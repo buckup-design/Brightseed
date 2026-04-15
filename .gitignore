@@ -1,0 +1,8 @@
+# Mac
+.DS_Store
+
+# Brand assets (large files, keep local only)
+Brightseed brand assets from 2022/
+
+# Working docs (keep in local project folder, not in repo)
+OUTPUTS/relay-design-extraction/

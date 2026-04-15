@@ -1,0 +1,15 @@
+/*
+ * Brightseed Design System — Token Entry Point
+ *
+ * Import this single file to get the full token system.
+ * Order matters: each layer depends on the one above it.
+ *
+ * Usage:
+ *   @import '@/tokens/index.css';   (in globals.css, before the shadcn bridge)
+ */
+
+@import './primitives.css'; /* Layer 1: raw hue scales */
+@import './intents.css';    /* Layer 2: role-name aliases */
+@import './semantics.css';  /* Layer 3: UI-function tokens + dark theme */
+@import './shape.css';      /* Radius, border width, shadow */
+@import './charts.css';     /* Data visualization tokens */

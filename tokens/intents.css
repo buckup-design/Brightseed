@@ -1,0 +1,154 @@
+/*
+ * Brightseed Design System — Color Intent Aliases
+ * Layer 2 of 3: Role names mapped to primitive scales via var().
+ * Reference: BrightseedDS.md §3.2
+ *
+ * Naming: --{role}-{step}
+ * No values are duplicated — this layer is purely indirection.
+ * The semantic layer (semantics.css) references intents, not primitives directly.
+ *
+ * Requires: primitives.css
+ */
+
+:root {
+
+  /* ── Action: Chlorophyll/lime — CTAs, primary buttons, focus rings ── */
+  --action-primary-50:  var(--color-lime-50);
+  --action-primary-100: var(--color-lime-100);
+  --action-primary-200: var(--color-lime-200);
+  --action-primary-300: var(--color-lime-300);
+  --action-primary-400: var(--color-lime-400);
+  --action-primary-500: var(--color-lime-500);
+  --action-primary-600: var(--color-lime-600);
+  --action-primary-700: var(--color-lime-700);
+  --action-primary-800: var(--color-lime-800);
+  --action-primary-900: var(--color-lime-900);
+  --action-primary-950: var(--color-lime-950);
+
+  /* ── Surface brand: Deep Forest/green — nav, headers, branded chrome ── */
+  --surface-brand-50:  var(--color-green-50);
+  --surface-brand-100: var(--color-green-100);
+  --surface-brand-200: var(--color-green-200);
+  --surface-brand-300: var(--color-green-300);
+  --surface-brand-400: var(--color-green-400);
+  --surface-brand-500: var(--color-green-500);
+  --surface-brand-600: var(--color-green-600);
+  --surface-brand-700: var(--color-green-700);
+  --surface-brand-800: var(--color-green-800);
+  --surface-brand-900: var(--color-green-900);
+  --surface-brand-950: var(--color-green-950);
+
+  /* ── Success: green — shares hue with surface-brand; uses light steps (50–300) ── */
+  --success-50:  var(--color-green-50);
+  --success-100: var(--color-green-100);
+  --success-200: var(--color-green-200);
+  --success-300: var(--color-green-300);
+  --success-400: var(--color-green-400);
+  --success-500: var(--color-green-500);
+  --success-600: var(--color-green-600);
+  --success-700: var(--color-green-700);
+  --success-800: var(--color-green-800);
+  --success-900: var(--color-green-900);
+  --success-950: var(--color-green-950);
+
+  /* ── Info: Ocean/blue ── */
+  --info-50:  var(--color-blue-50);
+  --info-100: var(--color-blue-100);
+  --info-200: var(--color-blue-200);
+  --info-300: var(--color-blue-300);
+  --info-400: var(--color-blue-400);
+  --info-500: var(--color-blue-500);
+  --info-600: var(--color-blue-600);
+  --info-700: var(--color-blue-700);
+  --info-800: var(--color-blue-800);
+  --info-900: var(--color-blue-900);
+  --info-950: var(--color-blue-950);
+
+  /* ── Warning: yellow ── */
+  --warning-50:  var(--color-yellow-50);
+  --warning-100: var(--color-yellow-100);
+  --warning-200: var(--color-yellow-200);
+  --warning-300: var(--color-yellow-300);
+  --warning-400: var(--color-yellow-400);
+  --warning-500: var(--color-yellow-500);
+  --warning-600: var(--color-yellow-600);
+  --warning-700: var(--color-yellow-700);
+  --warning-800: var(--color-yellow-800);
+  --warning-900: var(--color-yellow-900);
+  --warning-950: var(--color-yellow-950);
+
+  /* ── Critical: red ── */
+  --critical-50:  var(--color-red-50);
+  --critical-100: var(--color-red-100);
+  --critical-200: var(--color-red-200);
+  --critical-300: var(--color-red-300);
+  --critical-400: var(--color-red-400);
+  --critical-500: var(--color-red-500);
+  --critical-600: var(--color-red-600);
+  --critical-700: var(--color-red-700);
+  --critical-800: var(--color-red-800);
+  --critical-900: var(--color-red-900);
+  --critical-950: var(--color-red-950);
+
+  /* ── Data: cyan — primary data viz series ── */
+  --data-cyan-50:  var(--color-cyan-50);
+  --data-cyan-100: var(--color-cyan-100);
+  --data-cyan-200: var(--color-cyan-200);
+  --data-cyan-300: var(--color-cyan-300);
+  --data-cyan-400: var(--color-cyan-400);
+  --data-cyan-500: var(--color-cyan-500);
+  --data-cyan-600: var(--color-cyan-600);
+  --data-cyan-700: var(--color-cyan-700);
+  --data-cyan-800: var(--color-cyan-800);
+  --data-cyan-900: var(--color-cyan-900);
+  --data-cyan-950: var(--color-cyan-950);
+
+  /* ── Data: indigo — secondary data viz series ── */
+  --data-indigo-50:  var(--color-indigo-50);
+  --data-indigo-100: var(--color-indigo-100);
+  --data-indigo-200: var(--color-indigo-200);
+  --data-indigo-300: var(--color-indigo-300);
+  --data-indigo-400: var(--color-indigo-400);
+  --data-indigo-500: var(--color-indigo-500);
+  --data-indigo-600: var(--color-indigo-600);
+  --data-indigo-700: var(--color-indigo-700);
+  --data-indigo-800: var(--color-indigo-800);
+  --data-indigo-900: var(--color-indigo-900);
+  --data-indigo-950: var(--color-indigo-950);
+
+  /* ── Data: orange — tertiary data viz / Eschscholzia accent ── */
+  --data-orange-50:  var(--color-orange-50);
+  --data-orange-100: var(--color-orange-100);
+  --data-orange-200: var(--color-orange-200);
+  --data-orange-300: var(--color-orange-300);
+  --data-orange-400: var(--color-orange-400);
+  --data-orange-500: var(--color-orange-500);
+  --data-orange-600: var(--color-orange-600);
+  --data-orange-700: var(--color-orange-700);
+  --data-orange-800: var(--color-orange-800);
+  --data-orange-900: var(--color-orange-900);
+  --data-orange-950: var(--color-orange-950);
+
+  /* ── Data: purple — quaternary data viz / Garlic Bloom accent ── */
+  --data-purple-50:  var(--color-purple-50);
+  --data-purple-100: var(--color-purple-100);
+  --data-purple-200: var(--color-purple-200);
+  --data-purple-300: var(--color-purple-300);
+  --data-purple-400: var(--color-purple-400);
+  --data-purple-500: var(--color-purple-500);
+  --data-purple-600: var(--color-purple-600);
+  --data-purple-700: var(--color-purple-700);
+  --data-purple-800: var(--color-purple-800);
+  --data-purple-900: var(--color-purple-900);
+  --data-purple-950: var(--color-purple-950);
+
+}
+
+/*
+ * NOTE: success-* and surface-brand-* point at the same green primitive scale.
+ * This is intentional — brand chrome uses the dark end (700–950) and success
+ * semantics use the light end (50–300). They do not collide in practice.
+ *
+ * Data viz series order: cyan (primary) → indigo (secondary) → orange (tertiary) → purple (quaternary).
+ * Assign in this order when adding chart series.
+ */

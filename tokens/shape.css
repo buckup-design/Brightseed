@@ -1,0 +1,56 @@
+/*
+ * Brightseed Design System — Shape Tokens
+ * Radius, border width, and shadow.
+ * Reference: BrightseedDS.md §3.6
+ *
+ * Naming: --shape-{category}-{scale}
+ * Shadow umbra tinted with green-950 (#133019) for earthy warmth.
+ * Dark mode: shadows inherit — no override needed (they recede naturally on dark bg).
+ */
+
+:root {
+
+  /* ── Radius ── */
+  --shape-radius-none:    0px;
+  --shape-radius-sm:      2px;    /* subtle — tag indicators, inline chips */
+  --shape-radius-default: 4px;    /* standard — inputs, buttons, dropdowns */
+  --shape-radius-md:      6px;    /* medium — badges, small tooltips */
+  --shape-radius-lg:      8px;    /* large — cards, panels, dialogs */
+  --shape-radius-xl:      12px;   /* extra-large — sheet overlays, popovers */
+  --shape-radius-round:   9999px; /* pill — status badges, toggle chips */
+
+  /* ── Border width ── */
+  --shape-border-none:    0px;
+  --shape-border-default: 1px;    /* inputs, cards, table grid lines */
+  --shape-border-bold:    2px;    /* focus rings, selected-state indicators */
+  --shape-border-heavy:   4px;    /* left-edge accent stripe on alert banners */
+
+  /* ── Shadow ── */
+  --shadow-sm: 0 1px 2px 0 rgba(19, 48, 25, 0.08);
+  --shadow-md: 0 4px 6px -1px rgba(19, 48, 25, 0.10),
+               0 2px 4px -2px  rgba(19, 48, 25, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(19, 48, 25, 0.10),
+               0 4px  6px  -4px rgba(19, 48, 25, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(19, 48, 25, 0.10),
+               0 8px  10px -6px rgba(19, 48, 25, 0.04);
+
+}
+
+/*
+ * Radius conventions:
+ *   Input, Select, Textarea      → --shape-radius-default  (rounded)
+ *   Button (all variants)        → --shape-radius-default  (rounded)
+ *   Badge — status pill          → --shape-radius-round    (rounded-full)
+ *   Badge — category label       → --shape-radius-md       (rounded-md)
+ *   Card, Panel                  → --shape-radius-lg       (rounded-lg)
+ *   Dialog                       → --shape-radius-lg       (rounded-lg)
+ *   Popover, Tooltip             → --shape-radius-md       (rounded-md)
+ *   Alert / banner               → --shape-radius-default  (rounded)
+ *   Table row                    → --shape-radius-none
+ *
+ * Shadow conventions:
+ *   Raised card on page bg       → --shadow-sm
+ *   Popover, dropdown menu       → --shadow-md
+ *   Dialog, modal                → --shadow-lg
+ *   Sheet overlay                → --shadow-xl
+ */
