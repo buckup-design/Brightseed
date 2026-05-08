@@ -5,8 +5,8 @@
  * Requires: primitives.css, intents.css, semantics.css
  *
  * RULES:
- * — Never use brand action (lime/Chlorophyll) or brand surface (green/Deep Forest)
- *   for chart series — those are reserved for UI chrome.
+ * — Never use brand action (lime) or brand surface (forest) for chart series —
+ *   those are reserved for UI chrome.
  * — Categorical series colors are theme-invariant by design (no dark override).
  *   Surface/grid/axis tokens reference semantics and auto-adapt to dark theme.
  * — Always pair color with shape or pattern. Never rely on color alone.
@@ -31,24 +31,24 @@
   /* ── Categorical palette (8 series, colorblind-safe) ──
      Assign in order: cat-1 → cat-2 → ... → cat-8. Do not skip around. */
   --chart-cat-1: var(--data-cyan-500);     /* #00b4b6 — teal, primary series */
-  --chart-cat-2: var(--data-indigo-500);   /* #8261ff — blue-purple */
+  --chart-cat-2: var(--data-lavender-500);   /* #8261ff — lavender */
   --chart-cat-3: var(--data-orange-500);   /* #E88F3E — orange */
   --chart-cat-4: var(--color-red-500);     /* #ee3a49 — red */
   --chart-cat-5: var(--color-yellow-600);  /* #a69400 — olive-yellow (dark step for legibility) */
   --chart-cat-6: var(--data-cyan-800);     /* #004948 — dark teal (series-1 depth variant) */
-  --chart-cat-7: var(--data-indigo-300);   /* #c8bcff — soft indigo (series-2 light variant) */
+  --chart-cat-7: var(--data-lavender-300);   /* #c8bcff — soft lavender (series-2 light variant) */
   --chart-cat-8: var(--data-orange-700);   /* #a34900 — burnt orange (series-3 depth variant) */
 
-  /* ── Sequential palette — green (brand-tinted, for density / magnitude heatmaps) ── */
-  --chart-seq-green-100: var(--color-green-50);
-  --chart-seq-green-200: var(--color-green-100);
-  --chart-seq-green-300: var(--color-green-200);
-  --chart-seq-green-400: var(--color-green-300);
-  --chart-seq-green-500: var(--color-green-500);
-  --chart-seq-green-600: var(--color-green-600);
-  --chart-seq-green-700: var(--color-green-700);
-  --chart-seq-green-800: var(--color-green-800);
-  --chart-seq-green-900: var(--color-green-900);
+  /* ── Sequential palette — forest (brand-tinted, for density / magnitude heatmaps) ── */
+  --chart-seq-forest-100: var(--color-forest-50);
+  --chart-seq-forest-200: var(--color-forest-100);
+  --chart-seq-forest-300: var(--color-forest-200);
+  --chart-seq-forest-400: var(--color-forest-300);
+  --chart-seq-forest-500: var(--color-forest-500);
+  --chart-seq-forest-600: var(--color-forest-600);
+  --chart-seq-forest-700: var(--color-forest-700);
+  --chart-seq-forest-800: var(--color-forest-800);
+  --chart-seq-forest-900: var(--color-forest-900);
 
   /* ── Sequential palette — blue (alternative; distinguishes assay types from density) ── */
   --chart-seq-blue-100: var(--color-blue-50);
@@ -61,7 +61,7 @@
   --chart-seq-blue-800: var(--color-blue-800);
   --chart-seq-blue-900: var(--color-blue-900);
 
-  /* ── Diverging palette — red ↔ neutral ↔ green ──
+  /* ── Diverging palette — red ↔ neutral ↔ forest ──
      For deltas, fold-change, and pos/neg inhibition response maps.
      Neutral midpoint uses sand-100 (warm, not optical gray) to match page bg. */
   --chart-div-neg-500: var(--color-red-700);    /* strong negative / maximum inhibition loss */
@@ -70,14 +70,14 @@
   --chart-div-neg-200: var(--color-red-100);
   --chart-div-neg-100: var(--color-red-50);
   --chart-div-neutral: var(--color-sand-100);   /* zero / baseline / no change */
-  --chart-div-pos-100: var(--color-green-50);
-  --chart-div-pos-200: var(--color-green-100);
-  --chart-div-pos-300: var(--color-green-300);
-  --chart-div-pos-400: var(--color-green-500);
-  --chart-div-pos-500: var(--color-green-700);  /* strong positive / maximum effect */
+  --chart-div-pos-100: var(--color-forest-50);
+  --chart-div-pos-200: var(--color-forest-100);
+  --chart-div-pos-300: var(--color-forest-300);
+  --chart-div-pos-400: var(--color-forest-500);
+  --chart-div-pos-500: var(--color-forest-700);  /* strong positive / maximum effect */
 
   /* ── Semantic trend ── */
-  --chart-trend-positive: var(--success-600);      /* green-600 — improving, above baseline */
+  --chart-trend-positive: var(--success-600);      /* forest-600 — improving, above baseline */
   --chart-trend-negative: var(--critical-600);     /* red-600 — declining, below baseline */
   --chart-trend-neutral:  var(--color-sand-600);   /* no change — muted */
   --chart-trend-unknown:  var(--color-neutral-400); /* data pending / unclassified */
@@ -86,7 +86,7 @@
   --chart-curve-fit:           var(--data-cyan-500);      /* 4PL fitted line — teal */
   --chart-confidence-band:     var(--data-cyan-100);      /* error envelope — light teal wash */
   --chart-datapoint-default:   var(--color-sand-700);     /* raw experimental points — muted */
-  --chart-datapoint-highlight: var(--action-primary-300); /* selected / hovered point — Chlorophyll */
+  --chart-datapoint-highlight: var(--action-primary-400); /* selected / hovered point — lime */
   --chart-datapoint-outlier:   var(--critical-500);       /* flagged outlier — red */
   --chart-reference-line:      var(--critical-600);       /* IC50, EC50 vertical marker — dashed red */
 

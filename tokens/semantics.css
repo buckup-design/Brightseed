@@ -17,7 +17,7 @@
 :root {
 
   /* ── Surface ── */
-  --color-surface-default:         var(--color-sand-50);       /* #F9F8F3 — page background */
+  --color-surface-default:         var(--color-white);         /* #ffffff — page background */
   --color-surface-default-hover:   var(--color-sand-100);
   --color-surface-default-active:  var(--color-sand-200);
   --color-surface-alt:             var(--color-sand-100);      /* sidebar, table alt rows, inset panels */
@@ -48,29 +48,55 @@
   --color-surface-selected-active: var(--info-200);
 
   /* ── Action ── */
-  /* Primary: Chlorophyll fill — lime-300 base */
+  /* Disabled rule (uniform across all Button variants):
+       surface = color-mix(in srgb, <default-state surface>, var(--color-disabled-surface-overlay) 50%);
+       text + icon = the variant's normal foreground token, applied at --disabled-text-opacity.
+     Light theme pulls surface toward light sand (desaturate + lift); dark theme pulls
+     toward dark sand (desaturate + dim). The text fade is theme-invariant — same
+     opacity in both themes — so the rule has one number to tune.
+     Disabled UI is exempt from WCAG 1.4.3 contrast (we accept ~3.4:1 for the muted
+     read on the destructive variant — the worst case of the cohort). */
+  --color-disabled-surface-overlay: var(--color-sand-100);
+  --disabled-text-opacity:          0.55;
+
+  /* Primary: lime fill. Surface ladder shifted down one step Apr 2026 to give the
+     "more pronounced on hover" rule headroom. lime-300 default → lime-400 hover →
+     lime-500 active. lime-300 was retuned (#CAE279 → #CDE67B) to pass WCAG AA with
+     forest-800 text. */
   --color-action-primary:          var(--action-primary-300);
   --color-action-primary-hover:    var(--action-primary-400);
   --color-action-primary-active:   var(--action-primary-500);
-  --color-action-primary-disabled: var(--action-primary-100);
+  --color-action-primary-disabled: color-mix(in srgb, var(--color-action-primary), var(--color-disabled-surface-overlay) 50%);
 
-  /* Secondary: outlined / ghost */
-  --color-action-secondary:          var(--color-sand-50);
-  --color-action-secondary-hover:    var(--color-sand-100);
-  --color-action-secondary-active:   var(--color-sand-200);
+  /* Secondary: faint solid sand bg, no border. Ladder anchored at sand-100 so the
+     button is visibly distinct from page bg at default and steps darker per state.
+     (Earlier the ladder anchored at page-bg, which made Secondary invisible on
+     white surfaces — corrected Apr 2026.) */
+  --color-action-secondary:          var(--color-sand-100);
+  --color-action-secondary-hover:    var(--color-sand-200);
+  --color-action-secondary-active:   var(--color-sand-300);
   --color-action-secondary-disabled: var(--color-sand-50);
 
-  /* Critical: destructive — red-500 fill */
-  --color-action-critical:          var(--critical-500);
-  --color-action-critical-hover:    var(--critical-600);
-  --color-action-critical-active:   var(--critical-700);
-  --color-action-critical-disabled: var(--critical-100);
+  /* Critical: destructive — soft style. red-100 surface, red-600 text.
+     Refactored Apr 2026 from solid red-500 fill to discrete-step soft tint —
+     matches Tag recipe pattern (surface=step-100, text=step-600/700, hover steps up). */
+  --color-action-critical:          var(--critical-100);
+  --color-action-critical-hover:    var(--critical-200);
+  --color-action-critical-active:   var(--critical-300);
+  --color-action-critical-disabled: color-mix(in srgb, var(--color-action-critical), var(--color-disabled-surface-overlay) 50%);
 
   /* ── Border ── */
   --color-border-subtle:           var(--color-sand-200);      /* hairlines, table grid */
   --color-border-default:          var(--color-sand-300);      /* input default */
   --color-border-bold:             var(--color-sand-500);      /* emphatic dividers */
-  --color-border-focus:            var(--action-primary-300);  /* Chlorophyll — focus ring */
+  /* Focus rings — variant-aware. Default uses lime (the system action color);
+     destructive uses its own hue scale; secondary uses sand. Linktext is in the
+     lime family too, so its focus ring matches Default — kept as a separate
+     token name for namespace clarity in case it ever diverges. */
+  --color-border-focus:             var(--action-primary-500);  /* lime/500 — Default, Outline, Ghost focus */
+  --color-border-focus-secondary:   var(--color-sand-300);      /* sand/300 — Secondary focus (matches Figma base/ring) */
+  --color-border-focus-destructive: var(--critical-500);        /* red/500 — Destructive focus */
+  --color-border-focus-link-brand:  var(--action-primary-500);  /* lime/500 — Linktext focus (same as Default) */
 
   --color-border-success-default:  var(--success-200);
   --color-border-success-bold:     var(--success-600);
@@ -83,26 +109,68 @@
 
   /* ── Text ── */
   --color-text-default:            var(--color-sand-900);      /* #2a2925 — warm near-black */
+  --color-text-default-hover:      var(--color-sand-950);      /* one step "more pronounced" — used by
+                                                                  Secondary / Outline / Ghost button text on hover */
   --color-text-subtle:             var(--color-sand-700);      /* secondary / helper text */
-  --color-text-disabled:           var(--color-sand-500);
+  --color-text-disabled:           var(--color-sand-500);      /* generic flat disabled — for non-button contexts
+                                                                  (form labels, static text). Buttons use the alpha
+                                                                  rule on their normal foreground instead. */
 
   /* Inverse — text on Deep Forest surfaces or any dark panel */
   --color-text-inverse:            var(--color-sand-50);
   --color-text-inverse-subtle:     var(--color-sand-300);
 
-  /* Link */
-  --color-text-link:               var(--info-600);
-  --color-text-link-hover:         var(--info-700);
+  /* Text/icons on the lime primary action.
+     Three text steps to match the three surface states: forest-800 default →
+     forest-900 hover → forest-950 active. The active step is required for WCAG AA
+     on the deeper lime-500 active surface (forest-800/900 fail AA on lime-500).
+     Theme-invariant — same values in dark mode (lime button is the primary action
+     in both themes). Mirrors Figma `base/primary-foreground`. */
+  --color-text-on-action-primary:           var(--color-forest-800);
+  --color-text-on-action-primary-hover:     var(--color-forest-900);
+  --color-text-on-action-primary-active:    var(--color-forest-950);
+  /* No -disabled token — disabled state uses --color-text-on-action-primary at --disabled-text-opacity. */
+
+  /* Text on the destructive (soft red) action.
+     red-600 on red-100 surface — passes WCAG AA. Hover steps to red-700. */
+  --color-text-on-action-critical:           var(--critical-600);
+  --color-text-on-action-critical-hover:     var(--critical-700);
+  /* No -disabled token — disabled state uses --color-text-on-action-critical at --disabled-text-opacity. */
+
+  /* Link — two distinct components with different state machines.
+       link-*  → the inline `<a>` Link component for body copy. Always
+                 underlined. Has anchor pseudo-class states: link / visited /
+                 hover / focus / active. Blue scale.
+       link-brand → the Button component's "Linktext/default" variant —
+                 button-shaped, never underlined, button-state machine
+                 (default/hover/focus/loading/disabled/pressed). Lime scale —
+                 same family as the primary button surface, signaling that
+                 Linktext is the brand-link affordance.
+     The bare --color-text-link alias is intentionally NOT exposed so callers
+     must be explicit about which component they're in. */
+  --color-text-link-default:       var(--info-600);            /* blue-600 — :link */
+  --color-text-link-default-hover: var(--info-700);            /* blue-700 — :hover */
+  --color-text-link-visited:       var(--color-sand-700);      /* sand-700 — :visited (warm, settled) */
+  --color-text-link-active:        var(--info-900);            /* blue-900 — :active (pressed) */
+  /* Brand-link uses lime — but a deeper step than the lime button surface.
+     base/primary surface = lime-300 (#CDE67B); on white that's ~1.7:1, fine
+     for a button-shaped surface but unreadable as standalone text. Linktext
+     is text-only, so we step down the lime scale to lime-700 (light) /
+     lime-300 (dark) for AA contrast on page surfaces.
+     Decided May 2026 — replaced earlier forest-scale brand-link. */
+  --color-text-link-brand:           var(--color-lime-700);      /* #6f7e01 — AA on white (6.3:1) */
+  --color-text-link-brand-hover:     var(--color-lime-800);      /* one step more pronounced on hover */
+  /* No -disabled token — disabled state uses --color-text-link-brand at --disabled-text-opacity. */
 
   /* Semantic text — all verified WCAG AA on sand-50 surface */
-  --color-text-success:            var(--success-700);         /* green-700  — 4.98:1 ✓ AA */
+  --color-text-success:            var(--success-700);         /* forest-700 — 4.98:1 ✓ AA */
   --color-text-info:               var(--info-700);            /* blue-700   — 8.95:1 ✓ AA */
   --color-text-warning:            var(--warning-700);         /* yellow-700 — 4.92:1 ✓ AA */
   --color-text-critical:           var(--critical-700);        /* red-700    — 7.85:1 ✓ AA */
   --color-text-data:               var(--data-cyan-700);       /* cyan-700   — 5.79:1 ✓ AA */
-  --color-text-data-indigo:        var(--data-indigo-700);     /* indigo-700 — 4.92:1 ✓ AA */
+  --color-text-data-lavender:        var(--data-lavender-700);     /* lavender-700 — 4.92:1 ✓ AA */
   --color-text-data-orange:        var(--data-orange-700);     /* orange-700 — 4.65:1 ✓ AA */
-  --color-text-data-purple:        var(--data-purple-700);     /* purple-700 — 5.12:1 ✓ AA */
+  --color-text-data-orchid:        var(--data-orchid-700);     /* orchid-700 — 5.12:1 ✓ AA */
 
   /* ── Icon (mirrors text taxonomy exactly) ── */
   --color-icon-default:            var(--color-sand-900);
@@ -110,40 +178,110 @@
   --color-icon-disabled:           var(--color-sand-500);
   --color-icon-inverse:            var(--color-sand-50);
   --color-icon-inverse-subtle:     var(--color-sand-300);
-  --color-icon-brand:              var(--action-primary-300);  /* Chlorophyll — brand icons on light bg */
+  --color-icon-brand:              var(--action-primary-400);  /* lime — brand icons on light bg */
   --color-icon-success:            var(--success-700);
   --color-icon-info:               var(--info-700);
   --color-icon-warning:            var(--warning-700);
   --color-icon-critical:           var(--critical-700);
   --color-icon-data:               var(--data-cyan-700);
-  --color-icon-data-indigo:        var(--data-indigo-700);
+  --color-icon-data-lavender:      var(--data-lavender-700);
   --color-icon-data-orange:        var(--data-orange-700);
-  --color-icon-data-purple:        var(--data-purple-700);
+  --color-icon-data-orchid:        var(--data-orchid-700);
+
+  /* ──────────────────────────────────────────────────────────────────
+     Tag tokens — decorative color set for Forager's tag-dense surfaces.
+     Recipe per hue:
+       Default — surface = step-100, text = step-700
+       Hover   — surface = step-200, text = step-700
+       Focus   — surface = step-100, text = step-700, ring = step-500 (hue-specific)
+     No intent layer — tag colors are decorative only, not semantic.
+     ────────────────────────────────────────────────────────────────── */
+
+  --color-surface-tag-sand:           var(--color-sand-100);
+  --color-surface-tag-sand-hover:     var(--color-sand-200);
+  --color-text-tag-sand:              var(--color-sand-800);
+  --color-border-tag-sand-focus:      var(--color-sand-500);
+
+  --color-surface-tag-forest:         var(--color-forest-100);
+  --color-surface-tag-forest-hover:   var(--color-forest-200);
+  --color-text-tag-forest:            var(--color-forest-700);
+  --color-border-tag-forest-focus:    var(--color-forest-500);
+
+  --color-surface-tag-lime:           var(--color-lime-100);
+  --color-surface-tag-lime-hover:     var(--color-lime-200);
+  --color-text-tag-lime:              var(--color-lime-700);
+  --color-border-tag-lime-focus:      var(--color-lime-500);
+
+  --color-surface-tag-cyan:           var(--color-cyan-100);
+  --color-surface-tag-cyan-hover:     var(--color-cyan-200);
+  --color-text-tag-cyan:              var(--color-cyan-700);
+  --color-border-tag-cyan-focus:      var(--color-cyan-500);
+
+  --color-surface-tag-blue:           var(--color-blue-100);
+  --color-surface-tag-blue-hover:     var(--color-blue-200);
+  --color-text-tag-blue:              var(--color-blue-700);
+  --color-border-tag-blue-focus:      var(--color-blue-500);
+
+  --color-surface-tag-yellow:         var(--color-yellow-100);
+  --color-surface-tag-yellow-hover:   var(--color-yellow-200);
+  --color-text-tag-yellow:            var(--color-yellow-700);
+  --color-border-tag-yellow-focus:    var(--color-yellow-500);
+
+  --color-surface-tag-orange:         var(--color-orange-100);
+  --color-surface-tag-orange-hover:   var(--color-orange-200);
+  --color-text-tag-orange:            var(--color-orange-700);
+  --color-border-tag-orange-focus:    var(--color-orange-500);
+
+  --color-surface-tag-red:            var(--color-red-100);
+  --color-surface-tag-red-hover:      var(--color-red-200);
+  --color-text-tag-red:               var(--color-red-700);
+  --color-border-tag-red-focus:       var(--color-red-500);
+
+  --color-surface-tag-lavender:       var(--color-lavender-100);
+  --color-surface-tag-lavender-hover: var(--color-lavender-200);
+  --color-text-tag-lavender:          var(--color-lavender-700);
+  --color-border-tag-lavender-focus:  var(--color-lavender-500);
+
+  --color-surface-tag-orchid:         var(--color-orchid-100);
+  --color-surface-tag-orchid-hover:   var(--color-orchid-200);
+  --color-text-tag-orchid:            var(--color-orchid-700);
+  --color-border-tag-orchid-focus:    var(--color-orchid-500);
 
 }
 
 
 /* ════════════════════════════════════════════════════════════════════════════
    DARK THEME OVERRIDE ([data-theme="dark"])
-   Base surface: green-950 (#133019)
+   Base surface: sand-950 — warm dark neutral, NOT a forest-tinted dark mode.
+   The forest scale exits surface vocabulary in dark mode entirely; it only
+   stays as lime accent, text on the lime button (forest-900), and brand-context
+   link colors.
    Only tokens that change from light theme are listed — everything else inherits.
-   lime/Chlorophyll on green-950 = 8.03:1 ✓ AAA — no action-primary override needed.
+   The lime button surface (lime-400) on sand-950 page bg passes contrast, so
+   the --color-action-primary surface tokens don't need a dark override. Text
+   on that button stays forest-900 in both themes (see --color-text-on-action-primary).
    ════════════════════════════════════════════════════════════════════════════ */
 
 [data-theme="dark"] {
 
-  /* ── Surfaces — deep forest floor ── */
-  --color-surface-default:         var(--color-green-950);     /* #133019 — page bg */
-  --color-surface-default-hover:   var(--color-green-900);
-  --color-surface-default-active:  var(--color-green-800);
-  --color-surface-alt:             var(--color-green-900);     /* raised panels, cards */
-  --color-surface-alt-hover:       var(--color-green-800);
+  /* Disabled surface overlay — flips to dark sand so the rule pulls toward
+     dim/desaturated instead of light/desaturated. The surface-disabled tokens
+     in :root cascade through this override via color-mix.
+     Text fade is theme-invariant via --disabled-text-opacity (no override needed). */
+  --color-disabled-surface-overlay: var(--color-sand-700);
 
-  /* Brand nav/header lifts one step above page bg */
-  --color-surface-brand:           var(--color-green-800);
-  --color-surface-brand-hover:     var(--color-green-700);
-  --color-surface-brand-active:    var(--color-green-900);
-  --color-surface-brand-subtle:    var(--color-green-950);
+  /* ── Surfaces — warm dark sand ladder ── */
+  --color-surface-default:         var(--color-sand-950);       /* #1F1F1E — page bg */
+  --color-surface-default-hover:   var(--color-sand-900);
+  --color-surface-default-active:  var(--color-sand-800);
+  --color-surface-alt:             var(--color-sand-900);       /* raised panels, sidebars, cards */
+  --color-surface-alt-hover:       var(--color-sand-800);
+
+  /* Brand nav/header — sand-anchored in dark mode (forest exits surface vocabulary) */
+  --color-surface-brand:           var(--color-sand-900);
+  --color-surface-brand-hover:     var(--color-sand-800);
+  --color-surface-brand-active:    var(--color-sand-950);
+  --color-surface-brand-subtle:    var(--color-sand-950);
 
   /* Semantic surfaces — darkened to work on deep bg */
   --color-surface-success:         var(--success-950);
@@ -163,11 +301,13 @@
   --color-surface-selected-hover:  var(--info-900);
   --color-surface-selected-active: var(--info-800);
 
-  /* ── Borders — mid-green range for structure on dark bg ── */
-  --color-border-subtle:           var(--color-green-800);
-  --color-border-default:          var(--color-green-700);
-  --color-border-bold:             var(--color-green-600);
-  /* --color-border-focus unchanged — Chlorophyll works on dark bg */
+  /* ── Borders — mid-sand range for structure on dark bg ── */
+  --color-border-subtle:           var(--color-sand-800);
+  --color-border-default:          var(--color-sand-700);
+  --color-border-bold:             var(--color-sand-600);
+  /* Focus rings — only Secondary changes in dark mode (sand step shifts).
+     Default/Destructive/Link-Brand are theme-invariant per Figma. */
+  --color-border-focus-secondary:  var(--color-sand-500);      /* sand/500 — matches Figma colors/ring-dark */
 
   --color-border-success-default:  var(--success-800);
   --color-border-success-bold:     var(--success-500);
@@ -180,12 +320,21 @@
 
   /* ── Text — sand palette inverted ── */
   --color-text-default:            var(--color-sand-50);       /* warm white on dark bg */
+  --color-text-default-hover:      var(--color-sand-50);       /* boundary: sand-50 is already the lightest step.
+                                                                  Hover keeps the same color in dark mode; the weight
+                                                                  bump (500→600) carries the hover signal alone. */
   --color-text-subtle:             var(--color-sand-300);
   --color-text-disabled:           var(--color-sand-600);
   --color-text-inverse:            var(--color-sand-900);
   --color-text-inverse-subtle:     var(--color-sand-700);
-  --color-text-link:               var(--info-300);
-  --color-text-link-hover:         var(--info-200);
+  --color-text-link-default:       var(--info-500);            /* blue-500 — :link */
+  --color-text-link-default-hover: var(--info-400);            /* blue-400 — :hover (lighter on dark bg) */
+  --color-text-link-visited:       var(--color-sand-300);      /* sand-300 — :visited */
+  --color-text-link-active:        var(--info-200);            /* blue-200 — :active */
+  --color-text-link-brand:         var(--color-lime-300);      /* lime-300 — AA on sand-950 dark bg.
+                                                                  Same step as the lime button surface, but used
+                                                                  here as TEXT (not surface) so contrast holds. */
+  --color-text-link-brand-hover:   var(--color-lime-200);      /* one step lighter — "more pronounced on dark" */
 
   /* Semantic text — lighter steps for dark bg readability */
   --color-text-success:            var(--success-300);
@@ -193,9 +342,9 @@
   --color-text-warning:            var(--warning-300);
   --color-text-critical:           var(--critical-300);
   --color-text-data:               var(--data-cyan-300);
-  --color-text-data-indigo:        var(--data-indigo-300);
+  --color-text-data-lavender:        var(--data-lavender-300);
   --color-text-data-orange:        var(--data-orange-300);
-  --color-text-data-purple:        var(--data-purple-300);
+  --color-text-data-orchid:        var(--data-orchid-300);
 
   /* ── Icon — mirrors text ── */
   --color-icon-default:            var(--color-sand-50);
@@ -208,16 +357,74 @@
   --color-icon-warning:            var(--warning-300);
   --color-icon-critical:           var(--critical-300);
   --color-icon-data:               var(--data-cyan-300);
-  --color-icon-data-indigo:        var(--data-indigo-300);
+  --color-icon-data-lavender:        var(--data-lavender-300);
   --color-icon-data-orange:        var(--data-orange-300);
-  --color-icon-data-purple:        var(--data-purple-300);
-  /* --color-icon-brand unchanged — Chlorophyll works on dark bg */
+  --color-icon-data-orchid:        var(--data-orchid-300);
+  /* --color-icon-brand unchanged — lime works on dark bg */
 
   /* ── Action — secondary adapts to dark surface ── */
-  /* primary and critical unchanged — see note above */
-  --color-action-secondary:          var(--color-green-800);
-  --color-action-secondary-hover:    var(--color-green-700);
-  --color-action-secondary-active:   var(--color-green-600);
-  --color-action-secondary-disabled: var(--color-green-950);
+  /* primary unchanged — lime-400 reads on both themes */
+  --color-action-secondary:          var(--color-sand-900);
+  --color-action-secondary-hover:    var(--color-sand-800);
+  --color-action-secondary-active:   var(--color-sand-700);
+  --color-action-secondary-disabled: var(--color-sand-950);
+
+  /* Critical: destructive — soft style mirrors light but on the dark side of the red ladder.
+     red-900 surface on sand-950 page bg; red-300 text. Hover steps "more pronounced"
+     (surface lighter, text lighter — convention for dark themes). */
+  --color-action-critical:          var(--critical-900);
+  --color-action-critical-hover:    var(--critical-800);
+  --color-action-critical-active:   var(--critical-700);
+  --color-action-critical-disabled: var(--critical-950);
+
+  --color-text-on-action-critical:        var(--critical-300);
+  --color-text-on-action-critical-hover:  var(--critical-200);
+
+  /* ── Tag tokens — dark theme override ──
+     Recipe inverts:
+       Default — surface = step-900, text = step-300
+       Hover   — surface = step-800, text = step-300
+       Focus   — surface = step-900, text = step-300, ring = step-500 (theme-invariant) */
+
+  --color-surface-tag-sand:           var(--color-sand-800);
+  --color-surface-tag-sand-hover:     var(--color-sand-700);
+  --color-text-tag-sand:              var(--color-sand-200);
+  /* --color-border-tag-sand-focus stays step-500 — focus rings are theme-invariant */
+
+  --color-surface-tag-forest:         var(--color-forest-900);
+  --color-surface-tag-forest-hover:   var(--color-forest-800);
+  --color-text-tag-forest:            var(--color-forest-300);
+
+  --color-surface-tag-lime:           var(--color-lime-900);
+  --color-surface-tag-lime-hover:     var(--color-lime-800);
+  --color-text-tag-lime:              var(--color-lime-300);
+
+  --color-surface-tag-cyan:           var(--color-cyan-900);
+  --color-surface-tag-cyan-hover:     var(--color-cyan-800);
+  --color-text-tag-cyan:              var(--color-cyan-300);
+
+  --color-surface-tag-blue:           var(--color-blue-900);
+  --color-surface-tag-blue-hover:     var(--color-blue-800);
+  --color-text-tag-blue:              var(--color-blue-300);
+
+  --color-surface-tag-yellow:         var(--color-yellow-900);
+  --color-surface-tag-yellow-hover:   var(--color-yellow-800);
+  --color-text-tag-yellow:            var(--color-yellow-300);
+
+  --color-surface-tag-orange:         var(--color-orange-900);
+  --color-surface-tag-orange-hover:   var(--color-orange-800);
+  --color-text-tag-orange:            var(--color-orange-300);
+
+  --color-surface-tag-red:            var(--color-red-900);
+  --color-surface-tag-red-hover:      var(--color-red-800);
+  --color-text-tag-red:               var(--color-red-300);
+
+  --color-surface-tag-lavender:       var(--color-lavender-900);
+  --color-surface-tag-lavender-hover: var(--color-lavender-800);
+  --color-text-tag-lavender:          var(--color-lavender-300);
+
+  --color-surface-tag-orchid:         var(--color-orchid-900);
+  --color-surface-tag-orchid-hover:   var(--color-orchid-800);
+  --color-text-tag-orchid:            var(--color-orchid-300);
 
 }

@@ -10,25 +10,29 @@
 
 :root {
 
-  /* ── Green (brand surface — Deep Forest at 900) ── */
-  --color-green-50:  #eefbf1;
-  --color-green-100: #e2f4e5;
-  --color-green-200: #c9e7cf;
-  --color-green-300: #aad4b2;
-  --color-green-400: #86b990;
-  --color-green-500: #669f71;
-  --color-green-600: #51865c;
-  --color-green-700: #46764f;
-  --color-green-800: #3f6947;
-  --color-green-900: #305536;  /* Deep Forest — brand surface anchor */
-  --color-green-950: #133019;
+  /* ── Universals ── */
+  --color-white:    #ffffff;
+  --color-black:    #000000;
 
-  /* ── Lime (brand action — Chlorophyll at 300) ── */
+  /* ── Forest (brand surface — Deep Forest at 900) ── */
+  --color-forest-50:  #eefbf1;
+  --color-forest-100: #e2f4e5;
+  --color-forest-200: #c9e7cf;
+  --color-forest-300: #aad4b2;
+  --color-forest-400: #86b990;
+  --color-forest-500: #669f71;
+  --color-forest-600: #51865c;
+  --color-forest-700: #46764f;
+  --color-forest-800: #3f6947;
+  --color-forest-900: #305536;  /* Deep Forest — brand surface anchor */
+  --color-forest-950: #133019;
+
+  /* ── Lime (brand action — anchor at 400) ── */
   --color-lime-50:  #f2fde0;
   --color-lime-100: #e9faca;
   --color-lime-200: #e0f6ab;
-  --color-lime-300: #CAE279;  /* Chlorophyll — brand action anchor */
-  --color-lime-400: #b8d258;
+  --color-lime-300: #CDE67B;  /* Retuned Apr 2026 — was #CAE279. Adjusted to pass WCAG AA with forest-800 text (4.57:1). lime-300 is now the default surface of the lime button. */
+  --color-lime-400: #b8d258;  /* hover surface of the lime button (was the default anchor before Apr 2026) */
   --color-lime-500: #a1b833;
   --color-lime-600: #8b9d15;
   --color-lime-700: #6f7e01;
@@ -47,7 +51,7 @@
   --color-sand-700: #68665e;
   --color-sand-800: #46453f;
   --color-sand-900: #2a2925;
-  --color-sand-950: #141411;
+  --color-sand-950: #1F1F1E;
 
   /* ── Orange (accent — Eschscholzia at 500) ── */
   --color-orange-50:  #fff4e8;
@@ -88,18 +92,18 @@
   --color-cyan-900: #002b29;
   --color-cyan-950: #001312;
 
-  /* ── Indigo (violet — H=287° OKLCH) ── */
-  --color-indigo-50:  #f7f4ff;
-  --color-indigo-100: #eeeaff;
-  --color-indigo-200: #dfd9ff;
-  --color-indigo-300: #c8bcff;
-  --color-indigo-400: #a793ff;
-  --color-indigo-500: #8261ff;
-  --color-indigo-600: #6440dc;
-  --color-indigo-700: #4929ae;  /* AA on Sand ✓ */
-  --color-indigo-800: #2f197a;
-  --color-indigo-900: #190e4b;
-  --color-indigo-950: #090526;
+  /* ── Lavender (violet — H=287° OKLCH) ── */
+  --color-lavender-50:  #f7f4ff;
+  --color-lavender-100: #eeeaff;
+  --color-lavender-200: #dfd9ff;
+  --color-lavender-300: #c8bcff;
+  --color-lavender-400: #a793ff;
+  --color-lavender-500: #8261ff;
+  --color-lavender-600: #6440dc;
+  --color-lavender-700: #4929ae;  /* AA on Sand ✓ */
+  --color-lavender-800: #2f197a;
+  --color-lavender-900: #190e4b;
+  --color-lavender-950: #090526;
 
   /* ── Red (error / critical — H=22° OKLCH) ── */
   --color-red-50:  #fff3f0;
@@ -127,18 +131,18 @@
   --color-neutral-900: #1a1b1c;
   --color-neutral-950: #08090a;
 
-  /* ── Purple (pink-mauve / data viz — Garlic Bloom at 700) ── */
-  --color-purple-50:  #fff2f9;
-  --color-purple-100: #ffe5f4;
-  --color-purple-200: #ffcce7;
-  --color-purple-300: #f9a7d3;
-  --color-purple-400: #e57bb7;
-  --color-purple-500: #c75197;
-  --color-purple-600: #9f3275;
-  --color-purple-700: #782e5a;  /* Garlic Bloom — brand anchor */
-  --color-purple-800: #50173a;
-  --color-purple-900: #310e23;
-  --color-purple-950: #190511;
+  /* ── Orchid (pink-mauve / data viz — Garlic Bloom at 700) ── */
+  --color-orchid-50:  #fff2f9;
+  --color-orchid-100: #ffe5f4;
+  --color-orchid-200: #ffcce7;
+  --color-orchid-300: #f9a7d3;
+  --color-orchid-400: #e57bb7;
+  --color-orchid-500: #c75197;
+  --color-orchid-600: #9f3275;
+  --color-orchid-700: #782e5a;  /* Garlic Bloom — brand anchor */
+  --color-orchid-800: #50173a;
+  --color-orchid-900: #310e23;
+  --color-orchid-950: #190511;
 
   /* ── Yellow (warning / caution — H=103° OKLCH) ── */
   --color-yellow-50:  #faf9e4;
