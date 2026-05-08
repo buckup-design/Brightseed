@@ -51,4 +51,25 @@
   --border-bold:            var(--color-border-bold);     /* extended — emphatic dividers */
   --input:                  var(--color-border-default);
   --ring:                   var(--color-border-focus);
+
+  /*
+   * Sidebar tokens — added when @shadcndesign/app-shell-4 (or any shadcn Sidebar
+   * consumer) lands. Per v3 May 6 2026 decision: `base/sidebar = base/background`
+   * (white in light, sand-950 in dark). Other sidebar tokens follow the standard
+   * Brightseed semantics so the sidebar stays consistent with the rest of the app.
+   *
+   * NOTE: shadcn's auto-installer drops these as hardcoded hsl() values into
+   * app/globals.css with a `.dark` selector. That's wrong for us in two ways:
+   * (1) hardcoded colors bypass the bridge, (2) we use [data-theme="dark"]
+   * not `.dark`. So we override here in the bridge — single source of truth,
+   * and dark theme auto-applies via the existing semantics.css cascade.
+   */
+  --sidebar:                     var(--color-surface-default);   /* sidebar surface = page bg */
+  --sidebar-foreground:          var(--color-text-default);
+  --sidebar-primary:             var(--color-action-primary);    /* lime — brand action in nav */
+  --sidebar-primary-foreground:  var(--color-text-on-action-primary);  /* forest text on lime */
+  --sidebar-accent:              var(--color-surface-alt);       /* sand-100 hover/active */
+  --sidebar-accent-foreground:   var(--color-text-default);
+  --sidebar-border:              var(--color-border-default);
+  --sidebar-ring:                var(--color-border-focus);      /* lime focus ring */
 }
