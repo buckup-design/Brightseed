@@ -3,6 +3,25 @@
 
 # Brand assets (large files, keep local only)
 Brightseed brand assets from 2022/
+brand/
 
-# Working docs (keep in local project folder, not in repo)
-OUTPUTS/relay-design-extraction/
+# Personal memory + agent context (decoded shorthand, people notes, internal reasoning)
+memory/
+.agents/
+
+# Working folders (curate before adding to repo)
+OUTPUTS/
+vector-pipeline/
+DOCS/
+anna's mocks 4-29-26/
+
+# Stray PDF (rename + move into DOCS/ before committing)
+Forager refernce ui.pdf
+
+# --- standard ---
+node_modules/
+.next/
+.vercel/
+.env*
+*.log
+.DS_Store

@@ -10,13 +10,19 @@
 
 :root {
 
-  /* ── Radius ── */
+  /* ── Radius ──
+     Aligns with the Figma `radius/*` scale used by component bindings.
+     Component code should reference these tokens via the conventions below;
+     never hardcode pixel values on individual elements. */
   --shape-radius-none:    0px;
-  --shape-radius-sm:      2px;    /* subtle — tag indicators, inline chips */
-  --shape-radius-default: 4px;    /* standard — inputs, buttons, dropdowns */
-  --shape-radius-md:      6px;    /* medium — badges, small tooltips */
-  --shape-radius-lg:      8px;    /* large — cards, panels, dialogs */
-  --shape-radius-xl:      12px;   /* extra-large — sheet overlays, popovers */
+  --shape-radius-xs:      2px;    /* subtle — tag indicators, inline chips */
+  --shape-radius-sm:      6px;    /* small — badges, small tooltips */
+  --shape-radius-md:      8px;    /* medium — buttons (xs/default/sm/lg/icon sizes), inputs */
+  --shape-radius-lg:      10px;   /* large — cards, panels */
+  --shape-radius-xl:      14px;   /* extra-large — dialogs */
+  --shape-radius-2xl:     18px;   /* sheet overlays, popovers */
+  --shape-radius-3xl:     22px;
+  --shape-radius-4xl:     26px;   /* button XL sizes (xl, icon-xl) */
   --shape-radius-round:   9999px; /* pill — status badges, toggle chips */
 
   /* ── Border width ── */
@@ -38,14 +44,16 @@
 
 /*
  * Radius conventions:
- *   Input, Select, Textarea      → --shape-radius-default  (rounded)
- *   Button (all variants)        → --shape-radius-default  (rounded)
- *   Badge — status pill          → --shape-radius-round    (rounded-full)
- *   Badge — category label       → --shape-radius-md       (rounded-md)
- *   Card, Panel                  → --shape-radius-lg       (rounded-lg)
- *   Dialog                       → --shape-radius-lg       (rounded-lg)
- *   Popover, Tooltip             → --shape-radius-md       (rounded-md)
- *   Alert / banner               → --shape-radius-default  (rounded)
+ *   Input, Select, Textarea      → --shape-radius-md       (8px)
+ *   Button — xs/default/sm/lg/icon (and icon-xs/sm/lg) → --shape-radius-md  (8px)
+ *   Button — xl, icon-xl         → --shape-radius-4xl     (26px — pronounced rounding for hero CTAs)
+ *   Badge — primary kind         → --shape-radius-round   (rounded-full — pill, status, count)
+ *   Badge — secondary kind       → --shape-radius-xs      (2px — tight, tag-dense rows)
+ *   Badge — number kind          → --shape-radius-round   (rounded-full — notification counts)
+ *   Card, Panel                  → --shape-radius-lg      (10px)
+ *   Dialog                       → --shape-radius-xl      (14px)
+ *   Popover, Tooltip             → --shape-radius-sm      (6px)
+ *   Alert / banner               → --shape-radius-md      (8px)
  *   Table row                    → --shape-radius-none
  *
  * Shadow conventions:

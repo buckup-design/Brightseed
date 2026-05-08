@@ -1,0 +1,76 @@
+/*
+ * Brightseed Design System — Typography Tokens
+ * Two type families:
+ *   --font-sans     Geist          — product UI scale (309 styles in Figma).
+ *                                    Variable font; weight axis carries the
+ *                                    Button hover Medium → SemiBold transition.
+ *   --font-display  Tiempos        — marketing display headlines (H1 / H2 / H3).
+ *                                    Currently using Tiempos Text (4 weights
+ *                                    licensed). Once Tiempos Headline is
+ *                                    licensed, swap the family value below —
+ *                                    sizes/weights/tracking will hold.
+ *
+ * Naming mirrors the Figma text-style hierarchy:
+ *   display/h1 / h2 / h3   — Tiempos display scale (this file)
+ *   text-{size}/leading-{*}/{weight}  — Geist UI scale (Figma styles only)
+ *
+ * Reference: BrightseedDS.md §3 (typography section).
+ */
+
+:root {
+  /* ── Font families ────────────────────────────────────────────────── */
+  --font-sans:    "Geist", system-ui, sans-serif;
+  --font-display: "Tiempos Headline", "Tiempos Text", "Tiempos", "Iowan Old Style", Georgia, serif;
+  --font-mono:    "Geist Mono", ui-monospace, monospace;
+
+  /* ── Display scale (marketing H1 / H2 / H3) ────────────────────────
+     Sizes match the Figma `display/h1|h2|h3` text styles to the pixel.
+     Line-heights tightened toward 1.0 — display type wants air on the
+     sides, not between lines. Tracking is slightly negative; serif
+     letterforms read settled with -2% to -1% on display sizes. */
+
+  --text-display-h1-size:        3.5rem;    /* 56px */
+  --text-display-h1-line-height: 3.75rem;   /* 60px (≈1.07) */
+  --text-display-h1-tracking:    -0.02em;
+  --text-display-h1-weight:      700;       /* Tiempos Text Bold */
+
+  --text-display-h2-size:        2.5rem;    /* 40px */
+  --text-display-h2-line-height: 2.75rem;   /* 44px (≈1.10) */
+  --text-display-h2-tracking:    -0.015em;
+  --text-display-h2-weight:      600;       /* Tiempos Text Semibold */
+
+  --text-display-h3-size:        1.75rem;   /* 28px */
+  --text-display-h3-line-height: 2.125rem;  /* 34px (≈1.21) */
+  --text-display-h3-tracking:    -0.01em;
+  --text-display-h3-weight:      500;       /* Tiempos Text Medium */
+}
+
+/*
+ * Optional helper classes for marketing surfaces.
+ * Use these on <h1>/<h2>/<h3> in marketing layouts; product UI should
+ * continue to use the Geist Tailwind utility classes (text-xs, text-sm,
+ * etc.) which compose font-family from --font-sans by default.
+ */
+.text-display-h1 {
+  font-family:    var(--font-display);
+  font-size:      var(--text-display-h1-size);
+  line-height:    var(--text-display-h1-line-height);
+  letter-spacing: var(--text-display-h1-tracking);
+  font-weight:    var(--text-display-h1-weight);
+}
+
+.text-display-h2 {
+  font-family:    var(--font-display);
+  font-size:      var(--text-display-h2-size);
+  line-height:    var(--text-display-h2-line-height);
+  letter-spacing: var(--text-display-h2-tracking);
+  font-weight:    var(--text-display-h2-weight);
+}
+
+.text-display-h3 {
+  font-family:    var(--font-display);
+  font-size:      var(--text-display-h3-size);
+  line-height:    var(--text-display-h3-line-height);
+  letter-spacing: var(--text-display-h3-tracking);
+  font-weight:    var(--text-display-h3-weight);
+}

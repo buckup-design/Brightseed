@@ -9,10 +9,10 @@
  * After this bridge, shadcn class names resolve to Brightseed tokens automatically:
  *   bg-background       → --color-surface-default
  *   text-foreground     → --color-text-default
- *   bg-primary          → --color-action-primary  (Chlorophyll)
+ *   bg-primary          → --color-action-primary  (lime)
  *   text-muted-foreground → --color-text-subtle
  *   border-border       → --color-border-default
- *   ring                → --color-border-focus    (Chlorophyll focus ring)
+ *   ring                → --color-border-focus    (lime focus ring)
  *   ...and so on.
  *
  * For semantic status colors not in shadcn's variable set (success, warning, info, data),
@@ -37,7 +37,7 @@
   --popover:                var(--color-surface-default);
   --popover-foreground:     var(--color-text-default);
   --primary:                var(--color-action-primary);
-  --primary-foreground:     var(--color-text-inverse);
+  --primary-foreground:     var(--color-text-on-action-primary);
   --secondary:              var(--color-surface-alt);
   --secondary-foreground:   var(--color-text-default);
   --muted:                  var(--color-surface-alt);
@@ -45,7 +45,7 @@
   --accent:                 var(--color-surface-brand-subtle);
   --accent-foreground:      var(--color-text-default);
   --destructive:            var(--color-action-critical);
-  --destructive-foreground: var(--color-text-inverse);
+  --destructive-foreground: var(--color-text-on-action-critical);  /* soft destructive: red text on red-100, not white on red-500 */
   --border:                 var(--color-border-default);
   --border-subtle:          var(--color-border-subtle);   /* extended — hairlines, table grid */
   --border-bold:            var(--color-border-bold);     /* extended — emphatic dividers */

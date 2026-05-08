@@ -12,7 +12,7 @@
 
 :root {
 
-  /* ── Action: Chlorophyll/lime — CTAs, primary buttons, focus rings ── */
+  /* ── Action: lime — CTAs, primary buttons, focus rings ── */
   --action-primary-50:  var(--color-lime-50);
   --action-primary-100: var(--color-lime-100);
   --action-primary-200: var(--color-lime-200);
@@ -25,31 +25,31 @@
   --action-primary-900: var(--color-lime-900);
   --action-primary-950: var(--color-lime-950);
 
-  /* ── Surface brand: Deep Forest/green — nav, headers, branded chrome ── */
-  --surface-brand-50:  var(--color-green-50);
-  --surface-brand-100: var(--color-green-100);
-  --surface-brand-200: var(--color-green-200);
-  --surface-brand-300: var(--color-green-300);
-  --surface-brand-400: var(--color-green-400);
-  --surface-brand-500: var(--color-green-500);
-  --surface-brand-600: var(--color-green-600);
-  --surface-brand-700: var(--color-green-700);
-  --surface-brand-800: var(--color-green-800);
-  --surface-brand-900: var(--color-green-900);
-  --surface-brand-950: var(--color-green-950);
+  /* ── Surface brand: Deep Forest — nav, headers, branded chrome ── */
+  --surface-brand-50:  var(--color-forest-50);
+  --surface-brand-100: var(--color-forest-100);
+  --surface-brand-200: var(--color-forest-200);
+  --surface-brand-300: var(--color-forest-300);
+  --surface-brand-400: var(--color-forest-400);
+  --surface-brand-500: var(--color-forest-500);
+  --surface-brand-600: var(--color-forest-600);
+  --surface-brand-700: var(--color-forest-700);
+  --surface-brand-800: var(--color-forest-800);
+  --surface-brand-900: var(--color-forest-900);
+  --surface-brand-950: var(--color-forest-950);
 
-  /* ── Success: green — shares hue with surface-brand; uses light steps (50–300) ── */
-  --success-50:  var(--color-green-50);
-  --success-100: var(--color-green-100);
-  --success-200: var(--color-green-200);
-  --success-300: var(--color-green-300);
-  --success-400: var(--color-green-400);
-  --success-500: var(--color-green-500);
-  --success-600: var(--color-green-600);
-  --success-700: var(--color-green-700);
-  --success-800: var(--color-green-800);
-  --success-900: var(--color-green-900);
-  --success-950: var(--color-green-950);
+  /* ── Success: forest — shares hue with surface-brand; uses light steps (50–300) ── */
+  --success-50:  var(--color-forest-50);
+  --success-100: var(--color-forest-100);
+  --success-200: var(--color-forest-200);
+  --success-300: var(--color-forest-300);
+  --success-400: var(--color-forest-400);
+  --success-500: var(--color-forest-500);
+  --success-600: var(--color-forest-600);
+  --success-700: var(--color-forest-700);
+  --success-800: var(--color-forest-800);
+  --success-900: var(--color-forest-900);
+  --success-950: var(--color-forest-950);
 
   /* ── Info: Ocean/blue ── */
   --info-50:  var(--color-blue-50);
@@ -103,18 +103,18 @@
   --data-cyan-900: var(--color-cyan-900);
   --data-cyan-950: var(--color-cyan-950);
 
-  /* ── Data: indigo — secondary data viz series ── */
-  --data-indigo-50:  var(--color-indigo-50);
-  --data-indigo-100: var(--color-indigo-100);
-  --data-indigo-200: var(--color-indigo-200);
-  --data-indigo-300: var(--color-indigo-300);
-  --data-indigo-400: var(--color-indigo-400);
-  --data-indigo-500: var(--color-indigo-500);
-  --data-indigo-600: var(--color-indigo-600);
-  --data-indigo-700: var(--color-indigo-700);
-  --data-indigo-800: var(--color-indigo-800);
-  --data-indigo-900: var(--color-indigo-900);
-  --data-indigo-950: var(--color-indigo-950);
+  /* ── Data: lavender — secondary data viz series ── */
+  --data-lavender-50:  var(--color-lavender-50);
+  --data-lavender-100: var(--color-lavender-100);
+  --data-lavender-200: var(--color-lavender-200);
+  --data-lavender-300: var(--color-lavender-300);
+  --data-lavender-400: var(--color-lavender-400);
+  --data-lavender-500: var(--color-lavender-500);
+  --data-lavender-600: var(--color-lavender-600);
+  --data-lavender-700: var(--color-lavender-700);
+  --data-lavender-800: var(--color-lavender-800);
+  --data-lavender-900: var(--color-lavender-900);
+  --data-lavender-950: var(--color-lavender-950);
 
   /* ── Data: orange — tertiary data viz / Eschscholzia accent ── */
   --data-orange-50:  var(--color-orange-50);
@@ -129,26 +129,26 @@
   --data-orange-900: var(--color-orange-900);
   --data-orange-950: var(--color-orange-950);
 
-  /* ── Data: purple — quaternary data viz / Garlic Bloom accent ── */
-  --data-purple-50:  var(--color-purple-50);
-  --data-purple-100: var(--color-purple-100);
-  --data-purple-200: var(--color-purple-200);
-  --data-purple-300: var(--color-purple-300);
-  --data-purple-400: var(--color-purple-400);
-  --data-purple-500: var(--color-purple-500);
-  --data-purple-600: var(--color-purple-600);
-  --data-purple-700: var(--color-purple-700);
-  --data-purple-800: var(--color-purple-800);
-  --data-purple-900: var(--color-purple-900);
-  --data-purple-950: var(--color-purple-950);
+  /* ── Data: orchid — quaternary data viz / Garlic Bloom accent ── */
+  --data-orchid-50:  var(--color-orchid-50);
+  --data-orchid-100: var(--color-orchid-100);
+  --data-orchid-200: var(--color-orchid-200);
+  --data-orchid-300: var(--color-orchid-300);
+  --data-orchid-400: var(--color-orchid-400);
+  --data-orchid-500: var(--color-orchid-500);
+  --data-orchid-600: var(--color-orchid-600);
+  --data-orchid-700: var(--color-orchid-700);
+  --data-orchid-800: var(--color-orchid-800);
+  --data-orchid-900: var(--color-orchid-900);
+  --data-orchid-950: var(--color-orchid-950);
 
 }
 
 /*
- * NOTE: success-* and surface-brand-* point at the same green primitive scale.
+ * NOTE: success-* and surface-brand-* point at the same forest primitive scale.
  * This is intentional — brand chrome uses the dark end (700–950) and success
  * semantics use the light end (50–300). They do not collide in practice.
  *
- * Data viz series order: cyan (primary) → indigo (secondary) → orange (tertiary) → purple (quaternary).
+ * Data viz series order: cyan (primary) → lavender (secondary) → orange (tertiary) → orchid (quaternary).
  * Assign in this order when adding chart series.
  */

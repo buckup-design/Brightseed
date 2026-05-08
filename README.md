@@ -24,7 +24,7 @@ components/
 
 ```
 Primitives  →  Intents  →  Semantics  →  Component code
---color-lime-300  →  --action-primary-300  →  --color-action-primary  →  bg-primary (via bridge)
+--color-lime-400  →  --action-primary-400  →  --color-action-primary  →  bg-primary (via bridge)
 ```
 
 - **Layer 1 — Primitives:** Raw hue scales, 11 steps each (50–950), OKLCH color space. No semantic meaning.
@@ -36,8 +36,8 @@ Primitives  →  Intents  →  Semantics  →  Component code
 | Role | Token | Value | Name |
 |------|-------|-------|------|
 | Primary surface | `--color-surface-brand` | `#305536` | Deep Forest |
-| Primary action | `--color-action-primary` | `#CAE279` | Chlorophyll |
-| Default background | `--color-surface-default` | `#F9F8F3` | Sand |
+| Primary action | `--color-action-primary` | `#B8D258` | Lime 400 |
+| Default background | `--color-surface-default` | `#FFFFFF` | White (Sand `#F9F8F3` retired as default surface, Apr 2026) |
 | Dark mode base | `--color-surface-default` (dark) | `#133019` | Floor |
 
 ## Usage
