@@ -13,6 +13,26 @@
  */
 
 @import "tailwindcss";
+
+/*
+ * Explicit content sources for Tailwind v4's content scanner.
+ *
+ * Tailwind v4 auto-detects sources, but the auto-detection can miss files
+ * that don't exist when the build process starts (e.g., new directories
+ * added at runtime). The `components/pro-blocks/` tree is fed by the
+ * @shadcndesign registry — directories appear when blocks are installed.
+ *
+ * Listing sources explicitly is defensive insurance: even if auto-detection
+ * misses something, these directives guarantee Tailwind scans the right
+ * places. Restart Storybook/Next.js after adding new top-level component
+ * directories to ensure they're picked up.
+ */
+@source "../app/**/*.{ts,tsx,mdx}";
+@source "../components/**/*.{ts,tsx,mdx}";
+@source "../stories/**/*.{ts,tsx,mdx}";
+@source "../lib/**/*.{ts,tsx}";
+@source "../hooks/**/*.{ts,tsx}";
+
 @import "../tokens/index.css";
 @import "../bridge/globals.css";
 @import "tw-animate-css";
