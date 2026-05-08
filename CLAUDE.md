@@ -18,7 +18,7 @@ The design bar is high. Hummingbird is an enterprise product and needs to look l
 
 Project memory lives in two complementary places:
 - `.agents/context/` — distilled context loaders (`PRODUCT.md`, `DESIGN.md`, handoff files). What the impeccable skill / general agents read.
-- `memory/` — standard memory-management format (May 8, 2026): `glossary.md` (internal terms, codenames, "things that are NOT the thing"), `people/{anna, meng, chuan, becky-buck}.md`, `projects/{forager, quill}.md`, `context/{v3-figma, sandbox-stack}.md`. What the productivity:memory-management skill expects.
+- `memory/` — standard memory-management format (May 8, 2026): `glossary.md` (internal terms, codenames, "things that are NOT the thing"), `people/{anna, meng, chuan, becky-buck}.md`, `projects/{forager, quill}.md`, `context/{v3-figma, sandbox-stack, deployment}.md`. What the productivity:memory-management skill expects.
 
 Tiered lookup: this file → `memory/glossary.md` → `memory/people|projects|context/`. If a term isn't in any of those, ask.
 
@@ -105,7 +105,11 @@ Chart colors: use `--chart-cat-1` through `--chart-cat-8` in order. Never use br
 | Sandbox repo (Next.js + Storybook + shadcn) | ✅ Foundation built (Apr 30, 2026) — see `sandbox/` |
 | Sandbox Button — Brightseed React port (full Figma Quill matrix parity) | ✅ Complete (Apr 30, 2026) |
 | Brightseed-specific component tweaks ported from Figma to sandbox React | 🟡 In progress — Button + Badge done; 14 other shadcn components still stock |
-| Demo screens from Anna's mocks (Compounds + Plants views) | 🔲 Open |
+| Demo screens from Anna's mocks (Compounds + Plants views) | 🟡 Scrapped May 8, 2026 — to be rebuilt on Pro Block primitives. Branch: `pro-blocks-rebuild` |
+| shadcndesign.com Pro Pack registry wired (license-key auth via env var) | ✅ Complete (May 8, 2026) — see "Pro Pack rebuild" decision below |
+| `@shadcndesign/sign-in-2` installed + Storybook story + Brightseed-themed via bridge | ✅ Complete (May 8, 2026) |
+| `@shadcndesign/app-shell-4` installed + Storybook story + sidebar bridge mappings | ✅ Complete (May 8, 2026) |
+| `button-badge-snapshot` recovery branch at commit `5333cd1` | ✅ Created (May 8, 2026) |
 | v3 Figma file (`shadcn Brightseed v3 (with pro blocks)`) — canonical source going forward | ✅ Set up (May 6, 2026) |
 | v3 — Brightseed Mode collection (16 → ~50 vars after Quill port + state ladders + alpha overlays) | ✅ Complete (May 6, 2026) |
 | v3 — Sidebar correction (`base/sidebar` = `base/background` = white/sand-950) | ✅ Complete (May 6, 2026) |
@@ -135,6 +139,10 @@ Chart colors: use `--chart-cat-1` through `--chart-cat-8` in order. Never use br
 | `tokens/typography.css` + sandbox @theme inline `--font-display` wiring | ✅ Complete (May 8, 2026) |
 | Sandbox Badge React port — Quill parity (12 variants × 3 kinds × inline slots) | ✅ Complete (May 8, 2026) |
 | Tiempos Headline license + WOFF2 files placed at `sandbox/public/fonts/tiempos/` + uncomment localFont in layout.tsx | 🔲 Open — currently using Tiempos Text fallback |
+| First real push to `github.com/buckup-design/Brightseed` — sandbox/, tokens/, bridge/, components/, design system .md docs | ✅ Complete (May 8, 2026) — repo previously had only initial commit; .gitignore updated to hold back brand/, memory/, vector-pipeline/, OUTPUTS/, DOCS/, anna's mocks 4-29-26/ |
+| Vercel project `brightseed-storybook` — auto-deploys Storybook on push to `main`, preview URLs per branch | ✅ Complete (May 8, 2026) — live at https://brightseed-storybook.vercel.app, build ~45s, see `memory/context/deployment.md` |
+| Add Anna and Chuan as GitHub collaborators (required to edit; not required to view deployed Storybook) | 🔲 Open — deferred until contribution loop is designed |
+| Design the contribution loop for Anna/Chuan (push branch → preview → review → merge) | 🔲 Open — Becky is sole contributor for next 4+ weeks; revisit before week 4 |
 
 ---
 
@@ -635,3 +643,54 @@ Implementation: existing variant set kept at 315w with its automatic dashed bord
 
 **Open follow-ups documented elsewhere in the status table:**
 - Pro Blocks consumers still reference original shadcn `Badge` (`26:169`) and `Badge Number` (`17100:10130`) on the `Components` SECTION. Need to rebind to the Quill custom badges. Note: `Badge Number` may not have a direct Quill equivalent — surface that gap during the rebind.
+
+### Pro Pack rebuild — sandbox rebased on shadcndesign.com (May 8, 2026)
+
+The sandbox was rebased from stock shadcn-ui copies to the shadcndesign.com Pro Pack (purchased via Polar). Premise: case study reads stronger as "bought a Pro Pack and re-skinned through a token bridge" than "copied stock and customized." Branch: `pro-blocks-rebuild`. Recovery point: `button-badge-snapshot` branch at `5333cd1`.
+
+**What landed:** `@shadcndesign/sign-in-2` + 5 modern form primitives (Checkbox, Field, InputGroup, Label, Textarea); `@shadcndesign/app-shell-4` + 4 nav helpers (NavMain, NavProjects, NavUser, TeamSwitcher) + Collapsible (transitive dep shadcndesign forgot to declare). Storybook stories for both. Both paint full Brightseed via the bridge — no manual re-skinning needed.
+
+**Premise validated:** shadcndesign Pro Blocks are pure composition layers. They reference STOCK shadcn primitives by name (`button`, `checkbox`, `input`, `sidebar`, etc.) — not their own forks. So our customized Button + Badge ARE the paint surface; the bridge handles theming for everything else.
+
+**Registry wiring** lives in `sandbox/components.json` `registries` block — URL `https://www.shadcndesign.com/api/registry/{name}`, header `X-License-Key: ${SHADCNDESIGN_LICENSE_KEY}`. Token is in `sandbox/.env.local` (gitignored). Required first install: `@shadcndesign/styles` — purely additive `.heading-*` / `.container-padding-x` / `.section-padding-y` / `.section-title-gap-*` utility classes. No CSS vars, no clobbering. Fully verified safe for the bridge.
+
+**Install pattern (canonical, do this every time):**
+
+```bash
+yes n | npx --yes shadcn@latest add @shadcndesign/<block-name> --yes
+```
+
+The leading `yes n |` is critical. shadcn CLI 4.x's `--yes` flag confirms config prompts but does NOT auto-answer overwrite prompts (those default to `N`, but the CLI waits for stdin). Without `yes n |` piping `n` to stdin, the install hangs forever on the first existing-file prompt (typically `button.tsx`). The `n` answers preserve all customized files (Button, Badge, anything you've spec-ported); the CLI skips them and proceeds with new files.
+
+If a block install fails to render with "Failed to fetch dynamically imported module" in the Storybook iframe, the cause is usually a missing transitive dep that shadcndesign didn't declare. Grep the new pro-blocks files for `from "@/components/ui/<name>"`, check if `<name>.tsx` exists in `components/ui/`, and install any missing ones via `npx shadcn@latest add <name>` (no `@shadcndesign/` prefix — stock shadcn). Discovered via Collapsible during App Shell 4 install.
+
+**Inspect before install** is the rule. Fetch the registry payload first to see what files would be written, what `registryDependencies` cascade in, what `cssVars` or `tailwind` config changes are proposed:
+
+```bash
+curl -sS -H "X-License-Key: ${SHADCNDESIGN_LICENSE_KEY}" \
+  "https://www.shadcndesign.com/api/registry/<block-name>" | jq .
+```
+
+The most important fields to read: `files[].path` (will any path overlap with customized components?), `registryDependencies` (will the cascade try to pull stock versions of customized primitives?), `cssVars` (will the install touch our token bridge?), `tailwind` (will it modify Tailwind config?). For shadcndesign blocks, `cssVars` and `tailwind` are typically `null` — the only file edits beyond `files[]` are `app/globals.css` mutations the CLI does internally.
+
+**Tailwind v4 — `@source` directives go AFTER all `@import` statements.** CSS spec requires all `@import` at the top of the stylesheet, before any other rule. `@source` is non-`@import` content — placing it between imports silently invalidates everything after. Symptom: tokens/bridge stop loading, every Brightseed CSS variable resolves to empty string. Diagnosed once via Chrome MCP DOM inspection, fixed in `sandbox/app/globals.css`. Don't repeat.
+
+Tailwind v4 auto-detects content sources, but auto-detection misses runtime-added directories (e.g., `components/pro-blocks/` populated mid-session by Pro Block installs). Defensive `@source` directives in `app/globals.css` cover all the standard locations: `app/`, `components/`, `stories/`, `lib/`, `hooks/`. Restart Storybook/Next.js after adding new top-level directories.
+
+**Sidebar tokens — bridge them, don't let the CLI inline stock values.** When a Sidebar-consuming block (App Shell 4, etc.) installs, the shadcn CLI auto-injects `--sidebar`, `--sidebar-foreground`, `--sidebar-primary`, `--sidebar-primary-foreground`, `--sidebar-accent`, `--sidebar-accent-foreground`, `--sidebar-border`, `--sidebar-ring` as hardcoded `hsl()` values in `app/globals.css`, with a `.dark` selector for dark mode. **Both wrong for our setup:** (1) hardcoded values bypass the bridge and paint the sidebar in stock cool grays instead of Brightseed sand, (2) we use `[data-theme="dark"]` not `.dark`, so the dark override doesn't even fire.
+
+**Fix:** delete the auto-injected `:root { --sidebar: hsl(...) }` and `.dark { ... }` blocks from `app/globals.css`, define the same tokens in `bridge/globals.css` aliasing to Brightseed semantics. Sidebar surface = `--color-surface-default` (white/sand-950, per v3 May 6 decision). Sidebar primary = `--color-action-primary` (lime). Accent = `--color-surface-alt`. Border = `--color-border-default`. Ring = `--color-border-focus`. Dark theme cascades automatically through the existing `[data-theme="dark"]` selector in `tokens/semantics.css`. Single source of truth, no per-install maintenance. If the CLI re-injects on a future Sidebar install, delete it again — bridge wins.
+
+**Defending Button + Badge during installs.** Branch `button-badge-snapshot` is a permanent recovery point. If a future install ever does corrupt them despite the `yes n |` defense, restore with:
+
+```bash
+git checkout button-badge-snapshot -- \
+  sandbox/components/ui/button.tsx \
+  sandbox/components/ui/badge.tsx \
+  sandbox/stories/Button.stories.tsx \
+  sandbox/stories/Badge.stories.tsx
+```
+
+Pre-install verification ritual: `sha256sum components/ui/button.tsx components/ui/badge.tsx`. Re-run after install. Hashes must match. They have through both Sign In 2 and App Shell 4 installs to date.
+
+**Forager surfaces deferred.** The 5 Forager composition components (ChatPanel, CompoundCard, PlantCard, StrategyCard, SurfaceHeader) and their 2 demo pages (compounds, strategies) were deleted on May 8, 2026 to make room for the rebuild. To be re-derived on top of Pro Block primitives — not before more Pro Blocks land (Cards in particular, per Becky's roadmap; she said "we're not ready for [App Shell] 3 until I make a few additional card components"). `app/page.tsx` is currently a placeholder pointing users to Storybook.
