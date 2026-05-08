@@ -12,7 +12,16 @@
  * canonical files at the parent repo root. Edits flow both directions.
  */
 
+/*
+ * IMPORTANT: All @import statements MUST come before any other rules
+ * (CSS spec). @source directives are NOT @import — placing them between
+ * @imports invalidates everything after the first non-@import directive.
+ * Group all @imports here at the top.
+ */
 @import "tailwindcss";
+@import "../tokens/index.css";
+@import "../bridge/globals.css";
+@import "tw-animate-css";
 
 /*
  * Explicit content sources for Tailwind v4's content scanner.
@@ -32,10 +41,6 @@
 @source "../stories/**/*.{ts,tsx,mdx}";
 @source "../lib/**/*.{ts,tsx}";
 @source "../hooks/**/*.{ts,tsx}";
-
-@import "../tokens/index.css";
-@import "../bridge/globals.css";
-@import "tw-animate-css";
 
 @custom-variant dark (&:is([data-theme="dark"] *));
 
