@@ -9,35 +9,12 @@ export const metadata: Metadata = {
 };
 
 /*
- * Tiempos — Brightseed display family for marketing H1 / H2 / H3.
- *
- * Currently disabled to avoid breaking the build before font files exist.
- * To enable:
- *   1. License Tiempos from Klim Type Foundry. We're standardizing on Tiempos
- *      Text (Medium / Semibold / Bold) until Tiempos Headline is acquired —
- *      sizes/weights/tracking will hold; only the family-name preference list
- *      in tokens/typography.css changes.
- *   2. Drop WOFF2 files at `sandbox/public/fonts/tiempos/` matching the paths
- *      below (gitignore the directory — fonts are licensed assets, not source).
- *   3. Uncomment the `localFont(...)` block + the `${tiempos.variable}` token
- *      on the <html> element below. Restart `npm run dev`.
- *
- * Until then, the marketing display surface falls through to the serif stack
- * defined in tokens/typography.css ("Tiempos Headline" → "Tiempos Text" →
- * Iowan Old Style → Georgia → serif). On a Mac with Tiempos Text installed
- * locally, that stack will resolve to the system font automatically — useful
- * for design-time comparison even before WOFF files are wired.
+ * Tiempos Text is loaded via @font-face in tokens/typography.css.
+ * That path works in BOTH Next.js (public/ served at root) and Storybook
+ * (which serves public/ via .storybook/main.ts staticDirs). next/font/local
+ * was tried first but doesn't reach Storybook, since stories don't render
+ * through this layout — preview.ts only loads globals.css.
  */
-// import localFont from "next/font/local";
-// const tiempos = localFont({
-//   src: [
-//     { path: "../public/fonts/tiempos/TiemposText-Medium.woff2",   weight: "500", style: "normal" },
-//     { path: "../public/fonts/tiempos/TiemposText-Semibold.woff2", weight: "600", style: "normal" },
-//     { path: "../public/fonts/tiempos/TiemposText-Bold.woff2",     weight: "700", style: "normal" },
-//   ],
-//   variable: "--font-tiempos",
-//   display: "swap",
-// });
 
 export default function RootLayout({
   children,

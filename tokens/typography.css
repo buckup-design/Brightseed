@@ -4,45 +4,86 @@
  *   --font-sans     Geist          — product UI scale (309 styles in Figma).
  *                                    Variable font; weight axis carries the
  *                                    Button hover Medium → SemiBold transition.
- *   --font-display  Tiempos        — marketing display headlines (H1 / H2 / H3).
- *                                    Currently using Tiempos Text (4 weights
- *                                    licensed). Once Tiempos Headline is
- *                                    licensed, swap the family value below —
- *                                    sizes/weights/tracking will hold.
+ *   --font-display  Tiempos Fine   — marketing display headlines (H1 / H2 / H3).
+ *                                    Italic-only display face; the May 8 (PM)
+ *                                    decision moved display from Tiempos Text
+ *                                    Medium to Tiempos Fine RegularItalic for
+ *                                    a more refined, literary brand voice.
+ *                                    Loaded via @font-face below; files served
+ *                                    from sandbox/public/fonts/tiempos/ at the
+ *                                    URL /fonts/tiempos/* in both Next.js and
+ *                                    Storybook (staticDirs ["../public"]).
+ *                                    Source .otf files (gitignored): /Brightseed
+ *                                    brand assets from 2022/brightseed fonts/.
+ *
+ *   Tiempos Text     — kept loaded for body emphasis (Medium / Semibold / Bold).
+ *                      Not used in the display scale anymore, but available
+ *                      for inline emphasis or future patterns.
  *
  * Naming mirrors the Figma text-style hierarchy:
- *   display/h1 / h2 / h3   — Tiempos display scale (this file)
+ *   display/h1 / h2 / h3   — Tiempos Fine RegularItalic, this file
  *   text-{size}/leading-{*}/{weight}  — Geist UI scale (Figma styles only)
  *
  * Reference: BrightseedDS.md §3 (typography section).
  */
 
+@font-face {
+  font-family: "Tiempos Fine";
+  src: url("/fonts/tiempos/TiemposFine-RegularItalic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Tiempos Text";
+  src: url("/fonts/tiempos/TiemposText-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Tiempos Text";
+  src: url("/fonts/tiempos/TiemposText-Semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Tiempos Text";
+  src: url("/fonts/tiempos/TiemposText-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* ── Font families ────────────────────────────────────────────────── */
   --font-sans:    "Geist", system-ui, sans-serif;
-  --font-display: "Tiempos Headline", "Tiempos Text", "Tiempos", "Iowan Old Style", Georgia, serif;
+  --font-display: "Tiempos Fine", "Tiempos Headline", "Tiempos Text", "Iowan Old Style", Georgia, serif;
   --font-mono:    "Geist Mono", ui-monospace, monospace;
 
   /* ── Display scale (marketing H1 / H2 / H3) ────────────────────────
      Sizes match the Figma `display/h1|h2|h3` text styles to the pixel.
      Line-heights tightened toward 1.0 — display type wants air on the
-     sides, not between lines. Tracking is slightly negative; serif
-     letterforms read settled with -2% to -1% on display sizes. */
+     sides, not between lines. Tracking is slightly negative; italic serif
+     letterforms read settled with -2% to -1% on display sizes.
+     All three sizes use Tiempos Fine RegularItalic — italic is intrinsic
+     to the face, not an applied modifier. */
 
   --text-display-h1-size:        3.5rem;    /* 56px */
   --text-display-h1-line-height: 3.75rem;   /* 60px (≈1.07) */
   --text-display-h1-tracking:    -0.02em;
-  --text-display-h1-weight:      700;       /* Tiempos Text Bold */
+  --text-display-h1-weight:      400;       /* Tiempos Fine RegularItalic */
 
   --text-display-h2-size:        2.5rem;    /* 40px */
   --text-display-h2-line-height: 2.75rem;   /* 44px (≈1.10) */
   --text-display-h2-tracking:    -0.015em;
-  --text-display-h2-weight:      600;       /* Tiempos Text Semibold */
+  --text-display-h2-weight:      400;       /* Tiempos Fine RegularItalic */
 
   --text-display-h3-size:        1.75rem;   /* 28px */
   --text-display-h3-line-height: 2.125rem;  /* 34px (≈1.21) */
   --text-display-h3-tracking:    -0.01em;
-  --text-display-h3-weight:      500;       /* Tiempos Text Medium */
+  --text-display-h3-weight:      400;       /* Tiempos Fine RegularItalic */
 }
 
 /*
@@ -53,6 +94,7 @@
  */
 .text-display-h1 {
   font-family:    var(--font-display);
+  font-style:     italic;
   font-size:      var(--text-display-h1-size);
   line-height:    var(--text-display-h1-line-height);
   letter-spacing: var(--text-display-h1-tracking);
@@ -61,6 +103,7 @@
 
 .text-display-h2 {
   font-family:    var(--font-display);
+  font-style:     italic;
   font-size:      var(--text-display-h2-size);
   line-height:    var(--text-display-h2-line-height);
   letter-spacing: var(--text-display-h2-tracking);
@@ -69,6 +112,7 @@
 
 .text-display-h3 {
   font-family:    var(--font-display);
+  font-style:     italic;
   font-size:      var(--text-display-h3-size);
   line-height:    var(--text-display-h3-line-height);
   letter-spacing: var(--text-display-h3-tracking);
