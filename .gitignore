@@ -5,6 +5,9 @@
 Brightseed brand assets from 2022/
 brand/
 
+# Licensed display fonts (Tiempos Text — Klim Type Foundry, per-machine license)
+sandbox/public/fonts/
+
 # Personal memory + agent context (decoded shorthand, people notes, internal reasoning)
 memory/
 .agents/
