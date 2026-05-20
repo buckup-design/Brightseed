@@ -18,6 +18,23 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 
+/**
+ * NavMain — Brightseed Forager design system.
+ *
+ * No explicit color overrides — colors paint entirely through the shadcn
+ * Sidebar primitives, which the bridge already wires to Brightseed semantics:
+ *
+ *   SidebarMenuButton hover   → --color-surface-alt-hover
+ *   SidebarMenuButton active  → --color-surface-alt (sand-100 / sand-900)
+ *   SidebarGroupLabel         → --color-text-subtle
+ *   Chevron icons             → currentColor (inherits text)
+ *   Focus ring                → --color-border-focus (lime)
+ *
+ * If a future spec needs item-level color treatment (e.g. an "important"
+ * destructive item, or a brand-tinted active state), apply explicit Brightseed
+ * tokens here following the pattern in team-switcher.tsx and nav-projects.tsx.
+ */
+
 export function NavMain({
   items,
 }: {
