@@ -25,6 +25,19 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
+/**
+ * NavProjects — Brightseed Forager design system.
+ *
+ * Color tokens (Brightseed semantics):
+ *   Action menu icons       → --color-icon-subtle (sand-700 / sand-300 dark)
+ *   Destructive menu icon   → --color-icon-critical (red-700 / red-300 dark)
+ *   "More" trailing row     → --color-text-subtle for label + icon
+ *
+ * The destructive (Delete Project) row uses the critical icon token to give
+ * the destructive action semantic weight inside the menu without painting
+ * the entire row red — matches the "soft destructive" recipe used elsewhere.
+ */
+
 export function NavProjects({
   projects,
 }: {
@@ -61,16 +74,16 @@ export function NavProjects({
                 align={isMobile ? "end" : "start"}
               >
                 <DropdownMenuItem>
-                  <Folder className="text-muted-foreground mr-2 size-4" />
+                  <Folder className="text-[var(--color-icon-subtle)] mr-2 size-4" />
                   <span>View Project</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Forward className="text-muted-foreground mr-2 size-4" />
+                  <Forward className="text-[var(--color-icon-subtle)] mr-2 size-4" />
                   <span>Share Project</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  <Trash2 className="text-muted-foreground mr-2 size-4" />
+                  <Trash2 className="text-[var(--color-icon-critical)] mr-2 size-4" />
                   <span>Delete Project</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -78,8 +91,8 @@ export function NavProjects({
           </SidebarMenuItem>
         ))}
         <SidebarMenuItem>
-          <SidebarMenuButton className="text-sidebar-foreground/70">
-            <MoreHorizontal className="text-sidebar-foreground/70" />
+          <SidebarMenuButton className="text-[var(--color-text-subtle)]">
+            <MoreHorizontal className="text-[var(--color-icon-subtle)]" />
             <span>More</span>
           </SidebarMenuButton>
         </SidebarMenuItem>

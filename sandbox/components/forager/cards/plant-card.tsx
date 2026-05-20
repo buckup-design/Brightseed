@@ -1,0 +1,238 @@
+import * as React from "react";
+import { Leaf, ShieldCheck, ShieldAlert } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+
+/**
+ * PlantCard — Forager Plants view.
+ *
+ * Source mock: anna's mocks 4-29-26/filtered to plants.png
+ * Anna's content shapes are close to accurate; this component rebuilds the
+ * typography and hierarchy on Brightseed Quill tokens.
+ *
+ * Visual hierarchy (top → bottom, attention loud → quiet):
+ *   1. Scientific name (Tiempos italic — display, brand gravity)
+ *   2. Strategy one-liner (sans-serif, default text)
+ *   3. Evidence prose (sans-serif, subtle)
+ *   4. Compound tag row (sand tags)
+ *   5. Forager predicted bioactives microlabel + tag row (sand tags)
+ *   6. Footer status badges (semantic tokens — GRAS=success, IP=warning)
+ */
+
+interface PlantCardProps extends React.HTMLAttributes<HTMLDivElement> {
+  scientificName: string;
+  commonName?: string;
+  strategyOneLiner: string;
+  evidence: string;
+  compounds: string[];
+  bioactives: string[];
+  compoundOverflow?: number;
+  bioactiveOverflow?: number;
+  bioactivePotential?: boolean;
+  gras?: boolean;
+  ipLandscape?: "clear" | "watch" | "blocked";
+}
+
+export function PlantCard({
+  scientificName,
+  commonName,
+  strategyOneLiner,
+  evidence,
+  compounds,
+  bioactives,
+  compoundOverflow = 0,
+  bioactiveOverflow = 0,
+  bioactivePotential = true,
+  gras = true,
+  ipLandscape = "watch",
+  className,
+  ...props
+}: PlantCardProps) {
+  return (
+    <div
+      data-slot="plant-card"
+      className={cn(
+        "flex flex-col gap-3 p-4",
+        "bg-[var(--color-surface-default)]",
+        "border border-[var(--color-border-subtle)]",
+        "rounded-[var(--shape-radius-lg)]",
+        "transition-shadow duration-[120ms]",
+        "hover:shadow-sm",
+        className
+      )}
+      {...props}
+    >
+      {/* Header: leaf icon + scientific name + bioactive potential badge */}
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex items-start gap-2 min-w-0">
+          <Leaf className="size-4 mt-1 shrink-0 text-[var(--color-icon-success)]" />
+          <h3
+            className="text-base leading-tight text-[var(--color-text-default)]"
+            style={{
+              fontFamily: 'var(--font-display, "Tiempos Fine", serif)',
+              fontStyle: "italic",
+            }}
+          >
+            {scientificName}
+            {commonName && (
+              <span className="text-[var(--color-text-subtle)]">
+                {" "}
+                ({commonName})
+              </span>
+            )}
+          </h3>
+        </div>
+        {bioactivePotential && (
+          <SemanticPill intent="success">Bioactive potential</SemanticPill>
+        )}
+      </div>
+
+      {/* Strategy one-liner */}
+      <p className="text-sm text-[var(--color-text-default)] leading-snug">
+        {strategyOneLiner}
+      </p>
+
+      {/* Evidence prose */}
+      <p className="text-sm text-[var(--color-text-subtle)] leading-relaxed">
+        {evidence}
+      </p>
+
+      {/* Compound tag row */}
+      <TagRow items={compounds} overflow={compoundOverflow} />
+
+      {/* Forager predicted bioactives */}
+      <div className="flex flex-col gap-2 mt-1">
+        <span className="text-[10px] font-medium uppercase tracking-wider text-[var(--color-text-subtle)]">
+          Forager predicted bioactives
+        </span>
+        <TagRow items={bioactives} overflow={bioactiveOverflow} />
+      </div>
+
+      {/* Footer status badges */}
+      <div className="flex items-center gap-2 mt-2">
+        {gras && (
+          <StatusBadge intent="success" icon={<ShieldCheck className="size-3" />}>
+            GRAS
+          </StatusBadge>
+        )}
+        {ipLandscape && (
+          <StatusBadge
+            intent={ipLandscape === "clear" ? "success" : "warning"}
+            icon={<ShieldAlert className="size-3" />}
+          >
+            IP Landscape
+          </StatusBadge>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+ * Internal sub-components
+ * ───────────────────────────────────────────────────────────────────────── */
+
+function TagRow({ items, overflow = 0 }: { items: string[]; overflow?: number }) {
+  return (
+    <div className="flex flex-wrap items-center gap-1.5">
+      {items.map((item) => (
+        <NeutralTag key={item}>{item}</NeutralTag>
+      ))}
+      {overflow > 0 && (
+        <span className="text-xs text-[var(--color-text-subtle)] font-medium px-1">
+          +{overflow} more
+        </span>
+      )}
+    </div>
+  );
+}
+
+function NeutralTag({ children }: { children: React.ReactNode }) {
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium",
+        "bg-[var(--color-surface-tag-sand)] text-[var(--color-text-tag-sand)]"
+      )}
+    >
+      {children}
+    </span>
+  );
+}
+
+type IntentPill = "success" | "warning" | "critical" | "info";
+
+function SemanticPill({
+  intent,
+  children,
+}: {
+  intent: IntentPill;
+  children: React.ReactNode;
+}) {
+  const map = {
+    success: {
+      bg: "var(--color-surface-tag-forest)",
+      text: "var(--color-text-tag-forest)",
+    },
+    warning: {
+      bg: "var(--color-surface-tag-orange)",
+      text: "var(--color-text-tag-orange)",
+    },
+    critical: {
+      bg: "var(--color-surface-tag-red)",
+      text: "var(--color-text-tag-red)",
+    },
+    info: {
+      bg: "var(--color-surface-tag-blue)",
+      text: "var(--color-text-tag-blue)",
+    },
+  }[intent];
+
+  return (
+    <span
+      className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap shrink-0"
+      style={{ background: map.bg, color: map.text }}
+    >
+      {children}
+    </span>
+  );
+}
+
+function StatusBadge({
+  intent,
+  icon,
+  children,
+}: {
+  intent: IntentPill;
+  icon: React.ReactNode;
+  children: React.ReactNode;
+}) {
+  const map = {
+    success: {
+      bg: "var(--color-surface-tag-forest)",
+      text: "var(--color-text-tag-forest)",
+    },
+    warning: {
+      bg: "var(--color-surface-tag-orange)",
+      text: "var(--color-text-tag-orange)",
+    },
+    critical: {
+      bg: "var(--color-surface-tag-red)",
+      text: "var(--color-text-tag-red)",
+    },
+    info: {
+      bg: "var(--color-surface-tag-blue)",
+      text: "var(--color-text-tag-blue)",
+    },
+  }[intent];
+
+  return (
+    <span
+      className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium"
+      style={{ background: map.bg, color: map.text }}
+    >
+      {icon}
+      {children}
+    </span>
+  );
+}

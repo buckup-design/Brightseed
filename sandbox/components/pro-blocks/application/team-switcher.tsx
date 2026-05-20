@@ -19,6 +19,19 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
+/**
+ * TeamSwitcher — Brightseed Forager design system.
+ *
+ * Color tokens (Brightseed semantics):
+ *   Logo backdrop (lime)    → --color-action-primary
+ *   Logo icon (forest)      → --color-text-on-action-primary
+ *   Open-state surface      → --color-surface-alt
+ *   Open-state text         → --color-text-default
+ *   Dropdown label          → --color-text-subtle
+ *   Add-team icon backdrop  → --color-surface-default + --color-border-default
+ *   Add-team text           → --color-text-subtle
+ */
+
 export function TeamSwitcher({
   teams,
 }: {
@@ -38,9 +51,9 @@ export function TeamSwitcher({
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              className="data-[state=open]:bg-[var(--color-surface-alt)] data-[state=open]:text-[var(--color-text-default)]"
             >
-              <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+              <div className="bg-[var(--color-action-primary)] text-[var(--color-text-on-action-primary)] flex aspect-square size-8 items-center justify-center rounded-lg">
                 <activeTeam.logo className="size-4" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -58,7 +71,7 @@ export function TeamSwitcher({
             side={isMobile ? "bottom" : "right"}
             sideOffset={4}
           >
-            <DropdownMenuLabel className="text-muted-foreground text-xs">
+            <DropdownMenuLabel className="text-[var(--color-text-subtle)] text-xs">
               Teams
             </DropdownMenuLabel>
             {teams.map((team, index) => (
@@ -67,7 +80,7 @@ export function TeamSwitcher({
                 onClick={() => setActiveTeam(team)}
                 className="gap-2 p-2"
               >
-                <div className="flex size-6 items-center justify-center rounded-sm border">
+                <div className="flex size-6 items-center justify-center rounded-sm border border-[var(--color-border-default)]">
                   <team.logo className="size-4 shrink-0" />
                 </div>
                 {team.name}
@@ -76,10 +89,10 @@ export function TeamSwitcher({
             ))}
             <DropdownMenuSeparator />
             <DropdownMenuItem className="gap-2 p-2">
-              <div className="bg-background flex size-6 items-center justify-center rounded-md border">
+              <div className="bg-[var(--color-surface-default)] flex size-6 items-center justify-center rounded-md border border-[var(--color-border-default)]">
                 <Plus className="size-4" />
               </div>
-              <div className="text-muted-foreground font-medium">Add team</div>
+              <div className="text-[var(--color-text-subtle)] font-medium">Add team</div>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
