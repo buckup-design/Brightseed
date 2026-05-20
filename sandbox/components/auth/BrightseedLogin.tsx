@@ -26,7 +26,7 @@ import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
  *   7. Forgot your password: Quill Linktext (no underline ever; weight bump
  *      on hover via the existing button variant)
  *   8. Sign up row: "Don't have an account? Sign up" — body + Linktext footer
- *   9. Image Slot: brand graphic from brand/graphic_login.bg.png
+ *   9. Image Slot: brand graphic from brand/graphic_login.bg.webp
  *      (mirrored to /public/brand/) with Tiempos Fine Italic "6x faster"
  *      text overlay positioned on top of the image.
  */
@@ -159,7 +159,7 @@ function OrDivider() {
 
 /* ─────────────────────────────────────────────────────────────────────────
  * Image Slot — marketing pane
- * Background graphic sourced from brand/graphic_login.bg.png
+ * Background graphic sourced from brand/graphic_login.bg.webp
  * (copied to sandbox/public/brand/ at install time).
  * ───────────────────────────────────────────────────────────────────────── */
 
@@ -168,7 +168,7 @@ function ImageSlot() {
     <div
       className="relative hidden overflow-hidden md:block"
       style={{
-        backgroundImage: "url('/brand/graphic_login.bg.png')",
+        backgroundImage: "url('/brand/graphic_login.bg.webp')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
