@@ -10,7 +10,12 @@
  *   Strategy: "Shift microbiome towards propionate producers"
  */
 
-import type { PillarStatus } from "@/components/ui/strategy-card"
+// Pillar evaluation status for a strategy's evidence / feasibility / legal axes.
+// (Was imported from the now-removed ui/strategy-card; defined locally here.)
+export type PillarStatus = {
+  status: "positive" | "caution" | "negative"
+  label: string
+}
 
 // ── Project + strategy ─────────────────────────────────────────────────────
 
