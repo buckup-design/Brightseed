@@ -81,79 +81,25 @@ Chart colors: use `--chart-cat-1` through `--chart-cat-8` in order. Never use br
 
 ## Current status
 
+Granular per-decision history lives in **Locked-in decisions** (below) and `memory/`. This table is the current-state snapshot only.
+
 | Area | Status |
 |---|---|
-| Token vocabulary (all 3 layers) | ✅ Complete |
-| Dark theme | ✅ Defined (visual QA pending) |
-| shadcn/ui CSS bridge | ✅ Complete |
-| Brightseed primitives wired in Figma (10 scales × 11 steps) | ✅ Complete (Apr 2026) |
-| Tag tokens (decorative color set for badges) | ✅ Complete (Apr 2026) |
-| Button component — full size scale incl. XL | ✅ Complete (Apr 2026) |
-| Button — Linktext variant (rename from Link/brand, no underline) | ✅ Complete (Apr 2026) |
-| Button — variant-aware focus rings (Ring instance, replaces DROP_SHADOW) | ✅ Complete (Apr 2026) |
-| Button — destructive variant refactored to soft style (red-100 surface + red-600 text) | ✅ Complete (Apr 2026) |
-| Button — hover behavior: text steps "more pronounced" + Medium → SemiBold weight | ✅ Complete (Apr 2026) |
-| Button — lime button surface ladder shifted (lime-300 default, lime-400 hover, lime-500 pressed); lime-300 retuned to #CDE67B for AA | ✅ Complete (Apr 2026) |
-| Button — disabled state defined as overlay rule (sand-100 50% on surface, sand-700 60% on text), uniform across variants, theme-aware | ✅ Complete (Apr 2026) |
-| Link component — inline `<a>` for body copy, 5-state pseudo-class machine | ✅ Complete (Apr 2026) |
-| Badge component — restyled to consistent hierarchy + 8 new colors | ✅ Complete (Apr 2026) |
-| CompoundScreeningTable | ✅ Production-ready |
-| DoseResponseChart | 🔲 API spec done, implementation pending |
-| StatCard | 🔲 API spec done, implementation pending |
+| **Token system** — 3-layer vocabulary, dark theme (visual QA pending), shadcn/ui CSS bridge | ✅ Complete |
+| **Figma v3** (`shadcn Brightseed v3 (with pro blocks)`, the canonical file) — Brightseed primitives + tag tokens, ~50-var Brightseed Mode collection, full Quill component port (Button 330-variant matrix, Badge with inline-slot + tag-mode cascade, local Ring focus system, custom badge icons), Logo / Login / Input component sets, Geist + Tiempos type system | ✅ Complete (Apr–May 2026) — rationale in Locked-in decisions |
+| **Sandbox** (Next.js 16 + Tailwind 4 + Storybook 10, rebased on shadcndesign Pro Pack) — Button + Badge ported to Brightseed spec; Pro Blocks (App Shell 4, Sign In 2, nav helpers); modern form primitives; component ports (Alert, AlertDialog, Table, Switch, Spinner, Sonner); BrightseedLogo; BrightseedLogin + login page; Tiempos webfonts | ✅ Complete |
+| **Forager surfaces** — Compound / Plant / Strategy cards + Plants View, rebuilt on Pro Block primitives | 🟡 In progress — more screens to follow |
+| **Infra** — repo `github.com/buckup-design/Brightseed`; Vercel auto-deploys `main` → https://brightseed-storybook.vercel.app; public Storybook in sync (May 20, 2026) | ✅ Complete |
+| CompoundScreeningTable (reference implementation) | ✅ Production-ready |
+| DoseResponseChart, StatCard | 🔲 API spec done, implementation pending |
 | Brand evolution / color studies | 🔲 In progress (HTML prototype + Figma exploration) |
-| Icon system | 🔲 In progress (line art style, hummingbird motif) |
-| Sandbox repo (Next.js + Storybook + shadcn) | ✅ Foundation built (Apr 30, 2026) — see `sandbox/` |
-| Sandbox Button — Brightseed React port (full Figma Quill matrix parity) | ✅ Complete (Apr 30, 2026) |
-| Brightseed-specific component tweaks ported from Figma to sandbox React | 🟡 In progress — Button + Badge done; 14 other shadcn components still stock |
-| Demo screens from Anna's mocks (Compounds + Plants views) | 🟡 Scrapped May 8, 2026 — to be rebuilt on Pro Block primitives. Branch: `pro-blocks-rebuild` |
-| shadcndesign.com Pro Pack registry wired (license-key auth via env var) | ✅ Complete (May 8, 2026) — see "Pro Pack rebuild" decision below |
-| `@shadcndesign/sign-in-2` installed + Storybook story + Brightseed-themed via bridge | ✅ Complete (May 8, 2026) |
-| `@shadcndesign/app-shell-4` installed + Storybook story + sidebar bridge mappings | ✅ Complete (May 8, 2026) |
-| `button-badge-snapshot` recovery branch at commit `5333cd1` | ✅ Created (May 8, 2026) |
-| v3 Figma file (`shadcn Brightseed v3 (with pro blocks)`) — canonical source going forward | ✅ Set up (May 6, 2026) |
-| v3 — Brightseed Mode collection (16 → ~50 vars after Quill port + state ladders + alpha overlays) | ✅ Complete (May 6, 2026) |
-| v3 — Sidebar correction (`base/sidebar` = `base/background` = white/sand-950) | ✅ Complete (May 6, 2026) |
-| v3 — App Shell 4 + Sign In 2 (light + dark) on Brightseed Blocks page, rebound | ✅ Complete (May 6, 2026) |
-| v3 — Sign In 2 link-text AA upgrade (`base/link-brand` = lime-700/lime-300) | ✅ Complete (May 6, 2026) |
-| v3 — Canonical Button master at parity with Quill (330 variants × 10 sizes incl. xl/icon-xl, 168px columns) | 🟡 Mostly complete (May 6, 2026) — see open items below |
-| v3 — Components - Quill section ported, fully bound to Brightseed Mode | ✅ Complete (May 6, 2026) |
-| Mantel → Quill rename (Brightseed customized DS = "Quill") | ✅ Complete (May 6, 2026) |
-| Brand-link uses lime not forest | ✅ Complete (May 6, 2026) |
-| v3 — Secondary Badge cr=2 across all 36 variants (incl. inner Focus body frames) | ✅ Complete (May 7, 2026) |
-| v3 — Secondary Badge horizontal padding = `spacing/1` (4px), hug content, no min width | ✅ Complete (May 7, 2026) |
-| v3 — Local Brightseed `Ring` component_set with `Shape` variant axis (xs/sm/md/lg/xl/2xl/3xl/4xl/full) | ✅ Complete (May 7, 2026) |
-| v3 — 12 Secondary Badge focus rings migrated to local Ring `Shape=xs` | ✅ Complete (May 7, 2026) |
-| v3 — 55 Button focus rings migrated to local Ring (`Shape=md` × 44, `Shape=4xl` × 11) | ✅ Complete (May 7, 2026) |
-| v3 — Focus ring stroke weight unified at 1px (was 2px on Buttons) | ✅ Complete (May 7, 2026) |
-| v3 — Focus ring offset unified at 1px (was 3px on Buttons) | ✅ Complete (May 7, 2026) |
-| v3 — `custom/outline` aliased to `base/border` (sand-200 light / sand-700 dark) | ✅ Complete (May 7, 2026) |
-| v3 — Custom badge icon family (`Badge/Lucide Icon/Leaf-badge`, `Rat-badge`; `Badge/Status/Dot-badge`) — 10×10 outer, stroke-bound inner Vector | ✅ Complete (May 7, 2026) |
-| v3 — Primary Badge inline-slot architecture (4 component properties: `Show Inline Start/End` booleans + `Inline Start/End` instance-swap) | ✅ Complete (May 7, 2026) |
-| v3 — `Brightseed Tag Mode` variable collection (10 modes) + `tag/active-color` cascade for inline-mark color | ✅ Complete (May 7, 2026) |
-| v3 — Primary Badges matrix expanded to 6 columns (Default/Hover/Focus + Status Dot/Front Icon/Back Icon) | ✅ Complete (May 7, 2026) |
-| Quill frame renamed to "Quill Components" | ✅ Complete (May 7, 2026) |
-| Pro Blocks consumers rebound from original shadcn Badge (`26:169`) and Badge Number (`17100:10130`) to Quill custom badges | ✅ Complete (May 8, 2026) — 24 instances swapped to Quill Primary across Spinner/Card/Table/Input pages. Pro Blocks pages had zero direct consumers (Badges sealed inside Card/Sheet masters). Badge Number left as-is per Becky's call (May 8 Quill = default shadcn version w/ color rebind from May 6). |
-| v3 — Lucide icon library restored (1469 local components, post-deletion-recovery via v2 paste + detach + promote) | ✅ Complete (May 8, 2026) |
-| v3 — Geist set as default everywhere (136 stray Inter Medium labels rebound across Components-Quill, Components master overlay, Badge page) | ✅ Complete (May 8, 2026) |
-| v3 — Tiempos display scale in Figma (`display/h1` 56/60, `display/h2` 40/44, `display/h3` 28/34 — all Tiempos Fine RegularItalic per May 8 PM decision, superseding the same-day AM call to use Tiempos Text Medium) | ✅ Complete (May 8, 2026) |
-| `tokens/typography.css` + sandbox @theme inline `--font-display` wiring | ✅ Complete (May 8, 2026) |
-| Sandbox Badge React port — Quill parity (12 variants × 3 kinds × inline slots) | ✅ Complete (May 8, 2026) |
-| Tiempos Text WOFF2 (Medium/Semibold/Bold) wired via @font-face in `tokens/typography.css`; files at `sandbox/public/fonts/tiempos/` (gitignored), served at `/fonts/tiempos/*` in both Next.js and Storybook | ✅ Complete (May 8, 2026) — converted from .otf in `Brightseed brand assets from 2022/brightseed fonts/`. Display scale only consumes Medium after the May 8 unification; Semibold + Bold loaded for future body-emphasis use. |
-| v3 Brightseed Blocks page — font consistency sweep: Style Guide "This is a sample" Georgia Regular → Tiempos Text Medium, sibling label "Georgia" → "Tiempos Text"; 2 stray Inter Semi Bold "Title Text" placeholders → Geist SemiBold. Tiempos Fine Italic on "6x faster" Spinner instances confirmed intentional. | ✅ Complete (May 8, 2026) |
-| v3 — `Logo / Mark` COMPONENT_SET (Size=sm/md/lg, 24/48/96px) + `Logo / Lockup` standalone COMPONENT under Logo section divider; wordmark fill bound to new theme-aware `base/wordmark` token (forest-700 light / sand-50 dark) | ✅ Complete (May 8, 2026) |
-| v3 — Input COMPONENT_SET extended with Size axis (default 32px + new lg 48px); 30 variants total in 6×5 grid. Used by marketing/auth forms — Forager UI keeps Size=default | ✅ Complete (May 8, 2026) |
-| v3 — `Brightseed / Login / 1` COMPONENT_SET (Mode={light, dark}) under Sign In section divider on Brightseed Blocks page. Built via detach-and-promote from the design intent's remote Login-05 instances. Bakes in 11 customizations: Brightseed mark logo, Welcome back headline, Quill Secondary xl OAuth (Google + Email-me-a-link, no Apple), or-divider with horizontal lines, Size=lg sr-only-labelled inputs, Quill Default xl SIGN IN with caps + CircleArrowRight, Quill Linktext Forgot password, "Don't have an account? Sign up" footer row, and Image Slot consuming the composed lime+hummingbird marketing graphic. Both variants set `explicitVariableModes` for Brightseed Mode collection so theme-bound new content (like the Sign up row body text) resolves correctly. | ✅ Complete (May 8, 2026) |
-| Sandbox — `@shadcndesign/sign-in-2` retired, replaced by stock shadcn `login-04` (split-pane form + image — structurally what we needed; Pro Pack registry didn't have an equivalent block). Pre/post-install Button + Badge hash check verified customizations defended. Files: `app/login/page.tsx`, `components/login-form.tsx` (stock, kept as reference). | ✅ Complete (May 8, 2026) — Sign In 2 source files (`components/pro-blocks/application/sign-in/sign-in-2.tsx`, `stories/SignIn2.stories.tsx`) blocked from rm by Cowork file permissions; orphaned but not breaking — clean up manually when convenient. |
-| Sandbox — `<BrightseedLogo variant="mark|lockup" />` React component at `components/brand/BrightseedLogo.tsx`. Single inline SVG with viewBox sized by parent CSS (`h-6/h-12/h-24` → 24/48/96 to mirror Figma sm/md/lg). Brand mark colors literal (orange/forest/orchid/dark forest); wordmark uses `currentColor` for theme inheritance. Stories: `stories/brand/BrightseedLogo.stories.tsx`. NOTE: SVG paths are stylized approximations — production should swap in canonical paths from the Brightseed brand SVG (`Brightseed brand assets from 2022/...logo-white-cropped.svg`). | ✅ Complete (May 8, 2026) |
-| Sandbox — `<BrightseedLogin />` React component at `components/auth/BrightseedLogin.tsx` translates the v3 `Brightseed / Login / 1` component_set. Form pane: Brightseed mark, Welcome back, Quill Secondary xl OAuth (Google + Email), or-divider, h-12 inputs with sr-only Labels, Quill Default xl uppercase SIGN IN with arrow, Quill Linktext Forgot password + Sign up. Image Slot: lime/teal CSS gradient, dashed grid overlay, inline-SVG hummingbird + botanical line art (placeholder approximations), text overlay with "DISCOVER NUTRACEUTICALS / 6x faster (Tiempos Fine Italic via --font-display) / than the industry average." Story at `stories/auth/BrightseedLogin.stories.tsx`. | ✅ Complete (May 8, 2026) — placeholder note: production should swap the inline hummingbird + botanical SVGs for the exact composed graphic exported from Figma node `26503:716295` at 2x, dropped in `sandbox/public/images/login-marketing-bg.png` and consumed via `background-image`. |
-| Tiempos Headline license + WOFF2 (eventual upgrade — Tiempos Text is the current standin) | 🔲 Open — deferred |
-| Image Slot — extract composed marketing graphic from Figma node `26503:716295` to `sandbox/public/images/login-marketing-bg.png` (replaces the inline-SVG placeholders in BrightseedLogin's Image Slot) | 🔲 Open |
-| Sandbox — extend Input component with explicit `size="default" | "lg"` prop (currently using `className="h-12"` override on Login). Mirrors the Figma Input Size=lg variant cleanly when more surfaces consume it. | 🔲 Open — deferred until 2nd consumer surfaces |
-| BrightseedLogo — replace stylized placeholder SVG paths with canonical mark + wordmark vectors from brand assets | 🔲 Open — deferred |
-| First real push to `github.com/buckup-design/Brightseed` — sandbox/, tokens/, bridge/, components/, design system .md docs | ✅ Complete (May 8, 2026) — repo previously had only initial commit; .gitignore updated to hold back brand/, memory/, vector-pipeline/, OUTPUTS/, DOCS/, anna's mocks 4-29-26/ |
-| Vercel project `brightseed-storybook` — auto-deploys Storybook on push to `main`, preview URLs per branch | ✅ Complete (May 8, 2026) — live at https://brightseed-storybook.vercel.app, build ~45s, see `memory/context/deployment.md` |
-| Add Anna and Chuan as GitHub collaborators (required to edit; not required to view deployed Storybook) | 🔲 Open — deferred until contribution loop is designed |
-| Design the contribution loop for Anna/Chuan (push branch → preview → review → merge) | 🔲 Open — Becky is sole contributor for next 4+ weeks; revisit before week 4 |
+| Icon system (line-art, hummingbird motif) | 🔲 In progress |
+| BrightseedLogo — swap stylized placeholder SVG paths for canonical brand vectors | 🔲 Open — deferred |
+| Tiempos Headline license upgrade (Tiempos Text is the current standin) | 🔲 Open — deferred |
+| Tiempos webfont license — confirm `brightseed-storybook.vercel.app` is on Brightseed's Klim domains | 🔲 Open — confirm with Meng |
+| Input React component — explicit `size="default" \| "lg"` prop (Login uses an `h-12` override for now) | 🔲 Open — deferred until 2nd consumer |
+| v3 Button master — row-size labels for new xl / icon-xl rows + visual QA pass | 🟡 Minor follow-up (see v3 section) |
+| Add Anna + Chuan as GitHub collaborators; design the contribution loop (push → preview → review → merge) | 🔲 Open — Becky is sole contributor ~4 weeks; revisit before week 4 |
 
 ---
 
@@ -652,8 +598,7 @@ Implementation: existing variant set kept at 315w with its automatic dashed bord
 
 **The Phase-4 test container (`Phase 4 - Inline Slot Test`) was deleted by Becky after C landed.** The matrix's new example columns serve as the canonical demonstration.
 
-**Open follow-ups documented elsewhere in the status table:**
-- Pro Blocks consumers still reference original shadcn `Badge` (`26:169`) and `Badge Number` (`17100:10130`) on the `Components` SECTION. Need to rebind to the Quill custom badges. Note: `Badge Number` may not have a direct Quill equivalent — surface that gap during the rebind.
+**Resolved (May 8, 2026):** Pro Blocks consumers on the `Components` SECTION were rebound from original shadcn `Badge` (`26:169`) to the Quill custom badges — 24 instances swapped to Quill Primary across the Spinner/Card/Table/Input pages (the Pro Blocks pages themselves had zero direct consumers; badges were sealed inside Card/Sheet masters). `Badge Number` (`17100:10130`) was intentionally left as the default shadcn version (color-rebound only) per Becky's call — it has no direct Quill equivalent.
 
 ### Pro Pack rebuild — sandbox rebased on shadcndesign.com (May 8, 2026)
 
@@ -710,7 +655,7 @@ Pre-install verification ritual: `sha256sum components/ui/button.tsx components/
 
 The Brightseed display font lineup uses two cuts of Tiempos for two different jobs. **Final state as of May 8, 2026 PM**, after two same-day iterations on the display scale (see history block at the end of this section).
 
-**Tiempos Fine RegularItalic** (licensed; production-shipping). The display face. All three display text styles in v3 (`display/h1` 56/60, `display/h2` 40/44, `display/h3` 28/34) use Tiempos Fine RegularItalic — italic is intrinsic to the face, not an applied modifier. Differentiation across the scale comes from size + tracking, not weight or style. Wired into Storybook + Next.js via `@font-face` at the top of `tokens/typography.css`. Single WOFF2 (`TiemposFine-RegularItalic.woff2`) at `sandbox/public/fonts/tiempos/`, gitignored, served at `/fonts/tiempos/*` in both contexts. Source `.otf` in `Brightseed brand assets from 2022/brightseed fonts/`.
+**Tiempos Fine RegularItalic** (licensed; production-shipping). The display face. All three display text styles in v3 (`display/h1` 56/60, `display/h2` 40/44, `display/h3` 28/34) use Tiempos Fine RegularItalic — italic is intrinsic to the face, not an applied modifier. Differentiation across the scale comes from size + tracking, not weight or style. Wired into Storybook + Next.js via `@font-face` at the top of `tokens/typography.css`. Single WOFF2 (`TiemposFine-RegularItalic.woff2`) at `sandbox/public/fonts/tiempos/` — committed to the repo May 20, 2026 (was gitignored; Brightseed holds a Klim webfont license — see the May 20 entry), served at `/fonts/tiempos/*` in both contexts. Source `.otf` in `Brightseed brand assets from 2022/brightseed fonts/`.
 
 The face was already in use as accent ("6x faster" Spinner labels on Brightseed Blocks at `I26465:248391;28556:967154` and `I26465:248392;28557:968359`) — those uses now align with the global display rule rather than being separate accent moments.
 
@@ -723,3 +668,19 @@ The face was already in use as accent ("6x faster" Spinner labels on Brightseed 
 **May 8 sweep verified clean** under the rule above: Documentation, Style Guide, Academy, Typography component page, and Brightseed Blocks. Fixes that landed during the sweep: Style Guide "This is a sample" Georgia Regular → Tiempos Text Medium (then later, the display rule moved to Tiempos Fine — but this is a body specimen, not display, so Tiempos Text Medium stays as the right call there), sibling label "Georgia" → "Tiempos Text", two stray "Title Text" Inter Semi Bold placeholders on Brightseed Blocks → Geist SemiBold.
 
 **Display-scale history (one-day reversal).** Morning May 8 decision was "all Tiempos Text Medium 500" — superseded the original H1 Bold / H2 Semibold / H3 Medium ladder for a more refined, literary feel. PM May 8: pulled the lever further in the same direction, moving display from upright Tiempos Text Medium to italic Tiempos Fine RegularItalic. The morning state was a real intermediate, not a mistake — going Text Medium first surfaced what "more refined and literary" actually wanted, which turned out to be Fine Italic. The PM decision is the locked-in state; the morning weight-unification call is fully superseded.
+
+---
+
+### Public Storybook sync + repo hygiene (May 20, 2026)
+
+The public Storybook had silently drifted from local work, and the most recent push had failed to deploy. Root cause: the `brand/` rule in `.gitignore` was unanchored, so it matched **any** folder named `brand/` — including `sandbox/components/brand/`. That kept `BrightseedLogo.tsx` out of every commit, so the first deploy that imported it (via `BrightseedLogin`) failed the Vite/Rolldown build with an unresolved import. Fix: anchor the rule to `/brand/` (top-level brand assets stay ignored; sandbox component/asset `brand/` folders now track).
+
+What landed on `main` (commits `c78802b` → `4c5d7cc` → `0af1ff4`):
+- The previously-uncommitted May 8 work — component ports (Alert, AlertDialog, Table, Switch, Spinner, Sonner), `BrightseedLogin` + login page, the Forager card rebuild, Pro Block nav stories, and the Tiempos type-system wiring.
+- `components/forager/data.ts` repointed: `PillarStatus` is now defined locally (it had been importing from the deleted `ui/strategy-card`).
+- **Tiempos webfonts un-gitignored and committed.** Brightseed already holds a Klim *webfont* license, so web embedding is paid for — the remaining open item is confirming `brightseed-storybook.vercel.app` is on the registered domains (ask Meng).
+- **Login marketing graphic optimized:** `graphic_login.bg.png` (5.2 MB, 2067×2649) → `graphic_login.bg.webp` (69 KB, 1248×1600), and `BrightseedLogin` repointed to the `.webp`. This supersedes the earlier inline-SVG placeholder approach for the Image Slot.
+
+Public Storybook verified green and in sync at https://brightseed-storybook.vercel.app.
+
+**Workflow note (FUSE + push constraints):** the Cowork sandbox's FUSE mount can't delete files or push (no GitHub credentials), so commits and pushes run on Becky's Mac. Claude preps all edits and asset generation in the sandbox, then hands over an exact command block. Stale `.git/*.lock` files left by interrupted sandbox git ops are cleared with `rm -f .git/index.lock .git/HEAD.lock .git/objects/maintenance.lock` at the top of each block.
