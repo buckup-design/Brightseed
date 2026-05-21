@@ -1,42 +1,28 @@
 import * as React from "react"
-import {
-  Leaf,
-  Rat,
-  Hexagon,
-  ShieldCheck,
-  ShieldAlert,
-  BarChart3,
-  Star,
-  type LucideIcon,
-} from "lucide-react"
 
 /**
- * Brightseed badge-icon registry — Forager design system.
+ * Brightseed custom icon glyphs — Forager design system.
  *
- * The curated, convention-enforced icon set for Badge slots. Consumers reach for a
- * NAMED concept (`badgeIcons.plantSource`), not an arbitrary icon, so a tag-dense
- * Forager table stays visually coherent. This is the React mirror of the Figma
- * instance-swap vocabulary on the "Custom Icons" page.
+ * Home for the hand-authored glyphs Lucide doesn't carry (Cow, Hummingbird).
+ * Lucide is the default source for everything else; the full inventory (Lucide +
+ * these customs) is browsable in the "Foundations/Icons" Storybook page.
  *
- * Two tiers of icon, deliberately kept separate (see CLAUDE.md, the icon discussion):
- *   - Functional UI glyphs (this file): 10–24px, single-color via currentColor,
- *     line-art. Lucide is the default source; a handful of Brightseed glyphs that
- *     Lucide can't cover (cow, hummingbird) live here as hand-authored components.
+ * Naming is by glyph IDENTITY, not by use — it's exploratory. Meaning gets
+ * assigned later, in the surfaces that consume an icon, not here. There is
+ * intentionally no purposeful concept→icon map in this file yet.
+ *
+ * Two tiers, kept apart (see CLAUDE.md, the icon discussion):
+ *   - Functional UI glyphs (this file + Lucide): 10–24px, single-color via
+ *     currentColor, line-art.
  *   - Brand illustration (NOT here): the 300 KB+ hummingbird/bird vectors in
- *     /brand/theme A line art and /vector-pipeline. Illustration scale, never a
- *     badge slot. Don't conflate the two.
- *
- * Why Lucide entries are wrapped: Lucide draws at strokeWidth 2 for a 24px box,
- * which reads heavy at 10–12px badge scale. We bind a house strokeWidth (1.5) so
- * the line weight stays refined — matching how the custom Hummingbird-line glyph
- * was authored in Figma.
+ *     /brand and /vector-pipeline. Illustration scale, never a badge slot.
  *
  * Color tracking: every glyph uses stroke/fill="currentColor", so it inherits the
- * badge variant's text color automatically — the same outcome as the Figma
- * `tag/active-color` Variable Mode cascade, achieved natively with CSS.
+ * surrounding text color automatically — the CSS-native equivalent of the Figma
+ * tag/active-color cascade.
  */
 
-/** House stroke-width for badge-scale Lucide icons (Lucide default 2 reads heavy small). */
+/** House stroke-width for badge-scale line glyphs (Lucide default 2 reads heavy small). */
 export const BADGE_ICON_STROKE = 1.5
 
 type GlyphProps = React.SVGProps<SVGSVGElement>
@@ -145,48 +131,7 @@ export function CowBadge({ className, ...props }: GlyphProps) {
   )
 }
 
-/* ─────────────────────────────────────────────────────────────────────────
- * The curated badge-icon set.
- *
- * Concept name → component. Lucide entries are wrapped to apply BADGE_ICON_STROKE.
- * To add a concept: add a row here (and the matching Figma instance-swap target).
- * Don't reach for arbitrary Lucide icons in feature code — name the concept here.
- * ───────────────────────────────────────────────────────────────────────── */
-
-/** Wrap a Lucide icon so it renders at the house badge stroke-width. */
-function withBadgeStroke(Icon: LucideIcon) {
-  function BadgeLucideGlyph({ className, ...props }: GlyphProps) {
-    return (
-      <Icon
-        strokeWidth={BADGE_ICON_STROKE}
-        className={className}
-        {...(props as React.ComponentProps<LucideIcon>)}
-      />
-    )
-  }
-  return BadgeLucideGlyph
-}
-
-export const badgeIcons = {
-  /** Plant Source (botanical origin of a compound). */
-  plantSource: withBadgeStroke(Leaf),
-  /**
-   * Compound. PLACEHOLDER — Becky has a hexagon-derived custom glyph not yet in the
-   * repo. Swap this row to the custom component once it's exported from Figma.
-   */
-  compound: withBadgeStroke(Hexagon),
-  /** Animal / ruminant study (Animal-cow, Animal-ruminants tags). Custom glyph. */
-  animalStudy: CowBadge,
-  /** Rodent study. Lucide-derived (mirrors Figma Rat-badge). */
-  rat: withBadgeStroke(Rat),
-  /** Potency / score / bioactive-potential data. */
-  potency: withBadgeStroke(BarChart3),
-  /** Safety pass (e.g. GRAS). */
-  safety: withBadgeStroke(ShieldCheck),
-  /** Risk / caution (e.g. IP Landscape concern). */
-  risk: withBadgeStroke(ShieldAlert),
-  /** Saved-to-project (star-from-chat). */
-  save: withBadgeStroke(Star),
-} as const
-
-export type BadgeIconName = keyof typeof badgeIcons
+/* The full browsable inventory — these customs plus all of Lucide — lives in the
+ * "Foundations/Icons" Storybook page (sandbox/stories/Icons.stories.tsx). No
+ * purposeful concept→icon map is defined here yet; that's deliberate while the
+ * icon language is still exploratory. */
