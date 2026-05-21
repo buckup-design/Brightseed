@@ -34,7 +34,7 @@ import { AppShell4 } from "@/components/pro-blocks/application/app-shells/app-sh
  * ───────────────────────────────────────────────────────────────────────── */
 
 const meta = {
-  title: "Pro Blocks/Application/App Shell 4",
+  title: "Blocks/App Shell 4",
   component: AppShell4,
   parameters: { layout: "fullscreen" },
 } satisfies Meta<typeof AppShell4>

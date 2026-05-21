@@ -20,7 +20,7 @@ import {
  * ───────────────────────────────────────────────────────────────────────── */
 
 const meta = {
-  title: "Pro Blocks/Application/Team Switcher",
+  title: "Blocks/Team Switcher",
   component: TeamSwitcher,
   parameters: { layout: "padded" },
   decorators: [
