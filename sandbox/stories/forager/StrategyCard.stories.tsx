@@ -12,7 +12,7 @@ import { StrategyCard } from "@/components/forager/cards/strategy-card";
  * ───────────────────────────────────────────────────────────────────────── */
 
 const meta = {
-  title: "Forager/Cards/Strategy Card",
+  title: "DRAFT WIP/Cards/Strategy Card",
   component: StrategyCard,
   parameters: { layout: "padded" },
   tags: ["autodocs"],

@@ -15,7 +15,7 @@ import { PlantsView } from "@/components/forager/plants-view";
  * ───────────────────────────────────────────────────────────────────────── */
 
 const meta = {
-  title: "Forager/Screens/Plants View",
+  title: "DRAFT WIP/Screens/Plants View",
   component: PlantsView,
   parameters: { layout: "fullscreen" },
 } satisfies Meta<typeof PlantsView>;
