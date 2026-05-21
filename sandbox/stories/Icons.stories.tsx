@@ -135,16 +135,9 @@ function IconInventory() {
 
   return (
     <div className="flex flex-col gap-5 p-6">
-      <div className="flex flex-col gap-2">
-        <h2 className="text-base font-semibold text-[var(--color-text-default)]">
-          Icon inventory
-        </h2>
-        <p className="max-w-prose text-sm text-[var(--color-text-subtle)]">
-          Every glyph available to Forager — the complete Lucide set (also the icon
-          set the shadcn / Pro Pack renders with) plus Brightseed custom additions.
-          Exploratory: glyphs are labeled by identity, not by a fixed use.
-        </p>
-      </div>
+      <h2 className="text-base font-semibold text-[var(--color-text-default)]">
+        Icon inventory
+      </h2>
 
       <div className="flex flex-col gap-1">
         <input
