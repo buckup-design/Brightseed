@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import * as React from "react";
 
 import { Badge } from "@/components/ui/badge";
+import { badgeIcons } from "@/components/ui/badge-icons";
 
 /* ─────────────────────────────────────────────────────────────────────────
  * Badge stories — parity with Figma "Quill Components > Primary Badges"
@@ -54,41 +55,13 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/* ── Inline icons for slot-prop demos ─────────────────────────────────── */
-function LeafIcon() {
-  return (
-    <svg
-      viewBox="0 0 12 12"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.25"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M10 1.5C7 1.5 3.5 3 2.5 6.5c-.5 1.75 0 3.5 1.5 4M10 1.5c0 4-1.5 7-4 8.5M10 1.5c-2 .5-4 1.5-5.5 3.5" />
-    </svg>
-  );
-}
-
-function MouseIcon() {
-  // Stand-in for the Figma `Rat-badge` — abstract rodent silhouette.
-  return (
-    <svg
-      viewBox="0 0 12 12"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.25"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <circle cx="4" cy="6" r="2.5" />
-      <circle cx="8.5" cy="4" r="1.25" />
-      <path d="M11 8l-1.5-.5M11 9l-1.5-.25" />
-    </svg>
-  );
-}
+/* ── Inline icons for slot-prop demos ─────────────────────────────────────
+ * Pulled from the curated badge-icon registry — NOT hand-drawn. Lucide for what
+ * Lucide covers (Leaf → plantSource), Brightseed custom glyphs for what it doesn't
+ * (Cow → animalStudy, for the Animal-cow / ruminant tags). See
+ * components/ui/badge-icons.tsx. */
+const PlantCompoundIcon = badgeIcons.plantSource;
+const AnimalStudyIcon = badgeIcons.animalStudy;
 
 /* ─────────────────────────────────────────────────────────────────────
  * Spotlight stories — quick scans for individual aspects of the spec.
@@ -240,14 +213,14 @@ export const InlineSlots: Story = {
           children
         </span>
         <Badge variant="forest">
-          <LeafIcon /> Plant compound
+          <PlantCompoundIcon /> Plant compound
         </Badge>
       </div>
       <div className="flex items-center gap-2">
         <span className="font-mono text-xs text-[var(--color-text-subtle)] w-32">
           iconLeading prop
         </span>
-        <Badge variant="cyan" iconLeading={<MouseIcon />}>
+        <Badge variant="cyan" iconLeading={<AnimalStudyIcon />}>
           Animal study
         </Badge>
       </div>
@@ -255,7 +228,7 @@ export const InlineSlots: Story = {
         <span className="font-mono text-xs text-[var(--color-text-subtle)] w-32">
           iconTrailing prop
         </span>
-        <Badge variant="orange" iconTrailing={<LeafIcon />}>
+        <Badge variant="orange" iconTrailing={<PlantCompoundIcon />}>
           Active
         </Badge>
       </div>
