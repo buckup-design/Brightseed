@@ -2,6 +2,42 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 <Meta title="Quill Design System" />
 
+<style>{`
+  /* Brightseed typography — page-scoped to this docs page.
+     Headings: Tiempos Fine RegularItalic (the brand display face). Body, lists,
+     links: Geist via --font-sans. Sizes from tokens/typography.css; H1 uses the
+     hero display size, section headers use a content-appropriate scale (the full
+     40px display-h2 is reserved for marketing layouts, not a doc with many
+     sections). Selectors are scoped under .sbdocs-content and the <style>
+     unmounts when you navigate away, so this stays local to this page. */
+  .sbdocs-content {
+    font-family: var(--font-sans), system-ui, sans-serif;
+  }
+  .sbdocs-content .sbdocs-a { font-family: inherit; }
+  .sbdocs-content .sbdocs-h1,
+  .sbdocs-content .sbdocs-h2,
+  .sbdocs-content .sbdocs-h3 {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+  }
+  .sbdocs-content .sbdocs-h1 {
+    font-size: var(--text-display-h1-size);
+    line-height: var(--text-display-h1-line-height);
+    letter-spacing: var(--text-display-h1-tracking);
+  }
+  .sbdocs-content .sbdocs-h2 {
+    font-size: var(--text-display-h3-size);
+    line-height: var(--text-display-h3-line-height);
+    letter-spacing: var(--text-display-h3-tracking);
+  }
+  .sbdocs-content .sbdocs-h3 {
+    font-size: 1.375rem;
+    line-height: 1.75rem;
+    letter-spacing: -0.01em;
+  }
+`}</style>
+
 # Quill Design System
 
 ## About
