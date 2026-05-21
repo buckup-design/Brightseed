@@ -1,0 +1,17 @@
+<!--
+  Brightseed fonts for the Storybook preview iframe.
+
+  Geist + Geist Mono are loaded from the Google Fonts CDN here (NOT the `geist`
+  npm package — that package imports next/font/local, which the Storybook
+  Vite build can't resolve and which fails the build). tokens/typography.css
+  references these by family name (--font-sans: "Geist", --font-mono:
+  "Geist Mono"), so loading them here makes every story and docs page render in
+  Geist instead of the system fallback. Tiempos Fine (display) is self-hosted
+  via @font-face in tokens/typography.css and served from /public/fonts.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+  rel="stylesheet"
+/>
