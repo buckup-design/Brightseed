@@ -1,8 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import * as React from "react";
 
+import { Leaf } from "lucide-react";
+
 import { Badge } from "@/components/ui/badge";
-import { badgeIcons } from "@/components/ui/badge-icons";
+import { CowBadge, BADGE_ICON_STROKE } from "@/components/ui/badge-icons";
 
 /* ─────────────────────────────────────────────────────────────────────────
  * Badge stories — parity with Figma "Quill Components > Primary Badges"
@@ -55,13 +57,11 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/* ── Inline icons for slot-prop demos ─────────────────────────────────────
- * Pulled from the curated badge-icon registry — NOT hand-drawn. Lucide for what
- * Lucide covers (Leaf → plantSource), Brightseed custom glyphs for what it doesn't
- * (Cow → animalStudy, for the Animal-cow / ruminant tags). See
- * components/ui/badge-icons.tsx. */
-const PlantCompoundIcon = badgeIcons.plantSource;
-const AnimalStudyIcon = badgeIcons.animalStudy;
+/* ── Inline glyphs for slot-prop demos ────────────────────────────────────
+ * Real icons — Lucide for what it covers, Brightseed custom for what it doesn't.
+ * No hand-drawn SVGs. The full inventory is on the Foundations/Icons page. */
+const LeafGlyph = () => <Leaf strokeWidth={BADGE_ICON_STROKE} />;
+const CowGlyph = () => <CowBadge />;
 
 /* ─────────────────────────────────────────────────────────────────────
  * Spotlight stories — quick scans for individual aspects of the spec.
@@ -213,14 +213,14 @@ export const InlineSlots: Story = {
           children
         </span>
         <Badge variant="forest">
-          <PlantCompoundIcon /> Plant compound
+          <LeafGlyph /> Plant compound
         </Badge>
       </div>
       <div className="flex items-center gap-2">
         <span className="font-mono text-xs text-[var(--color-text-subtle)] w-32">
           iconLeading prop
         </span>
-        <Badge variant="cyan" iconLeading={<AnimalStudyIcon />}>
+        <Badge variant="cyan" iconLeading={<CowGlyph />}>
           Animal study
         </Badge>
       </div>
@@ -228,7 +228,7 @@ export const InlineSlots: Story = {
         <span className="font-mono text-xs text-[var(--color-text-subtle)] w-32">
           iconTrailing prop
         </span>
-        <Badge variant="orange" iconTrailing={<PlantCompoundIcon />}>
+        <Badge variant="orange" iconTrailing={<LeafGlyph />}>
           Active
         </Badge>
       </div>

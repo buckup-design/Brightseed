@@ -1,72 +1,91 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import * as React from "react";
+import * as LucideIcons from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import {
-  badgeIcons,
-  type BadgeIconName,
   BADGE_ICON_STROKE,
+  Cow,
+  CowBadge,
   HummingbirdLine,
   HummingbirdFill,
-  Cow,
 } from "@/components/ui/badge-icons";
 
 /* ─────────────────────────────────────────────────────────────────────────
- * Foundations / Icons — the curated badge-icon set + conventions.
+ * Foundations / Icons — the full icon inventory.
  *
- * This page is the visible contract for icons in Forager badges. It documents
- * the named set, where each glyph comes from (Lucide vs Brightseed custom), the
- * house stroke-width, and how color-tracking works — so the rules live here,
- * not in someone's head. See components/ui/badge-icons.tsx for the source.
+ * Exploratory reference, not a curated map. It records EVERY glyph available to
+ * Forager: the complete Lucide set (which is also the icon set the shadcn /
+ * shadcndesign Pro Pack renders with) plus Brightseed custom additions. Each
+ * glyph is labeled by what it IS — no purposeful concept names, no assigned uses.
+ * Meaning gets assigned to specific surfaces later, in feature code.
+ *
+ * Two tiers, kept apart (see CLAUDE.md, the icon discussion):
+ *   - Functional UI glyphs (this page): single-color via currentColor, line-art.
+ *   - Brand illustration (NOT here): the 300 KB+ hummingbird/bird vectors in
+ *     /brand and /vector-pipeline — illustration scale, never a badge slot.
  * ───────────────────────────────────────────────────────────────────────── */
 
 const meta = {
   title: "Foundations/Icons",
-  parameters: { layout: "padded" },
-  tags: ["autodocs"],
+  parameters: { layout: "fullscreen" },
 } satisfies Meta;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-type BadgeVariant = React.ComponentProps<typeof Badge>["variant"];
+/* ── Build the complete Lucide list once, at module scope ─────────────────
+ * lucide-react exports every icon as a PascalCase named export, plus a few
+ * non-icon utilities and `XIcon` aliases that point at the same component.
+ * We dedupe by component identity (keeping the shorter name) so each glyph
+ * appears once, and drop the known non-icon exports. */
+const NON_ICON_EXPORTS = new Set([
+  "createLucideIcon",
+  "Icon",
+  "icons",
+  "LucideProvider",
+  "default",
+]);
 
-/** Documentation descriptor for each entry in the curated set. */
-const BADGE_ICON_DOCS: {
-  name: BadgeIconName;
-  label: string;
-  source: string;
-  custom?: boolean;
-  demoVariant: BadgeVariant;
-}[] = [
-  { name: "plantSource", label: "Plant Source", source: "Lucide · Leaf", demoVariant: "forest" },
-  {
-    name: "compound",
-    label: "Compound",
-    source: "Lucide · Hexagon — placeholder",
-    demoVariant: "lavender",
-  },
-  { name: "animalStudy", label: "Animal study", source: "Custom · Cow", custom: true, demoVariant: "cyan" },
-  { name: "rat", label: "Rodent study", source: "Lucide · Rat", demoVariant: "orange" },
-  { name: "potency", label: "Potency / score", source: "Lucide · BarChart3", demoVariant: "blue" },
-  { name: "safety", label: "Safety (GRAS)", source: "Lucide · ShieldCheck", demoVariant: "forest" },
-  { name: "risk", label: "Risk / caution", source: "Lucide · ShieldAlert", demoVariant: "red" },
-  { name: "save", label: "Save to project", source: "Lucide · Star", demoVariant: "yellow" },
+type IconEntry = {
+  name: string;
+  Comp: React.ComponentType<{ size?: number; className?: string; strokeWidth?: number }>;
+};
+
+const LUCIDE_ICONS: IconEntry[] = (() => {
+  const byRef = new Map<unknown, string>();
+  for (const [name, value] of Object.entries(LucideIcons as Record<string, unknown>)) {
+    if (!/^[A-Z]/.test(name)) continue; // utilities are camelCase
+    if (NON_ICON_EXPORTS.has(name)) continue;
+    const isComponent =
+      typeof value === "function" ||
+      (typeof value === "object" && value !== null && "$$typeof" in (value as object));
+    if (!isComponent) continue;
+    const existing = byRef.get(value);
+    if (!existing || name.length < existing.length) byRef.set(value, name);
+  }
+  return [...byRef.entries()]
+    .map(([Comp, name]) => ({ name, Comp: Comp as IconEntry["Comp"] }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+})();
+
+/* ── Brightseed custom additions — Lucide has no equivalent ───────────────── */
+const CUSTOM_ICONS: IconEntry[] = [
+  { name: "Cow", Comp: Cow },
+  { name: "CowBadge", Comp: CowBadge },
+  { name: "HummingbirdLine", Comp: HummingbirdLine },
+  { name: "HummingbirdFill", Comp: HummingbirdFill },
 ];
 
-/* ── small presentational helpers ─────────────────────────────────────── */
+/* ── presentational helpers ───────────────────────────────────────────────── */
 
 function SourceTag({ custom }: { custom?: boolean }) {
   return (
     <span
       className="rounded-full px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide"
       style={{
-        background: custom
-          ? "var(--color-surface-tag-orchid)"
-          : "var(--color-surface-alt)",
-        color: custom
-          ? "var(--color-text-tag-orchid)"
-          : "var(--color-text-subtle)",
+        background: custom ? "var(--color-surface-tag-orchid)" : "var(--color-surface-alt)",
+        color: custom ? "var(--color-text-tag-orchid)" : "var(--color-text-subtle)",
       }}
     >
       {custom ? "Custom" : "Lucide"}
@@ -74,109 +93,160 @@ function SourceTag({ custom }: { custom?: boolean }) {
   );
 }
 
-function Panel({ title, children }: { title: string; children: React.ReactNode }) {
+function IconTile({ entry, custom }: { entry: IconEntry; custom?: boolean }) {
+  const { name, Comp } = entry;
   return (
-    <section className="flex flex-col gap-3">
-      <h3 className="font-mono text-sm text-[var(--color-text-default)]">{title}</h3>
+    <div className="flex flex-col items-center gap-2 rounded-lg border border-[var(--color-border-subtle)] bg-[var(--color-surface-default)] p-3 text-center">
+      <div className="flex h-9 w-9 items-center justify-center text-[var(--color-text-default)]">
+        <Comp className="size-6" />
+      </div>
+      <span
+        className="w-full truncate font-mono text-[10px] text-[var(--color-text-default)]"
+        title={name}
+      >
+        {name}
+      </span>
+      <SourceTag custom={custom} />
+    </div>
+  );
+}
+
+function Grid({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
       {children}
-    </section>
+    </div>
   );
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
- * Gallery — the full curated set, one tile per concept.
+ * Inventory — the searchable record of every available glyph.
  * ───────────────────────────────────────────────────────────────────────── */
 
-export const Gallery: Story = {
+function IconInventory() {
+  const [q, setQ] = React.useState("");
+  const query = q.trim().toLowerCase();
+  const customs = query
+    ? CUSTOM_ICONS.filter((i) => i.name.toLowerCase().includes(query))
+    : CUSTOM_ICONS;
+  const lucides = query
+    ? LUCIDE_ICONS.filter((i) => i.name.toLowerCase().includes(query))
+    : LUCIDE_ICONS;
+
+  return (
+    <div className="flex flex-col gap-5 p-6">
+      <div className="flex flex-col gap-2">
+        <h2 className="text-base font-semibold text-[var(--color-text-default)]">
+          Icon inventory
+        </h2>
+        <p className="max-w-prose text-sm text-[var(--color-text-subtle)]">
+          Every glyph available to Forager — the complete Lucide set (also the icon
+          set the shadcn / Pro Pack renders with) plus Brightseed custom additions.
+          Exploratory: glyphs are labeled by identity, not by a fixed use.
+        </p>
+      </div>
+
+      <div className="flex flex-col gap-1">
+        <input
+          type="search"
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Search icons by name…"
+          className="w-full max-w-sm rounded-md border border-[var(--color-border-default)] bg-[var(--color-surface-default)] px-3 py-2 text-sm text-[var(--color-text-default)] outline-none focus:border-[var(--color-border-focus)]"
+        />
+        <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+          {customs.length} custom · {lucides.length} Lucide
+        </span>
+      </div>
+
+      {customs.length > 0 && (
+        <section className="flex flex-col gap-3">
+          <h3 className="font-mono text-sm text-[var(--color-text-default)]">
+            Custom additions
+          </h3>
+          <Grid>
+            {customs.map((entry) => (
+              <IconTile key={`custom-${entry.name}`} entry={entry} custom />
+            ))}
+          </Grid>
+        </section>
+      )}
+
+      <section className="flex flex-col gap-3">
+        <h3 className="font-mono text-sm text-[var(--color-text-default)]">Lucide</h3>
+        {lucides.length === 0 ? (
+          <p className="text-sm text-[var(--color-text-subtle)]">No Lucide icons match “{q}”.</p>
+        ) : (
+          <Grid>
+            {lucides.map((entry) => (
+              <IconTile key={`lucide-${entry.name}`} entry={entry} />
+            ))}
+          </Grid>
+        )}
+      </section>
+    </div>
+  );
+}
+
+export const Inventory: Story = {
+  render: () => <IconInventory />,
+};
+
+/* ─────────────────────────────────────────────────────────────────────────
+ * Color tracking — one glyph across the tag palette. Every icon uses
+ * currentColor, so it inherits the badge's text color with no per-icon binding
+ * (the CSS-native equivalent of the Figma tag/active-color cascade). Toggle the
+ * Storybook theme to confirm dark. Labels name the COLOR, not a use.
+ * ───────────────────────────────────────────────────────────────────────── */
+
+const TAG_VARIANTS = [
+  "forest",
+  "lime",
+  "cyan",
+  "blue",
+  "yellow",
+  "orange",
+  "lavender",
+  "orchid",
+  "red",
+] as const;
+
+export const ColorTracking: Story = {
   render: () => (
-    <div className="flex flex-col gap-6 max-w-3xl">
-      <p className="text-sm text-[var(--color-text-subtle)] max-w-prose">
-        The curated badge-icon set. Reach for a <strong>named concept</strong> from{" "}
-        <code className="font-mono text-xs">badgeIcons</code> — not an arbitrary
-        Lucide import and never a hand-drawn SVG. Lucide is the default source;
-        Brightseed custom glyphs fill the gaps Lucide can&rsquo;t.
+    <div className="flex flex-col gap-6 p-6">
+      <p className="max-w-prose text-sm text-[var(--color-text-subtle)]">
+        The same glyph in every tag color — it inherits each badge&rsquo;s text color
+        automatically via <code className="font-mono text-xs">currentColor</code>.
       </p>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
-        {BADGE_ICON_DOCS.map((d) => {
-          const Icon = badgeIcons[d.name];
-          return (
-            <div
-              key={d.name}
-              className="flex flex-col items-center gap-2 rounded-lg border border-[var(--color-border-subtle)] bg-[var(--color-surface-default)] p-4 text-center"
-            >
-              <div className="flex h-9 w-9 items-center justify-center text-[var(--color-text-default)]">
-                <Icon className="size-5" />
-              </div>
-              <div className="flex flex-col gap-0.5">
-                <span className="text-xs font-medium text-[var(--color-text-default)]">
-                  {d.label}
-                </span>
-                <span className="font-mono text-[10px] text-[var(--color-text-subtle)]">
-                  {d.name}
-                </span>
-              </div>
-              <SourceTag custom={d.custom} />
-            </div>
-          );
-        })}
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-wrap items-center gap-2">
+          {TAG_VARIANTS.map((v) => (
+            <Badge key={`leaf-${v}`} variant={v} iconLeading={<LucideIcons.Leaf strokeWidth={BADGE_ICON_STROKE} />}>
+              {v}
+            </Badge>
+          ))}
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          {TAG_VARIANTS.map((v) => (
+            <Badge key={`cow-${v}`} variant={v} iconLeading={<CowBadge />}>
+              {v}
+            </Badge>
+          ))}
+        </div>
       </div>
     </div>
   ),
 };
 
 /* ─────────────────────────────────────────────────────────────────────────
- * In badges — proves color-tracking: each icon inherits its badge's text color
- * via currentColor, no per-icon color binding (the React equivalent of the
- * Figma tag/active-color cascade). Toggle the Storybook theme to confirm dark.
- * ───────────────────────────────────────────────────────────────────────── */
-
-export const InBadges: Story = {
-  render: () => (
-    <div className="flex flex-col gap-6 max-w-3xl">
-      <Panel title="Primary — icon inherits the variant's text color">
-        <div className="flex flex-wrap items-center gap-2">
-          {BADGE_ICON_DOCS.map((d) => {
-            const Icon = badgeIcons[d.name];
-            return (
-              <Badge key={d.name} variant={d.demoVariant} iconLeading={<Icon />}>
-                {d.label}
-              </Badge>
-            );
-          })}
-        </div>
-      </Panel>
-
-      <Panel title="Secondary — tight tag scale (cr=2, 4px padding)">
-        <div className="flex flex-wrap items-center gap-1">
-          {BADGE_ICON_DOCS.map((d) => {
-            const Icon = badgeIcons[d.name];
-            return (
-              <Badge
-                key={d.name}
-                variant={d.demoVariant}
-                kind="secondary"
-                iconLeading={<Icon />}
-              >
-                {d.label}
-              </Badge>
-            );
-          })}
-        </div>
-      </Panel>
-    </div>
-  ),
-};
-
-/* ─────────────────────────────────────────────────────────────────────────
- * App-scale custom glyphs — 24px, NOT badge-slot icons. The Hummingbird is
- * Forager's AI assistant mark; Cow has a 24px form for non-badge surfaces.
- * Separate tier from brand illustration (the 300 KB+ hummingbird vectors).
+ * App-scale custom glyphs — 24px, NOT badge-slot icons. Hummingbird is
+ * Forager's AI assistant mark. Separate tier from brand illustration.
  * ───────────────────────────────────────────────────────────────────────── */
 
 export const AppScaleGlyphs: Story = {
   render: () => (
-    <div className="flex flex-col gap-4 max-w-3xl">
-      <p className="text-sm text-[var(--color-text-subtle)] max-w-prose">
+    <div className="flex flex-col gap-4 p-6">
+      <p className="max-w-prose text-sm text-[var(--color-text-subtle)]">
         Custom glyphs at app scale (24px) for chat headers, nav, and cards — not
         badge slots. Prefer the line variant (honors the line-art house style).
       </p>
@@ -200,49 +270,43 @@ export const AppScaleGlyphs: Story = {
 };
 
 /* ─────────────────────────────────────────────────────────────────────────
- * Conventions — the rules, written down.
+ * Conventions — the mechanics, written down (no purpose assigned).
  * ───────────────────────────────────────────────────────────────────────── */
 
 export const Conventions: Story = {
   render: () => (
-    <div className="flex flex-col gap-4 max-w-prose text-sm text-[var(--color-text-default)]">
-      <Panel title="Conventions">
-        <ul className="flex list-disc flex-col gap-2 pl-5 text-[var(--color-text-subtle)]">
-          <li>
-            <strong className="text-[var(--color-text-default)]">Name the concept.</strong>{" "}
-            Use <code className="font-mono text-xs">badgeIcons.&lt;concept&gt;</code>. Don&rsquo;t
-            import a raw Lucide icon into feature code, and never hand-draw an SVG.
-            To add a concept, add a row to the registry (and the matching Figma
-            instance-swap target).
-          </li>
-          <li>
-            <strong className="text-[var(--color-text-default)]">Lucide first.</strong>{" "}
-            If Lucide has it, use it (wrapped at the house stroke). Reserve custom
-            glyphs for what Lucide genuinely can&rsquo;t cover — currently Cow and
-            Hummingbird.
-          </li>
-          <li>
-            <strong className="text-[var(--color-text-default)]">
-              House stroke = {BADGE_ICON_STROKE}.
-            </strong>{" "}
-            Lucide draws at stroke 2 for a 24px box, which reads heavy at 10–12px.
-            The registry binds {BADGE_ICON_STROKE} so badge-scale line weight stays
-            refined.
-          </li>
-          <li>
-            <strong className="text-[var(--color-text-default)]">currentColor only.</strong>{" "}
-            Glyphs use stroke/fill=currentColor and inherit the badge variant&rsquo;s
-            text color automatically. No per-icon color binding — the CSS-native
-            equivalent of the Figma tag/active-color cascade.
-          </li>
-          <li>
-            <strong className="text-[var(--color-text-default)]">Two tiers, kept apart.</strong>{" "}
-            Functional UI glyphs (this page) are 10–24px, single-color. Brand
-            illustration (the hummingbird/bird vectors in /brand and
-            /vector-pipeline) is illustration scale and never goes in a badge slot.
-          </li>
-        </ul>
-      </Panel>
+    <div className="flex max-w-prose flex-col gap-4 p-6 text-sm text-[var(--color-text-default)]">
+      <h3 className="font-mono text-sm">Conventions</h3>
+      <ul className="flex list-disc flex-col gap-2 pl-5 text-[var(--color-text-subtle)]">
+        <li>
+          <strong className="text-[var(--color-text-default)]">Lucide first.</strong> If
+          Lucide has the glyph, use it. Reserve custom additions for what Lucide
+          genuinely can&rsquo;t cover — currently Cow and Hummingbird.
+        </li>
+        <li>
+          <strong className="text-[var(--color-text-default)]">
+            House stroke = {BADGE_ICON_STROKE}.
+          </strong>{" "}
+          Lucide draws at stroke 2 for a 24px box, which reads heavy at 10–12px badge
+          scale. Pass <code className="font-mono text-xs">strokeWidth={BADGE_ICON_STROKE}</code>{" "}
+          for badge-scale line glyphs.
+        </li>
+        <li>
+          <strong className="text-[var(--color-text-default)]">currentColor only.</strong>{" "}
+          Glyphs use stroke/fill=currentColor and inherit their context&rsquo;s text color
+          automatically — no per-icon color binding.
+        </li>
+        <li>
+          <strong className="text-[var(--color-text-default)]">Identity, not use.</strong>{" "}
+          This page names glyphs by what they are. Assigning a glyph to a Forager
+          concept happens later, in the surface that uses it — it&rsquo;s exploratory for now.
+        </li>
+        <li>
+          <strong className="text-[var(--color-text-default)]">Two tiers, kept apart.</strong>{" "}
+          Functional UI glyphs (this page) vs. brand illustration (the hummingbird/bird
+          vectors in /brand and /vector-pipeline, illustration scale, never a badge slot).
+        </li>
+      </ul>
     </div>
   ),
 };
