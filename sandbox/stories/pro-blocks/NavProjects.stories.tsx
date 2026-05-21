@@ -23,7 +23,7 @@ import {
  * ───────────────────────────────────────────────────────────────────────── */
 
 const meta = {
-  title: "Pro Blocks/Application/Nav Projects",
+  title: "Blocks/Nav Projects",
   component: NavProjects,
   parameters: { layout: "padded" },
   decorators: [

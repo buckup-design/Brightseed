@@ -24,7 +24,7 @@ import {
  * ───────────────────────────────────────────────────────────────────────── */
 
 const meta = {
-  title: "Pro Blocks/Application/Nav Main",
+  title: "Blocks/Nav Main",
   component: NavMain,
   parameters: { layout: "padded" },
   decorators: [
