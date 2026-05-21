@@ -17,7 +17,7 @@ import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
  * ───────────────────────────────────────────────────────────────────────── */
 
 const meta = {
-  title: "Brand/Logo",
+  title: "Foundations/Logo",
   component: BrightseedLogo,
   parameters: { layout: "padded" },
 } satisfies Meta<typeof BrightseedLogo>;
