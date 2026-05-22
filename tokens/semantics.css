@@ -22,6 +22,7 @@
   --color-surface-default-active:  var(--color-sand-200);
   --color-surface-alt:             var(--color-sand-100);      /* sidebar, table alt rows, inset panels */
   --color-surface-alt-hover:       var(--color-sand-200);
+  --color-surface-scrim:           color-mix(in srgb, var(--color-sand-950) 50%, transparent);  /* modal / dialog veil — warm dark @ 50%, matches prior look */
 
   /* Brand surface — nav bar, header, branded panels */
   --color-surface-brand:           var(--surface-brand-900);   /* Deep Forest */
@@ -276,6 +277,7 @@
   --color-surface-default-active:  var(--color-sand-800);
   --color-surface-alt:             var(--color-sand-900);       /* raised panels, sidebars, cards */
   --color-surface-alt-hover:       var(--color-sand-800);
+  --color-surface-scrim:           color-mix(in srgb, var(--color-black) 60%, transparent);     /* veil must go darker than the sand-950 page to register — DESIGN REVIEW: black vs warm */
 
   /* Brand nav/header — sand-anchored in dark mode (forest exits surface vocabulary) */
   --color-surface-brand:           var(--color-sand-900);
