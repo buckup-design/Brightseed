@@ -1,5 +1,6 @@
 import type { Preview } from "@storybook/nextjs-vite";
 import "../app/globals.css";
+import React from "react";
 
 /*
  * Geist + Geist Mono load via .storybook/preview-head.html (Google Fonts CDN),
@@ -40,12 +41,29 @@ const preview: Preview = {
   },
   decorators: [
     (Story, context) => {
+      const theme = context.globals.theme ?? "light";
       // Apply data-theme to the root for the dark theme override in semantics.css
       if (typeof document !== "undefined") {
-        const theme = context.globals.theme ?? "light";
         document.documentElement.setAttribute("data-theme", theme);
       }
-      return Story();
+      // Paint the preview surface with the active theme. Without this, the
+      // Canvas/Docs preview stays white while dark-theme text flips to a light
+      // value — so transparent/outline components are invisible until a hover
+      // state adds a fill. The wrapper carries its own data-theme so the subtree
+      // resolves the right tokens even in Docs inline previews.
+      return React.createElement(
+        "div",
+        {
+          "data-theme": theme,
+          style: {
+            background: "var(--color-surface-default)",
+            color: "var(--color-text-default)",
+            padding: "2rem",
+            borderRadius: "8px",
+          },
+        },
+        React.createElement(Story)
+      );
     },
   ],
 };

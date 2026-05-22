@@ -79,14 +79,15 @@ export const OnDarkSurface: Story = {
   parameters: { backgrounds: { disable: false } },
   render: () => (
     <div
+      data-theme="dark"
       className="flex flex-col gap-8 p-12 rounded-lg"
       style={{
-        background: "var(--color-sand-950, #1F1F1E)",
+        background: "var(--color-surface-default)",
       }}
     >
       <BrightseedLogo variant="lockup" className="h-12" />
       <BrightseedLogo variant="mark" className="h-16 w-16" />
-      <p className="font-mono text-xs text-[#F9F8F3] opacity-70">
+      <p className="font-mono text-xs text-[var(--color-text-subtle)]">
         Mark and wordmark are theme-invariant — the brand colors stay the same
         on light and dark surfaces. Forest-green wordmark on sand-950 passes
         contrast.

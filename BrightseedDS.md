@@ -944,45 +944,18 @@ Use **Tailwind's default typography utilities** directly. Do not write custom `-
 
 The bare `--color-border-focus` is the system default — used for any focusable element that isn't a button (inputs, tabs, links). Buttons override per variant.
 
-**Button hover behavior:** On hover, every button variant does two things at once — the text gets one step more pronounced in color, and the font weight steps from Medium (500) to SemiBold (600). This rule applies to `:hover` only — `:focus-visible` carries its own signal via the ring, and `:active`/`pressed` carries its own via the depressed surface. Layering weight onto those would over-signal.
+**Button hover behavior:** On hover, every button variant changes its text color one step "more pronounced" and steps its surface one shade darker / more-contrasted. That is the entire hover signal. **There is NO font-weight change on hover** — the Medium→SemiBold bump was removed May 22, 2026 because it changed glyph width and caused layout shift. This rule applies to `:hover` only — `:focus-visible` carries its own signal via the ring, and `:active`/`pressed` carries its own via the depressed surface.
 
 | Variant | Default text token | Hover text token | Notes |
 |---|---|---|---|
 | Default (lime) | `--color-text-on-action-primary` (forest-800) | `--color-text-on-action-primary-hover` (forest-900) | Theme-invariant — same in dark mode |
-| Secondary | `--color-text-default` (sand-900) | `--color-text-default-hover` (sand-950) | In dark mode, `-hover` aliases to sand-50 (boundary) — weight bump alone carries the signal |
+| Secondary | `--color-text-default` (sand-900) | `--color-text-default-hover` (sand-950) | In dark mode, `-hover` aliases to sand-50 (boundary), so text barely moves — the surface step (sand-900 → sand-800) carries the hover signal |
 | Destructive | `--color-text-on-action-critical` (red-600) | `--color-text-on-action-critical-hover` (red-700) | |
 | Outline | `--color-text-default` | `--color-text-default-hover` | Same as Secondary |
 | Ghost | `--color-text-default` | `--color-text-default-hover` | Same as Secondary |
 | Linktext | `--color-text-link-brand` (lime-700) | `--color-text-link-brand-hover` (lime-800) | Direction is "more pronounced," not literally "darker" — in dark mode hover steps lighter (lime-300 → lime-200). Updated May 2026 — was forest-scale in original Apr 2026 spec |
 
-**Layout shift on hover (ghost label technique):** SemiBold (600) glyphs are physically wider than Medium (500). Without compensation, the button widens on hover and adjacent UI jiggles. Resolve this by rendering the label twice: once at SemiBold but invisible (reserves width), once at the live weight on top. The button always sizes to the wider SemiBold version, so `:hover` never grows it.
-
-```jsx
-// Pattern for the Button component's label
-<span className="relative inline-block">
-  <span
-    aria-hidden
-    className="invisible"
-    style={{ fontVariationSettings: "'wght' 600" }}
-  >
-    {label}
-  </span>
-  <span
-    className="absolute inset-0 transition-[font-variation-settings] duration-[120ms]"
-    style={{
-      fontVariationSettings: "'wght' var(--btn-wght, 500)",
-    }}
-  >
-    {label}
-  </span>
-</span>
-```
-
-```css
-.button:hover { --btn-wght: 600; }
-```
-
-Notes: (1) Geist is a variable font, so `font-variation-settings` interpolates smoothly over 120ms — no snap. (2) The `transition` is on `font-variation-settings`, not `font-weight` — only the variation axis is animatable. (3) The visible-label color transitions independently via `transition: color 120ms` set on the button. (4) For icon-only buttons there's no label to ghost — they skip this technique entirely. (5) The technique only matters in production HTML/CSS; Figma renders the static states without layout reservation, so the hover variant in the matrix may appear ~1px wider than default. That's a Figma representation artifact, not a production issue.
+**No layout shift on hover (ghost-label technique removed May 22, 2026):** Earlier, hover bumped the font weight Medium→SemiBold, and SemiBold glyphs are wider than Medium, so the button grew on hover — masked by rendering the label twice (an invisible always-SemiBold copy reserving width). Both the weight bump and the ghost-label technique have been removed. Hover no longer touches font-weight, so there is nothing to reserve: the Button renders a single label span. Do not reintroduce a hover weight change.
 
 **Button disabled state — surface overlay + text alpha:** Disabled is uniform across variants. Surface gets a desaturating overlay against the active default-state surface; text and icon use the variant's normal foreground at a single shared opacity.
 

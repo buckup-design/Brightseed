@@ -38,18 +38,11 @@ import { cn } from "@/lib/utils"
  *   step on the existing radius scale.
  *
  * Hover behavior
- *   1. Surface and text both step "more pronounced" (one shade darker in light,
- *      one shade lighter in dark — same direction conceptually).
- *   2. Font weight bumps from Medium (500) to SemiBold (600) over 120ms. Geist
- *      is a variable font, so font-weight interpolates smoothly along the wght axis.
- *
- *   Width reservation: SemiBold glyphs are wider than Medium. Without mitigation,
- *   the button would grow on hover, causing layout shift in adjacent content.
- *   Fix: render the label TWICE in a CSS grid stack — an invisible always-SemiBold
- *   ghost copy reserves width, the visible copy on top transitions weight smoothly.
- *
- *   Skipped when (a) `asChild` is true (Slot expects exactly one child) or (b) the
- *   size is icon-only (no text → no weight bump matters).
+ *   Surface and text both step "more pronounced" (one shade darker in light,
+ *   one shade lighter in dark). Hover is signaled by surface + text color ONLY.
+ *   The Medium->SemiBold weight bump was REMOVED (May 22, 2026): changing glyph
+ *   width caused layout shift, and the ghost-label hack that masked it was a
+ *   recurring source of bugs. Do not reintroduce a font-weight change on hover.
  *
  * Disabled
  *   Surface uses --color-action-{variant}-disabled (a color-mix overlay computed
@@ -82,9 +75,7 @@ const buttonVariants = cva(
     "rounded-[var(--shape-radius-md)]",
     "outline-none cursor-pointer select-none",
     // ── Transitions ─────────────────────────────────────────────────────
-    // 120ms is the value cited in the spec for the weight bump. transition-all
-    // covers bg/color/border/box-shadow; font-weight is animatable on variable
-    // fonts and uses the same duration.
+    // transition-all covers bg / color / border / box-shadow on hover and press.
     "transition-all duration-[120ms]",
     // ── Pointer / cursor ────────────────────────────────────────────────
     "disabled-state:cursor-not-allowed",
@@ -110,9 +101,7 @@ const buttonVariants = cva(
         default: cn(
           "bg-[var(--color-action-primary)] text-[var(--color-text-on-action-primary)]",
           "hovered:bg-[var(--color-action-primary-hover)]",
-          "hovered:text-[var(--color-text-on-action-primary-hover)]",
-          "hovered:font-semibold",
-          "pressed:bg-[var(--color-action-primary-active)]",
+          "hovered:text-[var(--color-text-on-action-primary-hover)]",          "pressed:bg-[var(--color-action-primary-active)]",
           "pressed:text-[var(--color-text-on-action-primary-active)]",
           "focused:ring-[var(--color-border-focus)]/50",
           "disabled-state:bg-[var(--color-action-primary-disabled)]"
@@ -121,9 +110,7 @@ const buttonVariants = cva(
         secondary: cn(
           "bg-[var(--color-action-secondary)] text-[var(--color-text-default)]",
           "hovered:bg-[var(--color-action-secondary-hover)]",
-          "hovered:text-[var(--color-text-default-hover)]",
-          "hovered:font-semibold",
-          "pressed:bg-[var(--color-action-secondary-active)]",
+          "hovered:text-[var(--color-text-default-hover)]",          "pressed:bg-[var(--color-action-secondary-active)]",
           "focused:ring-[var(--color-border-focus-secondary)]/50",
           "disabled-state:bg-[var(--color-action-secondary-disabled)]"
         ),
@@ -132,45 +119,36 @@ const buttonVariants = cva(
           "border border-[var(--color-border-default)] bg-transparent",
           "text-[var(--color-text-default)]",
           "hovered:bg-[var(--color-action-secondary-hover)]",
-          "hovered:text-[var(--color-text-default-hover)]",
-          "hovered:font-semibold",
-          "pressed:bg-[var(--color-action-secondary-active)]",
+          "hovered:text-[var(--color-text-default-hover)]",          "pressed:bg-[var(--color-action-secondary-active)]",
           "focused:ring-[var(--color-border-focus)]/50"
         ),
         // ── Ghost (no surface, no border) ───────────────────────────────
         ghost: cn(
           "bg-transparent text-[var(--color-text-default)]",
           "hovered:bg-[var(--color-action-secondary)]",
-          "hovered:text-[var(--color-text-default-hover)]",
-          "hovered:font-semibold",
-          "pressed:bg-[var(--color-action-secondary-hover)]",
+          "hovered:text-[var(--color-text-default-hover)]",          "pressed:bg-[var(--color-action-secondary-hover)]",
           "focused:ring-[var(--color-border-focus)]/50"
         ),
         // ── Destructive (soft red) ──────────────────────────────────────
         destructive: cn(
           "bg-[var(--color-action-critical)] text-[var(--color-text-on-action-critical)]",
           "hovered:bg-[var(--color-action-critical-hover)]",
-          "hovered:text-[var(--color-text-on-action-critical-hover)]",
-          "hovered:font-semibold",
-          "pressed:bg-[var(--color-action-critical-active)]",
+          "hovered:text-[var(--color-text-on-action-critical-hover)]",          "pressed:bg-[var(--color-action-critical-active)]",
           "focused:ring-[var(--color-border-focus-destructive)]/50",
           "disabled-state:bg-[var(--color-action-critical-disabled)]"
         ),
         // ── Linktext (button-shaped link, never underlined) ─────────────
         linktext: cn(
           "bg-transparent text-[var(--color-text-link-brand)]",
-          "hovered:text-[var(--color-text-link-brand-hover)]",
-          "hovered:font-semibold",
-          "pressed:text-[var(--color-text-link-brand-hover)]",
+          "hovered:text-[var(--color-text-link-brand-hover)]",          "pressed:text-[var(--color-text-link-brand-hover)]",
           "focused:ring-[var(--color-border-focus-link-brand)]/50"
         ),
       },
       size: {
         xs: cn(
           "h-6 px-2 text-xs",
-          // Per-size gap is set as a CSS var so the inner ghost-label and
-          // live-label spans can both consume it without the size variant
-          // having to know about that structure.
+          // Per-size icon/label gap, exposed as a CSS var so the button-content
+          // span can consume it without the size variant knowing the structure.
           "[--btn-gap:0.25rem]",
           "[&_svg:not([class*='size-'])]:size-3"
         ),
@@ -285,8 +263,6 @@ function Button({
   }
 
   // Text-bearing button: spinner takes the leading-icon slot when loading.
-  // Both the ghost (width-reservation) and live copies receive the spinner so
-  // width stays consistent in either state.
   const liveContent = loading ? (
     <>
       <ButtonSpinner />
@@ -307,27 +283,14 @@ function Button({
       className={cn(buttonVariants({ variant, size }), className)}
       {...props}
     >
+      {/* Single content span. Carries the disabled-fade hook
+          (data-slot=button-content) and the per-size icon/label gap. Hover no
+          longer changes font-weight, so no ghost-label width reservation. */}
       <span
         data-slot="button-content"
-        className="grid items-center justify-items-center"
+        className="inline-flex items-center gap-[var(--btn-gap)] whitespace-nowrap"
       >
-        {/* Ghost label — invisible, always SemiBold. Reserves width so the
-            visible label can transition weight on hover without layout shift. */}
-        <span
-          aria-hidden="true"
-          data-slot="button-ghost"
-          className="invisible col-start-1 row-start-1 inline-flex items-center gap-[var(--btn-gap)] font-semibold whitespace-nowrap"
-        >
-          {liveContent}
-        </span>
-        {/* Live label — sits on top of the ghost in the same grid cell.
-            Inherits font-weight from the button (Medium → SemiBold on hover). */}
-        <span
-          data-slot="button-live"
-          className="col-start-1 row-start-1 inline-flex items-center gap-[var(--btn-gap)] whitespace-nowrap"
-        >
-          {liveContent}
-        </span>
+        {liveContent}
       </span>
     </Comp>
   )

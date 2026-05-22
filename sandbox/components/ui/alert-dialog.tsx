@@ -10,8 +10,8 @@ import { Button } from "@/components/ui/button"
  * AlertDialog — Brightseed Forager design system.
  *
  * Color tokens (Brightseed semantics):
- *   Overlay scrim   → sand-950 / 50% alpha (warm dark, matches Brightseed
- *                     palette anchor instead of pure black)
+ *   Overlay scrim   → --color-surface-scrim (semantic; warm dark @ 50% in light,
+ *                     black-based veil in dark so it reads over the sand-950 page)
  *   Dialog surface  → --color-surface-default
  *   Dialog border   → --color-border-default
  *   Title text      → --color-text-default
@@ -54,7 +54,7 @@ function AlertDialogOverlay({
     <AlertDialogPrimitive.Overlay
       data-slot="alert-dialog-overlay"
       className={cn(
-        "fixed inset-0 z-50 bg-[var(--color-sand-950)]/50",
+        "fixed inset-0 z-50 bg-[var(--color-surface-scrim)]",
         "data-[state=closed]:animate-out data-[state=closed]:fade-out-0",
         "data-[state=open]:animate-in data-[state=open]:fade-in-0",
         className
@@ -195,13 +195,15 @@ function AlertDialogAction({
 }: React.ComponentProps<typeof AlertDialogPrimitive.Action> &
   Pick<React.ComponentProps<typeof Button>, "variant" | "size">) {
   return (
-    <Button variant={variant} size={size} asChild>
-      <AlertDialogPrimitive.Action
+    <AlertDialogPrimitive.Action asChild>
+      <Button
+        variant={variant}
+        size={size}
         data-slot="alert-dialog-action"
         className={cn(className)}
         {...props}
       />
-    </Button>
+    </AlertDialogPrimitive.Action>
   )
 }
 
@@ -213,13 +215,15 @@ function AlertDialogCancel({
 }: React.ComponentProps<typeof AlertDialogPrimitive.Cancel> &
   Pick<React.ComponentProps<typeof Button>, "variant" | "size">) {
   return (
-    <Button variant={variant} size={size} asChild>
-      <AlertDialogPrimitive.Cancel
+    <AlertDialogPrimitive.Cancel asChild>
+      <Button
+        variant={variant}
+        size={size}
         data-slot="alert-dialog-cancel"
         className={cn(className)}
         {...props}
       />
-    </Button>
+    </AlertDialogPrimitive.Cancel>
   )
 }
 
