@@ -18,9 +18,9 @@ const preview: Preview = {
   parameters: {
     // Sidebar order. Without this, Storybook falls back to default ordering and
     // the sections land alphabetically. Pinning the order puts the intro doc
-    // first, Foundations next, then the rest in the sequence the intro doc's
-    // "How this is organized" list describes. Sections not listed here fall to
-    // the bottom in default order.
+    // first, Foundations next, then Components/Blocks/Auth, with DRAFT WIP
+    // pinned last (it's in-progress product surfaces — keep it at the bottom).
+    // Sections not listed here fall to the bottom in default order.
     options: {
       storySort: {
         order: [
@@ -28,8 +28,8 @@ const preview: Preview = {
           "Foundations",
           "Components",
           "Blocks",
-          "DRAFT WIP",
           "Auth",
+          "DRAFT WIP",
         ],
       },
     },
