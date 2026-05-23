@@ -16,6 +16,23 @@ import React from "react";
 
 const preview: Preview = {
   parameters: {
+    // Sidebar order. Without this, Storybook falls back to default ordering and
+    // the sections land alphabetically. Pinning the order puts the intro doc
+    // first, Foundations next, then the rest in the sequence the intro doc's
+    // "How this is organized" list describes. Sections not listed here fall to
+    // the bottom in default order.
+    options: {
+      storySort: {
+        order: [
+          "Quill Design System",
+          "Foundations",
+          "Components",
+          "Blocks",
+          "DRAFT WIP",
+          "Auth",
+        ],
+      },
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,
