@@ -51,6 +51,8 @@ const NON_ICON_EXPORTS = new Set([
 type IconEntry = {
   name: string;
   Comp: React.ComponentType<{ size?: number; className?: string; strokeWidth?: number }>;
+  /** "badge" icons are designed for 14px badge slots — render at size-3.5 in the inventory. */
+  scale?: "app" | "badge";
 };
 
 const LUCIDE_ICONS: IconEntry[] = (() => {
@@ -72,35 +74,50 @@ const LUCIDE_ICONS: IconEntry[] = (() => {
 
 /* ── Brightseed custom additions — Lucide has no equivalent ───────────────── */
 const CUSTOM_ICONS: IconEntry[] = [
-  { name: "Cow", Comp: Cow },
-  { name: "CowBadge", Comp: CowBadge },
-  { name: "CompoundBadge", Comp: CompoundBadge },
-  { name: "HummingbirdLine", Comp: HummingbirdLine },
-  { name: "HummingbirdFill", Comp: HummingbirdFill },
+  { name: "Cow", Comp: Cow, scale: "app" },
+  { name: "CowBadge", Comp: CowBadge, scale: "badge" },
+  { name: "CompoundBadge", Comp: CompoundBadge, scale: "badge" },
+  { name: "HummingbirdLine", Comp: HummingbirdLine, scale: "app" },
+  { name: "HummingbirdFill", Comp: HummingbirdFill, scale: "app" },
 ];
 
 /* ── presentational helpers ───────────────────────────────────────────────── */
 
-function SourceTag({ custom }: { custom?: boolean }) {
+function SourceTag({ custom, badge }: { custom?: boolean; badge?: boolean }) {
   return (
-    <span
-      className="rounded-full px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide"
-      style={{
-        background: custom ? "var(--color-surface-tag-orchid)" : "var(--color-surface-alt)",
-        color: custom ? "var(--color-text-tag-orchid)" : "var(--color-text-subtle)",
-      }}
-    >
-      {custom ? "Custom" : "Lucide"}
-    </span>
+    <div className="flex flex-wrap justify-center gap-1">
+      <span
+        className="rounded-full px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide"
+        style={{
+          background: custom ? "var(--color-surface-tag-orchid)" : "var(--color-surface-alt)",
+          color: custom ? "var(--color-text-tag-orchid)" : "var(--color-text-subtle)",
+        }}
+      >
+        {custom ? "Custom" : "Lucide"}
+      </span>
+      {badge && (
+        <span
+          className="rounded-full px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide"
+          style={{
+            background: "var(--color-surface-tag-cyan)",
+            color: "var(--color-text-tag-cyan)",
+          }}
+        >
+          Badge
+        </span>
+      )}
+    </div>
   );
 }
 
 function IconTile({ entry, custom }: { entry: IconEntry; custom?: boolean }) {
-  const { name, Comp } = entry;
+  const { name, Comp, scale } = entry;
+  const isBadge = scale === "badge";
   return (
     <div className="flex flex-col items-center gap-2 rounded-lg border border-[var(--color-border-subtle)] bg-[var(--color-surface-default)] p-3 text-center">
       <div className="flex h-9 w-9 items-center justify-center text-[var(--color-text-default)]">
-        <Comp className="size-6" />
+        {/* badge-scale icons render at their intended 14px; app-scale at 24px */}
+        <Comp className={isBadge ? "size-3.5" : "size-6"} />
       </div>
       <span
         className="w-full truncate font-mono text-[10px] text-[var(--color-text-default)]"
@@ -108,7 +125,7 @@ function IconTile({ entry, custom }: { entry: IconEntry; custom?: boolean }) {
       >
         {name}
       </span>
-      <SourceTag custom={custom} />
+      <SourceTag custom={custom} badge={isBadge} />
     </div>
   );
 }
