@@ -208,6 +208,85 @@ export function CompoundBadge({ className, ...props }: GlyphProps) {
   )
 }
 
+/**
+ * PlantBadge (badge scale, 14px) — plant / botanical source. Leaf shape with
+ * stem, hand-optimized for badge slots. This IS the `Leaf-badge` Figma component
+ * (node 26485:632020) — the default Inline Start/End swap icon for Primary Badge.
+ * The other two preferredValues swap icons are Dot-badge (→ StatusDot in badge.tsx)
+ * and Rat-badge (→ RatBadge below).
+ *
+ * Replaces Lucide's generic <Leaf /> in Forager plant-entity badge slots. Lucide
+ * Leaf is 24px-optimized and reads soft at badge scale; this glyph was authored
+ * specifically for 14px badge slots with adjusted stroke weight (1.1px) and
+ * simplified curves. Figma: Icons / Lucide Icon / Leaf-badge.
+ */
+export function PlantBadge({ className, ...props }: GlyphProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="14"
+      height="14"
+      viewBox="0 0 14 14"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.1}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+      {...props}
+    >
+      {/* Vector node at (1.1666, 1.1667) within the 14×14 frame */}
+      <g transform="translate(1.1666 1.1667)">
+        {/* leaf body */}
+        <path d="M 5.2501 10.5 C 4.2258 10.5031 3.2378 10.1211 2.4819 9.4298 C 1.7261 8.7385 1.2577 7.7884 1.1696 6.7679 C 1.0815 5.7474 1.3801 4.731 2.0063 3.9204 C 2.6325 3.1098 3.5405 2.5642 4.5501 2.3917 C 7.8751 1.75 8.7501 1.4467 9.9168 0 C 10.5001 1.1667 11.0835 2.4383 11.0835 4.6667 C 11.0835 7.875 8.2951 10.5 5.2501 10.5 Z" />
+        {/* stem */}
+        <path d="M 0 11.0833 C 0 9.3333 1.0792 7.9567 2.9633 7.5833 C 4.375 7.3033 5.8333 6.4167 6.4167 5.8333" />
+      </g>
+    </svg>
+  )
+}
+
+/**
+ * RatBadge (badge scale, 14px) — animal / rodent studies. Rat silhouette with
+ * body, tail, ear dot, and extended paw. One of the three preferred inline-slot
+ * icons for Primary Badge (`Leaf-badge`, `Rat-badge`, `Dot-badge`). Useful for
+ * pre-clinical rodent model tags in Forager compound and strategy views.
+ * Figma: Icons / Lucide Icon / Rat-xs (node 26485:632018).
+ */
+export function RatBadge({ className, ...props }: GlyphProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="14"
+      height="14"
+      viewBox="0 0 14 14"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.1}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+      {...props}
+    >
+      {/* Vector node at (1.1666, 1.1667) within the 14×14 frame */}
+      <g transform="translate(1.1666 1.1667)">
+        {/* body + head arc */}
+        <path d="M 8.75 1.75 C 8.75 0.7583 7.9917 0 7 0 C 6.0083 0 5.25 0.7583 5.25 1.75 C 5.25 2.2167 5.425 2.625 5.7167 2.9167 L 5.25 2.9167 C 2.975 2.9167 1.1667 4.725 1.1667 7 C 1.1667 8.2833 2.2167 9.3333 3.5 9.3333" />
+        {/* ear + antenna arm */}
+        <path d="M 8.6333 1.1083 C 8.8083 0.9333 8.9833 0.8166 9.2167 0.6999 C 10.0917 0.3499 11.1417 0.7583 11.4917 1.6333 C 11.8417 2.5083 11.4333 3.5583 10.5583 3.9083 L 11.4917 5.5416 C 11.6083 5.7166 11.6083 5.9499 11.6083 6.1249 C 11.4917 6.5916 11.0833 6.8249 10.6167 6.7666 C 10.6167 6.7666 9.6833 6.5916 9.0417 6.4166 L 8.75 6.4166 C 7.7583 6.4166 7 7.1749 7 8.1666" />
+        {/* rear haunch */}
+        <path d="M 6.5333 9.3333 C 6.7574 9.0829 6.9046 8.7732 6.9574 8.4413 C 7.0101 8.1094 6.9662 7.7693 6.8309 7.4617 C 6.6955 7.1541 6.4745 6.892 6.1941 6.7067 C 5.9138 6.5214 5.586 6.4207 5.25 6.4167" />
+        {/* tail */}
+        <path d="M 6.4167 11.6667 L 1.1667 11.6667 C 0.8572 11.6667 0.5605 11.5438 0.3417 11.325 C 0.1229 11.1062 0 10.8094 0 10.5 C 0 10.1906 0.1229 9.8938 0.3417 9.675 C 0.5605 9.4562 0.8572 9.3333 1.1667 9.3333 L 8.1667 9.3333" />
+        {/* eye dot */}
+        <path d="M 8.1667 4.0833 L 8.1725 4.0833" />
+      </g>
+    </svg>
+  )
+}
+
 /* The full browsable inventory — these customs plus all of Lucide — lives in the
  * "Foundations/Icons" Storybook page (sandbox/stories/Icons.stories.tsx). No
  * purposeful concept→icon map is defined here yet; that's deliberate while the

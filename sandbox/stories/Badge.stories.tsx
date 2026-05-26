@@ -1,10 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import * as React from "react";
 
-import { Leaf } from "lucide-react";
-
 import { Badge } from "@/components/ui/badge";
-import { CowBadge, BADGE_ICON_STROKE } from "@/components/ui/badge-icons";
+import { CowBadge, CompoundBadge, PlantBadge, RatBadge } from "@/components/ui/badge-icons";
 
 /* ─────────────────────────────────────────────────────────────────────────
  * Badge stories — parity with Figma "Quill Components > Primary Badges"
@@ -58,10 +56,14 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /* ── Inline glyphs for slot-prop demos ────────────────────────────────────
- * Real icons — Lucide for what it covers, Brightseed custom for what it doesn't.
- * No hand-drawn SVGs. The full inventory is on the Foundations/Icons page. */
-const LeafGlyph = () => <Leaf strokeWidth={BADGE_ICON_STROKE} />;
+ * All Brightseed custom badge-scale icons — no Lucide placeholders here.
+ * PlantBadge is the React equivalent of Figma's Leaf-badge (node 26485:632020),
+ * the default inline-slot icon for Primary Badge's Inline Start/End swap.
+ * Full icon inventory lives on the Foundations/Icons Storybook page. */
+const PlantGlyph = () => <PlantBadge />;
 const CowGlyph = () => <CowBadge />;
+const CompoundGlyph = () => <CompoundBadge />;
+const RatGlyph = () => <RatBadge />;
 
 /* ─────────────────────────────────────────────────────────────────────
  * Spotlight stories — quick scans for individual aspects of the spec.
@@ -213,7 +215,7 @@ export const InlineSlots: Story = {
           children
         </span>
         <Badge variant="forest">
-          <LeafGlyph /> Plant compound
+          <PlantGlyph /> Plant compound
         </Badge>
       </div>
       <div className="flex items-center gap-2">
@@ -228,7 +230,7 @@ export const InlineSlots: Story = {
         <span className="font-mono text-xs text-[var(--color-text-subtle)] w-32">
           iconTrailing prop
         </span>
-        <Badge variant="orange" iconTrailing={<LeafGlyph />}>
+        <Badge variant="orange" iconTrailing={<PlantGlyph />}>
           Active
         </Badge>
       </div>
@@ -239,6 +241,55 @@ export const InlineSlots: Story = {
         <Badge variant="forest" statusDot>
           Live
         </Badge>
+      </div>
+    </div>
+  ),
+};
+
+/* Forager entity badges — the full badge-icon vocabulary as used in Forager
+ * compound and plant views. Each entity type gets its own glyph + color pairing.
+ * These are decorative, not semantic — color does not imply status. */
+export const ForagerEntityBadges: Story = {
+  parameters: { layout: "padded" },
+  render: () => (
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-2">
+        <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+          primary kind
+        </span>
+        <div className="flex flex-wrap items-center gap-2">
+          <Badge variant="forest" iconLeading={<PlantGlyph />}>
+            Plant source
+          </Badge>
+          <Badge variant="lime" iconLeading={<CompoundGlyph />}>
+            Compound
+          </Badge>
+          <Badge variant="cyan" iconLeading={<CowGlyph />}>
+            Bovine model
+          </Badge>
+          <Badge variant="blue" iconLeading={<RatGlyph />}>
+            Rodent study
+          </Badge>
+        </div>
+      </div>
+      <div className="flex flex-col gap-2">
+        <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+          secondary kind (tag-dense rows)
+        </span>
+        <div className="flex flex-wrap items-center gap-1">
+          <Badge variant="forest" kind="secondary" iconLeading={<PlantGlyph />}>
+            Foeniculum vulgare
+          </Badge>
+          <Badge variant="lime" kind="secondary" iconLeading={<CompoundGlyph />}>
+            Transanethole
+          </Badge>
+          <Badge variant="cyan" kind="secondary" iconLeading={<CowGlyph />}>
+            Rumen model
+          </Badge>
+          <Badge variant="blue" kind="secondary" iconLeading={<RatGlyph />}>
+            Pre-clinical
+          </Badge>
+        </div>
       </div>
     </div>
   ),
