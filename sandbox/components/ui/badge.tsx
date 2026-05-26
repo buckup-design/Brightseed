@@ -68,7 +68,7 @@ const badgeVariants = cva(
     "transition-all duration-[120ms]",
     // ── Icon defaults ────────────────────────────────────────────────────
     "[&_svg]:pointer-events-none [&_svg]:shrink-0",
-    "[&_svg:not([class*='size-'])]:size-3",
+    "[&_svg:not([class*='size-'])]:size-3.5",
     // ── Disabled fade — single DOM level so opacity never stacks ─────────
     "disabled-state:cursor-not-allowed",
     "disabled-state:[&_[data-slot=badge-content]]:opacity-[var(--disabled-text-opacity)]",
@@ -177,9 +177,9 @@ type BadgeProps = React.ComponentProps<"span"> &
   VariantProps<typeof badgeVariants> & {
     /** When true, the Slot from Radix is used so styling applies to the child element (e.g. an `<a>`). */
     asChild?: boolean
-    /** Leading inline mark — typically a 12×12 SVG icon (stroke="currentColor"). */
+    /** Leading inline mark — typically a 14×14 SVG icon (stroke="currentColor"). */
     iconLeading?: React.ReactNode
-    /** Trailing inline mark — typically a 12×12 SVG icon (stroke="currentColor"). */
+    /** Trailing inline mark — typically a 14×14 SVG icon (stroke="currentColor"). */
     iconTrailing?: React.ReactNode
     /** Renders a small filled circle in currentColor as the leading mark. Convenience for status indicators. */
     statusDot?: boolean
