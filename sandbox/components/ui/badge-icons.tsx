@@ -132,6 +132,44 @@ export function CowBadge({ className, ...props }: GlyphProps) {
 }
 
 /**
+ * Compound (24px) — chemical compound / molecule. Two hexagonal rings connected
+ * by bond lines with terminal atom marks. App-scale glyph for headers, nav, and
+ * entity cards. Honors the line-art house style (stroke, no fill).
+ * Figma: Icon / Custom / Compound (node 26553:767). Use CompoundBadge at badge scale.
+ */
+export function Compound({ className, ...props }: GlyphProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+      {...props}
+    >
+      {/* hexagon ring 1 */}
+      <path d="M13.5523 12.1769L11.2781 8.23796H6.72976L4.45557 12.1769L6.72976 16.1158H11.2781L13.5523 12.1769Z" />
+      {/* hexagon ring 2 */}
+      <path d="M20.3751 8.23798L18.1009 4.29907H13.5525L11.2783 8.23798L13.5525 12.1769H18.1009L20.3751 8.23798Z" />
+      {/* bond — upper-left arm */}
+      <path d="M6.72976 8.23797L5.75 6.54103" />
+      {/* bond — lower-right arm */}
+      <path d="M11.2783 16.512L12.5677 18.7453" />
+      {/* terminal atom — upper-left */}
+      <path d="M6.16129 4.29907C6.16129 3.35642 5.39716 2.59343 4.45565 2.59343C3.51413 2.59343 2.75 3.35642 2.75 4.29907C2.75 5.24059 3.51413 6.00472 4.45565 6.00472C5.39716 6.00472 6.16129 5.24059 6.16129 4.29907Z" />
+      {/* terminal atom — lower-right */}
+      <path d="M15.258 20.4509C15.258 19.5094 14.4938 18.7453 13.5523 18.7453C12.6108 18.7453 11.8467 19.5094 11.8467 20.4509C11.8467 21.3936 12.6108 22.1566 13.5523 22.1566C14.4938 22.1566 15.258 21.3936 15.258 20.4509Z" />
+    </svg>
+  )
+}
+
+/**
  * Compound (badge scale, 14px) — chemical compound / molecule. Shows two hexagonal
  * rings connected by bond lines with terminal atom marks at each end — the visual
  * shorthand for a bioactive small molecule in the Forager object model.
