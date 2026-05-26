@@ -7,6 +7,7 @@ import {
   BADGE_ICON_STROKE,
   Cow,
   CowBadge,
+  CompoundBadge,
   HummingbirdLine,
   HummingbirdFill,
 } from "@/components/ui/badge-icons";
@@ -73,6 +74,7 @@ const LUCIDE_ICONS: IconEntry[] = (() => {
 const CUSTOM_ICONS: IconEntry[] = [
   { name: "Cow", Comp: Cow },
   { name: "CowBadge", Comp: CowBadge },
+  { name: "CompoundBadge", Comp: CompoundBadge },
   { name: "HummingbirdLine", Comp: HummingbirdLine },
   { name: "HummingbirdFill", Comp: HummingbirdFill },
 ];
@@ -226,6 +228,13 @@ export const ColorTracking: Story = {
             </Badge>
           ))}
         </div>
+        <div className="flex flex-wrap items-center gap-2">
+          {TAG_VARIANTS.map((v) => (
+            <Badge key={`compound-${v}`} variant={v} iconLeading={<CompoundBadge />}>
+              {v}
+            </Badge>
+          ))}
+        </div>
       </div>
     </div>
   ),
@@ -280,7 +289,7 @@ export const Conventions: Story = {
           <strong className="text-[var(--color-text-default)]">
             House stroke = {BADGE_ICON_STROKE}.
           </strong>{" "}
-          Lucide draws at stroke 2 for a 24px box, which reads heavy at 10–12px badge
+          Lucide draws at stroke 2 for a 24px box, which reads heavy at 14px badge
           scale. Pass <code className="font-mono text-xs">strokeWidth={BADGE_ICON_STROKE}</code>{" "}
           for badge-scale line glyphs.
         </li>
