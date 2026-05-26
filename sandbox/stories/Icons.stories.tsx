@@ -7,6 +7,7 @@ import {
   BADGE_ICON_STROKE,
   Cow,
   CowBadge,
+  Compound,
   CompoundBadge,
   HummingbirdLine,
   HummingbirdFill,
@@ -76,6 +77,7 @@ const LUCIDE_ICONS: IconEntry[] = (() => {
 const CUSTOM_ICONS: IconEntry[] = [
   { name: "Cow", Comp: Cow, scale: "app" },
   { name: "CowBadge", Comp: CowBadge, scale: "badge" },
+  { name: "Compound", Comp: Compound, scale: "app" },
   { name: "CompoundBadge", Comp: CompoundBadge, scale: "badge" },
   { name: "HummingbirdLine", Comp: HummingbirdLine, scale: "app" },
   { name: "HummingbirdFill", Comp: HummingbirdFill, scale: "app" },
@@ -274,6 +276,7 @@ export const AppScaleGlyphs: Story = {
           { label: "Hummingbird (line)", node: <HummingbirdLine className="size-6" /> },
           { label: "Hummingbird (fill)", node: <HummingbirdFill className="size-6" /> },
           { label: "Cow", node: <Cow className="size-6" /> },
+          { label: "Compound", node: <Compound className="size-6" /> },
         ].map((g) => (
           <div
             key={g.label}
