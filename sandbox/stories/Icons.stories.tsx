@@ -11,6 +11,8 @@ import {
   CompoundBadge,
   HummingbirdLine,
   HummingbirdFill,
+  PlantBadge,
+  RatBadge,
 } from "@/components/ui/badge-icons";
 
 /* ─────────────────────────────────────────────────────────────────────────
@@ -81,6 +83,8 @@ const CUSTOM_ICONS: IconEntry[] = [
   { name: "CompoundBadge", Comp: CompoundBadge, scale: "badge" },
   { name: "HummingbirdLine", Comp: HummingbirdLine, scale: "app" },
   { name: "HummingbirdFill", Comp: HummingbirdFill, scale: "app" },
+  { name: "PlantBadge", Comp: PlantBadge, scale: "badge" },
+  { name: "RatBadge", Comp: RatBadge, scale: "badge" },
 ];
 
 /* ── presentational helpers ───────────────────────────────────────────────── */
@@ -235,7 +239,14 @@ export const ColorTracking: Story = {
       <div className="flex flex-col gap-4">
         <div className="flex flex-wrap items-center gap-2">
           {TAG_VARIANTS.map((v) => (
-            <Badge key={`leaf-${v}`} variant={v} iconLeading={<LucideIcons.Leaf strokeWidth={BADGE_ICON_STROKE} />}>
+            <Badge key={`plant-${v}`} variant={v} iconLeading={<PlantBadge />}>
+              {v}
+            </Badge>
+          ))}
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          {TAG_VARIANTS.map((v) => (
+            <Badge key={`rat-${v}`} variant={v} iconLeading={<RatBadge />}>
               {v}
             </Badge>
           ))}
