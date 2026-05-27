@@ -189,6 +189,10 @@
   --color-icon-data-orange:        var(--data-orange-700);
   --color-icon-data-orchid:        var(--data-orchid-700);
 
+  /* ── Favorite / pin icon ── */
+  --color-icon-favorite-inactive:  var(--color-sand-300);   /* appears on card hover — very light */
+  --color-icon-favorite-active:    var(--color-yellow-500); /* favorited/pinned — theme-invariant */
+
   /* ──────────────────────────────────────────────────────────────────
      Tag tokens — decorative color set for Forager's tag-dense surfaces.
      Recipe per hue:
@@ -363,6 +367,10 @@
   --color-icon-data-orange:        var(--data-orange-300);
   --color-icon-data-orchid:        var(--data-orchid-300);
   /* --color-icon-brand unchanged — lime works on dark bg */
+
+  /* ── Favorite / pin icon ── */
+  --color-icon-favorite-inactive:  var(--color-sand-700);   /* subtle on dark surface */
+  /* --color-icon-favorite-active unchanged — yellow-500 reads on dark bg */
 
   /* ── Action — secondary adapts to dark surface ── */
   /* primary unchanged — lime-400 reads on both themes */

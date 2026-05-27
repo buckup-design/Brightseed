@@ -1,44 +1,96 @@
 import * as React from "react";
-import { CheckCircle2, AlertTriangle, MinusCircle } from "lucide-react";
+import { Lightbulb, Star, Check, AlertTriangle, X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 /**
- * StrategyCard — Forager Strategies overview.
+ * StrategyCard v2 — Forager Strategies overview.
  *
- * Source mock: anna's mocks 4-29-26/strategies view.png
+ * Source: Figma StrategyCard v2 Components, node 26585:379616
+ * https://www.figma.com/design/ZZPjoeJ447MWuzNi3LL1BL?node-id=26585-379616
  *
- * Visual hierarchy (top → bottom):
- *   1. Strategy one-liner (bold, default text)
- *   2. Detailed description (subtle)
- *   3. Three evidence rows (status glyph + label + detail) — semantic colors
- *      map to Brightseed intents (success / warning / critical)
- *   4. Footer actions: "Tell me more" (outline) + "Explore compounds" (linktext)
+ * Layout (top → bottom):
+ *   1. Header row: lightbulb icon (left) + favorite star (right, fades in on hover)
+ *   2. Strategy one-liner — SemiBold 15px
+ *   3. Description — Regular 13px, subtle color
+ *   4. Assessment table — bordered, 3 rows of Mono label + StatusIcon + value
+ *   5. Full-width "Explore compounds" Secondary button
+ *
+ * Hover state:
+ *   - Border steps subtle → default
+ *   - Shadow deepens (1.5px → 6px)
+ *   - Assessment row text steps subtle → default
+ *   - Favorite star fades in (always visible when isFavorited=true)
  */
+
+// ─── Types ───────────────────────────────────────────────────────────────────
 
 export type StrategyStatus = "success" | "warning" | "critical";
 
-interface StrategyEvidence {
+export interface AssessmentRow {
   label: string;
   detail: string;
   status: StrategyStatus;
 }
 
-interface StrategyCardProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface StrategyCardProps extends React.HTMLAttributes<HTMLDivElement> {
   oneLiner: string;
   description: string;
-  evidence: StrategyEvidence[];
-  onTellMeMore?: () => void;
+  evidence: AssessmentRow[];
   onExploreCompounds?: () => void;
+  onFavorite?: () => void;
+  isFavorited?: boolean;
 }
+
+// ─── StatusIcon ───────────────────────────────────────────────────────────────
+// 24×24 pill, colored surface bg + centered 12×12 Lucide icon.
+// All colors reference semantic tokens → auto-adapts to light/dark theme.
+
+const STATUS_CONFIG: Record<
+  StrategyStatus,
+  { bg: string; iconClass: string; Icon: React.ElementType }
+> = {
+  success: {
+    bg: "bg-[var(--color-surface-success)]",
+    iconClass: "text-[var(--color-icon-success)]",
+    Icon: Check,
+  },
+  warning: {
+    bg: "bg-[var(--color-surface-warning)]",
+    iconClass: "text-[var(--color-icon-warning)]",
+    Icon: AlertTriangle,
+  },
+  critical: {
+    bg: "bg-[var(--color-surface-critical)]",
+    iconClass: "text-[var(--color-icon-critical)]",
+    Icon: X,
+  },
+};
+
+function StatusIcon({ status }: { status: StrategyStatus }) {
+  const { bg, iconClass, Icon } = STATUS_CONFIG[status];
+  return (
+    <div
+      className={cn(
+        "size-6 rounded-full flex items-center justify-center shrink-0",
+        bg
+      )}
+    >
+      <Icon className={cn("size-3 shrink-0", iconClass)} strokeWidth={2.5} />
+    </div>
+  );
+}
+
+// ─── StrategyCard ─────────────────────────────────────────────────────────────
 
 export function StrategyCard({
   oneLiner,
   description,
   evidence,
-  onTellMeMore,
   onExploreCompounds,
+  onFavorite,
+  isFavorited = false,
   className,
   ...props
 }: StrategyCardProps) {
@@ -46,70 +98,130 @@ export function StrategyCard({
     <div
       data-slot="strategy-card"
       className={cn(
-        "flex flex-col gap-4 p-5",
+        // layout
+        "group flex flex-col gap-3 p-4",
+        // sizing — canonical card width from Figma
+        "w-[320px]",
+        // surface
         "bg-[var(--color-surface-default)]",
-        "border border-[var(--color-border-subtle)]",
-        "rounded-[var(--shape-radius-lg)]",
-        "transition-shadow duration-[120ms]",
-        "hover:shadow-sm",
+        // border: subtle at rest, one step bolder on hover
+        "border border-[var(--color-border-subtle)] hover:border-[var(--color-border-default)]",
+        // corner radius: 8px (--shape-radius-md) matches Figma v2
+        "rounded-[var(--shape-radius-md)]",
+        // shadow: slight at rest, pronounced on hover
+        "shadow-[0px_1px_1.5px_rgba(0,0,0,0.07)]",
+        "hover:shadow-[0px_4px_6px_rgba(0,0,0,0.12)]",
+        // transitions
+        "transition-[border-color,box-shadow] duration-[120ms]",
         className
       )}
       {...props}
     >
-      {/* Header */}
-      <div className="flex flex-col gap-1">
-        <h3 className="text-base font-semibold leading-tight text-[var(--color-text-default)]">
-          {oneLiner}
-        </h3>
-        <p className="text-sm text-[var(--color-text-subtle)] leading-snug">
-          {description}
-        </p>
+      {/* ── Header ────────────────────────────────────────────────────────── */}
+      <div className="flex items-center justify-between">
+        {/* Strategy glyph — Lightbulb indicates "this is a proposed strategy" */}
+        <Lightbulb
+          className="size-6 text-[var(--color-text-subtle)] shrink-0"
+          strokeWidth={1.5}
+        />
+
+        {/* Favorite toggle — ghost icon button.
+            Invisible at rest; fades in on card hover.
+            Always visible when already favorited so the state is readable. */}
+        <button
+          type="button"
+          onClick={onFavorite}
+          aria-label={isFavorited ? "Remove from favorites" : "Add to favorites"}
+          aria-pressed={isFavorited}
+          className={cn(
+            "size-8 flex items-center justify-center shrink-0",
+            "rounded-[var(--shape-radius-md)]",
+            // fade in on hover; pinned cards always show star
+            isFavorited
+              ? "opacity-100"
+              : "opacity-0 group-hover:opacity-100",
+            "transition-opacity duration-[120ms]",
+            // button hover bg
+            "hover:bg-[var(--color-surface-alt)]",
+            // keyboard focus ring
+            "focus-visible:opacity-100",
+            "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-1",
+            "outline-none"
+          )}
+        >
+          <Star
+            className={cn(
+              "size-4",
+              isFavorited
+                ? "text-[var(--color-icon-favorite-active)] fill-current"
+                : "text-[var(--color-icon-favorite-inactive)]"
+            )}
+            strokeWidth={1.5}
+          />
+        </button>
       </div>
 
-      {/* Evidence rows */}
-      <div className="flex flex-col gap-2">
-        {evidence.map((row) => (
-          <EvidenceRow key={row.label} {...row} />
+      {/* ── One-liner ─────────────────────────────────────────────────────── */}
+      <p className="text-[15px] font-semibold leading-tight text-[var(--color-text-default)]">
+        {oneLiner}
+      </p>
+
+      {/* ── Description ───────────────────────────────────────────────────── */}
+      <p className="text-[13px] leading-snug text-[var(--color-text-subtle)]">
+        {description}
+      </p>
+
+      {/* ── Assessment table ──────────────────────────────────────────────── */}
+      {/* Bordered table; 3 rows separated by hairlines.
+          Row text steps from subtle → default on card hover (same timing as border/shadow). */}
+      <div
+        className={cn(
+          "border border-[var(--color-border-subtle)]",
+          "rounded-[var(--shape-radius-sm)]",  // 6px — tighter than card
+          "overflow-hidden shrink-0 w-full"
+        )}
+      >
+        {evidence.map((row, i) => (
+          <React.Fragment key={row.label}>
+            {i > 0 && (
+              <div
+                className="h-px bg-[var(--color-border-subtle)]"
+                aria-hidden="true"
+              />
+            )}
+            <div className="flex items-center gap-2 h-8 px-3">
+              {/* Label — Geist Mono, 12px, fixed 96px column */}
+              <p className="font-mono text-[12px] text-[var(--color-text-subtle)] w-24 shrink-0 leading-none">
+                {row.label}
+              </p>
+              {/* Value — icon + text; text shifts to default on hover */}
+              <div className="flex items-center gap-1.5 flex-1 min-w-0 overflow-hidden">
+                <StatusIcon status={row.status} />
+                <p
+                  className={cn(
+                    "text-[13px] whitespace-nowrap leading-none",
+                    "text-[var(--color-text-subtle)]",
+                    "group-hover:text-[var(--color-text-default)]",
+                    "transition-colors duration-[120ms]"
+                  )}
+                >
+                  {row.detail}
+                </p>
+              </div>
+            </div>
+          </React.Fragment>
         ))}
       </div>
 
-      {/* Footer actions */}
-      <div className="flex items-center gap-2 mt-1">
-        <Button variant="outline" size="sm" onClick={onTellMeMore}>
-          Tell me more
-        </Button>
-        <Button variant="linktext" size="sm" onClick={onExploreCompounds}>
-          Explore compounds
-        </Button>
-      </div>
-    </div>
-  );
-}
-
-function EvidenceRow({ label, detail, status }: StrategyEvidence) {
-  const iconMap = {
-    success: {
-      Icon: CheckCircle2,
-      color: "var(--color-icon-success)",
-    },
-    warning: {
-      Icon: AlertTriangle,
-      color: "var(--color-icon-warning)",
-    },
-    critical: {
-      Icon: MinusCircle,
-      color: "var(--color-icon-critical)",
-    },
-  }[status];
-  const Icon = iconMap.Icon;
-
-  return (
-    <div className="flex items-start gap-2 text-sm leading-snug">
-      <Icon className="size-4 mt-0.5 shrink-0" style={{ color: iconMap.color }} />
-      <p className="text-[var(--color-text-default)]">
-        <span className="font-medium">{label}:</span>{" "}
-        <span className="text-[var(--color-text-subtle)]">{detail}</span>
-      </p>
+      {/* ── CTA ───────────────────────────────────────────────────────────── */}
+      <Button
+        variant="secondary"
+        size="default"
+        className="w-full"
+        onClick={onExploreCompounds}
+      >
+        Explore compounds
+      </Button>
     </div>
   );
 }
