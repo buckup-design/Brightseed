@@ -1,6 +1,9 @@
+"use client";
+
+import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
-import { StrategyCard } from "@/components/forager/cards/strategy-card";
+import { StrategyCard, type AssessmentRow } from "@/components/forager/cards/strategy-card";
 
 /* ─────────────────────────────────────────────────────────────────────────
  * StrategyCard v2 — Forager Strategies view.
@@ -13,8 +16,68 @@ import { StrategyCard } from "@/components/forager/cards/strategy-card";
  *   - Assessment table is now a bordered table (not free-floating rows)
  *   - Single "Explore compounds" Secondary CTA (removed "Tell me more" outline)
  *   - Hover state: deeper shadow + bolder border + row text steps to default
- *   - Favorite star ghost button fades in on hover; pins when isFavorited=true
+ *   - Favorite star ghost button fades in on hover; pins when favorited
+ *
+ * Favorite behavior (Grid story):
+ *   - Clicking the star toggles immediately (visual confirmation only)
+ *   - Favorites persist to localStorage under FAVORITES_STORAGE_KEY
+ *   - On next page load / navigation, favorited cards sort to the top
+ *   - No re-ordering during the current session
  * ───────────────────────────────────────────────────────────────────────── */
+
+// ─── Demo data ───────────────────────────────────────────────────────────────
+
+type StrategyDef = {
+  id: string;
+  oneLiner: string;
+  description: string;
+  evidence: AssessmentRow[];
+};
+
+const DEMO_STRATEGIES: StrategyDef[] = [
+  {
+    id: "strategy-mtOR",
+    oneLiner: "Stimulate mTOR / IGF-1 signaling",
+    description: "Amino acid sensing → increased casein synthesis.",
+    evidence: [
+      { label: "Evidence",    detail: "Significant evidence",  status: "success" },
+      { label: "Feasibility", detail: "Probable",              status: "success" },
+      { label: "Legal",       detail: "No existing patents",   status: "success" },
+    ],
+  },
+  {
+    id: "strategy-myostatin",
+    oneLiner: "Block myostatin pathway via flavonoid combinations.",
+    description: "Inhibits myostatin signaling to retain lean mass; well-documented in murine models.",
+    evidence: [
+      { label: "Evidence",    detail: "Strong literature support",   status: "success" },
+      { label: "Feasibility", detail: "GRAS ingredients",            status: "success" },
+      { label: "Legal",       detail: "Clear freedom to operate",    status: "success" },
+    ],
+  },
+  {
+    id: "strategy-pgc1a",
+    oneLiner: "Boost mitochondrial biogenesis via PGC-1α activators.",
+    description: "Increases energy efficiency in muscle tissue to offset GLP-1-induced fatigue.",
+    evidence: [
+      { label: "Evidence",    detail: "Moderate literature, strong predicted signal", status: "warning" },
+      { label: "Feasibility", detail: "GRAS ingredients, stable formulation",         status: "success" },
+      { label: "Legal",       detail: "Two patents — workaround feasible",             status: "warning" },
+    ],
+  },
+  {
+    id: "strategy-satiety",
+    oneLiner: "Suppress satiety hormones via gut-bitter receptors.",
+    description: "Counter the appetite-suppressing effect of GLP-1. Blocked by IP and safety constraints.",
+    evidence: [
+      { label: "Evidence",    detail: "Thin literature, low signal",                  status: "critical" },
+      { label: "Feasibility", detail: "Counters the drug's intended effect",           status: "critical" },
+      { label: "Legal",       detail: "Core patents held by GLP-1 manufacturers",     status: "critical" },
+    ],
+  },
+];
+
+// ─── Storybook meta ──────────────────────────────────────────────────────────
 
 const meta = {
   title: "DRAFT WIP/Cards/Strategy Card",
@@ -29,34 +92,19 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// ─── Default ────────────────────────────────────────────────────────────────
+// ─── Single-card stories ──────────────────────────────────────────────────────
 
 export const Default: Story = {
   args: {
-    oneLiner: "Stimulate mTOR / IGF-1 signaling",
+    oneLiner:    "Stimulate mTOR / IGF-1 signaling",
     description: "Amino acid sensing → increased casein synthesis.",
     evidence: [
-      {
-        label: "Evidence",
-        detail: "Significant evidence",
-        status: "success",
-      },
-      {
-        label: "Feasibility",
-        detail: "Probable",
-        status: "success",
-      },
-      {
-        label: "Legal",
-        detail: "No existing patents",
-        status: "success",
-      },
+      { label: "Evidence",    detail: "Significant evidence", status: "success" },
+      { label: "Feasibility", detail: "Probable",             status: "success" },
+      { label: "Legal",       detail: "No existing patents",  status: "success" },
     ],
   },
 };
-
-// ─── Favorited ──────────────────────────────────────────────────────────────
-// Star is always visible (not hover-only) when a card is pinned.
 
 export const Favorited: Story = {
   args: {
@@ -65,131 +113,112 @@ export const Favorited: Story = {
   },
 };
 
-// ─── Mixed status ───────────────────────────────────────────────────────────
-
 export const Mixed: Story = {
   args: {
-    oneLiner: "Boost mitochondrial biogenesis via PGC-1α activators.",
-    description:
-      "Increases energy efficiency in muscle tissue to offset GLP-1-induced fatigue and lean mass loss.",
+    oneLiner:    "Boost mitochondrial biogenesis via PGC-1α activators.",
+    description: "Increases energy efficiency in muscle tissue to offset GLP-1-induced fatigue and lean mass loss.",
     evidence: [
-      {
-        label: "Evidence",
-        detail: "Moderate literature, strong predicted signal",
-        status: "warning",
-      },
-      {
-        label: "Feasibility",
-        detail: "GRAS ingredients, stable formulation",
-        status: "success",
-      },
-      {
-        label: "Legal",
-        detail: "Two patents — workaround feasible",
-        status: "warning",
-      },
+      { label: "Evidence",    detail: "Moderate literature, strong predicted signal", status: "warning" },
+      { label: "Feasibility", detail: "GRAS ingredients, stable formulation",         status: "success" },
+      { label: "Legal",       detail: "Two patents — workaround feasible",             status: "warning" },
     ],
   },
 };
-
-// ─── Blocked ─────────────────────────────────────────────────────────────────
 
 export const Blocked: Story = {
   args: {
-    oneLiner: "Suppress satiety hormones via gut-bitter receptors.",
-    description:
-      "Counter the appetite-suppressing effect of GLP-1 by activating TAS2R receptors. Mechanism is plausible but blocked by IP and safety constraints.",
+    oneLiner:    "Suppress satiety hormones via gut-bitter receptors.",
+    description: "Counter the appetite-suppressing effect of GLP-1 by activating TAS2R receptors. Mechanism is plausible but blocked by IP and safety constraints.",
     evidence: [
-      {
-        label: "Evidence",
-        detail: "Thin literature, low predictive signal",
-        status: "critical",
-      },
-      {
-        label: "Feasibility",
-        detail: "Counters the drug's intended effect",
-        status: "critical",
-      },
-      {
-        label: "Legal",
-        detail: "Core patents held by GLP-1 manufacturers",
-        status: "critical",
-      },
+      { label: "Evidence",    detail: "Thin literature, low predictive signal",       status: "critical" },
+      { label: "Feasibility", detail: "Counters the drug's intended effect",           status: "critical" },
+      { label: "Legal",       detail: "Core patents held by GLP-1 manufacturers",     status: "critical" },
     ],
   },
 };
-
-// ─── AllGreen ────────────────────────────────────────────────────────────────
 
 export const AllGreen: Story = {
   args: {
-    oneLiner: "Block myostatin pathway via flavonoid combinations.",
-    description:
-      "Inhibits myostatin signaling to retain lean mass; well-documented in murine models and several human trials.",
+    oneLiner:    "Block myostatin pathway via flavonoid combinations.",
+    description: "Inhibits myostatin signaling to retain lean mass; well-documented in murine models and several human trials.",
     evidence: [
-      {
-        label: "Evidence",
-        detail: "Strong literature support + matching predictions",
-        status: "success",
-      },
-      {
-        label: "Feasibility",
-        detail: "GRAS ingredients, stable formulation",
-        status: "success",
-      },
-      {
-        label: "Legal",
-        detail: "Clear freedom to operate",
-        status: "success",
-      },
+      { label: "Evidence",    detail: "Strong literature support + matching predictions", status: "success" },
+      { label: "Feasibility", detail: "GRAS ingredients, stable formulation",              status: "success" },
+      { label: "Legal",       detail: "Clear freedom to operate",                          status: "success" },
     ],
   },
 };
 
-// ─── Grid ────────────────────────────────────────────────────────────────────
-// Four cards on the sand background that the Strategies view uses.
+// ─── Grid story — deferred-sort favorites ─────────────────────────────────────
+//
+// Behavior:
+//   • Star toggles immediately (visual confirmation, internal state in StrategyCard)
+//   • Favorite state persists to localStorage on every toggle
+//   • Card ORDER is frozen at mount — derived from localStorage at that moment
+//   • Navigating away and back (or refreshing) re-reads localStorage → favorited
+//     cards sort to the top of the grid
+//
+// To test: favorite a card, then navigate away from this story and back.
+
+const FAVORITES_STORAGE_KEY = "forager-strategy-favorites-demo";
+
+function readFavorites(): Set<string> {
+  try {
+    const raw = localStorage.getItem(FAVORITES_STORAGE_KEY);
+    return raw ? new Set<string>(JSON.parse(raw)) : new Set<string>();
+  } catch {
+    return new Set<string>();
+  }
+}
+
+function StrategiesGrid() {
+  // Live favorites Set — updates immediately on click so star reflects truth.
+  const [favorites, setFavorites] = React.useState<Set<string>>(readFavorites);
+
+  // Sort order is frozen at mount. On the next mount (navigate away → back, or
+  // browser refresh), readFavorites() re-runs and the sorted order updates.
+  // Within a session, cards never jump around.
+  const [sortedStrategies] = React.useState<StrategyDef[]>(() => {
+    const init = readFavorites();
+    return [
+      ...DEMO_STRATEGIES.filter((s) => init.has(s.id)),
+      ...DEMO_STRATEGIES.filter((s) => !init.has(s.id)),
+    ];
+  });
+
+  const handleFavorite = (id: string) => {
+    setFavorites((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      try {
+        localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify([...next]));
+      } catch { /* storage unavailable — star still toggles visually */ }
+      return next;
+    });
+  };
+
+  return (
+    <div className="flex flex-col gap-4">
+      <p className="text-[12px] font-mono text-[var(--color-text-subtle)]">
+        Favorite a card, then navigate away and back to see it sort to the top.
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl bg-[var(--color-surface-alt)] p-6 rounded-lg">
+        {sortedStrategies.map((strategy) => (
+          <StrategyCard
+            key={strategy.id}
+            oneLiner={strategy.oneLiner}
+            description={strategy.description}
+            evidence={strategy.evidence}
+            isFavorited={favorites.has(strategy.id)}
+            onFavorite={() => handleFavorite(strategy.id)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export const Grid: Story = {
   parameters: { layout: "padded" },
-  render: () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl bg-[var(--color-surface-alt)] p-6 rounded-lg">
-      <StrategyCard
-        oneLiner="Stimulate mTOR / IGF-1 signaling"
-        description="Amino acid sensing → increased casein synthesis."
-        evidence={[
-          { label: "Evidence", detail: "Significant evidence", status: "success" },
-          { label: "Feasibility", detail: "Probable", status: "success" },
-          { label: "Legal", detail: "No existing patents", status: "success" },
-        ]}
-        isFavorited
-      />
-      <StrategyCard
-        oneLiner="Block myostatin pathway via flavonoid combinations."
-        description="Inhibits myostatin signaling to retain lean mass; well-documented in murine models."
-        evidence={[
-          { label: "Evidence", detail: "Strong literature support", status: "success" },
-          { label: "Feasibility", detail: "GRAS ingredients", status: "success" },
-          { label: "Legal", detail: "Clear freedom to operate", status: "success" },
-        ]}
-      />
-      <StrategyCard
-        oneLiner="Boost mitochondrial biogenesis via PGC-1α activators."
-        description="Increases energy efficiency in muscle tissue to offset GLP-1-induced fatigue."
-        evidence={[
-          { label: "Evidence", detail: "Moderate literature, strong predicted signal", status: "warning" },
-          { label: "Feasibility", detail: "GRAS ingredients, stable formulation", status: "success" },
-          { label: "Legal", detail: "Two patents — workaround feasible", status: "warning" },
-        ]}
-      />
-      <StrategyCard
-        oneLiner="Suppress satiety hormones via gut-bitter receptors."
-        description="Counter the appetite-suppressing effect of GLP-1. Blocked by IP and safety constraints."
-        evidence={[
-          { label: "Evidence", detail: "Thin literature, low signal", status: "critical" },
-          { label: "Feasibility", detail: "Counters the drug's intended effect", status: "critical" },
-          { label: "Legal", detail: "Core patents held by GLP-1 manufacturers", status: "critical" },
-        ]}
-      />
-    </div>
-  ),
+  render: () => <StrategiesGrid />,
 };
