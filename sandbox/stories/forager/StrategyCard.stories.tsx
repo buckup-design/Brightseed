@@ -202,7 +202,9 @@ function StrategiesGrid() {
       <p className="text-[12px] font-mono text-[var(--color-text-subtle)]">
         Favorite a card, then navigate away and back to see it sort to the top.
       </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl bg-[var(--color-surface-alt)] p-6 rounded-lg">
+      {/* auto-fill + minmax: as many columns as fit at ≥340px each, growing to 1fr.
+          overflow-hidden: clips anything that escapes a cell (last-resort guard). */}
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(340px,1fr))] gap-4 max-w-5xl overflow-hidden bg-[var(--color-surface-alt)] p-6 rounded-lg">
         {sortedStrategies.map((strategy) => (
           <StrategyCard
             key={strategy.id}

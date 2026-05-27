@@ -112,8 +112,10 @@ export function StrategyCard({
       className={cn(
         // layout
         "group flex flex-col gap-3 p-4",
-        // sizing — wider default gives table values room before truncation kicks in
-        "w-[380px]",
+        // w-full: card fills its grid column. Column width is the grid's responsibility.
+        // min-w-0: allows the card to shrink below intrinsic content width (prevents
+        // grid overflow when columns are narrower than the card's natural size).
+        "w-full min-w-0",
         // surface
         "bg-[var(--color-surface-default)]",
         // border: subtle at rest, one step bolder on hover
