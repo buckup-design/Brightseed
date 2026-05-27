@@ -179,12 +179,16 @@ export function StrategyCard({
       </div>
 
       {/* ── One-liner ─────────────────────────────────────────────────────── */}
-      <p className="text-[15px] font-semibold leading-tight text-[var(--color-text-default)]">
+      {/* min-h-[2.5em]: 2 × leading-tight (1.25em) — reserves the 2-line slot
+          even when copy is a single line, so card heights stay consistent.
+          line-clamp-2: truncates to 2 lines with ellipsis if copy runs long. */}
+      <p className="text-[15px] font-semibold leading-tight text-[var(--color-text-default)] line-clamp-2 min-h-[2.5em]">
         {oneLiner}
       </p>
 
       {/* ── Description ───────────────────────────────────────────────────── */}
-      <p className="text-[13px] leading-snug text-[var(--color-text-subtle)]">
+      {/* min-h-[2.75em]: 2 × leading-snug (1.375em) */}
+      <p className="text-[13px] leading-snug text-[var(--color-text-subtle)] line-clamp-2 min-h-[2.75em]">
         {description}
       </p>
 
