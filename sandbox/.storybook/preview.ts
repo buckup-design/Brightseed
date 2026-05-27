@@ -23,6 +23,7 @@ const preview: Preview = {
     // Sections not listed here fall to the bottom in default order.
     options: {
       storySort: {
+        method: "alphabetical",
         order: [
           "Quill Design System",
           "Foundations",
