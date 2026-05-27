@@ -151,26 +151,24 @@ export function StrategyCard({
           className={cn(
             "group/fav size-8 flex items-center justify-center shrink-0",
             "rounded-[var(--shape-radius-md)]",
-            // pinned cards always show the button; unpinned fades in on card hover
+            // pinned cards always show; unpinned fades in on card hover
             favorited
               ? "opacity-100"
               : "opacity-0 group-hover:opacity-100",
-            // transition both opacity and bg so hover surface appears smoothly
-            "transition-[opacity,background-color] duration-[120ms]",
-            // ghost surface on button hover
-            "hover:bg-[var(--color-surface-alt)]",
-            // keyboard focus
+            "transition-opacity duration-[120ms]",
+            // keyboard focus only — no hover surface
             "focus-visible:opacity-100 outline-none",
             "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-1",
           )}
         >
           <Star
             className={cn(
-              "size-4 transition-colors duration-[120ms]",
+              // always outline — no fill ever
+              "size-4 fill-none transition-colors duration-[120ms]",
               favorited
-                // active: filled yellow star
-                ? "text-[var(--color-icon-favorite-active)] fill-current"
-                // inactive: grey outline → yellow outline on button hover (preview)
+                // pinned: yellow outline
+                ? "text-[var(--color-icon-favorite-active)]"
+                // unpinned: grey outline → yellow outline on button hover (intent preview)
                 : "text-[var(--color-icon-favorite-inactive)] group-hover/fav:text-[var(--color-icon-favorite-active)]"
             )}
             strokeWidth={1.5}
