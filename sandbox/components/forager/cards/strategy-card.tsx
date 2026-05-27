@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import { Lightbulb, Star, Check, AlertTriangle, X } from "lucide-react";
 
@@ -90,10 +92,20 @@ export function StrategyCard({
   evidence,
   onExploreCompounds,
   onFavorite,
-  isFavorited = false,
+  isFavorited: isFavoritedProp = false,
   className,
   ...props
 }: StrategyCardProps) {
+  // Internal toggle state so the star works without external wiring.
+  // Storybook demos work out of the box; callers can still pass onFavorite
+  // to sync with their own state layer.
+  const [favorited, setFavorited] = React.useState(isFavoritedProp);
+
+  const handleFavorite = () => {
+    setFavorited((prev) => !prev);
+    onFavorite?.();
+  };
+
   return (
     <div
       data-slot="strategy-card"
@@ -128,33 +140,38 @@ export function StrategyCard({
         {/* Favorite toggle — ghost icon button.
             Invisible at rest; fades in on card hover.
             Always visible when already favorited so the state is readable. */}
+        {/* group/fav creates a named hover scope scoped to this button,
+            independent of the card-level group. This lets the star respond
+            to button-boundary hover separately from card-level hover. */}
         <button
           type="button"
-          onClick={onFavorite}
-          aria-label={isFavorited ? "Remove from favorites" : "Add to favorites"}
-          aria-pressed={isFavorited}
+          onClick={handleFavorite}
+          aria-label={favorited ? "Remove from favorites" : "Add to favorites"}
+          aria-pressed={favorited}
           className={cn(
-            "size-8 flex items-center justify-center shrink-0",
+            "group/fav size-8 flex items-center justify-center shrink-0",
             "rounded-[var(--shape-radius-md)]",
-            // fade in on hover; pinned cards always show star
-            isFavorited
+            // pinned cards always show the button; unpinned fades in on card hover
+            favorited
               ? "opacity-100"
               : "opacity-0 group-hover:opacity-100",
-            "transition-opacity duration-[120ms]",
-            // button hover bg
+            // transition both opacity and bg so hover surface appears smoothly
+            "transition-[opacity,background-color] duration-[120ms]",
+            // ghost surface on button hover
             "hover:bg-[var(--color-surface-alt)]",
-            // keyboard focus ring
-            "focus-visible:opacity-100",
+            // keyboard focus
+            "focus-visible:opacity-100 outline-none",
             "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-1",
-            "outline-none"
           )}
         >
           <Star
             className={cn(
-              "size-4",
-              isFavorited
+              "size-4 transition-colors duration-[120ms]",
+              favorited
+                // active: filled yellow star
                 ? "text-[var(--color-icon-favorite-active)] fill-current"
-                : "text-[var(--color-icon-favorite-inactive)]"
+                // inactive: grey outline → yellow outline on button hover (preview)
+                : "text-[var(--color-icon-favorite-inactive)] group-hover/fav:text-[var(--color-icon-favorite-active)]"
             )}
             strokeWidth={1.5}
           />
