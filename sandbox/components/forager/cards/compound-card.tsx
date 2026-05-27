@@ -44,6 +44,7 @@ export function CompoundCard({
       data-slot="compound-card"
       className={cn(
         "flex flex-col gap-3 p-4",
+        "w-full min-w-0",
         "bg-[var(--color-surface-default)]",
         "border border-[var(--color-border-subtle)]",
         "rounded-[var(--shape-radius-lg)]",
@@ -57,7 +58,7 @@ export function CompoundCard({
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-start gap-2 min-w-0">
           <Hexagon className="size-4 mt-0.5 shrink-0 text-[var(--color-icon-data-orange)]" />
-          <h3 className="text-base font-medium leading-tight text-[var(--color-text-default)]">
+          <h3 className="text-base font-medium leading-tight text-[var(--color-text-default)] line-clamp-2 min-h-[2.5em]">
             {name}
           </h3>
         </div>
@@ -70,7 +71,7 @@ export function CompoundCard({
       </div>
 
       {/* Mechanism one-liner */}
-      <p className="text-sm text-[var(--color-text-default)] leading-snug">
+      <p className="text-sm text-[var(--color-text-default)] leading-snug line-clamp-2 min-h-[2.75em]">
         {mechanism}
       </p>
 

@@ -11,7 +11,7 @@ import { PlantCard } from "@/components/forager/cards/plant-card";
  * ───────────────────────────────────────────────────────────────────────── */
 
 const meta = {
-  title: "DRAFT WIP/Cards/Plant Card",
+  title: "Components/Card - Plant",
   component: PlantCard,
   parameters: { layout: "padded" },
   tags: ["autodocs"],

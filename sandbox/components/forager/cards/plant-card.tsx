@@ -53,6 +53,7 @@ export function PlantCard({
       data-slot="plant-card"
       className={cn(
         "flex flex-col gap-3 p-4",
+        "w-full min-w-0",
         "bg-[var(--color-surface-default)]",
         "border border-[var(--color-border-subtle)]",
         "rounded-[var(--shape-radius-lg)]",
@@ -67,7 +68,7 @@ export function PlantCard({
         <div className="flex items-start gap-2 min-w-0">
           <Leaf className="size-4 mt-1 shrink-0 text-[var(--color-icon-success)]" />
           <h3
-            className="text-base leading-tight text-[var(--color-text-default)]"
+            className="text-base leading-tight text-[var(--color-text-default)] line-clamp-2 min-h-[2.5em]"
             style={{
               fontFamily: 'var(--font-display, "Tiempos Fine", serif)',
               fontStyle: "italic",
@@ -88,12 +89,12 @@ export function PlantCard({
       </div>
 
       {/* Strategy one-liner */}
-      <p className="text-sm text-[var(--color-text-default)] leading-snug">
+      <p className="text-sm text-[var(--color-text-default)] leading-snug line-clamp-2 min-h-[2.75em]">
         {strategyOneLiner}
       </p>
 
-      {/* Evidence prose */}
-      <p className="text-sm text-[var(--color-text-subtle)] leading-relaxed">
+      {/* Evidence prose — leading-relaxed (1.625) → 2 lines = 3.25em */}
+      <p className="text-sm text-[var(--color-text-subtle)] leading-relaxed line-clamp-2 min-h-[3.25em]">
         {evidence}
       </p>
 
