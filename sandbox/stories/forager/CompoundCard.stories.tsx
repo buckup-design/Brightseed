@@ -8,7 +8,7 @@ import { CompoundCard } from "@/components/forager/cards/compound-card";
  * ───────────────────────────────────────────────────────────────────────── */
 
 const meta = {
-  title: "DRAFT WIP/Cards/Compound Card",
+  title: "Components/Card - Compound",
   component: CompoundCard,
   parameters: { layout: "padded" },
   tags: ["autodocs"],
