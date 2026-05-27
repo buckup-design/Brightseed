@@ -112,8 +112,8 @@ export function StrategyCard({
       className={cn(
         // layout
         "group flex flex-col gap-3 p-4",
-        // sizing — canonical card width from Figma
-        "w-[320px]",
+        // sizing — wider default gives table values room before truncation kicks in
+        "w-[380px]",
         // surface
         "bg-[var(--color-surface-default)]",
         // border: subtle at rest, one step bolder on hover
@@ -214,7 +214,8 @@ export function StrategyCard({
                 <StatusIcon status={row.status} />
                 <p
                   className={cn(
-                    "text-[13px] whitespace-nowrap leading-none",
+                    // truncate handles whitespace-nowrap + overflow + ellipsis in one
+                    "text-[13px] truncate leading-none",
                     "text-[var(--color-text-subtle)]",
                     "group-hover:text-[var(--color-text-default)]",
                     "transition-colors duration-[120ms]"
