@@ -80,7 +80,7 @@ const DEMO_STRATEGIES: StrategyDef[] = [
 // ─── Storybook meta ──────────────────────────────────────────────────────────
 
 const meta = {
-  title: "DRAFT WIP/Cards/Strategy Card",
+  title: "Forager/Cards/Strategy Card",
   component: StrategyCard,
   parameters: { layout: "padded" },
   tags: ["autodocs"],
