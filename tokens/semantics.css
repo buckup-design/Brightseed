@@ -289,19 +289,22 @@
   --color-surface-brand-active:    var(--color-sand-950);
   --color-surface-brand-subtle:    var(--color-sand-950);
 
-  /* Semantic surfaces — darkened to work on deep bg */
-  --color-surface-success:         var(--success-950);
-  --color-surface-success-hover:   var(--success-900);
-  --color-surface-success-active:  var(--success-800);
-  --color-surface-info:            var(--info-950);
-  --color-surface-info-hover:      var(--info-900);
-  --color-surface-info-active:     var(--info-800);
-  --color-surface-warning:         var(--warning-950);
-  --color-surface-warning-hover:   var(--warning-900);
-  --color-surface-warning-active:  var(--warning-800);
-  --color-surface-critical:        var(--critical-950);
-  --color-surface-critical-hover:  var(--critical-900);
-  --color-surface-critical-active: var(--critical-800);
+  /* Semantic surfaces — intent tint at low opacity on sand-950 base.
+     Visual judgment: dark mode alerts read better with a subtle tint than
+     a pure deep-intent step. Recipe: intent step at 10-15% over sand-950.
+     Source: dark mode mockup May 28 2026. */
+  --color-surface-success:         color-mix(in srgb, var(--success-800) 15%, var(--color-sand-950));
+  --color-surface-success-hover:   color-mix(in srgb, var(--success-800) 22%, var(--color-sand-950));
+  --color-surface-success-active:  color-mix(in srgb, var(--success-800) 30%, var(--color-sand-950));
+  --color-surface-info:            color-mix(in srgb, var(--info-400)    10%, var(--color-sand-950));
+  --color-surface-info-hover:      color-mix(in srgb, var(--info-400)    16%, var(--color-sand-950));
+  --color-surface-info-active:     color-mix(in srgb, var(--info-400)    22%, var(--color-sand-950));
+  --color-surface-warning:         color-mix(in srgb, var(--warning-300) 10%, var(--color-sand-950));
+  --color-surface-warning-hover:   color-mix(in srgb, var(--warning-300) 16%, var(--color-sand-950));
+  --color-surface-warning-active:  color-mix(in srgb, var(--warning-300) 22%, var(--color-sand-950));
+  --color-surface-critical:        color-mix(in srgb, var(--critical-400) 10%, var(--color-sand-950));
+  --color-surface-critical-hover:  color-mix(in srgb, var(--critical-400) 16%, var(--color-sand-950));
+  --color-surface-critical-active: color-mix(in srgb, var(--critical-400) 22%, var(--color-sand-950));
   --color-surface-data:            var(--data-cyan-950);
   --color-surface-selected:        var(--info-950);
   --color-surface-selected-hover:  var(--info-900);
@@ -315,13 +318,15 @@
      Default/Destructive/Link-Brand are theme-invariant per Figma. */
   --color-border-focus-secondary:  var(--color-sand-500);      /* sand/500 — matches Figma colors/ring-dark */
 
-  --color-border-success-default:  var(--success-800);
+  /* Semi-transparent intent border on dark bg — 46% opacity matches mockup.
+     Source: dark mode mockup May 28 2026. */
+  --color-border-success-default:  color-mix(in srgb, var(--success-600) 46%, transparent);
   --color-border-success-bold:     var(--success-500);
-  --color-border-info-default:     var(--info-800);
+  --color-border-info-default:     color-mix(in srgb, var(--info-300)    46%, transparent);
   --color-border-info-bold:        var(--info-500);
-  --color-border-warning-default:  var(--warning-800);
+  --color-border-warning-default:  color-mix(in srgb, var(--warning-300) 46%, transparent);
   --color-border-warning-bold:     var(--warning-500);
-  --color-border-critical-default: var(--critical-800);
+  --color-border-critical-default: color-mix(in srgb, var(--critical-400) 46%, transparent);
   --color-border-critical-bold:    var(--critical-500);
 
   /* ── Text — sand palette inverted ── */
@@ -342,11 +347,15 @@
                                                                   here as TEXT (not surface) so contrast holds. */
   --color-text-link-brand-hover:   var(--color-lime-200);      /* one step lighter — "more pronounced on dark" */
 
-  /* Semantic text — lighter steps for dark bg readability */
-  --color-text-success:            var(--success-300);
-  --color-text-info:               var(--info-300);
-  --color-text-warning:            var(--warning-300);
-  --color-text-critical:           var(--critical-300);
+  /* Semantic text — neutral foreground in dark mode.
+     Design decision: intent-tinted text on dark tinted surfaces reads garish
+     and low-contrast. Dark mode alerts signal semantic intent through surface
+     tint + border only; text uses warm white so it stays readable.
+     Source: dark mode mockup May 28 2026. */
+  --color-text-success:            var(--color-text-default);  /* sand-50 — same as neutral foreground */
+  --color-text-info:               var(--color-text-default);
+  --color-text-warning:            var(--color-text-default);
+  --color-text-critical:           var(--color-text-default);
   --color-text-data:               var(--data-cyan-300);
   --color-text-data-lavender:        var(--data-lavender-300);
   --color-text-data-orange:        var(--data-orange-300);
@@ -358,10 +367,13 @@
   --color-icon-disabled:           var(--color-sand-600);
   --color-icon-inverse:            var(--color-sand-900);
   --color-icon-inverse-subtle:     var(--color-sand-700);
-  --color-icon-success:            var(--success-300);
-  --color-icon-info:               var(--info-300);
-  --color-icon-warning:            var(--warning-300);
-  --color-icon-critical:           var(--critical-300);
+  /* Icon dark mode = same base step as the border, solid.
+     Border uses color-mix(intent-step 46%, transparent) — icon uses that step opaque.
+     Source: dark mode visual judgment May 28 2026. */
+  --color-icon-success:            var(--success-600);  /* forest-600 — matches border base */
+  --color-icon-info:               var(--info-300);     /* blue-300   — matches border base */
+  --color-icon-warning:            color-mix(in srgb, var(--warning-200) 80%, transparent); /* yellow-200 at 80% */
+  --color-icon-critical:           var(--critical-300); /* red-300    — matches base/destructive-foreground dark */
   --color-icon-data:               var(--data-cyan-300);
   --color-icon-data-lavender:        var(--data-lavender-300);
   --color-icon-data-orange:        var(--data-orange-300);

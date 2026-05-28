@@ -177,6 +177,8 @@ npm run dev         # localhost:3000 (Next.js)
 
 9. **GitHub management is Claude's job, not Becky's.** Becky has stated this as a hard rule. Don't ask her to copy URLs, navigate folder pickers, click through Settings to find connectors, etc. Use the GitHub Connector (already authenticated at the Cowork platform level) and Claude in Chrome (also connected) before falling back to "tell me what to do" instructions. The `plugin:engineering:github` MCP plugin had an OAuth bug as of Apr 30, 2026 — uses an OAuth dialect Cowork's SDK doesn't speak — so don't waste cycles retrying that flow. Path that works: GitHub Connector + project context, or Claude in Chrome to drive github.com directly.
 10. **Chunk Figma bulk operations into batches of ≤12.** The `figma-console` WebSocket bridge has a ~30-second round-trip timeout. Any single `figma_execute` call that mutates many nodes — cloning component variants, walking and rebinding hundreds of fills, batch variable creation — risks blowing past it. **Critical wrinkle:** when the call times out, the work usually completes server-side anyway, but the response never returns. That makes state confusing — the next call may see "no it isn't done" or "it's already done," depending on timing. The rule is: chunk variant clones, mass rebinds, and similar bulk Figma mutations into batches of ≤12 per `figma_execute` call. Verify state with a small probe call between batches. Established May 2026 after multiple timeouts on Button master rebind + xl-variant cloning runs.
+12. **`createNodeFromSvg` does not inherit `fill="none"` — set it explicitly on every `<path>`.** Figma's plugin API method `figma.createNodeFromSvg(svgStr)` does NOT cascade the root `<svg fill="none">` attribute to child `<path>` elements. When Figma creates a VECTOR node from a closed `<path>` (one that ends in `Z`), it defaults to a solid black fill if no explicit `fill` attribute exists on the element itself. Symptoms: the created shape looks solid/filled at first render, then may render correctly after a Figma re-sync (confusing). `<circle>` and `<line>` elements are unaffected because Figma parses them into ELLIPSE/LINE node types, which have different fill defaults. **Rule: always add `fill="none"` explicitly on every `<path>` element when building SVG strings for icon components.** Example: `'<path fill="none" d="m21.73 18...Z"/>'` not `'<path d="m21.73 18...Z"/>'`. Applies to all closed-path shapes: triangles, polygons, shields, rosettes, blobs, etc. As a belt-and-suspenders check, after creating icon components via `createNodeFromSvg`, verify that all child VECTOR nodes have `fills: []` before moving them into the component. Established May 2026 after AlertTriangle rendered solid-filled on first creation.
+
 11. **Mirror canonical shadcn patterns exactly — never invent.** When shadcn provides a visual or structural pattern in the Pro Pack file (component layouts, doc skeletons, naming, etc.), copy it verbatim. The Pro Pack frames are usually locked, which means the API can READ them but the user can't easily edit them — that's by design, not a barrier. **If you can't access a canonical reference (locked, missing, ambiguous), pause and ask, don't approximate.** Canonical example: the **purple-dashed-line "Skeleton" pattern** for component documentation matrices uses **two tiers of dashed border** — an outer wrapper frame AND each individual cell wrapped in its own dashed-bordered frame. Stroke spec: `SOLID rgb(151, 71, 255)` (purple), `1px`, `INSIDE` alignment, `dashPattern [10, 5]`. Cell frames use FIXED sizing with `primaryAxisAlignItems: 'CENTER'` and `counterAxisAlignItems: 'CENTER'` so the component instance centers in the cell. Canonical source: `21123:52947` (Pro Pack Badge Number skeleton). Established May 7, 2026 after a refactor where Claude built a single big-border Examples frame instead of per-cell borders.
 
 ---
@@ -557,7 +559,7 @@ Primary Badge gained optional leading and trailing slots — for icons or status
 - `Inline End` — INSTANCE_SWAP, default `Leaf-badge`, same preferredValues. Bound to trailing slot's `mainComponent`.
 
 **Slot structure (replaces the legacy IconPlaceholder slots):**
-Every variant has `[leading slot] [text] [trailing slot]` as direct children — except Focus variants where the slots live inside `variant.children[1]` (the inner `Badge` frame, with the Ring outside). Slots are 10×10 INSTANCE nodes hidden by default. Auto Layout HUG, so badge auto-resizes when slots become visible.
+Every variant has `[leading slot] [text] [trailing slot]` as direct children — except Focus variants where the slots live inside `variant.children[1]` (the inner `Badge` frame, with the Ring outside). Slots are 14×14 INSTANCE nodes hidden by default. Auto Layout HUG, so badge auto-resizes when slots become visible.
 
 **The Figma idiosyncrasy this architecture solves.**
 First-pass implementation used per-variant nested overrides on `slot.children[0].strokes[0].boundVariables.color` — pointing each variant's slot inner stroke to that variant's text token. This worked for the common path (toggle `Show Inline Start`, leave `Inline Start` at default Leaf), but broke when the user explicitly picked "Leaf-badge" from the dropdown — i.e., set the property to its own default value. Figma's runtime optimizes "set property = default" into a no-op revert to master, bypassing the variant's nested override. The slot rendered in `base/foreground` (Leaf-badge's master stroke binding) instead of the variant's text color. Rare bug but real.
@@ -585,7 +587,7 @@ Figma caps mode count at 10 per collection on this account. With 12 Variant valu
 
 **Why the icon authoring pattern matters.**
 For the cascade to work, every icon component used as a swap target must have its inner stroke bound to `tag/active-color`. New custom icons added to the system follow this pattern:
-- Outer COMPONENT frame: 10×10, fills `[]`, strokes `[]`.
+- Outer COMPONENT frame: 14×14, fills `[]`, strokes `[]`.
 - Inner element at `children[0]` named `Vector` (consistency for swap-override compatibility — see Dot subsection below).
 - Inner element fills `[]`, strokes bound to `tag/active-color`.
 - 1px stroke weight, CENTER alignment for line-art icons.
@@ -604,7 +606,7 @@ Implementation: existing variant set kept at 315w with its automatic dashed bord
 ### What this means for Claude in future sessions
 
 **Adding a new custom icon for use in Primary Badge slots:**
-1. Build the component as 10×10 outer frame, inner `Vector` child at `children[0]`, no fills, strokes bound to `tag/active-color`, 1px CENTER stroke.
+1. Build the component as 14×14 outer frame, inner `Vector` child at `children[0]`, no fills, strokes bound to `tag/active-color`, 1px CENTER stroke.
 2. Add to `preferredValues` of the `Inline Start` and `Inline End` properties on the Primary Badge set so it appears in the curated swap dropdown.
 3. No per-variant rebinding needed — the cascade handles color automatically.
 
@@ -696,3 +698,41 @@ What landed on `main` (commits `c78802b` → `4c5d7cc` → `0af1ff4`):
 Public Storybook verified green and in sync at https://brightseed-storybook.vercel.app.
 
 **Workflow note (FUSE + push constraints):** the Cowork sandbox's FUSE mount can't delete files or push (no GitHub credentials), so commits and pushes run on Becky's Mac. Claude preps all edits and asset generation in the sandbox, then hands over an exact command block. Stale `.git/*.lock` files left by interrupted sandbox git ops are cleared with `rm -f .git/index.lock .git/HEAD.lock .git/objects/maintenance.lock` at the top of each block.
+
+---
+
+### Alert component — full variant set + dark mode (May 28, 2026)
+
+The Alert component reached full Storybook parity. Five variants in both Figma and React, in matching order: **Default → Info → Success → Warning → Destructive**.
+
+**Figma:** Component set node `26:160` on the Alert page (`21:322`). All 5 variants use Brightseed semantic variables for surface/text/border. Icon bindings per variant — see `memory/context/icon-system.md` Icon inventory → Alert component section.
+
+**React (`sandbox/components/ui/alert.tsx`):** No changes needed — component references semantic token names, dark mode flows through automatically via `[data-theme="dark"]` on the ancestor.
+
+### Dark mode — semantic intent surfaces (May 28, 2026)
+
+Locked-in design decision for how semantic intent colors (info/success/warning/critical) behave in dark mode across the whole system. Source: visual judgment against the "desired dark mode styling" mockup (`26631:866177`).
+
+**Three-part recipe:**
+
+| Layer | Light | Dark |
+|---|---|---|
+| **Surface** | `intent-50` (soft tint) | `color-mix(intent-step 10-15%, sand-950)` — subtle tint on dark base |
+| **Border** | `intent-200` (quiet outline) | `color-mix(intent-step 46%, transparent)` — semi-transparent intent color |
+| **Text** | `intent-700` (semantic tinted) | `--color-text-default` (sand-50 warm white) — **no semantic tint in dark** |
+
+**Why neutral text in dark mode:** tinted text on dark tinted surfaces reads garish and reduces contrast. The semantic signal in dark mode lives in the surface + border only. Text stays warm white across all intent variants.
+
+**Icon dark mode rule:** icon uses the same base color step as the border, but solid (no alpha). The border and icon share one hue, expressed at different opacities.
+
+| Variant | Surface (dark) | Border (dark) | Text (dark) | Icon (dark) |
+|---|---|---|---|---|
+| Default | `base/card` (`sand-950`) | `sand-200` at 40% | `base/foreground` | `base/foreground` |
+| Info | `blue-400` at 10% on `sand-950` | `blue-300` at 46% | `base/foreground` | `blue-300` |
+| Success | `forest-800` at 15% on `sand-950` | `forest-600` at 46% | `base/foreground` | `forest-600` |
+| Warning | `yellow-300` at 10% on `sand-950` | `yellow-300` at 46% | `base/foreground` | `yellow-200` at 80% |
+| Critical | `red-400` at 10% on `sand-950` | `red-400` at 46% | `base/foreground` | `red-300` (via `base/destructive-foreground`) |
+
+**CSS:** All values live in `tokens/semantics.css` `[data-theme="dark"]` section as `color-mix()` expressions. Component code unchanged — references semantic token names only.
+
+**Figma:** All 12 dark-mode variable values updated in the Brightseed Mode collection (`VariableCollectionId:26462:212204`, mode `26462:1`). Surfaces set as computed hex, borders as RGBA, text as alias to `base/foreground`, icons as alias to the matching primitive step.
