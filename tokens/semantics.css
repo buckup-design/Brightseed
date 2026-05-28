@@ -184,6 +184,7 @@
   --color-icon-info:               var(--info-700);
   --color-icon-warning:            var(--warning-700);
   --color-icon-critical:           var(--critical-700);
+  --color-icon-destructive:        var(--critical-700);  /* Alert Destructive icon — red-700 light */
   --color-icon-data:               var(--data-cyan-700);
   --color-icon-data-lavender:      var(--data-lavender-700);
   --color-icon-data-orange:        var(--data-orange-700);
@@ -374,6 +375,7 @@
   --color-icon-info:               var(--info-300);     /* blue-300   — matches border base */
   --color-icon-warning:            color-mix(in srgb, var(--warning-200) 80%, transparent); /* yellow-200 at 80% */
   --color-icon-critical:           color-mix(in srgb, var(--critical-400) 80%, transparent); /* red-400 at 80% */
+  --color-icon-destructive:        color-mix(in srgb, var(--critical-400) 80%, transparent); /* red-400 at 80% — Alert Destructive icon */
   --color-icon-data:               var(--data-cyan-300);
   --color-icon-data-lavender:        var(--data-lavender-300);
   --color-icon-data-orange:        var(--data-orange-300);
