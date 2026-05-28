@@ -731,7 +731,7 @@ Locked-in design decision for how semantic intent colors (info/success/warning/c
 | Info | `blue-400` at 10% on `sand-950` | `blue-300` at 46% | `base/foreground` | `blue-300` |
 | Success | `forest-800` at 15% on `sand-950` | `forest-600` at 46% | `base/foreground` | `forest-600` |
 | Warning | `yellow-300` at 10% on `sand-950` | `yellow-300` at 46% | `base/foreground` | `yellow-200` at 80% |
-| Critical | `red-400` at 10% on `sand-950` | `red-400` at 46% | `base/foreground` | `red-300` (via `base/destructive-foreground`) |
+| Critical | `red-400` at 10% on `sand-950` | `red-400` at 46% | `base/foreground` | `red-400` at 80% |
 
 **CSS:** All values live in `tokens/semantics.css` `[data-theme="dark"]` section as `color-mix()` expressions. Component code unchanged — references semantic token names only.
 
