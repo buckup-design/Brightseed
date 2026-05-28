@@ -373,7 +373,7 @@
   --color-icon-success:            var(--success-600);  /* forest-600 — matches border base */
   --color-icon-info:               var(--info-300);     /* blue-300   — matches border base */
   --color-icon-warning:            color-mix(in srgb, var(--warning-200) 80%, transparent); /* yellow-200 at 80% */
-  --color-icon-critical:           var(--critical-300); /* red-300    — matches base/destructive-foreground dark */
+  --color-icon-critical:           color-mix(in srgb, var(--critical-400) 80%, transparent); /* red-400 at 80% */
   --color-icon-data:               var(--data-cyan-300);
   --color-icon-data-lavender:        var(--data-lavender-300);
   --color-icon-data-orange:        var(--data-orange-300);
