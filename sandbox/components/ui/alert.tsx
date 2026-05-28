@@ -56,7 +56,7 @@ const alertVariants = cva(
         destructive: cn(
           "bg-[var(--color-surface-critical)] text-[var(--color-text-critical)]",
           "border-[var(--color-border-critical-default)]",
-          "[&>svg]:text-[var(--color-icon-critical)]"
+          "[&>svg]:text-[var(--color-icon-destructive)]"
         ),
       },
     },
