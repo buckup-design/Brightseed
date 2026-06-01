@@ -162,7 +162,8 @@ npm run dev         # localhost:3000 (Next.js)
 2. **This is a case study.** Every significant decision should be documentable — what was the problem, what was tried, what was chosen and why.
 3. **Forager is data-dense.** Dense tables, charts, canvas-style UIs. Patterns like "wizard" are wrong here — configuration panels with stateful nodes are right.
 4. **Line art visual style** — icons and illustration use clean line art, not 3D or filled styles.
-5. **The work is for a hiring audience too.** Write comments, name things clearly, and keep code readable for a case study context — not just functional.
+5. **Never hand-roll an SVG glyph.** Always use icons from the approved library: https://brightseed-storybook.vercel.app/?path=/story/foundations-icons--inventory. If an icon isn't in the inventory, flag it — do not improvise paths.
+6. **The work is for a hiring audience too.** Write comments, name things clearly, and keep code readable for a case study context — not just functional.
 6. **Forager is alpha (3 customer POCs, <10 by EOY 2026).** Speed of prototyping > code quality. Heavy review tooling, AI code review GitHub Actions, formal PR review — all premature for this stage. Bring them back when there's PMF and real engineering. **Hold the line on brand quality and token discipline only** — those are what make the prompted UI look on-brand. Code cleanliness underneath can be sloppy.
 7. **The case study is the workflow, not just the design system.** Becky designed an end-to-end Cowork → preview → merge pipeline that lets non-engineers (Anna, Meng, Chuan) prototype Forager screens at the speed of typing without breaking production. Document the workflow as the headline artifact, with the design system as one ingredient.
 8. **Push-back protocol — use it in chat responses and code comments.** Three levels, used consistently so Becky (and eventually Chuan) knows exactly what needs attention:
