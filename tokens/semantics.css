@@ -159,8 +159,8 @@
      is text-only, so we step down the lime scale to lime-700 (light) /
      lime-300 (dark) for AA contrast on page surfaces.
      Decided May 2026 — replaced earlier forest-scale brand-link. */
-  --color-text-link-brand:           var(--color-lime-600);      /* default — one step lighter than prior lime-700 */
-  --color-text-link-brand-hover:     var(--color-lime-700);      /* one step more pronounced on hover */
+  --color-text-link-brand:           var(--color-forest-800);    /* #3f6947 — matches Figma base/link-brand light mode */
+  --color-text-link-brand-hover:     var(--color-forest-900);    /* one step more pronounced on hover */
   /* No -disabled token — disabled state uses --color-text-link-brand at --disabled-text-opacity. */
 
   /* Semantic text — all verified WCAG AA on sand-50 surface */
