@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { ArrowRight } from "lucide-react";
+import { CircleArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -121,7 +121,7 @@ function FormPane() {
           className="w-full justify-center gap-2 rounded-full uppercase tracking-wide"
         >
           Sign in
-          <CircleArrowRightGlyph className="size-5" />
+          <CircleArrowRight className="size-5" />
         </Button>
 
         <Button
@@ -234,13 +234,4 @@ function MailGlyph({ className }: { className?: string }) {
   );
 }
 
-function CircleArrowRightGlyph({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10" />
-      <path d="m9 9 3 3-3 3" />
-      <path d="M16 12H9" />
-    </svg>
-  );
-}
 
