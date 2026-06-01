@@ -43,6 +43,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
+    "remark-gfm": "^4.0.1",
     "storybook": "^10.3.6",
     "tailwindcss": "^4",
     "typescript": "^5",
