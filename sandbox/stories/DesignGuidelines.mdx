@@ -25,7 +25,7 @@ Charts and tag colors (forest, cyan, lavender, orchid, orange, blue, yellow, red
 Component code references **semantic tokens only** — never primitives or intents directly. The layers exist so that a single design decision (e.g., "primary action should be lime") flows everywhere automatically.
 
 | Layer      | Example                  | What it does                              |
-| ---------- | ------------------------ | ----------------------------------------- |
+|---|---|---|
 | Primitives | `--color-lime-300`       | Raw hue values — the palette              |
 | Intents    | `--action-primary-300`   | Semantic groupings — what the color means |
 | Semantics  | `--color-action-primary` | What a component uses — always this layer |
@@ -34,16 +34,16 @@ Component code references **semantic tokens only** — never primitives or inten
 
 #### Surfaces
 
-| Token                     | Light      | Dark              | Use                                    |
-| ------------------------- | ---------- | ----------------- | -------------------------------------- |
-| `--color-surface-default` | white      | sand-950 `#1F1F1E` | Page background                       |
-| `--color-surface-alt`     | sand-100   | sand-900          | Sidebars, table alt rows, inset panels |
-| `--color-surface-brand`   | forest-900 | forest-900        | Deep Forest branded surfaces           |
+| Token                     | Light      | Dark               | Use                                    |
+|---|---|---|---|
+| `--color-surface-default` | white      | sand-950 `#1F1F1E` | Page background                        |
+| `--color-surface-alt`     | sand-100   | sand-900           | Sidebars, table alt rows, inset panels |
+| `--color-surface-brand`   | forest-900 | forest-900         | Deep Forest branded surfaces           |
 
 #### Actions
 
 | Token                      | Value                          | Notes                                               |
-| -------------------------- | ------------------------------ | --------------------------------------------------- |
+|---|---|---|
 | `--color-action-primary`   | lime-300 `#CDE67B`             | Default state; hover = lime-400, pressed = lime-500 |
 | `--color-action-secondary` | aliases page bg                | Secondary buttons match the surface they sit on     |
 | `--color-action-critical`  | red-100 surface + red-600 text | Soft, not alarming                                  |
@@ -51,7 +51,7 @@ Component code references **semantic tokens only** — never primitives or inten
 #### Text
 
 | Token                            | Use                                                      |
-| -------------------------------- | -------------------------------------------------------- |
+|---|---|
 | `--color-text-primary`           | Body copy, primary labels                                |
 | `--color-text-secondary`         | Supporting copy, captions                                |
 | `--color-text-tertiary`          | Placeholder, disabled labels                             |
@@ -62,7 +62,7 @@ Component code references **semantic tokens only** — never primitives or inten
 #### Focus rings
 
 | Variant               | Token                              | Color |
-| --------------------- | ---------------------------------- | ----- |
+|---|---|---|
 | Default/Outline/Ghost | `--color-border-focus`             | lime  |
 | Secondary             | `--color-border-focus-secondary`   | sand  |
 | Destructive           | `--color-border-focus-destructive` | red   |
@@ -96,7 +96,7 @@ Body line length is capped at **65–75ch** to maintain readable measure at typi
 All corner radii reference the shape token ladder. Never hardcode pixel values on individual components — that's how components drift from each other over time.
 
 | Token                  | Value  | Typical use                              |
-| ---------------------- | ------ | ---------------------------------------- |
+|---|---|---|
 | `--shape-radius-xs`    | 2px    | Tight secondary badges                   |
 | `--shape-radius-sm`    | 6px    | Small chips                              |
 | `--shape-radius-md`    | 8px    | Buttons (default, sm, lg), inputs, cards |
