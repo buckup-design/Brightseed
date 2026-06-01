@@ -24,48 +24,48 @@ Charts and tag colors (forest, cyan, lavender, orchid, orange, blue, yellow, red
 
 Component code references **semantic tokens only** — never primitives or intents directly. The layers exist so that a single design decision (e.g., "primary action should be lime") flows everywhere automatically.
 
-| Layer      | Example                  | What it does                              |
+| Layer | Example | What it does |
 |---|---|---|
-| Primitives | `--color-lime-300`       | Raw hue values — the palette              |
-| Intents    | `--action-primary-300`   | Semantic groupings — what the color means |
-| Semantics  | `--color-action-primary` | What a component uses — always this layer |
+| Primitives | `--color-lime-300` | Raw hue values — the palette |
+| Intents | `--action-primary-300` | Semantic groupings — what the color means |
+| Semantics | `--color-action-primary` | What a component uses — always this layer |
 
 ### Key tokens
 
 #### Surfaces
 
-| Token                     | Light      | Dark               | Use                                    |
+| Token | Light | Dark | Use |
 |---|---|---|---|
-| `--color-surface-default` | white      | sand-950 `#1F1F1E` | Page background                        |
-| `--color-surface-alt`     | sand-100   | sand-900           | Sidebars, table alt rows, inset panels |
-| `--color-surface-brand`   | forest-900 | forest-900         | Deep Forest branded surfaces           |
+| `--color-surface-default` | white | sand-950 `#1F1F1E` | Page background |
+| `--color-surface-alt` | sand-100 | sand-900 | Sidebars, table alt rows, inset panels |
+| `--color-surface-brand` | forest-900 | forest-900 | Deep Forest branded surfaces |
 
 #### Actions
 
-| Token                      | Value                          | Notes                                               |
+| Token | Value | Notes |
 |---|---|---|
-| `--color-action-primary`   | lime-300 `#CDE67B`             | Default state; hover = lime-400, pressed = lime-500 |
-| `--color-action-secondary` | aliases page bg                | Secondary buttons match the surface they sit on     |
-| `--color-action-critical`  | red-100 surface + red-600 text | Soft, not alarming                                  |
+| `--color-action-primary` | lime-300 `#CDE67B` | Default state; hover = lime-400, pressed = lime-500 |
+| `--color-action-secondary` | aliases page bg | Secondary buttons match the surface they sit on |
+| `--color-action-critical` | red-100 surface + red-600 text | Soft, not alarming |
 
 #### Text
 
-| Token                            | Use                                                      |
+| Token | Use |
 |---|---|
-| `--color-text-primary`           | Body copy, primary labels                                |
-| `--color-text-secondary`         | Supporting copy, captions                                |
-| `--color-text-tertiary`          | Placeholder, disabled labels                             |
-| `--color-text-on-action-primary` | Text on lime buttons (forest-800, theme-invariant)       |
-| `--color-text-link-default`      | Inline body links (blue scale)                           |
-| `--color-text-link-brand`        | Linktext button variant (lime-700 light / lime-300 dark) |
+| `--color-text-primary` | Body copy, primary labels |
+| `--color-text-secondary` | Supporting copy, captions |
+| `--color-text-tertiary` | Placeholder, disabled labels |
+| `--color-text-on-action-primary` | Text on lime buttons (forest-800, theme-invariant) |
+| `--color-text-link-default` | Inline body links (blue scale) |
+| `--color-text-link-brand` | Linktext button variant (lime-700 light / lime-300 dark) |
 
 #### Focus rings
 
-| Variant               | Token                              | Color |
+| Variant | Token | Color |
 |---|---|---|
-| Default/Outline/Ghost | `--color-border-focus`             | lime  |
-| Secondary             | `--color-border-focus-secondary`   | sand  |
-| Destructive           | `--color-border-focus-destructive` | red   |
+| Default/Outline/Ghost | `--color-border-focus` | lime |
+| Secondary | `--color-border-focus-secondary` | sand |
+| Destructive | `--color-border-focus-destructive` | red |
 
 ### Tag colors
 
@@ -95,17 +95,17 @@ Body line length is capped at **65–75ch** to maintain readable measure at typi
 
 All corner radii reference the shape token ladder. Never hardcode pixel values on individual components — that's how components drift from each other over time.
 
-| Token                  | Value  | Typical use                              |
+| Token | Value | Typical use |
 |---|---|---|
-| `--shape-radius-xs`    | 2px    | Tight secondary badges                   |
-| `--shape-radius-sm`    | 6px    | Small chips                              |
-| `--shape-radius-md`    | 8px    | Buttons (default, sm, lg), inputs, cards |
-| `--shape-radius-lg`    | 10px   | Larger cards                             |
-| `--shape-radius-xl`    | 14px   | Modals, popovers                         |
-| `--shape-radius-2xl`   | 18px   |                                          |
-| `--shape-radius-3xl`   | 22px   |                                          |
-| `--shape-radius-4xl`   | 26px   | XL buttons only                          |
-| `--shape-radius-round` | 9999px | Pills, avatars                           |
+| `--shape-radius-xs` | 2px | Tight secondary badges |
+| `--shape-radius-sm` | 6px | Small chips |
+| `--shape-radius-md` | 8px | Buttons (default, sm, lg), inputs, cards |
+| `--shape-radius-lg` | 10px | Larger cards |
+| `--shape-radius-xl` | 14px | Modals, popovers |
+| `--shape-radius-2xl` | 18px | |
+| `--shape-radius-3xl` | 22px | |
+| `--shape-radius-4xl` | 26px | XL buttons only |
+| `--shape-radius-round` | 9999px | Pills, avatars |
 
 ---
 
