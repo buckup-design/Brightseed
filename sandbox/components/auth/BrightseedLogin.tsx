@@ -175,7 +175,7 @@ function ImageSlot() {
     >
       {/* Text overlay — sits on top of the brand graphic */}
       <div className="relative flex h-full flex-col justify-center px-12 lg:px-16">
-        <p className="font-mono text-[10px] font-medium uppercase tracking-widest text-[#1F4030]">
+        <p className="font-sans text-[11px] font-bold uppercase tracking-widest text-[#1F4030]">
           Discover
           <br />
           Nutraceuticals
@@ -187,7 +187,7 @@ function ImageSlot() {
             fontStyle: "italic",
           }}
         >
-          6<span className="italic">x</span> faster
+          6x faster
         </h2>
         <p className="mt-3 text-base text-[#1F4030]">
           than the industry average.
