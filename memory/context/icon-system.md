@@ -193,15 +193,15 @@ This page is for **component-specific icon groups** — clusters of icons that t
 **Component set node:** `26:160` (frame "Alert") on the Alert page (`21:322`)
 **Storybook parity:** full — 5 Figma variants match the 5 `alert.tsx` variants
 
-**Correct icon color bindings (as of May 28, 2026 — corrected by Becky):**
+**Correct icon color bindings (as of May 28, 2026):**
 
-| Variant | Icon | Icon color variable |
-|---|---|---|
-| Default | Lucide Icon / CircleAlert | `base/foreground` |
-| Destructive | Lucide Icon / OctagonX | `base/destructive-foreground` |
-| Info | Lucide Icon / Info | `base/icon-info` |
-| Success | Lucide Icon / CircleCheck | `base/icon-success` |
-| Warning | Lucide Icon / TriangleAlert | `base/icon-warning` |
+| Variant | Icon | Icon color variable | Dark mode value |
+|---|---|---|---|
+| Default | Lucide Icon / CircleAlert | `base/foreground` | `sand-50` |
+| Destructive | Lucide Icon / OctagonX | `base/icon-destructive` | `red-400` at 80% |
+| Info | Lucide Icon / Info | `base/icon-info` | `blue-300` |
+| Success | Lucide Icon / CircleCheck | `base/icon-success` | `forest-600` |
+| Warning | Lucide Icon / TriangleAlert | `base/icon-warning` | `yellow-200` at 80% |
 
 **Background / text / border bindings per variant:**
 
