@@ -23,8 +23,8 @@ import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
  *   5. Inputs: visually labelless (sr-only labels for a11y); 48px height
  *      matches the Brightseed Input Size=lg variant from Figma
  *   6. SIGN IN: Quill Default xl, all-caps text, trailing CircleArrowRight
- *   7. Forgot your password: Quill Linktext (no underline ever; weight bump
- *      on hover via the existing button variant)
+ *   7. Forgot your password: Quill Linktext (no underline ever; lime-300 →
+ *      lime-200 color step on hover in dark mode via variant="linktext")
  *   8. Sign up row: "Don't have an account? Sign up" — body + Linktext footer
  *   9. Image Slot: brand graphic from brand/graphic_login.bg.webp
  *      (mirrored to /public/brand/) with Tiempos Fine Italic "6x faster"
@@ -126,8 +126,7 @@ function FormPane() {
 
         <Button
           type="button"
-          variant="link"
-          className="text-[var(--color-text-link-brand)] no-underline hover:no-underline"
+          variant="linktext"
         >
           Forgot your password?
         </Button>
@@ -137,8 +136,8 @@ function FormPane() {
         Don&apos;t have an account?{" "}
         <Button
           type="button"
-          variant="link"
-          className="h-auto p-0 align-baseline text-[var(--color-text-link-brand)] no-underline hover:no-underline"
+          variant="linktext"
+          className="h-auto p-0 align-baseline"
         >
           Sign up
         </Button>
