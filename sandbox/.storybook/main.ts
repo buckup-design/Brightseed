@@ -5,7 +5,6 @@ const config: StorybookConfig = {
     "../stories/**/*.mdx",
     "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
     "../components/**/*.stories.@(js|jsx|mjs|ts|tsx)",
-    "../../DOCS/**/*.mdx",
   ],
   addons: ["@storybook/addon-docs", "@storybook/addon-a11y"],
   framework: "@storybook/nextjs-vite",
