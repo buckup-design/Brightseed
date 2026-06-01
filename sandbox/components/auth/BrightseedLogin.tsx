@@ -173,25 +173,66 @@ function ImageSlot() {
         backgroundRepeat: "no-repeat",
       }}
     >
-      {/* Text overlay — sits on top of the brand graphic */}
-      <div className="relative flex h-full flex-col justify-center px-12 lg:px-16">
-        <p className="font-sans text-[11px] font-bold uppercase tracking-widest text-[#1F4030]">
-          Discover
-          <br />
-          Nutraceuticals
-        </p>
-        <h2
-          className="mt-3 text-[64px] leading-none text-[#1F4030]"
-          style={{
-            fontFamily: 'var(--font-display, "Tiempos Fine", serif)',
-            fontStyle: "italic",
-          }}
-        >
-          6x faster
-        </h2>
-        <p className="mt-3 text-base text-[#1F4030]">
-          than the industry average.
-        </p>
+      {/*
+       * Text overlay — CSS grid overlap pattern matching Figma node 28556:967152.
+       * All 3 elements share col-start-1/row-start-1; vertical position is set
+       * via top margin from the shared grid origin.
+       *
+       * Typography (from Figma):
+       *   Label    — Geist Mono Medium, 32px / 36px lh, uppercase, forest-950
+       *   Headline — Tiempos Fine italic: "6x" 120px / " faster" 100px, text-default
+       *   Subtext  — Geist Regular, 24px / 49px lh, forest-950
+       *
+       * [CONCERN] Label + subtext use --color-surface-brand-active (forest-950)
+       * as a text color — no dedicated --color-text-on-brand-graphic token exists
+       * yet. Using the surface token matches Figma's --base/surface-brand-active
+       * binding; add a proper text token when there's a second consumer.
+       */}
+      <div className="relative flex h-full items-center justify-center">
+        <div className="inline-grid grid-cols-[max-content] grid-rows-[max-content] place-items-start leading-none">
+
+          {/* DISCOVER / NUTRACEUTICALS — Geist Mono Medium 32px */}
+          <p
+            className="col-start-1 row-start-1 ml-5 w-[284px] whitespace-pre-wrap uppercase"
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontWeight: 500,
+              fontSize: "32px",
+              lineHeight: "36px",
+              color: "var(--color-surface-brand-active)",
+            }}
+          >
+            {"Discover \nnutraceuticals"}
+          </p>
+
+          {/* 6x faster — Tiempos Fine italic, two sizes in one line */}
+          <p
+            className="col-start-1 row-start-1 mt-[106px] w-[437px] text-[0px]"
+            style={{
+              fontFamily: "var(--font-display)",
+              fontStyle: "italic",
+              color: "var(--color-text-default)",
+            }}
+          >
+            <span style={{ fontSize: "120px", lineHeight: "49.06px" }}>6x</span>
+            <span style={{ fontSize: "100px", lineHeight: "49.06px" }}> faster</span>
+          </p>
+
+          {/* than the industry average. — Geist Regular 24px */}
+          <p
+            className="col-start-1 row-start-1 ml-5 mt-[191px] w-[303px]"
+            style={{
+              fontFamily: "var(--font-sans)",
+              fontWeight: 400,
+              fontSize: "24px",
+              lineHeight: "49.06px",
+              color: "var(--color-surface-brand-active)",
+            }}
+          >
+            than the industry average.
+          </p>
+
+        </div>
       </div>
     </div>
   );
