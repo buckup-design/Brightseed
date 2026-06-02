@@ -40,7 +40,7 @@ const NAV = [
 ];
 
 /**
- * Icon-rail collapsed sidebar — the variant Anna's mocks use.
+ * Icon-rail collapsed sidebar, the variant Anna's mocks use.
  * sidebar-07 equivalent. Brightseed icon and color tweaks come later.
  */
 export const IconRail: Story = {

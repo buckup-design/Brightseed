@@ -1,18 +1,20 @@
-# Brightseed Digital Design — Project Brief
+# Brightseed Digital Design: Project Brief
 
-> **This is the canonical rules doc.** A rule or value is stated once, here or in the CSS — other docs point to it, never restate it. Dated decision history is not kept here; it lives in git. When a doc disagrees with `tokens/*.css` or Storybook, the running system wins.
+> **This is the canonical rules doc.** A rule or value is stated once, here or in the CSS, other docs point to it, never restate it. Dated decision history is not kept here; it lives in git. When a doc disagrees with `tokens/*.css` or Storybook, the running system wins.
 
 ## What this project is
 
-A pro bono engagement to build an AI-ready design system and evolve the visual brand for **Forager**, Brightseed's biotech compound screening platform. It serves two audiences at once: Brightseed's team (a production design system they can use) and hiring managers (a case study of Becky's AI-assisted process). The design bar is high — Brightseed is raising enterprise funding and needs to look like a cutting-edge tech company.
+A pro bono engagement to build **Quill**, an AI-ready design system, and evolve the visual brand for **Hummingbird**, Brightseed's biotech compound-screening application. It serves two audiences at once: Brightseed's team (a production design system they can use) and hiring managers (a case study of Becky's AI-assisted process). The design bar is high; Brightseed is raising enterprise funding and needs to look like a cutting-edge tech company.
 
-**Website:** https://www.brightseedbio.com/ · **App:** Forager (dense data tables, charts, canvas-style UIs).
+**Naming:** **Quill** = the design system (this project's deliverable). **Hummingbird** = the Brightseed application that Quill skins. **Forager** = the AI discovery model that powers Hummingbird. In these docs, "screens / surfaces / regions / the product UI" means Hummingbird; "the model / discovery engine" means Forager.
 
-The case study is **the workflow**, not just the design system: an end-to-end Cowork → preview → merge pipeline that lets non-engineers prototype Forager screens without breaking production.
+**Website:** https://www.brightseedbio.com/ · **App:** Hummingbird (dense data tables, charts, canvas-style UIs), powered by the Forager AI model.
+
+The case study is **the workflow**, not just the design system: an end-to-end Cowork → preview → merge pipeline that lets non-engineers prototype Hummingbird screens without breaking production.
 
 ## Memory pointer
 
-- `memory/` — memory-management format: `glossary.md`, `people/`, `projects/`, `context/`.
+- `memory/`, memory-management format: `glossary.md`, `people/`, `projects/`, `context/`.
 
 Tiered lookup: this file → `memory/glossary.md` → `memory/people|projects|context/`. If a term isn't in any of those, ask.
 
@@ -21,9 +23,9 @@ Tiered lookup: this file → `memory/glossary.md` → `memory/people|projects|co
 | Person | Role | Notes |
 |---|---|---|
 | Becky Buck | Design lead (pro bono) | Runs the design system + brand evolution. |
-| Anna | Consultant / acting Head of Design | Mocks fast and loose, doesn't use Figma components — a pragmatic call, not a mistake. Being onboarded as an active collaborator (June 2026). |
+| Anna | Consultant / acting Head of Design | Mocks fast and loose, doesn't use Figma components, a pragmatic call, not a mistake. Being onboarded as an active collaborator (June 2026). |
 | Meng | VP, Platform Development | Philosophy + CS + ML background. Talk to him as a technical peer. |
-| Chuan | Direct report to Meng | Brilliant scientist, not a web engineer. Future "PR reviewer" — but only if tooling does the heavy lifting and his job is visual + intent confirmation, not code-quality judgment. |
+| Chuan | Direct report to Meng | Brilliant scientist, not a web engineer. Future "PR reviewer", but only if tooling does the heavy lifting and his job is visual + intent confirmation, not code-quality judgment. |
 
 ## Tech stack
 
@@ -31,9 +33,9 @@ Next.js + shadcn/ui + Tailwind CSS · color via CSS custom properties (no hardco
 
 ---
 
-## Design system — architecture & rules
+## Design system: architecture & rules
 
-Three-layer token system. The CSS in `tokens/` is the source of truth for all names and values; this section is the rules, not a value list. (What was once split into separate "intents" and "semantics" tiers is now one merged semantic layer — there is no `intents.css`.)
+Three-layer token system. The CSS in `tokens/` is the source of truth for all names and values; this section is the rules, not a value list. (What was once split into separate "intents" and "semantics" tiers is now one merged semantic layer, there is no `intents.css`.)
 
 ```
 Primitives   --p-color-forest-700        raw values, organized by $type
@@ -49,19 +51,19 @@ Components   bg-[var(--ds-color-...)]    ← component code references the seman
 |---|---|---|
 | Primitive | `--p-{type}-*` | `--p-color-forest-700`, `--p-radius-md`, `--p-space-4` |
 | Semantic | `--ds-*` | `--ds-color-surface-success`, `--ds-shape-radius-md` |
-| Component | references `--ds-*` (optional `--c-{component}-*` token) | `bg-[var(--ds-color-surface-success)]`; `--c-button-bg` — none defined yet |
+| Component | references `--ds-*` (optional `--c-{component}-*` token) | `bg-[var(--ds-color-surface-success)]`; `--c-button-bg`, none defined yet |
 
 Primitives are organized by `$type` (the W3C tokens axis): `--p-color-*`, `--p-radius-*` / `--p-space-*` / `--p-border-width-*`, `--p-font-family-*` / `--p-font-size-*` / `--p-font-weight-*`. The bare `--color-*` primitive names are fully retired. **Not primitives, deliberately:** shadow (`--ds-shadow-*`, a color recipe) and display roles `h1/h2/h3` (`--ds-text-display-*`).
 
 **Rules**
 
-◆ **No tier-skipping.** Component code references semantic `--ds-*` only — never primitives or raw values. Semantics are the only tier that touches primitives. (`--c-*` is an optional escape hatch for a local value with no semantic home; in practice components use `--ds-*` directly.)
+◆ **No tier-skipping.** Component code references semantic `--ds-*` only, never primitives or raw values. Semantics are the only tier that touches primitives. (`--c-*` is an optional escape hatch for a local value with no semantic home; in practice components use `--ds-*` directly.)
 
 ◆ **No hardcoded values.** No hex, px, or font names in component styles. Use `var(--ds-*)` or Tailwind arbitrary refs (`bg-[var(--ds-color-surface-success)]`). CSS-variable arbitrary refs are allowed; hardcoded-hex arbitrary values are not.
 
 ◆ **Semantic intent.** Tokens name usage (`--ds-color-surface-default`), not appearance.
 
-◆ **Light-first.** Defaults assume a light background. Dark theme swaps semantic tokens via `data-theme="dark"` on an ancestor — never write dark-mode-specific component code.
+◆ **Light-first.** Defaults assume a light background. Dark theme swaps semantic tokens via `data-theme="dark"` on an ancestor, never write dark-mode-specific component code.
 
 ◆ **Corner radii** reference `--ds-shape-radius-*` (→ `--p-radius-*`), never raw pixels.
 
@@ -86,14 +88,14 @@ Color scale names: forest, lime, sand, cyan, blue, yellow, orange, lavender, orc
 | Area | Status |
 |---|---|
 | Token system (3-tier, dark theme, shadcn bridge) | ✅ Complete |
-| Figma v3 (`shadcn Brightseed v3 (with pro blocks)`) — primitives + tag tokens, ~50-var Brightseed Mode, Quill Button/Badge port, local Ring focus system, Logo/Login/Input sets, Geist + Tiempos | ✅ Complete |
-| Web app (`/web/`, Next.js 16 + Tailwind 4 + Storybook 10, on Pro Pack) — Button + Badge to spec; Pro Blocks (App Shell 4, Sign In 2, nav); form primitives; Alert/AlertDialog/Table/Switch/Spinner/Sonner; BrightseedLogo + Login | ✅ Complete |
-| Infra — Vercel auto-deploys `main` → https://brightseed-storybook.vercel.app | ✅ In sync |
-| Forager surfaces (Compound/Plant/Strategy cards) | 🟡 To be re-derived on Pro Block primitives |
+| Figma v3 (`shadcn Brightseed v3 (with pro blocks)`), primitives + tag tokens, ~50-var Brightseed Mode, Quill Button/Badge port, local Ring focus system, Logo/Login/Input sets, Geist + Tiempos | ✅ Complete |
+| Web app (`/web/`, Next.js 16 + Tailwind 4 + Storybook 10, on Pro Pack), Button + Badge to spec; Pro Blocks (App Shell 4, Sign In 2, nav); form primitives; Alert/AlertDialog/Table/Switch/Spinner/Sonner; BrightseedLogo + Login | ✅ Complete |
+| Infra: Vercel auto-deploys `main` → https://brightseed-storybook.vercel.app | ✅ In sync |
+| Hummingbird surfaces (Compound/Plant/Strategy cards) | 🟡 To be re-derived on Pro Block primitives |
 | DoseResponseChart, StatCard | 🔲 API spec done, impl pending |
 | Brand evolution / color studies, icon system (line-art, hummingbird) | 🔲 In progress |
 | BrightseedLogo canonical vectors; Tiempos Headline license; Tiempos webfont domain confirm (ask Meng); Input `size` prop | 🔲 Deferred / open |
-| Onboard Anna as collaborator (GitHub + Cowork + Figma) | 🟡 In progress (June 2026) — see `collaboration/` |
+| Onboard Anna as collaborator (GitHub + Cowork + Figma) | 🟡 In progress (June 2026), see `collaboration/` |
 
 ---
 
@@ -101,9 +103,9 @@ Color scale names: forest, lime, sand, cyan, blue, yellow, orange, lavender, orc
 
 | File | Purpose |
 |---|---|
-| `CLAUDE.md` | This file — canonical rules, conventions, status. |
-| `tokens/` | Token CSS — source of truth for names + values. |
-| `bridge/globals.css` | shadcn bridge — maps Brightseed tokens onto shadcn variable names. Intentionally thin. |
+| `CLAUDE.md` | This file: canonical rules, conventions, status. |
+| `tokens/` | Token CSS: source of truth for names + values. |
+| `bridge/globals.css` | shadcn bridge: maps Brightseed tokens onto shadcn variable names. Intentionally thin. |
 | `README.md` | Short orientation pointing to CSS + Storybook. |
 | `web/` | Next.js 16 + Tailwind 4 + Storybook 10 production app. `tokens/` + `bridge/` here are symlinks to root. |
 | `collaboration/` | Internal: workflow + Anna onboarding. |
@@ -112,15 +114,15 @@ Color scale names: forest, lime, sand, cyan, blue, yellow, orange, lavender, orc
 
 ---
 
-## Working rules — read before any task
+## Working rules: read before any task
 
 1. **Generating UI?** The token rules above + the live CSS/Storybook are the source of truth. Composition guidance and component-usage rules live in Storybook → Design.mdx (`web/stories/DesignGuidelines.mdx`).
-2. **Forager is data-dense.** Dense tables, charts, canvas UIs. "Wizard" patterns are wrong; stateful configuration panels are right.
-3. **Line-art visual style** — icons/illustration are clean line art, never 3D or filled.
+2. **Hummingbird is data-dense.** Dense tables, charts, canvas UIs. "Wizard" patterns are wrong; stateful configuration panels are right.
+3. **Line-art visual style:** icons/illustration are clean line art, never 3D or filled.
 4. **Never hand-roll an SVG glyph.** Use the approved icon library (Storybook → Foundations → Icons). Not in the inventory → flag it, don't improvise paths.
-5. **Forager is alpha** (3 POCs, <10 by EOY 2026). Speed of prototyping > code quality. Heavy review tooling / AI code-review actions / formal PR review are premature. **Hold the line only on brand quality + token discipline** — code cleanliness underneath can be loose.
-6. **Hiring audience.** Name things clearly and keep work documentable — what was the problem, what was tried, what was chosen.
-7. **GitHub management is Claude's job, not Becky's.** Don't ask her to copy URLs or click through Settings. Use the GitHub Connector or Claude in Chrome. (The `plugin:engineering:github` MCP had an OAuth bug Cowork's SDK can't speak — don't retry that flow.)
+5. **Hummingbird is alpha** (3 POCs, <10 by EOY 2026). Speed of prototyping > code quality. Heavy review tooling / AI code-review actions / formal PR review are premature. **Hold the line only on brand quality + token discipline:** code cleanliness underneath can be loose.
+6. **Hiring audience.** Name things clearly and keep work documentable, what was the problem, what was tried, what was chosen.
+7. **GitHub management is Claude's job, not Becky's.** Don't ask her to copy URLs or click through Settings. Use the GitHub Connector or Claude in Chrome. (The `plugin:engineering:github` MCP had an OAuth bug Cowork's SDK can't speak, don't retry that flow.)
 8. **Sandbox can't delete files or push** (FUSE mount, no git creds). Claude preps edits + hands Becky an exact command block for deletes/symlinks/commits/pushes. Clear stale locks at the top: `rm -f .git/index.lock .git/HEAD.lock .git/objects/maintenance.lock`.
 9. **Sandbox is Linux; Becky's machine is macOS.** Any `node_modules/` Claude installs has Linux-native binaries that break on macOS (rolldown). Claude writes source; Becky runs `npm install` + `npm run storybook` on her Mac. Don't trust sandbox-only verification.
 
@@ -132,47 +134,47 @@ Color scale names: forest, lime, sand, cyan, blue, yellow, orange, lavender, orc
 
 Values point to `tokens/semantics.css`; component appearance lives in Storybook; Figma IDs are listed for Figma work.
 
-**Tag colors** (forest, lime, cyan, blue, yellow, orange, lavender, orchid + red, sand) are decorative — color never implies status. For status, compose icon + text with semantic intent tokens (`--success/info/warning/critical-*`). Tags intentionally skip the intent layer.
+**Tag colors** (forest, lime, cyan, blue, yellow, orange, lavender, orchid + red, sand) are decorative, color never implies status. For status, compose icon + text with semantic intent tokens (`--success/info/warning/critical-*`). Tags intentionally skip the intent layer.
 
-**Button** — variant state ladders are in `tokens/semantics.css`. Rules:
-- **Hover changes surface + text color only — never font-weight.** Text steps one increment "more pronounced" (darker in light, lighter in dark). Focus and pressed carry their own signals (ring / depressed surface).
+**Button:** variant state ladders are in `tokens/semantics.css`. Rules:
+- **Hover changes surface + text color only, never font-weight.** Text steps one increment "more pronounced" (darker in light, lighter in dark). Focus and pressed carry their own signals (ring / depressed surface).
 - **Lime (primary):** surface lime-300 → 400 → 500 (default/hover/pressed); text forest-800 → 900 → 950. lime-300 = `#CDE67B`.
 - **Secondary:** flat sand steps 100 → 200 → 300, disabled sand-50. No overlays.
-- **Destructive:** soft tint — red-100 surface / red-600 text (light), red-900 / red-300 (dark). Not solid red.
+- **Destructive:** soft tint, red-100 surface / red-600 text (light), red-900 / red-300 (dark). Not solid red.
 - **Disabled (uniform):** surface = `color-mix(variant default surface, --ds-color-disabled-surface-overlay 50%)`; text + icon = the variant's normal foreground at `--ds-disabled-text-opacity` (0.55), applied at exactly **one** DOM level (`data-slot="button-content"`) so opacity doesn't multiply.
 - **Loading ≠ disabled.** `loading` sets HTML `disabled` + `data-loading="true"` + `aria-busy`; the disabled fade excludes `[data-loading="true"]`; spinner replaces the leading icon.
 - **Corner radii** bound to tokens, never hardcoded: standard sizes `rounded-md` (8px), xl/icon-xl `rounded-4xl` (26px).
 
-**Link vs Linktext** — two distinct components, two state machines, don't collapse:
+**Link vs Linktext:** two distinct components, two state machines, don't collapse:
 - **Link:** inline `<a>`, always underlined, blue scale (`--ds-color-text-link-*`), anchor pseudo-class states. Figma set `28590:36956`.
-- **Linktext:** button-shaped, never underlined, lime scale (`--ds-color-text-link-brand`), button states. Brand-link is lime (lime-700 light / lime-300 dark — stepped down from the lime-300 button surface so standalone text passes AA).
+- **Linktext:** button-shaped, never underlined, lime scale (`--ds-color-text-link-brand`), button states. Brand-link is lime (lime-700 light / lime-300 dark, stepped down from the lime-300 button surface so standalone text passes AA).
 
 **Focus rings** (system invariant): all reference the local Brightseed Ring set (`26482:628558`), 1px stroke + 1px offset, instance at `(-1,-1)` sized `body+2`, `Shape=*` variant matching body radius, color via instance stroke override. No per-instance cornerRadius overrides. Variant colors: Default/Outline/Ghost lime-500, Secondary sand-300, Destructive red-500, Linktext lime-500.
 
-**Badge** — 12 variants, one recipe so tag-dense tables don't shout: default surface step-100 / text step-700; hover surface step-200; focus surface step-100 + ring step-500. Removed `verified` + `secondary`; `destructive`→`red`. Secondary Badges set `cr=2`, horizontal padding `spacing/1` (4px), hug content. Primary Badge has optional inline start/end slots (icon/dot) driven by component properties + a `Brightseed Tag Mode` variable-modes cascade (`tag/active-color`); swap targets must bind inner `Vector` stroke to `tag/active-color`.
+**Badge:** 12 variants, one recipe so tag-dense tables don't shout: default surface step-100 / text step-700; hover surface step-200; focus surface step-100 + ring step-500. Removed `verified` + `secondary`; `destructive`→`red`. Secondary Badges set `cr=2`, horizontal padding `spacing/1` (4px), hug content. Primary Badge has optional inline start/end slots (icon/dot) driven by component properties + a `Brightseed Tag Mode` variable-modes cascade (`tag/active-color`); swap targets must bind inner `Vector` stroke to `tag/active-color`.
 
-**Dark-mode semantic intent surfaces** (recipe; values in `tokens/semantics.css` `[data-theme="dark"]`): surface = `color-mix(intent-step 10–15%, sand-950)`; border = `color-mix(intent-step 46%, transparent)`; **text = neutral `--ds-color-text-default`** (no semantic tint in dark — signal lives in surface + border); icon = same hue as border, solid.
+**Dark-mode semantic intent surfaces** (recipe; values in `tokens/semantics.css` `[data-theme="dark"]`): surface = `color-mix(intent-step 10–15%, sand-950)`; border = `color-mix(intent-step 46%, transparent)`; **text = neutral `--ds-color-text-default`** (no semantic tint in dark, signal lives in surface + border); icon = same hue as border, solid.
 
 ---
 
-## Figma — canonical references & quirks
+## Figma, canonical references & quirks
 
 **File:** `shadcn Brightseed v3 (with pro blocks)`, key `ZZPjoeJ447MWuzNi3LL1BL`.
 
 **IDs:** Button page `34:6`; Button COMPONENT_SET `37:931` (330 variants); Quill Button skeleton `26465:249160`; Brightseed Blocks page `26465:212221`; Primary Badges set `26480:627833`; Secondary Badges set `26480:628051`; local Ring set `26482:628558`; Brightseed Mode collection `26462:212204`. **Brightseed Mode** (~50 vars) mirrors shadcn slot vocab (`base/primary`, `base/primary-hover`, `base/link-brand`, …) for name-match rebinds against Pro Pack components.
 
 **Quirks (operational):**
-- **Chunk bulk mutations into batches of ≤12** per `figma_execute` — the WebSocket bridge times out ~30s, and on timeout the work often completes server-side but no response returns (confusing state). Probe between batches.
-- **`createNodeFromSvg` does not inherit `fill="none"`** — set `fill="none"` explicitly on every `<path>`, or closed paths render solid black. Verify child VECTORs have `fills: []` after creation.
-- **`figma_arrange_component_set` recreates** the set via `combineAsVariants()` (decoupled duplicate) — apply rebindings to the arranged set, not the original.
+- **Chunk bulk mutations into batches of ≤12** per `figma_execute`, the WebSocket bridge times out ~30s, and on timeout the work often completes server-side but no response returns (confusing state). Probe between batches.
+- **`createNodeFromSvg` does not inherit `fill="none"`:** set `fill="none"` explicitly on every `<path>`, or closed paths render solid black. Verify child VECTORs have `fills: []` after creation.
+- **`figma_arrange_component_set` recreates** the set via `combineAsVariants()` (decoupled duplicate), apply rebindings to the arranged set, not the original.
 - **`swapComponent` drops color overrides** that happen to match the new master's default. Capture each instance's pre-swap binding, swap, re-apply if it changed.
-- **Mirror canonical shadcn patterns exactly, never invent.** Pro Pack frames are often locked (readable, not editable — by design). Can't access a canonical reference → pause and ask. The doc-skeleton "Skeleton" pattern uses two tiers of purple dashed border (`SOLID rgb(151,71,255)`, 1px, INSIDE, `dashPattern [10,5]`); cells FIXED-sized, centered.
+- **Mirror canonical shadcn patterns exactly, never invent.** Pro Pack frames are often locked (readable, not editable, by design). Can't access a canonical reference → pause and ask. The doc-skeleton "Skeleton" pattern uses two tiers of purple dashed border (`SOLID rgb(151,71,255)`, 1px, INSIDE, `dashPattern [10,5]`); cells FIXED-sized, centered.
 
 ---
 
-## Web app (`/web/`) — operational
+## Web app (`/web/`), operational
 
-Next.js 16 (App Router) + Tailwind 4 + Storybook 10, deployed to Vercel — **production, not staging.** Rebased on the shadcndesign.com Pro Pack; Pro Blocks are pure composition over stock shadcn primitives, so the customized Button + Badge are the paint surface and the bridge themes everything else. Geist via the `geist` npm package (`next/font/google` is blocked in-sandbox). Theme toggle via `data-theme="dark"` on `<html>`.
+Next.js 16 (App Router) + Tailwind 4 + Storybook 10, deployed to Vercel, **production, not staging.** Rebased on the shadcndesign.com Pro Pack; Pro Blocks are pure composition over stock shadcn primitives, so the customized Button + Badge are the paint surface and the bridge themes everything else. Geist via the `geist` npm package (`next/font/google` is blocked in-sandbox). Theme toggle via `data-theme="dark"` on `<html>`.
 
 **Run (on Mac):** `cd web && npm install && npm run storybook` (6006) / `npm run dev` (3000).
 
@@ -180,10 +182,10 @@ Next.js 16 (App Router) + Tailwind 4 + Storybook 10, deployed to Vercel — **pr
 ```bash
 yes n | npx --yes shadcn@latest add @shadcndesign/<block-name> --yes
 ```
-The `yes n |` is critical — it answers overwrite prompts `n`, preserving customized files (Button/Badge); without it the CLI hangs. **Inspect before install:** `curl -sS -H "X-License-Key: ${SHADCNDESIGN_LICENSE_KEY}" "https://www.shadcndesign.com/api/registry/<name>" | jq .` and read `files[].path`, `registryDependencies`, `cssVars`, `tailwind`. Missing-transitive-dep render error → install the stock primitive (no `@shadcndesign/` prefix). Registry wiring is in `web/components.json`; license key in `web/.env.local` (gitignored).
+The `yes n |` is critical, it answers overwrite prompts `n`, preserving customized files (Button/Badge); without it the CLI hangs. **Inspect before install:** `curl -sS -H "X-License-Key: ${SHADCNDESIGN_LICENSE_KEY}" "https://www.shadcndesign.com/api/registry/<name>" | jq .` and read `files[].path`, `registryDependencies`, `cssVars`, `tailwind`. Missing-transitive-dep render error → install the stock primitive (no `@shadcndesign/` prefix). Registry wiring is in `web/components.json`; license key in `web/.env.local` (gitignored).
 
 **Gotchas:**
-- **Tailwind v4 `@source` directives go AFTER all `@import`s** — between imports silently invalidates the token/bridge load (every var resolves empty). Defensive `@source` for `app/`, `components/`, `stories/`, `lib/`, `hooks/`.
+- **Tailwind v4 `@source` directives go AFTER all `@import`s:** between imports silently invalidates the token/bridge load (every var resolves empty). Defensive `@source` for `app/`, `components/`, `stories/`, `lib/`, `hooks/`.
 - **Sidebar tokens:** the CLI inlines stock `hsl()` `--sidebar-*` values + a `.dark` block. Delete those; define `--sidebar-*` in `bridge/globals.css` aliasing Brightseed semantics (surface = `--ds-color-surface-default`, primary = `--ds-color-action-primary`, accent = `--ds-color-surface-alt`, border = `--ds-color-border-default`, ring = `--ds-color-border-focus`). Bridge wins; re-delete if re-injected.
 - **Defend Button + Badge:** recovery branch `button-badge-snapshot`. Pre/post-install `sha256sum components/ui/button.tsx components/ui/badge.tsx` must match; restore via `git checkout button-badge-snapshot -- web/components/ui/button.tsx web/components/ui/badge.tsx web/stories/Button.stories.tsx web/stories/Badge.stories.tsx`.
 

@@ -3,7 +3,7 @@ import * as React from "react";
 import { BrightseedLogin } from "@/components/auth/BrightseedLogin";
 
 /* ─────────────────────────────────────────────────────────────────────────
- * Brightseed Login — translation of the v3 Figma `Brightseed / Login / 1`
+ * Brightseed Login, translation of the v3 Figma `Brightseed / Login / 1`
  * COMPONENT_SET (Mode={light, dark}) into React.
  *
  * Forms a complete two-pane sign-in experience: form pane on the left,

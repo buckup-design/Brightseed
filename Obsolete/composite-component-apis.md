@@ -1,6 +1,6 @@
 # Composite Component APIs (archived)
 
-> Archived from `BrightseedDS.md` §5.2 when that file was retired. These are **forward specs** — proposed prop interfaces for Forager composite components, most of which were never built. Kept for reference if/when these components get implemented. Not authoritative; the real source of truth for any built component is its Storybook story + code. Token names below use the retired `--color-*` prefix; translate to `--ds-color-*` if reused.
+> Archived from `BrightseedDS.md` §5.2 when that file was retired. These are **forward specs:** proposed prop interfaces for Forager composite components, most of which were never built. Kept for reference if/when these components get implemented. Not authoritative; the real source of truth for any built component is its Storybook story + code. Token names below use the retired `--color-*` prefix; translate to `--ds-color-*` if reused.
 
 ## `<StatCard>`
 
@@ -11,10 +11,10 @@ type Trend = "up" | "down" | "neutral"
 
 interface StatCardProps {
   label: string       // e.g. "Compounds screened this week"
-  value: string       // pre-formatted: "1,247" — caller handles formatting
-  delta?: string      // e.g. "+12%" — omit if no comparison period
+  value: string       // pre-formatted: "1,247", caller handles formatting
+  delta?: string      // e.g. "+12%", omit if no comparison period
   trend?: Trend       // controls icon and color; defaults to "neutral"
-  footnote?: string   // e.g. "vs. last week" — defaults to "vs. last week"
+  footnote?: string   // e.g. "vs. last week", defaults to "vs. last week"
 }
 ```
 
@@ -32,7 +32,7 @@ interface ColumnDef<T> {
   sortable?: boolean
   statusConfig?: Record<string, { label: string; className: string }>  // for type="badge"
   decimals?: number   // for type="numeric"
-  unit?: string       // appended after value — e.g. "µM", "%"
+  unit?: string       // appended after value, e.g. "µM", "%"
 }
 
 interface DataTableProps<T extends { id: string }> {
@@ -53,7 +53,7 @@ interface DataTableProps<T extends { id: string }> {
   }
   search?: {
     placeholder?: string    // defaults to "Search…"
-    keys: (keyof T)[]       // fields to search across — always include compoundId if present
+    keys: (keyof T)[]       // fields to search across, always include compoundId if present
   }
   filters?: {
     key: keyof T
@@ -78,7 +78,7 @@ interface DoseResponseChartProps {
   targetId: string
   dataPoints: Point[]    // raw experimental observations
   curvePoints: Point[]   // pre-computed 4PL fit (higher density than raw)
-  ic50LogValue: number   // log10(IC50 in µM) — e.g. -1.42 = 0.038 µM
+  ic50LogValue: number   // log10(IC50 in µM), e.g. -1.42 = 0.038 µM
   height?: number        // defaults to 320
 }
 ```
@@ -113,7 +113,7 @@ Inline identifier pill for compound IDs with status color.
 type CompoundStatus = "active" | "pending" | "failed" | "archived"
 
 interface CompoundBadgeProps {
-  compoundId: string       // e.g. "BS-4421" — rendered in font-mono
+  compoundId: string       // e.g. "BS-4421", rendered in font-mono
   status: CompoundStatus
   size?: "sm" | "default"  // sm for dense table contexts
   onClick?: () => void     // if provided, renders as a button

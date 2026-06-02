@@ -8,10 +8,10 @@
 Mid-career change. Up-skilling on prototyping with AI, design systems, and AI workflows in general. The Brightseed engagement serves two audiences: (1) Brightseed's engineering team gets a production-ready design system; (2) hiring managers get a case study showing Becky's evolved process with AI tooling.
 
 ## How she works
-- ADHD/dyslexia-informed — patterns get reflected in the Friday weekly calibration ritual
+- ADHD/dyslexia-informed, patterns get reflected in the Friday weekly calibration ritual
 - Engineering tasks: "just complete the task or tell me exactly what to do"
 - Strategic tasks: wants to be challenged, prompted to clarify thinking, write more, build better plans
-- GitHub management is Claude's job, not hers — she has stated this as a hard rule
+- GitHub management is Claude's job, not hers, she has stated this as a hard rule
 - Linear (Buck-up workspace) is the daily work tracker
 
 ## Writing voice

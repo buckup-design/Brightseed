@@ -4,19 +4,19 @@ import { Leaf, ShieldCheck, ShieldAlert } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
- * PlantCard — Forager Plants view.
+ * PlantCard, Hummingbird Plants view.
  *
  * Source mock: anna's mocks 4-29-26/filtered to plants.png
  * Anna's content shapes are close to accurate; this component rebuilds the
  * typography and hierarchy on Brightseed Quill tokens.
  *
  * Visual hierarchy (top → bottom, attention loud → quiet):
- *   1. Scientific name (Tiempos italic — display, brand gravity)
+ *   1. Scientific name (Tiempos italic, display, brand gravity)
  *   2. Strategy one-liner (sans-serif, default text)
  *   3. Evidence prose (sans-serif, subtle)
  *   4. Compound tag row (sand tags)
  *   5. Forager predicted bioactives microlabel + tag row (sand tags)
- *   6. Footer status badges (semantic tokens — GRAS=success, IP=warning)
+ *   6. Footer status badges (semantic tokens, GRAS=success, IP=warning)
  *
  * Card container layout inherits StrategyCard's rules:
  *   - Border steps subtle → default on hover
@@ -67,7 +67,7 @@ export function PlantCard({
         "bg-[var(--ds-color-surface-default)]",
         // border: subtle at rest, one step bolder on hover
         "border border-[var(--ds-color-border-subtle)] hover:border-[var(--ds-color-border-default)]",
-        // corner radius: 8px (--ds-shape-radius-md) — matches StrategyCard / Figma v2
+        // corner radius: 8px (--ds-shape-radius-md), matches StrategyCard / Figma v2
         "rounded-[var(--ds-shape-radius-md)]",
         // shadow: slight at rest, pronounced on hover
         "shadow-[0px_1px_1.5px_rgba(0,0,0,0.07)]",
@@ -108,7 +108,7 @@ export function PlantCard({
         {strategyOneLiner}
       </p>
 
-      {/* Evidence prose — leading-relaxed (1.625) → 2 lines = 3.25em */}
+      {/* Evidence prose, leading-relaxed (1.625) → 2 lines = 3.25em */}
       <p className="text-sm text-[var(--ds-color-text-subtle)] leading-relaxed line-clamp-2 min-h-[3.25em]">
         {evidence}
       </p>

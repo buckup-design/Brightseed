@@ -1,13 +1,13 @@
 import * as React from "react"
 
 /**
- * Brightseed custom icon glyphs — Forager design system.
+ * Brightseed custom icon glyphs, Quill design system.
  *
  * Home for the hand-authored glyphs Lucide doesn't carry (Cow, Hummingbird).
  * Lucide is the default source for everything else; the full inventory (Lucide +
  * these customs) is browsable in the "Foundations/Icons" Storybook page.
  *
- * Naming is by glyph IDENTITY, not by use — it's exploratory. Meaning gets
+ * Naming is by glyph IDENTITY, not by use, it's exploratory. Meaning gets
  * assigned later, in the surfaces that consume an icon, not here. There is
  * intentionally no purposeful concept→icon map in this file yet.
  *
@@ -18,7 +18,7 @@ import * as React from "react"
  *     /brand and /vector-pipeline. Illustration scale, never a badge slot.
  *
  * Color tracking: every glyph uses stroke/fill="currentColor", so it inherits the
- * surrounding text color automatically — the CSS-native equivalent of the Figma
+ * surrounding text color automatically, the CSS-native equivalent of the Figma
  * tag/active-color cascade.
  */
 
@@ -28,7 +28,7 @@ export const BADGE_ICON_STROKE = 1.5
 type GlyphProps = React.SVGProps<SVGSVGElement>
 
 /* ─────────────────────────────────────────────────────────────────────────
- * Custom Brightseed glyphs — Lucide has no equivalent.
+ * Custom Brightseed glyphs, Lucide has no equivalent.
  *
  * Source of truth: Figma file "shadcn/ui kit Brightseed (with pro blocks)"
  * (key ZZPjoeJ447MWuzNi3LL1BL) → page "Lucide Icons" → frame "Custom Icons"
@@ -37,7 +37,7 @@ type GlyphProps = React.SVGProps<SVGSVGElement>
  * ───────────────────────────────────────────────────────────────────────── */
 
 /**
- * Hummingbird (line) — Forager's AI assistant mark. 24px app-scale glyph
+ * Hummingbird (line), the AI assistant mark. 24px app-scale glyph
  * (chat headers, assistant affordances), NOT a badge slot icon. Honors the
  * line-art house style (stroke, no fill). Figma: Icon / Custom / Hummingbird-line.
  */
@@ -63,7 +63,7 @@ export function HummingbirdLine({ className, ...props }: GlyphProps) {
 }
 
 /**
- * Hummingbird (fill) — filled variant of the assistant mark. 24px.
+ * Hummingbird (fill), filled variant of the assistant mark. 24px.
  * Note: filled, so it diverges from the line-art house style; use HummingbirdLine
  * unless a filled treatment is explicitly wanted. Figma: Icon / Custom / Hummingbird - fill.
  */
@@ -89,8 +89,8 @@ export function HummingbirdFill({ className, ...props }: GlyphProps) {
 }
 
 /**
- * Cow (24px) — animal / ruminant studies. Maps to the Animal-cow / Animal-ruminants
- * compound tags in the Forager object model. Filled glyph (no line variant exists).
+ * Cow (24px), animal / ruminant studies. Maps to the Animal-cow / Animal-ruminants
+ * compound tags in the Hummingbird object model. Filled glyph (no line variant exists).
  * Figma: Icon / Custom / Cow. Use CowBadge at badge scale.
  */
 export function Cow({ className, ...props }: GlyphProps) {
@@ -111,7 +111,7 @@ export function Cow({ className, ...props }: GlyphProps) {
 }
 
 /**
- * Cow (badge scale, 14px) — hand-optimized for badge slots (simpler than the 24px
+ * Cow (badge scale, 14px), hand-optimized for badge slots (simpler than the 24px
  * Cow at small sizes). Figma: Icon / Custom / Cow-xs (node 26485:632020).
  */
 export function CowBadge({ className, ...props }: GlyphProps) {
@@ -132,7 +132,7 @@ export function CowBadge({ className, ...props }: GlyphProps) {
 }
 
 /**
- * Compound (24px) — chemical compound / molecule. Two hexagonal rings connected
+ * Compound (24px), chemical compound / molecule. Two hexagonal rings connected
  * by bond lines with terminal atom marks. App-scale glyph for headers, nav, and
  * entity cards. Honors the line-art house style (stroke, no fill).
  * Figma: Icon / Custom / Compound (node 26553:767). Use CompoundBadge at badge scale.
@@ -157,22 +157,22 @@ export function Compound({ className, ...props }: GlyphProps) {
       <path d="M13.5523 12.1769L11.2781 8.23796H6.72976L4.45557 12.1769L6.72976 16.1158H11.2781L13.5523 12.1769Z" />
       {/* hexagon ring 2 */}
       <path d="M20.3751 8.23798L18.1009 4.29907H13.5525L11.2783 8.23798L13.5525 12.1769H18.1009L20.3751 8.23798Z" />
-      {/* bond — upper-left arm */}
+      {/* bond, upper-left arm */}
       <path d="M6.72976 8.23797L5.75 6.54103" />
-      {/* bond — lower-right arm */}
+      {/* bond, lower-right arm */}
       <path d="M11.2783 16.512L12.5677 18.7453" />
-      {/* terminal atom — upper-left */}
+      {/* terminal atom, upper-left */}
       <path d="M6.16129 4.29907C6.16129 3.35642 5.39716 2.59343 4.45565 2.59343C3.51413 2.59343 2.75 3.35642 2.75 4.29907C2.75 5.24059 3.51413 6.00472 4.45565 6.00472C5.39716 6.00472 6.16129 5.24059 6.16129 4.29907Z" />
-      {/* terminal atom — lower-right */}
+      {/* terminal atom, lower-right */}
       <path d="M15.258 20.4509C15.258 19.5094 14.4938 18.7453 13.5523 18.7453C12.6108 18.7453 11.8467 19.5094 11.8467 20.4509C11.8467 21.3936 12.6108 22.1566 13.5523 22.1566C14.4938 22.1566 15.258 21.3936 15.258 20.4509Z" />
     </svg>
   )
 }
 
 /**
- * Compound (badge scale, 14px) — chemical compound / molecule. Shows two hexagonal
- * rings connected by bond lines with terminal atom marks at each end — the visual
- * shorthand for a bioactive small molecule in the Forager object model.
+ * Compound (badge scale, 14px), chemical compound / molecule. Shows two hexagonal
+ * rings connected by bond lines with terminal atom marks at each end, the visual
+ * shorthand for a bioactive small molecule in the Hummingbird object model.
  * Figma: Icon / Custom / Compound-xs (node 26553:7667). Paths exported verbatim;
  * hardcoded fill/stroke swapped to currentColor.
  */
@@ -196,26 +196,26 @@ export function CompoundBadge({ className, ...props }: GlyphProps) {
       <path vectorEffect="non-scaling-stroke" d="M5.78351 4.03853L3.21404 4.03853C3.10139 4.03865 2.99076 4.06838 2.89323 4.12476C2.7957 4.18113 2.71472 4.26216 2.65839 4.35972L1.37366 6.60801C1.31728 6.70566 1.2876 6.81643 1.2876 6.92919C1.2876 7.04195 1.31728 7.15272 1.37366 7.25037L2.65839 9.49866C2.71472 9.59622 2.7957 9.67725 2.89323 9.73362C2.99076 9.79 3.10139 9.81973 3.21404 9.81985L5.78351 9.81985C5.89616 9.81973 6.00679 9.79 6.10432 9.73362C6.20185 9.67725 6.28283 9.59622 6.33916 9.49866L7.62389 7.25037C7.68027 7.15272 7.70995 7.04195 7.70995 6.92919C7.70995 6.81643 7.68027 6.70566 7.62389 6.60801L6.33916 4.35972C6.28283 4.26216 6.20185 4.18113 6.10432 4.12476C6.00679 4.06838 5.89616 4.03865 5.78351 4.03853Z" />
       {/* hexagon ring 2 (upper-right) */}
       <path vectorEffect="non-scaling-stroke" d="M10.9715 1.14788L8.40203 1.14788C8.28938 1.14799 8.17875 1.17773 8.08122 1.2341C7.98369 1.29048 7.90271 1.37151 7.84638 1.46906L6.56165 3.71735C6.50527 3.815 6.47559 3.92578 6.47559 4.03853C6.47559 4.15129 6.50527 4.26207 6.56165 4.35972L7.84638 6.60801C7.90271 6.70556 7.98369 6.78659 8.08122 6.84297C8.17875 6.89934 8.28938 6.92908 8.40203 6.92919L10.9715 6.92919C11.0841 6.92908 11.1948 6.89934 11.2923 6.84297C11.3898 6.78659 11.4708 6.70556 11.5271 6.60801L12.8119 4.35972C12.8683 4.26207 12.8979 4.15129 12.8979 4.03853C12.8979 3.92578 12.8683 3.815 12.8119 3.71735L11.5271 1.46906C11.4708 1.37151 11.3898 1.29048 11.2923 1.2341C11.1948 1.17773 11.0841 1.14799 10.9715 1.14788Z" />
-      {/* terminal atom — upper-left */}
+      {/* terminal atom, upper-left */}
       <path vectorEffect="non-scaling-stroke" d="M2.13548 0.896194C1.8402 0.514552 1.29144 0.444543 0.909798 0.739825C0.528156 1.03511 0.458148 1.58386 0.75343 1.96551C1.04871 2.34715 1.59747 2.41716 1.97911 2.12188C2.36075 1.82659 2.43076 1.27784 2.13548 0.896194Z" />
-      {/* terminal atom — lower-right */}
+      {/* terminal atom, lower-right */}
       <path vectorEffect="non-scaling-stroke" d="M8.39231 12.0256C8.09703 11.6439 7.54828 11.5739 7.16663 11.8692C6.78499 12.1645 6.71498 12.7132 7.01027 13.0949C7.30555 13.4765 7.8543 13.5465 8.23595 13.2512C8.61759 12.956 8.6876 12.4072 8.39231 12.0256Z" />
-      {/* bond — upper-left arm */}
+      {/* bond, upper-left arm */}
       <line vectorEffect="non-scaling-stroke" y1="-0.557072" x2="2.33435" y2="-0.557072" transform="matrix(0.458048 0.888927 -0.888927 0.458049 1.2876 2.41653)" />
-      {/* bond — lower-right arm */}
+      {/* bond, lower-right arm */}
       <line vectorEffect="non-scaling-stroke" y1="-0.557072" x2="2.38816" y2="-0.557072" transform="matrix(0.515676 0.856784 -0.856773 0.515693 5.5647 10.1609)" />
     </svg>
   )
 }
 
 /**
- * PlantBadge (badge scale, 14px) — plant / botanical source. Leaf shape with
+ * PlantBadge (badge scale, 14px), plant / botanical source. Leaf shape with
  * stem, hand-optimized for badge slots. This IS the `Leaf-badge` Figma component
- * (node 26485:632020) — the default Inline Start/End swap icon for Primary Badge.
+ * (node 26485:632020), the default Inline Start/End swap icon for Primary Badge.
  * The other two preferredValues swap icons are Dot-badge (→ StatusDot in badge.tsx)
  * and Rat-badge (→ RatBadge below).
  *
- * Replaces Lucide's generic <Leaf /> in Forager plant-entity badge slots. Lucide
+ * Replaces Lucide's generic <Leaf /> in Hummingbird plant-entity badge slots. Lucide
  * Leaf is 24px-optimized and reads soft at badge scale; this glyph was authored
  * specifically for 14px badge slots with adjusted stroke weight (1.1px) and
  * simplified curves. Figma: Icons / Lucide Icon / Leaf-badge.
@@ -248,10 +248,10 @@ export function PlantBadge({ className, ...props }: GlyphProps) {
 }
 
 /**
- * RatBadge (badge scale, 14px) — animal / rodent studies. Rat silhouette with
+ * RatBadge (badge scale, 14px), animal / rodent studies. Rat silhouette with
  * body, tail, ear dot, and extended paw. One of the three preferred inline-slot
  * icons for Primary Badge (`Leaf-badge`, `Rat-badge`, `Dot-badge`). Useful for
- * pre-clinical rodent model tags in Forager compound and strategy views.
+ * pre-clinical rodent model tags in Hummingbird compound and strategy views.
  * Figma: Icons / Lucide Icon / Rat-xs (node 26485:632018).
  */
 export function RatBadge({ className, ...props }: GlyphProps) {
@@ -287,7 +287,7 @@ export function RatBadge({ className, ...props }: GlyphProps) {
   )
 }
 
-/* The full browsable inventory — these customs plus all of Lucide — lives in the
+/* The full browsable inventory, these customs plus all of Lucide, lives in the
  * "Foundations/Icons" Storybook page (web/stories/Icons.stories.tsx). No
  * purposeful concept→icon map is defined here yet; that's deliberate while the
  * icon language is still exploratory. */

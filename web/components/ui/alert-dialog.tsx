@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
 /**
- * AlertDialog — Brightseed Forager design system.
+ * AlertDialog, Brightseed Quill design system.
  *
  * Color tokens (Brightseed semantics):
  *   Overlay scrim   → --ds-color-surface-scrim (semantic; warm dark @ 50% in light,
@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button"
  *   Radius          → --ds-shape-radius-lg          (12px; one step bolder than buttons)
  *
  * AlertDialogAction defaults to Button variant="default" (lime).
- * For destructive flows pass variant="destructive" — soft-red recipe.
+ * For destructive flows pass variant="destructive", soft-red recipe.
  * AlertDialogCancel defaults to Button variant="outline".
  */
 

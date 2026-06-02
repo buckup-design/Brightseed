@@ -1,11 +1,11 @@
-# Brightseed Icon System — Rules
+# Brightseed Icon System, Rules
 
 Source: analysis of [Demo Icon Library](https://www.figma.com/design/EnAf4CmIjVCujbzyVkfdLG/) + existing Brightseed badge-icon work (May 2026).
-Target page: "Icon sets for components" — node `26646:876956` in `ZZPjoeJ447MWuzNi3LL1BL`.
+Target page: "Icon sets for components", node `26646:876956` in `ZZPjoeJ447MWuzNi3LL1BL`.
 
 ---
 
-## 1. Component anatomy — every icon, no exceptions
+## 1. Component anatomy, every icon, no exceptions
 
 ```
 COMPONENT "IconName"        ← fixed canvas, clip content ON
@@ -13,10 +13,10 @@ COMPONENT "IconName"        ← fixed canvas, clip content ON
 ```
 
 - Outer frame: clip content enabled
-- Inner child: named exactly **`Vector`**, at **`children[0]`** — this position and name are load-bearing
+- Inner child: named exactly **`Vector`**, at **`children[0]`:** this position and name are load-bearing
 - Outer frame: fills `[]`, strokes `[]`
 - Vector child: fills `[]`, strokes = the icon color (see Color section below)
-- When authoring via `createNodeFromSvg`: `fill="none"` on every `<path>` — the root `<svg fill="none">` does NOT cascade to children in Figma's plugin API. After creation, verify all child VECTOR nodes have `fills: []`. (CLAUDE.md rule #12.)
+- When authoring via `createNodeFromSvg`: `fill="none"` on every `<path>`, the root `<svg fill="none">` does NOT cascade to children in Figma's plugin API. After creation, verify all child VECTOR nodes have `fills: []`. (CLAUDE.md rule #12.)
 
 **Why `children[0]` / "Vector" is load-bearing:** Figma's instance swap preserves overrides only when source and destination share the same child structure at the same index with the same name. Naming drift or index shifts break color bindings on swap. This is a hard constraint from badge-icon work (May 2026).
 
@@ -30,7 +30,7 @@ COMPONENT "IconName"        ← fixed canvas, clip content ON
 | Badge / inline slot icon (Leaf, Rat, Dot) | 14 × 14 | Existing Brightseed spec |
 | Status icon with bg circle (Success/Warning/Critical) | 24 × 24 | Existing on icon page |
 
-Never hardcode pixel sizes in component code. Reference the `--icon-N` CSS custom property scale. The demo library uses `var(--icon-4, 16px)` for 16px icons — adopt the same convention. Exact scale steps (`--icon-1` through `--icon-N`) to be defined when the first size-variant consumer appears.
+Never hardcode pixel sizes in component code. Reference the `--icon-N` CSS custom property scale. The demo library uses `var(--icon-4, 16px)` for 16px icons, adopt the same convention. Exact scale steps (`--icon-1` through `--icon-N`) to be defined when the first size-variant consumer appears.
 
 ---
 
@@ -55,7 +55,7 @@ Bell / BellFilled
 Chat / ChatFilled
 ```
 
-**Badge-slot icons:** `Noun-badge` — lowercase hyphen suffix.
+**Badge-slot icons:** `Noun-badge`, lowercase hyphen suffix.
 
 ```
 Leaf-badge
@@ -67,32 +67,32 @@ Only make a `Filled` variant when there's a concrete UI use case (e.g. active na
 
 ---
 
-## 4. Color — how icons get their color
+## 4. Color, how icons get their color
 
 Icons must never have baked-in color. Two patterns depending on context:
 
-**Badge-slot icons (14×14):** Inner Vector strokes bound to the variable `tag/active-color` in the `Brightseed Tag Mode` collection. The Variable Modes cascade on the parent Badge component drives the actual color — 10 modes (Neutral, Red, forest, lime, cyan, blue, yellow, orange, lavender, orchid). Never override the stroke to a hardcoded value on a badge-slot icon.
+**Badge-slot icons (14×14):** Inner Vector strokes bound to the variable `tag/active-color` in the `Brightseed Tag Mode` collection. The Variable Modes cascade on the parent Badge component drives the actual color, 10 modes (Neutral, Red, forest, lime, cyan, blue, yellow, orange, lavender, orchid). Never override the stroke to a hardcoded value on a badge-slot icon.
 
-**General UI icons (16×16):** Bind Vector strokes to a semantic icon token from `tokens/semantics.css`. The full icon color vocabulary — already defined and locked (May 2026):
+**General UI icons (16×16):** Bind Vector strokes to a semantic icon token from `tokens/semantics.css`. The full icon color vocabulary, already defined and locked (May 2026):
 
 | Token | Light | Dark | Use |
 |---|---|---|---|
-| `--color-icon-default` | `sand-900` | `sand-50` | Standard icons — nav, actions, labels |
+| `--color-icon-default` | `sand-900` | `sand-50` | Standard icons, nav, actions, labels |
 | `--color-icon-subtle` | `sand-700` | `sand-300` | Secondary / supporting icons, timestamps |
 | `--color-icon-disabled` | `sand-500` | `sand-600` | Disabled state |
 | `--color-icon-inverse` | `sand-50` | `sand-900` | Icons on dark/brand surfaces |
 | `--color-icon-inverse-subtle` | `sand-300` | `sand-700` | Secondary icons on dark surfaces |
-| `--color-icon-brand` | `lime-400` | `lime-400` | Brand accent — theme-invariant |
+| `--color-icon-brand` | `lime-400` | `lime-400` | Brand accent, theme-invariant |
 | `--color-icon-success` | `success-700` | `success-300` | Semantic success |
 | `--color-icon-info` | `info-700` | `info-300` | Semantic info |
 | `--color-icon-warning` | `warning-700` | `warning-300` | Semantic warning |
 | `--color-icon-critical` | `critical-700` | `critical-300` | Semantic error/critical |
 | `--color-icon-data` | `data-cyan-700` | `data-cyan-300` | Chart/data series (cyan) |
-| `--color-icon-data-lavender` | `data-lavender-700` | `data-lavender-300` | Chart series — lavender |
-| `--color-icon-data-orange` | `data-orange-700` | `data-orange-300` | Chart series — orange |
-| `--color-icon-data-orchid` | `data-orchid-700` | `data-orchid-300` | Chart series — orchid |
+| `--color-icon-data-lavender` | `data-lavender-700` | `data-lavender-300` | Chart series, lavender |
+| `--color-icon-data-orange` | `data-orange-700` | `data-orange-300` | Chart series, orange |
+| `--color-icon-data-orchid` | `data-orchid-700` | `data-orchid-300` | Chart series, orchid |
 | `--color-icon-favorite-inactive` | `sand-300` | `sand-700` | Star/pin on card hover, unfavorited |
-| `--color-icon-favorite-active` | `yellow-500` | `yellow-500` | Favorited/pinned — theme-invariant |
+| `--color-icon-favorite-active` | `yellow-500` | `yellow-500` | Favorited/pinned, theme-invariant |
 
 **Default rule:** use `--color-icon-default` unless there's a specific reason to use another. Never reach past semantics to intents or primitives. Never hardcode hex on an icon.
 
@@ -119,7 +119,7 @@ Each frame: category name is the frame name. Icons in a row, consistent spacing.
 
 ## 6. Component descriptions
 
-Every icon component should have a Figma component description documenting semantic meaning — not just the visual shape. Format: `Primary use / Secondary use`.
+Every icon component should have a Figma component description documenting semantic meaning, not just the visual shape. Format: `Primary use / Secondary use`.
 
 ```
 Calendar       → "Schedule / Course"
@@ -132,7 +132,7 @@ This is a searchability and handoff aid. AI agents read these descriptions when 
 
 ---
 
-## 7. Badge-slot icons — extended rules
+## 7. Badge-slot icons, extended rules
 
 These are the 14×14 icons used as swap targets in the Primary Badge `Inline Start` / `Inline End` slots (Leaf-badge, Rat-badge, Dot-badge). Additional constraints beyond the base anatomy:
 
@@ -148,12 +148,12 @@ These are the 14×14 icons used as swap targets in the Primary Badge `Inline Sta
 ## 8. The icon page in v3
 
 **File:** `shadcn Brightseed v3 (with pro blocks)` (`ZZPjoeJ447MWuzNi3LL1BL`)
-**Page node:** `26646:876956` — "Icon sets for components"
+**Page node:** `26646:876956`, "Icon sets for components"
 
-This page is for **component-specific icon groups** — clusters of icons that travel together as a unit inside one component. Currently holds:
+This page is for **component-specific icon groups:** clusters of icons that travel together as a unit inside one component. Currently holds:
 
-- `FavoriteIcon` — state: boolean (unfilled / filled star)
-- `StatusIcon` — state: "Success" | "Warning" | "Critical" (icon + colored bg circle)
+- `FavoriteIcon`, state: boolean (unfilled / filled star)
+- `StatusIcon`, state: "Success" | "Warning" | "Critical" (icon + colored bg circle)
 - Badge slot icons: `Leaf-badge`, `Rat-badge`, `Dot-badge`
 
 **General icon library** (all reusable UI icons) goes in a separate section on this page or a new page, to be established when the first batch of general icons lands. When that section exists, add its node ID here.
@@ -162,7 +162,7 @@ This page is for **component-specific icon groups** — clusters of icons that t
 
 ## Icon inventory
 
-### `AlertIcon` — COMPONENT_SET
+### `AlertIcon`, COMPONENT_SET
 **Node ID:** `26649:1059244`
 **Section:** "Alert Icons" section `26649:1059245`, on the Lucide Icons page (`1:433`)
 **Axes:** `Variant = Info | Success | Warning | Critical` × `Style = Default | Sparkles | Shield | Circle | Octagon`
@@ -189,9 +189,9 @@ This page is for **component-specific icon groups** — clusters of icons that t
 
 ---
 
-### Alert component — `Variant=Default/Destructive/Info/Success/Warning`
+### Alert component, `Variant=Default/Destructive/Info/Success/Warning`
 **Component set node:** `26:160` (frame "Alert") on the Alert page (`21:322`)
-**Storybook parity:** full — 5 Figma variants match the 5 `alert.tsx` variants
+**Storybook parity:** full, 5 Figma variants match the 5 `alert.tsx` variants
 
 **Correct icon color bindings (as of May 28, 2026):**
 
@@ -213,7 +213,7 @@ This page is for **component-specific icon groups** — clusters of icons that t
 | Success | `base/surface-success` | `base/text-success` | `base/border-success` |
 | Warning | `base/surface-warning` | `base/text-warning` | `base/border-warning` |
 
-**Lesson:** `base/text-warning` ≠ `base/icon-warning` — use the icon-scoped token for icon strokes, not the text token, even when they resolve to similar values. Caught during build (May 28, 2026).
+**Lesson:** `base/text-warning` ≠ `base/icon-warning`, use the icon-scoped token for icon strokes, not the text token, even when they resolve to similar values. Caught during build (May 28, 2026).
 
 ---
 

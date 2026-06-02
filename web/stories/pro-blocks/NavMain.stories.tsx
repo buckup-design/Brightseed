@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/sidebar";
 
 /* ─────────────────────────────────────────────────────────────────────────
- * NavMain — sub-piece of AppShell4 sidebar.
+ * NavMain, sub-piece of AppShell4 sidebar.
  *
  * Renders a "Platform" section with collapsible nav groups. Each top-level
  * item can have nested sub-items, opened/closed via the chevron rotation.

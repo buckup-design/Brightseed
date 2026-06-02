@@ -2,7 +2,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Brightseed Logo — Mark + Lockup variants.
+ * Brightseed Logo, Mark + Lockup variants.
  *
  * Source: PROJECTS/Brightseed Digital Design/brand/logos/
  *   - Size=sm.svg / Size=md.svg / Size=lg.svg → identical paths, different viewBox.
@@ -10,17 +10,17 @@ import { cn } from "@/lib/utils";
  *     className (h-6 / h-12 / h-24 to match the Figma sm / md / lg ladder).
  *   - Logo/Lockup.svg → mark + "brightseed" wordmark, drawn as paths.
  *
- * Brand colors (literal hex — brand-locked, NOT design tokens):
+ * Brand colors (literal hex, brand-locked, NOT design tokens):
  *   #FF9A31  Bright orange   (small accent paths inside the mark)
  *   #FFA547  Hexagon outline (the main orange frame)
- *   #5C8061  Forest green    (leaf shape — top right of mark)
- *   #B34F90  Orchid          (circle — bottom right of mark)
+ *   #5C8061  Forest green    (leaf shape, top right of mark)
+ *   #B34F90  Orchid          (circle, bottom right of mark)
  *   #B34F8F  Orchid alt      (variant on the same hue, kept literal to match source)
- *   #295133  Dark forest     (mark accent — inner detail)
+ *   #295133  Dark forest     (mark accent, inner detail)
  *   #46764F  Wordmark forest (the "brightseed" letterforms in the lockup)
  *
  * Theme behavior
- *   The mark is theme-invariant — colors don't change with light/dark mode
+ *   The mark is theme-invariant, colors don't change with light/dark mode
  *   because the logo IS the brand expression.
  *
  *   The wordmark in the lockup is also brand-locked to forest green by
@@ -34,7 +34,7 @@ interface BrightseedLogoProps extends React.SVGAttributes<SVGSVGElement> {
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
- * Mark paths — extracted from brand/logos/Size=md.svg.
+ * Mark paths, extracted from brand/logos/Size=md.svg.
  * viewBox 0 0 48 48.
  * ───────────────────────────────────────────────────────────────────────── */
 function MarkPaths() {
@@ -77,14 +77,14 @@ function MarkPaths() {
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
- * Lockup paths — the entire brand/logos/Logo/Lockup.svg.
+ * Lockup paths, the entire brand/logos/Logo/Lockup.svg.
  * viewBox 0 0 440 81.
  * Mark on the left, "brightseed" wordmark on the right (forest green).
  * ───────────────────────────────────────────────────────────────────────── */
 function LockupPaths() {
   return (
     <g>
-      {/* Wordmark "brightseed" — forest green letterforms */}
+      {/* Wordmark "brightseed", forest green letterforms */}
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -139,7 +139,7 @@ function LockupPaths() {
         d="M390.928 28.9561C388.557 27.3738 385.631 26.5652 382.287 26.5652C378.907 26.5652 375.947 27.3738 373.436 28.9561C370.929 30.5384 368.909 32.824 367.514 35.6721C366.086 38.5201 365.355 41.9309 365.355 45.7285C365.355 46.2206 365.355 46.6777 365.39 47.1349V47.3107C365.563 50.4753 366.297 53.3234 367.585 55.7846C369.083 58.6679 371.139 60.9183 373.717 62.5006C376.294 64.0828 379.291 64.8915 382.671 64.8915C387.061 64.8915 390.578 63.696 393.191 61.3754C395.699 59.1251 397.408 56.3473 398.244 53.0772C398.278 52.9366 398.244 52.7959 398.173 52.6904C398.07 52.585 397.965 52.5147 397.826 52.5147H392.355C392.182 52.5147 392.043 52.62 391.972 52.7959C391.207 54.6595 390.126 56.1714 388.733 57.2263C387.303 58.3164 385.247 58.8789 382.671 58.8789C380.823 58.8789 379.083 58.457 377.479 57.5778C375.876 56.7341 374.517 55.3978 373.473 53.6749C372.461 51.9873 371.835 49.8776 371.696 47.3458C371.696 47.3107 371.696 47.3107 371.73 47.3107L371.765 47.2755H397.86C398.104 47.2755 398.278 47.0996 398.278 46.8536C398.278 46.5346 398.287 46.2358 398.299 45.9569C398.305 45.713 398.312 45.4846 398.312 45.2713C398.349 44.7086 398.349 44.1812 398.349 43.6538C398.349 40.6651 397.721 37.8171 396.467 35.2502C395.142 32.6834 393.331 30.5737 390.928 28.9561ZM392.077 41.6144C392.077 41.6497 392.077 41.6497 392.043 41.6497L392.008 41.6847H371.662C371.644 41.6847 371.634 41.6847 371.63 41.6803C371.625 41.6759 371.625 41.6672 371.625 41.6497C371.625 41.6319 371.618 41.6231 371.614 41.6188C371.614 41.6188 371.612 41.6144 371.625 41.6144C372.114 38.7663 373.297 36.516 375.213 34.8984C377.201 33.2459 379.501 32.4019 382.114 32.4019C384.9 32.4019 387.235 33.2459 389.08 34.9337C390.857 36.551 391.867 38.8014 392.077 41.6144Z"
         fill="#46764F"
       />
-      {/* Mark — embedded inside the lockup at left, brand colors */}
+      {/* Mark, embedded inside the lockup at left, brand colors */}
       <path
         d="M57.975 37.1874L47.5753 19.088C46.3842 17.0084 44.1626 15.7087 41.7479 15.7087L21.0132 15.7411C18.5985 15.7411 16.4091 17.0408 15.1856 19.153L4.85048 37.2849C3.65921 39.3971 3.65921 41.9641 4.85048 44.0761L15.25 62.1757C16.4413 64.2553 18.6628 65.555 21.0775 65.555L41.8122 65.5226C44.227 65.5226 46.4163 64.2227 47.6397 62.1105L57.975 43.9788C59.1984 41.8666 59.1984 39.267 57.975 37.1874ZM45.9656 61.0707C45.7402 61.4281 45.4827 61.7856 45.1929 62.0781C44.9031 62.3706 44.5812 62.6305 44.227 62.8254C43.8728 63.0203 43.4865 63.1829 43.1 63.3128C42.6815 63.4104 42.2629 63.4754 41.8443 63.4754L21.1098 63.5077C20.6912 63.5077 20.2727 63.4428 19.8541 63.3454C19.4678 63.2478 19.0814 63.0855 18.7272 62.858C18.3731 62.6631 18.0511 62.403 17.7613 62.1105C17.4716 61.8182 17.214 61.4607 16.9886 61.1033L6.5891 43.0039C6.36373 42.6465 6.20274 42.2566 6.10615 41.8342C6.00956 41.4441 5.94518 41.0217 5.94518 40.5993C5.94518 40.1768 6.00956 39.7544 6.10615 39.3645C6.20274 38.9421 6.36373 38.5522 6.5891 38.1948L16.9242 20.0629C17.1496 19.7054 17.4072 19.3479 17.6969 19.0557C17.9867 18.7632 18.3087 18.5031 18.6628 18.3081C19.017 18.1132 19.4034 17.9507 19.7897 17.8207C20.2083 17.7234 20.6268 17.6584 21.0455 17.6584L41.78 17.6258C42.1985 17.6258 42.6171 17.6908 43.0357 17.7883C43.4221 17.8857 43.8084 18.0482 44.1626 18.2758C44.5168 18.4707 44.8387 18.7306 45.1285 19.0231C45.4183 19.3156 45.6758 19.673 45.9013 20.0305L51.6 29.9411H39.494L33.409 40.5993L39.494 51.2574H51.5679L45.9656 61.0707Z"
         fill="#FFA547"

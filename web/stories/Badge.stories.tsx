@@ -5,18 +5,18 @@ import { Badge } from "@/components/ui/badge";
 import { CowBadge, CompoundBadge, PlantBadge, RatBadge } from "@/components/ui/badge-icons";
 
 /* ─────────────────────────────────────────────────────────────────────────
- * Badge stories — parity with Figma "Quill Components > Primary Badges"
+ * Badge stories, parity with Figma "Quill Components > Primary Badges"
  * (26480:627833) and "Secondary Badges" (26480:628051).
  *
  * Two prop axes:
- *   variant — color treatment (12: default / outline / ghost / red /
+ *   variant, color treatment (12: default / outline / ghost / red /
  *             forest / lime / cyan / blue / yellow / orange / lavender / orchid)
- *   kind    — visual treatment (3: primary / secondary / number)
+ *   kind   , visual treatment (3: primary / secondary / number)
  *
  * The Quill matrix renders all 12 variants × 3 states (default / hover / focus)
  * for each kind. Hover and focus are forced via `data-force-state`, mapped by
  * the `hovered` and `focused` custom Tailwind variants in
- * web/app/globals.css — the same dual-trigger pattern Button uses.
+ * web/app/globals.css, the same dual-trigger pattern Button uses.
  *
  * Light + dark modes are toggled via the Storybook toolbar.
  * ───────────────────────────────────────────────────────────────────────── */
@@ -56,7 +56,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /* ── Inline glyphs for slot-prop demos ────────────────────────────────────
- * All Brightseed custom badge-scale icons — no Lucide placeholders here.
+ * All Brightseed custom badge-scale icons, no Lucide placeholders here.
  * PlantBadge is the React equivalent of Figma's Leaf-badge (node 26485:632020),
  * the default inline-slot icon for Primary Badge's Inline Start/End swap.
  * Full icon inventory lives on the Foundations/Icons Storybook page. */
@@ -66,7 +66,7 @@ const CompoundGlyph = () => <CompoundBadge />;
 const RatGlyph = () => <RatBadge />;
 
 /* ─────────────────────────────────────────────────────────────────────
- * Spotlight stories — quick scans for individual aspects of the spec.
+ * Spotlight stories, quick scans for individual aspects of the spec.
  * ───────────────────────────────────────────────────────────────────── */
 
 export const Default: Story = {
@@ -85,7 +85,7 @@ export const Number: Story = {
   args: { kind: "number", variant: "default", children: "12" },
 };
 
-/* All 12 variants at primary kind — quickest visual diff across light/dark. */
+/* All 12 variants at primary kind, quickest visual diff across light/dark. */
 export const AllVariantsPrimary: Story = {
   parameters: { layout: "padded" },
   render: () => (
@@ -106,7 +106,7 @@ export const AllVariantsPrimary: Story = {
   ),
 };
 
-/* All 12 variants at secondary kind — confirms the cr=2 + 4px padding
+/* All 12 variants at secondary kind, confirms the cr=2 + 4px padding
  * layout from the May 7 Secondary Badge tightening. */
 export const AllVariantsSecondary: Story = {
   parameters: { layout: "padded" },
@@ -152,7 +152,7 @@ export const AllVariantsSecondary: Story = {
   ),
 };
 
-/* Tag-dense row — Forager use case. Three short labels per row,
+/* Tag-dense row, Hummingbird use case. Three short labels per row,
  * showing how secondary kind packs more badges into the same column. */
 export const TagDenseRow: Story = {
   parameters: { layout: "padded" },
@@ -187,7 +187,7 @@ export const TagDenseRow: Story = {
   ),
 };
 
-/* Number badges in their natural habitat — counts/notifications. */
+/* Number badges in their natural habitat, counts/notifications. */
 export const NumberBadges: Story = {
   parameters: { layout: "padded" },
   render: () => (
@@ -246,10 +246,10 @@ export const InlineSlots: Story = {
   ),
 };
 
-/* Forager entity badges — the full badge-icon vocabulary as used in Forager
+/* Hummingbird entity badges, the full badge-icon vocabulary as used in Hummingbird
  * compound and plant views. Each entity type gets its own glyph + color pairing.
- * These are decorative, not semantic — color does not imply status. */
-export const ForagerEntityBadges: Story = {
+ * These are decorative, not semantic, color does not imply status. */
+export const HummingbirdEntityBadges: Story = {
   parameters: { layout: "padded" },
   render: () => (
     <div className="flex flex-col gap-4">
@@ -295,7 +295,7 @@ export const ForagerEntityBadges: Story = {
   ),
 };
 
-/* Three states of one variant — cheap sanity check before scrolling matrix. */
+/* Three states of one variant, cheap sanity check before scrolling matrix. */
 export const States: Story = {
   parameters: { layout: "padded" },
   render: () => (
@@ -323,7 +323,7 @@ export const States: Story = {
 };
 
 /* ─────────────────────────────────────────────────────────────────────
- * Quill matrix — the canonical parity grid.
+ * Quill matrix, the canonical parity grid.
  * 12 variants × 3 states × 3 kinds = 108 cells per pass.
  * ─────────────────────────────────────────────────────────────────── */
 
@@ -420,12 +420,12 @@ export const QuillMatrix: Story = {
   parameters: { layout: "padded" },
   render: () => (
     <div className="flex flex-col gap-10">
-      <KindMatrix kind="primary" title="Primary — 12 variants × 3 states" />
+      <KindMatrix kind="primary" title="Primary, 12 variants × 3 states" />
       <KindMatrix
         kind="secondary"
-        title="Secondary — 12 variants × 3 states (cr=2, 4px padding)"
+        title="Secondary, 12 variants × 3 states (cr=2, 4px padding)"
       />
-      <KindMatrix kind="number" title="Number — 12 variants × 3 states" />
+      <KindMatrix kind="number" title="Number, 12 variants × 3 states" />
     </div>
   ),
 };

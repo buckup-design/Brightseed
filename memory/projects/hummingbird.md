@@ -1,11 +1,11 @@
-# Forager
+# Hummingbird
 
-**Codename:** Forager
-**Status:** Alpha — 3 customer POCs today, fewer than 10 by EOY 2026
+**Codename:** Hummingbird (the application). Powered by the **Forager** AI discovery model.
+**Status:** Alpha, 3 customer POCs today, fewer than 10 by EOY 2026
 **Owner at Brightseed:** Meng (VP Platform)
 
 ## What it is
-Brightseed's biotech compound screening platform. Scientists feed it a research goal — "help individuals on GLP-1 weight-loss drugs retain lean muscle mass" — and Forager surfaces strategies, compounds, and plant sources from Brightseed's proprietary dataset, with evidence, feasibility, and IP/legal signals attached.
+Brightseed's biotech compound-screening application, powered by the Forager AI discovery model. Scientists feed it a research goal, "help individuals on GLP-1 weight-loss drugs retain lean muscle mass," and Forager surfaces strategies, compounds, and plant sources from Brightseed's proprietary dataset, with evidence, feasibility, and IP/legal signals attached.
 
 Conversational interaction model: AI chat thread on the left runs alongside structured result surfaces on the right. Pivoting the search ("now also show me secondary compounds that strengthen this effect") doesn't require leaving the page.
 
@@ -16,7 +16,7 @@ Biotech research scientists and bioactive-product strategists at partner enterpr
 - Tokens over values. Component code references the semantic layer; never hardcode hex/px/font.
 - Brand-poetic names live only in the brand reference file. Code uses functional names.
 - Cards are the lazy answer for dense data. Don't reach for a card grid when a comparison matrix or table would do the job better.
-- Forager is data-dense. Patterns like "wizard" are wrong here; configuration panels with stateful nodes are right.
+- Hummingbird is data-dense. Patterns like "wizard" are wrong here; configuration panels with stateful nodes are right.
 - Speed of prototyping > code cleanliness, because the platform is alpha. Hold the line on brand quality and token discipline only.
 - The case study is the workflow. The design system is one ingredient; the artifact is the end-to-end Cowork → preview → merge pipeline.
 
@@ -32,7 +32,7 @@ Biotech research scientists and bioactive-product strategists at partner enterpr
 | DoseResponseChart | 🔲 API spec done, implementation pending |
 | StatCard | 🔲 API spec done, implementation pending |
 | Demo screens from Anna's mocks (Compounds + Plants views) | 🔲 Open |
-| PlantCard / CompoundCard / StrategyCard | 🔲 Open — see "Card types" below |
+| PlantCard / CompoundCard / StrategyCard | 🔲 Open, see "Card types" below |
 
 ## Card types (from Anna's 4-29-26 mocks)
 
@@ -62,7 +62,7 @@ Used in the Compounds view. One card per compound that supports the active strat
 ### StrategyCard
 Used in the Strategies overview grid. One card per candidate strategy for a research goal.
 - **Header**: strategy one-liner (bold) + detailed description below (subtler)
-- **Body — three evidence rows**, each with a status glyph:
+- **Body, three evidence rows**, each with a status glyph:
   - Green check → "Evidence: what's in literature + predicted"
   - Yellow warning → "Feasibility: formula and safety concerns"
   - Red blocked → "Legal: freedom to operate"
@@ -71,8 +71,8 @@ Used in the Strategies overview grid. One card per candidate strategy for a rese
 Shared concerns across all three: light card surface on the alt grid bg,
 medium radius, hairline border, hover lift, focus ring via Brightseed
 focus token. Status colors map to the Brightseed semantic intents
-(success / warning / critical) — not raw red/yellow/green.
+(success / warning / critical), not raw red/yellow/green.
 
 ## Reference files
-- `CLAUDE.md` — canonical rules; Storybook → Design.mdx — design language, composition, component usage
-- `anna's mocks 4-29-26/` — reference screenshots
+- `CLAUDE.md`, canonical rules; Storybook → Design.mdx, design language, composition, component usage
+- `anna's mocks 4-29-26/`, reference screenshots

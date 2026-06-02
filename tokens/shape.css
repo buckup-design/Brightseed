@@ -1,22 +1,22 @@
 /*
- * Brightseed Design System — Shape & Dimension Tokens
+ * Brightseed Design System, Shape & Dimension Tokens
  * Reference: BrightseedDS.md §3.6
  *
  * Two tiers live in this file:
- *   Layer 1 — Primitives  --p-radius-* / --p-border-width-* / --p-space-*
+ *   Layer 1, Primitives  --p-radius-* / --p-border-width-* / --p-space-*
  *                         Raw, $type:dimension values. No role meaning.
- *   Layer 2 — Semantics   --ds-shape-* / --ds-shadow-*
+ *   Layer 2, Semantics   --ds-shape-* / --ds-shadow-*
  *                         Role/usage aliases that component code references.
  *
  * Shadow is intentionally semantic-only: a shadow bakes in a color decision
  * (umbra tinted with forest-950 #133019 for earthy warmth), so it is not a
- * raw primitive. Dark mode: shadows recede naturally on dark bg — no override.
+ * raw primitive. Dark mode: shadows recede naturally on dark bg, no override.
  */
 
 :root {
 
   /* ─────────────────────────────────────────────────────────────────────
-     LAYER 1 — DIMENSION PRIMITIVES ($type: dimension)
+     LAYER 1, DIMENSION PRIMITIVES ($type: dimension)
      Raw values only. Mirrors the Figma `radius/*` and `spacing/*` scales.
      ───────────────────────────────────────────────────────────────────── */
 
@@ -58,7 +58,7 @@
   --p-space-24: 96px;
 
   /* ─────────────────────────────────────────────────────────────────────
-     LAYER 2 — SHAPE SEMANTICS
+     LAYER 2, SHAPE SEMANTICS
      Component code references THESE (or its own --c-* tokens), never the
      raw --p-* values directly. Names kept stable so no component edits were
      needed when the primitive tier was introduced (June 2026).
@@ -66,15 +66,15 @@
 
   /* ── Radius semantics ── */
   --ds-shape-radius-none:    var(--p-radius-none);
-  --ds-shape-radius-xs:      var(--p-radius-xs);    /* subtle — tag indicators, inline chips */
-  --ds-shape-radius-sm:      var(--p-radius-sm);    /* small — badges, small tooltips */
-  --ds-shape-radius-md:      var(--p-radius-md);    /* medium — buttons (xs/default/sm/lg/icon sizes), inputs */
-  --ds-shape-radius-lg:      var(--p-radius-lg);    /* large — cards, panels */
-  --ds-shape-radius-xl:      var(--p-radius-xl);    /* extra-large — dialogs */
+  --ds-shape-radius-xs:      var(--p-radius-xs);    /* subtle, tag indicators, inline chips */
+  --ds-shape-radius-sm:      var(--p-radius-sm);    /* small, badges, small tooltips */
+  --ds-shape-radius-md:      var(--p-radius-md);    /* medium, buttons (xs/default/sm/lg/icon sizes), inputs */
+  --ds-shape-radius-lg:      var(--p-radius-lg);    /* large, cards, panels */
+  --ds-shape-radius-xl:      var(--p-radius-xl);    /* extra-large, dialogs */
   --ds-shape-radius-2xl:     var(--p-radius-2xl);   /* sheet overlays, popovers */
   --ds-shape-radius-3xl:     var(--p-radius-3xl);
   --ds-shape-radius-4xl:     var(--p-radius-4xl);   /* button XL sizes (xl, icon-xl) */
-  --ds-shape-radius-round:   var(--p-radius-round); /* pill — status badges, toggle chips */
+  --ds-shape-radius-round:   var(--p-radius-round); /* pill, status badges, toggle chips */
 
   /* ── Border width semantics ── */
   --ds-shape-border-none:    var(--p-border-width-none);
@@ -96,11 +96,11 @@
 /*
  * Radius conventions (which semantic token each component uses):
  *   Input, Select, Textarea      → --ds-shape-radius-md       (8px)
- *   Button — xs/default/sm/lg/icon (and icon-xs/sm/lg) → --ds-shape-radius-md  (8px)
- *   Button — xl, icon-xl         → --ds-shape-radius-4xl     (26px — pronounced rounding for hero CTAs)
- *   Badge — primary kind         → --ds-shape-radius-round   (rounded-full — pill, status, count)
- *   Badge — secondary kind       → --ds-shape-radius-xs      (2px — tight, tag-dense rows)
- *   Badge — number kind          → --ds-shape-radius-round   (rounded-full — notification counts)
+ *   Button, xs/default/sm/lg/icon (and icon-xs/sm/lg) → --ds-shape-radius-md  (8px)
+ *   Button, xl, icon-xl         → --ds-shape-radius-4xl     (26px, pronounced rounding for hero CTAs)
+ *   Badge, primary kind         → --ds-shape-radius-round   (rounded-full, pill, status, count)
+ *   Badge, secondary kind       → --ds-shape-radius-xs      (2px, tight, tag-dense rows)
+ *   Badge, number kind          → --ds-shape-radius-round   (rounded-full, notification counts)
  *   Card, Panel                  → --ds-shape-radius-lg      (10px)
  *   Dialog                       → --ds-shape-radius-xl      (14px)
  *   Popover, Tooltip             → --ds-shape-radius-sm      (6px)

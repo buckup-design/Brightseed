@@ -1,8 +1,8 @@
-# Brightseed Case Study — Draft
+# Brightseed Case Study, Draft
 
 > Linear: [Portfolio v1 → Brightseed case study milestone](https://linear.app/buck-up/project/portfolio-v1-430066cf7de5)
 > Due: target May 16, 2026 (site launch); buffer May 23 for polish
-> Audience: dual — Brightseed engineering team (source of truth for design system) + hiring managers (evidence of Design Director capability)
+> Audience: dual, Brightseed engineering team (source of truth for design system) + hiring managers (evidence of Design Director capability)
 
 ---
 
@@ -26,7 +26,7 @@ _One sharp paragraph: pro bono AI-ready design system + brand evolution for Brig
 TODO
 
 ### 2. The real problem
-_Not "they needed a design system." The real problem: engineering was shipping faster than design could keep up, and AI coding agents were starting to generate components with no shared vocabulary. The design system wasn't a deliverable — it was infrastructure for a new way of building._
+_Not "they needed a design system." The real problem: engineering was shipping faster than design could keep up, and AI coding agents were starting to generate components with no shared vocabulary. The design system wasn't a deliverable, it was infrastructure for a new way of building._
 
 TODO
 
@@ -54,12 +54,12 @@ TODO
 
 ## Source material (not for inclusion, for reference)
 
-- `CLAUDE.md` — engagement brief, team roster, tech stack, status matrix
-- Storybook → Design.mdx — design language, token reference, composition, component usage, anti-patterns
-- `brightseed-shadcn-mapping.md` — Figma variable wiring guide
-- `brand/` — brand evolution assets
-- `components/` — current component inventory
-- `tokens/` — three-layer token architecture
+- `CLAUDE.md`, engagement brief, team roster, tech stack, status matrix
+- Storybook → Design.mdx, design language, token reference, composition, component usage, anti-patterns
+- `brightseed-shadcn-mapping.md`, Figma variable wiring guide
+- `brand/`, brand evolution assets
+- `components/`, current component inventory
+- `tokens/`, three-layer token architecture
 
 ## Notes to self
 

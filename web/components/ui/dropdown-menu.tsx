@@ -6,19 +6,19 @@ import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui"
 import { cn } from "@/lib/utils"
 
 /**
- * DropdownMenu — Brightseed web/ version.
+ * DropdownMenu, Brightseed web/ version.
  *
  * Pulled into web/ following the same path as the rest of the
  * shadcn-derived components: the Radix primitive lives in the `radix-ui`
  * meta-package (already in package.json), and styling references Brightseed
- * semantic tokens via Tailwind arbitrary CSS-variable values — same pattern
+ * semantic tokens via Tailwind arbitrary CSS-variable values, same pattern
  * the Button component established. The shadcn → Brightseed bridge stays
  * intentionally thin (see `bridge/globals.css`); component code reaches
  * directly for the semantic tokens it needs.
  *
  * Covers the 95% surface: Root, Trigger, Portal, Content, Item, Label,
  * Separator, Shortcut, Group. Submenu / checkbox-item / radio-item are not
- * included here — add when the first usage demands it.
+ * included here, add when the first usage demands it.
  */
 
 function DropdownMenu({
@@ -116,7 +116,7 @@ function DropdownMenuItem({
         "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         // Inset (room for an alignment column)
         "data-[inset]:pl-8",
-        // SVG defaults — leading icons size to text height
+        // SVG defaults, leading icons size to text height
         "[&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:pointer-events-none",
         className
       )}

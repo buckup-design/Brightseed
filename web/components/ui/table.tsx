@@ -5,7 +5,7 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 /**
- * Table — Brightseed Forager design system.
+ * Table, Brightseed Quill design system.
  *
  * Color tokens (Brightseed semantics):
  *   Header text       → --ds-color-text-default
@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils"
  *   Footer surface    → --ds-color-surface-alt        (sand-100; inset panels)
  *   Footer border-top → --ds-color-border-default     (sand-300; emphatic divider above totals)
  *   Row hover         → --ds-color-surface-default-hover (sand-100)
- *   Row selected      → --ds-color-surface-selected   (info-50; matches the Forager selected-row pattern)
+ *   Row selected      → --ds-color-surface-selected   (info-50; matches the Hummingbird selected-row pattern)
  *   Row selected hover → --ds-color-surface-selected-hover
  */
 

@@ -112,35 +112,35 @@ export const AllVariants: Story = {
         <InfoIcon />
         <AlertTitle>Default</AlertTitle>
         <AlertDescription>
-          Neutral surface — informational, no semantic weight.
+          Neutral surface, informational, no semantic weight.
         </AlertDescription>
       </Alert>
       <Alert variant="info">
         <InfoIcon />
         <AlertTitle>Info</AlertTitle>
         <AlertDescription>
-          Soft blue surface — informational with semantic weight.
+          Soft blue surface, informational with semantic weight.
         </AlertDescription>
       </Alert>
       <Alert variant="success">
         <CircleCheckIcon />
         <AlertTitle>Success</AlertTitle>
         <AlertDescription>
-          Soft forest surface — positive confirmation.
+          Soft forest surface, positive confirmation.
         </AlertDescription>
       </Alert>
       <Alert variant="warning">
         <TriangleAlertIcon />
         <AlertTitle>Warning</AlertTitle>
         <AlertDescription>
-          Soft yellow surface — caution, action recommended.
+          Soft yellow surface, caution, action recommended.
         </AlertDescription>
       </Alert>
       <Alert variant="destructive">
         <OctagonXIcon />
         <AlertTitle>Destructive</AlertTitle>
         <AlertDescription>
-          Soft red surface — error or destructive state.
+          Soft red surface, error or destructive state.
         </AlertDescription>
       </Alert>
     </div>

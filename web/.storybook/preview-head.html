@@ -2,7 +2,7 @@
   Brightseed fonts for the Storybook preview iframe.
 
   Geist + Geist Mono are loaded from the Google Fonts CDN here (NOT the `geist`
-  npm package — that package imports next/font/local, which the Storybook
+  npm package, that package imports next/font/local, which the Storybook
   Vite build can't resolve and which fails the build). tokens/typography.css
   references these by family name (--font-sans: "Geist", --font-mono:
   "Geist Mono"), so loading them here makes every story and docs page render in

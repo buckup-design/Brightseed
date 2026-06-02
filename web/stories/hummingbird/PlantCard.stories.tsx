@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
-import { PlantCard } from "@/components/forager/cards/plant-card";
+import { PlantCard } from "@/components/hummingbird/cards/plant-card";
 
 /* ─────────────────────────────────────────────────────────────────────────
- * PlantCard — Forager Plants view.
+ * PlantCard, Hummingbird Plants view.
  *
  * Source mock: anna's mocks 4-29-26/filtered to plants.png
  * Content shapes pulled from Anna's mocs; typography and hierarchy rebuilt
@@ -94,7 +94,7 @@ export const NoBioactivePotential: Story = {
     scientificName: "Allium sativum",
     commonName: "Garlic",
     strategyOneLiner:
-      "Mild antimicrobial activity in vitro — insufficient evidence in rumen models.",
+      "Mild antimicrobial activity in vitro, insufficient evidence in rumen models.",
     evidence:
       "Allicin and diallyl disulfide show in vitro activity against gram-positive bacteria, but rumen-specific evidence is limited.",
     compounds: ["Allicin", "Diallyl disulfide"],

@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
-import { CompoundCard } from "@/components/forager/cards/compound-card";
+import { CompoundCard } from "@/components/hummingbird/cards/compound-card";
 
 /* ─────────────────────────────────────────────────────────────────────────
- * CompoundCard — Forager Compounds view.
+ * CompoundCard, Hummingbird Compounds view.
  * Source mock: anna's mocks 4-29-26/filtered to compounds.png
  * ───────────────────────────────────────────────────────────────────────── */
 
@@ -26,7 +26,7 @@ export const Default: Story = {
     bioactives: ["IGF-1R", "PI3K", "Akt", "Ras", "Raf"],
     bioactiveOverflow: 5,
     confidence: 85,
-    category: "Animal — cow",
+    category: "Animal, cow",
     ipLandscape: "watch",
   },
 };
@@ -40,7 +40,7 @@ export const Cinnamaldehyde: Story = {
     bioactives: ["MUC2", "TFF3", "ZO-1", "Claudin-1"],
     bioactiveOverflow: 5,
     confidence: 85,
-    category: "Animal — ruminants",
+    category: "Animal, ruminants",
     ipLandscape: "watch",
   },
 };
@@ -53,7 +53,7 @@ export const TransAnethole: Story = {
     bioactives: ["NF-kB", "HIF-1α", "Akt", "ZO-1", "MUC2"],
     bioactiveOverflow: 6,
     confidence: 85,
-    category: "Animal — cow",
+    category: "Animal, cow",
     ipLandscape: "clear",
   },
 };
@@ -67,7 +67,7 @@ export const Berberine: Story = {
     bioactives: ["MLCK", "HIF-1α", "Akt", "ZO-1"],
     bioactiveOverflow: 6,
     confidence: 85,
-    category: "Animal — cow",
+    category: "Animal, cow",
     ipLandscape: "watch",
   },
 };
@@ -83,7 +83,7 @@ export const Grid: Story = {
         bioactives={["IGF-1R", "PI3K", "Akt", "Ras", "Raf"]}
         bioactiveOverflow={5}
         confidence={85}
-        category="Animal — cow"
+        category="Animal, cow"
       />
       <CompoundCard
         name="Cinnamaldehyde"
@@ -92,7 +92,7 @@ export const Grid: Story = {
         bioactives={["MUC2", "TFF3", "ZO-1", "Claudin-1"]}
         bioactiveOverflow={5}
         confidence={85}
-        category="Animal — ruminants"
+        category="Animal, ruminants"
       />
       <CompoundCard
         name="Trans-anethole"
@@ -101,7 +101,7 @@ export const Grid: Story = {
         bioactives={["NF-kB", "HIF-1α", "Akt", "ZO-1", "MUC2"]}
         bioactiveOverflow={6}
         confidence={85}
-        category="Animal — cow"
+        category="Animal, cow"
         ipLandscape="clear"
       />
       <CompoundCard
@@ -111,7 +111,7 @@ export const Grid: Story = {
         bioactives={["MLCK", "HIF-1α", "Akt", "ZO-1"]}
         bioactiveOverflow={6}
         confidence={85}
-        category="Animal — cow"
+        category="Animal, cow"
       />
     </div>
   ),
@@ -125,6 +125,6 @@ export const NoConfidence: Story = {
     linkedPlants: ["Thyme", "Oregano"],
     bioactives: ["NF-kB", "HIF-1α"],
     bioactiveOverflow: 4,
-    category: "Animal — cow",
+    category: "Animal, cow",
   },
 };

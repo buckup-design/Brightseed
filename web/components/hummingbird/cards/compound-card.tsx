@@ -4,7 +4,7 @@ import { Hexagon, BarChart3, ShieldAlert } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
- * CompoundCard — Forager Compounds view.
+ * CompoundCard, Hummingbird Compounds view.
  *
  * Source mock: anna's mocks 4-29-26/filtered to compounds.png
  *
@@ -58,7 +58,7 @@ export function CompoundCard({
         "bg-[var(--ds-color-surface-default)]",
         // border: subtle at rest, one step bolder on hover
         "border border-[var(--ds-color-border-subtle)] hover:border-[var(--ds-color-border-default)]",
-        // corner radius: 8px (--ds-shape-radius-md) — matches StrategyCard / Figma v2
+        // corner radius: 8px (--ds-shape-radius-md), matches StrategyCard / Figma v2
         "rounded-[var(--ds-shape-radius-md)]",
         // shadow: slight at rest, pronounced on hover
         "shadow-[0px_1px_1.5px_rgba(0,0,0,0.07)]",

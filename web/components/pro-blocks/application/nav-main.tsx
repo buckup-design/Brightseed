@@ -19,9 +19,9 @@ import {
 } from "@/components/ui/sidebar";
 
 /**
- * NavMain — Brightseed Forager design system.
+ * NavMain, Brightseed Quill design system.
  *
- * No explicit color overrides — colors paint entirely through the shadcn
+ * No explicit color overrides, colors paint entirely through the shadcn
  * Sidebar primitives, which the bridge already wires to Brightseed semantics:
  *
  *   SidebarMenuButton hover   → --ds-color-surface-alt-hover

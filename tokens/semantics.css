@@ -1,5 +1,5 @@
 /*
- * Brightseed Design System — Color Semantics
+ * Brightseed Design System, Color Semantics
  * Layer 2 of 2: UI-function tokens. Component code references ONLY these.
  * Reference: BrightseedDS.md §3.3
  *
@@ -17,20 +17,20 @@
 :root {
 
   /* ── Surface ── */
-  --ds-color-surface-default:         var(--p-color-white);         /* #ffffff — page background */
+  --ds-color-surface-default:         var(--p-color-white);         /* #ffffff, page background */
   --ds-color-surface-default-hover:   var(--p-color-sand-100);
   --ds-color-surface-default-active:  var(--p-color-sand-200);
   --ds-color-surface-alt:             var(--p-color-sand-100);      /* sidebar, table alt rows, inset panels */
   --ds-color-surface-alt-hover:       var(--p-color-sand-200);
-  --ds-color-surface-scrim:           color-mix(in srgb, var(--p-color-sand-950) 50%, transparent);  /* modal / dialog veil — warm dark @ 50%, matches prior look */
+  --ds-color-surface-scrim:           color-mix(in srgb, var(--p-color-sand-950) 50%, transparent);  /* modal / dialog veil, warm dark @ 50%, matches prior look */
 
-  /* Brand surface — nav bar, header, branded panels */
+  /* Brand surface, nav bar, header, branded panels */
   --ds-color-surface-brand:           var(--p-color-forest-900);   /* Deep Forest */
   --ds-color-surface-brand-hover:     var(--p-color-forest-800);
   --ds-color-surface-brand-active:    var(--p-color-forest-950);
   --ds-color-surface-brand-subtle:    var(--p-color-forest-50);    /* light green tint */
 
-  /* Semantic surfaces — alert backgrounds, callout tints */
+  /* Semantic surfaces, alert backgrounds, callout tints */
   --ds-color-surface-success:         var(--p-color-forest-50);
   --ds-color-surface-success-hover:   var(--p-color-forest-100);
   --ds-color-surface-success-active:  var(--p-color-forest-200);
@@ -44,7 +44,7 @@
   --ds-color-surface-critical-hover:  var(--p-color-red-100);
   --ds-color-surface-critical-active: var(--p-color-red-200);
   --ds-color-surface-data:            var(--p-color-cyan-50);        /* default data panel tint */
-  --ds-color-surface-selected:        var(--p-color-blue-50);             /* selected row / focused item — blue-50 */
+  --ds-color-surface-selected:        var(--p-color-blue-50);             /* selected row / focused item, blue-50 */
   --ds-color-surface-selected-hover:  var(--p-color-blue-100);
   --ds-color-surface-selected-active: var(--p-color-blue-200);
 
@@ -53,10 +53,10 @@
        surface = color-mix(in srgb, <default-state surface>, var(--ds-color-disabled-surface-overlay) 50%);
        text + icon = the variant's normal foreground token, applied at --ds-disabled-text-opacity.
      Light theme pulls surface toward light sand (desaturate + lift); dark theme pulls
-     toward dark sand (desaturate + dim). The text fade is theme-invariant — same
-     opacity in both themes — so the rule has one number to tune.
+     toward dark sand (desaturate + dim). The text fade is theme-invariant, same
+     opacity in both themes, so the rule has one number to tune.
      Disabled UI is exempt from WCAG 1.4.3 contrast (we accept ~3.4:1 for the muted
-     read on the destructive variant — the worst case of the cohort). */
+     read on the destructive variant, the worst case of the cohort). */
   --ds-color-disabled-surface-overlay: var(--p-color-sand-100);
   --ds-disabled-text-opacity:          0.55;
 
@@ -72,14 +72,14 @@
   /* Secondary: faint solid sand bg, no border. Ladder anchored at sand-100 so the
      button is visibly distinct from page bg at default and steps darker per state.
      (Earlier the ladder anchored at page-bg, which made Secondary invisible on
-     white surfaces — corrected Apr 2026.) */
+     white surfaces, corrected Apr 2026.) */
   --ds-color-action-secondary:          var(--p-color-sand-100);
   --ds-color-action-secondary-hover:    var(--p-color-sand-200);
   --ds-color-action-secondary-active:   var(--p-color-sand-300);
   --ds-color-action-secondary-disabled: var(--p-color-sand-50);
 
-  /* Critical: destructive — soft style. red-100 surface, red-600 text.
-     Refactored Apr 2026 from solid red-500 fill to discrete-step soft tint —
+  /* Critical: destructive, soft style. red-100 surface, red-600 text.
+     Refactored Apr 2026 from solid red-500 fill to discrete-step soft tint , 
      matches Tag recipe pattern (surface=step-100, text=step-600/700, hover steps up). */
   --ds-color-action-critical:          var(--p-color-red-100);
   --ds-color-action-critical-hover:    var(--p-color-red-200);
@@ -90,14 +90,14 @@
   --ds-color-border-subtle:           var(--p-color-sand-200);      /* hairlines, table grid */
   --ds-color-border-default:          var(--p-color-sand-300);      /* input default */
   --ds-color-border-bold:             var(--p-color-sand-500);      /* emphatic dividers */
-  /* Focus rings — variant-aware. Default uses lime (the system action color);
+  /* Focus rings, variant-aware. Default uses lime (the system action color);
      destructive uses its own hue scale; secondary uses sand. Linktext is in the
-     lime family too, so its focus ring matches Default — kept as a separate
+     lime family too, so its focus ring matches Default, kept as a separate
      token name for namespace clarity in case it ever diverges. */
-  --ds-color-border-focus:             var(--p-color-lime-500);  /* lime/500 — Default, Outline, Ghost focus */
-  --ds-color-border-focus-secondary:   var(--p-color-sand-300);      /* sand/300 — Secondary focus (matches Figma base/ring) */
-  --ds-color-border-focus-destructive: var(--p-color-red-500);        /* red/500 — Destructive focus */
-  --ds-color-border-focus-link-brand:  var(--p-color-lime-500);  /* lime/500 — Linktext focus (same as Default) */
+  --ds-color-border-focus:             var(--p-color-lime-500);  /* lime/500, Default, Outline, Ghost focus */
+  --ds-color-border-focus-secondary:   var(--p-color-sand-300);      /* sand/300, Secondary focus (matches Figma base/ring) */
+  --ds-color-border-focus-destructive: var(--p-color-red-500);        /* red/500, Destructive focus */
+  --ds-color-border-focus-link-brand:  var(--p-color-lime-500);  /* lime/500, Linktext focus (same as Default) */
 
   --ds-color-border-success-default:  var(--p-color-forest-200);
   --ds-color-border-success-bold:     var(--p-color-forest-600);
@@ -109,15 +109,15 @@
   --ds-color-border-critical-bold:    var(--p-color-red-600);
 
   /* ── Text ── */
-  --ds-color-text-default:            var(--p-color-sand-900);      /* #2a2925 — warm near-black */
-  --ds-color-text-default-hover:      var(--p-color-sand-950);      /* one step "more pronounced" — used by
+  --ds-color-text-default:            var(--p-color-sand-900);      /* #2a2925, warm near-black */
+  --ds-color-text-default-hover:      var(--p-color-sand-950);      /* one step "more pronounced", used by
                                                                   Secondary / Outline / Ghost button text on hover */
   --ds-color-text-subtle:             var(--p-color-sand-700);      /* secondary / helper text */
-  --ds-color-text-disabled:           var(--p-color-sand-500);      /* generic flat disabled — for non-button contexts
+  --ds-color-text-disabled:           var(--p-color-sand-500);      /* generic flat disabled, for non-button contexts
                                                                   (form labels, static text). Buttons use the alpha
                                                                   rule on their normal foreground instead. */
 
-  /* Inverse — text on Deep Forest surfaces or any dark panel */
+  /* Inverse, text on Deep Forest surfaces or any dark panel */
   --ds-color-text-inverse:            var(--p-color-sand-50);
   --ds-color-text-inverse-subtle:     var(--p-color-sand-300);
 
@@ -125,53 +125,53 @@
      Three text steps to match the three surface states: forest-800 default →
      forest-900 hover → forest-950 active. The active step is required for WCAG AA
      on the deeper lime-500 active surface (forest-800/900 fail AA on lime-500).
-     Theme-invariant — same values in dark mode (lime button is the primary action
+     Theme-invariant, same values in dark mode (lime button is the primary action
      in both themes). Mirrors Figma `base/primary-foreground`. */
   --ds-color-text-on-action-primary:           var(--p-color-forest-800);
   --ds-color-text-on-action-primary-hover:     var(--p-color-forest-900);
   --ds-color-text-on-action-primary-active:    var(--p-color-forest-950);
-  /* No -disabled token — disabled state uses --ds-color-text-on-action-primary at --ds-disabled-text-opacity. */
+  /* No -disabled token, disabled state uses --ds-color-text-on-action-primary at --ds-disabled-text-opacity. */
 
   /* Text on the destructive (soft red) action.
-     red-600 on red-100 surface — passes WCAG AA. Hover steps to red-700. */
+     red-600 on red-100 surface, passes WCAG AA. Hover steps to red-700. */
   --ds-color-text-on-action-critical:           var(--p-color-red-600);
   --ds-color-text-on-action-critical-hover:     var(--p-color-red-700);
-  /* No -disabled token — disabled state uses --ds-color-text-on-action-critical at --ds-disabled-text-opacity. */
+  /* No -disabled token, disabled state uses --ds-color-text-on-action-critical at --ds-disabled-text-opacity. */
 
-  /* Link — two distinct components with different state machines.
+  /* Link, two distinct components with different state machines.
        link-*  → the inline `<a>` Link component for body copy. Always
                  underlined. Has anchor pseudo-class states: link / visited /
                  hover / focus / active. Blue scale.
-       link-brand → the Button component's "Linktext/default" variant —
+       link-brand → the Button component's "Linktext/default" variant , 
                  button-shaped, never underlined, button-state machine
-                 (default/hover/focus/loading/disabled/pressed). Lime scale —
+                 (default/hover/focus/loading/disabled/pressed). Lime scale , 
                  same family as the primary button surface, signaling that
                  Linktext is the brand-link affordance.
      The bare --ds-color-text-link alias is intentionally NOT exposed so callers
      must be explicit about which component they're in. */
-  --ds-color-text-link-default:       var(--p-color-blue-600);            /* blue-600 — :link */
-  --ds-color-text-link-default-hover: var(--p-color-blue-700);            /* blue-700 — :hover */
-  --ds-color-text-link-visited:       var(--p-color-sand-700);      /* sand-700 — :visited (warm, settled) */
-  --ds-color-text-link-active:        var(--p-color-blue-900);            /* blue-900 — :active (pressed) */
-  /* Brand-link uses lime — but a deeper step than the lime button surface.
+  --ds-color-text-link-default:       var(--p-color-blue-600);            /* blue-600, :link */
+  --ds-color-text-link-default-hover: var(--p-color-blue-700);            /* blue-700, :hover */
+  --ds-color-text-link-visited:       var(--p-color-sand-700);      /* sand-700, :visited (warm, settled) */
+  --ds-color-text-link-active:        var(--p-color-blue-900);            /* blue-900, :active (pressed) */
+  /* Brand-link uses lime, but a deeper step than the lime button surface.
      base/primary surface = lime-300 (#CDE67B); on white that's ~1.7:1, fine
      for a button-shaped surface but unreadable as standalone text. Linktext
      is text-only, so we step down the lime scale to lime-700 (light) /
      lime-300 (dark) for AA contrast on page surfaces.
-     Decided May 2026 — replaced earlier forest-scale brand-link. */
-  --ds-color-text-link-brand:           var(--p-color-forest-800);    /* #3f6947 — matches Figma base/link-brand light mode */
+     Decided May 2026, replaced earlier forest-scale brand-link. */
+  --ds-color-text-link-brand:           var(--p-color-forest-800);    /* #3f6947, matches Figma base/link-brand light mode */
   --ds-color-text-link-brand-hover:     var(--p-color-forest-900);    /* one step more pronounced on hover */
-  /* No -disabled token — disabled state uses --ds-color-text-link-brand at --ds-disabled-text-opacity. */
+  /* No -disabled token, disabled state uses --ds-color-text-link-brand at --ds-disabled-text-opacity. */
 
-  /* Semantic text — all verified WCAG AA on sand-50 surface */
-  --ds-color-text-success:            var(--p-color-forest-700);         /* forest-700 — 4.98:1 ✓ AA */
-  --ds-color-text-info:               var(--p-color-blue-700);            /* blue-700   — 8.95:1 ✓ AA */
-  --ds-color-text-warning:            var(--p-color-yellow-700);         /* yellow-700 — 4.92:1 ✓ AA */
-  --ds-color-text-critical:           var(--p-color-red-700);        /* red-700    — 7.85:1 ✓ AA */
-  --ds-color-text-data:               var(--p-color-cyan-700);       /* cyan-700   — 5.79:1 ✓ AA */
-  --ds-color-text-data-lavender:        var(--p-color-lavender-700);     /* lavender-700 — 4.92:1 ✓ AA */
-  --ds-color-text-data-orange:        var(--p-color-orange-700);     /* orange-700 — 4.65:1 ✓ AA */
-  --ds-color-text-data-orchid:        var(--p-color-orchid-700);     /* orchid-700 — 5.12:1 ✓ AA */
+  /* Semantic text, all verified WCAG AA on sand-50 surface */
+  --ds-color-text-success:            var(--p-color-forest-700);         /* forest-700, 4.98:1 ✓ AA */
+  --ds-color-text-info:               var(--p-color-blue-700);            /* blue-700  , 8.95:1 ✓ AA */
+  --ds-color-text-warning:            var(--p-color-yellow-700);         /* yellow-700, 4.92:1 ✓ AA */
+  --ds-color-text-critical:           var(--p-color-red-700);        /* red-700   , 7.85:1 ✓ AA */
+  --ds-color-text-data:               var(--p-color-cyan-700);       /* cyan-700  , 5.79:1 ✓ AA */
+  --ds-color-text-data-lavender:        var(--p-color-lavender-700);     /* lavender-700, 4.92:1 ✓ AA */
+  --ds-color-text-data-orange:        var(--p-color-orange-700);     /* orange-700, 4.65:1 ✓ AA */
+  --ds-color-text-data-orchid:        var(--p-color-orchid-700);     /* orchid-700, 5.12:1 ✓ AA */
 
   /* ── Icon (mirrors text taxonomy exactly) ── */
   --ds-color-icon-default:            var(--p-color-sand-900);
@@ -179,28 +179,28 @@
   --ds-color-icon-disabled:           var(--p-color-sand-500);
   --ds-color-icon-inverse:            var(--p-color-sand-50);
   --ds-color-icon-inverse-subtle:     var(--p-color-sand-300);
-  --ds-color-icon-brand:              var(--p-color-lime-400);  /* lime — brand icons on light bg */
+  --ds-color-icon-brand:              var(--p-color-lime-400);  /* lime, brand icons on light bg */
   --ds-color-icon-success:            var(--p-color-forest-700);
   --ds-color-icon-info:               var(--p-color-blue-700);
   --ds-color-icon-warning:            var(--p-color-yellow-700);
   --ds-color-icon-critical:           var(--p-color-red-700);
-  --ds-color-icon-destructive:        var(--p-color-red-700);  /* Alert Destructive icon — red-700 light */
+  --ds-color-icon-destructive:        var(--p-color-red-700);  /* Alert Destructive icon, red-700 light */
   --ds-color-icon-data:               var(--p-color-cyan-700);
   --ds-color-icon-data-lavender:      var(--p-color-lavender-700);
   --ds-color-icon-data-orange:        var(--p-color-orange-700);
   --ds-color-icon-data-orchid:        var(--p-color-orchid-700);
 
   /* ── Favorite / pin icon ── */
-  --ds-color-icon-favorite-inactive:  var(--p-color-sand-300);   /* appears on card hover — very light */
-  --ds-color-icon-favorite-active:    var(--p-color-yellow-500); /* favorited/pinned — theme-invariant */
+  --ds-color-icon-favorite-inactive:  var(--p-color-sand-300);   /* appears on card hover, very light */
+  --ds-color-icon-favorite-active:    var(--p-color-yellow-500); /* favorited/pinned, theme-invariant */
 
   /* ──────────────────────────────────────────────────────────────────
-     Tag tokens — decorative color set for Forager's tag-dense surfaces.
+     Tag tokens, decorative color set for Hummingbird's tag-dense surfaces.
      Recipe per hue:
-       Default — surface = step-100, text = step-700
-       Hover   — surface = step-200, text = step-700
-       Focus   — surface = step-100, text = step-700, ring = step-500 (hue-specific)
-     No intent layer — tag colors are decorative only, not semantic.
+       Default, surface = step-100, text = step-700
+       Hover  , surface = step-200, text = step-700
+       Focus  , surface = step-100, text = step-700, ring = step-500 (hue-specific)
+     No intent layer, tag colors are decorative only, not semantic.
      ────────────────────────────────────────────────────────────────── */
 
   --ds-color-surface-tag-sand:           var(--p-color-sand-100);
@@ -258,11 +258,11 @@
 
 /* ════════════════════════════════════════════════════════════════════════════
    DARK THEME OVERRIDE ([data-theme="dark"])
-   Base surface: sand-950 — warm dark neutral, NOT a forest-tinted dark mode.
+   Base surface: sand-950, warm dark neutral, NOT a forest-tinted dark mode.
    The forest scale exits surface vocabulary in dark mode entirely; it only
    stays as lime accent, text on the lime button (forest-900), and brand-context
    link colors.
-   Only tokens that change from light theme are listed — everything else inherits.
+   Only tokens that change from light theme are listed, everything else inherits.
    The lime button surface (lime-400) on sand-950 page bg passes contrast, so
    the --ds-color-action-primary surface tokens don't need a dark override. Text
    on that button stays forest-900 in both themes (see --ds-color-text-on-action-primary).
@@ -270,27 +270,27 @@
 
 [data-theme="dark"] {
 
-  /* Disabled surface overlay — flips to dark sand so the rule pulls toward
+  /* Disabled surface overlay, flips to dark sand so the rule pulls toward
      dim/desaturated instead of light/desaturated. The surface-disabled tokens
      in :root cascade through this override via color-mix.
      Text fade is theme-invariant via --ds-disabled-text-opacity (no override needed). */
   --ds-color-disabled-surface-overlay: var(--p-color-sand-700);
 
-  /* ── Surfaces — warm dark sand ladder ── */
-  --ds-color-surface-default:         var(--p-color-sand-950);       /* #1F1F1E — page bg */
+  /* ── Surfaces, warm dark sand ladder ── */
+  --ds-color-surface-default:         var(--p-color-sand-950);       /* #1F1F1E, page bg */
   --ds-color-surface-default-hover:   var(--p-color-sand-900);
   --ds-color-surface-default-active:  var(--p-color-sand-800);
   --ds-color-surface-alt:             var(--p-color-sand-900);       /* raised panels, sidebars, cards */
   --ds-color-surface-alt-hover:       var(--p-color-sand-800);
-  --ds-color-surface-scrim:           color-mix(in srgb, var(--p-color-black) 60%, transparent);     /* veil must go darker than the sand-950 page to register — DESIGN REVIEW: black vs warm */
+  --ds-color-surface-scrim:           color-mix(in srgb, var(--p-color-black) 60%, transparent);     /* veil must go darker than the sand-950 page to register, DESIGN REVIEW: black vs warm */
 
-  /* Brand nav/header — sand-anchored in dark mode (forest exits surface vocabulary) */
+  /* Brand nav/header, sand-anchored in dark mode (forest exits surface vocabulary) */
   --ds-color-surface-brand:           var(--p-color-sand-900);
   --ds-color-surface-brand-hover:     var(--p-color-sand-800);
   --ds-color-surface-brand-active:    var(--p-color-sand-950);
   --ds-color-surface-brand-subtle:    var(--p-color-sand-950);
 
-  /* Semantic surfaces — intent tint at low opacity on sand-950 base.
+  /* Semantic surfaces, intent tint at low opacity on sand-950 base.
      Visual judgment: dark mode alerts read better with a subtle tint than
      a pure deep-intent step. Recipe: intent step at 10-15% over sand-950.
      Source: dark mode mockup May 28 2026. */
@@ -311,15 +311,15 @@
   --ds-color-surface-selected-hover:  var(--p-color-blue-900);
   --ds-color-surface-selected-active: var(--p-color-blue-800);
 
-  /* ── Borders — mid-sand range for structure on dark bg ── */
+  /* ── Borders, mid-sand range for structure on dark bg ── */
   --ds-color-border-subtle:           var(--p-color-sand-800);
   --ds-color-border-default:          var(--p-color-sand-700);
   --ds-color-border-bold:             var(--p-color-sand-600);
-  /* Focus rings — only Secondary changes in dark mode (sand step shifts).
+  /* Focus rings, only Secondary changes in dark mode (sand step shifts).
      Default/Destructive/Link-Brand are theme-invariant per Figma. */
-  --ds-color-border-focus-secondary:  var(--p-color-sand-500);      /* sand/500 — matches Figma colors/ring-dark */
+  --ds-color-border-focus-secondary:  var(--p-color-sand-500);      /* sand/500, matches Figma colors/ring-dark */
 
-  /* Semi-transparent intent border on dark bg — 46% opacity matches mockup.
+  /* Semi-transparent intent border on dark bg, 46% opacity matches mockup.
      Source: dark mode mockup May 28 2026. */
   --ds-color-border-success-default:  color-mix(in srgb, var(--p-color-forest-600) 46%, transparent);
   --ds-color-border-success-bold:     var(--p-color-forest-500);
@@ -330,7 +330,7 @@
   --ds-color-border-critical-default: color-mix(in srgb, var(--p-color-red-400) 46%, transparent);
   --ds-color-border-critical-bold:    var(--p-color-red-500);
 
-  /* ── Text — sand palette inverted ── */
+  /* ── Text, sand palette inverted ── */
   --ds-color-text-default:            var(--p-color-sand-50);       /* warm white on dark bg */
   --ds-color-text-default-hover:      var(--p-color-sand-50);       /* boundary: sand-50 is already the lightest step.
                                                                   Hover keeps the same color in dark mode; the weight
@@ -339,21 +339,21 @@
   --ds-color-text-disabled:           var(--p-color-sand-600);
   --ds-color-text-inverse:            var(--p-color-sand-900);
   --ds-color-text-inverse-subtle:     var(--p-color-sand-700);
-  --ds-color-text-link-default:       var(--p-color-blue-500);            /* blue-500 — :link */
-  --ds-color-text-link-default-hover: var(--p-color-blue-400);            /* blue-400 — :hover (lighter on dark bg) */
-  --ds-color-text-link-visited:       var(--p-color-sand-300);      /* sand-300 — :visited */
-  --ds-color-text-link-active:        var(--p-color-blue-200);            /* blue-200 — :active */
-  --ds-color-text-link-brand:         var(--p-color-lime-300);      /* lime-300 — AA on sand-950 dark bg.
+  --ds-color-text-link-default:       var(--p-color-blue-500);            /* blue-500, :link */
+  --ds-color-text-link-default-hover: var(--p-color-blue-400);            /* blue-400, :hover (lighter on dark bg) */
+  --ds-color-text-link-visited:       var(--p-color-sand-300);      /* sand-300, :visited */
+  --ds-color-text-link-active:        var(--p-color-blue-200);            /* blue-200, :active */
+  --ds-color-text-link-brand:         var(--p-color-lime-300);      /* lime-300, AA on sand-950 dark bg.
                                                                   Same step as the lime button surface, but used
                                                                   here as TEXT (not surface) so contrast holds. */
-  --ds-color-text-link-brand-hover:   var(--p-color-lime-200);      /* one step lighter — "more pronounced on dark" */
+  --ds-color-text-link-brand-hover:   var(--p-color-lime-200);      /* one step lighter, "more pronounced on dark" */
 
-  /* Semantic text — neutral foreground in dark mode.
+  /* Semantic text, neutral foreground in dark mode.
      Design decision: intent-tinted text on dark tinted surfaces reads garish
      and low-contrast. Dark mode alerts signal semantic intent through surface
      tint + border only; text uses warm white so it stays readable.
      Source: dark mode mockup May 28 2026. */
-  --ds-color-text-success:            var(--ds-color-text-default);  /* sand-50 — same as neutral foreground */
+  --ds-color-text-success:            var(--ds-color-text-default);  /* sand-50, same as neutral foreground */
   --ds-color-text-info:               var(--ds-color-text-default);
   --ds-color-text-warning:            var(--ds-color-text-default);
   --ds-color-text-critical:           var(--ds-color-text-default);
@@ -362,40 +362,40 @@
   --ds-color-text-data-orange:        var(--p-color-orange-300);
   --ds-color-text-data-orchid:        var(--p-color-orchid-300);
 
-  /* ── Icon — mirrors text ── */
+  /* ── Icon, mirrors text ── */
   --ds-color-icon-default:            var(--p-color-sand-50);
   --ds-color-icon-subtle:             var(--p-color-sand-300);
   --ds-color-icon-disabled:           var(--p-color-sand-600);
   --ds-color-icon-inverse:            var(--p-color-sand-900);
   --ds-color-icon-inverse-subtle:     var(--p-color-sand-700);
   /* Icon dark mode = same base step as the border, solid.
-     Border uses color-mix(intent-step 46%, transparent) — icon uses that step opaque.
+     Border uses color-mix(intent-step 46%, transparent), icon uses that step opaque.
      Source: dark mode visual judgment May 28 2026. */
-  --ds-color-icon-success:            var(--p-color-forest-600);  /* forest-600 — matches border base */
-  --ds-color-icon-info:               var(--p-color-blue-300);     /* blue-300   — matches border base */
+  --ds-color-icon-success:            var(--p-color-forest-600);  /* forest-600, matches border base */
+  --ds-color-icon-info:               var(--p-color-blue-300);     /* blue-300  , matches border base */
   --ds-color-icon-warning:            color-mix(in srgb, var(--p-color-yellow-200) 80%, transparent); /* yellow-200 at 80% */
   --ds-color-icon-critical:           color-mix(in srgb, var(--p-color-red-400) 80%, transparent); /* red-400 at 80% */
-  --ds-color-icon-destructive:        color-mix(in srgb, var(--p-color-red-400) 80%, transparent); /* red-400 at 80% — Alert Destructive icon */
+  --ds-color-icon-destructive:        color-mix(in srgb, var(--p-color-red-400) 80%, transparent); /* red-400 at 80%, Alert Destructive icon */
   --ds-color-icon-data:               var(--p-color-cyan-300);
   --ds-color-icon-data-lavender:        var(--p-color-lavender-300);
   --ds-color-icon-data-orange:        var(--p-color-orange-300);
   --ds-color-icon-data-orchid:        var(--p-color-orchid-300);
-  /* --ds-color-icon-brand unchanged — lime works on dark bg */
+  /* --ds-color-icon-brand unchanged, lime works on dark bg */
 
   /* ── Favorite / pin icon ── */
   --ds-color-icon-favorite-inactive:  var(--p-color-sand-700);   /* subtle on dark surface */
-  /* --ds-color-icon-favorite-active unchanged — yellow-500 reads on dark bg */
+  /* --ds-color-icon-favorite-active unchanged, yellow-500 reads on dark bg */
 
-  /* ── Action — secondary adapts to dark surface ── */
-  /* primary unchanged — lime-400 reads on both themes */
+  /* ── Action, secondary adapts to dark surface ── */
+  /* primary unchanged, lime-400 reads on both themes */
   --ds-color-action-secondary:          var(--p-color-sand-900);
   --ds-color-action-secondary-hover:    var(--p-color-sand-800);
   --ds-color-action-secondary-active:   var(--p-color-sand-700);
   --ds-color-action-secondary-disabled: var(--p-color-sand-950);
 
-  /* Critical: destructive — soft style mirrors light but on the dark side of the red ladder.
+  /* Critical: destructive, soft style mirrors light but on the dark side of the red ladder.
      red-900 surface on sand-950 page bg; red-300 text. Hover steps "more pronounced"
-     (surface lighter, text lighter — convention for dark themes). */
+     (surface lighter, text lighter, convention for dark themes). */
   --ds-color-action-critical:          var(--p-color-red-900);
   --ds-color-action-critical-hover:    var(--p-color-red-800);
   --ds-color-action-critical-active:   var(--p-color-red-700);
@@ -404,16 +404,16 @@
   --ds-color-text-on-action-critical:        var(--p-color-red-300);
   --ds-color-text-on-action-critical-hover:  var(--p-color-red-200);
 
-  /* ── Tag tokens — dark theme override ──
+  /* ── Tag tokens, dark theme override ──
      Recipe inverts:
-       Default — surface = step-900, text = step-300
-       Hover   — surface = step-800, text = step-300
-       Focus   — surface = step-900, text = step-300, ring = step-500 (theme-invariant) */
+       Default, surface = step-900, text = step-300
+       Hover  , surface = step-800, text = step-300
+       Focus  , surface = step-900, text = step-300, ring = step-500 (theme-invariant) */
 
   --ds-color-surface-tag-sand:           var(--p-color-sand-800);
   --ds-color-surface-tag-sand-hover:     var(--p-color-sand-700);
   --ds-color-text-tag-sand:              var(--p-color-sand-200);
-  /* --ds-color-border-tag-sand-focus stays step-500 — focus rings are theme-invariant */
+  /* --ds-color-border-tag-sand-focus stays step-500, focus rings are theme-invariant */
 
   --ds-color-surface-tag-forest:         var(--p-color-forest-900);
   --ds-color-surface-tag-forest-hover:   var(--p-color-forest-800);

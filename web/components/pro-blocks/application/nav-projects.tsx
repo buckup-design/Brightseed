@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/sidebar";
 
 /**
- * NavProjects — Brightseed Forager design system.
+ * NavProjects, Brightseed Quill design system.
  *
  * Color tokens (Brightseed semantics):
  *   Action menu icons       → --ds-color-icon-subtle (sand-700 / sand-300 dark)
@@ -35,7 +35,7 @@ import {
  *
  * The destructive (Delete Project) row uses the critical icon token to give
  * the destructive action semantic weight inside the menu without painting
- * the entire row red — matches the "soft destructive" recipe used elsewhere.
+ * the entire row red, matches the "soft destructive" recipe used elsewhere.
  */
 
 export function NavProjects({

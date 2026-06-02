@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 
 /**
- * BrightseedLogin — translation of the Figma `Brightseed / Login / 1`
+ * BrightseedLogin, translation of the Figma `Brightseed / Login / 1`
  * COMPONENT_SET (Mode={light, dark}) into React.
  *
  * Layout: 2-column grid. Left = form pane, right = marketing pane (Image Slot).
@@ -25,7 +25,7 @@ import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
  *   6. SIGN IN: Quill Default xl, all-caps text, trailing CircleArrowRight
  *   7. Forgot your password: Quill Linktext (no underline ever; lime-300 →
  *      lime-200 color step on hover in dark mode via variant="linktext")
- *   8. Sign up row: "Don't have an account? Sign up" — body + Linktext footer
+ *   8. Sign up row: "Don't have an account? Sign up", body + Linktext footer
  *   9. Image Slot: brand graphic from brand/graphic_login.bg.webp
  *      (mirrored to /public/brand/) with Tiempos Fine Italic "6x faster"
  *      text overlay positioned on top of the image.
@@ -157,7 +157,7 @@ function OrDivider() {
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
- * Image Slot — marketing pane
+ * Image Slot, marketing pane
  * Background graphic sourced from brand/graphic_login.bg.webp
  * (copied to web/public/brand/ at install time).
  * ───────────────────────────────────────────────────────────────────────── */
@@ -174,24 +174,24 @@ function ImageSlot() {
       }}
     >
       {/*
-       * Text overlay — CSS grid overlap pattern matching Figma node 28556:967152.
+       * Text overlay, CSS grid overlap pattern matching Figma node 28556:967152.
        * All 3 elements share col-start-1/row-start-1; vertical position is set
        * via top margin from the shared grid origin.
        *
        * Typography (from Figma):
-       *   Label    — Geist Mono Medium, 32px / 36px lh, uppercase, forest-950
-       *   Headline — Tiempos Fine italic: "6x" 120px / " faster" 100px, text-default
-       *   Subtext  — Geist Regular, 24px / 49px lh, forest-950
+       *   Label   , Geist Mono Medium, 32px / 36px lh, uppercase, forest-950
+       *   Headline, Tiempos Fine italic: "6x" 120px / " faster" 100px, text-default
+       *   Subtext , Geist Regular, 24px / 49px lh, forest-950
        *
        * [CONCERN] Label + subtext use --ds-color-surface-brand-active (forest-950)
-       * as a text color — no dedicated --ds-color-text-on-brand-graphic token exists
+       * as a text color, no dedicated --ds-color-text-on-brand-graphic token exists
        * yet. Using the surface token matches Figma's --base/surface-brand-active
        * binding; add a proper text token when there's a second consumer.
        */}
       <div className="relative flex h-full items-center justify-center">
         <div className="inline-grid grid-cols-[max-content] grid-rows-[max-content] place-items-start leading-none">
 
-          {/* DISCOVER / NUTRACEUTICALS — Geist Mono Medium 32px */}
+          {/* DISCOVER / NUTRACEUTICALS, Geist Mono Medium 32px */}
           <p
             className="col-start-1 row-start-1 ml-5 w-[284px] whitespace-pre-wrap uppercase"
             style={{
@@ -205,7 +205,7 @@ function ImageSlot() {
             {"Discover \nnutraceuticals"}
           </p>
 
-          {/* 6x faster — Tiempos Fine italic, two sizes in one line */}
+          {/* 6x faster, Tiempos Fine italic, two sizes in one line */}
           <p
             className="col-start-1 row-start-1 mt-[106px] w-[437px] text-[0px]"
             style={{
@@ -218,7 +218,7 @@ function ImageSlot() {
             <span style={{ fontSize: "100px", lineHeight: "49.06px" }}> faster</span>
           </p>
 
-          {/* than the industry average. — Geist Regular 24px */}
+          {/* than the industry average., Geist Regular 24px */}
           <p
             className="col-start-1 row-start-1 ml-5 mt-[191px] w-[303px]"
             style={{
