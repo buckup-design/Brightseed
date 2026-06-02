@@ -25,7 +25,9 @@ const preview: Preview = {
       storySort: {
         method: "alphabetical",
         order: [
-          "Quill Design System",
+          "Getting Started",
+          "Design.mdx",
+          "Prototyping Workflow",
           "Foundations",
           "Components",
           "Blocks",
