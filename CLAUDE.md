@@ -18,7 +18,7 @@ The design bar is high. Brightseed is raising enterprise-level funding and needs
 
 Project memory lives in two complementary places:
 - `.agents/context/` — distilled context loaders (`PRODUCT.md`, `DESIGN.md`, handoff files). What the impeccable skill / general agents read.
-- `memory/` — standard memory-management format (May 8, 2026): `glossary.md` (internal terms, codenames, "things that are NOT the thing"), `people/{anna, meng, chuan, becky-buck}.md`, `projects/{forager, quill}.md`, `context/{v3-figma, sandbox-stack, deployment}.md`. What the productivity:memory-management skill expects.
+- `memory/` — standard memory-management format (May 8, 2026): `glossary.md` (internal terms, codenames, "things that are NOT the thing"), `people/{anna, meng, chuan, becky-buck}.md`, `projects/{forager, quill}.md`, `context/{v3-figma, web-stack, deployment}.md`. What the productivity:memory-management skill expects.
 
 Tiered lookup: this file → `memory/glossary.md` → `memory/people|projects|context/`. If a term isn't in any of those, ask.
 
@@ -50,38 +50,38 @@ Tiered lookup: this file → `memory/glossary.md` → `memory/people|projects|co
 Three-layer token system. Read `BrightseedDS.md` before generating any Forager UI.
 
 ```
-Layer 1 — Primitives    --p-forest-700  (legacy names: --color-forest-700)
+Layer 1 — Primitives    --p-color-forest-700        (raw values, $type-organized)
           ↓ var()
-Layer 2 — Semantics     --ds-color-surface-success  (includes intent aliases like --ds-success-700)
-          ↓ var()
-Layer 3 — Components    --c-{component}-*   ← component code references THIS layer
+Layer 2 — Semantics     --ds-color-surface-success  ← component code references THIS layer
 ```
+
+Component code (`.tsx`/CSS) **always references the semantic `--ds-*` layer** — never raw `--p-*` primitives. Semantics reference primitives; component code references semantics. (Decided June 2026, superseding the earlier `--c-*`-mandate model — see below.)
 
 **Token naming prefixes** (adopted June 2026 — source: [shabirgilkar.github.io/claude-design-system](https://shabirgilkar.github.io/claude-design-system/))
 
 | Tier | Prefix | Example |
 |---|---|---|
-| Primitives | `--p-*` | `--p-forest-700` |
-| Semantic | `--ds-*` | `--ds-color-surface-success` |
-| Components | `--c-{component}-*` | `--c-button-bg`, `--c-badge-surface` |
+| Primitives | `--p-{type}-*` | `--p-color-forest-700`, `--p-radius-md`, `--p-space-4` |
+| Semantic | `--ds-*` | `--ds-color-surface-success`, `--ds-shape-radius-md` |
+| Component (optional) | `--c-{component}-*` | `--c-button-bg` — escape hatch only; see Component scoping rule |
 
-Existing primitive tokens (`--color-forest-700`, `--color-lime-300`, etc.) predate this convention and are not being renamed. New primitive tokens use `--p-*`. Component code references `--c-*` tokens, not semantic tokens directly.
+Primitives are organized by **`$type`**: each raw value-type gets its own `--p-{type}-*` namespace — `--p-color-*` (colors), `--p-radius-*` / `--p-space-*` / `--p-border-width-*` (dimension), `--p-font-family-*` / `--p-font-size-*` / `--p-font-weight-*` (type). The legacy bare `--color-*` primitive names are fully retired (June 2026) — semantics now reference `--p-color-*`. **Migration complete** across color, dimension, and font (see "Primitive layer organized by `$type`" in Locked-in decisions).
 
 **Rules:**
 
-◆ **No tier-skipping** — Components must reference `--c-*` tokens, not `--color-*` or `--p-*` directly.
+◆ **No tier-skipping** — Component code must reference semantic `--ds-*` tokens, never raw `--p-*` primitives directly. (Semantics are the only tier that references primitives.)
 
 ◆ **No hardcoded values** — No hex codes, px values, or font names in component styles.
 
-◆ **Semantic intent** — Semantic tokens convey usage (`--color-surface-default`) not appearance (`--color-dark-gray`).
+◆ **Semantic intent** — Semantic tokens convey usage (`--ds-color-surface-default`) not appearance (`--ds-color-dark-gray` would be wrong).
 
-◆ **Component scoping** — Each component has its own `--c-{component}-*` namespace in the CSS.
+◆ **Component scoping (optional escape hatch)** — `--c-{component}-*` is no longer a mandated tier. Component code references `--ds-*` directly. Define a `--c-{component}-*` token *only* when a component needs a local value that has no suitable semantic home; it references `--ds-*`/`--p-*` on its right-hand side, and the component references the `--c-*` token. In practice, components reference `--ds-*` directly today and no `--c-*` tokens exist yet.
 
 ◆ **Light-first** — All default values assume a Light background. Dark theme overrides swap semantic tokens via `data-theme="dark"` on the ancestor — do not write dark-mode-specific component code.
 
 Additional rules:
 - If no token exists for what you need, flag with `// BRIGHTSEED-TBD: [BLOCKING]` and stop. Do not improvise. (See push-back protocol below.)
-- Corner radii on components reference shape tokens (`--shape-radius-*` in CSS, `border-radius/rounded-*` in Figma). Never hardcode pixel radii on individual variants — that's how drift happens between sizes.
+- Corner radii on components reference semantic shape tokens (`--ds-shape-radius-*` in CSS, `border-radius/rounded-*` in Figma), which in turn reference the `--p-radius-*` primitives. Never hardcode pixel radii on individual variants — that's how drift happens between sizes.
 
 ---
 
@@ -106,7 +106,7 @@ Granular per-decision history lives in **Locked-in decisions** (below) and `memo
 |---|---|
 | **Token system** — 3-layer vocabulary, dark theme (visual QA pending), shadcn/ui CSS bridge | ✅ Complete |
 | **Figma v3** (`shadcn Brightseed v3 (with pro blocks)`, the canonical file) — Brightseed primitives + tag tokens, ~50-var Brightseed Mode collection, full Quill component port (Button 330-variant matrix, Badge with inline-slot + tag-mode cascade, local Ring focus system, custom badge icons), Logo / Login / Input component sets, Geist + Tiempos type system | ✅ Complete (Apr–May 2026) — rationale in Locked-in decisions |
-| **Sandbox** (Next.js 16 + Tailwind 4 + Storybook 10, rebased on shadcndesign Pro Pack) — Button + Badge ported to Brightseed spec; Pro Blocks (App Shell 4, Sign In 2, nav helpers); modern form primitives; component ports (Alert, AlertDialog, Table, Switch, Spinner, Sonner); BrightseedLogo; BrightseedLogin + login page; Tiempos webfonts | ✅ Complete |
+| **Web app** (`/web/`, Next.js 16 + Tailwind 4 + Storybook 10, rebased on shadcndesign Pro Pack) — Button + Badge ported to Brightseed spec; Pro Blocks (App Shell 4, Sign In 2, nav helpers); modern form primitives; component ports (Alert, AlertDialog, Table, Switch, Spinner, Sonner); BrightseedLogo; BrightseedLogin + login page; Tiempos webfonts | ✅ Complete |
 | **Forager surfaces** — Compound / Plant / Strategy cards + Plants View, rebuilt on Pro Block primitives | 🟡 In progress — more screens to follow |
 | **Infra** — repo `github.com/buckup-design/Brightseed`; Vercel auto-deploys `main` → https://brightseed-storybook.vercel.app; public Storybook in sync (May 20, 2026) | ✅ Complete |
 | CompoundScreeningTable (reference implementation) | ✅ Production-ready |
@@ -132,17 +132,17 @@ Granular per-decision history lives in **Locked-in decisions** (below) and `memo
 | `tokens/` | CSS token files (primitives, intents, semantics, shape, charts) |
 | `bridge/globals.css` | shadcn/ui bridge — maps Brightseed tokens to shadcn variables |
 | `components/CompoundScreeningTable.tsx` | Reference implementation |
-| `sandbox/` | Next.js 16 + Tailwind 4 + Storybook 10 playground (Apr 30, 2026). Anna and Meng's AI prompting target. |
-| `sandbox/components/ui/` | 15 shadcn components copied from official `shadcn-ui/ui` repo |
-| `sandbox/stories/` | Storybook stories — one per component, plus seeded Forager-flavored examples |
+| `web/` | Next.js 16 + Tailwind 4 + Storybook 10 production app (Apr 30, 2026). Deploys to Vercel; this is production, not staging. |
+| `web/components/ui/` | 15 shadcn components copied from official `shadcn-ui/ui` repo |
+| `web/stories/` | Storybook stories — one per component, plus seeded Forager-flavored examples |
 | `anna's mocks 4-29-26/` | Reference screenshots ("filtered to compounds.png", "filtered to plants.png") that drive the demo screens |
-| `DOCS/AI that knows (and uses) your design system.md` | TJ Pitre webinar transcript on AI + design system workflow — informed the sandbox approach |
+| `DOCS/AI that knows (and uses) your design system.md` | TJ Pitre webinar transcript on AI + design system workflow — informed the `web/` app workflow |
 
 ---
 
-## Sandbox (`/sandbox/`) — built Apr 30, 2026
+## Web app (`/web/`) — built Apr 30, 2026
 
-A Next.js 16 + Tailwind 4 + Storybook 10 playground built as a subfolder of the main repo so Anna, Meng, and Chuan can prompt against the design system in Cowork and see "feels like" mocks before any production code lands. **The workflow IS the case study, not just the design system.**
+The Next.js 16 + Tailwind 4 + Storybook 10 app (`/web/`), deployed to Vercel — **this is production, not a staging area.** Becky is the sole contributor; everything she commits ships to the live Storybook at brightseed-storybook.vercel.app. (Originally scaffolded as a `sandbox/` for Anna, Meng, and Chuan to prompt against before production; that multi-contributor premise didn't materialize, so it was renamed `web/` in June 2026 to reflect that it's a single-contributor production app.) **The workflow IS the case study, not just the design system.**
 
 **Stack:**
 - Next.js 16 (App Router) + Tailwind 4
@@ -155,13 +155,13 @@ A Next.js 16 + Tailwind 4 + Storybook 10 playground built as a subfolder of the 
 
 **Installed (15 components):** button, card, badge, input, avatar, tabs, select, toggle-group, toggle, breadcrumb, sidebar, separator, sheet, skeleton, tooltip — plus `hooks/use-mobile.ts`.
 
-**Storied (14):** all of the above in `sandbox/stories/*.stories.tsx`. Sidebar uses the icon-rail collapsible variant that matches Anna's mocks.
+**Storied (14):** all of the above in `web/stories/*.stories.tsx`. Sidebar uses the icon-rail collapsible variant that matches Anna's mocks.
 
 **Verified Apr 30, 2026:** stock shadcn components paint correctly through the bridge — lime primary, sand secondary, soft red destructive all render as designed. **Brightseed-specific React-side tweaks are NOT yet applied** — the deeper Figma spec (lime ladder for hover/active, hover weight bump with ghost label, opacity-based disabled, variant-aware focus rings, Linktext button variant, etc.) lives in Figma but hasn't been ported to the React components. That's open work.
 
 **To run (always from your Mac, never trust Claude's Linux sandbox node_modules):**
 ```bash
-cd sandbox
+cd web
 npm install         # required after Claude installs anything — Linux node_modules has wrong native binaries
 npm run storybook   # localhost:6006
 npm run dev         # localhost:3000 (Next.js)
@@ -205,21 +205,45 @@ npm run dev         # localhost:3000 (Next.js)
 
 ## Locked-in decisions (Apr 2026)
 
+### Primitive layer organized by `$type` (June 2026)
+
+The primitive tier (Layer 1) is organized by **`$type`** — the value-type axis the W3C Design Tokens spec uses — not by an ad-hoc "color vs shape" split. Every raw value-type gets its own `--p-{type}-*` namespace. This replaced the earlier convention where only *new* primitives took `--p-*` and existing ones were grandfathered; the grandfather note is retired.
+
+| `$type` | Namespace | Where | Notes |
+|---|---|---|---|
+| color | `--p-color-*` | `primitives.css` | All 11 hue scales × 11 steps + white/black. Renamed from bare `--color-*` (fully retired). |
+| dimension / radius | `--p-radius-*` | `shape.css` | `none, xs, sm, md, lg, xl, 2xl, 3xl, 4xl, round`. |
+| dimension / border-width | `--p-border-width-*` | `shape.css` | `none, default, bold, heavy`. |
+| dimension / space | `--p-space-*` | `shape.css` | 4px base ramp (`--p-space-N` = N×4px), mirrors Figma `spacing/N`. **New** — not yet consumed by component CSS (components use Tailwind's `p-`/`gap-` scale); present for Figma parity + complete tier. |
+| fontFamily | `--p-font-family-*` | `typography.css` | `sans, display, mono`. |
+| fontSize | `--p-font-size-*` | `typography.css` | Display sizes only (`28, 40, 56`, px-keyed); product UI sizes come from Tailwind. |
+| fontWeight | `--p-font-weight-*` | `typography.css` | `regular, medium, semibold, bold`. |
+
+**Things that are NOT primitives (deliberately):**
+- **Shadow** stays semantic-only (`--ds-shadow-*`) — a shadow bakes in a color decision (forest-950 tinted umbra), so it's a recipe, not a raw value.
+- **Display roles `h1/h2/h3`** are semantic (`--ds-text-display-*`), referencing `--p-font-size-*` / `--p-font-weight-*`. This removed the prior tier-skip where raw `3.5rem` lived at the role name. Line-height and tracking stay inline on the role (role-specific recipe, not a reusable scale).
+
+**Implementation pattern — primitives added *under* existing names, zero component edits.** Semantic tokens that component code already references (`--ds-shape-radius-md`, `--font-sans`, etc.) were kept as names and repointed to alias the new primitives (`--ds-shape-radius-md: var(--p-radius-md)`; `--font-sans: var(--p-font-family-sans)`). So the primitive tier was introduced without touching `button.tsx`, `badge.tsx`, the cards, or the bridge. Only `--text-display-*` → `--ds-text-display-*` required consumer edits (Configure.mdx + the `.text-display-*` helper classes).
+
+**Verification invariants:** no bare `--color-{hue}` remains in any live CSS or doc; every `var(--p-*)` reference resolves to a definition; all 260 `--ds-color-*` semantics intact. Re-run before any future primitive rename.
+
+> ⚠️ Verify in Storybook after `npm install` on Mac — the Linux sandbox can't run the build, so the rename was verified by static resolution-chain checks, not a live render.
+
 ### Color palette renames
 The original primitive scales had three names that no longer reflect the brand. These were renamed everywhere — primitives, intents, semantics, charts, HTML, mapping doc, BrightseedDS.md.
 
 | Was | Now | Why |
 |---|---|---|
-| `--color-green-*` | `--color-forest-*` | Anchored to "Deep Forest" brand color. "Green" was generic. |
-| `--color-indigo-*` | `--color-lavender-*` | Brand-tuned violet (H=287°). "Indigo" implied a stock tailwind hue. |
-| `--color-purple-*` | `--color-orchid-*` | Anchored to "Garlic Bloom" brand color. |
+| `--color-green-*` | `--p-color-forest-*` | Anchored to "Deep Forest" brand color. "Green" was generic. |
+| `--color-indigo-*` | `--p-color-lavender-*` | Brand-tuned violet (H=287°). "Indigo" implied a stock tailwind hue. |
+| `--color-purple-*` | `--p-color-orchid-*` | Anchored to "Garlic Bloom" brand color. |
 
 Same renames in Figma: `brightseed/forest/*`, `brightseed/lavender/*`, `brightseed/orchid/*`.
 
 ### Page background: white, not Sand (Apr 2026)
-`--color-surface-default` (light theme) was repointed from `--color-sand-50` (`#F9F8F3`, warm off-white) to `--color-white` (`#FFFFFF`). Sand stays in the palette and continues to anchor warmer surfaces — `--color-surface-alt` (sidebars, table alt rows, inset panels) is still `--color-sand-100`, hover/active states still use the sand scale, and `--color-text-inverse` on dark surfaces is still `--color-sand-50` (warm white reads better on Deep Forest than pure white). Only the page-level surface concept moved to white.
+`--color-surface-default` (light theme) was repointed from `--p-color-sand-50` (`#F9F8F3`, warm off-white) to `--p-color-white` (`#FFFFFF`). Sand stays in the palette and continues to anchor warmer surfaces — `--color-surface-alt` (sidebars, table alt rows, inset panels) is still `--p-color-sand-100`, hover/active states still use the sand scale, and `--color-text-inverse` on dark surfaces is still `--p-color-sand-50` (warm white reads better on Deep Forest than pure white). Only the page-level surface concept moved to white.
 
-`--color-action-secondary` was refactored to alias `--color-surface-default` directly (semantic-to-semantic), capturing the "secondary buttons match page bg" relationship explicitly. Same change in Figma — `colors/background-light` now aliases to `brightseed colors/base/white`. The `--color-white` and `--color-black` primitives were added at the top of `tokens/primitives.css`.
+`--color-action-secondary` was refactored to alias `--color-surface-default` directly (semantic-to-semantic), capturing the "secondary buttons match page bg" relationship explicitly. Same change in Figma — `colors/background-light` now aliases to `brightseed colors/base/white`. The `--p-color-white` and `--p-color-black` primitives were added at the top of `tokens/primitives.css`.
 
 ### Tag colors are decorative, not semantic
 The 8 tag colors (forest, lime, cyan, blue, yellow, orange, lavender, orchid) are for visual differentiation in tag-dense Forager surfaces — compound source taxonomies, screening categories, etc. **Color does not imply status.** A `cyan` badge does not mean "info"; an `orange` badge does not mean "caution". For status meaning, use icon + text composition, not color.
@@ -369,12 +393,12 @@ Every Button cell across all 6 variants × 10 sizes × 6 states (330 cells) has 
 
 **Audit invariant.** A passing audit of the Button set means every cell has `boundVariables.topLeftRadius` set. If any cell shows a hardcoded number, that's a regression — re-bind it.
 
-**CSS side.** `tokens/shape.css` declares the full `--shape-radius-{xs, sm, md, lg, xl, 2xl, 3xl, 4xl, round}` scale to mirror the Figma `radius/*` family, with conventions documenting which token each component uses. Component code references `--shape-radius-md` for the standard button sizes and `--shape-radius-4xl` for xl.
+**CSS side.** `tokens/shape.css` declares the full `--ds-shape-radius-{xs, sm, md, lg, xl, 2xl, 3xl, 4xl, round}` scale to mirror the Figma `radius/*` family, with conventions documenting which token each component uses. Component code references `--ds-shape-radius-md` for the standard button sizes and `--ds-shape-radius-4xl` for xl.
 
-### Button — sandbox React implementation (Apr 30, 2026)
-Until this work, the Brightseed Button spec lived only in Figma (the Quill matrix at `26465:249160`). The React component in `sandbox/components/ui/button.tsx` and its full-matrix story in `sandbox/stories/Button.stories.tsx` are the first stock shadcn component ported to Brightseed spec parity. Five decisions worth knowing about before extending the pattern to other components (Badge is the obvious next candidate).
+### Button — web/ React implementation (Apr 30, 2026)
+Until this work, the Brightseed Button spec lived only in Figma (the Quill matrix at `26465:249160`). The React component in `web/components/ui/button.tsx` and its full-matrix story in `web/stories/Button.stories.tsx` are the first stock shadcn component ported to Brightseed spec parity. Five decisions worth knowing about before extending the pattern to other components (Badge is the obvious next candidate).
 
-**Custom Tailwind variants for dual-trigger states.** The Quill matrix shows every state of every variant statically — hover, focus, pressed, disabled, loading — but real users get those states via `:hover`, `:focus-visible`, `:active`, `:disabled` pseudo-classes. Writing two sets of state classes (one for stories, one for production) doubles the cva and guarantees drift. Solution: `@custom-variant` declarations in `sandbox/app/globals.css` that wrap real pseudo-classes AND a `data-force-state` attribute in `:is()`:
+**Custom Tailwind variants for dual-trigger states.** The Quill matrix shows every state of every variant statically — hover, focus, pressed, disabled, loading — but real users get those states via `:hover`, `:focus-visible`, `:active`, `:disabled` pseudo-classes. Writing two sets of state classes (one for stories, one for production) doubles the cva and guarantees drift. Solution: `@custom-variant` declarations in `web/app/globals.css` that wrap real pseudo-classes AND a `data-force-state` attribute in `:is()`:
 
 ```css
 @custom-variant hovered (&:is(:hover, [data-force-state="hover"]));
@@ -436,7 +460,7 @@ Linktext text color and brand-link focus ring moved from the forest scale to the
 **Downstream:**
 - ✅ v3's Brightseed Mode collection already has `base/link-brand` and `base/link-brand-hover` (lime-700/lime-300 light, lime-300/lime-200 dark). Added during the May 6 reskin experiment.
 - Sign In 2 in Brightseed Blocks (all in use) page already has its "Sign up" link-text rebound from `base/primary` to `base/link-brand` for AA compliance.
-- Sandbox React Button's Linktext variant (`sandbox/components/ui/button.tsx`) references `--color-text-link-brand` via CSS variable; semantics.css updates flow through automatically. When extending `bridge/globals.css`, consider adding `--link-brand: var(--color-text-link-brand)` so cva can reference it via the bridge name as well as direct CSS variable.
+- The web/ Button's Linktext variant (`web/components/ui/button.tsx`) references `--color-text-link-brand` via CSS variable; semantics.css updates flow through automatically. When extending `bridge/globals.css`, consider adding `--link-brand: var(--color-text-link-brand)` so cva can reference it via the bridge name as well as direct CSS variable.
 
 ### v3 file structure (May 6, 2026)
 
@@ -634,15 +658,15 @@ Implementation: existing variant set kept at 315w with its automatic dashed bord
 
 **Resolved (May 8, 2026):** Pro Blocks consumers on the `Components` SECTION were rebound from original shadcn `Badge` (`26:169`) to the Quill custom badges — 24 instances swapped to Quill Primary across the Spinner/Card/Table/Input pages (the Pro Blocks pages themselves had zero direct consumers; badges were sealed inside Card/Sheet masters). `Badge Number` (`17100:10130`) was intentionally left as the default shadcn version (color-rebound only) per Becky's call — it has no direct Quill equivalent.
 
-### Pro Pack rebuild — sandbox rebased on shadcndesign.com (May 8, 2026)
+### Pro Pack rebuild — web/ app rebased on shadcndesign.com (May 8, 2026)
 
-The sandbox was rebased from stock shadcn-ui copies to the shadcndesign.com Pro Pack (purchased via Polar). Premise: case study reads stronger as "bought a Pro Pack and re-skinned through a token bridge" than "copied stock and customized." Branch: `pro-blocks-rebuild`. Recovery point: `button-badge-snapshot` branch at `5333cd1`.
+The web/ app was rebased from stock shadcn-ui copies to the shadcndesign.com Pro Pack (purchased via Polar). Premise: case study reads stronger as "bought a Pro Pack and re-skinned through a token bridge" than "copied stock and customized." Branch: `pro-blocks-rebuild`. Recovery point: `button-badge-snapshot` branch at `5333cd1`.
 
 **What landed:** `@shadcndesign/sign-in-2` + 5 modern form primitives (Checkbox, Field, InputGroup, Label, Textarea); `@shadcndesign/app-shell-4` + 4 nav helpers (NavMain, NavProjects, NavUser, TeamSwitcher) + Collapsible (transitive dep shadcndesign forgot to declare). Storybook stories for both. Both paint full Brightseed via the bridge — no manual re-skinning needed.
 
 **Premise validated:** shadcndesign Pro Blocks are pure composition layers. They reference STOCK shadcn primitives by name (`button`, `checkbox`, `input`, `sidebar`, etc.) — not their own forks. So our customized Button + Badge ARE the paint surface; the bridge handles theming for everything else.
 
-**Registry wiring** lives in `sandbox/components.json` `registries` block — URL `https://www.shadcndesign.com/api/registry/{name}`, header `X-License-Key: ${SHADCNDESIGN_LICENSE_KEY}`. Token is in `sandbox/.env.local` (gitignored). Required first install: `@shadcndesign/styles` — purely additive `.heading-*` / `.container-padding-x` / `.section-padding-y` / `.section-title-gap-*` utility classes. No CSS vars, no clobbering. Fully verified safe for the bridge.
+**Registry wiring** lives in `web/components.json` `registries` block — URL `https://www.shadcndesign.com/api/registry/{name}`, header `X-License-Key: ${SHADCNDESIGN_LICENSE_KEY}`. Token is in `web/.env.local` (gitignored). Required first install: `@shadcndesign/styles` — purely additive `.heading-*` / `.container-padding-x` / `.section-padding-y` / `.section-title-gap-*` utility classes. No CSS vars, no clobbering. Fully verified safe for the bridge.
 
 **Install pattern (canonical, do this every time):**
 
@@ -663,7 +687,7 @@ curl -sS -H "X-License-Key: ${SHADCNDESIGN_LICENSE_KEY}" \
 
 The most important fields to read: `files[].path` (will any path overlap with customized components?), `registryDependencies` (will the cascade try to pull stock versions of customized primitives?), `cssVars` (will the install touch our token bridge?), `tailwind` (will it modify Tailwind config?). For shadcndesign blocks, `cssVars` and `tailwind` are typically `null` — the only file edits beyond `files[]` are `app/globals.css` mutations the CLI does internally.
 
-**Tailwind v4 — `@source` directives go AFTER all `@import` statements.** CSS spec requires all `@import` at the top of the stylesheet, before any other rule. `@source` is non-`@import` content — placing it between imports silently invalidates everything after. Symptom: tokens/bridge stop loading, every Brightseed CSS variable resolves to empty string. Diagnosed once via Chrome MCP DOM inspection, fixed in `sandbox/app/globals.css`. Don't repeat.
+**Tailwind v4 — `@source` directives go AFTER all `@import` statements.** CSS spec requires all `@import` at the top of the stylesheet, before any other rule. `@source` is non-`@import` content — placing it between imports silently invalidates everything after. Symptom: tokens/bridge stop loading, every Brightseed CSS variable resolves to empty string. Diagnosed once via Chrome MCP DOM inspection, fixed in `web/app/globals.css`. Don't repeat.
 
 Tailwind v4 auto-detects content sources, but auto-detection misses runtime-added directories (e.g., `components/pro-blocks/` populated mid-session by Pro Block installs). Defensive `@source` directives in `app/globals.css` cover all the standard locations: `app/`, `components/`, `stories/`, `lib/`, `hooks/`. Restart Storybook/Next.js after adding new top-level directories.
 
@@ -675,10 +699,10 @@ Tailwind v4 auto-detects content sources, but auto-detection misses runtime-adde
 
 ```bash
 git checkout button-badge-snapshot -- \
-  sandbox/components/ui/button.tsx \
-  sandbox/components/ui/badge.tsx \
-  sandbox/stories/Button.stories.tsx \
-  sandbox/stories/Badge.stories.tsx
+  web/components/ui/button.tsx \
+  web/components/ui/badge.tsx \
+  web/stories/Button.stories.tsx \
+  web/stories/Badge.stories.tsx
 ```
 
 Pre-install verification ritual: `sha256sum components/ui/button.tsx components/ui/badge.tsx`. Re-run after install. Hashes must match. They have through both Sign In 2 and App Shell 4 installs to date.
@@ -689,7 +713,7 @@ Pre-install verification ritual: `sha256sum components/ui/button.tsx components/
 
 The Brightseed display font lineup uses two cuts of Tiempos for two different jobs. **Final state as of May 8, 2026 PM**, after two same-day iterations on the display scale (see history block at the end of this section).
 
-**Tiempos Fine RegularItalic** (licensed; production-shipping). The display face. All three display text styles in v3 (`display/h1` 56/60, `display/h2` 40/44, `display/h3` 28/34) use Tiempos Fine RegularItalic — italic is intrinsic to the face, not an applied modifier. Differentiation across the scale comes from size + tracking, not weight or style. Wired into Storybook + Next.js via `@font-face` at the top of `tokens/typography.css`. Single WOFF2 (`TiemposFine-RegularItalic.woff2`) at `sandbox/public/fonts/tiempos/` — committed to the repo May 20, 2026 (was gitignored; Brightseed holds a Klim webfont license — see the May 20 entry), served at `/fonts/tiempos/*` in both contexts. Source `.otf` in `Brightseed brand assets from 2022/brightseed fonts/`.
+**Tiempos Fine RegularItalic** (licensed; production-shipping). The display face. All three display text styles in v3 (`display/h1` 56/60, `display/h2` 40/44, `display/h3` 28/34) use Tiempos Fine RegularItalic — italic is intrinsic to the face, not an applied modifier. Differentiation across the scale comes from size + tracking, not weight or style. Wired into Storybook + Next.js via `@font-face` at the top of `tokens/typography.css`. Single WOFF2 (`TiemposFine-RegularItalic.woff2`) at `web/public/fonts/tiempos/` — committed to the repo May 20, 2026 (was gitignored; Brightseed holds a Klim webfont license — see the May 20 entry), served at `/fonts/tiempos/*` in both contexts. Source `.otf` in `Brightseed brand assets from 2022/brightseed fonts/`.
 
 The face was already in use as accent ("6x faster" Spinner labels on Brightseed Blocks at `I26465:248391;28556:967154` and `I26465:248392;28557:968359`) — those uses now align with the global display rule rather than being separate accent moments.
 
@@ -707,7 +731,7 @@ The face was already in use as accent ("6x faster" Spinner labels on Brightseed 
 
 ### Public Storybook sync + repo hygiene (May 20, 2026)
 
-The public Storybook had silently drifted from local work, and the most recent push had failed to deploy. Root cause: the `brand/` rule in `.gitignore` was unanchored, so it matched **any** folder named `brand/` — including `sandbox/components/brand/`. That kept `BrightseedLogo.tsx` out of every commit, so the first deploy that imported it (via `BrightseedLogin`) failed the Vite/Rolldown build with an unresolved import. Fix: anchor the rule to `/brand/` (top-level brand assets stay ignored; sandbox component/asset `brand/` folders now track).
+The public Storybook had silently drifted from local work, and the most recent push had failed to deploy. Root cause: the `brand/` rule in `.gitignore` was unanchored, so it matched **any** folder named `brand/` — including `web/components/brand/`. That kept `BrightseedLogo.tsx` out of every commit, so the first deploy that imported it (via `BrightseedLogin`) failed the Vite/Rolldown build with an unresolved import. Fix: anchor the rule to `/brand/` (top-level brand assets stay ignored; web/ component/asset `brand/` folders now track).
 
 What landed on `main` (commits `c78802b` → `4c5d7cc` → `0af1ff4`):
 - The previously-uncommitted May 8 work — component ports (Alert, AlertDialog, Table, Switch, Spinner, Sonner), `BrightseedLogin` + login page, the Forager card rebuild, Pro Block nav stories, and the Tiempos type-system wiring.
@@ -727,7 +751,7 @@ The Alert component reached full Storybook parity. Five variants in both Figma a
 
 **Figma:** Component set node `26:160` on the Alert page (`21:322`). All 5 variants use Brightseed semantic variables for surface/text/border. Icon bindings per variant — see `memory/context/icon-system.md` Icon inventory → Alert component section.
 
-**React (`sandbox/components/ui/alert.tsx`):** No changes needed — component references semantic token names, dark mode flows through automatically via `[data-theme="dark"]` on the ancestor.
+**React (`web/components/ui/alert.tsx`):** No changes needed — component references semantic token names, dark mode flows through automatically via `[data-theme="dark"]` on the ancestor.
 
 ### Dark mode — semantic intent surfaces (May 28, 2026)
 

@@ -6,7 +6,7 @@
 
 ## What's live
 
-The `sandbox/` Storybook builds and ships to Vercel on every push to `main`. Anyone with the URL can view it — no GitHub access required. This is the "shared library" Anna and Chuan can click into without setup.
+The `web/` Storybook builds and ships to Vercel on every push to `main`. Anyone with the URL can view it — no GitHub access required. This is the "shared library" Anna and Chuan can click into without setup.
 
 | Concern | Where it lives |
 |---|---|
@@ -18,7 +18,7 @@ The `sandbox/` Storybook builds and ships to Vercel on every push to `main`. Any
 
 ## Vercel project config
 
-- **Root Directory:** `sandbox`
+- **Root Directory:** `web`
 - **Application Preset:** Other (NOT Next.js — we're shipping the Storybook static build, not the Next.js app)
 - **Build Command:** `npm run build-storybook`
 - **Output Directory:** `storybook-static`
@@ -34,7 +34,7 @@ When a PR is opened, Vercel posts the preview URL as a PR comment. This is the s
 
 ## What was scoped INTO the first push
 
-Pushed: `sandbox/`, `tokens/`, `bridge/`, `components/`, `README.md`, `CLAUDE.md`, `BrightseedDS.md`, `brightseed-shadcn-mapping.md`, updated `.gitignore`.
+Pushed: `web/`, `tokens/`, `bridge/`, `components/`, `README.md`, `CLAUDE.md`, `BrightseedDS.md`, `brightseed-shadcn-mapping.md`, updated `.gitignore`.
 
 ## What was held back (added to .gitignore)
 
@@ -53,7 +53,7 @@ Each is a "decide and add later" item, not a permanent exclusion.
 
 ## Open follow-ups (from May 8)
 
-1. **Tiempos Headline WOFF2 files** — drop into `sandbox/public/fonts/tiempos/`, uncomment `localFont` in `sandbox/app/layout.tsx`. Until then, display headings use Tiempos Text fallback.
+1. **Tiempos Headline WOFF2 files** — drop into `web/public/fonts/tiempos/`, uncomment `localFont` in `web/app/layout.tsx`. Until then, display headings use Tiempos Text fallback.
 2. **Add Anna and Chuan as GitHub collaborators** — required for them to *edit*. Not required for them to *view* Storybook.
 3. **Design the contribution loop** — Becky said hold for now (next 4+ weeks she's the only contributor). Worth revisiting before week 4.
 4. **Decide what's case-study-public.** Repo is private today. If hiring managers need to see it, either flip to public (after a curation pass) or share specific artifacts directly.
@@ -74,4 +74,4 @@ Captured here so future Claude sessions know these are done and not to re-prompt
 - **First push had to come from Becky's Mac, not Claude's Linux sandbox.** The FUSE mount Claude uses can't clear `.git/index.lock` cleanly. Pattern: Claude stages files via Edit/Write, Becky runs `git commit && git push` on her Mac.
 - **Vercel Hobby plan = 1 project remaining slot was used.** Future deploys (e.g. a separate Forager production project) may need a Pro upgrade.
 - **GitHub repo visibility = private.** Vercel still deploys from it (it has read access via the GitHub App), but the deployed Storybook site itself is public — anyone with the URL can view.
-- **Vercel's Application Preset must be "Other" for Storybook builds.** Letting it auto-detect Next.js (because `sandbox/` has next.config.ts) would deploy the Next.js app, not Storybook.
+- **Vercel's Application Preset must be "Other" for Storybook builds.** Letting it auto-detect Next.js (because `web/` has next.config.ts) would deploy the Next.js app, not Storybook.

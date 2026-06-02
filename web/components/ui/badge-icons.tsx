@@ -288,6 +288,6 @@ export function RatBadge({ className, ...props }: GlyphProps) {
 }
 
 /* The full browsable inventory — these customs plus all of Lucide — lives in the
- * "Foundations/Icons" Storybook page (sandbox/stories/Icons.stories.tsx). No
+ * "Foundations/Icons" Storybook page (web/stories/Icons.stories.tsx). No
  * purposeful concept→icon map is defined here yet; that's deliberate while the
  * icon language is still exploratory. */

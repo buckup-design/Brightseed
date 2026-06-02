@@ -11,7 +11,7 @@ Brightseed's customized fork of shadcn/ui. Quill = shadcn + Brightseed Mode rebi
 Three-layer token system (read `BrightseedDS.md` before generating any Forager UI):
 
 ```
-Layer 1 — Primitives    --color-forest-700
+Layer 1 — Primitives    --p-color-forest-700
           ↓ var()
 Layer 2 — Intents       --success-700
           ↓ var()
@@ -32,7 +32,7 @@ Component code references **semantic** tokens only. Never reach past semantics t
 | IconPlaceholder | `21003:91178` |
 | Brightseed Blocks (curated home) | `26465:212221` |
 
-## Component porting status (sandbox React)
+## Component porting status (web/ React)
 | Component | Status |
 |---|---|
 | Button | ✅ Full Quill parity (Apr 30, 2026) |
@@ -44,11 +44,11 @@ Component code references **semantic** tokens only. Never reach past semantics t
 - `brightseed-shadcn-mapping.md` — Figma variable wiring guide
 - `tokens/` — primitives / intents / semantics / shape / charts / typography
 - `bridge/globals.css` — shadcn → Brightseed token bridge (intentionally thin)
-- `sandbox/components/ui/` — React component implementations
-- `sandbox/stories/` — Storybook stories incl. full Quill matrices for Button + Badge
+- `web/components/ui/` — React component implementations
+- `web/stories/` — Storybook stories incl. full Quill matrices for Button + Badge
 
 ## Known follow-ups (open as of May 8)
-- Tiempos Headline license + WOFF2 files placed at `sandbox/public/fonts/tiempos/` + uncomment localFont in `sandbox/app/layout.tsx`
+- Tiempos Headline license + WOFF2 files placed at `web/public/fonts/tiempos/` + uncomment localFont in `web/app/layout.tsx`
 - Old broken Lucide scaffolding cleanup (Pro Pack frame on Lucide Icons page with 6 leftover icons that survived deletion)
 - 14 stock shadcn components awaiting Brightseed-spec port
 - DoseResponseChart, StatCard implementation

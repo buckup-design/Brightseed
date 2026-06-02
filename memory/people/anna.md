@@ -13,5 +13,5 @@
 - Reference mocks live in `anna's mocks 4-29-26/` ("filtered to compounds.png", "filtered to plants.png") — the basis for the Compounds + Plants demo screens
 
 ## How Claude helps Anna
-- The sandbox (Next.js + Storybook + Quill components) is Anna's prompting target — she should be able to prompt against it in Cowork and see "feels like" mocks before any production code lands
+- The `web/` app (Next.js + Storybook + Quill components) was intended as Anna's prompting target — the idea was she'd prompt against it in Cowork and see "feels like" mocks. In practice that multi-contributor premise hasn't materialized; Becky remains sole contributor and `web/` is a single-contributor production app
 - The workflow IS the case study, not just the design system

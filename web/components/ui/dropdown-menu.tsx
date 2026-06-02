@@ -6,9 +6,9 @@ import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui"
 import { cn } from "@/lib/utils"
 
 /**
- * DropdownMenu — Brightseed sandbox version.
+ * DropdownMenu — Brightseed web/ version.
  *
- * Pulled into the sandbox following the same path as the rest of the
+ * Pulled into web/ following the same path as the rest of the
  * shadcn-derived components: the Radix primitive lives in the `radix-ui`
  * meta-package (already in package.json), and styling references Brightseed
  * semantic tokens via Tailwind arbitrary CSS-variable values — same pattern

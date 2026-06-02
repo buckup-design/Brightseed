@@ -23,7 +23,7 @@ Internal terms, project codenames, and shorthand specific to the Brightseed enga
 | **Linktext** | The Button variant that's button-shaped but reads as a link. Lime text, never underlined. Distinct from the inline `<a>` Link component (blue, always underlined). Different state machines — do not collapse. |
 | **The matrix / the Quill matrix** | The dashed-purple-line component-doc grid showing every variant × state cell as live component instances. Canonical Quill location: `Components - Quill` SECTION on the Button page (id `26465:249160`). |
 | **The bridge** | `bridge/globals.css` — maps shadcn variable names to Brightseed semantic tokens. "Intentionally thin" — never extend it to expose state ladders; reach for `[var(--color-...)]` arbitrary values in the cva instead. |
-| **The sandbox** | `/sandbox/` — Next.js 16 + Tailwind 4 + Storybook 10 playground. Anna and Meng's AI-prompting target. Built Apr 30, 2026. |
+| **The web app** (formerly "the sandbox") | `/web/` — Next.js 16 + Tailwind 4 + Storybook 10 production app, deploys to Vercel. Built Apr 30, 2026; renamed `sandbox/` → `web/` June 2026 (single-contributor production app, not a staging area). |
 | **Cowork** | Anthropic's desktop tool for non-engineers to drive AI workflows. The case study workflow: Anna/Meng prompt in Cowork → Vercel preview → Becky reviews → merge. |
 
 ## Acronyms

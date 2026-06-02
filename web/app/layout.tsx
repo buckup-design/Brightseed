@@ -4,7 +4,7 @@ import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Brightseed Sandbox",
+  title: "Brightseed",
   description: "AI prototyping playground for the Brightseed design system",
 };
 

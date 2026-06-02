@@ -1,6 +1,6 @@
-# Sandbox stack — context
+# Web stack — context
 
-**Path:** `/sandbox/` (subfolder of the main repo)
+**Path:** `/web/` (subfolder of the main repo)
 **Built:** Apr 30, 2026
 **Deployed:** May 8, 2026 — live at https://brightseed-storybook.vercel.app (see `memory/context/deployment.md`)
 **Purpose:** Anna and Meng's AI-prompting target. Where they prompt against Quill components in Cowork to see "feels like" Forager screens before any production code lands.
@@ -18,7 +18,7 @@
 ## Run
 **Always from Becky's Mac, never trust Claude's Linux sandbox node_modules:**
 ```bash
-cd sandbox
+cd web
 npm install        # required after any dependency changes
 npm run storybook  # localhost:6006
 npm run dev        # localhost:3000 (Next.js)
@@ -43,7 +43,7 @@ npm run dev        # localhost:3000 (Next.js)
 | `stories/Typography.stories.tsx` | DisplayScale + DisplayVsBody (Tiempos) |
 
 ## Component porting playbook
-See CLAUDE.md "Button — sandbox React implementation (Apr 30, 2026)" for the full pattern. Summary:
+See CLAUDE.md "Button — web/ React implementation (Apr 30, 2026)" for the full pattern. Summary:
 1. Confirm semantic tokens with full state ladders exist in `tokens/semantics.css`
 2. Reference them via Tailwind arbitrary values: `bg-[var(--color-...)]`, never via the bridge alias for state ladders
 3. Use `hovered` / `focused` / `pressed` / `disabled-state` / `loading-state` custom variants from globals.css
@@ -51,15 +51,15 @@ See CLAUDE.md "Button — sandbox React implementation (Apr 30, 2026)" for the f
 5. Build a Quill-style matrix story in stories file (forces every state of every variant to be visible at once)
 
 ## shadcndesign Pro Pack registry + license key (verified May 22, 2026)
-The sandbox was rebased onto the shadcndesign.com Pro Pack on May 8, 2026 (see CLAUDE.md "Pro Pack rebuild"). The authenticated registry is the install path now — this **supersedes** the older "copy components from a cloned `shadcn-ui/ui` repo" note in the Constraints section above (that workaround was for the public `ui.shadcn.com` registry; the `@shadcndesign` registry works via the CLI with the license key).
+The web/ app was rebased onto the shadcndesign.com Pro Pack on May 8, 2026 (see CLAUDE.md "Pro Pack rebuild"). The authenticated registry is the install path now — this **supersedes** the older "copy components from a cloned `shadcn-ui/ui` repo" note in the Constraints section above (that workaround was for the public `ui.shadcn.com` registry; the `@shadcndesign` registry works via the CLI with the license key).
 
-- **Registry wiring:** `sandbox/components.json` → `registries["@shadcndesign"]`: URL `https://www.shadcndesign.com/api/registry/{name}`, header `X-License-Key: ${SHADCNDESIGN_LICENSE_KEY}`.
-- **Key:** `sandbox/.env.local` → `SHADCNDESIGN_LICENSE_KEY` (prefix `SD-2…`), gitignored. Treat like a password — never paste in chat, screenshots, or commits. Rotate via Polar customer portal / hi@shadcndesign.com.
+- **Registry wiring:** `web/components.json` → `registries["@shadcndesign"]`: URL `https://www.shadcndesign.com/api/registry/{name}`, header `X-License-Key: ${SHADCNDESIGN_LICENSE_KEY}`.
+- **Key:** `web/.env.local` → `SHADCNDESIGN_LICENSE_KEY` (prefix `SD-2…`), gitignored. Treat like a password — never paste in chat, screenshots, or commits. Rotate via Polar customer portal / hi@shadcndesign.com.
 - **Verified May 22, 2026:** key authenticates — registry returned **HTTP 200** for a Pro Block fetch. There is no separate "activation" step; the key just works as the request header. Config was already in place from the May 8 rebuild — May 22 was a confirmation, not a setup.
-- **Install pattern (run on Becky's Mac):** `yes n | npx --yes shadcn@latest add @shadcndesign/<block> --yes`. The `yes n |` answers overwrite prompts `n`, protecting the customized Button/Badge. Inspect-first: `curl -sS -H "X-License-Key: ${SHADCNDESIGN_LICENSE_KEY}" "https://www.shadcndesign.com/api/registry/<block>" | jq .` (env var auto-loads when run from inside `sandbox/`; otherwise `source .env.local` first).
+- **Install pattern (run on Becky's Mac):** `yes n | npx --yes shadcn@latest add @shadcndesign/<block> --yes`. The `yes n |` answers overwrite prompts `n`, protecting the customized Button/Badge. Inspect-first: `curl -sS -H "X-License-Key: ${SHADCNDESIGN_LICENSE_KEY}" "https://www.shadcndesign.com/api/registry/<block>" | jq .` (env var auto-loads when run from inside `web/`; otherwise `source .env.local` first).
 
 ## shadcndesign Claude skills — installed + tested, left as-is (May 22, 2026)
-Installed `@shadcndesign/skills-claude` from the registry. The CLI resolved the registry's `~/.claude/skills/` target **relative to the project**, so the files landed at `sandbox/.claude/skills/` (project-local) — NOT home `~/.claude/skills/`. They work as Brightseed project skills but aren't global across Becky's other projects.
+Installed `@shadcndesign/skills-claude` from the registry. The CLI resolved the registry's `~/.claude/skills/` target **relative to the project**, so the files landed at `web/.claude/skills/` (project-local) — NOT home `~/.claude/skills/`. They work as Brightseed project skills but aren't global across Becky's other projects.
 
 Files:
 - `generate-code/SKILL.md` — Figma frame → production React/TSX (Pro-Block-aware).

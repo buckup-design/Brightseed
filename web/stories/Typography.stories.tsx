@@ -21,7 +21,7 @@ import * as React from "react";
  *                   emphasis or future body patterns.
  *
  * All Tiempos WOFF2 files are loaded via @font-face in tokens/typography.css
- * from sandbox/public/fonts/tiempos/, served at /fonts/tiempos/* in both
+ * from web/public/fonts/tiempos/, served at /fonts/tiempos/* in both
  * Next.js (public/) and Storybook (.storybook/main.ts staticDirs). Source
  * .otf files (gitignored) live in /Brightseed brand assets from 2022/.
  * ───────────────────────────────────────────────────────────────────────── */

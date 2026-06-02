@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
  * Every state cell uses real component output. Hover / focus / pressed /
  * disabled / loading are forced via the `data-force-state` attribute (or
  * the `disabled` / `loading` props), which the custom Tailwind variants in
- * sandbox/app/globals.css map to the same classes the live pseudo-classes do.
+ * web/app/globals.css map to the same classes the live pseudo-classes do.
  * That means: what you see in the matrix is what users see when they
  * actually hover / focus / press the button.
  *

@@ -32,7 +32,7 @@ Five non-negotiables. These come before any token or component decision.
 
 1. **Tokens over values.** Every color, space, radius, and type style references a token. No hardcoded hex, px, rem, or font strings in component code.
 2. **Functional names only.** Colors are named by hue (`forest-700`, `lavender-400`, `cyan-300`), not by brand-poetic names. The brand names live in the brand reference file, nowhere else.
-3. **Component tokens only.** Component code references `--c-{component}-*` tokens only. Semantic tokens (`--color-*`) feed the component layer; primitives (`--p-*`) feed semantics. Never skip a layer — reaching past component tokens into semantic or primitive space is a violation.
+3. **Semantics, not primitives.** Component code references semantic `--ds-*` tokens. Semantic tokens reference primitives (`--p-*`); component code never reaches past semantics into primitive space — that's a tier-skip violation. (`--c-{component}-*` component tokens are an optional escape hatch only — see Component scoping rule.)
 4. **One scale for sizing and spacing.** The same scale tokens handle width, height, padding, margin, gap, icon size, and radius. Do not split them.
 5. **Light-first, dark via CSS variable override.** The entire token system is authored for light theme. Dark theme is a single `[data-theme="dark"]` override on the primitives layer. Component code is theme-agnostic.
 
@@ -43,39 +43,39 @@ Five non-negotiables. These come before any token or component decision.
 The system has three layers. An LLM reading tokens should understand which layer it's allowed to reference.
 
 ```
-Layer 1 — Primitives         e.g. --p-forest-700  (legacy: --color-forest-700)
+Layer 1 — Primitives         e.g. --p-color-forest-700  (raw values, $type-organized)
             ↓ var() reference
-Layer 2 — Semantics          e.g. --ds-color-surface-success = var(--p-forest-100)
-                             (includes intent aliases like --ds-success-700)
-            ↓ var() reference
-Layer 3 — Components         e.g. --c-badge-surface = var(--color-surface-success)
+Layer 2 — Semantics          e.g. --ds-color-surface-success = var(--p-color-forest-100)
+                             ← component code (.tsx/CSS) references THIS layer
 ```
+
+Component code **always references the semantic `--ds-*` layer** — never raw `--p-*` primitives. Semantics reference primitives; component code references semantics. (Decided June 2026, superseding the earlier `--c-*`-mandate model.)
 
 **Token naming prefixes** (adopted June 2026):
 
 | Tier | Prefix | Example |
 |---|---|---|
-| Primitives | `--p-*` | `--p-forest-700` |
-| Semantic | `--ds-*` | `--ds-color-surface-success` |
-| Components | `--c-{component}-*` | `--c-button-bg`, `--c-badge-surface` |
+| Primitives | `--p-{type}-*` | `--p-color-forest-700`, `--p-radius-md`, `--p-space-4` |
+| Semantic | `--ds-*` | `--ds-color-surface-success`, `--ds-shape-radius-md` |
+| Component (optional) | `--c-{component}-*` | `--c-button-bg` — escape hatch only; see Component scoping |
 
-Existing primitive tokens (`--color-forest-700`, etc.) predate this convention and are not renamed. New primitives use `--p-*`.
+Primitives are organized by **`$type`** — each raw value-type has its own `--p-{type}-*` namespace: `--p-color-*` (colors), `--p-radius-*` / `--p-space-*` / `--p-border-width-*` (dimension), `--p-font-family-*` / `--p-font-size-*` / `--p-font-weight-*` (type). The legacy bare `--color-*` primitive names are fully retired (June 2026); semantics reference `--p-color-*`. Migration complete across color, dimension, and font. Shadow stays semantic-only (`--ds-shadow-*`) — it bakes in a color decision, so it is not a raw primitive.
 
 **Rules (mirrored in CLAUDE.md):**
 
-◆ **No tier-skipping** — Components must reference `--c-*` tokens, not `--color-*` or `--p-*` directly.
+◆ **No tier-skipping** — Component code must reference semantic `--ds-*` tokens, never raw `--p-*` primitives directly. (Semantics are the only tier that references primitives.)
 
 ◆ **No hardcoded values** — No hex codes, px values, or font names in component styles.
 
-◆ **Semantic intent** — Semantic tokens convey usage (`--color-surface-default`) not appearance (`--color-dark-gray`).
+◆ **Semantic intent** — Semantic tokens convey usage (`--ds-color-surface-default`) not appearance (`--ds-color-dark-gray` would be wrong).
 
-◆ **Component scoping** — Each component has its own `--c-{component}-*` namespace in the CSS.
+◆ **Component scoping (optional escape hatch)** — `--c-{component}-*` is no longer a mandated tier. Component code references `--ds-*` directly. Define a `--c-{component}-*` token *only* when a component needs a local value with no suitable semantic home; it references `--ds-*`/`--p-*` and the component references the `--c-*`. No `--c-*` tokens exist yet in practice.
 
 ◆ **Light-first** — All default values assume a Light background. Dark theme overrides swap semantic tokens via `[data-theme="dark"]` — component code is theme-agnostic.
 
 **Never** ship compiled-flat CSS. All `var()` chains stay live so theme switching works by overriding Layer 1 at `[data-theme="dark"]`.
 
-**Rule for missing tokens:** If no token exists in Layers 1–4 for the need, stop and flag `// BRIGHTSEED-TBD: [BLOCKING]`. Do not improvise or reach across layers.
+**Rule for missing tokens:** If no semantic (`--ds-*`) token exists for the need, stop and flag `// BRIGHTSEED-TBD: [BLOCKING]`. Do not improvise or reach past semantics into primitives.
 
 ---
 
@@ -87,171 +87,171 @@ Existing primitive tokens (`--color-forest-700`, etc.) predate this convention a
 
 Eleven-step scales at 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950. All built in OKLCH for perceptual uniformity. Brand anchor steps are noted inline.
 
-In addition, two universals: `--color-white` (`#ffffff`) and `--color-black` (`#000000`). White is the page surface anchor (light theme); black is a utility for shadows and full-opacity overlays. Neither participates in scales.
+In addition, two universals: `--p-color-white` (`#ffffff`) and `--p-color-black` (`#000000`). White is the page surface anchor (light theme); black is a utility for shadows and full-opacity overlays. Neither participates in scales.
 
 | Hue | Role | Anchor | AA floor on white |
 |---|---|---|---|
-| `--color-forest-*` | Brand surface (Deep Forest) | 900 = `#305536` | forest-700 |
-| `--color-lime-*` | Brand action | 400 = `#B8D258` | lime-800 |
-| `--color-sand-*` | Warm neutral (sidebars, alt surfaces, hover states, inverse text on dark) | 50 = `#F9F8F3` | sand-700 |
-| `--color-orange-*` | Accent (Eschscholzia) | 500 = `#E88F3E` | orange-700 |
-| `--color-blue-*` | Info semantic (Ocean) | 900 = `#113458` | blue-600 |
-| `--color-cyan-*` | Light blue / data viz | — generated | cyan-700 |
-| `--color-lavender-*` | Violet / data viz (H=287° OKLCH) | 700 = `#4929ae` | lavender-700 |
-| `--color-orchid-*` | Pink-mauve / data viz (Garlic Bloom) | 700 = `#782e5a` | orchid-700 |
-| `--color-red-*` | Error / critical semantic | — generated | red-600 |
-| `--color-neutral-*` | Cool gray UI chrome | — generated | neutral-700 |
-| `--color-yellow-*` | Warning / caution semantic | — generated | yellow-700 |
+| `--p-color-forest-*` | Brand surface (Deep Forest) | 900 = `#305536` | forest-700 |
+| `--p-color-lime-*` | Brand action | 400 = `#B8D258` | lime-800 |
+| `--p-color-sand-*` | Warm neutral (sidebars, alt surfaces, hover states, inverse text on dark) | 50 = `#F9F8F3` | sand-700 |
+| `--p-color-orange-*` | Accent (Eschscholzia) | 500 = `#E88F3E` | orange-700 |
+| `--p-color-blue-*` | Info semantic (Ocean) | 900 = `#113458` | blue-600 |
+| `--p-color-cyan-*` | Light blue / data viz | — generated | cyan-700 |
+| `--p-color-lavender-*` | Violet / data viz (H=287° OKLCH) | 700 = `#4929ae` | lavender-700 |
+| `--p-color-orchid-*` | Pink-mauve / data viz (Garlic Bloom) | 700 = `#782e5a` | orchid-700 |
+| `--p-color-red-*` | Error / critical semantic | — generated | red-600 |
+| `--p-color-neutral-*` | Cool gray UI chrome | — generated | neutral-700 |
+| `--p-color-yellow-*` | Warning / caution semantic | — generated | yellow-700 |
 
 ```css
 :root {
 
   /* ── Universals ── */
-  --color-white:    #ffffff;
-  --color-black:    #000000;
+  --p-color-white:    #ffffff;
+  --p-color-black:    #000000;
 
   /* ── Forest (brand surface — Deep Forest at 900) ── */
-  --color-forest-50:  #eefbf1;
-  --color-forest-100: #e2f4e5;
-  --color-forest-200: #c9e7cf;
-  --color-forest-300: #aad4b2;
-  --color-forest-400: #86b990;
-  --color-forest-500: #669f71;
-  --color-forest-600: #51865c;
-  --color-forest-700: #46764f;
-  --color-forest-800: #3f6947;
-  --color-forest-900: #305536;  /* Deep Forest — brand surface anchor */
-  --color-forest-950: #133019;
+  --p-color-forest-50:  #eefbf1;
+  --p-color-forest-100: #e2f4e5;
+  --p-color-forest-200: #c9e7cf;
+  --p-color-forest-300: #aad4b2;
+  --p-color-forest-400: #86b990;
+  --p-color-forest-500: #669f71;
+  --p-color-forest-600: #51865c;
+  --p-color-forest-700: #46764f;
+  --p-color-forest-800: #3f6947;
+  --p-color-forest-900: #305536;  /* Deep Forest — brand surface anchor */
+  --p-color-forest-950: #133019;
 
   /* ── Lime (brand action — anchor at 400) ── */
-  --color-lime-50:  #f2fde0;
-  --color-lime-100: #e9faca;
-  --color-lime-200: #e0f6ab;
-  --color-lime-300: #CDE67B;  /* lime button default surface (retuned Apr 2026 from #CAE279 for AA with forest-800 text) */
-  --color-lime-400: #b8d258;  /* lime button hover surface (was the default anchor before Apr 2026) */
-  --color-lime-500: #a1b833;
-  --color-lime-600: #8b9d15;
-  --color-lime-700: #6f7e01;
-  --color-lime-800: #525c08;
-  --color-lime-900: #363c07;
-  --color-lime-950: #212404;
+  --p-color-lime-50:  #f2fde0;
+  --p-color-lime-100: #e9faca;
+  --p-color-lime-200: #e0f6ab;
+  --p-color-lime-300: #CDE67B;  /* lime button default surface (retuned Apr 2026 from #CAE279 for AA with forest-800 text) */
+  --p-color-lime-400: #b8d258;  /* lime button hover surface (was the default anchor before Apr 2026) */
+  --p-color-lime-500: #a1b833;
+  --p-color-lime-600: #8b9d15;
+  --p-color-lime-700: #6f7e01;
+  --p-color-lime-800: #525c08;
+  --p-color-lime-900: #363c07;
+  --p-color-lime-950: #212404;
 
   /* ── Sand (warm neutral surface — Sand at 50) ── */
-  --color-sand-50:  #F9F8F3;  /* Sand — warm surface anchor */
-  --color-sand-100: #f3f2ec;
-  --color-sand-200: #eae8df;
-  --color-sand-300: #dddbcf;
-  --color-sand-400: #cac8bb;
-  --color-sand-500: #aeab9e;
-  --color-sand-600: #8c897f;
-  --color-sand-700: #68665e;
-  --color-sand-800: #46453f;
-  --color-sand-900: #2a2925;
-  --color-sand-950: #1F1F1E;
+  --p-color-sand-50:  #F9F8F3;  /* Sand — warm surface anchor */
+  --p-color-sand-100: #f3f2ec;
+  --p-color-sand-200: #eae8df;
+  --p-color-sand-300: #dddbcf;
+  --p-color-sand-400: #cac8bb;
+  --p-color-sand-500: #aeab9e;
+  --p-color-sand-600: #8c897f;
+  --p-color-sand-700: #68665e;
+  --p-color-sand-800: #46453f;
+  --p-color-sand-900: #2a2925;
+  --p-color-sand-950: #1F1F1E;
 
   /* ── Orange (accent — Eschscholzia at 500) ── */
-  --color-orange-50:  #fff4e8;
-  --color-orange-100: #ffe9cf;
-  --color-orange-200: #ffd7a8;
-  --color-orange-300: #ffbf79;
-  --color-orange-400: #ffa547;
-  --color-orange-500: #E88F3E;  /* Eschscholzia — accent anchor */
-  --color-orange-600: #ca6300;
-  --color-orange-700: #a34900;
-  --color-orange-800: #743200;
-  --color-orange-900: #4b2000;
-  --color-orange-950: #2a1100;
+  --p-color-orange-50:  #fff4e8;
+  --p-color-orange-100: #ffe9cf;
+  --p-color-orange-200: #ffd7a8;
+  --p-color-orange-300: #ffbf79;
+  --p-color-orange-400: #ffa547;
+  --p-color-orange-500: #E88F3E;  /* Eschscholzia — accent anchor */
+  --p-color-orange-600: #ca6300;
+  --p-color-orange-700: #a34900;
+  --p-color-orange-800: #743200;
+  --p-color-orange-900: #4b2000;
+  --p-color-orange-950: #2a1100;
 
   /* ── Blue (info semantic — Ocean at 900) ── */
-  --color-blue-50:  #eef8ff;
-  --color-blue-100: #e0f1ff;
-  --color-blue-200: #c4e1ff;
-  --color-blue-300: #99c8fd;
-  --color-blue-400: #5ea2ed;
-  --color-blue-500: #237cd2;
-  --color-blue-600: #005aae;
-  --color-blue-700: #00448c;
-  --color-blue-800: #00326a;
-  --color-blue-900: #113458;  /* Ocean — info anchor */
-  --color-blue-950: #00112b;
+  --p-color-blue-50:  #eef8ff;
+  --p-color-blue-100: #e0f1ff;
+  --p-color-blue-200: #c4e1ff;
+  --p-color-blue-300: #99c8fd;
+  --p-color-blue-400: #5ea2ed;
+  --p-color-blue-500: #237cd2;
+  --p-color-blue-600: #005aae;
+  --p-color-blue-700: #00448c;
+  --p-color-blue-800: #00326a;
+  --p-color-blue-900: #113458;  /* Ocean — info anchor */
+  --p-color-blue-950: #00112b;
 
   /* ── Cyan (light blue — H=195° OKLCH) ── */
-  --color-cyan-50:  #e9fcfc;
-  --color-cyan-100: #d4f9f9;
-  --color-cyan-200: #aef3f3;
-  --color-cyan-300: #6ce7e8;
-  --color-cyan-400: #00d1d2;
-  --color-cyan-500: #00b4b6;
-  --color-cyan-600: #009193;
-  --color-cyan-700: #006d6d;
-  --color-cyan-800: #004948;
-  --color-cyan-900: #002b29;
-  --color-cyan-950: #001312;
+  --p-color-cyan-50:  #e9fcfc;
+  --p-color-cyan-100: #d4f9f9;
+  --p-color-cyan-200: #aef3f3;
+  --p-color-cyan-300: #6ce7e8;
+  --p-color-cyan-400: #00d1d2;
+  --p-color-cyan-500: #00b4b6;
+  --p-color-cyan-600: #009193;
+  --p-color-cyan-700: #006d6d;
+  --p-color-cyan-800: #004948;
+  --p-color-cyan-900: #002b29;
+  --p-color-cyan-950: #001312;
 
   /* ── Lavender (violet — H=287° OKLCH, updated from Figma DS v1) ── */
-  --color-lavender-50:  #f7f4ff;
-  --color-lavender-100: #eeeaff;
-  --color-lavender-200: #dfd9ff;
-  --color-lavender-300: #c8bcff;
-  --color-lavender-400: #a793ff;
-  --color-lavender-500: #8261ff;
-  --color-lavender-600: #6440dc;
-  --color-lavender-700: #4929ae;  /* AA on Sand ✓ */
-  --color-lavender-800: #2f197a;
-  --color-lavender-900: #190e4b;
-  --color-lavender-950: #090526;
+  --p-color-lavender-50:  #f7f4ff;
+  --p-color-lavender-100: #eeeaff;
+  --p-color-lavender-200: #dfd9ff;
+  --p-color-lavender-300: #c8bcff;
+  --p-color-lavender-400: #a793ff;
+  --p-color-lavender-500: #8261ff;
+  --p-color-lavender-600: #6440dc;
+  --p-color-lavender-700: #4929ae;  /* AA on Sand ✓ */
+  --p-color-lavender-800: #2f197a;
+  --p-color-lavender-900: #190e4b;
+  --p-color-lavender-950: #090526;
 
   /* ── Red (error / critical — H=22° OKLCH) ── */
-  --color-red-50:  #fff3f0;
-  --color-red-100: #ffe6e2;
-  --color-red-200: #ffd0ca;
-  --color-red-300: #ffaea7;
-  --color-red-400: #ff7d7b;
-  --color-red-500: #ee3a49;
-  --color-red-600: #c9092e;
-  --color-red-700: #a00020;
-  --color-red-800: #710013;
-  --color-red-900: #46000c;
-  --color-red-950: #250104;
+  --p-color-red-50:  #fff3f0;
+  --p-color-red-100: #ffe6e2;
+  --p-color-red-200: #ffd0ca;
+  --p-color-red-300: #ffaea7;
+  --p-color-red-400: #ff7d7b;
+  --p-color-red-500: #ee3a49;
+  --p-color-red-600: #c9092e;
+  --p-color-red-700: #a00020;
+  --p-color-red-800: #710013;
+  --p-color-red-900: #46000c;
+  --p-color-red-950: #250104;
 
   /* ── Neutral (cool gray UI chrome — H=264° OKLCH) ── */
-  --color-neutral-50:  #f6f8fb;
-  --color-neutral-100: #eef0f4;
-  --color-neutral-200: #e1e4e9;
-  --color-neutral-300: #ced2d8;
-  --color-neutral-400: #b4b7be;
-  --color-neutral-500: #95989f;
-  --color-neutral-600: #72747a;
-  --color-neutral-700: #505357;
-  --color-neutral-800: #313336;
-  --color-neutral-900: #1a1b1c;
-  --color-neutral-950: #08090a;
+  --p-color-neutral-50:  #f6f8fb;
+  --p-color-neutral-100: #eef0f4;
+  --p-color-neutral-200: #e1e4e9;
+  --p-color-neutral-300: #ced2d8;
+  --p-color-neutral-400: #b4b7be;
+  --p-color-neutral-500: #95989f;
+  --p-color-neutral-600: #72747a;
+  --p-color-neutral-700: #505357;
+  --p-color-neutral-800: #313336;
+  --p-color-neutral-900: #1a1b1c;
+  --p-color-neutral-950: #08090a;
 
   /* ── Orchid (pink-mauve / data viz — Garlic Bloom at 700) ── */
-  --color-orchid-50:  #fff2f9;
-  --color-orchid-100: #ffe5f4;
-  --color-orchid-200: #ffcce7;
-  --color-orchid-300: #f9a7d3;
-  --color-orchid-400: #e57bb7;
-  --color-orchid-500: #c75197;
-  --color-orchid-600: #9f3275;
-  --color-orchid-700: #782e5a;  /* Garlic Bloom — brand anchor */
-  --color-orchid-800: #50173a;
-  --color-orchid-900: #310e23;
-  --color-orchid-950: #190511;
+  --p-color-orchid-50:  #fff2f9;
+  --p-color-orchid-100: #ffe5f4;
+  --p-color-orchid-200: #ffcce7;
+  --p-color-orchid-300: #f9a7d3;
+  --p-color-orchid-400: #e57bb7;
+  --p-color-orchid-500: #c75197;
+  --p-color-orchid-600: #9f3275;
+  --p-color-orchid-700: #782e5a;  /* Garlic Bloom — brand anchor */
+  --p-color-orchid-800: #50173a;
+  --p-color-orchid-900: #310e23;
+  --p-color-orchid-950: #190511;
 
   /* ── Yellow (warning / caution — H=103° OKLCH) ── */
-  --color-yellow-50:  #faf9e4;
-  --color-yellow-100: #f6f4ca;
-  --color-yellow-200: #f2eca1;
-  --color-yellow-300: #ecdf6e;
-  --color-yellow-400: #dece39;
-  --color-yellow-500: #cab900;
-  --color-yellow-600: #a69400;
-  --color-yellow-700: #7d6c00;
-  --color-yellow-800: #514500;
-  --color-yellow-900: #2e2600;
-  --color-yellow-950: #151000;
+  --p-color-yellow-50:  #faf9e4;
+  --p-color-yellow-100: #f6f4ca;
+  --p-color-yellow-200: #f2eca1;
+  --p-color-yellow-300: #ecdf6e;
+  --p-color-yellow-400: #dece39;
+  --p-color-yellow-500: #cab900;
+  --p-color-yellow-600: #a69400;
+  --p-color-yellow-700: #7d6c00;
+  --p-color-yellow-800: #514500;
+  --p-color-yellow-900: #2e2600;
+  --p-color-yellow-950: #151000;
 
 }
 ```
@@ -264,134 +264,134 @@ Each intent maps a meaningful role name to a primitive scale via `var()`. No val
 :root {
 
   /* ── Action: lime — CTAs, primary buttons, focus rings ── */
-  --action-primary-50:  var(--color-lime-50);
-  --action-primary-100: var(--color-lime-100);
-  --action-primary-200: var(--color-lime-200);
-  --action-primary-300: var(--color-lime-300);
-  --action-primary-400: var(--color-lime-400);
-  --action-primary-500: var(--color-lime-500);
-  --action-primary-600: var(--color-lime-600);
-  --action-primary-700: var(--color-lime-700);
-  --action-primary-800: var(--color-lime-800);
-  --action-primary-900: var(--color-lime-900);
-  --action-primary-950: var(--color-lime-950);
+  --action-primary-50:  var(--p-color-lime-50);
+  --action-primary-100: var(--p-color-lime-100);
+  --action-primary-200: var(--p-color-lime-200);
+  --action-primary-300: var(--p-color-lime-300);
+  --action-primary-400: var(--p-color-lime-400);
+  --action-primary-500: var(--p-color-lime-500);
+  --action-primary-600: var(--p-color-lime-600);
+  --action-primary-700: var(--p-color-lime-700);
+  --action-primary-800: var(--p-color-lime-800);
+  --action-primary-900: var(--p-color-lime-900);
+  --action-primary-950: var(--p-color-lime-950);
 
   /* ── Surface brand: Deep Forest — nav, headers, branded chrome ── */
-  --surface-brand-50:  var(--color-forest-50);
-  --surface-brand-100: var(--color-forest-100);
-  --surface-brand-200: var(--color-forest-200);
-  --surface-brand-300: var(--color-forest-300);
-  --surface-brand-400: var(--color-forest-400);
-  --surface-brand-500: var(--color-forest-500);
-  --surface-brand-600: var(--color-forest-600);
-  --surface-brand-700: var(--color-forest-700);
-  --surface-brand-800: var(--color-forest-800);
-  --surface-brand-900: var(--color-forest-900);
-  --surface-brand-950: var(--color-forest-950);
+  --surface-brand-50:  var(--p-color-forest-50);
+  --surface-brand-100: var(--p-color-forest-100);
+  --surface-brand-200: var(--p-color-forest-200);
+  --surface-brand-300: var(--p-color-forest-300);
+  --surface-brand-400: var(--p-color-forest-400);
+  --surface-brand-500: var(--p-color-forest-500);
+  --surface-brand-600: var(--p-color-forest-600);
+  --surface-brand-700: var(--p-color-forest-700);
+  --surface-brand-800: var(--p-color-forest-800);
+  --surface-brand-900: var(--p-color-forest-900);
+  --surface-brand-950: var(--p-color-forest-950);
 
   /* ── Success: forest — shares hue with surface-brand; uses light steps (50–300) ── */
-  --success-50:  var(--color-forest-50);
-  --success-100: var(--color-forest-100);
-  --success-200: var(--color-forest-200);
-  --success-300: var(--color-forest-300);
-  --success-400: var(--color-forest-400);
-  --success-500: var(--color-forest-500);
-  --success-600: var(--color-forest-600);
-  --success-700: var(--color-forest-700);
-  --success-800: var(--color-forest-800);
-  --success-900: var(--color-forest-900);
-  --success-950: var(--color-forest-950);
+  --success-50:  var(--p-color-forest-50);
+  --success-100: var(--p-color-forest-100);
+  --success-200: var(--p-color-forest-200);
+  --success-300: var(--p-color-forest-300);
+  --success-400: var(--p-color-forest-400);
+  --success-500: var(--p-color-forest-500);
+  --success-600: var(--p-color-forest-600);
+  --success-700: var(--p-color-forest-700);
+  --success-800: var(--p-color-forest-800);
+  --success-900: var(--p-color-forest-900);
+  --success-950: var(--p-color-forest-950);
 
   /* ── Info: Ocean/blue ── */
-  --info-50:  var(--color-blue-50);
-  --info-100: var(--color-blue-100);
-  --info-200: var(--color-blue-200);
-  --info-300: var(--color-blue-300);
-  --info-400: var(--color-blue-400);
-  --info-500: var(--color-blue-500);
-  --info-600: var(--color-blue-600);
-  --info-700: var(--color-blue-700);
-  --info-800: var(--color-blue-800);
-  --info-900: var(--color-blue-900);
-  --info-950: var(--color-blue-950);
+  --info-50:  var(--p-color-blue-50);
+  --info-100: var(--p-color-blue-100);
+  --info-200: var(--p-color-blue-200);
+  --info-300: var(--p-color-blue-300);
+  --info-400: var(--p-color-blue-400);
+  --info-500: var(--p-color-blue-500);
+  --info-600: var(--p-color-blue-600);
+  --info-700: var(--p-color-blue-700);
+  --info-800: var(--p-color-blue-800);
+  --info-900: var(--p-color-blue-900);
+  --info-950: var(--p-color-blue-950);
 
   /* ── Warning: yellow ── */
-  --warning-50:  var(--color-yellow-50);
-  --warning-100: var(--color-yellow-100);
-  --warning-200: var(--color-yellow-200);
-  --warning-300: var(--color-yellow-300);
-  --warning-400: var(--color-yellow-400);
-  --warning-500: var(--color-yellow-500);
-  --warning-600: var(--color-yellow-600);
-  --warning-700: var(--color-yellow-700);
-  --warning-800: var(--color-yellow-800);
-  --warning-900: var(--color-yellow-900);
-  --warning-950: var(--color-yellow-950);
+  --warning-50:  var(--p-color-yellow-50);
+  --warning-100: var(--p-color-yellow-100);
+  --warning-200: var(--p-color-yellow-200);
+  --warning-300: var(--p-color-yellow-300);
+  --warning-400: var(--p-color-yellow-400);
+  --warning-500: var(--p-color-yellow-500);
+  --warning-600: var(--p-color-yellow-600);
+  --warning-700: var(--p-color-yellow-700);
+  --warning-800: var(--p-color-yellow-800);
+  --warning-900: var(--p-color-yellow-900);
+  --warning-950: var(--p-color-yellow-950);
 
   /* ── Critical: red ── */
-  --critical-50:  var(--color-red-50);
-  --critical-100: var(--color-red-100);
-  --critical-200: var(--color-red-200);
-  --critical-300: var(--color-red-300);
-  --critical-400: var(--color-red-400);
-  --critical-500: var(--color-red-500);
-  --critical-600: var(--color-red-600);
-  --critical-700: var(--color-red-700);
-  --critical-800: var(--color-red-800);
-  --critical-900: var(--color-red-900);
-  --critical-950: var(--color-red-950);
+  --critical-50:  var(--p-color-red-50);
+  --critical-100: var(--p-color-red-100);
+  --critical-200: var(--p-color-red-200);
+  --critical-300: var(--p-color-red-300);
+  --critical-400: var(--p-color-red-400);
+  --critical-500: var(--p-color-red-500);
+  --critical-600: var(--p-color-red-600);
+  --critical-700: var(--p-color-red-700);
+  --critical-800: var(--p-color-red-800);
+  --critical-900: var(--p-color-red-900);
+  --critical-950: var(--p-color-red-950);
 
   /* ── Data: cyan — primary data viz series ── */
-  --data-cyan-50:  var(--color-cyan-50);
-  --data-cyan-100: var(--color-cyan-100);
-  --data-cyan-200: var(--color-cyan-200);
-  --data-cyan-300: var(--color-cyan-300);
-  --data-cyan-400: var(--color-cyan-400);
-  --data-cyan-500: var(--color-cyan-500);
-  --data-cyan-600: var(--color-cyan-600);
-  --data-cyan-700: var(--color-cyan-700);
-  --data-cyan-800: var(--color-cyan-800);
-  --data-cyan-900: var(--color-cyan-900);
-  --data-cyan-950: var(--color-cyan-950);
+  --data-cyan-50:  var(--p-color-cyan-50);
+  --data-cyan-100: var(--p-color-cyan-100);
+  --data-cyan-200: var(--p-color-cyan-200);
+  --data-cyan-300: var(--p-color-cyan-300);
+  --data-cyan-400: var(--p-color-cyan-400);
+  --data-cyan-500: var(--p-color-cyan-500);
+  --data-cyan-600: var(--p-color-cyan-600);
+  --data-cyan-700: var(--p-color-cyan-700);
+  --data-cyan-800: var(--p-color-cyan-800);
+  --data-cyan-900: var(--p-color-cyan-900);
+  --data-cyan-950: var(--p-color-cyan-950);
 
   /* ── Data: lavender — secondary data viz series ── */
-  --data-lavender-50:  var(--color-lavender-50);
-  --data-lavender-100: var(--color-lavender-100);
-  --data-lavender-200: var(--color-lavender-200);
-  --data-lavender-300: var(--color-lavender-300);
-  --data-lavender-400: var(--color-lavender-400);
-  --data-lavender-500: var(--color-lavender-500);
-  --data-lavender-600: var(--color-lavender-600);
-  --data-lavender-700: var(--color-lavender-700);
-  --data-lavender-800: var(--color-lavender-800);
-  --data-lavender-900: var(--color-lavender-900);
-  --data-lavender-950: var(--color-lavender-950);
+  --data-lavender-50:  var(--p-color-lavender-50);
+  --data-lavender-100: var(--p-color-lavender-100);
+  --data-lavender-200: var(--p-color-lavender-200);
+  --data-lavender-300: var(--p-color-lavender-300);
+  --data-lavender-400: var(--p-color-lavender-400);
+  --data-lavender-500: var(--p-color-lavender-500);
+  --data-lavender-600: var(--p-color-lavender-600);
+  --data-lavender-700: var(--p-color-lavender-700);
+  --data-lavender-800: var(--p-color-lavender-800);
+  --data-lavender-900: var(--p-color-lavender-900);
+  --data-lavender-950: var(--p-color-lavender-950);
 
   /* ── Data: orange — tertiary data viz / Eschscholzia accent ── */
-  --data-orange-50:  var(--color-orange-50);
-  --data-orange-100: var(--color-orange-100);
-  --data-orange-200: var(--color-orange-200);
-  --data-orange-300: var(--color-orange-300);
-  --data-orange-400: var(--color-orange-400);
-  --data-orange-500: var(--color-orange-500);
-  --data-orange-600: var(--color-orange-600);
-  --data-orange-700: var(--color-orange-700);
-  --data-orange-800: var(--color-orange-800);
-  --data-orange-900: var(--color-orange-900);
-  --data-orange-950: var(--color-orange-950);
+  --data-orange-50:  var(--p-color-orange-50);
+  --data-orange-100: var(--p-color-orange-100);
+  --data-orange-200: var(--p-color-orange-200);
+  --data-orange-300: var(--p-color-orange-300);
+  --data-orange-400: var(--p-color-orange-400);
+  --data-orange-500: var(--p-color-orange-500);
+  --data-orange-600: var(--p-color-orange-600);
+  --data-orange-700: var(--p-color-orange-700);
+  --data-orange-800: var(--p-color-orange-800);
+  --data-orange-900: var(--p-color-orange-900);
+  --data-orange-950: var(--p-color-orange-950);
 
   /* ── Data: orchid — quaternary data viz / Garlic Bloom accent ── */
-  --data-orchid-50:  var(--color-orchid-50);
-  --data-orchid-100: var(--color-orchid-100);
-  --data-orchid-200: var(--color-orchid-200);
-  --data-orchid-300: var(--color-orchid-300);
-  --data-orchid-400: var(--color-orchid-400);
-  --data-orchid-500: var(--color-orchid-500);
-  --data-orchid-600: var(--color-orchid-600);
-  --data-orchid-700: var(--color-orchid-700);
-  --data-orchid-800: var(--color-orchid-800);
-  --data-orchid-900: var(--color-orchid-900);
-  --data-orchid-950: var(--color-orchid-950);
+  --data-orchid-50:  var(--p-color-orchid-50);
+  --data-orchid-100: var(--p-color-orchid-100);
+  --data-orchid-200: var(--p-color-orchid-200);
+  --data-orchid-300: var(--p-color-orchid-300);
+  --data-orchid-400: var(--p-color-orchid-400);
+  --data-orchid-500: var(--p-color-orchid-500);
+  --data-orchid-600: var(--p-color-orchid-600);
+  --data-orchid-700: var(--p-color-orchid-700);
+  --data-orchid-800: var(--p-color-orchid-800);
+  --data-orchid-900: var(--p-color-orchid-900);
+  --data-orchid-950: var(--p-color-orchid-950);
 
 }
 ```
@@ -410,11 +410,11 @@ Component code references these tokens. State suffixes (`-hover`, `-active`, `-d
 :root {
 
   /* ── Surface ── */
-  --color-surface-default:         var(--color-white);         /* #ffffff — page background */
-  --color-surface-default-hover:   var(--color-sand-100);
-  --color-surface-default-active:  var(--color-sand-200);
-  --color-surface-alt:             var(--color-sand-100);      /* sidebar, table alt rows, inset panels */
-  --color-surface-alt-hover:       var(--color-sand-200);
+  --color-surface-default:         var(--p-color-white);         /* #ffffff — page background */
+  --color-surface-default-hover:   var(--p-color-sand-100);
+  --color-surface-default-active:  var(--p-color-sand-200);
+  --color-surface-alt:             var(--p-color-sand-100);      /* sidebar, table alt rows, inset panels */
+  --color-surface-alt-hover:       var(--p-color-sand-200);
 
   /* Brand surface — nav bar, header, branded panels */
   --color-surface-brand:           var(--surface-brand-900);   /* Deep Forest */
@@ -446,7 +446,7 @@ Component code references these tokens. State suffixes (`-hover`, `-active`, `-d
        text + icon = the variant's normal foreground token, applied at --disabled-text-opacity.
      Light theme pulls surface toward light sand; dark theme pulls toward dark sand.
      The text fade is theme-invariant — same opacity in both themes. */
-  --color-disabled-surface-overlay: var(--color-sand-100);
+  --color-disabled-surface-overlay: var(--p-color-sand-100);
   --disabled-text-opacity:          0.55;
 
   /* Primary: lime fill. Surface ladder shifted down one step Apr 2026 — lime-300
@@ -460,10 +460,10 @@ Component code references these tokens. State suffixes (`-hover`, `-active`, `-d
   /* Secondary: outlined / ghost — surface follows page bg so they visually merge */
   /* Secondary: faint solid sand bg, no border. Anchored at sand-100 so it's
      visibly distinct from page bg at default and steps darker per state. */
-  --color-action-secondary:          var(--color-sand-100);
-  --color-action-secondary-hover:    var(--color-sand-200);
-  --color-action-secondary-active:   var(--color-sand-300);
-  --color-action-secondary-disabled: var(--color-sand-50);
+  --color-action-secondary:          var(--p-color-sand-100);
+  --color-action-secondary-hover:    var(--p-color-sand-200);
+  --color-action-secondary-active:   var(--p-color-sand-300);
+  --color-action-secondary-disabled: var(--p-color-sand-50);
 
   /* Critical: destructive — soft style. red-100 surface, red-600 text.
      Refactored Apr 2026 from solid red-500 fill to discrete-step soft tint. */
@@ -478,15 +478,15 @@ Component code references these tokens. State suffixes (`-hover`, `-active`, `-d
   /* No -disabled token — disabled state uses --color-text-on-action-critical at --disabled-text-opacity. */
 
   /* ── Border ── */
-  --color-border-subtle:           var(--color-sand-200);      /* hairlines, table grid */
-  --color-border-default:          var(--color-sand-300);      /* input default */
-  --color-border-bold:             var(--color-sand-500);      /* emphatic dividers */
+  --color-border-subtle:           var(--p-color-sand-200);      /* hairlines, table grid */
+  --color-border-default:          var(--p-color-sand-300);      /* input default */
+  --color-border-bold:             var(--p-color-sand-500);      /* emphatic dividers */
   /* Focus rings — variant-aware. Default uses lime (the system action color);
      destructive uses its own hue scale; secondary uses sand. Linktext is in the
      lime family too, so its focus ring matches Default — kept as a separate
      token name for namespace clarity in case it ever diverges. */
   --color-border-focus:             var(--action-primary-500);  /* lime/500 — Default, Outline, Ghost focus */
-  --color-border-focus-secondary:   var(--color-sand-300);      /* sand/300 — Secondary focus (matches Figma base/ring) */
+  --color-border-focus-secondary:   var(--p-color-sand-300);      /* sand/300 — Secondary focus (matches Figma base/ring) */
   --color-border-focus-destructive: var(--critical-500);        /* red/500 — Destructive focus */
   --color-border-focus-link-brand:  var(--action-primary-500);  /* lime/500 — Linktext focus (same as Default) */
 
@@ -500,24 +500,24 @@ Component code references these tokens. State suffixes (`-hover`, `-active`, `-d
   --color-border-critical-bold:    var(--critical-600);
 
   /* ── Text ── */
-  --color-text-default:            var(--color-sand-900);      /* #2a2925 — warm near-black */
-  --color-text-default-hover:      var(--color-sand-950);      /* one step "more pronounced" — used by
+  --color-text-default:            var(--p-color-sand-900);      /* #2a2925 — warm near-black */
+  --color-text-default-hover:      var(--p-color-sand-950);      /* one step "more pronounced" — used by
                                                                   Secondary / Outline / Ghost button text on hover */
-  --color-text-subtle:             var(--color-sand-700);      /* secondary / helper text */
-  --color-text-disabled:           var(--color-sand-500);      /* generic flat disabled — for non-button contexts
+  --color-text-subtle:             var(--p-color-sand-700);      /* secondary / helper text */
+  --color-text-disabled:           var(--p-color-sand-500);      /* generic flat disabled — for non-button contexts
                                                                   (form labels, static text). Buttons use the alpha
                                                                   rule on their normal foreground instead. */
 
   /* Inverse — text on Deep Forest surfaces or any dark panel */
-  --color-text-inverse:            var(--color-sand-50);
-  --color-text-inverse-subtle:     var(--color-sand-300);
+  --color-text-inverse:            var(--p-color-sand-50);
+  --color-text-inverse-subtle:     var(--p-color-sand-300);
 
   /* Text on the lime primary action.
      Three steps to match the three-step surface ladder. forest-950 active is
      required for WCAG AA on the deeper lime-500 active surface. Theme-invariant. */
-  --color-text-on-action-primary:           var(--color-forest-800);
-  --color-text-on-action-primary-hover:     var(--color-forest-900);
-  --color-text-on-action-primary-active:    var(--color-forest-950);
+  --color-text-on-action-primary:           var(--p-color-forest-800);
+  --color-text-on-action-primary-hover:     var(--p-color-forest-900);
+  --color-text-on-action-primary-active:    var(--p-color-forest-950);
   /* No -disabled token — disabled state uses --color-text-on-action-primary at --disabled-text-opacity. */
 
   /* Link — two distinct components with different state machines.
@@ -533,7 +533,7 @@ Component code references these tokens. State suffixes (`-hover`, `-active`, `-d
      must be explicit about which component they're in. */
   --color-text-link-default:       var(--info-600);            /* blue-600 — :link */
   --color-text-link-default-hover: var(--info-700);            /* blue-700 — :hover */
-  --color-text-link-visited:       var(--color-sand-700);      /* sand-700 — :visited (warm, settled) */
+  --color-text-link-visited:       var(--p-color-sand-700);      /* sand-700 — :visited (warm, settled) */
   --color-text-link-active:        var(--info-900);            /* blue-900 — :active (pressed) */
   /* Brand-link uses lime — but a deeper step than the lime button surface.
      base/primary surface = lime-300 (#CDE67B); on white that's ~1.7:1, fine
@@ -541,8 +541,8 @@ Component code references these tokens. State suffixes (`-hover`, `-active`, `-d
      is text-only, so we step down the lime scale to lime-700 (light) /
      lime-300 (dark) for AA contrast on page surfaces. May 2026 — replaced
      earlier forest-scale brand-link. */
-  --color-text-link-brand:           var(--color-lime-700);      /* #6f7e01 — AA on white (6.3:1) */
-  --color-text-link-brand-hover:     var(--color-lime-800);      /* one step more pronounced on hover */
+  --color-text-link-brand:           var(--p-color-lime-700);      /* #6f7e01 — AA on white (6.3:1) */
+  --color-text-link-brand-hover:     var(--p-color-lime-800);      /* one step more pronounced on hover */
   /* No -disabled token — disabled state uses --color-text-link-brand at --disabled-text-opacity. */
 
   /* Semantic text — all verified AA on white surface */
@@ -556,11 +556,11 @@ Component code references these tokens. State suffixes (`-hover`, `-active`, `-d
   --color-text-data-orchid:        var(--data-orchid-700);     /* orchid-700 — 5.12:1 ✓ AA */
 
   /* ── Icon (mirrors text taxonomy exactly) ── */
-  --color-icon-default:            var(--color-sand-900);
-  --color-icon-subtle:             var(--color-sand-700);
-  --color-icon-disabled:           var(--color-sand-500);
-  --color-icon-inverse:            var(--color-sand-50);
-  --color-icon-inverse-subtle:     var(--color-sand-300);
+  --color-icon-default:            var(--p-color-sand-900);
+  --color-icon-subtle:             var(--p-color-sand-700);
+  --color-icon-disabled:           var(--p-color-sand-500);
+  --color-icon-inverse:            var(--p-color-sand-50);
+  --color-icon-inverse-subtle:     var(--p-color-sand-300);
   --color-icon-brand:              var(--action-primary-400);  /* lime — brand icons on light bg */
   --color-icon-success:            var(--success-700);
   --color-icon-info:               var(--info-700);
@@ -575,26 +575,26 @@ Component code references these tokens. State suffixes (`-hover`, `-active`, `-d
      Recipe: tinted surface (step-100) + saturated text (step-700).
      SKIPS the intent layer — tag colors are decorative, not semantic.
      Always pair surface + text from the same hue. */
-  --color-surface-tag-sand:        var(--color-sand-100);
-  --color-text-tag-sand:           var(--color-sand-800);
-  --color-surface-tag-forest:      var(--color-forest-100);
-  --color-text-tag-forest:         var(--color-forest-700);
-  --color-surface-tag-lime:        var(--color-lime-100);
-  --color-text-tag-lime:           var(--color-lime-700);
-  --color-surface-tag-cyan:        var(--color-cyan-100);
-  --color-text-tag-cyan:           var(--color-cyan-700);
-  --color-surface-tag-blue:        var(--color-blue-100);
-  --color-text-tag-blue:           var(--color-blue-700);
-  --color-surface-tag-yellow:      var(--color-yellow-100);
-  --color-text-tag-yellow:         var(--color-yellow-700);
-  --color-surface-tag-orange:      var(--color-orange-100);
-  --color-text-tag-orange:         var(--color-orange-700);
-  --color-surface-tag-red:         var(--color-red-100);
-  --color-text-tag-red:            var(--color-red-700);
-  --color-surface-tag-lavender:    var(--color-lavender-100);
-  --color-text-tag-lavender:       var(--color-lavender-700);
-  --color-surface-tag-orchid:      var(--color-orchid-100);
-  --color-text-tag-orchid:         var(--color-orchid-700);
+  --color-surface-tag-sand:        var(--p-color-sand-100);
+  --color-text-tag-sand:           var(--p-color-sand-800);
+  --color-surface-tag-forest:      var(--p-color-forest-100);
+  --color-text-tag-forest:         var(--p-color-forest-700);
+  --color-surface-tag-lime:        var(--p-color-lime-100);
+  --color-text-tag-lime:           var(--p-color-lime-700);
+  --color-surface-tag-cyan:        var(--p-color-cyan-100);
+  --color-text-tag-cyan:           var(--p-color-cyan-700);
+  --color-surface-tag-blue:        var(--p-color-blue-100);
+  --color-text-tag-blue:           var(--p-color-blue-700);
+  --color-surface-tag-yellow:      var(--p-color-yellow-100);
+  --color-text-tag-yellow:         var(--p-color-yellow-700);
+  --color-surface-tag-orange:      var(--p-color-orange-100);
+  --color-text-tag-orange:         var(--p-color-orange-700);
+  --color-surface-tag-red:         var(--p-color-red-100);
+  --color-text-tag-red:            var(--p-color-red-700);
+  --color-surface-tag-lavender:    var(--p-color-lavender-100);
+  --color-text-tag-lavender:       var(--p-color-lavender-700);
+  --color-surface-tag-orchid:      var(--p-color-orchid-100);
+  --color-text-tag-orchid:         var(--p-color-orchid-700);
 
 }
 ```
@@ -610,20 +610,20 @@ Base surface is `sand-950` — a warm dark neutral, NOT a forest-tinted dark mod
      meaning ("pull toward neutral") in dark mode. Surface-disabled tokens cascade
      through this via the color-mix expression in :root.
      Text fade is theme-invariant via --disabled-text-opacity (no override needed). */
-  --color-disabled-surface-overlay: var(--color-sand-700);
+  --color-disabled-surface-overlay: var(--p-color-sand-700);
 
   /* ── Surfaces — warm dark sand ladder ── */
-  --color-surface-default:         var(--color-sand-950);       /* #1F1F1E — page bg */
-  --color-surface-default-hover:   var(--color-sand-900);
-  --color-surface-default-active:  var(--color-sand-800);
-  --color-surface-alt:             var(--color-sand-900);       /* raised panels, sidebars, cards */
-  --color-surface-alt-hover:       var(--color-sand-800);
+  --color-surface-default:         var(--p-color-sand-950);       /* #1F1F1E — page bg */
+  --color-surface-default-hover:   var(--p-color-sand-900);
+  --color-surface-default-active:  var(--p-color-sand-800);
+  --color-surface-alt:             var(--p-color-sand-900);       /* raised panels, sidebars, cards */
+  --color-surface-alt-hover:       var(--p-color-sand-800);
 
   /* Brand nav/header — sand-anchored in dark mode (forest exits surface vocabulary) */
-  --color-surface-brand:           var(--color-sand-900);
-  --color-surface-brand-hover:     var(--color-sand-800);
-  --color-surface-brand-active:    var(--color-sand-950);
-  --color-surface-brand-subtle:    var(--color-sand-950);
+  --color-surface-brand:           var(--p-color-sand-900);
+  --color-surface-brand-hover:     var(--p-color-sand-800);
+  --color-surface-brand-active:    var(--p-color-sand-950);
+  --color-surface-brand-subtle:    var(--p-color-sand-950);
 
   /* Semantic surfaces — darkened to work on deep bg */
   --color-surface-success:         var(--success-950);
@@ -644,12 +644,12 @@ Base surface is `sand-950` — a warm dark neutral, NOT a forest-tinted dark mod
   --color-surface-selected-active: var(--info-800);
 
   /* ── Borders — mid-sand range for structure on dark bg ── */
-  --color-border-subtle:           var(--color-sand-800);
-  --color-border-default:          var(--color-sand-700);
-  --color-border-bold:             var(--color-sand-600);
+  --color-border-subtle:           var(--p-color-sand-800);
+  --color-border-default:          var(--p-color-sand-700);
+  --color-border-bold:             var(--p-color-sand-600);
   /* Focus rings — only Secondary changes in dark mode (sand step shifts).
      Default/Destructive/Link-Brand are theme-invariant per Figma. */
-  --color-border-focus-secondary:  var(--color-sand-500);      /* sand/500 — matches Figma colors/ring-dark */
+  --color-border-focus-secondary:  var(--p-color-sand-500);      /* sand/500 — matches Figma colors/ring-dark */
 
   --color-border-success-default:  var(--success-800);
   --color-border-success-bold:     var(--success-500);
@@ -661,17 +661,17 @@ Base surface is `sand-950` — a warm dark neutral, NOT a forest-tinted dark mod
   --color-border-critical-bold:    var(--critical-500);
 
   /* ── Text — sand palette inverted ── */
-  --color-text-default:            var(--color-sand-50);       /* warm white on dark bg */
-  --color-text-subtle:             var(--color-sand-300);
-  --color-text-disabled:           var(--color-sand-600);
-  --color-text-inverse:            var(--color-sand-900);
-  --color-text-inverse-subtle:     var(--color-sand-700);
+  --color-text-default:            var(--p-color-sand-50);       /* warm white on dark bg */
+  --color-text-subtle:             var(--p-color-sand-300);
+  --color-text-disabled:           var(--p-color-sand-600);
+  --color-text-inverse:            var(--p-color-sand-900);
+  --color-text-inverse-subtle:     var(--p-color-sand-700);
   --color-text-link-default:       var(--info-500);            /* blue-500 — :link */
   --color-text-link-default-hover: var(--info-400);            /* blue-400 — :hover (lighter on dark bg) */
-  --color-text-link-visited:       var(--color-sand-300);      /* sand-300 — :visited */
+  --color-text-link-visited:       var(--p-color-sand-300);      /* sand-300 — :visited */
   --color-text-link-active:        var(--info-200);            /* blue-200 — :active */
-  --color-text-link-brand:         var(--color-lime-300);      /* lime-300 — Linktext default in dark, theme-invariant with lime button surface */
-  --color-text-link-brand-hover:   var(--color-lime-200);      /* one step lighter — "more pronounced on dark" */
+  --color-text-link-brand:         var(--p-color-lime-300);      /* lime-300 — Linktext default in dark, theme-invariant with lime button surface */
+  --color-text-link-brand-hover:   var(--p-color-lime-200);      /* one step lighter — "more pronounced on dark" */
 
   /* Semantic text — lighter steps for dark bg readability */
   --color-text-success:            var(--success-300);
@@ -684,11 +684,11 @@ Base surface is `sand-950` — a warm dark neutral, NOT a forest-tinted dark mod
   --color-text-data-orchid:        var(--data-orchid-300);
 
   /* ── Icon — mirrors text ── */
-  --color-icon-default:            var(--color-sand-50);
-  --color-icon-subtle:             var(--color-sand-300);
-  --color-icon-disabled:           var(--color-sand-600);
-  --color-icon-inverse:            var(--color-sand-900);
-  --color-icon-inverse-subtle:     var(--color-sand-700);
+  --color-icon-default:            var(--p-color-sand-50);
+  --color-icon-subtle:             var(--p-color-sand-300);
+  --color-icon-disabled:           var(--p-color-sand-600);
+  --color-icon-inverse:            var(--p-color-sand-900);
+  --color-icon-inverse-subtle:     var(--p-color-sand-700);
   --color-icon-success:            var(--success-300);
   --color-icon-info:               var(--info-300);
   --color-icon-warning:            var(--warning-300);
@@ -702,34 +702,34 @@ Base surface is `sand-950` — a warm dark neutral, NOT a forest-tinted dark mod
   /* ── Action — primary and critical unchanged ── */
   /* lime-400 on sand-950 passes contrast — no override needed */
   /* Secondary adapts to dark surface */
-  --color-action-secondary:          var(--color-sand-900);
-  --color-action-secondary-hover:    var(--color-sand-800);
-  --color-action-secondary-active:   var(--color-sand-700);
-  --color-action-secondary-disabled: var(--color-sand-950);
+  --color-action-secondary:          var(--p-color-sand-900);
+  --color-action-secondary-hover:    var(--p-color-sand-800);
+  --color-action-secondary-active:   var(--p-color-sand-700);
+  --color-action-secondary-disabled: var(--p-color-sand-950);
 
   /* ── Tag — dark theme override.
      Surface jumps to step-900 (deep tint), text to step-300 (light pop).
      Each pair retains AA contrast on the dark surface. */
-  --color-surface-tag-sand:        var(--color-sand-800);
-  --color-text-tag-sand:           var(--color-sand-200);
-  --color-surface-tag-forest:      var(--color-forest-900);
-  --color-text-tag-forest:         var(--color-forest-300);
-  --color-surface-tag-lime:        var(--color-lime-900);
-  --color-text-tag-lime:           var(--color-lime-300);
-  --color-surface-tag-cyan:        var(--color-cyan-900);
-  --color-text-tag-cyan:           var(--color-cyan-300);
-  --color-surface-tag-blue:        var(--color-blue-900);
-  --color-text-tag-blue:           var(--color-blue-300);
-  --color-surface-tag-yellow:      var(--color-yellow-900);
-  --color-text-tag-yellow:         var(--color-yellow-300);
-  --color-surface-tag-orange:      var(--color-orange-900);
-  --color-text-tag-orange:         var(--color-orange-300);
-  --color-surface-tag-red:         var(--color-red-900);
-  --color-text-tag-red:            var(--color-red-300);
-  --color-surface-tag-lavender:    var(--color-lavender-900);
-  --color-text-tag-lavender:       var(--color-lavender-300);
-  --color-surface-tag-orchid:      var(--color-orchid-900);
-  --color-text-tag-orchid:         var(--color-orchid-300);
+  --color-surface-tag-sand:        var(--p-color-sand-800);
+  --color-text-tag-sand:           var(--p-color-sand-200);
+  --color-surface-tag-forest:      var(--p-color-forest-900);
+  --color-text-tag-forest:         var(--p-color-forest-300);
+  --color-surface-tag-lime:        var(--p-color-lime-900);
+  --color-text-tag-lime:           var(--p-color-lime-300);
+  --color-surface-tag-cyan:        var(--p-color-cyan-900);
+  --color-text-tag-cyan:           var(--p-color-cyan-300);
+  --color-surface-tag-blue:        var(--p-color-blue-900);
+  --color-text-tag-blue:           var(--p-color-blue-300);
+  --color-surface-tag-yellow:      var(--p-color-yellow-900);
+  --color-text-tag-yellow:         var(--p-color-yellow-300);
+  --color-surface-tag-orange:      var(--p-color-orange-900);
+  --color-text-tag-orange:         var(--p-color-orange-300);
+  --color-surface-tag-red:         var(--p-color-red-900);
+  --color-text-tag-red:            var(--p-color-red-300);
+  --color-surface-tag-lavender:    var(--p-color-lavender-900);
+  --color-text-tag-lavender:       var(--p-color-lavender-300);
+  --color-surface-tag-orchid:      var(--p-color-orchid-900);
+  --color-text-tag-orchid:         var(--p-color-orchid-300);
 
 }
 
@@ -785,19 +785,19 @@ Use **Tailwind's default typography utilities** directly. Do not write custom `-
 :root {
 
   /* ── Radius ── */
-  --shape-radius-none:    0px;
-  --shape-radius-sm:      2px;    /* subtle — tag indicators, inline chips */
-  --shape-radius-default: 4px;    /* standard — inputs, buttons, dropdowns */
-  --shape-radius-md:      6px;    /* medium — badges, small tooltips */
-  --shape-radius-lg:      8px;    /* large — cards, panels, dialogs */
-  --shape-radius-xl:      12px;   /* extra-large — sheet overlays, popovers */
-  --shape-radius-round:   9999px; /* pill — status badges, toggle chips */
+  --ds-shape-radius-none:    0px;
+  --ds-shape-radius-sm:      2px;    /* subtle — tag indicators, inline chips */
+  --ds-shape-radius-default: 4px;    /* standard — inputs, buttons, dropdowns */
+  --ds-shape-radius-md:      6px;    /* medium — badges, small tooltips */
+  --ds-shape-radius-lg:      8px;    /* large — cards, panels, dialogs */
+  --ds-shape-radius-xl:      12px;   /* extra-large — sheet overlays, popovers */
+  --ds-shape-radius-round:   9999px; /* pill — status badges, toggle chips */
 
   /* ── Border width ── */
-  --shape-border-none:    0px;
-  --shape-border-default: 1px;    /* inputs, cards, table grid lines */
-  --shape-border-bold:    2px;    /* focus rings, selected-state indicators */
-  --shape-border-heavy:   4px;    /* left-edge accent stripe on alert banners */
+  --ds-shape-border-none:    0px;
+  --ds-shape-border-default: 1px;    /* inputs, cards, table grid lines */
+  --ds-shape-border-bold:    2px;    /* focus rings, selected-state indicators */
+  --ds-shape-border-heavy:   4px;    /* left-edge accent stripe on alert banners */
 
   /* ── Shadow — umbra tinted with forest-950 (#133019) for earthy warmth ── */
   --shadow-sm: 0 1px 2px 0 rgba(19, 48, 25, 0.08);
@@ -815,15 +815,15 @@ Use **Tailwind's default typography utilities** directly. Do not write custom `-
 
 | Component | Token | Tailwind equivalent |
 |---|---|---|
-| Input, Select, Textarea | `--shape-radius-default` | `rounded` |
-| Button (all variants) | `--shape-radius-default` | `rounded` |
-| Badge — status pill | `--shape-radius-round` | `rounded-full` |
-| Badge — category label | `--shape-radius-md` | `rounded-md` |
-| Card, Panel | `--shape-radius-lg` | `rounded-lg` |
-| Dialog | `--shape-radius-lg` | `rounded-lg` |
-| Popover, Tooltip | `--shape-radius-md` | `rounded-md` |
-| Alert / banner | `--shape-radius-default` | `rounded` |
-| Table row | `--shape-radius-none` | — |
+| Input, Select, Textarea | `--ds-shape-radius-default` | `rounded` |
+| Button (all variants) | `--ds-shape-radius-default` | `rounded` |
+| Badge — status pill | `--ds-shape-radius-round` | `rounded-full` |
+| Badge — category label | `--ds-shape-radius-md` | `rounded-md` |
+| Card, Panel | `--ds-shape-radius-lg` | `rounded-lg` |
+| Dialog | `--ds-shape-radius-lg` | `rounded-lg` |
+| Popover, Tooltip | `--ds-shape-radius-md` | `rounded-md` |
+| Alert / banner | `--ds-shape-radius-default` | `rounded` |
+| Table row | `--ds-shape-radius-none` | — |
 
 **Shadow conventions:**
 
@@ -844,7 +844,7 @@ Use **Tailwind's default typography utilities** directly. Do not write custom `-
   /* ── Chart surfaces — reference semantic tokens so they auto-adapt to dark theme ── */
   --chart-background:         var(--color-surface-default);
   --chart-grid-major:         var(--color-border-subtle);    /* primary grid lines */
-  --chart-grid-minor:         var(--color-sand-100);         /* secondary grid lines, lighter */
+  --chart-grid-minor:         var(--p-color-sand-100);         /* secondary grid lines, lighter */
   --chart-axis-line:          var(--color-border-default);
   --chart-axis-text:          var(--color-text-subtle);
   --chart-tooltip-background: var(--color-surface-default);
@@ -859,59 +859,59 @@ Use **Tailwind's default typography utilities** directly. Do not write custom `-
   --chart-cat-1: var(--data-cyan-500);     /* #00b4b6 — teal, primary series */
   --chart-cat-2: var(--data-lavender-500);   /* #636cff — lavender */
   --chart-cat-3: var(--data-orange-500);   /* #E88F3E — orange */
-  --chart-cat-4: var(--color-red-500);     /* #ee3a49 — red */
-  --chart-cat-5: var(--color-yellow-600);  /* #a69400 — olive-yellow (dark step for legibility) */
+  --chart-cat-4: var(--p-color-red-500);     /* #ee3a49 — red */
+  --chart-cat-5: var(--p-color-yellow-600);  /* #a69400 — olive-yellow (dark step for legibility) */
   --chart-cat-6: var(--data-cyan-800);     /* #004948 — dark teal (series-1 depth variant) */
   --chart-cat-7: var(--data-lavender-300);   /* #b5c2ff — soft lavender (series-2 light variant) */
   --chart-cat-8: var(--data-orange-700);   /* #a34900 — burnt orange (series-3 depth variant) */
 
   /* ── Sequential palette — forest (brand-tinted, for density / magnitude heatmaps) ── */
-  --chart-seq-forest-100: var(--color-forest-50);
-  --chart-seq-forest-200: var(--color-forest-100);
-  --chart-seq-forest-300: var(--color-forest-200);
-  --chart-seq-forest-400: var(--color-forest-300);
-  --chart-seq-forest-500: var(--color-forest-500);
-  --chart-seq-forest-600: var(--color-forest-600);
-  --chart-seq-forest-700: var(--color-forest-700);
-  --chart-seq-forest-800: var(--color-forest-800);
-  --chart-seq-forest-900: var(--color-forest-900);
+  --chart-seq-forest-100: var(--p-color-forest-50);
+  --chart-seq-forest-200: var(--p-color-forest-100);
+  --chart-seq-forest-300: var(--p-color-forest-200);
+  --chart-seq-forest-400: var(--p-color-forest-300);
+  --chart-seq-forest-500: var(--p-color-forest-500);
+  --chart-seq-forest-600: var(--p-color-forest-600);
+  --chart-seq-forest-700: var(--p-color-forest-700);
+  --chart-seq-forest-800: var(--p-color-forest-800);
+  --chart-seq-forest-900: var(--p-color-forest-900);
 
   /* ── Sequential palette — blue (alternative; use to distinguish assay types from density) ── */
-  --chart-seq-blue-100: var(--color-blue-50);
-  --chart-seq-blue-200: var(--color-blue-100);
-  --chart-seq-blue-300: var(--color-blue-200);
-  --chart-seq-blue-400: var(--color-blue-300);
-  --chart-seq-blue-500: var(--color-blue-500);
-  --chart-seq-blue-600: var(--color-blue-600);
-  --chart-seq-blue-700: var(--color-blue-700);
-  --chart-seq-blue-800: var(--color-blue-800);
-  --chart-seq-blue-900: var(--color-blue-900);
+  --chart-seq-blue-100: var(--p-color-blue-50);
+  --chart-seq-blue-200: var(--p-color-blue-100);
+  --chart-seq-blue-300: var(--p-color-blue-200);
+  --chart-seq-blue-400: var(--p-color-blue-300);
+  --chart-seq-blue-500: var(--p-color-blue-500);
+  --chart-seq-blue-600: var(--p-color-blue-600);
+  --chart-seq-blue-700: var(--p-color-blue-700);
+  --chart-seq-blue-800: var(--p-color-blue-800);
+  --chart-seq-blue-900: var(--p-color-blue-900);
 
   /* ── Diverging palette — red ↔ neutral ↔ forest ──
      For deltas, fold-change, and pos/neg inhibition response maps.
      Neutral midpoint uses sand-100 (warm, not optical gray) to match page bg. */
-  --chart-div-neg-500: var(--color-red-700);    /* strong negative / maximum inhibition loss */
-  --chart-div-neg-400: var(--color-red-500);
-  --chart-div-neg-300: var(--color-red-300);
-  --chart-div-neg-200: var(--color-red-100);
-  --chart-div-neg-100: var(--color-red-50);
-  --chart-div-neutral: var(--color-sand-100);   /* zero / baseline / no change */
-  --chart-div-pos-100: var(--color-forest-50);
-  --chart-div-pos-200: var(--color-forest-100);
-  --chart-div-pos-300: var(--color-forest-300);
-  --chart-div-pos-400: var(--color-forest-500);
-  --chart-div-pos-500: var(--color-forest-700);  /* strong positive / maximum effect */
+  --chart-div-neg-500: var(--p-color-red-700);    /* strong negative / maximum inhibition loss */
+  --chart-div-neg-400: var(--p-color-red-500);
+  --chart-div-neg-300: var(--p-color-red-300);
+  --chart-div-neg-200: var(--p-color-red-100);
+  --chart-div-neg-100: var(--p-color-red-50);
+  --chart-div-neutral: var(--p-color-sand-100);   /* zero / baseline / no change */
+  --chart-div-pos-100: var(--p-color-forest-50);
+  --chart-div-pos-200: var(--p-color-forest-100);
+  --chart-div-pos-300: var(--p-color-forest-300);
+  --chart-div-pos-400: var(--p-color-forest-500);
+  --chart-div-pos-500: var(--p-color-forest-700);  /* strong positive / maximum effect */
 
   /* ── Semantic trend ── */
   --chart-trend-positive: var(--success-600);      /* green-600 — improving, above baseline */
   --chart-trend-negative: var(--critical-600);     /* red-600 — declining, below baseline */
-  --chart-trend-neutral:  var(--color-sand-600);   /* no change — muted */
-  --chart-trend-unknown:  var(--color-neutral-400); /* data pending / unclassified */
+  --chart-trend-neutral:  var(--p-color-sand-600);   /* no change — muted */
+  --chart-trend-unknown:  var(--p-color-neutral-400); /* data pending / unclassified */
 
   /* ── Dose-response specific (biotech) ── */
   --chart-curve-fit:           var(--data-cyan-500);      /* 4PL fitted line — teal */
   --chart-confidence-band:     var(--data-cyan-100);      /* error envelope around fit — light teal wash */
-  --chart-datapoint-default:   var(--color-sand-700);     /* raw experimental points — muted */
+  --chart-datapoint-default:   var(--p-color-sand-700);     /* raw experimental points — muted */
   --chart-datapoint-highlight: var(--action-primary-400); /* selected / hovered point — lime */
   --chart-datapoint-outlier:   var(--critical-500);       /* flagged outlier — red */
   --chart-reference-line:      var(--critical-600);       /* IC50, EC50 vertical marker — dashed red */
@@ -939,7 +939,7 @@ Use **Tailwind's default typography utilities** directly. Do not write custom `-
 **Page structure:**
 - Page background → `--color-surface-default`
 - Nav bar / header → `--color-surface-brand` (Deep Forest) with `--color-text-inverse` for text
-- Main content panel / card → `--color-surface-default`, border `--color-border-subtle`, radius `--shape-radius-300`
+- Main content panel / card → `--color-surface-default`, border `--color-border-subtle`, radius `--ds-shape-radius-300`
 - Sidebar → `--color-surface-alt`
 
 **Buttons:**
@@ -993,7 +993,7 @@ In CSS: keep the variant's normal foreground token on the label and icon, then d
 
 | | Light theme | Dark theme |
 |---|---|---|
-| `--color-disabled-surface-overlay` | `var(--color-sand-100)` | `var(--color-sand-700)` |
+| `--color-disabled-surface-overlay` | `var(--p-color-sand-100)` | `var(--p-color-sand-700)` |
 
 In light theme it pulls toward light sand (desaturate + lift); in dark theme it pulls toward dark sand (desaturate + dim). The text alpha is theme-invariant — same `0.55` in both modes — because the variant's normal foreground token already has a light/dark variant, and opacity composites correctly over either disabled surface.
 
@@ -1030,7 +1030,7 @@ In light theme it pulls toward light sand (desaturate + lift); in dark theme it 
 - Borders → `--color-border-subtle`
 
 **Charts:**
-- Always wrap in a container with `--color-surface-default` background and `--shape-radius-300` radius
+- Always wrap in a container with `--color-surface-default` background and `--ds-shape-radius-300` radius
 - Axis lines use `--chart-axis-line`, never a text color token
 - Never use primary brand colors (lime, forest) as chart data colors — reserve them for UI chrome so charts read as information, not decoration
 - Dose-response curves use `--chart-curve-fit` for the fitted line and `--chart-confidence-band` for the error envelope
@@ -1204,7 +1204,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sh
 - **Dialog:** For confirmations, destructive actions, and short forms (≤4 fields). Footer always has a primary action left and a ghost/cancel right.
 - **Sheet:** For side panels with more context — compound detail, assay configuration. `side="right"` only in Forager.
 
-Both use `--shadow-lg` and `--shape-radius-lg` via the bridge automatically.
+Both use `--shadow-lg` and `--ds-shape-radius-lg` via the bridge automatically.
 
 ---
 
@@ -1706,7 +1706,7 @@ A non-exhaustive list of patterns that are forbidden in Forager code.
 - **Do not reference `--primary-*` tokens.** Brightseed splits primary into `surface-brand` and `action-primary`. If you want the brand chrome color, reach for `--color-surface-brand`. If you want the primary button color, reach for `--color-action-primary`. "Primary" alone is ambiguous and forbidden.
 - **Do not hardcode font families.** `font-family: "Tiempos Text"` is wrong. Tailwind's `font-sans`, `font-serif`, `font-mono` utilities are right. Tiempos is marketing-only.
 - **Do not write dark-mode CSS.** No `@media (prefers-color-scheme: dark)`, no `.dark` class handling in components. Dark theme is handled by `[data-theme="dark"]` overrides at the primitive layer, not in component code.
-- **Do not reach past the semantic layer into primitives.** Using `--color-neutral-100` in a component means no semantic captured your intent — stop and flag with `// BRIGHTSEED-TBD:`.
+- **Do not reach past the semantic layer into primitives.** Using `--p-color-neutral-100` in a component means no semantic captured your intent — stop and flag with `// BRIGHTSEED-TBD:`.
 - **Do not use the lime brand action as a chart data color.** Brand action colors are reserved for UI chrome. Charts use `--chart-cat-*` and `--chart-seq-*`.
 - **Do not invent tokens.** If a token doesn't exist in Section 3, you may not use it. Flag and stop.
 - **Do not import from component libraries other than shadcn/ui and Recharts.** No MUI, no Chakra, no Ant, no custom Tailwind plugins.
@@ -1749,7 +1749,7 @@ Things about the Brightseed product domain that affect UI decisions.
 
 1. ~~**Sans-serif pairing for Tiempos.**~~ → **Resolved:** Tailwind system sans throughout Forager. Tiempos is marketing-website only.
 2. ~~**Dark mode base: pure black, Deep-Forest-900, or cool neutral?**~~ → **Resolved (Apr 2026):** `sand-950` (`#1F1F1E`) — warm dark neutral. Initially set to forest-950 ("Deep Forest floor") but realigned to sand to match Figma's shadcn Theme dark mappings. Forest exits surface vocabulary in dark mode entirely, staying only as text on the lime button. Brand-context link colors moved to lime in May 2026. See Section 3.3 dark theme override.
-3. ~~**Sand as its own scale or rolled into neutral?**~~ → **Resolved:** Sand gets its own scale (`--color-sand-*`). It's a warm off-white with a distinct hue (H=97°) that neutral-50 doesn't replicate. Both scales coexist.
+3. ~~**Sand as its own scale or rolled into neutral?**~~ → **Resolved:** Sand gets its own scale (`--p-color-sand-*`). It's a warm off-white with a distinct hue (H=97°) that neutral-50 doesn't replicate. Both scales coexist.
 4. ~~**Does `--success-*` share the green-* hue scale with `--surface-brand-*`?**~~ → **Resolved:** Yes, they share. Brand chrome uses dark steps (700–950), success semantics use light steps (50–300). No collision. See Section 3.2.
 5. **Selected-row surface: reuse `--color-surface-success` or dedicate `--color-surface-selected`?** → *Still open — will resolve during compound library browser build.*
 6. **Dose-response 4PL fitting: Recharts custom layer or Visx fallback?** → *Still open.*

@@ -16,7 +16,7 @@ import { CowBadge, CompoundBadge, PlantBadge, RatBadge } from "@/components/ui/b
  * The Quill matrix renders all 12 variants × 3 states (default / hover / focus)
  * for each kind. Hover and focus are forced via `data-force-state`, mapped by
  * the `hovered` and `focused` custom Tailwind variants in
- * sandbox/app/globals.css — the same dual-trigger pattern Button uses.
+ * web/app/globals.css — the same dual-trigger pattern Button uses.
  *
  * Light + dark modes are toggled via the Storybook toolbar.
  * ───────────────────────────────────────────────────────────────────────── */

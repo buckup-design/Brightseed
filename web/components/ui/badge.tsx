@@ -54,7 +54,7 @@ import { cn } from "@/lib/utils"
  *
  * Story / matrix support: `data-force-state="hover|focus|disabled"` renders any
  * variant in that state without real interaction. The `hovered`, `focused`, and
- * `disabled-state` Tailwind variants (declared in sandbox/app/globals.css) match
+ * `disabled-state` Tailwind variants (declared in web/app/globals.css) match
  * both the real pseudo-class AND the data attribute, so the cva stays
  * single-declaration. Same dual-trigger pattern Button uses.
  */
