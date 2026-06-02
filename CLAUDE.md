@@ -104,7 +104,6 @@ Color scale names: forest, lime, sand, cyan, blue, yellow, orange, lavender, orc
 | `bridge/globals.css` | shadcn bridge — maps Brightseed tokens onto shadcn variable names. Intentionally thin. |
 | `README.md` | Short orientation pointing to CSS + Storybook. |
 | `web/` | Next.js 16 + Tailwind 4 + Storybook 10 production app. `tokens/` + `bridge/` here are symlinks to root. |
-| `share-with-anna/` | People-free design-system handoff package. |
 | `collaboration/` | Internal: workflow + Anna onboarding. |
 | `brightseed-shadcn-mapping.md` | Figma variable-collection wiring guide. |
 | `DOCS/DESIGN.mdx` | Storybook design guidelines (symlink to `web/stories/DesignGuidelines.mdx`). |

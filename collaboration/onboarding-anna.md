@@ -13,14 +13,10 @@ GitHub mechanics are mine to handle — you don't touch Settings or copy URLs. W
 - [ ] I enable **branch protection on `main`** (no direct pushes; merge via PR) so her prototypes can't ship by accident — *pending your nod on workflow decision #2.*
 - [ ] I confirm **Vercel preview deploys** are on for branches, so every branch gets a live preview URL.
 
-### B. The docs — ready to hand over
+### B. Orientation — all in Storybook (nothing to download)
 
-- [ ] The clean, people-free package is built in `share-with-anna/`:
-  - `00-START-HERE.md` — orientation
-  - `01-design-system-overview.md` — architecture + key tokens
-  - `02-token-reference.md` — the working vocabulary (keep open while prototyping)
-  - `03-prototyping-guide.md` — the idea→preview loop
-- [ ] Decide *how* she gets them: a shared Drive/Notion folder, or committed into the repo so they travel with the code. **[need from you]** which.
+- [ ] Anna's entry point is the **Getting Started** page in Storybook (`web/stories/GettingStarted.mdx`), which points to Foundations (live token reference), Design.mdx (design language + composition + component usage), and Components.
+- [ ] Hand her the live URL — that *is* the handoff: https://brightseed-storybook.vercel.app
 
 ### C. Figma
 
