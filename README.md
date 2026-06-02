@@ -42,4 +42,4 @@ Toggle dark by setting `data-theme="dark"` on `<html>`. The semantic tokens swap
 - `bridge/globals.css` — maps Brightseed tokens onto shadcn's variable names.
 - `web/` — the Next.js + Storybook app (production). `tokens/` and `bridge/` here are symlinks to the root copies.
 - `CLAUDE.md` — canonical rules, conventions, and current status.
-- `share-with-anna/` — the design-system handoff package.
+- Storybook (https://brightseed-storybook.vercel.app) — the live design-system handoff: Getting Started, Foundations, Design.mdx, Components.
