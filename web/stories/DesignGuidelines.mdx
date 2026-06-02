@@ -18,15 +18,15 @@ Charts and tag colors (forest, cyan, lavender, orchid, orange, blue, yellow, red
 
 ### Three layers
 
-Component code references **component tokens only** (`--c-{component}-*`) — never semantics or primitives directly. The layers exist so that a single design decision (e.g., "primary action should be lime") flows everywhere automatically.
+Component code references **semantic tokens only** (`--ds-*`) — never primitives directly. The layers exist so that a single design decision (e.g., "primary action should be lime") flows everywhere automatically.
 
 | Layer      | Prefix              | Example                          | What it does                                              |
 | ---------- | ------------------- | -------------------------------- | --------------------------------------------------------- |
-| Primitives | `--p-*`             | `--p-lime-300`                   | Raw hue values — the palette. Never used in components.   |
-| Semantics  | `--ds-*`            | `--ds-color-action-primary`      | Intent-based aliases. Map design intent to primitives.    |
-| Components | `--c-{component}-*` | `--c-button-bg`, `--c-badge-surface` | Component-scoped tokens. Every component reads only this tier. |
+| Primitives | `--p-{type}-*`      | `--p-color-lime-300`             | Raw values, organized by type — the palette. Never used in components. |
+| Semantics  | `--ds-*`            | `--ds-color-action-primary`      | Intent-based aliases. Map design intent to primitives. **Component code reads this tier.** |
+| Component  | `--c-{component}-*` | `--c-button-bg`                  | Optional escape hatch only — for a local value with no semantic home. None defined yet. |
 
-> **Note:** Existing primitive tokens (`--p-color-forest-700`, `--p-color-lime-300`, etc.) predate the `--p-*` convention and are not being renamed. New primitive tokens use `--p-*`. Component tokens (`--c-*`) are defined per component in that component's stylesheet.
+> **Note:** Primitives are organized by `$type` and all use the `--p-{type}-*` convention (`--p-color-forest-700`, `--p-color-lime-300`, etc.) — the migration is complete; no bare `--color-*` primitives remain. Component code references `--ds-*` semantics directly; the `--c-*` tier is an optional escape hatch and no `--c-*` tokens exist today.
 
 ---
 
@@ -366,4 +366,4 @@ Icon sizes are relative to the component they live in. Button icon slots are siz
 2. **Hardcoded hex, px, or font strings** — all values come from tokens via CSS custom properties.
 3. **Tag colors implying status** — use icon + text for status; tag color is decorative.
 4. **Brand lime or forest as a chart data series** — those hues are reserved for UI affordances.
-5. **Reaching past component tokens** — component code never references semantic or primitive tokens directly. Always use `--c-{component}-*`. If no component token exists for what you need, flag it with `// BRIGHTSEED-TBD: [BLOCKING]` and stop.
+5. **Reaching past the semantic layer** — component code references `--ds-*` semantics only, never primitives (`--p-*`) or raw values directly. If no semantic token exists for what you need, flag it with `// BRIGHTSEED-TBD: [BLOCKING]` and stop.
