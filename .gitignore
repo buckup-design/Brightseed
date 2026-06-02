@@ -5,9 +5,8 @@
 Brightseed brand assets from 2022/
 /brand/
 
-# Personal memory + agent context (decoded shorthand, people notes, internal reasoning)
+# Personal memory (decoded shorthand, people notes, internal reasoning)
 memory/
-.agents/
 
 # Working folders (curate before adding to repo)
 OUTPUTS/
