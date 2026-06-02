@@ -33,11 +33,11 @@ Next.js + shadcn/ui + Tailwind CSS · color via CSS custom properties (no hardco
 
 ## Design system — architecture & rules
 
-Three-tier token system. The CSS in `tokens/` is the source of truth for all names and values; this section is the rules, not a value list.
+Two-tier token system. The CSS in `tokens/` is the source of truth for all names and values; this section is the rules, not a value list.
 
 ```
 Primitives   --p-color-forest-700        raw values, organized by $type
-   ↓ (intents: --{role}-{step}, pure aliases)
+   ↓
 Semantics    --ds-color-surface-success  ← component code references THIS tier
 ```
 
@@ -53,7 +53,7 @@ Primitives are organized by `$type` (the W3C tokens axis): `--p-color-*`, `--p-r
 
 **Rules**
 
-◆ **No tier-skipping.** Component code references semantic `--ds-*` only — never primitives, intents, or raw values. Semantics are the only tier that touches primitives. (`--c-*` is an optional escape hatch for a local value with no semantic home; in practice components use `--ds-*` directly.)
+◆ **No tier-skipping.** Component code references semantic `--ds-*` only — never primitives or raw values. Semantics are the only tier that touches primitives. (`--c-*` is an optional escape hatch for a local value with no semantic home; in practice components use `--ds-*` directly.)
 
 ◆ **No hardcoded values.** No hex, px, or font names in component styles. Use `var(--ds-*)` or Tailwind arbitrary refs (`bg-[var(--ds-color-surface-success)]`). CSS-variable arbitrary refs are allowed; hardcoded-hex arbitrary values are not.
 

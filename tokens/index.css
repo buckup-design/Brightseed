@@ -9,8 +9,7 @@
  */
 
 @import './primitives.css'; /* Layer 1: raw hue scales */
-@import './intents.css';    /* Layer 2: role-name aliases */
-@import './semantics.css';  /* Layer 3: UI-function tokens + dark theme */
+@import './semantics.css';  /* Layer 2: UI-function tokens + dark theme */
 @import './shape.css';      /* Radius, border width, shadow */
 @import './typography.css'; /* Font families + display scale (Tiempos H1/H2/H3) */
 @import './charts.css';     /* Data visualization tokens */

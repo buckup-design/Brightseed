@@ -2,7 +2,7 @@
  * Brightseed Design System — Chart & Data Visualization Tokens
  * Reference: BrightseedDS.md §3.7
  *
- * Requires: primitives.css, intents.css, semantics.css
+ * Requires: primitives.css, semantics.css
  *
  * RULES:
  * — Never use brand action (lime) or brand surface (forest) for chart series —
@@ -30,14 +30,14 @@
 
   /* ── Categorical palette (8 series, colorblind-safe) ──
      Assign in order: cat-1 → cat-2 → ... → cat-8. Do not skip around. */
-  --chart-cat-1: var(--data-cyan-500);     /* #00b4b6 — teal, primary series */
-  --chart-cat-2: var(--data-lavender-500);   /* #8261ff — lavender */
-  --chart-cat-3: var(--data-orange-500);   /* #E88F3E — orange */
+  --chart-cat-1: var(--p-color-cyan-500);     /* #00b4b6 — teal, primary series */
+  --chart-cat-2: var(--p-color-lavender-500);   /* #8261ff — lavender */
+  --chart-cat-3: var(--p-color-orange-500);   /* #E88F3E — orange */
   --chart-cat-4: var(--p-color-red-500);     /* #ee3a49 — red */
   --chart-cat-5: var(--p-color-yellow-600);  /* #a69400 — olive-yellow (dark step for legibility) */
-  --chart-cat-6: var(--data-cyan-800);     /* #004948 — dark teal (series-1 depth variant) */
-  --chart-cat-7: var(--data-lavender-300);   /* #c8bcff — soft lavender (series-2 light variant) */
-  --chart-cat-8: var(--data-orange-700);   /* #a34900 — burnt orange (series-3 depth variant) */
+  --chart-cat-6: var(--p-color-cyan-800);     /* #004948 — dark teal (series-1 depth variant) */
+  --chart-cat-7: var(--p-color-lavender-300);   /* #c8bcff — soft lavender (series-2 light variant) */
+  --chart-cat-8: var(--p-color-orange-700);   /* #a34900 — burnt orange (series-3 depth variant) */
 
   /* ── Sequential palette — forest (brand-tinted, for density / magnitude heatmaps) ── */
   --chart-seq-forest-100: var(--p-color-forest-50);
@@ -77,17 +77,17 @@
   --chart-div-pos-500: var(--p-color-forest-700);  /* strong positive / maximum effect */
 
   /* ── Semantic trend ── */
-  --chart-trend-positive: var(--success-600);      /* forest-600 — improving, above baseline */
-  --chart-trend-negative: var(--critical-600);     /* red-600 — declining, below baseline */
+  --chart-trend-positive: var(--p-color-forest-600);      /* forest-600 — improving, above baseline */
+  --chart-trend-negative: var(--p-color-red-600);     /* red-600 — declining, below baseline */
   --chart-trend-neutral:  var(--p-color-sand-600);   /* no change — muted */
   --chart-trend-unknown:  var(--p-color-neutral-400); /* data pending / unclassified */
 
   /* ── Dose-response specific (biotech) ── */
-  --chart-curve-fit:           var(--data-cyan-500);      /* 4PL fitted line — teal */
-  --chart-confidence-band:     var(--data-cyan-100);      /* error envelope — light teal wash */
+  --chart-curve-fit:           var(--p-color-cyan-500);      /* 4PL fitted line — teal */
+  --chart-confidence-band:     var(--p-color-cyan-100);      /* error envelope — light teal wash */
   --chart-datapoint-default:   var(--p-color-sand-700);     /* raw experimental points — muted */
-  --chart-datapoint-highlight: var(--action-primary-400); /* selected / hovered point — lime */
-  --chart-datapoint-outlier:   var(--critical-500);       /* flagged outlier — red */
-  --chart-reference-line:      var(--critical-600);       /* IC50, EC50 vertical marker — dashed red */
+  --chart-datapoint-highlight: var(--p-color-lime-400); /* selected / hovered point — lime */
+  --chart-datapoint-outlier:   var(--p-color-red-500);       /* flagged outlier — red */
+  --chart-reference-line:      var(--p-color-red-600);       /* IC50, EC50 vertical marker — dashed red */
 
 }
