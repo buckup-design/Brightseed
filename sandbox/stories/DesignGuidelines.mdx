@@ -32,36 +32,36 @@ Component code references **component tokens only** (`--c-{component}-*`) — ne
 
 | Token | Light | Dark | Use |
 |---|---|---|---|
-| `--color-surface-default` | white | sand-950 `#1F1F1E` | Page background |
-| `--color-surface-alt` | sand-100 | sand-900 | Sidebars, table alt rows, inset panels |
-| `--color-surface-brand` | forest-900 | forest-900 | Deep Forest branded surfaces |
+| `--ds-color-surface-default` | white | sand-950 `#1F1F1E` | Page background |
+| `--ds-color-surface-alt` | sand-100 | sand-900 | Sidebars, table alt rows, inset panels |
+| `--ds-color-surface-brand` | forest-900 | forest-900 | Deep Forest branded surfaces |
 
 #### Actions
 
 | Token | Value | Notes |
 |---|---|---|
-| `--color-action-primary` | lime-300 `#CDE67B` | Default state; hover = lime-400, pressed = lime-500 |
-| `--color-action-secondary` | aliases page bg | Secondary buttons match the surface they sit on |
-| `--color-action-critical` | red-100 surface + red-600 text | Soft, not alarming |
+| `--ds-color-action-primary` | lime-300 `#CDE67B` | Default state; hover = lime-400, pressed = lime-500 |
+| `--ds-color-action-secondary` | aliases page bg | Secondary buttons match the surface they sit on |
+| `--ds-color-action-critical` | red-100 surface + red-600 text | Soft, not alarming |
 
 #### Text
 
 | Token | Use |
 |---|---|
-| `--color-text-primary` | Body copy, primary labels |
-| `--color-text-secondary` | Supporting copy, captions |
-| `--color-text-tertiary` | Placeholder, disabled labels |
-| `--color-text-on-action-primary` | Text on lime buttons (forest-800, theme-invariant) |
-| `--color-text-link-default` | Inline body links (blue scale) |
-| `--color-text-link-brand` | Linktext button variant (lime-700 light / lime-300 dark) |
+| `--ds-color-text-primary` | Body copy, primary labels |
+| `--ds-color-text-secondary` | Supporting copy, captions |
+| `--ds-color-text-tertiary` | Placeholder, disabled labels |
+| `--ds-color-text-on-action-primary` | Text on lime buttons (forest-800, theme-invariant) |
+| `--ds-color-text-link-default` | Inline body links (blue scale) |
+| `--ds-color-text-link-brand` | Linktext button variant (lime-700 light / lime-300 dark) |
 
 #### Focus rings
 
 | Variant | Token | Color |
 |---|---|---|
-| Default/Outline/Ghost | `--color-border-focus` | lime |
-| Secondary | `--color-border-focus-secondary` | sand |
-| Destructive | `--color-border-focus-destructive` | red |
+| Default/Outline/Ghost | `--ds-color-border-focus` | lime |
+| Secondary | `--ds-color-border-focus-secondary` | sand |
+| Destructive | `--ds-color-border-focus-destructive` | red |
 
 ### Tag colors
 
@@ -71,7 +71,7 @@ For status meaning, always use icon + text composition — never rely on color a
 
 ### Charts
 
-Use `--chart-cat-1` through `--chart-cat-8` in order for categorical data series. Never use brand lime or brand forest as a data series color — those are reserved for UI, not data.
+Use `--ds-chart-cat-1` through `--ds-chart-cat-8` in order for categorical data series. Never use brand lime or brand forest as a data series color — those are reserved for UI, not data.
 
 ---
 
@@ -93,15 +93,15 @@ All corner radii reference the shape token ladder. Never hardcode pixel values o
 
 | Token | Value | Typical use |
 |---|---|---|
-| `--shape-radius-xs` | 2px | Tight secondary badges |
-| `--shape-radius-sm` | 6px | Small chips |
-| `--shape-radius-md` | 8px | Buttons (default, sm, lg), inputs, cards |
-| `--shape-radius-lg` | 10px | Larger cards |
-| `--shape-radius-xl` | 14px | Modals, popovers |
-| `--shape-radius-2xl` | 18px | |
-| `--shape-radius-3xl` | 22px | |
-| `--shape-radius-4xl` | 26px | XL buttons only |
-| `--shape-radius-round` | 9999px | Pills, avatars |
+| `--ds-shape-radius-xs` | 2px | Tight secondary badges |
+| `--ds-shape-radius-sm` | 6px | Small chips |
+| `--ds-shape-radius-md` | 8px | Buttons (default, sm, lg), inputs, cards |
+| `--ds-shape-radius-lg` | 10px | Larger cards |
+| `--ds-shape-radius-xl` | 14px | Modals, popovers |
+| `--ds-shape-radius-2xl` | 18px | |
+| `--ds-shape-radius-3xl` | 22px | |
+| `--ds-shape-radius-4xl` | 26px | XL buttons only |
+| `--ds-shape-radius-round` | 9999px | Pills, avatars |
 
 ---
 
