@@ -123,7 +123,7 @@ export const AllVariants: Story = {
 };
 
 /* All ten sizes of the default (lime) variant. Confirms the radius jump at
- * xl + icon-xl (--shape-radius-md → --shape-radius-4xl) and icon-only sizes
+ * xl + icon-xl (--ds-shape-radius-md → --ds-shape-radius-4xl) and icon-only sizes
  * staying square. */
 export const AllSizes: Story = {
   parameters: { layout: "padded" },
@@ -163,32 +163,32 @@ export const States: Story = {
   parameters: { layout: "padded" },
   render: () => (
     <div className="grid grid-cols-[auto_1fr] items-center gap-x-6 gap-y-3">
-      <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+      <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
         Default
       </span>
       <Button>Save compound</Button>
 
-      <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+      <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
         Hover
       </span>
       <Button data-force-state="hover">Save compound</Button>
 
-      <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+      <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
         Focus
       </span>
       <Button data-force-state="focus">Save compound</Button>
 
-      <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+      <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
         Pressed
       </span>
       <Button data-force-state="active">Save compound</Button>
 
-      <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+      <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
         Disabled
       </span>
       <Button disabled>Save compound</Button>
 
-      <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+      <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
         Loading
       </span>
       <Button loading>Save compound</Button>
@@ -297,7 +297,7 @@ function QuillCell({
   // so the grid alignment stays consistent.
   if (variant === "linktext" && isIconSize) {
     return (
-      <div className="flex h-9 items-center justify-center text-xs text-[var(--color-text-subtle)]/40">
+      <div className="flex h-9 items-center justify-center text-xs text-[var(--ds-color-text-subtle)]/40">
         —
       </div>
     );
@@ -332,7 +332,7 @@ function QuillCell({
 function QuillRow({ variant, size }: { variant: Variant; size: Size }) {
   return (
     <>
-      <div className="flex items-center pl-2 font-mono text-xs text-[var(--color-text-subtle)]">
+      <div className="flex items-center pl-2 font-mono text-xs text-[var(--ds-color-text-subtle)]">
         {variant} / {size}
       </div>
       {STATES.map((state) => (
@@ -355,7 +355,7 @@ function QuillVariantSection({ variant }: { variant: Variant }) {
 
   return (
     <section className="mb-12">
-      <h3 className="mb-4 border-b border-[var(--color-border-subtle)] pb-1 font-mono text-sm font-semibold uppercase tracking-wide text-[var(--color-text-default)]">
+      <h3 className="mb-4 border-b border-[var(--ds-color-border-subtle)] pb-1 font-mono text-sm font-semibold uppercase tracking-wide text-[var(--ds-color-text-default)]">
         {variant}
       </h3>
       <div
@@ -370,7 +370,7 @@ function QuillVariantSection({ variant }: { variant: Variant }) {
         {STATES.map((state) => (
           <div
             key={state.key}
-            className="font-mono text-xs uppercase tracking-wide text-[var(--color-text-subtle)]"
+            className="font-mono text-xs uppercase tracking-wide text-[var(--ds-color-text-subtle)]"
           >
             {state.label}
           </div>
@@ -403,10 +403,10 @@ export const QuillMatrix: Story = {
     },
   },
   render: () => (
-    <div className="bg-[var(--color-surface-default)] p-8 text-[var(--color-text-default)]">
+    <div className="bg-[var(--ds-color-surface-default)] p-8 text-[var(--ds-color-text-default)]">
       <header className="mb-8">
         <h1 className="text-2xl font-semibold">Button — Quill matrix</h1>
-        <p className="mt-2 max-w-2xl text-sm text-[var(--color-text-subtle)]">
+        <p className="mt-2 max-w-2xl text-sm text-[var(--ds-color-text-subtle)]">
           Every variant × size × state combination in the system. Toggle the
           theme switch in the toolbar to verify dark-mode parity. Hover / focus /
           pressed states are forced via data-force-state and use the same classes

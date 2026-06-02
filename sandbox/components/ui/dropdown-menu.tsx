@@ -66,10 +66,10 @@ function DropdownMenuContent({
         sideOffset={sideOffset}
         className={cn(
           "z-50 min-w-[8rem] overflow-hidden",
-          "rounded-[var(--shape-radius-md)]",
-          "border border-[var(--color-border-default)]",
-          "bg-[var(--color-surface-default)] text-[var(--color-text-default)]",
-          "p-1 shadow-[var(--shadow-md)]",
+          "rounded-[var(--ds-shape-radius-md)]",
+          "border border-[var(--ds-color-border-default)]",
+          "bg-[var(--ds-color-surface-default)] text-[var(--ds-color-text-default)]",
+          "p-1 shadow-[var(--ds-shadow-md)]",
           // Animations come from tw-animate-css (already imported in globals.css)
           "data-[state=open]:animate-in data-[state=closed]:animate-out",
           "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
@@ -104,14 +104,14 @@ function DropdownMenuItem({
       data-inset={inset || undefined}
       className={cn(
         "relative flex cursor-pointer select-none items-center gap-2",
-        "rounded-[var(--shape-radius-sm)] px-2 py-1.5 text-sm outline-none",
+        "rounded-[var(--ds-shape-radius-sm)] px-2 py-1.5 text-sm outline-none",
         "transition-colors duration-[120ms]",
         // Highlight (Radix sets data-highlighted on focus + hover)
-        "data-[highlighted]:bg-[var(--color-action-secondary-hover)]",
-        "data-[highlighted]:text-[var(--color-text-default)]",
+        "data-[highlighted]:bg-[var(--ds-color-action-secondary-hover)]",
+        "data-[highlighted]:text-[var(--ds-color-text-default)]",
         // Destructive variant: critical-toned text + hover surface
-        "data-[variant=destructive]:text-[var(--color-text-on-action-critical)]",
-        "data-[variant=destructive]:data-[highlighted]:bg-[var(--color-action-critical)]",
+        "data-[variant=destructive]:text-[var(--ds-color-text-on-action-critical)]",
+        "data-[variant=destructive]:data-[highlighted]:bg-[var(--ds-color-action-critical)]",
         // Disabled
         "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         // Inset (room for an alignment column)
@@ -137,7 +137,7 @@ function DropdownMenuLabel({
       data-slot="dropdown-menu-label"
       data-inset={inset || undefined}
       className={cn(
-        "px-2 py-1.5 text-xs font-medium text-[var(--color-text-subtle)]",
+        "px-2 py-1.5 text-xs font-medium text-[var(--ds-color-text-subtle)]",
         "data-[inset]:pl-8",
         className
       )}
@@ -154,7 +154,7 @@ function DropdownMenuSeparator({
     <DropdownMenuPrimitive.Separator
       data-slot="dropdown-menu-separator"
       className={cn(
-        "-mx-1 my-1 h-px bg-[var(--color-border-subtle)]",
+        "-mx-1 my-1 h-px bg-[var(--ds-color-border-subtle)]",
         className
       )}
       {...props}
@@ -170,7 +170,7 @@ function DropdownMenuShortcut({
     <span
       data-slot="dropdown-menu-shortcut"
       className={cn(
-        "ml-auto text-xs tracking-widest text-[var(--color-text-subtle)]",
+        "ml-auto text-xs tracking-widest text-[var(--ds-color-text-subtle)]",
         className
       )}
       {...props}

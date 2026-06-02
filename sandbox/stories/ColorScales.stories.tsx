@@ -107,14 +107,14 @@ function Swatch({
     <div className="flex min-w-0 flex-col gap-1.5">
       <div
         ref={ref}
-        className="h-14 rounded-md border border-[var(--color-border-subtle)]"
+        className="h-14 rounded-md border border-[var(--ds-color-border-subtle)]"
         style={{ backgroundColor: `var(--color-${scaleKey}-${step})` }}
       />
       <div className="flex flex-col leading-tight">
-        <span className="text-[11px] font-medium text-[var(--color-text-default)]">{step}</span>
-        <span className="font-mono text-[10px] text-[var(--color-text-subtle)]">{hex}</span>
+        <span className="text-[11px] font-medium text-[var(--ds-color-text-default)]">{step}</span>
+        <span className="font-mono text-[10px] text-[var(--ds-color-text-subtle)]">{hex}</span>
         {note && (
-          <span className="mt-0.5 text-[10px] text-[var(--color-text-subtle)]">{note}</span>
+          <span className="mt-0.5 text-[10px] text-[var(--ds-color-text-subtle)]">{note}</span>
         )}
       </div>
     </div>
@@ -131,8 +131,8 @@ function ScaleRow({ scale }: { scale: Scale }) {
         >
           {scale.label}
         </h3>
-        <span className="text-sm text-[var(--color-text-subtle)]">/ {scale.desc}</span>
-        <span className="font-mono text-[11px] text-[var(--color-text-subtle)]">
+        <span className="text-sm text-[var(--ds-color-text-subtle)]">/ {scale.desc}</span>
+        <span className="font-mono text-[11px] text-[var(--ds-color-text-subtle)]">
           --color-{scale.key}-*
         </span>
       </div>
@@ -153,7 +153,7 @@ export const Scales: Story = {
     <div className="flex flex-col gap-9 p-8">
       <header className="flex flex-col gap-2">
         <h2
-          className="text-[var(--color-text-default)]"
+          className="text-[var(--ds-color-text-default)]"
           style={{
             fontFamily: "var(--font-display)",
             fontStyle: "italic",
@@ -165,7 +165,7 @@ export const Scales: Story = {
         >
           Color Scales
         </h2>
-        <p className="max-w-prose text-sm text-[var(--color-text-subtle)]">
+        <p className="max-w-prose text-sm text-[var(--ds-color-text-subtle)]">
           The Brightseed primitive hue scales — Layer 1 of the token system
           (primitives → intents → semantics). Each scale runs 50→950. Component
           code references semantic tokens, never these primitives directly. Token

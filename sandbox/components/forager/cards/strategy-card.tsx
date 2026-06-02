@@ -54,18 +54,18 @@ const STATUS_CONFIG: Record<
   { bg: string; iconClass: string; Icon: React.ElementType }
 > = {
   success: {
-    bg: "bg-[var(--color-surface-success)]",
-    iconClass: "text-[var(--color-icon-success)]",
+    bg: "bg-[var(--ds-color-surface-success)]",
+    iconClass: "text-[var(--ds-color-icon-success)]",
     Icon: Check,
   },
   warning: {
-    bg: "bg-[var(--color-surface-warning)]",
-    iconClass: "text-[var(--color-icon-warning)]",
+    bg: "bg-[var(--ds-color-surface-warning)]",
+    iconClass: "text-[var(--ds-color-icon-warning)]",
     Icon: AlertTriangle,
   },
   critical: {
-    bg: "bg-[var(--color-surface-critical)]",
-    iconClass: "text-[var(--color-icon-critical)]",
+    bg: "bg-[var(--ds-color-surface-critical)]",
+    iconClass: "text-[var(--ds-color-icon-critical)]",
     Icon: X,
   },
 };
@@ -117,11 +117,11 @@ export function StrategyCard({
         // grid overflow when columns are narrower than the card's natural size).
         "w-full min-w-0",
         // surface
-        "bg-[var(--color-surface-default)]",
+        "bg-[var(--ds-color-surface-default)]",
         // border: subtle at rest, one step bolder on hover
-        "border border-[var(--color-border-subtle)] hover:border-[var(--color-border-default)]",
-        // corner radius: 8px (--shape-radius-md) matches Figma v2
-        "rounded-[var(--shape-radius-md)]",
+        "border border-[var(--ds-color-border-subtle)] hover:border-[var(--ds-color-border-default)]",
+        // corner radius: 8px (--ds-shape-radius-md) matches Figma v2
+        "rounded-[var(--ds-shape-radius-md)]",
         // shadow: slight at rest, pronounced on hover
         "shadow-[0px_1px_1.5px_rgba(0,0,0,0.07)]",
         "hover:shadow-[0px_4px_6px_rgba(0,0,0,0.12)]",
@@ -135,7 +135,7 @@ export function StrategyCard({
       <div className="flex items-center justify-between">
         {/* Strategy glyph — Lightbulb indicates "this is a proposed strategy" */}
         <Lightbulb
-          className="size-6 text-[var(--color-text-subtle)] shrink-0"
+          className="size-6 text-[var(--ds-color-text-subtle)] shrink-0"
           strokeWidth={1.5}
         />
 
@@ -152,7 +152,7 @@ export function StrategyCard({
           aria-pressed={favorited}
           className={cn(
             "group/fav size-8 flex items-center justify-center shrink-0",
-            "rounded-[var(--shape-radius-md)]",
+            "rounded-[var(--ds-shape-radius-md)]",
             // pinned cards always show; unpinned fades in on card hover
             favorited
               ? "opacity-100"
@@ -160,7 +160,7 @@ export function StrategyCard({
             "transition-opacity duration-[120ms]",
             // keyboard focus only — no hover surface
             "focus-visible:opacity-100 outline-none",
-            "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-1",
+            "focus-visible:ring-2 focus-visible:ring-[var(--ds-color-border-focus)] focus-visible:ring-offset-1",
           )}
         >
           <Star
@@ -169,9 +169,9 @@ export function StrategyCard({
               "size-4 fill-none transition-colors duration-[120ms]",
               favorited
                 // pinned: yellow outline
-                ? "text-[var(--color-icon-favorite-active)]"
+                ? "text-[var(--ds-color-icon-favorite-active)]"
                 // unpinned: grey outline → yellow outline on button hover (intent preview)
-                : "text-[var(--color-icon-favorite-inactive)] group-hover/fav:text-[var(--color-icon-favorite-active)]"
+                : "text-[var(--ds-color-icon-favorite-inactive)] group-hover/fav:text-[var(--ds-color-icon-favorite-active)]"
             )}
             strokeWidth={1.5}
           />
@@ -182,13 +182,13 @@ export function StrategyCard({
       {/* min-h-[2.5em]: 2 × leading-tight (1.25em) — reserves the 2-line slot
           even when copy is a single line, so card heights stay consistent.
           line-clamp-2: truncates to 2 lines with ellipsis if copy runs long. */}
-      <p className="text-[15px] font-semibold leading-tight text-[var(--color-text-default)] line-clamp-2 min-h-[2.5em]">
+      <p className="text-[15px] font-semibold leading-tight text-[var(--ds-color-text-default)] line-clamp-2 min-h-[2.5em]">
         {oneLiner}
       </p>
 
       {/* ── Description ───────────────────────────────────────────────────── */}
       {/* min-h-[2.75em]: 2 × leading-snug (1.375em) */}
-      <p className="text-[13px] leading-snug text-[var(--color-text-subtle)] line-clamp-2 min-h-[2.75em]">
+      <p className="text-[13px] leading-snug text-[var(--ds-color-text-subtle)] line-clamp-2 min-h-[2.75em]">
         {description}
       </p>
 
@@ -197,8 +197,8 @@ export function StrategyCard({
           Row text steps from subtle → default on card hover (same timing as border/shadow). */}
       <div
         className={cn(
-          "border border-[var(--color-border-subtle)]",
-          "rounded-[var(--shape-radius-sm)]",  // 6px — tighter than card
+          "border border-[var(--ds-color-border-subtle)]",
+          "rounded-[var(--ds-shape-radius-sm)]",  // 6px — tighter than card
           "overflow-hidden shrink-0 w-full"
         )}
       >
@@ -206,13 +206,13 @@ export function StrategyCard({
           <React.Fragment key={row.label}>
             {i > 0 && (
               <div
-                className="h-px bg-[var(--color-border-subtle)]"
+                className="h-px bg-[var(--ds-color-border-subtle)]"
                 aria-hidden="true"
               />
             )}
             <div className="flex items-center gap-2 h-8 px-3">
               {/* Label — Geist Mono, 12px, fixed 96px column */}
-              <p className="font-mono text-[12px] text-[var(--color-text-subtle)] w-24 shrink-0 leading-none">
+              <p className="font-mono text-[12px] text-[var(--ds-color-text-subtle)] w-24 shrink-0 leading-none">
                 {row.label}
               </p>
               {/* Value — icon + text; text shifts to default on hover */}
@@ -222,8 +222,8 @@ export function StrategyCard({
                   className={cn(
                     // truncate handles whitespace-nowrap + overflow + ellipsis in one
                     "text-[13px] truncate leading-none",
-                    "text-[var(--color-text-subtle)]",
-                    "group-hover:text-[var(--color-text-default)]",
+                    "text-[var(--ds-color-text-subtle)]",
+                    "group-hover:text-[var(--ds-color-text-default)]",
                     "transition-colors duration-[120ms]"
                   )}
                 >

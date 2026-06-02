@@ -57,7 +57,7 @@ export function AppShell({
   return (
     <SidebarProvider defaultOpen={false}>
       <ForagerSidebar />
-      <SidebarInset className="bg-[var(--color-surface-default)]">
+      <SidebarInset className="bg-[var(--ds-color-surface-default)]">
         <TopBar projectName={projectName} surfaceLabel={surfaceLabel} />
         {children}
       </SidebarInset>
@@ -79,8 +79,8 @@ function TopBar({
       data-slot="app-shell-top-bar"
       className={cn(
         "sticky top-0 z-20 flex h-12 shrink-0 items-center gap-3",
-        "border-b border-[var(--color-border-subtle)]",
-        "bg-[var(--color-surface-default)]/95 backdrop-blur-[2px]",
+        "border-b border-[var(--ds-color-border-subtle)]",
+        "bg-[var(--ds-color-surface-default)]/95 backdrop-blur-[2px]",
         "px-4"
       )}
     >
@@ -95,8 +95,8 @@ function TopBar({
         <Link
           href="/"
           className={cn(
-            "shrink-0 text-[var(--color-text-subtle)] transition-colors",
-            "hover:text-[var(--color-text-default)]"
+            "shrink-0 text-[var(--ds-color-text-subtle)] transition-colors",
+            "hover:text-[var(--ds-color-text-default)]"
           )}
         >
           {projectName}
@@ -105,9 +105,9 @@ function TopBar({
           <>
             <ChevronRight
               aria-hidden
-              className="size-3.5 shrink-0 text-[var(--color-text-subtle)]"
+              className="size-3.5 shrink-0 text-[var(--ds-color-text-subtle)]"
             />
-            <span className="min-w-0 truncate text-[var(--color-text-default)]">
+            <span className="min-w-0 truncate text-[var(--ds-color-text-default)]">
               {surfaceLabel}
             </span>
           </>
@@ -119,8 +119,8 @@ function TopBar({
       <span
         className={cn(
           "hidden sm:inline-flex shrink-0 items-center gap-1.5 rounded-full",
-          "bg-[var(--color-surface-tag-lavender)] px-2.5 py-0.5",
-          "text-[11px] font-medium text-[var(--color-text-tag-lavender)]"
+          "bg-[var(--ds-color-surface-tag-lavender)] px-2.5 py-0.5",
+          "text-[11px] font-medium text-[var(--ds-color-text-tag-lavender)]"
         )}
       >
         <span aria-hidden className="size-1.5 rounded-full bg-current" />

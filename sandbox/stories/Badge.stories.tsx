@@ -211,7 +211,7 @@ export const InlineSlots: Story = {
   render: () => (
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-2">
-        <span className="font-mono text-xs text-[var(--color-text-subtle)] w-32">
+        <span className="font-mono text-xs text-[var(--ds-color-text-subtle)] w-32">
           children
         </span>
         <Badge variant="forest">
@@ -219,7 +219,7 @@ export const InlineSlots: Story = {
         </Badge>
       </div>
       <div className="flex items-center gap-2">
-        <span className="font-mono text-xs text-[var(--color-text-subtle)] w-32">
+        <span className="font-mono text-xs text-[var(--ds-color-text-subtle)] w-32">
           iconLeading prop
         </span>
         <Badge variant="cyan" iconLeading={<CowGlyph />}>
@@ -227,7 +227,7 @@ export const InlineSlots: Story = {
         </Badge>
       </div>
       <div className="flex items-center gap-2">
-        <span className="font-mono text-xs text-[var(--color-text-subtle)] w-32">
+        <span className="font-mono text-xs text-[var(--ds-color-text-subtle)] w-32">
           iconTrailing prop
         </span>
         <Badge variant="orange" iconTrailing={<PlantGlyph />}>
@@ -235,7 +235,7 @@ export const InlineSlots: Story = {
         </Badge>
       </div>
       <div className="flex items-center gap-2">
-        <span className="font-mono text-xs text-[var(--color-text-subtle)] w-32">
+        <span className="font-mono text-xs text-[var(--ds-color-text-subtle)] w-32">
           statusDot
         </span>
         <Badge variant="forest" statusDot>
@@ -254,7 +254,7 @@ export const ForagerEntityBadges: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-2">
-        <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+        <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
           primary kind
         </span>
         <div className="flex flex-wrap items-center gap-2">
@@ -273,7 +273,7 @@ export const ForagerEntityBadges: Story = {
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+        <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
           secondary kind (tag-dense rows)
         </span>
         <div className="flex flex-wrap items-center gap-1">
@@ -300,19 +300,19 @@ export const States: Story = {
   parameters: { layout: "padded" },
   render: () => (
     <div className="grid grid-cols-[auto_1fr] items-center gap-x-6 gap-y-3">
-      <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+      <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
         Default
       </span>
       <Badge variant="forest">Compound</Badge>
 
-      <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+      <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
         Hover
       </span>
       <Badge variant="forest" data-force-state="hover">
         Compound
       </Badge>
 
-      <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+      <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
         Focus
       </span>
       <Badge variant="forest" data-force-state="focus">
@@ -364,13 +364,13 @@ function MatrixRow({
   const label = KIND_DEMO_LABEL[kind];
   return (
     <>
-      <div className="flex items-center justify-end pr-3 font-mono text-xs text-[var(--color-text-subtle)]">
+      <div className="flex items-center justify-end pr-3 font-mono text-xs text-[var(--ds-color-text-subtle)]">
         {variant}
       </div>
       {STATES.map((s) => (
         <div
           key={s.label}
-          className="flex items-center justify-center px-2 py-2 border border-dashed border-[var(--color-border-subtle)]"
+          className="flex items-center justify-center px-2 py-2 border border-dashed border-[var(--ds-color-border-subtle)]"
         >
           <Badge
             variant={variant}
@@ -394,16 +394,16 @@ function KindMatrix({
 }) {
   return (
     <section className="flex flex-col gap-3">
-      <h3 className="font-mono text-sm text-[var(--color-text-default)]">
+      <h3 className="font-mono text-sm text-[var(--ds-color-text-default)]">
         {title}
       </h3>
-      <div className="grid grid-cols-[auto_repeat(3,minmax(120px,1fr))] gap-y-1 border border-dashed border-[var(--color-border-subtle)] p-2">
+      <div className="grid grid-cols-[auto_repeat(3,minmax(120px,1fr))] gap-y-1 border border-dashed border-[var(--ds-color-border-subtle)] p-2">
         {/* Header row */}
         <div />
         {STATES.map((s) => (
           <div
             key={s.label}
-            className="flex items-center justify-center pb-2 font-mono text-xs text-[var(--color-text-subtle)]"
+            className="flex items-center justify-center pb-2 font-mono text-xs text-[var(--ds-color-text-subtle)]"
           >
             {s.label}
           </div>

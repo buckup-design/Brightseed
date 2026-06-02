@@ -183,8 +183,8 @@ function ImageSlot() {
        *   Headline — Tiempos Fine italic: "6x" 120px / " faster" 100px, text-default
        *   Subtext  — Geist Regular, 24px / 49px lh, forest-950
        *
-       * [CONCERN] Label + subtext use --color-surface-brand-active (forest-950)
-       * as a text color — no dedicated --color-text-on-brand-graphic token exists
+       * [CONCERN] Label + subtext use --ds-color-surface-brand-active (forest-950)
+       * as a text color — no dedicated --ds-color-text-on-brand-graphic token exists
        * yet. Using the surface token matches Figma's --base/surface-brand-active
        * binding; add a proper text token when there's a second consumer.
        */}
@@ -199,7 +199,7 @@ function ImageSlot() {
               fontWeight: 500,
               fontSize: "32px",
               lineHeight: "36px",
-              color: "var(--color-surface-brand-active)",
+              color: "var(--ds-color-surface-brand-active)",
             }}
           >
             {"Discover \nnutraceuticals"}
@@ -211,7 +211,7 @@ function ImageSlot() {
             style={{
               fontFamily: "var(--font-display)",
               fontStyle: "italic",
-              color: "var(--color-text-default)",
+              color: "var(--ds-color-text-default)",
             }}
           >
             <span style={{ fontSize: "120px", lineHeight: "49.06px" }}>6x</span>
@@ -226,7 +226,7 @@ function ImageSlot() {
               fontWeight: 400,
               fontSize: "24px",
               lineHeight: "49.06px",
-              color: "var(--color-surface-brand-active)",
+              color: "var(--ds-color-surface-brand-active)",
             }}
           >
             than the industry average.

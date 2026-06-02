@@ -14,13 +14,13 @@ import { Toaster as Sonner, type ToasterProps } from "sonner"
  * Toaster — Brightseed Forager design system.
  *
  * Color tokens (Brightseed semantics):
- *   Toast surface     → --color-surface-default      (white / sand-950)
- *   Toast text        → --color-text-default
- *   Toast border      → --color-border-default
- *   Radius            → --shape-radius-md
+ *   Toast surface     → --ds-color-surface-default      (white / sand-950)
+ *   Toast text        → --ds-color-text-default
+ *   Toast border      → --ds-color-border-default
+ *   Radius            → --ds-shape-radius-md
  *   Intent surfaces (success/info/warning/error) wired via sonner's
  *   --success-bg / --info-bg / --warning-bg / --error-bg slots, each
- *   pointing to the matching --color-surface-{intent} token. Intent
+ *   pointing to the matching --ds-color-surface-{intent} token. Intent
  *   text/border follow the same pattern.
  *
  * Theme: reads `data-theme` on <html> directly — see useDataTheme below.
@@ -69,24 +69,24 @@ const Toaster = ({ ...props }: ToasterProps) => {
       style={
         {
           // Default toast — neutral surface
-          "--normal-bg": "var(--color-surface-default)",
-          "--normal-text": "var(--color-text-default)",
-          "--normal-border": "var(--color-border-default)",
+          "--normal-bg": "var(--ds-color-surface-default)",
+          "--normal-text": "var(--ds-color-text-default)",
+          "--normal-border": "var(--ds-color-border-default)",
           // Intent toasts — semantic surfaces / text / borders
-          "--success-bg": "var(--color-surface-success)",
-          "--success-text": "var(--color-text-success)",
-          "--success-border": "var(--color-border-success-default)",
-          "--info-bg": "var(--color-surface-info)",
-          "--info-text": "var(--color-text-info)",
-          "--info-border": "var(--color-border-info-default)",
-          "--warning-bg": "var(--color-surface-warning)",
-          "--warning-text": "var(--color-text-warning)",
-          "--warning-border": "var(--color-border-warning-default)",
-          "--error-bg": "var(--color-surface-critical)",
-          "--error-text": "var(--color-text-critical)",
-          "--error-border": "var(--color-border-critical-default)",
+          "--success-bg": "var(--ds-color-surface-success)",
+          "--success-text": "var(--ds-color-text-success)",
+          "--success-border": "var(--ds-color-border-success-default)",
+          "--info-bg": "var(--ds-color-surface-info)",
+          "--info-text": "var(--ds-color-text-info)",
+          "--info-border": "var(--ds-color-border-info-default)",
+          "--warning-bg": "var(--ds-color-surface-warning)",
+          "--warning-text": "var(--ds-color-text-warning)",
+          "--warning-border": "var(--ds-color-border-warning-default)",
+          "--error-bg": "var(--ds-color-surface-critical)",
+          "--error-text": "var(--ds-color-text-critical)",
+          "--error-border": "var(--ds-color-border-critical-default)",
           // Shape
-          "--border-radius": "var(--shape-radius-md)",
+          "--border-radius": "var(--ds-shape-radius-md)",
         } as React.CSSProperties
       }
       {...props}

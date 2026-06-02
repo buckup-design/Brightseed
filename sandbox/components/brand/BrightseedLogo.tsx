@@ -26,7 +26,7 @@ import { cn } from "@/lib/utils";
  *   The wordmark in the lockup is also brand-locked to forest green by
  *   default (matching the source SVG). If a future spec requires the
  *   wordmark to flip on dark surfaces, we'd swap fills to currentColor and
- *   wire to a `--color-text-wordmark` token.
+ *   wire to a `--ds-color-text-wordmark` token.
  */
 
 interface BrightseedLogoProps extends React.SVGAttributes<SVGSVGElement> {

@@ -25,7 +25,7 @@ import { AppShell4 } from "@/components/pro-blocks/application/app-shells/app-sh
  *   - Sidebar surface is white (light) / sand-950 (dark) — same as page bg.
  *     Distinguishable from main content by the divider, not by hue.
  *   - Active nav item background is sand-100 (light) / sand-900 (dark).
- *   - Sidebar focus ring is lime (--color-border-focus).
+ *   - Sidebar focus ring is lime (--ds-color-border-focus).
  *   - Breadcrumbs and search input paint correctly through the bridge.
  *
  * Known cosmetics — deferred:

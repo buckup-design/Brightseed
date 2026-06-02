@@ -23,13 +23,13 @@ import {
  * TeamSwitcher — Brightseed Forager design system.
  *
  * Color tokens (Brightseed semantics):
- *   Logo backdrop (lime)    → --color-action-primary
- *   Logo icon (forest)      → --color-text-on-action-primary
- *   Open-state surface      → --color-surface-alt
- *   Open-state text         → --color-text-default
- *   Dropdown label          → --color-text-subtle
- *   Add-team icon backdrop  → --color-surface-default + --color-border-default
- *   Add-team text           → --color-text-subtle
+ *   Logo backdrop (lime)    → --ds-color-action-primary
+ *   Logo icon (forest)      → --ds-color-text-on-action-primary
+ *   Open-state surface      → --ds-color-surface-alt
+ *   Open-state text         → --ds-color-text-default
+ *   Dropdown label          → --ds-color-text-subtle
+ *   Add-team icon backdrop  → --ds-color-surface-default + --ds-color-border-default
+ *   Add-team text           → --ds-color-text-subtle
  */
 
 export function TeamSwitcher({
@@ -51,9 +51,9 @@ export function TeamSwitcher({
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-[var(--color-surface-alt)] data-[state=open]:text-[var(--color-text-default)]"
+              className="data-[state=open]:bg-[var(--ds-color-surface-alt)] data-[state=open]:text-[var(--ds-color-text-default)]"
             >
-              <div className="bg-[var(--color-action-primary)] text-[var(--color-text-on-action-primary)] flex aspect-square size-8 items-center justify-center rounded-lg">
+              <div className="bg-[var(--ds-color-action-primary)] text-[var(--ds-color-text-on-action-primary)] flex aspect-square size-8 items-center justify-center rounded-lg">
                 <activeTeam.logo className="size-4" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -71,7 +71,7 @@ export function TeamSwitcher({
             side={isMobile ? "bottom" : "right"}
             sideOffset={4}
           >
-            <DropdownMenuLabel className="text-[var(--color-text-subtle)] text-xs">
+            <DropdownMenuLabel className="text-[var(--ds-color-text-subtle)] text-xs">
               Teams
             </DropdownMenuLabel>
             {teams.map((team, index) => (
@@ -80,7 +80,7 @@ export function TeamSwitcher({
                 onClick={() => setActiveTeam(team)}
                 className="gap-2 p-2"
               >
-                <div className="flex size-6 items-center justify-center rounded-sm border border-[var(--color-border-default)]">
+                <div className="flex size-6 items-center justify-center rounded-sm border border-[var(--ds-color-border-default)]">
                   <team.logo className="size-4 shrink-0" />
                 </div>
                 {team.name}
@@ -89,10 +89,10 @@ export function TeamSwitcher({
             ))}
             <DropdownMenuSeparator />
             <DropdownMenuItem className="gap-2 p-2">
-              <div className="bg-[var(--color-surface-default)] flex size-6 items-center justify-center rounded-md border border-[var(--color-border-default)]">
+              <div className="bg-[var(--ds-color-surface-default)] flex size-6 items-center justify-center rounded-md border border-[var(--ds-color-border-default)]">
                 <Plus className="size-4" />
               </div>
-              <div className="text-[var(--color-text-subtle)] font-medium">Add team</div>
+              <div className="text-[var(--ds-color-text-subtle)] font-medium">Add team</div>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

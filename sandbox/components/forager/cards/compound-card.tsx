@@ -45,9 +45,9 @@ export function CompoundCard({
       className={cn(
         "flex flex-col gap-3 p-4",
         "w-full min-w-0",
-        "bg-[var(--color-surface-default)]",
-        "border border-[var(--color-border-subtle)]",
-        "rounded-[var(--shape-radius-lg)]",
+        "bg-[var(--ds-color-surface-default)]",
+        "border border-[var(--ds-color-border-subtle)]",
+        "rounded-[var(--ds-shape-radius-lg)]",
         "transition-shadow duration-[120ms]",
         "hover:shadow-sm",
         className
@@ -57,13 +57,13 @@ export function CompoundCard({
       {/* Header: molecule glyph + name + confidence score */}
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-start gap-2 min-w-0">
-          <Hexagon className="size-4 mt-0.5 shrink-0 text-[var(--color-icon-data-orange)]" />
-          <h3 className="text-base font-medium leading-tight text-[var(--color-text-default)] line-clamp-2 min-h-[2.5em]">
+          <Hexagon className="size-4 mt-0.5 shrink-0 text-[var(--ds-color-icon-data-orange)]" />
+          <h3 className="text-base font-medium leading-tight text-[var(--ds-color-text-default)] line-clamp-2 min-h-[2.5em]">
             {name}
           </h3>
         </div>
         {typeof confidence === "number" && (
-          <div className="flex items-center gap-1 shrink-0 text-[var(--color-text-subtle)]">
+          <div className="flex items-center gap-1 shrink-0 text-[var(--ds-color-text-subtle)]">
             <BarChart3 className="size-3" />
             <span className="text-xs font-medium">{confidence}%</span>
           </div>
@@ -71,23 +71,23 @@ export function CompoundCard({
       </div>
 
       {/* Mechanism one-liner */}
-      <p className="text-sm text-[var(--color-text-default)] leading-snug line-clamp-2 min-h-[2.75em]">
+      <p className="text-sm text-[var(--ds-color-text-default)] leading-snug line-clamp-2 min-h-[2.75em]">
         {mechanism}
       </p>
 
       {/* Linked plant */}
       <div className="flex flex-col gap-1">
-        <span className="text-[10px] font-medium uppercase tracking-wider text-[var(--color-text-subtle)]">
+        <span className="text-[10px] font-medium uppercase tracking-wider text-[var(--ds-color-text-subtle)]">
           Linked plant
         </span>
-        <p className="text-sm text-[var(--color-text-default)]">
+        <p className="text-sm text-[var(--ds-color-text-default)]">
           {linkedPlants.map((plant, i) => (
             <React.Fragment key={plant}>
-              <span className="italic underline underline-offset-2 decoration-[var(--color-border-default)]">
+              <span className="italic underline underline-offset-2 decoration-[var(--ds-color-border-default)]">
                 {plant}
               </span>
               {i < linkedPlants.length - 1 && (
-                <span className="text-[var(--color-text-subtle)]">, </span>
+                <span className="text-[var(--ds-color-text-subtle)]">, </span>
               )}
             </React.Fragment>
           ))}
@@ -100,7 +100,7 @@ export function CompoundCard({
           <NeutralTag key={b}>{b}</NeutralTag>
         ))}
         {bioactiveOverflow > 0 && (
-          <span className="text-xs text-[var(--color-text-subtle)] font-medium px-1">
+          <span className="text-xs text-[var(--ds-color-text-subtle)] font-medium px-1">
             +{bioactiveOverflow} more
           </span>
         )}
@@ -112,8 +112,8 @@ export function CompoundCard({
           <span
             className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium"
             style={{
-              background: "var(--color-surface-tag-sand)",
-              color: "var(--color-text-tag-sand)",
+              background: "var(--ds-color-surface-tag-sand)",
+              color: "var(--ds-color-text-tag-sand)",
             }}
           >
             {category}
@@ -125,12 +125,12 @@ export function CompoundCard({
             style={{
               background:
                 ipLandscape === "clear"
-                  ? "var(--color-surface-tag-forest)"
-                  : "var(--color-surface-tag-orange)",
+                  ? "var(--ds-color-surface-tag-forest)"
+                  : "var(--ds-color-surface-tag-orange)",
               color:
                 ipLandscape === "clear"
-                  ? "var(--color-text-tag-forest)"
-                  : "var(--color-text-tag-orange)",
+                  ? "var(--ds-color-text-tag-forest)"
+                  : "var(--ds-color-text-tag-orange)",
             }}
           >
             <ShieldAlert className="size-3" />
@@ -147,7 +147,7 @@ function NeutralTag({ children }: { children: React.ReactNode }) {
     <span
       className={cn(
         "inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium",
-        "bg-[var(--color-surface-tag-sand)] text-[var(--color-text-tag-sand)]"
+        "bg-[var(--ds-color-surface-tag-sand)] text-[var(--ds-color-text-tag-sand)]"
       )}
     >
       {children}

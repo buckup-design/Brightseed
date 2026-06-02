@@ -78,7 +78,7 @@ export function PlantsView() {
           </SidebarMenu>
         </SidebarContent>
         <SidebarFooter className="items-center pb-3">
-          <div className="size-7 rounded-full bg-[var(--color-surface-tag-orchid)] text-[var(--color-text-tag-orchid)] flex items-center justify-center text-xs font-semibold">
+          <div className="size-7 rounded-full bg-[var(--ds-color-surface-tag-orchid)] text-[var(--ds-color-text-tag-orchid)] flex items-center justify-center text-xs font-semibold">
             BB
           </div>
         </SidebarFooter>
@@ -90,7 +90,7 @@ export function PlantsView() {
           <ChatPanelPlaceholder />
 
           {/* Main content */}
-          <div className="flex-1 flex flex-col bg-[var(--color-surface-alt)] overflow-hidden">
+          <div className="flex-1 flex flex-col bg-[var(--ds-color-surface-alt)] overflow-hidden">
             <PlantsViewHeader />
             <PlantsViewBody />
           </div>
@@ -106,28 +106,28 @@ export function PlantsView() {
 
 function ChatPanelPlaceholder() {
   return (
-    <aside className="w-80 flex flex-col border-r border-[var(--color-border-subtle)] bg-[var(--color-surface-default)]">
+    <aside className="w-80 flex flex-col border-r border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-default)]">
       <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
-        <p className="text-sm leading-relaxed text-[var(--color-text-default)]">
+        <p className="text-sm leading-relaxed text-[var(--ds-color-text-default)]">
           What's interesting here: Trans-anethole from fennel has the lowest IP
           activity of any compound on this list, and one of the cattle studies
           showed a statistically significant increase in milk protein percentage
           (+0.18%). The fennel plant itself is GRAS. There's almost no prior art
           on fennel-derived feed supplements for rumen modulation specifically.
         </p>
-        <p className="text-sm leading-relaxed text-[var(--color-text-default)]">
+        <p className="text-sm leading-relaxed text-[var(--ds-color-text-default)]">
           Would you like to see what fennel-containing or anethole-rich plants
           are in the dataset, and do any also contain secondary compounds that
           could strengthen the rumen microbiome effect?
         </p>
 
         <div className="self-end">
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[var(--color-action-primary)] text-[var(--color-text-on-action-primary)]">
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[var(--ds-color-action-primary)] text-[var(--ds-color-text-on-action-primary)]">
             Yes
           </span>
         </div>
 
-        <p className="text-sm leading-relaxed text-[var(--color-text-default)]">
+        <p className="text-sm leading-relaxed text-[var(--ds-color-text-default)]">
           <span className="font-medium italic">Foeniculum vulgare</span> +{" "}
           <span className="font-medium italic">Illicium verum</span> together
           covers trans-anethole at high dose plus fenchone, which has separate
@@ -135,15 +135,15 @@ function ChatPanelPlaceholder() {
           combination for ruminant feed application. The combination may be
           patentable as a feed additive composition.
         </p>
-        <p className="text-sm text-[var(--color-text-subtle)]">
+        <p className="text-sm text-[var(--ds-color-text-subtle)]">
           I've saved this project for you.
         </p>
       </div>
 
-      <div className="p-3 border-t border-[var(--color-border-subtle)] relative">
+      <div className="p-3 border-t border-[var(--ds-color-border-subtle)] relative">
         <Input
           placeholder="Ask anything..."
-          className="pr-9 bg-[var(--color-surface-alt)] border-[var(--color-border-subtle)]"
+          className="pr-9 bg-[var(--ds-color-surface-alt)] border-[var(--ds-color-border-subtle)]"
         />
         <Button
           size="icon-sm"
@@ -164,7 +164,7 @@ function ChatPanelPlaceholder() {
 
 function PlantsViewHeader() {
   return (
-    <header className="bg-[var(--color-surface-default)] border-b border-[var(--color-border-subtle)] flex flex-col">
+    <header className="bg-[var(--ds-color-surface-default)] border-b border-[var(--ds-color-border-subtle)] flex flex-col">
       <div className="px-6 pt-4 pb-2">
         <Button
           variant="linktext"
@@ -176,7 +176,7 @@ function PlantsViewHeader() {
         </Button>
       </div>
       <div className="px-6 pb-4">
-        <h1 className="text-2xl font-semibold tracking-tight text-[var(--color-text-default)]">
+        <h1 className="text-2xl font-semibold tracking-tight text-[var(--ds-color-text-default)]">
           Shift microbiome towards propionate producers
         </h1>
       </div>
@@ -190,14 +190,14 @@ function PlantsViewHeader() {
           </SourceTab>
           <Separator orientation="vertical" className="h-4" />
           <FilterPill label="Evidence" value="Animal" />
-          <button className="text-xs font-medium text-[var(--color-text-link-brand)] flex items-center gap-1">
+          <button className="text-xs font-medium text-[var(--ds-color-text-link-brand)] flex items-center gap-1">
             <SlidersHorizontal className="size-3" />
             Show filters
           </button>
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="text-xs text-[var(--color-text-subtle)]">
+          <span className="text-xs text-[var(--ds-color-text-subtle)]">
             5 results
           </span>
           <FilterPill label="Sorted by" value="relevance" />
@@ -206,7 +206,7 @@ function PlantsViewHeader() {
               size="icon-xs"
               variant="ghost"
               aria-label="Grid view"
-              className="bg-[var(--color-surface-alt)]"
+              className="bg-[var(--ds-color-surface-alt)]"
             >
               <LayoutGrid className="size-3.5" />
             </Button>
@@ -231,8 +231,8 @@ function SourceTab({
     <button
       className={
         active
-          ? "inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-text-default)] border-b-2 border-[var(--color-action-primary)] pb-0.5"
-          : "inline-flex items-center gap-1.5 text-sm text-[var(--color-text-subtle)] pb-0.5 hover:text-[var(--color-text-default)]"
+          ? "inline-flex items-center gap-1.5 text-sm font-medium text-[var(--ds-color-text-default)] border-b-2 border-[var(--ds-color-action-primary)] pb-0.5"
+          : "inline-flex items-center gap-1.5 text-sm text-[var(--ds-color-text-subtle)] pb-0.5 hover:text-[var(--ds-color-text-default)]"
       }
     >
       {children}
@@ -242,10 +242,10 @@ function SourceTab({
 
 function FilterPill({ label, value }: { label: string; value: string }) {
   return (
-    <button className="inline-flex items-center gap-1 text-xs font-medium text-[var(--color-text-default)] px-2 py-1 rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-surface-default)] hover:bg-[var(--color-surface-default-hover)]">
-      <span className="text-[var(--color-text-subtle)]">{label}:</span>
+    <button className="inline-flex items-center gap-1 text-xs font-medium text-[var(--ds-color-text-default)] px-2 py-1 rounded-md border border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-default)] hover:bg-[var(--ds-color-surface-default-hover)]">
+      <span className="text-[var(--ds-color-text-subtle)]">{label}:</span>
       {value}
-      <ChevronDown className="size-3 text-[var(--color-text-subtle)]" />
+      <ChevronDown className="size-3 text-[var(--ds-color-text-subtle)]" />
     </button>
   );
 }

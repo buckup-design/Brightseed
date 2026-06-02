@@ -54,9 +54,9 @@ export function PlantCard({
       className={cn(
         "flex flex-col gap-3 p-4",
         "w-full min-w-0",
-        "bg-[var(--color-surface-default)]",
-        "border border-[var(--color-border-subtle)]",
-        "rounded-[var(--shape-radius-lg)]",
+        "bg-[var(--ds-color-surface-default)]",
+        "border border-[var(--ds-color-border-subtle)]",
+        "rounded-[var(--ds-shape-radius-lg)]",
         "transition-shadow duration-[120ms]",
         "hover:shadow-sm",
         className
@@ -66,9 +66,9 @@ export function PlantCard({
       {/* Header: leaf icon + scientific name + bioactive potential badge */}
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-start gap-2 min-w-0">
-          <Leaf className="size-4 mt-1 shrink-0 text-[var(--color-icon-success)]" />
+          <Leaf className="size-4 mt-1 shrink-0 text-[var(--ds-color-icon-success)]" />
           <h3
-            className="text-base leading-tight text-[var(--color-text-default)] line-clamp-2 min-h-[2.5em]"
+            className="text-base leading-tight text-[var(--ds-color-text-default)] line-clamp-2 min-h-[2.5em]"
             style={{
               fontFamily: 'var(--font-display, "Tiempos Fine", serif)',
               fontStyle: "italic",
@@ -76,7 +76,7 @@ export function PlantCard({
           >
             {scientificName}
             {commonName && (
-              <span className="text-[var(--color-text-subtle)]">
+              <span className="text-[var(--ds-color-text-subtle)]">
                 {" "}
                 ({commonName})
               </span>
@@ -89,12 +89,12 @@ export function PlantCard({
       </div>
 
       {/* Strategy one-liner */}
-      <p className="text-sm text-[var(--color-text-default)] leading-snug line-clamp-2 min-h-[2.75em]">
+      <p className="text-sm text-[var(--ds-color-text-default)] leading-snug line-clamp-2 min-h-[2.75em]">
         {strategyOneLiner}
       </p>
 
       {/* Evidence prose — leading-relaxed (1.625) → 2 lines = 3.25em */}
-      <p className="text-sm text-[var(--color-text-subtle)] leading-relaxed line-clamp-2 min-h-[3.25em]">
+      <p className="text-sm text-[var(--ds-color-text-subtle)] leading-relaxed line-clamp-2 min-h-[3.25em]">
         {evidence}
       </p>
 
@@ -103,7 +103,7 @@ export function PlantCard({
 
       {/* Forager predicted bioactives */}
       <div className="flex flex-col gap-2 mt-1">
-        <span className="text-[10px] font-medium uppercase tracking-wider text-[var(--color-text-subtle)]">
+        <span className="text-[10px] font-medium uppercase tracking-wider text-[var(--ds-color-text-subtle)]">
           Forager predicted bioactives
         </span>
         <TagRow items={bioactives} overflow={bioactiveOverflow} />
@@ -140,7 +140,7 @@ function TagRow({ items, overflow = 0 }: { items: string[]; overflow?: number })
         <NeutralTag key={item}>{item}</NeutralTag>
       ))}
       {overflow > 0 && (
-        <span className="text-xs text-[var(--color-text-subtle)] font-medium px-1">
+        <span className="text-xs text-[var(--ds-color-text-subtle)] font-medium px-1">
           +{overflow} more
         </span>
       )}
@@ -153,7 +153,7 @@ function NeutralTag({ children }: { children: React.ReactNode }) {
     <span
       className={cn(
         "inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium",
-        "bg-[var(--color-surface-tag-sand)] text-[var(--color-text-tag-sand)]"
+        "bg-[var(--ds-color-surface-tag-sand)] text-[var(--ds-color-text-tag-sand)]"
       )}
     >
       {children}
@@ -172,20 +172,20 @@ function SemanticPill({
 }) {
   const map = {
     success: {
-      bg: "var(--color-surface-tag-forest)",
-      text: "var(--color-text-tag-forest)",
+      bg: "var(--ds-color-surface-tag-forest)",
+      text: "var(--ds-color-text-tag-forest)",
     },
     warning: {
-      bg: "var(--color-surface-tag-orange)",
-      text: "var(--color-text-tag-orange)",
+      bg: "var(--ds-color-surface-tag-orange)",
+      text: "var(--ds-color-text-tag-orange)",
     },
     critical: {
-      bg: "var(--color-surface-tag-red)",
-      text: "var(--color-text-tag-red)",
+      bg: "var(--ds-color-surface-tag-red)",
+      text: "var(--ds-color-text-tag-red)",
     },
     info: {
-      bg: "var(--color-surface-tag-blue)",
-      text: "var(--color-text-tag-blue)",
+      bg: "var(--ds-color-surface-tag-blue)",
+      text: "var(--ds-color-text-tag-blue)",
     },
   }[intent];
 
@@ -210,20 +210,20 @@ function StatusBadge({
 }) {
   const map = {
     success: {
-      bg: "var(--color-surface-tag-forest)",
-      text: "var(--color-text-tag-forest)",
+      bg: "var(--ds-color-surface-tag-forest)",
+      text: "var(--ds-color-text-tag-forest)",
     },
     warning: {
-      bg: "var(--color-surface-tag-orange)",
-      text: "var(--color-text-tag-orange)",
+      bg: "var(--ds-color-surface-tag-orange)",
+      text: "var(--ds-color-text-tag-orange)",
     },
     critical: {
-      bg: "var(--color-surface-tag-red)",
-      text: "var(--color-text-tag-red)",
+      bg: "var(--ds-color-surface-tag-red)",
+      text: "var(--ds-color-text-tag-red)",
     },
     info: {
-      bg: "var(--color-surface-tag-blue)",
-      text: "var(--color-text-tag-blue)",
+      bg: "var(--ds-color-surface-tag-blue)",
+      text: "var(--ds-color-text-tag-blue)",
     },
   }[intent];
 

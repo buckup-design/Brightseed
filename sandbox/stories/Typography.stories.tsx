@@ -38,28 +38,28 @@ export const DisplayScale: Story = {
   render: () => (
     <div className="flex flex-col gap-12 max-w-4xl">
       <section className="flex flex-col gap-3">
-        <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+        <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
           .text-display-h1 — 56px / 60lh / Tiempos Fine RegularItalic
         </span>
-        <h1 className="text-display-h1 text-[var(--color-text-default)]">
+        <h1 className="text-display-h1 text-[var(--ds-color-text-default)]">
           Discover the molecules that make plants powerful.
         </h1>
       </section>
 
       <section className="flex flex-col gap-3">
-        <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+        <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
           .text-display-h2 — 40px / 44lh / Tiempos Fine RegularItalic
         </span>
-        <h2 className="text-display-h2 text-[var(--color-text-default)]">
+        <h2 className="text-display-h2 text-[var(--ds-color-text-default)]">
           A platform for finding what nature already knows.
         </h2>
       </section>
 
       <section className="flex flex-col gap-3">
-        <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+        <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
           .text-display-h3 — 28px / 34lh / Tiempos Fine RegularItalic
         </span>
-        <h3 className="text-display-h3 text-[var(--color-text-default)]">
+        <h3 className="text-display-h3 text-[var(--ds-color-text-default)]">
           Forager screens 50,000 compounds against your target overnight.
         </h3>
       </section>
@@ -71,27 +71,27 @@ export const DisplayVsBody: Story = {
   parameters: { layout: "padded" },
   render: () => (
     <article className="max-w-2xl flex flex-col gap-6">
-      <h1 className="text-display-h1 text-[var(--color-text-default)]">
+      <h1 className="text-display-h1 text-[var(--ds-color-text-default)]">
         From plants to compounds.
       </h1>
-      <p className="text-base text-[var(--color-text-subtle)] leading-relaxed">
+      <p className="text-base text-[var(--ds-color-text-subtle)] leading-relaxed">
         This block uses the body Geist scale (text-base / leading-relaxed) — the
         contrast with the Tiempos H1 above is the marketing rhythm we&apos;re
         designing for. Display type carries weight; body type carries detail.
       </p>
-      <h2 className="text-display-h2 text-[var(--color-text-default)]">
+      <h2 className="text-display-h2 text-[var(--ds-color-text-default)]">
         How Forager works.
       </h2>
-      <p className="text-base text-[var(--color-text-subtle)] leading-relaxed">
+      <p className="text-base text-[var(--ds-color-text-subtle)] leading-relaxed">
         Geist again — and again the contrast does the work. Setting display in
         a serif and body in a sans is a marketing pattern with deep roots
         (think Linear, Stripe, Notion). For Brightseed it doubles as a brand
         signal: nature meets technology.
       </p>
-      <h3 className="text-display-h3 text-[var(--color-text-default)]">
+      <h3 className="text-display-h3 text-[var(--ds-color-text-default)]">
         What we screen for.
       </h3>
-      <p className="text-base text-[var(--color-text-subtle)] leading-relaxed">
+      <p className="text-base text-[var(--ds-color-text-subtle)] leading-relaxed">
         Body. Calm. Readable. The display family is reserved — only at level-1,
         2, and 3 marketing entry points. Anything below H3 stays in Geist.
       </p>

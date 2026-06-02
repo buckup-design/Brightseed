@@ -96,10 +96,10 @@
   --color-ring: var(--ring);
 
   /* Radii — use Brightseed shape tokens if defined, else sensible defaults */
-  --radius-sm: var(--shape-radius-sm, 0.25rem);
-  --radius-md: var(--shape-radius-md, 0.5rem);
-  --radius-lg: var(--shape-radius-lg, 0.75rem);
-  --radius-xl: var(--shape-radius-xl, 1rem);
+  --radius-sm: var(--ds-shape-radius-sm, 0.25rem);
+  --radius-md: var(--ds-shape-radius-md, 0.5rem);
+  --radius-lg: var(--ds-shape-radius-lg, 0.75rem);
+  --radius-xl: var(--ds-shape-radius-xl, 1rem);
 
   /* Fonts.
    * --font-sans / --font-mono come from the Geist Next/font wrappers in
