@@ -52,7 +52,7 @@ Three-layer token system. Read `BrightseedDS.md` before generating any Forager U
 ```
 Layer 1 — Primitives    --p-forest-700  (legacy names: --color-forest-700)
           ↓ var()
-Layer 2 — Semantics     --color-surface-success  (includes intent aliases like --success-700)
+Layer 2 — Semantics     --ds-color-surface-success  (includes intent aliases like --ds-success-700)
           ↓ var()
 Layer 3 — Components    --c-{component}-*   ← component code references THIS layer
 ```
@@ -62,7 +62,7 @@ Layer 3 — Components    --c-{component}-*   ← component code references THIS
 | Tier | Prefix | Example |
 |---|---|---|
 | Primitives | `--p-*` | `--p-forest-700` |
-| Semantic | `--color-*` / `--success-*` (legacy naming, kept) | `--color-surface-success` |
+| Semantic | `--ds-*` | `--ds-color-surface-success` |
 | Components | `--c-{component}-*` | `--c-button-bg`, `--c-badge-surface` |
 
 Existing primitive tokens (`--color-forest-700`, `--color-lime-300`, etc.) predate this convention and are not being renamed. New primitive tokens use `--p-*`. Component code references `--c-*` tokens, not semantic tokens directly.
