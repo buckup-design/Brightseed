@@ -17,6 +17,12 @@ import { cn } from "@/lib/utils";
  *   4. Compound tag row (sand tags)
  *   5. Forager predicted bioactives microlabel + tag row (sand tags)
  *   6. Footer status badges (semantic tokens — GRAS=success, IP=warning)
+ *
+ * Card container layout inherits StrategyCard's rules:
+ *   - Border steps subtle → default on hover
+ *   - Shadow deepens (1.5px → 6px) on hover
+ *   - Corner radius --ds-shape-radius-md (8px)
+ *   - transition border-color + box-shadow, 120ms
  */
 
 interface PlantCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -52,13 +58,22 @@ export function PlantCard({
     <div
       data-slot="plant-card"
       className={cn(
-        "flex flex-col gap-3 p-4",
+        // layout
+        "group flex flex-col gap-3 p-4",
+        // w-full: card fills its grid column. min-w-0: allows shrink below
+        // intrinsic content width so it doesn't overflow narrow columns.
         "w-full min-w-0",
+        // surface
         "bg-[var(--ds-color-surface-default)]",
-        "border border-[var(--ds-color-border-subtle)]",
-        "rounded-[var(--ds-shape-radius-lg)]",
-        "transition-shadow duration-[120ms]",
-        "hover:shadow-sm",
+        // border: subtle at rest, one step bolder on hover
+        "border border-[var(--ds-color-border-subtle)] hover:border-[var(--ds-color-border-default)]",
+        // corner radius: 8px (--ds-shape-radius-md) — matches StrategyCard / Figma v2
+        "rounded-[var(--ds-shape-radius-md)]",
+        // shadow: slight at rest, pronounced on hover
+        "shadow-[0px_1px_1.5px_rgba(0,0,0,0.07)]",
+        "hover:shadow-[0px_4px_6px_rgba(0,0,0,0.12)]",
+        // transitions
+        "transition-[border-color,box-shadow] duration-[120ms]",
         className
       )}
       {...props}
