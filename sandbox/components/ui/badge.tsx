@@ -29,7 +29,7 @@ import { cn } from "@/lib/utils"
  *     primary    Standard pill. rounded-full, comfortable px-2 py-0.5, text-xs.
  *                Used in body content, table rows, chip-stacks of moderate density.
  *     secondary  Tight tag for tag-dense Forager surfaces. cr=2 (sharp corners,
- *                bound to --shape-radius-xs), px-1 horizontal, hugs content.
+ *                bound to --ds-shape-radius-xs), px-1 horizontal, hugs content.
  *                More badges fit per row without column wrapping. Locked May 7.
  *     number     Compact numeric chip for counts/notifications. Round, tabular-nums,
  *                min-w to stay even when displaying single/double digit numbers.
@@ -71,79 +71,79 @@ const badgeVariants = cva(
     "[&_svg:not([class*='size-'])]:size-3.5",
     // ── Disabled fade — single DOM level so opacity never stacks ─────────
     "disabled-state:cursor-not-allowed",
-    "disabled-state:[&_[data-slot=badge-content]]:opacity-[var(--disabled-text-opacity)]",
+    "disabled-state:[&_[data-slot=badge-content]]:opacity-[var(--ds-disabled-text-opacity)]",
     // ── Focus ring — 1px stroke, 1px offset (matches Figma Ring spec) ────
     "outline-none",
-    "focused:ring-1 focused:ring-offset-1 focused:ring-offset-[var(--color-surface-default)]",
+    "focused:ring-1 focused:ring-offset-1 focused:ring-offset-[var(--ds-color-surface-default)]",
   ),
   {
     variants: {
       variant: {
         // ── Neutral cohort (Default / Outline / Ghost) ──────────────────
         // These three share the "Neutral" tag-active-color mode in Figma —
-        // icon and text track --color-text-default, surface treatment varies.
+        // icon and text track --ds-color-text-default, surface treatment varies.
         default: cn(
-          "bg-[var(--color-action-secondary)] text-[var(--color-text-default)]",
-          "hovered:bg-[var(--color-action-secondary-hover)]",
-          "focused:ring-[var(--color-border-focus-secondary)]",
+          "bg-[var(--ds-color-action-secondary)] text-[var(--ds-color-text-default)]",
+          "hovered:bg-[var(--ds-color-action-secondary-hover)]",
+          "focused:ring-[var(--ds-color-border-focus-secondary)]",
         ),
         outline: cn(
-          "bg-transparent text-[var(--color-text-default)]",
-          "border-[var(--color-border-default)]",
-          "hovered:bg-[var(--color-action-secondary)]",
-          "focused:ring-[var(--color-border-focus-secondary)]",
+          "bg-transparent text-[var(--ds-color-text-default)]",
+          "border-[var(--ds-color-border-default)]",
+          "hovered:bg-[var(--ds-color-action-secondary)]",
+          "focused:ring-[var(--ds-color-border-focus-secondary)]",
         ),
         ghost: cn(
-          "bg-transparent text-[var(--color-text-default)]",
-          "hovered:bg-[var(--color-action-secondary)]",
-          "focused:ring-[var(--color-border-focus-secondary)]",
+          "bg-transparent text-[var(--ds-color-text-default)]",
+          "hovered:bg-[var(--ds-color-action-secondary)]",
+          "focused:ring-[var(--ds-color-border-focus-secondary)]",
         ),
         // ── Critical (red, soft tint) ──────────────────────────────────
         red: cn(
-          "bg-[var(--color-surface-tag-red)] text-[var(--color-text-tag-red)]",
-          "hovered:bg-[var(--color-surface-tag-red-hover)]",
-          "focused:ring-[var(--color-border-tag-red-focus)]",
+          "bg-[var(--ds-color-surface-tag-red)] text-[var(--ds-color-text-tag-red)]",
+          "hovered:bg-[var(--ds-color-surface-tag-red-hover)]",
+          "focused:ring-[var(--ds-color-border-tag-red-focus)]",
         ),
         // ── Tag decorative palette (8 hues) ─────────────────────────────
         forest: cn(
-          "bg-[var(--color-surface-tag-forest)] text-[var(--color-text-tag-forest)]",
-          "hovered:bg-[var(--color-surface-tag-forest-hover)]",
-          "focused:ring-[var(--color-border-tag-forest-focus)]",
+          "bg-[var(--ds-color-surface-tag-forest)] text-[var(--ds-color-text-tag-forest)]",
+          "hovered:bg-[var(--ds-color-surface-tag-forest-hover)]",
+          "focused:ring-[var(--ds-color-border-tag-forest-focus)]",
         ),
         lime: cn(
-          "bg-[var(--color-surface-tag-lime)] text-[var(--color-text-tag-lime)]",
-          "hovered:bg-[var(--color-surface-tag-lime-hover)]",
-          "focused:ring-[var(--color-border-tag-lime-focus)]",
+          "bg-[var(--ds-color-surface-tag-lime)] text-[var(--ds-color-text-tag-lime)]",
+          "hovered:bg-[var(--ds-color-surface-tag-lime-hover)]",
+          "focused:ring-[var(--ds-color-border-tag-lime-focus)]",
         ),
         cyan: cn(
-          "bg-[var(--color-surface-tag-cyan)] text-[var(--color-text-tag-cyan)]",
-          "hovered:bg-[var(--color-surface-tag-cyan-hover)]",
-          "focused:ring-[var(--color-border-tag-cyan-focus)]",
+          "bg-[var(--ds-color-surface-tag-cyan)] text-[var(--ds-color-text-tag-cyan)]",
+          "hovered:bg-[var(--ds-color-surface-tag-cyan-hover)]",
+          "focused:ring-[var(--ds-color-border-tag-cyan-focus)]",
         ),
         blue: cn(
-          "bg-[var(--color-surface-tag-blue)] text-[var(--color-text-tag-blue)]",
-          "hovered:bg-[var(--color-surface-tag-blue-hover)]",
-          "focused:ring-[var(--color-border-tag-blue-focus)]",
+          "bg-[var(--ds-color-surface-tag-blue)] text-[var(--ds-color-text-tag-blue)]",
+          "hovered:bg-[var(--ds-color-surface-tag-blue-hover)]",
+          "focused:ring-[var(--ds-color-border-tag-blue-focus)]",
         ),
         yellow: cn(
-          "bg-[var(--color-surface-tag-yellow)] text-[var(--color-text-tag-yellow)]",
-          "hovered:bg-[var(--color-surface-tag-yellow-hover)]",
-          "focused:ring-[var(--color-border-tag-yellow-focus)]",
+          "bg-[var(--ds-color-surface-tag-yellow)] text-[var(--ds-color-text-tag-yellow)]",
+          "hovered:bg-[var(--ds-color-surface-tag-yellow-hover)]",
+          "focused:ring-[var(--ds-color-border-tag-yellow-focus)]",
         ),
         orange: cn(
-          "bg-[var(--color-surface-tag-orange)] text-[var(--color-text-tag-orange)]",
-          "hovered:bg-[var(--color-surface-tag-orange-hover)]",
-          "focused:ring-[var(--color-border-tag-orange-focus)]",
+          "bg-[var(--ds-color-surface-tag-orange)] text-[var(--ds-color-text-tag-orange)]",
+          "hovered:bg-[var(--ds-color-surface-tag-orange-hover)]",
+          "focused:ring-[var(--ds-color-border-tag-orange-focus)]",
         ),
         lavender: cn(
-          "bg-[var(--color-surface-tag-lavender)] text-[var(--color-text-tag-lavender)]",
-          "hovered:bg-[var(--color-surface-tag-lavender-hover)]",
-          "focused:ring-[var(--color-border-tag-lavender-focus)]",
+          "bg-[var(--ds-color-surface-tag-lavender)] text-[var(--ds-color-text-tag-lavender)]",
+          "hovered:bg-[var(--ds-color-surface-tag-lavender-hover)]",
+          "focused:ring-[var(--ds-color-border-tag-lavender-focus)]",
         ),
         orchid: cn(
-          "bg-[var(--color-surface-tag-orchid)] text-[var(--color-text-tag-orchid)]",
-          "hovered:bg-[var(--color-surface-tag-orchid-hover)]",
-          "focused:ring-[var(--color-border-tag-orchid-focus)]",
+          "bg-[var(--ds-color-surface-tag-orchid)] text-[var(--ds-color-text-tag-orchid)]",
+          "hovered:bg-[var(--ds-color-surface-tag-orchid-hover)]",
+          "focused:ring-[var(--ds-color-border-tag-orchid-focus)]",
         ),
       },
       kind: {
@@ -152,11 +152,11 @@ const badgeVariants = cva(
           "h-5 px-2 py-0.5 gap-1 text-xs",
           "rounded-full",
         ),
-        // Secondary — tight tag, cr=2 (--shape-radius-xs), 4px horizontal padding,
+        // Secondary — tight tag, cr=2 (--ds-shape-radius-xs), 4px horizontal padding,
         // hugs content. For dense rows where width matters more than air.
         secondary: cn(
           "h-[18px] px-1 gap-1 text-[11px] leading-none",
-          "rounded-[var(--shape-radius-xs)]",
+          "rounded-[var(--ds-shape-radius-xs)]",
         ),
         // Number — compact numeric. tabular-nums keeps "9" and "10" the same width.
         // min-w-5 prevents single-digit numbers from collapsing too narrow.

@@ -24,11 +24,11 @@ import {
  * No explicit color overrides — colors paint entirely through the shadcn
  * Sidebar primitives, which the bridge already wires to Brightseed semantics:
  *
- *   SidebarMenuButton hover   → --color-surface-alt-hover
- *   SidebarMenuButton active  → --color-surface-alt (sand-100 / sand-900)
- *   SidebarGroupLabel         → --color-text-subtle
+ *   SidebarMenuButton hover   → --ds-color-surface-alt-hover
+ *   SidebarMenuButton active  → --ds-color-surface-alt (sand-100 / sand-900)
+ *   SidebarGroupLabel         → --ds-color-text-subtle
  *   Chevron icons             → currentColor (inherits text)
- *   Focus ring                → --color-border-focus (lime)
+ *   Focus ring                → --ds-color-border-focus (lime)
  *
  * If a future spec needs item-level color treatment (e.g. an "important"
  * destructive item, or a brand-tinted active state), apply explicit Brightseed

@@ -33,8 +33,8 @@ import { cn } from "@/lib/utils"
  *   icon-xs / icon-sm / icon /
  *   icon-lg / icon-xl             square icon-only sizes
  *
- *   Corner radii: --shape-radius-md (8px) for everything except xl + icon-xl,
- *   which use --shape-radius-4xl (26px) — the "pronounced rounding for hero CTAs"
+ *   Corner radii: --ds-shape-radius-md (8px) for everything except xl + icon-xl,
+ *   which use --ds-shape-radius-4xl (26px) — the "pronounced rounding for hero CTAs"
  *   step on the existing radius scale.
  *
  * Hover behavior
@@ -45,9 +45,9 @@ import { cn } from "@/lib/utils"
  *   recurring source of bugs. Do not reintroduce a font-weight change on hover.
  *
  * Disabled
- *   Surface uses --color-action-{variant}-disabled (a color-mix overlay computed
+ *   Surface uses --ds-color-action-{variant}-disabled (a color-mix overlay computed
  *   per variant — see semantics.css). Label and icon stay at the variant's normal
- *   foreground color but fade to --disabled-text-opacity (0.55). Opacity is
+ *   foreground color but fade to --ds-disabled-text-opacity (0.55). Opacity is
  *   applied at exactly one DOM level (`[data-slot=button-content]`) so it never
  *   stacks. Disabled UI is exempt from WCAG 1.4.3 contrast.
  *
@@ -72,7 +72,7 @@ const buttonVariants = cva(
     // ── Layout / typography (size-invariant) ────────────────────────────
     "relative inline-flex shrink-0 items-center justify-center",
     "whitespace-nowrap text-sm font-medium",
-    "rounded-[var(--shape-radius-md)]",
+    "rounded-[var(--ds-shape-radius-md)]",
     "outline-none cursor-pointer select-none",
     // ── Transitions ─────────────────────────────────────────────────────
     // transition-all covers bg / color / border / box-shadow on hover and press.
@@ -90,7 +90,7 @@ const buttonVariants = cva(
     // it never stacks. The disabled-state variant excludes [data-loading="true"]
     // (see globals.css), so loading buttons keep their content at full opacity
     // even though they're HTML-disabled — the spinner stays clearly visible.
-    "disabled-state:[&_[data-slot=button-content]]:opacity-[var(--disabled-text-opacity)]",
+    "disabled-state:[&_[data-slot=button-content]]:opacity-[var(--ds-disabled-text-opacity)]",
     // ── Focus ring: 3px outer, 50% alpha for softness. Variant sets color. ──
     "focused:ring-[3px] focused:ring-offset-0",
   ),
@@ -99,49 +99,49 @@ const buttonVariants = cva(
       variant: {
         // ── Default (lime — brand action) ───────────────────────────────
         default: cn(
-          "bg-[var(--color-action-primary)] text-[var(--color-text-on-action-primary)]",
-          "hovered:bg-[var(--color-action-primary-hover)]",
-          "hovered:text-[var(--color-text-on-action-primary-hover)]",          "pressed:bg-[var(--color-action-primary-active)]",
-          "pressed:text-[var(--color-text-on-action-primary-active)]",
-          "focused:ring-[var(--color-border-focus)]/50",
-          "disabled-state:bg-[var(--color-action-primary-disabled)]"
+          "bg-[var(--ds-color-action-primary)] text-[var(--ds-color-text-on-action-primary)]",
+          "hovered:bg-[var(--ds-color-action-primary-hover)]",
+          "hovered:text-[var(--ds-color-text-on-action-primary-hover)]",          "pressed:bg-[var(--ds-color-action-primary-active)]",
+          "pressed:text-[var(--ds-color-text-on-action-primary-active)]",
+          "focused:ring-[var(--ds-color-border-focus)]/50",
+          "disabled-state:bg-[var(--ds-color-action-primary-disabled)]"
         ),
         // ── Secondary (faint sand) ──────────────────────────────────────
         secondary: cn(
-          "bg-[var(--color-action-secondary)] text-[var(--color-text-default)]",
-          "hovered:bg-[var(--color-action-secondary-hover)]",
-          "hovered:text-[var(--color-text-default-hover)]",          "pressed:bg-[var(--color-action-secondary-active)]",
-          "focused:ring-[var(--color-border-focus-secondary)]/50",
-          "disabled-state:bg-[var(--color-action-secondary-disabled)]"
+          "bg-[var(--ds-color-action-secondary)] text-[var(--ds-color-text-default)]",
+          "hovered:bg-[var(--ds-color-action-secondary-hover)]",
+          "hovered:text-[var(--ds-color-text-default-hover)]",          "pressed:bg-[var(--ds-color-action-secondary-active)]",
+          "focused:ring-[var(--ds-color-border-focus-secondary)]/50",
+          "disabled-state:bg-[var(--ds-color-action-secondary-disabled)]"
         ),
         // ── Outline (hairline border, transparent surface) ──────────────
         outline: cn(
-          "border border-[var(--color-border-default)] bg-transparent",
-          "text-[var(--color-text-default)]",
-          "hovered:bg-[var(--color-action-secondary-hover)]",
-          "hovered:text-[var(--color-text-default-hover)]",          "pressed:bg-[var(--color-action-secondary-active)]",
-          "focused:ring-[var(--color-border-focus)]/50"
+          "border border-[var(--ds-color-border-default)] bg-transparent",
+          "text-[var(--ds-color-text-default)]",
+          "hovered:bg-[var(--ds-color-action-secondary-hover)]",
+          "hovered:text-[var(--ds-color-text-default-hover)]",          "pressed:bg-[var(--ds-color-action-secondary-active)]",
+          "focused:ring-[var(--ds-color-border-focus)]/50"
         ),
         // ── Ghost (no surface, no border) ───────────────────────────────
         ghost: cn(
-          "bg-transparent text-[var(--color-text-default)]",
-          "hovered:bg-[var(--color-action-secondary)]",
-          "hovered:text-[var(--color-text-default-hover)]",          "pressed:bg-[var(--color-action-secondary-hover)]",
-          "focused:ring-[var(--color-border-focus)]/50"
+          "bg-transparent text-[var(--ds-color-text-default)]",
+          "hovered:bg-[var(--ds-color-action-secondary)]",
+          "hovered:text-[var(--ds-color-text-default-hover)]",          "pressed:bg-[var(--ds-color-action-secondary-hover)]",
+          "focused:ring-[var(--ds-color-border-focus)]/50"
         ),
         // ── Destructive (soft red) ──────────────────────────────────────
         destructive: cn(
-          "bg-[var(--color-action-critical)] text-[var(--color-text-on-action-critical)]",
-          "hovered:bg-[var(--color-action-critical-hover)]",
-          "hovered:text-[var(--color-text-on-action-critical-hover)]",          "pressed:bg-[var(--color-action-critical-active)]",
-          "focused:ring-[var(--color-border-focus-destructive)]/50",
-          "disabled-state:bg-[var(--color-action-critical-disabled)]"
+          "bg-[var(--ds-color-action-critical)] text-[var(--ds-color-text-on-action-critical)]",
+          "hovered:bg-[var(--ds-color-action-critical-hover)]",
+          "hovered:text-[var(--ds-color-text-on-action-critical-hover)]",          "pressed:bg-[var(--ds-color-action-critical-active)]",
+          "focused:ring-[var(--ds-color-border-focus-destructive)]/50",
+          "disabled-state:bg-[var(--ds-color-action-critical-disabled)]"
         ),
         // ── Linktext (button-shaped link, never underlined) ─────────────
         linktext: cn(
-          "bg-transparent text-[var(--color-text-link-brand)]",
-          "hovered:text-[var(--color-text-link-brand-hover)]",          "pressed:text-[var(--color-text-link-brand-hover)]",
-          "focused:ring-[var(--color-border-focus-link-brand)]/50"
+          "bg-transparent text-[var(--ds-color-text-link-brand)]",
+          "hovered:text-[var(--ds-color-text-link-brand-hover)]",          "pressed:text-[var(--ds-color-text-link-brand-hover)]",
+          "focused:ring-[var(--ds-color-border-focus-link-brand)]/50"
         ),
       },
       size: {
@@ -155,13 +155,13 @@ const buttonVariants = cva(
         sm: "h-8 px-3 [--btn-gap:0.375rem]",
         default: "h-9 px-4 [--btn-gap:0.5rem]",
         lg: "h-10 px-6 [--btn-gap:0.5rem]",
-        xl: "h-12 px-8 text-base [--btn-gap:0.5rem] rounded-[var(--shape-radius-4xl)] [&_svg:not([class*='size-'])]:size-5",
+        xl: "h-12 px-8 text-base [--btn-gap:0.5rem] rounded-[var(--ds-shape-radius-4xl)] [&_svg:not([class*='size-'])]:size-5",
         // ── Icon sizes (square, no text) ─────────────────────────────────
         "icon-xs": "size-6 [&_svg:not([class*='size-'])]:size-3",
         "icon-sm": "size-8",
         icon: "size-9",
         "icon-lg": "size-10",
-        "icon-xl": "size-12 rounded-[var(--shape-radius-4xl)] [&_svg:not([class*='size-'])]:size-5",
+        "icon-xl": "size-12 rounded-[var(--ds-shape-radius-4xl)] [&_svg:not([class*='size-'])]:size-5",
       },
     },
     defaultVariants: {

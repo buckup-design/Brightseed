@@ -9,7 +9,7 @@
  * avatar in the SidebarFooter.
  *
  * Active route is highlighted via `isActive` on SidebarMenuButton. Active state
- * uses --color-surface-alt-hover (sand-200 light / sand-800 dark) per the
+ * uses --ds-color-surface-alt-hover (sand-200 light / sand-800 dark) per the
  * pattern shadcn ships, no custom token required.
  */
 
@@ -64,7 +64,7 @@ export function ForagerSidebar() {
               <Link href="/">
                 <span
                   aria-hidden
-                  className="flex aspect-square size-8 items-center justify-center rounded-[var(--shape-radius-sm)] bg-[var(--color-surface-brand)] text-[var(--color-text-inverse)] text-[11px] font-semibold tracking-wide"
+                  className="flex aspect-square size-8 items-center justify-center rounded-[var(--ds-shape-radius-sm)] bg-[var(--ds-color-surface-brand)] text-[var(--ds-color-text-inverse)] text-[11px] font-semibold tracking-wide"
                 >
                   BS
                 </span>
@@ -122,7 +122,7 @@ export function ForagerSidebar() {
             <SidebarMenuButton tooltip="user@example.com" asChild>
               <button type="button" className="cursor-pointer">
                 <Avatar className="size-6">
-                  <AvatarFallback className="bg-[var(--color-surface-tag-cyan)] text-[var(--color-text-tag-cyan)] text-[10px]">
+                  <AvatarFallback className="bg-[var(--ds-color-surface-tag-cyan)] text-[var(--ds-color-text-tag-cyan)] text-[10px]">
                     BB
                   </AvatarFallback>
                 </Avatar>

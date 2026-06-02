@@ -14,51 +14,51 @@
      Aligns with the Figma `radius/*` scale used by component bindings.
      Component code should reference these tokens via the conventions below;
      never hardcode pixel values on individual elements. */
-  --shape-radius-none:    0px;
-  --shape-radius-xs:      2px;    /* subtle — tag indicators, inline chips */
-  --shape-radius-sm:      6px;    /* small — badges, small tooltips */
-  --shape-radius-md:      8px;    /* medium — buttons (xs/default/sm/lg/icon sizes), inputs */
-  --shape-radius-lg:      10px;   /* large — cards, panels */
-  --shape-radius-xl:      14px;   /* extra-large — dialogs */
-  --shape-radius-2xl:     18px;   /* sheet overlays, popovers */
-  --shape-radius-3xl:     22px;
-  --shape-radius-4xl:     26px;   /* button XL sizes (xl, icon-xl) */
-  --shape-radius-round:   9999px; /* pill — status badges, toggle chips */
+  --ds-shape-radius-none:    0px;
+  --ds-shape-radius-xs:      2px;    /* subtle — tag indicators, inline chips */
+  --ds-shape-radius-sm:      6px;    /* small — badges, small tooltips */
+  --ds-shape-radius-md:      8px;    /* medium — buttons (xs/default/sm/lg/icon sizes), inputs */
+  --ds-shape-radius-lg:      10px;   /* large — cards, panels */
+  --ds-shape-radius-xl:      14px;   /* extra-large — dialogs */
+  --ds-shape-radius-2xl:     18px;   /* sheet overlays, popovers */
+  --ds-shape-radius-3xl:     22px;
+  --ds-shape-radius-4xl:     26px;   /* button XL sizes (xl, icon-xl) */
+  --ds-shape-radius-round:   9999px; /* pill — status badges, toggle chips */
 
   /* ── Border width ── */
-  --shape-border-none:    0px;
-  --shape-border-default: 1px;    /* inputs, cards, table grid lines */
-  --shape-border-bold:    2px;    /* focus rings, selected-state indicators */
-  --shape-border-heavy:   4px;    /* left-edge accent stripe on alert banners */
+  --ds-shape-border-none:    0px;
+  --ds-shape-border-default: 1px;    /* inputs, cards, table grid lines */
+  --ds-shape-border-bold:    2px;    /* focus rings, selected-state indicators */
+  --ds-shape-border-heavy:   4px;    /* left-edge accent stripe on alert banners */
 
   /* ── Shadow ── */
-  --shadow-sm: 0 1px 2px 0 rgba(19, 48, 25, 0.08);
-  --shadow-md: 0 4px 6px -1px rgba(19, 48, 25, 0.10),
+  --ds-shadow-sm: 0 1px 2px 0 rgba(19, 48, 25, 0.08);
+  --ds-shadow-md: 0 4px 6px -1px rgba(19, 48, 25, 0.10),
                0 2px 4px -2px  rgba(19, 48, 25, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(19, 48, 25, 0.10),
+  --ds-shadow-lg: 0 10px 15px -3px rgba(19, 48, 25, 0.10),
                0 4px  6px  -4px rgba(19, 48, 25, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(19, 48, 25, 0.10),
+  --ds-shadow-xl: 0 20px 25px -5px rgba(19, 48, 25, 0.10),
                0 8px  10px -6px rgba(19, 48, 25, 0.04);
 
 }
 
 /*
  * Radius conventions:
- *   Input, Select, Textarea      → --shape-radius-md       (8px)
- *   Button — xs/default/sm/lg/icon (and icon-xs/sm/lg) → --shape-radius-md  (8px)
- *   Button — xl, icon-xl         → --shape-radius-4xl     (26px — pronounced rounding for hero CTAs)
- *   Badge — primary kind         → --shape-radius-round   (rounded-full — pill, status, count)
- *   Badge — secondary kind       → --shape-radius-xs      (2px — tight, tag-dense rows)
- *   Badge — number kind          → --shape-radius-round   (rounded-full — notification counts)
- *   Card, Panel                  → --shape-radius-lg      (10px)
- *   Dialog                       → --shape-radius-xl      (14px)
- *   Popover, Tooltip             → --shape-radius-sm      (6px)
- *   Alert / banner               → --shape-radius-md      (8px)
- *   Table row                    → --shape-radius-none
+ *   Input, Select, Textarea      → --ds-shape-radius-md       (8px)
+ *   Button — xs/default/sm/lg/icon (and icon-xs/sm/lg) → --ds-shape-radius-md  (8px)
+ *   Button — xl, icon-xl         → --ds-shape-radius-4xl     (26px — pronounced rounding for hero CTAs)
+ *   Badge — primary kind         → --ds-shape-radius-round   (rounded-full — pill, status, count)
+ *   Badge — secondary kind       → --ds-shape-radius-xs      (2px — tight, tag-dense rows)
+ *   Badge — number kind          → --ds-shape-radius-round   (rounded-full — notification counts)
+ *   Card, Panel                  → --ds-shape-radius-lg      (10px)
+ *   Dialog                       → --ds-shape-radius-xl      (14px)
+ *   Popover, Tooltip             → --ds-shape-radius-sm      (6px)
+ *   Alert / banner               → --ds-shape-radius-md      (8px)
+ *   Table row                    → --ds-shape-radius-none
  *
  * Shadow conventions:
- *   Raised card on page bg       → --shadow-sm
- *   Popover, dropdown menu       → --shadow-md
- *   Dialog, modal                → --shadow-lg
- *   Sheet overlay                → --shadow-xl
+ *   Raised card on page bg       → --ds-shadow-sm
+ *   Popover, dropdown menu       → --ds-shadow-md
+ *   Dialog, modal                → --ds-shadow-lg
+ *   Sheet overlay                → --ds-shadow-xl
  */

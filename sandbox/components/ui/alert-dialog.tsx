@@ -10,14 +10,14 @@ import { Button } from "@/components/ui/button"
  * AlertDialog — Brightseed Forager design system.
  *
  * Color tokens (Brightseed semantics):
- *   Overlay scrim   → --color-surface-scrim (semantic; warm dark @ 50% in light,
+ *   Overlay scrim   → --ds-color-surface-scrim (semantic; warm dark @ 50% in light,
  *                     black-based veil in dark so it reads over the sand-950 page)
- *   Dialog surface  → --color-surface-default
- *   Dialog border   → --color-border-default
- *   Title text      → --color-text-default
- *   Description     → --color-text-subtle
- *   Media chip bg   → --color-surface-alt        (sand-100; quiet inset)
- *   Radius          → --shape-radius-lg          (12px; one step bolder than buttons)
+ *   Dialog surface  → --ds-color-surface-default
+ *   Dialog border   → --ds-color-border-default
+ *   Title text      → --ds-color-text-default
+ *   Description     → --ds-color-text-subtle
+ *   Media chip bg   → --ds-color-surface-alt        (sand-100; quiet inset)
+ *   Radius          → --ds-shape-radius-lg          (12px; one step bolder than buttons)
  *
  * AlertDialogAction defaults to Button variant="default" (lime).
  * For destructive flows pass variant="destructive" — soft-red recipe.
@@ -54,7 +54,7 @@ function AlertDialogOverlay({
     <AlertDialogPrimitive.Overlay
       data-slot="alert-dialog-overlay"
       className={cn(
-        "fixed inset-0 z-50 bg-[var(--color-surface-scrim)]",
+        "fixed inset-0 z-50 bg-[var(--ds-color-surface-scrim)]",
         "data-[state=closed]:animate-out data-[state=closed]:fade-out-0",
         "data-[state=open]:animate-in data-[state=open]:fade-in-0",
         className
@@ -82,9 +82,9 @@ function AlertDialogContent({
           "grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%]",
           "gap-4 p-6 duration-200",
           // Brightseed surface + border + radius
-          "bg-[var(--color-surface-default)] text-[var(--color-text-default)]",
-          "border border-[var(--color-border-default)]",
-          "rounded-[var(--shape-radius-lg)]",
+          "bg-[var(--ds-color-surface-default)] text-[var(--ds-color-text-default)]",
+          "border border-[var(--ds-color-border-default)]",
+          "rounded-[var(--ds-shape-radius-lg)]",
           "shadow-lg",
           // Sizing
           "data-[size=sm]:max-w-xs",
@@ -145,7 +145,7 @@ function AlertDialogTitle({
     <AlertDialogPrimitive.Title
       data-slot="alert-dialog-title"
       className={cn(
-        "text-lg font-semibold text-[var(--color-text-default)]",
+        "text-lg font-semibold text-[var(--ds-color-text-default)]",
         "sm:group-data-[size=default]/alert-dialog-content:group-has-data-[slot=alert-dialog-media]/alert-dialog-content:col-start-2",
         className
       )}
@@ -161,7 +161,7 @@ function AlertDialogDescription({
   return (
     <AlertDialogPrimitive.Description
       data-slot="alert-dialog-description"
-      className={cn("text-sm text-[var(--color-text-subtle)]", className)}
+      className={cn("text-sm text-[var(--ds-color-text-subtle)]", className)}
       {...props}
     />
   )
@@ -176,8 +176,8 @@ function AlertDialogMedia({
       data-slot="alert-dialog-media"
       className={cn(
         "mb-2 inline-flex size-16 items-center justify-center",
-        "rounded-[var(--shape-radius-md)]",
-        "bg-[var(--color-surface-alt)] text-[var(--color-icon-default)]",
+        "rounded-[var(--ds-shape-radius-md)]",
+        "bg-[var(--ds-color-surface-alt)] text-[var(--ds-color-icon-default)]",
         "sm:group-data-[size=default]/alert-dialog-content:row-span-2",
         "*:[svg:not([class*='size-'])]:size-8",
         className

@@ -199,12 +199,12 @@ function StrategiesGrid() {
 
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-[12px] font-mono text-[var(--color-text-subtle)]">
+      <p className="text-[12px] font-mono text-[var(--ds-color-text-subtle)]">
         Favorite a card, then navigate away and back to see it sort to the top.
       </p>
       {/* auto-fill + minmax: as many columns as fit at ≥340px each, growing to 1fr.
           overflow-hidden: clips anything that escapes a cell (last-resort guard). */}
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(340px,1fr))] gap-4 max-w-5xl overflow-hidden bg-[var(--color-surface-alt)] p-6 rounded-lg">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(340px,1fr))] gap-4 max-w-5xl overflow-hidden bg-[var(--ds-color-surface-alt)] p-6 rounded-lg">
         {sortedStrategies.map((strategy) => (
           <StrategyCard
             key={strategy.id}

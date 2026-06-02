@@ -95,8 +95,8 @@ function SourceTag({ custom, badge }: { custom?: boolean; badge?: boolean }) {
       <span
         className="rounded-full px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide"
         style={{
-          background: custom ? "var(--color-surface-tag-orchid)" : "var(--color-surface-alt)",
-          color: custom ? "var(--color-text-tag-orchid)" : "var(--color-text-subtle)",
+          background: custom ? "var(--ds-color-surface-tag-orchid)" : "var(--ds-color-surface-alt)",
+          color: custom ? "var(--ds-color-text-tag-orchid)" : "var(--ds-color-text-subtle)",
         }}
       >
         {custom ? "Custom" : "Lucide"}
@@ -105,8 +105,8 @@ function SourceTag({ custom, badge }: { custom?: boolean; badge?: boolean }) {
         <span
           className="rounded-full px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide"
           style={{
-            background: "var(--color-surface-tag-cyan)",
-            color: "var(--color-text-tag-cyan)",
+            background: "var(--ds-color-surface-tag-cyan)",
+            color: "var(--ds-color-text-tag-cyan)",
           }}
         >
           Badge
@@ -120,13 +120,13 @@ function IconTile({ entry, custom }: { entry: IconEntry; custom?: boolean }) {
   const { name, Comp, scale } = entry;
   const isBadge = scale === "badge";
   return (
-    <div className="flex flex-col items-center gap-2 rounded-lg border border-[var(--color-border-subtle)] bg-[var(--color-surface-default)] p-3 text-center">
-      <div className="flex h-9 w-9 items-center justify-center text-[var(--color-text-default)]">
+    <div className="flex flex-col items-center gap-2 rounded-lg border border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-default)] p-3 text-center">
+      <div className="flex h-9 w-9 items-center justify-center text-[var(--ds-color-text-default)]">
         {/* badge-scale icons render at their intended 14px; app-scale at 24px */}
         <Comp className={isBadge ? "size-3.5" : "size-6"} />
       </div>
       <span
-        className="w-full truncate font-mono text-[10px] text-[var(--color-text-default)]"
+        className="w-full truncate font-mono text-[10px] text-[var(--ds-color-text-default)]"
         title={name}
       >
         {name}
@@ -160,7 +160,7 @@ function IconInventory() {
 
   return (
     <div className="flex flex-col gap-5 p-6">
-      <h2 className="text-base font-semibold text-[var(--color-text-default)]">
+      <h2 className="text-base font-semibold text-[var(--ds-color-text-default)]">
         Icon inventory
       </h2>
 
@@ -170,16 +170,16 @@ function IconInventory() {
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Search icons by name…"
-          className="w-full max-w-sm rounded-md border border-[var(--color-border-default)] bg-[var(--color-surface-default)] px-3 py-2 text-sm text-[var(--color-text-default)] outline-none focus:border-[var(--color-border-focus)]"
+          className="w-full max-w-sm rounded-md border border-[var(--ds-color-border-default)] bg-[var(--ds-color-surface-default)] px-3 py-2 text-sm text-[var(--ds-color-text-default)] outline-none focus:border-[var(--ds-color-border-focus)]"
         />
-        <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+        <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
           {customs.length} custom · {lucides.length} Lucide
         </span>
       </div>
 
       {customs.length > 0 && (
         <section className="flex flex-col gap-3">
-          <h3 className="font-mono text-sm text-[var(--color-text-default)]">
+          <h3 className="font-mono text-sm text-[var(--ds-color-text-default)]">
             Custom additions
           </h3>
           <Grid>
@@ -191,9 +191,9 @@ function IconInventory() {
       )}
 
       <section className="flex flex-col gap-3">
-        <h3 className="font-mono text-sm text-[var(--color-text-default)]">Lucide</h3>
+        <h3 className="font-mono text-sm text-[var(--ds-color-text-default)]">Lucide</h3>
         {lucides.length === 0 ? (
-          <p className="text-sm text-[var(--color-text-subtle)]">No Lucide icons match “{q}”.</p>
+          <p className="text-sm text-[var(--ds-color-text-subtle)]">No Lucide icons match “{q}”.</p>
         ) : (
           <Grid>
             {lucides.map((entry) => (
@@ -232,7 +232,7 @@ const TAG_VARIANTS = [
 export const ColorTracking: Story = {
   render: () => (
     <div className="flex flex-col gap-6 p-6">
-      <p className="max-w-prose text-sm text-[var(--color-text-subtle)]">
+      <p className="max-w-prose text-sm text-[var(--ds-color-text-subtle)]">
         The same glyph in every tag color — it inherits each badge&rsquo;s text color
         automatically via <code className="font-mono text-xs">currentColor</code>.
       </p>
@@ -278,7 +278,7 @@ export const ColorTracking: Story = {
 export const AppScaleGlyphs: Story = {
   render: () => (
     <div className="flex flex-col gap-4 p-6">
-      <p className="max-w-prose text-sm text-[var(--color-text-subtle)]">
+      <p className="max-w-prose text-sm text-[var(--ds-color-text-subtle)]">
         Custom glyphs at app scale (24px) for chat headers, nav, and cards — not
         badge slots. Prefer the line variant (honors the line-art house style).
       </p>
@@ -291,7 +291,7 @@ export const AppScaleGlyphs: Story = {
         ].map((g) => (
           <div
             key={g.label}
-            className="flex flex-col items-center gap-2 rounded-lg border border-[var(--color-border-subtle)] bg-[var(--color-surface-default)] p-4 text-[var(--color-text-default)]"
+            className="flex flex-col items-center gap-2 rounded-lg border border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-default)] p-4 text-[var(--ds-color-text-default)]"
           >
             {g.node}
             <span className="text-xs font-medium">{g.label}</span>
@@ -308,16 +308,16 @@ export const AppScaleGlyphs: Story = {
 
 export const Conventions: Story = {
   render: () => (
-    <div className="flex max-w-prose flex-col gap-4 p-6 text-sm text-[var(--color-text-default)]">
+    <div className="flex max-w-prose flex-col gap-4 p-6 text-sm text-[var(--ds-color-text-default)]">
       <h3 className="font-mono text-sm">Conventions</h3>
-      <ul className="flex list-disc flex-col gap-2 pl-5 text-[var(--color-text-subtle)]">
+      <ul className="flex list-disc flex-col gap-2 pl-5 text-[var(--ds-color-text-subtle)]">
         <li>
-          <strong className="text-[var(--color-text-default)]">Lucide first.</strong> If
+          <strong className="text-[var(--ds-color-text-default)]">Lucide first.</strong> If
           Lucide has the glyph, use it. Reserve custom additions for what Lucide
           genuinely can&rsquo;t cover — currently Cow and Hummingbird.
         </li>
         <li>
-          <strong className="text-[var(--color-text-default)]">
+          <strong className="text-[var(--ds-color-text-default)]">
             House stroke = {BADGE_ICON_STROKE}.
           </strong>{" "}
           Lucide draws at stroke 2 for a 24px box, which reads heavy at 14px badge
@@ -325,17 +325,17 @@ export const Conventions: Story = {
           for badge-scale line glyphs.
         </li>
         <li>
-          <strong className="text-[var(--color-text-default)]">currentColor only.</strong>{" "}
+          <strong className="text-[var(--ds-color-text-default)]">currentColor only.</strong>{" "}
           Glyphs use stroke/fill=currentColor and inherit their context&rsquo;s text color
           automatically — no per-icon color binding.
         </li>
         <li>
-          <strong className="text-[var(--color-text-default)]">Identity, not use.</strong>{" "}
+          <strong className="text-[var(--ds-color-text-default)]">Identity, not use.</strong>{" "}
           This page names glyphs by what they are. Assigning a glyph to a Forager
           concept happens later, in the surface that uses it — it&rsquo;s exploratory for now.
         </li>
         <li>
-          <strong className="text-[var(--color-text-default)]">Two tiers, kept apart.</strong>{" "}
+          <strong className="text-[var(--ds-color-text-default)]">Two tiers, kept apart.</strong>{" "}
           Functional UI glyphs (this page) vs. brand illustration (the hummingbird/bird
           vectors in /brand and /vector-pipeline, illustration scale, never a badge slot).
         </li>

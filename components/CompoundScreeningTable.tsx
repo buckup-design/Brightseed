@@ -55,31 +55,31 @@ const STATUS_CONFIG: Record<
   active: {
     label: "Active",
     className: [
-      "bg-[var(--color-surface-success)]",
-      "text-[var(--color-text-success)]",
-      "border-[var(--color-border-success-bold)]",
+      "bg-[var(--ds-color-surface-success)]",
+      "text-[var(--ds-color-text-success)]",
+      "border-[var(--ds-color-border-success-bold)]",
     ].join(" "),
   },
   pending: {
     label: "Pending",
     className: [
-      "bg-[var(--color-surface-warning)]",
-      "text-[var(--color-text-warning)]",
-      "border-[var(--color-border-warning-bold)]",
+      "bg-[var(--ds-color-surface-warning)]",
+      "text-[var(--ds-color-text-warning)]",
+      "border-[var(--ds-color-border-warning-bold)]",
     ].join(" "),
   },
   failed: {
     label: "Failed",
     className: [
-      "bg-[var(--color-surface-critical)]",
-      "text-[var(--color-text-critical)]",
-      "border-[var(--color-border-critical-bold)]",
+      "bg-[var(--ds-color-surface-critical)]",
+      "text-[var(--ds-color-text-critical)]",
+      "border-[var(--ds-color-border-critical-bold)]",
     ].join(" "),
   },
   archived: {
     label: "Archived",
     // No semantic "archived" — use muted (shadcn bridge covers this)
-    // BRIGHTSEED-TBD: needs a dedicated --color-surface-archived token if
+    // BRIGHTSEED-TBD: needs a dedicated --ds-color-surface-archived token if
     //   archived becomes a first-class Forager state; using muted as closest match.
     className: "bg-muted text-muted-foreground border-border",
   },
@@ -133,7 +133,7 @@ export function CompoundScreeningTable({
         {/* ── Header ── */}
         <TableHeader>
           <TableRow
-            style={{ backgroundColor: "var(--color-surface-alt)" }}
+            style={{ backgroundColor: "var(--ds-color-surface-alt)" }}
             className="hover:bg-inherit"
           >
             {COLUMNS.map(({ key, label }) => (
@@ -177,10 +177,10 @@ export function CompoundScreeningTable({
                 key={row.compoundId}
                 style={{
                   backgroundColor: isAlt
-                    ? "var(--color-surface-alt)"
-                    : "var(--color-surface-default)",
+                    ? "var(--ds-color-surface-alt)"
+                    : "var(--ds-color-surface-default)",
                 }}
-                className="hover:bg-[var(--color-surface-default-hover)]"
+                className="hover:bg-[var(--ds-color-surface-default-hover)]"
               >
                 {/* Compound ID — first-class identifier, always mono */}
                 <TableCell>
@@ -253,7 +253,7 @@ export function CompoundScreeningTable({
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         onClick={() => onArchive(row.compoundId)}
-                        className="text-[var(--color-text-critical)]"
+                        className="text-[var(--ds-color-text-critical)]"
                       >
                         Archive
                       </DropdownMenuItem>

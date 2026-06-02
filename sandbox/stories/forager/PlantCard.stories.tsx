@@ -56,7 +56,7 @@ export const StarAnise: Story = {
 export const Grid: Story = {
   parameters: { layout: "padded" },
   render: () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl bg-[var(--color-surface-alt)] p-6 rounded-lg">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl bg-[var(--ds-color-surface-alt)] p-6 rounded-lg">
       <PlantCard
         scientificName="Foeniculum vulgare"
         commonName="Fennel"

@@ -18,15 +18,15 @@
 :root {
 
   /* ── Chart surfaces — reference semantic tokens; auto-adapt to dark theme ── */
-  --chart-background:         var(--color-surface-default);
-  --chart-grid-major:         var(--color-border-subtle);    /* primary grid lines */
+  --chart-background:         var(--ds-color-surface-default);
+  --chart-grid-major:         var(--ds-color-border-subtle);    /* primary grid lines */
   --chart-grid-minor:         var(--color-sand-100);         /* secondary grid lines */
-  --chart-axis-line:          var(--color-border-default);
-  --chart-axis-text:          var(--color-text-subtle);
-  --chart-tooltip-background: var(--color-surface-default);
-  --chart-tooltip-text:       var(--color-text-default);
-  --chart-tooltip-border:     var(--color-border-default);
-  --chart-legend-text:        var(--color-text-subtle);
+  --chart-axis-line:          var(--ds-color-border-default);
+  --chart-axis-text:          var(--ds-color-text-subtle);
+  --chart-tooltip-background: var(--ds-color-surface-default);
+  --chart-tooltip-text:       var(--ds-color-text-default);
+  --chart-tooltip-border:     var(--ds-color-border-default);
+  --chart-legend-text:        var(--ds-color-text-subtle);
 
   /* ── Categorical palette (8 series, colorblind-safe) ──
      Assign in order: cat-1 → cat-2 → ... → cat-8. Do not skip around. */

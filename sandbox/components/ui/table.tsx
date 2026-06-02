@@ -8,15 +8,15 @@ import { cn } from "@/lib/utils"
  * Table — Brightseed Forager design system.
  *
  * Color tokens (Brightseed semantics):
- *   Header text       → --color-text-default
- *   Body cell text    → --color-text-default
- *   Caption text      → --color-text-subtle
- *   Row borders       → --color-border-subtle      (sand-200; "hairlines, table grid")
- *   Footer surface    → --color-surface-alt        (sand-100; inset panels)
- *   Footer border-top → --color-border-default     (sand-300; emphatic divider above totals)
- *   Row hover         → --color-surface-default-hover (sand-100)
- *   Row selected      → --color-surface-selected   (info-50; matches the Forager selected-row pattern)
- *   Row selected hover → --color-surface-selected-hover
+ *   Header text       → --ds-color-text-default
+ *   Body cell text    → --ds-color-text-default
+ *   Caption text      → --ds-color-text-subtle
+ *   Row borders       → --ds-color-border-subtle      (sand-200; "hairlines, table grid")
+ *   Footer surface    → --ds-color-surface-alt        (sand-100; inset panels)
+ *   Footer border-top → --ds-color-border-default     (sand-300; emphatic divider above totals)
+ *   Row hover         → --ds-color-surface-default-hover (sand-100)
+ *   Row selected      → --ds-color-surface-selected   (info-50; matches the Forager selected-row pattern)
+ *   Row selected hover → --ds-color-surface-selected-hover
  */
 
 function Table({ className, ...props }: React.ComponentProps<"table">) {
@@ -39,7 +39,7 @@ function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
     <thead
       data-slot="table-header"
       className={cn(
-        "[&_tr]:border-b [&_tr]:border-[var(--color-border-subtle)]",
+        "[&_tr]:border-b [&_tr]:border-[var(--ds-color-border-subtle)]",
         className
       )}
       {...props}
@@ -62,8 +62,8 @@ function TableFooter({ className, ...props }: React.ComponentProps<"tfoot">) {
     <tfoot
       data-slot="table-footer"
       className={cn(
-        "border-t border-[var(--color-border-default)]",
-        "bg-[var(--color-surface-alt)] text-[var(--color-text-default)]",
+        "border-t border-[var(--ds-color-border-default)]",
+        "bg-[var(--ds-color-surface-alt)] text-[var(--ds-color-text-default)]",
         "font-medium [&>tr]:last:border-b-0",
         className
       )}
@@ -77,12 +77,12 @@ function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
     <tr
       data-slot="table-row"
       className={cn(
-        "border-b border-[var(--color-border-subtle)]",
+        "border-b border-[var(--ds-color-border-subtle)]",
         "transition-colors duration-[120ms]",
-        "hover:bg-[var(--color-surface-default-hover)]",
-        "has-aria-expanded:bg-[var(--color-surface-default-hover)]",
-        "data-[state=selected]:bg-[var(--color-surface-selected)]",
-        "data-[state=selected]:hover:bg-[var(--color-surface-selected-hover)]",
+        "hover:bg-[var(--ds-color-surface-default-hover)]",
+        "has-aria-expanded:bg-[var(--ds-color-surface-default-hover)]",
+        "data-[state=selected]:bg-[var(--ds-color-surface-selected)]",
+        "data-[state=selected]:hover:bg-[var(--ds-color-surface-selected-hover)]",
         className
       )}
       {...props}
@@ -96,7 +96,7 @@ function TableHead({ className, ...props }: React.ComponentProps<"th">) {
       data-slot="table-head"
       className={cn(
         "h-10 px-2 text-left align-middle whitespace-nowrap",
-        "font-medium text-[var(--color-text-default)]",
+        "font-medium text-[var(--ds-color-text-default)]",
         "[&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
         className
       )}
@@ -111,7 +111,7 @@ function TableCell({ className, ...props }: React.ComponentProps<"td">) {
       data-slot="table-cell"
       className={cn(
         "p-2 align-middle whitespace-nowrap",
-        "text-[var(--color-text-default)]",
+        "text-[var(--ds-color-text-default)]",
         "[&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
         className
       )}
@@ -128,7 +128,7 @@ function TableCaption({
     <caption
       data-slot="table-caption"
       className={cn(
-        "mt-4 text-sm text-[var(--color-text-subtle)]",
+        "mt-4 text-sm text-[var(--ds-color-text-subtle)]",
         className
       )}
       {...props}

@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils"
  * Variants follow the soft-surface intent recipe: surface = subtle tint,
  * border = semi-transparent intent outline, text = semantic in light /
  * warm-white (sand-50) in dark. Icon color is explicit per variant via
- * --color-icon-* tokens — decoupled from text so dark mode icons stay
+ * --ds-color-icon-* tokens — decoupled from text so dark mode icons stay
  * semantically colored while text falls back to neutral.
  *
  *   default      neutral surface — informational, no semantic weight
@@ -25,7 +25,7 @@ import { cn } from "@/lib/utils"
 const alertVariants = cva(
   cn(
     "relative grid w-full grid-cols-[0_1fr] items-start gap-y-0.5",
-    "rounded-[var(--shape-radius-md)] border px-4 py-3 text-sm",
+    "rounded-[var(--ds-shape-radius-md)] border px-4 py-3 text-sm",
     "has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] has-[>svg]:gap-x-3",
     // Icon size + position — color set per-variant below, not inherited from text
     "[&>svg]:size-4 [&>svg]:translate-y-0.5"
@@ -34,29 +34,29 @@ const alertVariants = cva(
     variants: {
       variant: {
         default: cn(
-          "bg-[var(--color-surface-default)] text-[var(--color-text-default)]",
-          "border-[var(--color-border-subtle)]",
-          "[&>svg]:text-[var(--color-icon-default)]"
+          "bg-[var(--ds-color-surface-default)] text-[var(--ds-color-text-default)]",
+          "border-[var(--ds-color-border-subtle)]",
+          "[&>svg]:text-[var(--ds-color-icon-default)]"
         ),
         info: cn(
-          "bg-[var(--color-surface-info)] text-[var(--color-text-info)]",
-          "border-[var(--color-border-info-default)]",
-          "[&>svg]:text-[var(--color-icon-info)]"
+          "bg-[var(--ds-color-surface-info)] text-[var(--ds-color-text-info)]",
+          "border-[var(--ds-color-border-info-default)]",
+          "[&>svg]:text-[var(--ds-color-icon-info)]"
         ),
         success: cn(
-          "bg-[var(--color-surface-success)] text-[var(--color-text-success)]",
-          "border-[var(--color-border-success-default)]",
-          "[&>svg]:text-[var(--color-icon-success)]"
+          "bg-[var(--ds-color-surface-success)] text-[var(--ds-color-text-success)]",
+          "border-[var(--ds-color-border-success-default)]",
+          "[&>svg]:text-[var(--ds-color-icon-success)]"
         ),
         warning: cn(
-          "bg-[var(--color-surface-warning)] text-[var(--color-text-warning)]",
-          "border-[var(--color-border-warning-default)]",
-          "[&>svg]:text-[var(--color-icon-warning)]"
+          "bg-[var(--ds-color-surface-warning)] text-[var(--ds-color-text-warning)]",
+          "border-[var(--ds-color-border-warning-default)]",
+          "[&>svg]:text-[var(--ds-color-icon-warning)]"
         ),
         destructive: cn(
-          "bg-[var(--color-surface-critical)] text-[var(--color-text-critical)]",
-          "border-[var(--color-border-critical-default)]",
-          "[&>svg]:text-[var(--color-icon-destructive)]"
+          "bg-[var(--ds-color-surface-critical)] text-[var(--ds-color-text-critical)]",
+          "border-[var(--ds-color-border-critical-default)]",
+          "[&>svg]:text-[var(--ds-color-icon-destructive)]"
         ),
       },
     },
