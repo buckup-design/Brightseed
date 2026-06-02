@@ -13,7 +13,7 @@ export const metadata: Metadata = {
  * That path works in BOTH Next.js (public/ served at root) and Storybook
  * (which serves public/ via .storybook/main.ts staticDirs). next/font/local
  * was tried first but doesn't reach Storybook, since stories don't render
- * through this layout — preview.ts only loads globals.css.
+ * through this layout, preview.ts only loads globals.css.
  */
 
 export default function RootLayout({

@@ -1,7 +1,7 @@
 "use client"
 
 /**
- * ForagerSidebar — the icon-rail sidebar configured for Forager surfaces.
+ * HummingbirdSidebar, the icon-rail sidebar configured for Hummingbird surfaces.
  *
  * Wraps shadcn/ui's Sidebar in `collapsible="icon"` mode (matches Anna's mocks
  * 4-29-26 and Sidebar.stories.tsx "IconRail"). Brightseed wordmark in the
@@ -52,7 +52,7 @@ const SECONDARY_NAV = [
   { title: "Settings", href: "/settings", icon: Settings },
 ]
 
-export function ForagerSidebar() {
+export function HummingbirdSidebar() {
   const pathname = usePathname() ?? ""
 
   return (

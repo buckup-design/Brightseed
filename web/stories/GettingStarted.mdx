@@ -4,13 +4,13 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 # Prototyping Workflow
 
-How to prototype with Quill, the design system behind Brightseed's digital design surfaces. Everything you need is in this Storybook — nothing to download, always live and current. This page walks the workflow end to end.
+How to prototype with Quill, the design system behind Brightseed's digital design surfaces. Everything you need is in this Storybook: nothing to download, always live and current. This page walks the workflow end to end.
 
 ## What this is
 
-A production design system for Brightseed's digital design surfaces, built on **shadcn/ui + Tailwind**. The whole visual language — color, type, shape, component states — is expressed as **design tokens** (CSS custom properties). Components never hardcode a value; they reference a token. Change the token, every screen updates.
+A production design system for Brightseed's digital design surfaces, built on **shadcn/ui + Tailwind**. The whole visual language (color, type, shape, component states) is expressed as **design tokens** (CSS custom properties). Components never hardcode a value; they reference a token. Change the token, every screen updates.
 
-That's what lets you prototype real, on-brand Forager screens quickly: describe what you want, reference the token vocabulary, and the components paint themselves correctly.
+That's what lets you prototype real, on-brand Hummingbird screens quickly: describe what you want, reference the token vocabulary, and the components paint themselves correctly.
 
 ## The one rule that makes it work
 
@@ -22,25 +22,25 @@ Primitives   --p-color-lime-300        raw values (#CDE67B). No meaning.
 Semantics    --ds-color-action-primary ← reference THIS
 ```
 
-Reach for `--ds-*` tokens — never a raw hex or a `--p-*` primitive. That single discipline is what keeps prototypes on-brand instead of drifting.
+Reach for `--ds-*` tokens, never a raw hex or a `--p-*` primitive. That single discipline is what keeps prototypes on-brand instead of drifting.
 
 ## Where everything lives (all in this Storybook)
 
-- **Foundations → Color Scales** — every color token, live, in both themes. This is your token reference; don't keep a copy anywhere else.
-- **Foundations → Typography / Icons / Logo** — type scale, the approved icon inventory, brand marks.
-- **Design.mdx** — the design language: surfaces, actions, borders, composition (which token for which region), component-usage rules, anti-patterns, and domain notes. Read this second.
-- **Components** — every component (Button, Badge, Card, Table, Alert, …) with all variants and states. When in doubt about how something looks, look here, not at a static spec.
+- **Foundations → Color Scales:** every color token, live, in both themes. This is your token reference; don't keep a copy anywhere else.
+- **Foundations → Typography / Icons / Logo:** type scale, the approved icon inventory, brand marks.
+- **Design.mdx** covers the design language: surfaces, actions, borders, composition (which token for which region), component-usage rules, anti-patterns, and domain notes. Read this second.
+- **Components:** every component (Button, Badge, Card, Table, Alert, …) with all variants and states. When in doubt about how something looks, look here, not at a static spec.
 
-## How to prototype a Forager screen
+## How to prototype a Hummingbird screen
 
 ```
 idea  →  prompt in Cowork  →  preview in Storybook  →  refine  →  ship
 ```
 
-1. **Open the app in Cowork.** The app lives in the `web/` folder — open it as your working directory. The AI working there already reads the project's conventions; you bring the intent.
-2. **Describe the screen in plain language** — "a compound detail card with a header, a dose-response chart, and a row of source tags." Name existing components when you can (browse them under **Components** first) — building on them beats describing from scratch.
-3. **Preview.** Run the library locally to see it: `npm run storybook` (component library) or `npm run dev` (full app). Toggle light/dark with the toolbar switch — your screen should hold up in both with no extra work, because the tokens handle it.
-4. **Refine against the system, not around it.** When something looks off, the fix is almost always "use the right token," not "override with a custom value." If you want a color or size that has no token, that's a signal — flag it rather than hardcoding. A missing token is a system gap worth a real decision.
+1. **Open the app in Cowork.** The app lives in the `web/` folder. Open it as your working directory. The AI working there already reads the project's conventions; you bring the intent.
+2. **Describe the screen in plain language:** "a compound detail card with a header, a dose-response chart, and a row of source tags." Name existing components when you can (browse them under **Components** first); building on them beats describing from scratch.
+3. **Preview.** Run the library locally to see it: `npm run storybook` (component library) or `npm run dev` (full app). Toggle light/dark with the toolbar switch; your screen should hold up in both with no extra work, because the tokens handle it.
+4. **Refine against the system, not around it.** When something looks off, the fix is almost always "use the right token," not "override with a custom value." If you want a color or size that has no token, that's a signal: flag it rather than hardcoding. A missing token is a system gap worth a real decision.
 5. **Ship.** Changes reach the live Storybook through the project's git flow; a merge to the main branch auto-deploys.
 
 ## A few conventions worth knowing
@@ -50,4 +50,4 @@ idea  →  prompt in Cowork  →  preview in Storybook  →  refine  →  ship
 - **Icons come from the approved set** (Foundations → Icons). Not there → flag it, don't draw a new one.
 - **Data series** use the `--chart-*` colors, never brand lime or forest.
 
-When a written doc ever disagrees with the live tokens or Storybook, the running system wins — and the disagreement is worth flagging so the docs get fixed.
+When a written doc ever disagrees with the live tokens or Storybook, the running system wins, and the disagreement is worth flagging so the docs get fixed.

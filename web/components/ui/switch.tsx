@@ -6,13 +6,13 @@ import { Switch as SwitchPrimitive } from "radix-ui"
 import { cn } from "@/lib/utils"
 
 /**
- * Switch — Brightseed Forager design system.
+ * Switch, Brightseed Quill design system.
  *
  * Color tokens (Brightseed semantics):
  *   Track unchecked   → --ds-color-border-default       (sand-300; soft neutral track)
  *   Track checked     → --ds-color-action-primary       (lime-300; brand action)
  *   Thumb             → --ds-color-surface-default      (white in light, sand-950 in dark)
- *   Focus ring        → --ds-color-border-focus / 50    (lime-500 soft ring — same as Button)
+ *   Focus ring        → --ds-color-border-focus / 50    (lime-500 soft ring, same as Button)
  *   Disabled          → uses --ds-disabled-text-opacity
  *
  * Sizes

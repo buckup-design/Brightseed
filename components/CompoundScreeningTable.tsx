@@ -1,9 +1,9 @@
 /**
  * CompoundScreeningTable
- * Forager — compound screening results
+ * Hummingbird: compound screening results
  *
  * Tokens: BrightseedDS.md §3.3 (semantics), §3.5 (typography), §3.6 (shape)
- * Components: Table, Badge, DropdownMenu, Button — all shadcn/ui
+ * Components: Table, Badge, DropdownMenu, Button, all shadcn/ui
  */
 
 import {
@@ -32,8 +32,8 @@ type Status = "active" | "pending" | "failed" | "archived"
 type CompoundResult = {
   compoundId: string
   target: string
-  ic50: number | null       // µM — null if curve fit not yet computed
-  inhibition: number | null // % — null if run incomplete
+  ic50: number | null       // µM, null if curve fit not yet computed
+  inhibition: number | null // %, null if run incomplete
   replicates: number
   status: Status
 }
@@ -78,9 +78,9 @@ const STATUS_CONFIG: Record<
   },
   archived: {
     label: "Archived",
-    // No semantic "archived" — use muted (shadcn bridge covers this)
+    // No semantic "archived", use muted (shadcn bridge covers this)
     // BRIGHTSEED-TBD: needs a dedicated --ds-color-surface-archived token if
-    //   archived becomes a first-class Forager state; using muted as closest match.
+    //   archived becomes a first-class Hummingbird state; using muted as closest match.
     className: "bg-muted text-muted-foreground border-border",
   },
 }
@@ -155,13 +155,13 @@ export function CompoundScreeningTable({
                 </button>
               </TableHead>
             ))}
-            {/* Status — not sortable */}
+            {/* Status, not sortable */}
             <TableHead>
               <span className="text-sm font-medium text-muted-foreground">
                 Status
               </span>
             </TableHead>
-            {/* Actions — no header label */}
+            {/* Actions, no header label */}
             <TableHead />
           </TableRow>
         </TableHeader>
@@ -182,7 +182,7 @@ export function CompoundScreeningTable({
                 }}
                 className="hover:bg-[var(--ds-color-surface-default-hover)]"
               >
-                {/* Compound ID — first-class identifier, always mono */}
+                {/* Compound ID, first-class identifier, always mono */}
                 <TableCell>
                   <span className="font-mono text-sm">{row.compoundId}</span>
                 </TableCell>
@@ -192,30 +192,30 @@ export function CompoundScreeningTable({
                   <span className="text-sm font-normal">{row.target}</span>
                 </TableCell>
 
-                {/* IC50 — scientific value: mono + tabular-nums, 3 decimal places */}
+                {/* IC50, scientific value: mono + tabular-nums, 3 decimal places */}
                 <TableCell>
                   <span className="font-mono text-sm tabular-nums">
-                    {row.ic50 != null ? row.ic50.toFixed(3) : "—"}
+                    {row.ic50 != null ? row.ic50.toFixed(3) : ", "}
                   </span>
                 </TableCell>
 
-                {/* % Inhibition — numeric: tabular-nums, 1 decimal place */}
+                {/* % Inhibition, numeric: tabular-nums, 1 decimal place */}
                 <TableCell>
                   <span className="font-mono text-sm tabular-nums">
                     {row.inhibition != null
                       ? `${row.inhibition.toFixed(1)}%`
-                      : "—"}
+                      : ", "}
                   </span>
                 </TableCell>
 
-                {/* Replicates — small integer, still tabular for column alignment */}
+                {/* Replicates, small integer, still tabular for column alignment */}
                 <TableCell>
                   <span className="font-mono text-sm tabular-nums">
                     {row.replicates}
                   </span>
                 </TableCell>
 
-                {/* Status badge — pill shape per §3.6 conventions */}
+                {/* Status badge, pill shape per §3.6 conventions */}
                 <TableCell>
                   <Badge
                     variant="outline"

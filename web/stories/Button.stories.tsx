@@ -4,7 +4,7 @@ import * as React from "react";
 import { Button } from "@/components/ui/button";
 
 /* ─────────────────────────────────────────────────────────────────────────
- * Button stories — parity with Figma "Components - Quill" (26465:249160).
+ * Button stories, parity with Figma "Components - Quill" (26465:249160).
  *
  * The Quill matrix is the canonical doc-skeleton for the Brightseed Button:
  * rows = Variant × Size, columns = State (default / hover / focus / pressed /
@@ -79,7 +79,7 @@ function PlusIcon() {
 }
 
 /* ───────────────────────────────────────────────────────────────────────
- * Spotlight stories — quick scans for individual aspects of the spec.
+ * Spotlight stories, quick scans for individual aspects of the spec.
  * ─────────────────────────────────────────────────────────────────────── */
 
 export const Default: Story = {
@@ -106,7 +106,7 @@ export const Linktext: Story = {
   args: { variant: "linktext", children: "View details" },
 };
 
-/* All six variants side-by-side at the default size — quickest visual diff
+/* All six variants side-by-side at the default size, quickest visual diff
  * across light + dark mode. */
 export const AllVariants: Story = {
   parameters: { layout: "padded" },
@@ -247,7 +247,7 @@ export const Loading: Story = {
 };
 
 /* ───────────────────────────────────────────────────────────────────────
- * Quill matrix — the canonical 330-cell parity grid.
+ * Quill matrix, the canonical 330-cell parity grid.
  * Mirrors Figma node 26465:249160.
  * ─────────────────────────────────────────────────────────────────────── */
 
@@ -293,12 +293,12 @@ function QuillCell({
   state: StateKey;
 }) {
   const isIconSize = size.startsWith("icon");
-  // linktext × icon-* doesn't exist in the Figma matrix — render a placeholder
+  // linktext × icon-* doesn't exist in the Figma matrix, render a placeholder
   // so the grid alignment stays consistent.
   if (variant === "linktext" && isIconSize) {
     return (
       <div className="flex h-9 items-center justify-center text-xs text-[var(--ds-color-text-subtle)]/40">
-        —
+        , 
       </div>
     );
   }
@@ -348,7 +348,7 @@ function QuillRow({ variant, size }: { variant: Variant; size: Size }) {
 }
 
 function QuillVariantSection({ variant }: { variant: Variant }) {
-  // linktext skips icon sizes per Figma matrix (not just rendered as "—",
+  // linktext skips icon sizes per Figma matrix (not just rendered as ", ",
   // those rows aren't present at all).
   const sizes =
     variant === "linktext" ? TEXT_SIZES : ALL_SIZES;
@@ -405,7 +405,7 @@ export const QuillMatrix: Story = {
   render: () => (
     <div className="bg-[var(--ds-color-surface-default)] p-8 text-[var(--ds-color-text-default)]">
       <header className="mb-8">
-        <h1 className="text-2xl font-semibold">Button — Quill matrix</h1>
+        <h1 className="text-2xl font-semibold">Button, Quill matrix</h1>
         <p className="mt-2 max-w-2xl text-sm text-[var(--ds-color-text-subtle)]">
           Every variant × size × state combination in the system. Toggle the
           theme switch in the toolbar to verify dark-mode parity. Hover / focus /

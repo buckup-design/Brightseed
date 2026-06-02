@@ -3,10 +3,10 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
-import { StrategyCard, type AssessmentRow } from "@/components/forager/cards/strategy-card";
+import { StrategyCard, type AssessmentRow } from "@/components/hummingbird/cards/strategy-card";
 
 /* ─────────────────────────────────────────────────────────────────────────
- * StrategyCard v2 — Forager Strategies view.
+ * StrategyCard v2, Hummingbird Strategies view.
  *
  * Source mock:  anna's mocks 4-29-26/strategies view.png
  * Figma source: node 26585:379616 (StrategyCard v2 Components)
@@ -62,7 +62,7 @@ const DEMO_STRATEGIES: StrategyDef[] = [
     evidence: [
       { label: "Evidence",    detail: "Moderate literature, strong predicted signal", status: "warning" },
       { label: "Feasibility", detail: "GRAS ingredients, stable formulation",         status: "success" },
-      { label: "Legal",       detail: "Two patents — workaround feasible",             status: "warning" },
+      { label: "Legal",       detail: "Two patents, workaround feasible",             status: "warning" },
     ],
   },
   {
@@ -120,7 +120,7 @@ export const Mixed: Story = {
     evidence: [
       { label: "Evidence",    detail: "Moderate literature, strong predicted signal", status: "warning" },
       { label: "Feasibility", detail: "GRAS ingredients, stable formulation",         status: "success" },
-      { label: "Legal",       detail: "Two patents — workaround feasible",             status: "warning" },
+      { label: "Legal",       detail: "Two patents, workaround feasible",             status: "warning" },
     ],
   },
 };
@@ -149,18 +149,18 @@ export const AllGreen: Story = {
   },
 };
 
-// ─── Grid story — deferred-sort favorites ─────────────────────────────────────
+// ─── Grid story, deferred-sort favorites ─────────────────────────────────────
 //
 // Behavior:
 //   • Star toggles immediately (visual confirmation, internal state in StrategyCard)
 //   • Favorite state persists to localStorage on every toggle
-//   • Card ORDER is frozen at mount — derived from localStorage at that moment
+//   • Card ORDER is frozen at mount, derived from localStorage at that moment
 //   • Navigating away and back (or refreshing) re-reads localStorage → favorited
 //     cards sort to the top of the grid
 //
 // To test: favorite a card, then navigate away from this story and back.
 
-const FAVORITES_STORAGE_KEY = "forager-strategy-favorites-demo";
+const FAVORITES_STORAGE_KEY = "hummingbird-strategy-favorites-demo";
 
 function readFavorites(): Set<string> {
   try {
@@ -172,7 +172,7 @@ function readFavorites(): Set<string> {
 }
 
 function StrategiesGrid() {
-  // Live favorites Set — updates immediately on click so star reflects truth.
+  // Live favorites Set, updates immediately on click so star reflects truth.
   const [favorites, setFavorites] = React.useState<Set<string>>(readFavorites);
 
   // Sort order is frozen at mount. On the next mount (navigate away → back, or
@@ -192,7 +192,7 @@ function StrategiesGrid() {
       if (next.has(id)) next.delete(id); else next.add(id);
       try {
         localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify([...next]));
-      } catch { /* storage unavailable — star still toggles visually */ }
+      } catch { /* storage unavailable, star still toggles visually */ }
       return next;
     });
   };

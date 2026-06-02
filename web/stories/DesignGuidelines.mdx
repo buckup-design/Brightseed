@@ -6,9 +6,9 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 ## Visual direction
 
-Hummingbird is a tool for scientists and R&D professionals in food manufacturing. The interface should be calm, credible, and efficient — not expressive for its own sake. Design earns attention; it doesn't demand it.
+Hummingbird is a tool for scientists and R&D professionals in biotech discovery. The interface should be calm, credible, and efficient, not expressive for its own sake. Design earns attention; it doesn't demand it.
 
-**Restrained, with a committed accent on action surfaces.** Most pixels are neutral: sand, white, near-black. Lime carries the primary action weight. It appears on hero CTAs, primary chips, and the brand mark on the rail — surfaces where the user needs to act. Everywhere else, we get out of the way.
+**Restrained, with a committed accent on action surfaces.** Most pixels are neutral: sand, white, near-black. Lime carries the primary action weight. It appears on hero CTAs, primary chips, and the brand mark on the rail, surfaces where the user needs to act. Everywhere else, we get out of the way.
 
 Charts and tag colors (forest, cyan, lavender, orchid, orange, blue, yellow, red) are available for data differentiation, but they are never mixed with brand lime or forest as data series. Color in charts serves data clarity, not brand expression.
 
@@ -18,21 +18,21 @@ Charts and tag colors (forest, cyan, lavender, orchid, orange, blue, yellow, red
 
 ### Three layers
 
-Component code references **semantic tokens only** (`--ds-*`) — never primitives directly. The layers exist so that a single design decision (e.g., "primary action should be lime") flows everywhere automatically.
+Component code references **semantic tokens only** (`--ds-*`), never primitives directly. The layers exist so that a single design decision (e.g., "primary action should be lime") flows everywhere automatically.
 
 | Layer      | Prefix              | Example                          | What it does                                              |
 | ---------- | ------------------- | -------------------------------- | --------------------------------------------------------- |
-| Primitives | `--p-{type}-*`      | `--p-color-lime-300`             | Raw values, organized by type — the palette. Never used in components. |
+| Primitives | `--p-{type}-*`      | `--p-color-lime-300`             | Raw values, organized by type, the palette. Never used in components. |
 | Semantics  | `--ds-*`            | `--ds-color-action-primary`      | Intent-based aliases. Map design intent to primitives. **Component code reads this tier.** |
-| Component  | `--c-{component}-*` | `--c-button-bg`                  | Optional escape hatch only — for a local value with no semantic home. None defined yet. |
+| Component  | `--c-{component}-*` | `--c-button-bg`                  | Optional escape hatch only, for a local value with no semantic home. None defined yet. |
 
-> **Note:** Primitives are organized by `$type` and all use the `--p-{type}-*` convention (`--p-color-forest-700`, `--p-color-lime-300`, etc.) — the migration is complete; no bare `--color-*` primitives remain. Component code references `--ds-*` semantics directly; the `--c-*` tier is an optional escape hatch and no `--c-*` tokens exist today.
+> **Note:** Primitives are organized by `$type` and all use the `--p-{type}-*` convention (`--p-color-forest-700`, `--p-color-lime-300`, etc.), the migration is complete; no bare `--color-*` primitives remain. Component code references `--ds-*` semantics directly; the `--c-*` tier is an optional escape hatch and no `--c-*` tokens exist today.
 
 ---
 
 ### Surfaces
 
-All surfaces that change between light and dark theme list both values. State suffixes (`-hover`, `-active`) follow the "one step more pronounced" rule — each step tightens toward the interaction direction.
+All surfaces that change between light and dark theme list both values. State suffixes (`-hover`, `-active`) follow the "one step more pronounced" rule, each step tightens toward the interaction direction.
 
 #### Base surfaces
 
@@ -87,15 +87,15 @@ Each variant has three surface states (default → hover → active) and one dis
 
 | Token                                   | Light                 | Dark                  | Notes                                      |
 | --------------------------------------- | --------------------- | --------------------- | ------------------------------------------ |
-| `--ds-color-action-primary`             | lime-300 `#CDE67B`    | lime-300              | Default — theme-invariant                  |
+| `--ds-color-action-primary`             | lime-300 `#CDE67B`    | lime-300              | Default, theme-invariant                  |
 | `--ds-color-action-primary-hover`       | lime-400              | lime-400              | One step more pronounced                   |
 | `--ds-color-action-primary-active`      | lime-500              | lime-500              | Pressed                                    |
 | `--ds-color-action-primary-disabled`    | lime-300 + sand-100 overlay | lime-300 + sand-700 overlay | Desaturated surface overlay       |
-| `--ds-color-action-secondary`           | sand-100              | sand-900              | Faint sand bg — visibly distinct from page |
+| `--ds-color-action-secondary`           | sand-100              | sand-900              | Faint sand bg, visibly distinct from page |
 | `--ds-color-action-secondary-hover`     | sand-200              | sand-800              |                                            |
 | `--ds-color-action-secondary-active`    | sand-300              | sand-700              |                                            |
 | `--ds-color-action-secondary-disabled`  | sand-50               | sand-950              | Fades toward page bg                       |
-| `--ds-color-action-critical`            | red-100               | red-900               | Soft destructive — tinted, not alarming    |
+| `--ds-color-action-critical`            | red-100               | red-900               | Soft destructive, tinted, not alarming    |
 | `--ds-color-action-critical-hover`      | red-200               | red-800               |                                            |
 | `--ds-color-action-critical-active`     | red-300               | red-700               |                                            |
 | `--ds-color-action-critical-disabled`   | red-100 + sand overlay | red-900 + sand overlay |                                           |
@@ -105,16 +105,16 @@ Each variant has three surface states (default → hover → active) and one dis
 | Token                             | Value                                 | Notes                                                         |
 | --------------------------------- | ------------------------------------- | ------------------------------------------------------------- |
 | `--ds-color-disabled-surface-overlay` | sand-100 (light) / sand-700 (dark) | Mixed at 50% over the default surface to produce the disabled surface |
-| `--ds-disabled-text-opacity`      | `0.55`                                | Applied to text + icon on the variant's normal foreground. Not a hex — an opacity multiplier. |
+| `--ds-disabled-text-opacity`      | `0.55`                                | Applied to text + icon on the variant's normal foreground. Not a hex, an opacity multiplier. |
 
 #### Text on action surfaces
 
 | Token                                      | Light       | Dark        | Notes                                                    |
 | ------------------------------------------ | ----------- | ----------- | -------------------------------------------------------- |
-| `--ds-color-text-on-action-primary`        | forest-800  | forest-800  | Theme-invariant — lime button text at default            |
+| `--ds-color-text-on-action-primary`        | forest-800  | forest-800  | Theme-invariant, lime button text at default            |
 | `--ds-color-text-on-action-primary-hover`  | forest-900  | forest-900  | One step more pronounced                                 |
 | `--ds-color-text-on-action-primary-active` | forest-950  | forest-950  | Required for AA on lime-500 active surface               |
-| `--ds-color-text-on-action-critical`       | red-600     | red-300     | Soft destructive text — red on red-tinted surface        |
+| `--ds-color-text-on-action-critical`       | red-600     | red-300     | Soft destructive text, red on red-tinted surface        |
 | `--ds-color-text-on-action-critical-hover` | red-700     | red-200     |                                                          |
 
 ---
@@ -131,7 +131,7 @@ Each variant has three surface states (default → hover → active) and one dis
 
 #### Focus rings
 
-1px stroke, 1px offset from the component body. Variant-aware color — visible without dominating. `--ds-color-border-focus-link-brand` is a separate token from `--ds-color-border-focus` for namespace clarity, even though they currently resolve to the same value.
+1px stroke, 1px offset from the component body. Variant-aware color, visible without dominating. `--ds-color-border-focus-link-brand` is a separate token from `--ds-color-border-focus` for namespace clarity, even though they currently resolve to the same value.
 
 | Variant                | Token                                  | Light    | Dark     |
 | ---------------------- | -------------------------------------- | -------- | -------- |
@@ -142,7 +142,7 @@ Each variant has three surface states (default → hover → active) and one dis
 
 #### Semantic intent borders
 
-Light mode uses a quiet step-200 tint. Dark mode uses a semi-transparent intent color at 46% opacity — same base step as the icon, expressed as a translucent overlay.
+Light mode uses a quiet step-200 tint. Dark mode uses a semi-transparent intent color at 46% opacity, same base step as the icon, expressed as a translucent overlay.
 
 | Token                               | Light      | Dark                    |
 | ----------------------------------- | ---------- | ----------------------- |
@@ -163,7 +163,7 @@ Light mode uses a quiet step-200 tint. Dark mode uses a semi-transparent intent 
 
 | Token                          | Light      | Dark       | Use                                                        |
 | ------------------------------ | ---------- | ---------- | ---------------------------------------------------------- |
-| `--ds-color-text-default`      | sand-900   | sand-50    | Body copy, primary labels — warm near-black / warm white   |
+| `--ds-color-text-default`      | sand-900   | sand-50    | Body copy, primary labels, warm near-black / warm white   |
 | `--ds-color-text-default-hover`| sand-950   | sand-50    | One step more pronounced (dark mode hits ceiling at sand-50) |
 | `--ds-color-text-subtle`       | sand-700   | sand-300   | Secondary / helper text, captions                          |
 | `--ds-color-text-disabled`     | sand-500   | sand-600   | Static disabled text (non-button). Buttons use opacity rule instead. |
@@ -179,20 +179,20 @@ Used on Deep Forest (`--ds-color-surface-brand`) and other dark panels.
 
 #### Link text
 
-Two distinct components with separate state machines. `link-*` is the inline `<a>` in body copy (always underlined, blue scale). `link-brand` is the `Linktext` button variant (never underlined, lime scale — same family as the primary CTA).
+Two distinct components with separate state machines. `link-*` is the inline `<a>` in body copy (always underlined, blue scale). `link-brand` is the `Linktext` button variant (never underlined, lime scale, same family as the primary CTA).
 
 | Token                             | Light      | Dark       | State           |
 | --------------------------------- | ---------- | ---------- | --------------- |
 | `--ds-color-text-link-default`    | blue-600   | blue-500   | `:link`         |
 | `--ds-color-text-link-default-hover` | blue-700 | blue-400  | `:hover`        |
-| `--ds-color-text-link-visited`    | sand-700   | sand-300   | `:visited` — warm, settled |
+| `--ds-color-text-link-visited`    | sand-700   | sand-300   | `:visited`, warm, settled |
 | `--ds-color-text-link-active`     | blue-900   | blue-200   | `:active`       |
-| `--ds-color-text-link-brand`      | lime-700   | lime-300   | Linktext default — lime-700 passes AA on white; lime-300 passes AA on sand-950 |
+| `--ds-color-text-link-brand`      | lime-700   | lime-300   | Linktext default, lime-700 passes AA on white; lime-300 passes AA on sand-950 |
 | `--ds-color-text-link-brand-hover`| lime-800   | lime-200   | One step more pronounced |
 
 #### Semantic text
 
-Light mode uses intent-tinted text. Dark mode uses neutral foreground (`sand-50`) — tinted text on dark tinted surfaces reads garish and reduces contrast. The semantic signal in dark mode lives in the surface tint and border only.
+Light mode uses intent-tinted text. Dark mode uses neutral foreground (`sand-50`), tinted text on dark tinted surfaces reads garish and reduces contrast. The semantic signal in dark mode lives in the surface tint and border only.
 
 | Token                          | Light      | Dark (neutral) | Use                        |
 | ------------------------------ | ---------- | -------------- | -------------------------- |
@@ -209,7 +209,7 @@ Light mode uses intent-tinted text. Dark mode uses neutral foreground (`sand-50`
 
 ### Icons
 
-Icons mirror the text taxonomy exactly. `--ds-color-icon-*` and `--ds-color-text-*` share the same token structure and values — pick the one that semantically matches whether you're coloring a text node or an icon node.
+Icons mirror the text taxonomy exactly. `--ds-color-icon-*` and `--ds-color-text-*` share the same token structure and values, pick the one that semantically matches whether you're coloring a text node or an icon node.
 
 #### Base icons
 
@@ -220,7 +220,7 @@ Icons mirror the text taxonomy exactly. `--ds-color-icon-*` and `--ds-color-text
 | `--ds-color-icon-disabled`       | sand-500 | sand-600 | Static disabled icon (non-button contexts) |
 | `--ds-color-icon-inverse`        | sand-50  | sand-900 | Icons on Deep Forest or other dark surfaces|
 | `--ds-color-icon-inverse-subtle` | sand-300 | sand-700 | Secondary icons on dark surfaces           |
-| `--ds-color-icon-brand`          | lime-400 | lime-400 | Brand icons on light or dark bg — theme-invariant |
+| `--ds-color-icon-brand`          | lime-400 | lime-400 | Brand icons on light or dark bg, theme-invariant |
 
 #### Semantic icons
 
@@ -242,30 +242,30 @@ In dark mode, icon color uses the same base step as the semantic border (solid, 
 | `--ds-color-icon-data-lavender`  | lavender-700 | lavender-300 | Data panel (lavender hue)        |
 | `--ds-color-icon-data-orange`    | orange-700   | orange-300   | Data panel (orange hue)          |
 | `--ds-color-icon-data-orchid`    | orchid-700   | orchid-300   | Data panel (orchid hue)          |
-| `--ds-color-icon-favorite-inactive` | sand-300  | sand-700     | Favorite/pin icon — appears on card hover, unpinned |
-| `--ds-color-icon-favorite-active`   | yellow-500 | yellow-500   | Favorited / pinned — theme-invariant |
+| `--ds-color-icon-favorite-inactive` | sand-300  | sand-700     | Favorite/pin icon, appears on card hover, unpinned |
+| `--ds-color-icon-favorite-active`   | yellow-500 | yellow-500   | Favorited / pinned, theme-invariant |
 
 ---
 
 ### Tag colors
 
-The 8 tag colors — forest, lime, cyan, blue, yellow, orange, lavender, orchid — are **decorative, not semantic**. A `cyan` badge does not mean "info." An `orange` badge does not mean "warning." Tag color exists for visual differentiation in tag-dense Forager tables, not to imply system state.
+The 8 tag colors, forest, lime, cyan, blue, yellow, orange, lavender, orchid, are **decorative, not semantic**. A `cyan` badge does not mean "info." An `orange` badge does not mean "warning." Tag color exists for visual differentiation in tag-dense Hummingbird tables, not to imply system state.
 
-For status meaning, always use icon + text composition — never rely on color alone.
+For status meaning, always use icon + text composition, never rely on color alone.
 
 ---
 
 ### Charts
 
-Use `--ds-chart-cat-1` through `--ds-chart-cat-8` in order for categorical data series. Never use brand lime or brand forest as a data series color — those are reserved for UI, not data.
+Use `--ds-chart-cat-1` through `--ds-chart-cat-8` in order for categorical data series. Never use brand lime or brand forest as a data series color, those are reserved for UI, not data.
 
 ---
 
 ## Typography
 
-**Geist** is the primary typeface for all UI — labels, body, tables, inputs. It's a variable font; we use the weight axis for state signaling (button hover, etc.). Loaded via the `geist` npm package.
+**Geist** is the primary typeface for all UI, labels, body, tables, inputs. It's a variable font; we use the weight axis for state signaling (button hover, etc.). Loaded via the `geist` npm package.
 
-**Tiempos Fine RegularItalic** is the display face — marketing headlines, section titles, the doc pages you're reading now. The italic is intrinsic to the cut, not a modifier. Use it for `display/h1`, `display/h2`, `display/h3` only; don't reach for it inside the product UI.
+**Tiempos Fine RegularItalic** is the display face, marketing headlines, section titles, the doc pages you're reading now. The italic is intrinsic to the cut, not a modifier. Use it for `display/h1`, `display/h2`, `display/h3` only; don't reach for it inside the product UI.
 
 **Tiempos Text** (Medium, Semibold, Bold) is licensed and available for inline body emphasis. Not currently in active use but available.
 
@@ -275,7 +275,7 @@ Body line length is capped at **65–75ch** to maintain readable measure at typi
 
 ## Shape & radius
 
-All corner radii reference the shape token ladder. Never hardcode pixel values on individual components — that's how components drift from each other over time.
+All corner radii reference the shape token ladder. Never hardcode pixel values on individual components, that's how components drift from each other over time.
 
 ### Radius
 
@@ -289,7 +289,7 @@ All corner radii reference the shape token ladder. Never hardcode pixel values o
 | `--ds-shape-radius-xl`      | 14px   | Dialogs / modals                                   |
 | `--ds-shape-radius-2xl`     | 18px   | Sheet overlays                                     |
 | `--ds-shape-radius-3xl`     | 22px   |                                                    |
-| `--ds-shape-radius-4xl`     | 26px   | XL buttons only — pronounced rounding for hero CTAs|
+| `--ds-shape-radius-4xl`     | 26px   | XL buttons only, pronounced rounding for hero CTAs|
 | `--ds-shape-radius-round`   | 9999px | Pills, avatars, number badges                      |
 
 ### Border width
@@ -305,7 +305,7 @@ All corner radii reference the shape token ladder. Never hardcode pixel values o
 
 ## Elevation & shadow
 
-Forager uses very little shadow. Surface differentiation comes from sand tinting (alt surfaces) and 1px borders — not drop shadows. The exception is dropdowns and popovers, which use a single elevation token.
+Hummingbird uses very little shadow. Surface differentiation comes from sand tinting (alt surfaces) and 1px borders, not drop shadows. The exception is dropdowns and popovers, which use a single elevation token.
 
 If you're reaching for a shadow on a card or panel, ask first whether a 1px border and a sand alt-surface achieves the same goal. It usually does.
 
@@ -316,16 +316,16 @@ If you're reaching for a shadow on a card or panel, ask first whether a 1px bord
 | `--ds-shadow-lg`| Dialog, modal                               |
 | `--ds-shadow-xl`| Sheet overlay                               |
 
-All shadows are tinted with `forest-950 (#133019)` for earthy warmth — not neutral gray.
+All shadows are tinted with `forest-950 (#133019)` for earthy warmth, not neutral gray.
 
 ---
 
 ## Motion
 
-1. **Easing** — ease-out exponential curves (`ease-out-quart`, `ease-out-quint`, `ease-out-expo`)
-2. **No bounce** — no elastic, no spring
-3. **Standard duration** — 120ms for state changes
-4. **Animate transform and opacity only** — never animate layout properties (width, height, padding, margin)
+1. **Easing:** ease-out exponential curves (`ease-out-quart`, `ease-out-quint`, `ease-out-expo`)
+2. **No bounce:** no elastic, no spring
+3. **Standard duration:** 120ms for state changes
+4. **Animate transform and opacity only:** never animate layout properties (width, height, padding, margin)
 
 ---
 
@@ -333,10 +333,10 @@ All shadows are tinted with `forest-950 (#133019)` for earthy warmth — not neu
 
 WCAG 2.1 AA is the floor on all action surfaces. Notable decisions in the system:
 
-1. **Lime-300 retuned** — `#CDE67B` (was `#CAE279`) so `forest-800` text passes AA at 4.57:1 on the default button surface
-2. **Hover and pressed pass AA** — at 5.00:1 and 6.43:1 respectively
-3. **Focus rings** — 1px stroke, 1px offset, variant-aware color; visible without dominating
-4. **Disabled is exempt from WCAG 1.4.3** — we apply 0.55 opacity over a desaturating surface overlay, accepting ~3.4:1 worst case in exchange for a clear "inactive" read
+1. **Lime-300 retuned:** `#CDE67B` (was `#CAE279`) so `forest-800` text passes AA at 4.57:1 on the default button surface
+2. **Hover and pressed pass AA:** at 5.00:1 and 6.43:1 respectively
+3. **Focus rings:** 1px stroke, 1px offset, variant-aware color; visible without dominating
+4. **Disabled is exempt from WCAG 1.4.3:** we apply 0.55 opacity over a desaturating surface overlay, accepting ~3.4:1 worst case in exchange for a clear "inactive" read
 
 ---
 
@@ -350,7 +350,7 @@ Icon sizes are relative to the component they live in. Button icon slots are siz
 
 ## Composition
 
-How to assemble tokens into the common Forager regions. These map intent → token; each token's appearance is defined in the sections above.
+How to assemble tokens into the common Hummingbird regions. These map intent → token; each token's appearance is defined in the sections above.
 
 **Page structure**
 
@@ -370,7 +370,7 @@ How to assemble tokens into the common Forager regions. These map intent → tok
 
 - Row → `--ds-color-surface-default`; alternate row → `--ds-color-surface-alt`
 - Header row → `--ds-color-surface-alt` with `--ds-color-text-subtle`
-- Selected row → `--ds-color-surface-selected` (blue tint — a row being selected is not a status, so it is deliberately not success-green)
+- Selected row → `--ds-color-surface-selected` (blue tint, a row being selected is not a status, so it is deliberately not success-green)
 - Numeric cells → `font-mono` + `tabular-nums`; borders → `--ds-color-border-subtle`
 
 **Status surfaces (alerts, banners, callouts)**
@@ -387,16 +387,16 @@ How to assemble tokens into the common Forager regions. These map intent → tok
 
 ## Component usage
 
-Forager-specific constraints on the shared components. Appearance lives in Storybook; these are the rules for using them correctly.
+Hummingbird-specific constraints on the shared components. Appearance lives in Storybook; these are the rules for using them correctly.
 
-- **Button** — never override `bg-*` / `text-*` via `className` (the bridge handles color); use the `disabled` prop, never reach for `-disabled` tokens in component code.
-- **Link vs Linktext** — never use a Button for an inline text link; never use a Link for a standalone CTA. Two components, two state machines.
-- **Input / Textarea / Select** — signal errors with `aria-invalid="true"`, not by changing the border color directly.
-- **Badge** — always `rounded-full`; never `rounded` (it reads as a button).
-- **Card** — padding `p-4` (dense panels) or `p-6` (primary content); never nest a Card in a Card — use `--ds-color-surface-alt` for inset content.
-- **Dialog vs Sheet** — Dialog for confirmations and short forms (≤4 fields); Sheet for side panels with more context (`side="right"` only).
-- **Skeleton** — use for all loading states; match the skeleton's dimensions to the content it replaces.
-- **Tabs** — in-page view switching only, never page-level navigation (that is the sidebar's job).
+- **Button:** never override `bg-*` / `text-*` via `className` (the bridge handles color); use the `disabled` prop, never reach for `-disabled` tokens in component code.
+- **Link vs Linktext:** never use a Button for an inline text link; never use a Link for a standalone CTA. Two components, two state machines.
+- **Input / Textarea / Select:** signal errors with `aria-invalid="true"`, not by changing the border color directly.
+- **Badge:** always `rounded-full`; never `rounded` (it reads as a button).
+- **Card:** padding `p-4` (dense panels) or `p-6` (primary content); never nest a Card in a Card; use `--ds-color-surface-alt` for inset content.
+- **Dialog vs Sheet:** Dialog for confirmations and short forms (≤4 fields); Sheet for side panels with more context (`side="right"` only).
+- **Skeleton:** use for all loading states; match the skeleton's dimensions to the content it replaces.
+- **Tabs:** in-page view switching only, never page-level navigation (that is the sidebar's job).
 
 ---
 
@@ -404,35 +404,35 @@ Forager-specific constraints on the shared components. Appearance lives in Story
 
 ### Banned everywhere
 
-1. **Side-stripe borders** — a colored accent stripe on the left or right edge of a card, list item, or alert. This pattern signals "I couldn't decide on a real hierarchy."
-2. **Gradient text** — `background-clip: text` for decorative effect. Clever for a moment, regrettable in a product.
-3. **Glassmorphism as default** — it can be purposeful in rare moments but it is not a surface treatment for an app that handles serious data.
-4. **The hero-metric template** — big number, small label, supporting stats, gradient accent. This pattern has been done so many times it has stopped conveying confidence.
-5. **Identical card grids** — the same card repeated with no variation in role, hierarchy, or visual weight.
-6. **Modal as first thought** — panels, drawers, and inline affordances almost always serve better. Reserve modals for destructive confirmations.
-7. **Em dashes in product copy** — use a comma, a colon, or a second sentence instead.
+1. **Side-stripe borders:** a colored accent stripe on the left or right edge of a card, list item, or alert. This pattern signals "I couldn't decide on a real hierarchy."
+2. **Gradient text:** `background-clip: text` for decorative effect. Clever for a moment, regrettable in a product.
+3. **Glassmorphism as default:** it can be purposeful in rare moments but it is not a surface treatment for an app that handles serious data.
+4. **The hero-metric template:** big number, small label, supporting stats, gradient accent. This pattern has been done so many times it has stopped conveying confidence.
+5. **Identical card grids:** the same card repeated with no variation in role, hierarchy, or visual weight.
+6. **Modal as first thought:** panels, drawers, and inline affordances almost always serve better. Reserve modals for destructive confirmations.
+7. **Em dashes in product copy:** use a comma, a colon, or a second sentence instead.
 
 ### Brightseed-specific
 
-1. **Brand-poetic names in code** — "Chlorophyll," "Deep Forest," "Garlic Bloom" do not appear in `tokens/`, `bridge/`, components, or documentation. They live only in `Obsolete/brand-colors-reference.md`.
-2. **Hardcoded hex, px, or font strings** — all values come from tokens via CSS custom properties.
-3. **Tag colors implying status** — use icon + text for status; tag color is decorative.
-4. **Brand lime or forest as a chart data series** — those hues are reserved for UI affordances.
-5. **Reaching past the semantic layer** — component code references `--ds-*` semantics only, never primitives (`--p-*`) or raw values directly. If no semantic token exists for what you need, flag it with `// BRIGHTSEED-TBD: [BLOCKING]` and stop.
-6. **Marketing patterns inside Forager** — hero sections, editorial layouts, large display type belong to the marketing system, not the product. Flag them rather than build them.
-7. **Rounding scientific values for display** — show full precision with units; rounding is a data-layer decision, not a presentation one.
-8. **The ambiguous `--primary-*`** — Brightseed splits primary into `--ds-color-surface-brand` (chrome) and `--ds-color-action-primary` (the button). "Primary" alone is forbidden.
-9. **Importing from any library beyond shadcn/ui and Recharts** — no MUI, Chakra, Ant, or custom Tailwind plugins.
+1. **Brand-poetic names in code:** "Chlorophyll," "Deep Forest," "Garlic Bloom" do not appear in `tokens/`, `bridge/`, components, or documentation. They live only in `Obsolete/brand-colors-reference.md`.
+2. **Hardcoded hex, px, or font strings:** all values come from tokens via CSS custom properties.
+3. **Tag colors implying status:** use icon + text for status; tag color is decorative.
+4. **Brand lime or forest as a chart data series:** those hues are reserved for UI affordances.
+5. **Reaching past the semantic layer:** component code references `--ds-*` semantics only, never primitives (`--p-*`) or raw values directly. If no semantic token exists for what you need, flag it with `// BRIGHTSEED-TBD: [BLOCKING]` and stop.
+6. **Marketing patterns inside Hummingbird:** hero sections, editorial layouts, large display type belong to the marketing system, not the product. Flag them rather than build them.
+7. **Rounding scientific values for display:** show full precision with units; rounding is a data-layer decision, not a presentation one.
+8. **The ambiguous `--primary-*`:** Brightseed splits primary into `--ds-color-surface-brand` (chrome) and `--ds-color-action-primary` (the button). "Primary" alone is forbidden.
+9. **Importing from any library beyond shadcn/ui and Recharts:** no MUI, Chakra, Ant, or custom Tailwind plugins.
 
 ---
 
 ## Domain notes
 
-Forager is a biotech discovery tool; these domain facts shape UI decisions.
+Hummingbird is a biotech discovery tool; these domain facts shape UI decisions.
 
-- **Users are scientists, not consumers** — lean to information density over whitespace.
-- **Numeric precision matters** — use `tabular-nums` for any column of numbers; show scientific notation where apt (nM, EC50).
-- **Sample and compound IDs are first-class** — render them in `font-mono` so they stand out.
-- **Primary chart types are dose-response, time-series, and heatmaps** — bar and pie are rare.
-- **Units are non-negotiable** — never display a number without its unit (µM, nM, %).
-- **Never encode data by color alone** — pair color with a label or shape; some users are colorblind.
+- **Users are scientists, not consumers:** lean to information density over whitespace.
+- **Numeric precision matters:** use `tabular-nums` for any column of numbers; show scientific notation where apt (nM, EC50).
+- **Sample and compound IDs are first-class:** render them in `font-mono` so they stand out.
+- **Primary chart types are dose-response, time-series, and heatmaps:** bar and pie are rare.
+- **Units are non-negotiable:** never display a number without its unit (µM, nM, %).
+- **Never encode data by color alone:** pair color with a label or shape; some users are colorblind.

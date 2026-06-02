@@ -6,7 +6,7 @@ import React from "react";
  * Geist + Geist Mono load via .storybook/preview-head.html (Google Fonts CDN),
  * NOT the `geist` npm package. The package does `import localFont from
  * "next/font/local"`, which @storybook/nextjs-vite's Vite build can't resolve in
- * the preview config ("default" is not exported) — it fails the Storybook build.
+ * the preview config ("default" is not exported), it fails the Storybook build.
  * A <link> in preview-head can't break the build. tokens/typography.css already
  * sets --font-sans: "Geist" and --font-mono: "Geist Mono", so loading those
  * families by name in the iframe head is all that's needed for stories + docs to
@@ -66,7 +66,7 @@ const preview: Preview = {
       }
       // Paint the preview surface with the active theme. Without this, the
       // Canvas/Docs preview stays white while dark-theme text flips to a light
-      // value — so transparent/outline components are invisible until a hover
+      // value, so transparent/outline components are invisible until a hover
       // state adds a fill. The wrapper carries its own data-theme so the subtree
       // resolves the right tokens even in Docs inline previews.
       return React.createElement(

@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/sidebar";
 
 /**
- * TeamSwitcher — Brightseed Forager design system.
+ * TeamSwitcher, Brightseed Quill design system.
  *
  * Color tokens (Brightseed semantics):
  *   Logo backdrop (lime)    → --ds-color-action-primary

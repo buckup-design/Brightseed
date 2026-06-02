@@ -1,23 +1,23 @@
 /*
- * Brightseed Design System — Chart & Data Visualization Tokens
+ * Brightseed Design System, Chart & Data Visualization Tokens
  * Reference: BrightseedDS.md §3.7
  *
  * Requires: primitives.css, semantics.css
  *
  * RULES:
- * — Never use brand action (lime) or brand surface (forest) for chart series —
+ *, Never use brand action (lime) or brand surface (forest) for chart series , 
  *   those are reserved for UI chrome.
- * — Categorical series colors are theme-invariant by design (no dark override).
+ *, Categorical series colors are theme-invariant by design (no dark override).
  *   Surface/grid/axis tokens reference semantics and auto-adapt to dark theme.
- * — Always pair color with shape or pattern. Never rely on color alone.
- * — Colorblind verification: categorical palette confirmed under Deuteranopia
- *   and Protanopia. Tritanopia check: cat-1 (teal) vs cat-5 (olive-yellow) —
+ *, Always pair color with shape or pattern. Never rely on color alone.
+ *, Colorblind verification: categorical palette confirmed under Deuteranopia
+ *   and Protanopia. Tritanopia check: cat-1 (teal) vs cat-5 (olive-yellow) , 
  *   use shape/pattern redundancy in any two-series chart using this pair.
  */
 
 :root {
 
-  /* ── Chart surfaces — reference semantic tokens; auto-adapt to dark theme ── */
+  /* ── Chart surfaces, reference semantic tokens; auto-adapt to dark theme ── */
   --chart-background:         var(--ds-color-surface-default);
   --chart-grid-major:         var(--ds-color-border-subtle);    /* primary grid lines */
   --chart-grid-minor:         var(--p-color-sand-100);         /* secondary grid lines */
@@ -30,16 +30,16 @@
 
   /* ── Categorical palette (8 series, colorblind-safe) ──
      Assign in order: cat-1 → cat-2 → ... → cat-8. Do not skip around. */
-  --chart-cat-1: var(--p-color-cyan-500);     /* #00b4b6 — teal, primary series */
-  --chart-cat-2: var(--p-color-lavender-500);   /* #8261ff — lavender */
-  --chart-cat-3: var(--p-color-orange-500);   /* #E88F3E — orange */
-  --chart-cat-4: var(--p-color-red-500);     /* #ee3a49 — red */
-  --chart-cat-5: var(--p-color-yellow-600);  /* #a69400 — olive-yellow (dark step for legibility) */
-  --chart-cat-6: var(--p-color-cyan-800);     /* #004948 — dark teal (series-1 depth variant) */
-  --chart-cat-7: var(--p-color-lavender-300);   /* #c8bcff — soft lavender (series-2 light variant) */
-  --chart-cat-8: var(--p-color-orange-700);   /* #a34900 — burnt orange (series-3 depth variant) */
+  --chart-cat-1: var(--p-color-cyan-500);     /* #00b4b6, teal, primary series */
+  --chart-cat-2: var(--p-color-lavender-500);   /* #8261ff, lavender */
+  --chart-cat-3: var(--p-color-orange-500);   /* #E88F3E, orange */
+  --chart-cat-4: var(--p-color-red-500);     /* #ee3a49, red */
+  --chart-cat-5: var(--p-color-yellow-600);  /* #a69400, olive-yellow (dark step for legibility) */
+  --chart-cat-6: var(--p-color-cyan-800);     /* #004948, dark teal (series-1 depth variant) */
+  --chart-cat-7: var(--p-color-lavender-300);   /* #c8bcff, soft lavender (series-2 light variant) */
+  --chart-cat-8: var(--p-color-orange-700);   /* #a34900, burnt orange (series-3 depth variant) */
 
-  /* ── Sequential palette — forest (brand-tinted, for density / magnitude heatmaps) ── */
+  /* ── Sequential palette, forest (brand-tinted, for density / magnitude heatmaps) ── */
   --chart-seq-forest-100: var(--p-color-forest-50);
   --chart-seq-forest-200: var(--p-color-forest-100);
   --chart-seq-forest-300: var(--p-color-forest-200);
@@ -50,7 +50,7 @@
   --chart-seq-forest-800: var(--p-color-forest-800);
   --chart-seq-forest-900: var(--p-color-forest-900);
 
-  /* ── Sequential palette — blue (alternative; distinguishes assay types from density) ── */
+  /* ── Sequential palette, blue (alternative; distinguishes assay types from density) ── */
   --chart-seq-blue-100: var(--p-color-blue-50);
   --chart-seq-blue-200: var(--p-color-blue-100);
   --chart-seq-blue-300: var(--p-color-blue-200);
@@ -61,7 +61,7 @@
   --chart-seq-blue-800: var(--p-color-blue-800);
   --chart-seq-blue-900: var(--p-color-blue-900);
 
-  /* ── Diverging palette — red ↔ neutral ↔ forest ──
+  /* ── Diverging palette, red ↔ neutral ↔ forest ──
      For deltas, fold-change, and pos/neg inhibition response maps.
      Neutral midpoint uses sand-100 (warm, not optical gray) to match page bg. */
   --chart-div-neg-500: var(--p-color-red-700);    /* strong negative / maximum inhibition loss */
@@ -77,17 +77,17 @@
   --chart-div-pos-500: var(--p-color-forest-700);  /* strong positive / maximum effect */
 
   /* ── Semantic trend ── */
-  --chart-trend-positive: var(--p-color-forest-600);      /* forest-600 — improving, above baseline */
-  --chart-trend-negative: var(--p-color-red-600);     /* red-600 — declining, below baseline */
-  --chart-trend-neutral:  var(--p-color-sand-600);   /* no change — muted */
+  --chart-trend-positive: var(--p-color-forest-600);      /* forest-600, improving, above baseline */
+  --chart-trend-negative: var(--p-color-red-600);     /* red-600, declining, below baseline */
+  --chart-trend-neutral:  var(--p-color-sand-600);   /* no change, muted */
   --chart-trend-unknown:  var(--p-color-neutral-400); /* data pending / unclassified */
 
   /* ── Dose-response specific (biotech) ── */
-  --chart-curve-fit:           var(--p-color-cyan-500);      /* 4PL fitted line — teal */
-  --chart-confidence-band:     var(--p-color-cyan-100);      /* error envelope — light teal wash */
-  --chart-datapoint-default:   var(--p-color-sand-700);     /* raw experimental points — muted */
-  --chart-datapoint-highlight: var(--p-color-lime-400); /* selected / hovered point — lime */
-  --chart-datapoint-outlier:   var(--p-color-red-500);       /* flagged outlier — red */
-  --chart-reference-line:      var(--p-color-red-600);       /* IC50, EC50 vertical marker — dashed red */
+  --chart-curve-fit:           var(--p-color-cyan-500);      /* 4PL fitted line, teal */
+  --chart-confidence-band:     var(--p-color-cyan-100);      /* error envelope, light teal wash */
+  --chart-datapoint-default:   var(--p-color-sand-700);     /* raw experimental points, muted */
+  --chart-datapoint-highlight: var(--p-color-lime-400); /* selected / hovered point, lime */
+  --chart-datapoint-outlier:   var(--p-color-red-500);       /* flagged outlier, red */
+  --chart-reference-line:      var(--p-color-red-600);       /* IC50, EC50 vertical marker, dashed red */
 
 }

@@ -10,13 +10,13 @@ import {
 } from "@/components/ui/sidebar";
 
 /* ─────────────────────────────────────────────────────────────────────────
- * TeamSwitcher — sub-piece of AppShell4 sidebar header.
+ * TeamSwitcher, sub-piece of AppShell4 sidebar header.
  *
  * Renders a workspace/team selector with logo + name + plan, opening a
  * dropdown of switchable teams plus an "Add team" affordance. Lives in the
  * SidebarHeader slot in AppShell4.
  *
- * Requires SidebarProvider context — useSidebar() reads layout state.
+ * Requires SidebarProvider context, useSidebar() reads layout state.
  * ───────────────────────────────────────────────────────────────────────── */
 
 const meta = {
@@ -41,7 +41,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const teams = [
-  { name: "Forager Research", logo: Microscope, plan: "Enterprise" },
+  { name: "Hummingbird Research", logo: Microscope, plan: "Enterprise" },
   { name: "Greenhouse Lab", logo: Leaf, plan: "Pro" },
   { name: "Compound Studio", logo: Beaker, plan: "Free" },
 ];
@@ -52,7 +52,7 @@ export const Default: Story = {
 
 export const SingleTeam: Story = {
   args: {
-    teams: [{ name: "Forager Research", logo: Microscope, plan: "Enterprise" }],
+    teams: [{ name: "Hummingbird Research", logo: Microscope, plan: "Enterprise" }],
   },
 };
 

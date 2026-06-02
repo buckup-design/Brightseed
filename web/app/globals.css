@@ -6,7 +6,7 @@
  *   2. Brightseed tokens (primitives → semantics → shape → charts)
  *   3. Brightseed → shadcn bridge (maps Brightseed semantics to shadcn variable names)
  *   4. tw-animate-css (provides the keyframe utilities shadcn components reference)
- *   5. @theme inline — exposes shadcn variables to Tailwind v4's utility generator
+ *   5. @theme inline, exposes shadcn variables to Tailwind v4's utility generator
  *
  * The tokens/ and bridge/ directories at the web/ root are symlinks to the
  * canonical files at the parent repo root. Edits flow both directions.
@@ -14,7 +14,7 @@
 
 /*
  * IMPORTANT: All @import statements MUST come before any other rules
- * (CSS spec). @source directives are NOT @import — placing them between
+ * (CSS spec). @source directives are NOT @import, placing them between
  * @imports invalidates everything after the first non-@import directive.
  * Group all @imports here at the top.
  */
@@ -29,7 +29,7 @@
  * Tailwind v4 auto-detects sources, but the auto-detection can miss files
  * that don't exist when the build process starts (e.g., new directories
  * added at runtime). The `components/pro-blocks/` tree is fed by the
- * @shadcndesign registry — directories appear when blocks are installed.
+ * @shadcndesign registry, directories appear when blocks are installed.
  *
  * Listing sources explicitly is defensive insurance: even if auto-detection
  * misses something, these directives guarantee Tailwind scans the right
@@ -50,7 +50,7 @@
  * Each variant fires for both the real pseudo-class AND a `data-force-state`
  * attribute. That lets `Button.stories.tsx` render every cell of the Quill
  * matrix in a specific state (hover, focus, active, disabled, loading) without
- * simulating user input — while production code still gets normal pseudo-class
+ * simulating user input, while production code still gets normal pseudo-class
  * behavior. One declaration in the cva, two trigger surfaces.
  */
 @custom-variant hovered (&:is(:hover, [data-force-state="hover"]));
@@ -95,7 +95,7 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  /* Radii — use Brightseed shape tokens if defined, else sensible defaults */
+  /* Radii, use Brightseed shape tokens if defined, else sensible defaults */
   --radius-sm: var(--ds-shape-radius-sm, 0.25rem);
   --radius-md: var(--ds-shape-radius-md, 0.5rem);
   --radius-lg: var(--ds-shape-radius-lg, 0.75rem);
@@ -226,10 +226,10 @@ body {
 
 /*
  * Sidebar tokens are defined in bridge/globals.css mapping to Brightseed
- * semantics — NOT here. The shadcn CLI auto-added stock hsl() values + a
+ * semantics, NOT here. The shadcn CLI auto-added stock hsl() values + a
  * `.dark` selector during @shadcndesign/app-shell-4 install (May 8, 2026);
  * those were removed in favor of the bridge-mapped versions.
  *
  * If you re-install a Sidebar-consuming block and the CLI re-injects stock
- * values here, delete them again — bridge/globals.css is the source of truth.
+ * values here, delete them again, bridge/globals.css is the source of truth.
  */

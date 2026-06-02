@@ -1,5 +1,5 @@
 /**
- * Real-shaped placeholder data for Forager surfaces.
+ * Real-shaped placeholder data for Hummingbird surfaces.
  *
  * Vocabulary stays consistent across Strategies / Compounds / Plants so the
  * three views read as one project. All numbers are invented; all names,

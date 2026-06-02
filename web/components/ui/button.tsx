@@ -5,7 +5,7 @@ import { Slot } from "radix-ui"
 import { cn } from "@/lib/utils"
 
 /**
- * Button — Brightseed Forager design system.
+ * Button, Brightseed Quill design system.
  *
  * Spec: see CLAUDE.md "Locked-in decisions (Apr 2026)" sections and BrightseedDS.md §4.
  * Mirrors the canonical "Components - Quill" matrix in Figma (node 26465:249160):
@@ -18,10 +18,10 @@ import { cn } from "@/lib/utils"
  *   secondary    Faint sand fill, no border. Flat-step ladder sand-100 → 200 → 300.
  *   outline      Hairline border, transparent surface. Hovers to surface-alt.
  *   ghost        No surface; hovers to surface-alt.
- *   destructive  Soft red. red-100 surface + red-600 text (NOT solid red-500) —
+ *   destructive  Soft red. red-100 surface + red-600 text (NOT solid red-500) , 
  *                matches the Tag recipe pattern, reads as destructive without shouting.
  *   linktext     Button-shaped link. Lime text, never underlined. (Deeper step
- *                than the lime button surface — lime-700 light / lime-300 dark —
+ *                than the lime button surface, lime-700 light / lime-300 dark , 
  *                so the text passes AA on page surfaces.) Distinct from the
  *                inline <a> Link component (blue, always underlined). See
  *                CLAUDE.md "Link vs Linktext" and "Brand-link uses lime, not
@@ -34,7 +34,7 @@ import { cn } from "@/lib/utils"
  *   icon-lg / icon-xl             square icon-only sizes
  *
  *   Corner radii: --ds-shape-radius-md (8px) for everything except xl + icon-xl,
- *   which use --ds-shape-radius-4xl (26px) — the "pronounced rounding for hero CTAs"
+ *   which use --ds-shape-radius-4xl (26px), the "pronounced rounding for hero CTAs"
  *   step on the existing radius scale.
  *
  * Hover behavior
@@ -46,7 +46,7 @@ import { cn } from "@/lib/utils"
  *
  * Disabled
  *   Surface uses --ds-color-action-{variant}-disabled (a color-mix overlay computed
- *   per variant — see semantics.css). Label and icon stay at the variant's normal
+ *   per variant, see semantics.css). Label and icon stay at the variant's normal
  *   foreground color but fade to --ds-disabled-text-opacity (0.55). Opacity is
  *   applied at exactly one DOM level (`[data-slot=button-content]`) so it never
  *   stacks. Disabled UI is exempt from WCAG 1.4.3 contrast.
@@ -56,7 +56,7 @@ import { cn } from "@/lib/utils"
  *   `aria-busy="true"` (screen readers announce in-progress), and
  *   `data-loading="true"`. The `disabled-state` Tailwind variant explicitly
  *   excludes `[data-loading="true"]` (see globals.css), so loading buttons
- *   keep their default surface — they read as "in progress", not "inactive".
+ *   keep their default surface, they read as "in progress", not "inactive".
  *   Visually: spinner takes the leading-icon slot, text stays at full opacity.
  *
  * Story / matrix support
@@ -89,7 +89,7 @@ const buttonVariants = cva(
     // Apply opacity to the content wrapper only, at exactly one DOM level so
     // it never stacks. The disabled-state variant excludes [data-loading="true"]
     // (see globals.css), so loading buttons keep their content at full opacity
-    // even though they're HTML-disabled — the spinner stays clearly visible.
+    // even though they're HTML-disabled, the spinner stays clearly visible.
     "disabled-state:[&_[data-slot=button-content]]:opacity-[var(--ds-disabled-text-opacity)]",
     // ── Focus ring: 3px outer, 50% alpha for softness. Variant sets color. ──
     "focused:ring-[3px] focused:ring-offset-0",
@@ -97,7 +97,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        // ── Default (lime — brand action) ───────────────────────────────
+        // ── Default (lime, brand action) ───────────────────────────────
         default: cn(
           "bg-[var(--ds-color-action-primary)] text-[var(--ds-color-text-on-action-primary)]",
           "hovered:bg-[var(--ds-color-action-primary-hover)]",
@@ -221,7 +221,7 @@ function Button({
   const isDisabled = disabled || loading
 
   // asChild: the user passed a complete element (typically an <a>). Pass
-  // through unchanged — Slot expects exactly one child, and we don't own
+  // through unchanged, Slot expects exactly one child, and we don't own
   // its internal structure enough to inject a ghost-label wrapper.
   if (asChild) {
     return (

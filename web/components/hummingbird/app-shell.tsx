@@ -1,7 +1,7 @@
 "use client"
 
 /**
- * AppShell — the layout wrapper used by every Forager surface.
+ * AppShell, the layout wrapper used by every Hummingbird surface.
  *
  * Structure:
  *   ┌─────────────┬────────────────────────────────────────────┐
@@ -23,7 +23,7 @@
  * trap PRODUCT.md anti-references warn against. Separating them keeps the
  * surface header free to carry editorial weight.
  *
- * Pages render their own SurfaceHeader inside the children slot — AppShell
+ * Pages render their own SurfaceHeader inside the children slot, AppShell
  * doesn't impose one. That's deliberate: the header is page-owned content,
  * not chrome.
  */
@@ -38,7 +38,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { ForagerSidebar } from "./forager-sidebar"
+import { HummingbirdSidebar } from "./hummingbird-sidebar"
 import { PROJECT } from "./data"
 
 export type AppShellProps = {
@@ -56,7 +56,7 @@ export function AppShell({
 }: AppShellProps) {
   return (
     <SidebarProvider defaultOpen={false}>
-      <ForagerSidebar />
+      <HummingbirdSidebar />
       <SidebarInset className="bg-[var(--ds-color-surface-default)]">
         <TopBar projectName={projectName} surfaceLabel={surfaceLabel} />
         {children}
@@ -86,7 +86,7 @@ function TopBar({
     >
       <SidebarTrigger className="size-8 shrink-0" />
 
-      {/* Project breadcrumb. Calm and small — the app top bar should not compete
+      {/* Project breadcrumb. Calm and small, the app top bar should not compete
           with the surface header below it. */}
       <nav
         aria-label="Breadcrumb"
@@ -114,7 +114,7 @@ function TopBar({
         ) : null}
       </nav>
 
-      {/* Project meta — quiet status pill on the right. Tag-color decorative
+      {/* Project meta, quiet status pill on the right. Tag-color decorative
           (lavender), not implying status meaning per DESIGN.md. */}
       <span
         className={cn(

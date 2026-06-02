@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/sidebar";
 
 /* ─────────────────────────────────────────────────────────────────────────
- * NavProjects — sub-piece of AppShell4 sidebar.
+ * NavProjects, sub-piece of AppShell4 sidebar.
  *
  * Renders a "Projects" section in the sidebar. Each row is a link with a
  * leading icon and a row-action menu (View / Share / Delete) revealed on
@@ -18,7 +18,7 @@ import {
  * Hidden when the sidebar is in icon-only collapsed mode (the section
  * label has nowhere to land on a 48px rail).
  *
- * Requires SidebarProvider context — useSidebar() drives the row-action
+ * Requires SidebarProvider context, useSidebar() drives the row-action
  * menu's side/align placement.
  * ───────────────────────────────────────────────────────────────────────── */
 

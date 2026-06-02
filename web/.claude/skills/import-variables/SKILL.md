@@ -10,16 +10,16 @@ Convert Figma variables from `$ARGUMENTS` into CSS custom properties.
 
 ---
 
-## Step 1 — Determine Figma input
+## Step 1, Determine Figma input
 
-### Option A — Figma URL
+### Option A, Figma URL
 
 If `$ARGUMENTS` contains a Figma URL (`figma.com/design/...`), parse:
 
 - `fileKey`: segment after `/design/`
 - `nodeId`: `node-id` query param, converting `-` to `:` (e.g. `25031-105337` → `25031:105337`)
 
-### Option B — Desktop selection
+### Option B, Desktop selection
 
 If no URL, use current Figma desktop selection (local MCP at `http://127.0.0.1:3845/mcp`). Set both `fileKey` and `nodeId` to `""`. On failure, ask the user to select a frame or provide a URL.
 
@@ -27,7 +27,7 @@ Auto-detect the CSS file: look for `globals.css` or `app/globals.css` in the pro
 
 ---
 
-## Step 2 — Fetch Figma variables
+## Step 2, Fetch Figma variables
 
 Call `mcp__figma__get_variable_defs` with parsed `fileKey` and `nodeId`. Returns an object like:
 
@@ -43,7 +43,7 @@ Call `mcp__figma__get_variable_defs` with parsed `fileKey` and `nodeId`. Returns
 
 ---
 
-## Step 3 — Read the target CSS file
+## Step 3, Read the target CSS file
 
 Read the CSS file to:
 
@@ -52,7 +52,7 @@ Read the CSS file to:
 
 ---
 
-## Step 4 — Categorize variables
+## Step 4, Categorize variables
 
 Group by prefix:
 
@@ -73,7 +73,7 @@ Skip: internal-only tokens, alpha-only tokens, `tailwind colors/base/transparent
 
 ---
 
-## Step 5 — Map color variables
+## Step 5, Map color variables
 
 Strip the `base/` prefix to derive the CSS variable name: `base/primary` → `--primary`, `base/card-foreground` → `--card-foreground`, `base/chart-1` → `--chart-1`, `base/sidebar-accent-foreground` → `--sidebar-accent-foreground`.
 
@@ -83,7 +83,7 @@ For any `base/*` key not matching a known token, apply the same rule: strip pref
 
 ---
 
-## Step 6 — Convert color format
+## Step 6, Convert color format
 
 Use the bundled script:
 
@@ -96,15 +96,15 @@ Match the format detected in Step 3. Preserve any existing alpha patterns (`/ 10
 
 ---
 
-## Step 7 — Handle border radius
+## Step 7, Handle border radius
 
 `border-radius/rounded-lg` maps to `--radius`. Convert px to rem (divide by 16): `7.2` → `0.45rem`.
 
-Only update `--radius` in `:root` — derived tokens (`--radius-sm`, `--radius-md`) compute automatically in `@theme inline`.
+Only update `--radius` in `:root`, derived tokens (`--radius-sm`, `--radius-md`) compute automatically in `@theme inline`.
 
 ---
 
-## Step 8 — Handle fonts
+## Step 8, Handle fonts
 
 Fonts require coordination between Next.js `next/font` (raw variables) and Tailwind v4 theme tokens.
 
@@ -113,7 +113,7 @@ Fonts require coordination between Next.js `next/font` (raw variables) and Tailw
 - `next/font` owns **raw** variables: `--font-roboto`, `--font-geist-mono`, `--font-noto-serif`
 - `@theme inline` maps **theme tokens** to raw variables: `--font-sans: var(--font-roboto);`
 
-Never set `variable: "--font-sans"` in `next/font` — keep raw and theme names separate.
+Never set `variable: "--font-sans"` in `next/font`, keep raw and theme names separate.
 
 ### 8b. Update `@theme inline`
 
@@ -160,7 +160,7 @@ If Figma provides `heading-*/font-family` tokens, update matching CSS classes in
 
 ---
 
-## Step 9 — Handle shadows
+## Step 9, Handle shadows
 
 Map `shadow/*` keys to `--shadow-*` in `:root`. Use modern `rgb()` syntax (not `rgba()`):
 
@@ -173,7 +173,7 @@ Add corresponding entries in `@theme inline` if not already present.
 
 ---
 
-## Step 10 — Handle text size / spacing / other tokens
+## Step 10, Handle text size / spacing / other tokens
 
 - `text/sm/font-size: 14` → `--text-sm: 0.875rem` (÷ 16)
 - `spacing/4: 16` → `--spacing-4: 1rem` (÷ 16)
@@ -181,7 +181,7 @@ Add corresponding entries in `@theme inline` if not already present.
 
 ---
 
-## Step 11 — Dark mode
+## Step 11, Dark mode
 
 **If Figma returns separate dark-mode values**: convert and use directly.
 
@@ -198,7 +198,7 @@ Add corresponding entries in `@theme inline` if not already present.
 
 ---
 
-## Step 12 — Update the CSS file
+## Step 12, Update the CSS file
 
 Edit `:root { }` and `.dark { }` blocks with new values. Preserve everything outside those blocks.
 
@@ -207,11 +207,11 @@ For every **new** variable (not already in `@theme inline`), add a corresponding
 - Color `--warning` → `--color-warning: var(--warning);`
 - Shadow `--shadow-brand` → `--shadow-brand: var(--shadow-brand);`
 
-Standard shadcn tokens already have `--color-*` entries — skip those. Do not duplicate.
+Standard shadcn tokens already have `--color-*` entries, skip those. Do not duplicate.
 
 ---
 
-## Step 13 — Report changes
+## Step 13, Report changes
 
 Output a brief summary:
 

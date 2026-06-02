@@ -4,15 +4,15 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 /**
- * Alert — Brightseed Forager design system.
+ * Alert, Brightseed Quill design system.
  *
  * Variants follow the soft-surface intent recipe: surface = subtle tint,
  * border = semi-transparent intent outline, text = semantic in light /
  * warm-white (sand-50) in dark. Icon color is explicit per variant via
- * --ds-color-icon-* tokens — decoupled from text so dark mode icons stay
+ * --ds-color-icon-* tokens, decoupled from text so dark mode icons stay
  * semantically colored while text falls back to neutral.
  *
- *   default      neutral surface — informational, no semantic weight
+ *   default      neutral surface, informational, no semantic weight
  *   info         blue tint
  *   success      forest tint
  *   warning      yellow tint
@@ -27,7 +27,7 @@ const alertVariants = cva(
     "relative grid w-full grid-cols-[0_1fr] items-start gap-y-0.5",
     "rounded-[var(--ds-shape-radius-md)] border px-4 py-3 text-sm",
     "has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] has-[>svg]:gap-x-3",
-    // Icon size + position — color set per-variant below, not inherited from text
+    // Icon size + position, color set per-variant below, not inherited from text
     "[&>svg]:size-4 [&>svg]:translate-y-0.5"
   ),
   {

@@ -1,5 +1,5 @@
 /*
- * Brightseed Design System — Color Primitives
+ * Brightseed Design System, Color Primitives
  * Layer 1 of 3: Raw hue scales. No semantic meaning here.
  * Reference: BrightseedDS.md §3.1
  *
@@ -14,7 +14,7 @@
   --p-color-white:    #ffffff;
   --p-color-black:    #000000;
 
-  /* ── Forest (brand surface — Deep Forest at 900) ── */
+  /* ── Forest (brand surface, Deep Forest at 900) ── */
   --p-color-forest-50:  #eefbf1;
   --p-color-forest-100: #e2f4e5;
   --p-color-forest-200: #c9e7cf;
@@ -24,14 +24,14 @@
   --p-color-forest-600: #51865c;
   --p-color-forest-700: #46764f;
   --p-color-forest-800: #3f6947;
-  --p-color-forest-900: #305536;  /* Deep Forest — brand surface anchor */
+  --p-color-forest-900: #305536;  /* Deep Forest, brand surface anchor */
   --p-color-forest-950: #133019;
 
-  /* ── Lime (brand action — anchor at 400) ── */
+  /* ── Lime (brand action, anchor at 400) ── */
   --p-color-lime-50:  #f2fde0;
   --p-color-lime-100: #e9faca;
   --p-color-lime-200: #e0f6ab;
-  --p-color-lime-300: #CDE67B;  /* Retuned Apr 2026 — was #CAE279. Adjusted to pass WCAG AA with forest-800 text (4.57:1). lime-300 is now the default surface of the lime button. */
+  --p-color-lime-300: #CDE67B;  /* Retuned Apr 2026, was #CAE279. Adjusted to pass WCAG AA with forest-800 text (4.57:1). lime-300 is now the default surface of the lime button. */
   --p-color-lime-400: #b8d258;  /* hover surface of the lime button (was the default anchor before Apr 2026) */
   --p-color-lime-500: #a1b833;
   --p-color-lime-600: #8b9d15;
@@ -40,8 +40,8 @@
   --p-color-lime-900: #363c07;
   --p-color-lime-950: #212404;
 
-  /* ── Sand (warm neutral surface — Sand at 50) ── */
-  --p-color-sand-50:  #F9F8F3;  /* Sand — warm surface anchor */
+  /* ── Sand (warm neutral surface, Sand at 50) ── */
+  --p-color-sand-50:  #F9F8F3;  /* Sand, warm surface anchor */
   --p-color-sand-100: #f3f2ec;
   --p-color-sand-200: #eae8df;
   --p-color-sand-300: #dddbcf;
@@ -53,20 +53,20 @@
   --p-color-sand-900: #2a2925;
   --p-color-sand-950: #1F1F1E;
 
-  /* ── Orange (accent — Eschscholzia at 500) ── */
+  /* ── Orange (accent, Eschscholzia at 500) ── */
   --p-color-orange-50:  #fff4e8;
   --p-color-orange-100: #ffe9cf;
   --p-color-orange-200: #ffd7a8;
   --p-color-orange-300: #ffbf79;
   --p-color-orange-400: #ffa547;
-  --p-color-orange-500: #E88F3E;  /* Eschscholzia — accent anchor */
+  --p-color-orange-500: #E88F3E;  /* Eschscholzia, accent anchor */
   --p-color-orange-600: #ca6300;
   --p-color-orange-700: #a34900;
   --p-color-orange-800: #743200;
   --p-color-orange-900: #4b2000;
   --p-color-orange-950: #2a1100;
 
-  /* ── Blue (info semantic — Ocean at 900) ── */
+  /* ── Blue (info semantic, Ocean at 900) ── */
   --p-color-blue-50:  #eef8ff;
   --p-color-blue-100: #e0f1ff;
   --p-color-blue-200: #c4e1ff;
@@ -76,10 +76,10 @@
   --p-color-blue-600: #005aae;
   --p-color-blue-700: #00448c;
   --p-color-blue-800: #00326a;
-  --p-color-blue-900: #113458;  /* Ocean — info anchor */
+  --p-color-blue-900: #113458;  /* Ocean, info anchor */
   --p-color-blue-950: #00112b;
 
-  /* ── Cyan (light blue — H=195° OKLCH) ── */
+  /* ── Cyan (light blue, H=195° OKLCH) ── */
   --p-color-cyan-50:  #e9fcfc;
   --p-color-cyan-100: #d4f9f9;
   --p-color-cyan-200: #aef3f3;
@@ -92,7 +92,7 @@
   --p-color-cyan-900: #002b29;
   --p-color-cyan-950: #001312;
 
-  /* ── Lavender (violet — H=287° OKLCH) ── */
+  /* ── Lavender (violet, H=287° OKLCH) ── */
   --p-color-lavender-50:  #f7f4ff;
   --p-color-lavender-100: #eeeaff;
   --p-color-lavender-200: #dfd9ff;
@@ -105,7 +105,7 @@
   --p-color-lavender-900: #190e4b;
   --p-color-lavender-950: #090526;
 
-  /* ── Red (error / critical — H=22° OKLCH) ── */
+  /* ── Red (error / critical, H=22° OKLCH) ── */
   --p-color-red-50:  #fff3f0;
   --p-color-red-100: #ffe6e2;
   --p-color-red-200: #ffd0ca;
@@ -118,7 +118,7 @@
   --p-color-red-900: #46000c;
   --p-color-red-950: #250104;
 
-  /* ── Neutral (cool gray UI chrome — H=264° OKLCH) ── */
+  /* ── Neutral (cool gray UI chrome, H=264° OKLCH) ── */
   --p-color-neutral-50:  #f6f8fb;
   --p-color-neutral-100: #eef0f4;
   --p-color-neutral-200: #e1e4e9;
@@ -131,7 +131,7 @@
   --p-color-neutral-900: #1a1b1c;
   --p-color-neutral-950: #08090a;
 
-  /* ── Orchid (pink-mauve / data viz — Garlic Bloom at 700) ── */
+  /* ── Orchid (pink-mauve / data viz, Garlic Bloom at 700) ── */
   --p-color-orchid-50:  #fff2f9;
   --p-color-orchid-100: #ffe5f4;
   --p-color-orchid-200: #ffcce7;
@@ -139,12 +139,12 @@
   --p-color-orchid-400: #e57bb7;
   --p-color-orchid-500: #c75197;
   --p-color-orchid-600: #9f3275;
-  --p-color-orchid-700: #782e5a;  /* Garlic Bloom — brand anchor */
+  --p-color-orchid-700: #782e5a;  /* Garlic Bloom, brand anchor */
   --p-color-orchid-800: #50173a;
   --p-color-orchid-900: #310e23;
   --p-color-orchid-950: #190511;
 
-  /* ── Yellow (warning / caution — H=103° OKLCH) ── */
+  /* ── Yellow (warning / caution, H=103° OKLCH) ── */
   --p-color-yellow-50:  #faf9e4;
   --p-color-yellow-100: #f6f4ca;
   --p-color-yellow-200: #f2eca1;

@@ -2,22 +2,22 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import * as React from "react";
 
 /* ─────────────────────────────────────────────────────────────────────────
- * Foundations / Color Scales — the Brightseed primitive hue scales.
+ * Foundations / Color Scales, the Brightseed primitive hue scales.
  *
  * Layer 1 of the 3-layer token system (primitives → intents → semantics).
  * Each scale runs 50→950. Component code references SEMANTIC tokens, never
- * these primitives directly — this page is the reference for what the raw
+ * these primitives directly, this page is the reference for what the raw
  * scales contain.
  *
  * Swatches render from the live --color-{scale}-{step} tokens (defined in
  * tokens/primitives.css via the bridge), and each hex label is read back from
- * the rendered swatch — so the swatch and its label can never drift, and the
+ * the rendered swatch, so the swatch and its label can never drift, and the
  * page updates automatically if a token value changes.
  *
  * Layout mirrors the v2 Figma "UI Color Scales" board (28498:7764). Labels are
  * functional; brand-origin names (Deep Forest, Chlorophyll, Garlic Bloom, …)
  * are intentionally omitted here per the "no brand-poetic names in code"
- * decision — they live in brand/brand-colors-reference.md.
+ * decision, they live in brand/brand-colors-reference.md.
  * ───────────────────────────────────────────────────────────────────────── */
 
 const meta = {
@@ -166,7 +166,7 @@ export const Scales: Story = {
           Color Scales
         </h2>
         <p className="max-w-prose text-sm text-[var(--ds-color-text-subtle)]">
-          The Brightseed primitive hue scales — Layer 1 of the token system
+          The Brightseed primitive hue scales, Layer 1 of the token system
           (primitives → intents → semantics). Each scale runs 50→950. Component
           code references semantic tokens, never these primitives directly. Token
           pattern: <code className="font-mono text-xs">--color-{`{scale}`}-{`{step}`}</code>.

@@ -11,7 +11,7 @@ import {
 import { Toaster as Sonner, type ToasterProps } from "sonner"
 
 /**
- * Toaster — Brightseed Forager design system.
+ * Toaster, Brightseed Quill design system.
  *
  * Color tokens (Brightseed semantics):
  *   Toast surface     → --ds-color-surface-default      (white / sand-950)
@@ -23,7 +23,7 @@ import { Toaster as Sonner, type ToasterProps } from "sonner"
  *   pointing to the matching --ds-color-surface-{intent} token. Intent
  *   text/border follow the same pattern.
  *
- * Theme: reads `data-theme` on <html> directly — see useDataTheme below.
+ * Theme: reads `data-theme` on <html> directly, see useDataTheme below.
  * Single source of truth, no next-themes dependency.
  */
 
@@ -68,11 +68,11 @@ const Toaster = ({ ...props }: ToasterProps) => {
       }}
       style={
         {
-          // Default toast — neutral surface
+          // Default toast, neutral surface
           "--normal-bg": "var(--ds-color-surface-default)",
           "--normal-text": "var(--ds-color-text-default)",
           "--normal-border": "var(--ds-color-border-default)",
-          // Intent toasts — semantic surfaces / text / borders
+          // Intent toasts, semantic surfaces / text / borders
           "--success-bg": "var(--ds-color-surface-success)",
           "--success-text": "var(--ds-color-text-success)",
           "--success-border": "var(--ds-color-border-success-default)",

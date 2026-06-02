@@ -16,18 +16,18 @@ import {
 } from "@/components/ui/badge-icons";
 
 /* ─────────────────────────────────────────────────────────────────────────
- * Foundations / Icons — the full icon inventory.
+ * Foundations / Icons, the full icon inventory.
  *
  * Exploratory reference, not a curated map. It records EVERY glyph available to
- * Forager: the complete Lucide set (which is also the icon set the shadcn /
+ * Hummingbird: the complete Lucide set (which is also the icon set the shadcn /
  * shadcndesign Pro Pack renders with) plus Brightseed custom additions. Each
- * glyph is labeled by what it IS — no purposeful concept names, no assigned uses.
+ * glyph is labeled by what it IS, no purposeful concept names, no assigned uses.
  * Meaning gets assigned to specific surfaces later, in feature code.
  *
  * Two tiers, kept apart (see CLAUDE.md, the icon discussion):
  *   - Functional UI glyphs (this page): single-color via currentColor, line-art.
  *   - Brand illustration (NOT here): the 300 KB+ hummingbird/bird vectors in
- *     /brand and /vector-pipeline — illustration scale, never a badge slot.
+ *     /brand and /vector-pipeline, illustration scale, never a badge slot.
  * ───────────────────────────────────────────────────────────────────────── */
 
 const meta = {
@@ -54,7 +54,7 @@ const NON_ICON_EXPORTS = new Set([
 type IconEntry = {
   name: string;
   Comp: React.ComponentType<{ size?: number; className?: string; strokeWidth?: number }>;
-  /** "badge" icons are designed for 14px badge slots — render at size-3.5 in the inventory. */
+  /** "badge" icons are designed for 14px badge slots, render at size-3.5 in the inventory. */
   scale?: "app" | "badge";
 };
 
@@ -75,7 +75,7 @@ const LUCIDE_ICONS: IconEntry[] = (() => {
     .sort((a, b) => a.name.localeCompare(b.name));
 })();
 
-/* ── Brightseed custom additions — Lucide has no equivalent ───────────────── */
+/* ── Brightseed custom additions, Lucide has no equivalent ───────────────── */
 const CUSTOM_ICONS: IconEntry[] = [
   { name: "Cow", Comp: Cow, scale: "app" },
   { name: "CowBadge", Comp: CowBadge, scale: "badge" },
@@ -145,7 +145,7 @@ function Grid({ children }: { children: React.ReactNode }) {
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
- * Inventory — the searchable record of every available glyph.
+ * Inventory, the searchable record of every available glyph.
  * ───────────────────────────────────────────────────────────────────────── */
 
 function IconInventory() {
@@ -211,7 +211,7 @@ export const Inventory: Story = {
 };
 
 /* ─────────────────────────────────────────────────────────────────────────
- * Color tracking — one glyph across the tag palette. Every icon uses
+ * Color tracking, one glyph across the tag palette. Every icon uses
  * currentColor, so it inherits the badge's text color with no per-icon binding
  * (the CSS-native equivalent of the Figma tag/active-color cascade). Toggle the
  * Storybook theme to confirm dark. Labels name the COLOR, not a use.
@@ -233,7 +233,7 @@ export const ColorTracking: Story = {
   render: () => (
     <div className="flex flex-col gap-6 p-6">
       <p className="max-w-prose text-sm text-[var(--ds-color-text-subtle)]">
-        The same glyph in every tag color — it inherits each badge&rsquo;s text color
+        The same glyph in every tag color, it inherits each badge&rsquo;s text color
         automatically via <code className="font-mono text-xs">currentColor</code>.
       </p>
       <div className="flex flex-col gap-4">
@@ -271,15 +271,15 @@ export const ColorTracking: Story = {
 };
 
 /* ─────────────────────────────────────────────────────────────────────────
- * App-scale custom glyphs — 24px, NOT badge-slot icons. Hummingbird is
- * Forager's AI assistant mark. Separate tier from brand illustration.
+ * App-scale custom glyphs, 24px, NOT badge-slot icons. Hummingbird is
+ * the AI assistant mark. Separate tier from brand illustration.
  * ───────────────────────────────────────────────────────────────────────── */
 
 export const AppScaleGlyphs: Story = {
   render: () => (
     <div className="flex flex-col gap-4 p-6">
       <p className="max-w-prose text-sm text-[var(--ds-color-text-subtle)]">
-        Custom glyphs at app scale (24px) for chat headers, nav, and cards — not
+        Custom glyphs at app scale (24px) for chat headers, nav, and cards, not
         badge slots. Prefer the line variant (honors the line-art house style).
       </p>
       <div className="flex flex-wrap gap-3">
@@ -303,7 +303,7 @@ export const AppScaleGlyphs: Story = {
 };
 
 /* ─────────────────────────────────────────────────────────────────────────
- * Conventions — the mechanics, written down (no purpose assigned).
+ * Conventions, the mechanics, written down (no purpose assigned).
  * ───────────────────────────────────────────────────────────────────────── */
 
 export const Conventions: Story = {
@@ -314,7 +314,7 @@ export const Conventions: Story = {
         <li>
           <strong className="text-[var(--ds-color-text-default)]">Lucide first.</strong> If
           Lucide has the glyph, use it. Reserve custom additions for what Lucide
-          genuinely can&rsquo;t cover — currently Cow and Hummingbird.
+          genuinely can&rsquo;t cover, currently Cow and Hummingbird.
         </li>
         <li>
           <strong className="text-[var(--ds-color-text-default)]">
@@ -327,12 +327,12 @@ export const Conventions: Story = {
         <li>
           <strong className="text-[var(--ds-color-text-default)]">currentColor only.</strong>{" "}
           Glyphs use stroke/fill=currentColor and inherit their context&rsquo;s text color
-          automatically — no per-icon color binding.
+          automatically, no per-icon color binding.
         </li>
         <li>
           <strong className="text-[var(--ds-color-text-default)]">Identity, not use.</strong>{" "}
-          This page names glyphs by what they are. Assigning a glyph to a Forager
-          concept happens later, in the surface that uses it — it&rsquo;s exploratory for now.
+          This page names glyphs by what they are. Assigning a glyph to a Hummingbird
+          concept happens later, in the surface that uses it, it&rsquo;s exploratory for now.
         </li>
         <li>
           <strong className="text-[var(--ds-color-text-default)]">Two tiers, kept apart.</strong>{" "}

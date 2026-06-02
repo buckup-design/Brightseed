@@ -7,16 +7,16 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 /**
- * StrategyCard v2 — Forager Strategies overview.
+ * StrategyCard v2, Hummingbird Strategies overview.
  *
  * Source: Figma StrategyCard v2 Components, node 26585:379616
  * https://www.figma.com/design/ZZPjoeJ447MWuzNi3LL1BL?node-id=26585-379616
  *
  * Layout (top → bottom):
  *   1. Header row: lightbulb icon (left) + favorite star (right, fades in on hover)
- *   2. Strategy one-liner — SemiBold 15px
- *   3. Description — Regular 13px, subtle color
- *   4. Assessment table — bordered, 3 rows of Mono label + StatusIcon + value
+ *   2. Strategy one-liner, SemiBold 15px
+ *   3. Description, Regular 13px, subtle color
+ *   4. Assessment table, bordered, 3 rows of Mono label + StatusIcon + value
  *   5. Full-width "Explore compounds" Secondary button
  *
  * Hover state:
@@ -133,13 +133,13 @@ export function StrategyCard({
     >
       {/* ── Header ────────────────────────────────────────────────────────── */}
       <div className="flex items-center justify-between">
-        {/* Strategy glyph — Lightbulb indicates "this is a proposed strategy" */}
+        {/* Strategy glyph, Lightbulb indicates "this is a proposed strategy" */}
         <Lightbulb
           className="size-6 text-[var(--ds-color-text-subtle)] shrink-0"
           strokeWidth={1.5}
         />
 
-        {/* Favorite toggle — ghost icon button.
+        {/* Favorite toggle, ghost icon button.
             Invisible at rest; fades in on card hover.
             Always visible when already favorited so the state is readable. */}
         {/* group/fav creates a named hover scope scoped to this button,
@@ -158,14 +158,14 @@ export function StrategyCard({
               ? "opacity-100"
               : "opacity-0 group-hover:opacity-100",
             "transition-opacity duration-[120ms]",
-            // keyboard focus only — no hover surface
+            // keyboard focus only, no hover surface
             "focus-visible:opacity-100 outline-none",
             "focus-visible:ring-2 focus-visible:ring-[var(--ds-color-border-focus)] focus-visible:ring-offset-1",
           )}
         >
           <Star
             className={cn(
-              // always outline — no fill ever
+              // always outline, no fill ever
               "size-4 fill-none transition-colors duration-[120ms]",
               favorited
                 // pinned: yellow outline
@@ -179,7 +179,7 @@ export function StrategyCard({
       </div>
 
       {/* ── One-liner ─────────────────────────────────────────────────────── */}
-      {/* min-h-[2.5em]: 2 × leading-tight (1.25em) — reserves the 2-line slot
+      {/* min-h-[2.5em]: 2 × leading-tight (1.25em), reserves the 2-line slot
           even when copy is a single line, so card heights stay consistent.
           line-clamp-2: truncates to 2 lines with ellipsis if copy runs long. */}
       <p className="text-[15px] font-semibold leading-tight text-[var(--ds-color-text-default)] line-clamp-2 min-h-[2.5em]">
@@ -198,7 +198,7 @@ export function StrategyCard({
       <div
         className={cn(
           "border border-[var(--ds-color-border-subtle)]",
-          "rounded-[var(--ds-shape-radius-sm)]",  // 6px — tighter than card
+          "rounded-[var(--ds-shape-radius-sm)]",  // 6px, tighter than card
           "overflow-hidden shrink-0 w-full"
         )}
       >
@@ -211,11 +211,11 @@ export function StrategyCard({
               />
             )}
             <div className="flex items-center gap-2 h-8 px-3">
-              {/* Label — Geist Mono, 12px, fixed 96px column */}
+              {/* Label, Geist Mono, 12px, fixed 96px column */}
               <p className="font-mono text-[12px] text-[var(--ds-color-text-subtle)] w-24 shrink-0 leading-none">
                 {row.label}
               </p>
-              {/* Value — icon + text; text shifts to default on hover */}
+              {/* Value, icon + text; text shifts to default on hover */}
               <div className="flex items-center gap-1.5 flex-1 min-w-0 overflow-hidden">
                 <StatusIcon status={row.status} />
                 <p

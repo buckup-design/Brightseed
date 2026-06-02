@@ -5,30 +5,30 @@ import { Slot } from "radix-ui"
 import { cn } from "@/lib/utils"
 
 /**
- * Badge — Brightseed Forager design system.
+ * Badge, Brightseed Quill design system.
  *
- * Spec: see CLAUDE.md "Locked-in decisions" — the Badge component recipe (Apr 2026)
+ * Spec: see CLAUDE.md "Locked-in decisions", the Badge component recipe (Apr 2026)
  * and the Primary/Secondary/Number Badge architecture (May 7, 2026).
  *
  * Two prop axes:
  *
- *   `variant` — color treatment (12 values)
- *     default                      Neutral sand chip — surface=sand-100, text=sand-800.
+ *   `variant`, color treatment (12 values)
+ *     default                      Neutral sand chip, surface=sand-100, text=sand-800.
  *                                  Distinct from page bg, calm enough for tag-dense rows.
  *     outline                      Hairline border, transparent surface, sand-900 text.
  *     ghost                        No surface, no border, sand-900 text.
- *     red                          Soft critical — red-100 surface, red-700 text.
+ *     red                          Soft critical, red-100 surface, red-700 text.
  *     forest / lime / cyan /       Tag decorative palette. Color does NOT imply
- *     blue / yellow / orange /     status — for status meaning, compose icon + text
+ *     blue / yellow / orange /     status, for status meaning, compose icon + text
  *     lavender / orchid            instead of relying on hue. Recipe per hue:
- *                                    Default — surface=step-100, text=step-700
- *                                    Hover   — surface=step-200, text=step-700
- *                                    Focus   — ring=step-500 (hue-specific)
+ *                                    Default, surface=step-100, text=step-700
+ *                                    Hover  , surface=step-200, text=step-700
+ *                                    Focus  , ring=step-500 (hue-specific)
  *
- *   `kind` — visual treatment (3 values)
+ *   `kind`, visual treatment (3 values)
  *     primary    Standard pill. rounded-full, comfortable px-2 py-0.5, text-xs.
  *                Used in body content, table rows, chip-stacks of moderate density.
- *     secondary  Tight tag for tag-dense Forager surfaces. cr=2 (sharp corners,
+ *     secondary  Tight tag for tag-dense Hummingbird surfaces. cr=2 (sharp corners,
  *                bound to --ds-shape-radius-xs), px-1 horizontal, hugs content.
  *                More badges fit per row without column wrapping. Locked May 7.
  *     number     Compact numeric chip for counts/notifications. Round, tabular-nums,
@@ -36,7 +36,7 @@ import { cn } from "@/lib/utils"
  *                The shadcn-default Badge Number, rebound through Brightseed Mode,
  *                IS the Quill version (May 8 2026 decision).
  *
- * Inline slots — three composition paths, matching the Figma component_property
+ * Inline slots, three composition paths, matching the Figma component_property
  * pattern (Show Inline Start/End booleans + Inline Start/End instance-swap):
  *
  *   1. Free composition (most idiomatic React):
@@ -45,11 +45,11 @@ import { cn } from "@/lib/utils"
  *   2. Explicit slot props (1:1 with the Figma master's properties):
  *        <Badge variant="forest" iconLeading={<LeafIcon />}>Compound</Badge>
  *
- *   3. Status dot (boolean — renders a small filled circle in currentColor):
+ *   3. Status dot (boolean, renders a small filled circle in currentColor):
  *        <Badge variant="forest" statusDot>Active</Badge>
  *
  * Icons (SVGs with stroke="currentColor") automatically track the variant's text
- * color via the cascade — same outcome as the Figma `tag/active-color` Variable Mode
+ * color via the cascade, same outcome as the Figma `tag/active-color` Variable Mode
  * cascade, just naturally with CSS instead of nested overrides.
  *
  * Story / matrix support: `data-force-state="hover|focus|disabled"` renders any
@@ -69,10 +69,10 @@ const badgeVariants = cva(
     // ── Icon defaults ────────────────────────────────────────────────────
     "[&_svg]:pointer-events-none [&_svg]:shrink-0",
     "[&_svg:not([class*='size-'])]:size-3.5",
-    // ── Disabled fade — single DOM level so opacity never stacks ─────────
+    // ── Disabled fade, single DOM level so opacity never stacks ─────────
     "disabled-state:cursor-not-allowed",
     "disabled-state:[&_[data-slot=badge-content]]:opacity-[var(--ds-disabled-text-opacity)]",
-    // ── Focus ring — 1px stroke, 1px offset (matches Figma Ring spec) ────
+    // ── Focus ring, 1px stroke, 1px offset (matches Figma Ring spec) ────
     "outline-none",
     "focused:ring-1 focused:ring-offset-1 focused:ring-offset-[var(--ds-color-surface-default)]",
   ),
@@ -80,7 +80,7 @@ const badgeVariants = cva(
     variants: {
       variant: {
         // ── Neutral cohort (Default / Outline / Ghost) ──────────────────
-        // These three share the "Neutral" tag-active-color mode in Figma —
+        // These three share the "Neutral" tag-active-color mode in Figma , 
         // icon and text track --ds-color-text-default, surface treatment varies.
         default: cn(
           "bg-[var(--ds-color-action-secondary)] text-[var(--ds-color-text-default)]",
@@ -147,18 +147,18 @@ const badgeVariants = cva(
         ),
       },
       kind: {
-        // Primary — standard pill, rounded-full
+        // Primary, standard pill, rounded-full
         primary: cn(
           "h-5 px-2 py-0.5 gap-1 text-xs",
           "rounded-full",
         ),
-        // Secondary — tight tag, cr=2 (--ds-shape-radius-xs), 4px horizontal padding,
+        // Secondary, tight tag, cr=2 (--ds-shape-radius-xs), 4px horizontal padding,
         // hugs content. For dense rows where width matters more than air.
         secondary: cn(
           "h-[18px] px-1 gap-1 text-[11px] leading-none",
           "rounded-[var(--ds-shape-radius-xs)]",
         ),
-        // Number — compact numeric. tabular-nums keeps "9" and "10" the same width.
+        // Number, compact numeric. tabular-nums keeps "9" and "10" the same width.
         // min-w-5 prevents single-digit numbers from collapsing too narrow.
         number: cn(
           "h-5 min-w-5 px-1.5 text-[11px] tabular-nums",
@@ -177,19 +177,19 @@ type BadgeProps = React.ComponentProps<"span"> &
   VariantProps<typeof badgeVariants> & {
     /** When true, the Slot from Radix is used so styling applies to the child element (e.g. an `<a>`). */
     asChild?: boolean
-    /** Leading inline mark — typically a 14×14 SVG icon (stroke="currentColor"). */
+    /** Leading inline mark, typically a 14×14 SVG icon (stroke="currentColor"). */
     iconLeading?: React.ReactNode
-    /** Trailing inline mark — typically a 14×14 SVG icon (stroke="currentColor"). */
+    /** Trailing inline mark, typically a 14×14 SVG icon (stroke="currentColor"). */
     iconTrailing?: React.ReactNode
     /** Renders a small filled circle in currentColor as the leading mark. Convenience for status indicators. */
     statusDot?: boolean
   }
 
 /**
- * Status dot — a 6×6 filled circle in currentColor. Mirrors Figma's
+ * Status dot, a 6×6 filled circle in currentColor. Mirrors Figma's
  * `Badge/Status/Dot-badge` component (a zero-length LINE with strokeCap=ROUND
  * at strokeWeight=4 produces the same visual). Implemented in React as a
- * plain span with bg-current — simpler given CSS box-shadow caveats.
+ * plain span with bg-current, simpler given CSS box-shadow caveats.
  */
 function StatusDot({ className }: { className?: string }) {
   return (
@@ -218,7 +218,7 @@ function Badge({
   const Comp = asChild ? Slot.Root : "span"
 
   // Composition: explicit slot props win over inline children for the leading
-  // mark. statusDot is mutually exclusive with iconLeading — if both are
+  // mark. statusDot is mutually exclusive with iconLeading, if both are
   // passed, iconLeading takes precedence (more specific intent).
   const leading = iconLeading ?? (statusDot ? <StatusDot /> : null)
 
