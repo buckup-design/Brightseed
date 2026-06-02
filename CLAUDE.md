@@ -113,7 +113,7 @@ Color scale names: forest, lime, sand, cyan, blue, yellow, orange, lavender, orc
 
 ## Working rules — read before any task
 
-1. **Generating UI?** The token rules above + the live CSS/Storybook are the source of truth. `BrightseedDS.md` holds worked examples.
+1. **Generating UI?** The token rules above + the live CSS/Storybook are the source of truth. Composition guidance and component-usage rules live in Storybook → Design.mdx (`web/stories/DesignGuidelines.mdx`).
 2. **Forager is data-dense.** Dense tables, charts, canvas UIs. "Wizard" patterns are wrong; stateful configuration panels are right.
 3. **Line-art visual style** — icons/illustration are clean line art, never 3D or filled.
 4. **Never hand-roll an SVG glyph.** Use the approved icon library (Storybook → Foundations → Icons). Not in the inventory → flag it, don't improvise paths.
