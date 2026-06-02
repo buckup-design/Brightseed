@@ -20,11 +20,11 @@ Charts and tag colors (forest, cyan, lavender, orchid, orange, blue, yellow, red
 
 Component code references **component tokens only** (`--c-{component}-*`) — never semantics or primitives directly. The layers exist so that a single design decision (e.g., "primary action should be lime") flows everywhere automatically.
 
-| Layer | Prefix | Example | What it does |
+| Layer | Use | Prefix | Example |
 |---|---|---|---|
-| Primitives | `--p-*` | `--p-lime-300` | Raw hue values — the palette |
-| Semantics | `--color-*` | `--color-action-primary` | Intent aliases — what the color means |
-| Components | `--c-{component}-*` | `--c-button-bg` | What component code uses — always this layer |
+| Primitives | Raw literal values. Never used directly in components — only referenced by semantic tokens. | `--p-*` | `--p-lime-300` |
+| Semantics | Intent-based aliases. Map design intent to primitives. Used directly in component tokens. | `--color-*` | `--color-action-primary` |
+| Components | Component-scoped tokens. Every component only reads from this tier. Never skips a tier. | `--c-{component}-*` | `--c-button-bg` |
 
 ### Key tokens
 
