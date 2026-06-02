@@ -1,91 +1,45 @@
 # Brightseed Design System
 
-A three-layer design token system for Forager — Brightseed's biotech compound screening platform. Built on shadcn/ui with a single base palette mapped to CSS variables, supporting light and dark themes.
+A three-layer design token system for Forager — Brightseed's biotech compound screening platform. Built on shadcn/ui + Tailwind, with one base palette mapped through CSS variables and full light/dark theming.
 
-## Structure
+## Where the truth lives
 
-```
-tokens/
-  primitives.css     # Layer 1: 10 color hue scales (green, lime, sand, ...)
-  intents.css        # Layer 2: role-name aliases (action-primary, success, ...)
-  semantics.css      # Layer 3: UI-function tokens + dark theme override
-  shape.css          # Radius, border width, shadow
-  charts.css         # Data visualization tokens (categorical, sequential, diverging)
-  index.css          # Entry point — import this one file to get everything
+This README orients; it does not duplicate. For anything specific, go to the source — those can't go stale:
 
-bridge/
-  globals.css        # shadcn/ui bridge — maps Brightseed tokens to shadcn variables
+- **Token names + values** → the CSS in `tokens/` (`primitives.css`, `intents.css`, `semantics.css`, `shape.css`, `charts.css`, `typography.css`). Import `index.css` to get everything.
+- **How components look** → the live library at https://brightseed-storybook.vercel.app (every variant + state, both themes).
+- **Rules + conventions** → `CLAUDE.md` (the canonical rules doc). Don't rely on rule statements copied into other files.
 
-components/
-  CompoundScreeningTable.tsx   # Reference implementation (sortable data table)
-```
-
-## Token Architecture
+## The three layers
 
 ```
 Primitives  →  Intents  →  Semantics  →  Component code
---p-color-lime-400  →  --action-primary-400  →  --color-action-primary  →  bg-primary (via bridge)
+--p-color-lime-300   →   --action-primary-300   →   --ds-color-action-primary   →   bg-[var(--ds-color-action-primary)]
 ```
 
-- **Layer 1 — Primitives:** Raw hue scales, 11 steps each (50–950), OKLCH color space. No semantic meaning.
-- **Layer 2 — Intents:** Role-name aliases pointing to primitive scales via `var()`. Pure indirection — no values duplicated.
-- **Layer 3 — Semantics:** What component code references. Named for UI function (`--color-surface-default`, `--color-action-primary`, etc.). Full light + dark theme coverage in one file.
+- **Primitives** (`--p-{type}-*`) — raw values, organized by type. The palette. Never used in components.
+- **Intents** (`--{role}-{step}`) — role aliases pointing at primitives. Pure indirection.
+- **Semantics** (`--ds-*`) — named for UI function. **Component code references this tier only.**
 
-## Key Brand Decisions
+## Using it in a Next.js + shadcn project
 
-| Role | Token | Value | Name |
-|------|-------|-------|------|
-| Primary surface | `--color-surface-brand` | `#305536` | Deep Forest |
-| Primary action | `--color-action-primary` | `#B8D258` | Lime 400 |
-| Default background | `--color-surface-default` | `#FFFFFF` | White (Sand `#F9F8F3` retired as default surface, Apr 2026) |
-| Dark mode base | `--color-surface-default` (dark) | `#133019` | Floor |
-
-## Usage
-
-### In a new Next.js + shadcn project
-
-1. Copy `tokens/` and `bridge/` into your project.
-
-2. In your `globals.css`:
 ```css
+/* globals.css */
 @import '@/tokens/index.css';
 @import '@/bridge/globals.css';
 ```
 
-3. Enable dark mode in `tailwind.config.ts`:
 ```ts
+/* tailwind config */
 darkMode: ['selector', '[data-theme="dark"]']
 ```
 
-4. Toggle dark mode by setting `data-theme="dark"` on the `<html>` element.
+Toggle dark by setting `data-theme="dark"` on `<html>`. The semantic tokens swap underneath; you never write dark-specific component code.
 
-### Naming conventions
+## Repo map
 
-| Layer | Pattern | Example |
-|-------|---------|---------|
-| Primitive | `--color-{hue}-{step}` | `--p-color-lime-300` |
-| Intent | `--{role}-{step}` | `--action-primary-300` |
-| Semantic | `--color-{category}-{role}-{state}` | `--color-action-primary-hover` |
-| Component | `--{component}-{element}-{property}-{state}` | `--table-row-background-selected` |
-
-### Rules
-
-- Component code references **semantic tokens only** — never primitives or intents directly.
-- State variants (`-hover`, `-active`, `-disabled`) exist on semantic tokens — never use inline opacity for disabled states.
-- Hardcoded hex values are forbidden in component code. Use `var(--color-*)` or Tailwind's arbitrary reference syntax `bg-[var(--color-surface-success)]`.
-- For numeric data columns: always use `tabular-nums` and `font-mono`.
-- Chart categorical colors: assign `--chart-cat-1` through `--chart-cat-8` in order. Never use brand lime or brand green for data series.
-
-## Status
-
-| Layer | Status |
-|-------|--------|
-| Token vocabulary (all 3 layers) | ✅ Complete |
-| Dark theme | ✅ Defined (visual QA pending) |
-| shadcn/ui bridge | ✅ Complete |
-| CompoundScreeningTable | ✅ Production-ready |
-| DoseResponseChart | 🔲 API spec complete, implementation pending |
-| StatCard | 🔲 API spec complete, implementation pending |
-| AssayTimeSeries | 🔲 API spec complete, implementation pending |
-| CompoundBadge | 🔲 API spec complete, implementation pending |
-| Figma variables | 🔲 Mapping guide written, entry pending |
+- `tokens/` — the token CSS (source of truth for names + values).
+- `bridge/globals.css` — maps Brightseed tokens onto shadcn's variable names.
+- `web/` — the Next.js + Storybook app (production). `tokens/` and `bridge/` here are symlinks to the root copies.
+- `CLAUDE.md` — canonical rules, conventions, and current status.
+- `share-with-anna/` — the design-system handoff package.
