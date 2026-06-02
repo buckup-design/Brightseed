@@ -8,7 +8,7 @@
 
 ## Purpose of this file
 
-This is the working draft of the hiring-manager-facing narrative. It is NOT the design system documentation (that lives in `BrightseedDS.md` and `CLAUDE.md`). This is the story that shows up on the portfolio site.
+This is the working draft of the hiring-manager-facing narrative. It is NOT the design system documentation (that lives in `CLAUDE.md` and Storybook → Design.mdx). This is the story that shows up on the portfolio site.
 
 The two audiences pull in opposite directions:
 - Engineering wants precision, tokens, rules.
@@ -55,7 +55,7 @@ TODO
 ## Source material (not for inclusion, for reference)
 
 - `CLAUDE.md` — engagement brief, team roster, tech stack, status matrix
-- `BrightseedDS.md` — AI coding agent source of truth, token vocabulary, hard rules
+- Storybook → Design.mdx — design language, token reference, composition, component usage, anti-patterns
 - `brightseed-shadcn-mapping.md` — Figma variable wiring guide
 - `brand/` — brand evolution assets
 - `components/` — current component inventory

@@ -348,6 +348,58 @@ Icon sizes are relative to the component they live in. Button icon slots are siz
 
 ---
 
+## Composition
+
+How to assemble tokens into the common Forager regions. These map intent → token; each token's appearance is defined in the sections above.
+
+**Page structure**
+
+- Page background → `--ds-color-surface-default`
+- Nav bar / header → `--ds-color-surface-brand` (Deep Forest) with `--ds-color-text-inverse`
+- Main content panel / card → `--ds-color-surface-default`, border `--ds-color-border-subtle`
+- Sidebar → `--ds-color-surface-alt`
+
+**Forms**
+
+- Input background → `--ds-color-surface-default`; border → `--ds-color-border-default`; focus → `--ds-color-border-focus`
+- Label → `text-sm font-medium` + `--ds-color-text-default`
+- Helper text → `text-sm` + `--ds-color-text-subtle`
+- Error text → `text-sm` + `--ds-color-text-critical` (pair with `aria-invalid="true"` on the input)
+
+**Data tables**
+
+- Row → `--ds-color-surface-default`; alternate row → `--ds-color-surface-alt`
+- Header row → `--ds-color-surface-alt` with `--ds-color-text-subtle`
+- Selected row → `--ds-color-surface-selected` (blue tint — a row being selected is not a status, so it is deliberately not success-green)
+- Numeric cells → `font-mono` + `tabular-nums`; borders → `--ds-color-border-subtle`
+
+**Status surfaces (alerts, banners, callouts)**
+
+- Success / Info / Warning / Critical → matching `--ds-color-surface-{intent}` fill, `--ds-color-border-{intent}-bold`, `--ds-color-text-{intent}` text
+
+**Charts**
+
+- Wrap in a `--ds-color-surface-default` container
+- Axis lines use `--chart-axis-line`, never a text-color token
+- Never use brand lime or forest as a data series; dose-response curves use `--chart-curve-fit` (fit line) and `--chart-confidence-band` (error envelope)
+
+---
+
+## Component usage
+
+Forager-specific constraints on the shared components. Appearance lives in Storybook; these are the rules for using them correctly.
+
+- **Button** — never override `bg-*` / `text-*` via `className` (the bridge handles color); use the `disabled` prop, never reach for `-disabled` tokens in component code.
+- **Link vs Linktext** — never use a Button for an inline text link; never use a Link for a standalone CTA. Two components, two state machines.
+- **Input / Textarea / Select** — signal errors with `aria-invalid="true"`, not by changing the border color directly.
+- **Badge** — always `rounded-full`; never `rounded` (it reads as a button).
+- **Card** — padding `p-4` (dense panels) or `p-6` (primary content); never nest a Card in a Card — use `--ds-color-surface-alt` for inset content.
+- **Dialog vs Sheet** — Dialog for confirmations and short forms (≤4 fields); Sheet for side panels with more context (`side="right"` only).
+- **Skeleton** — use for all loading states; match the skeleton's dimensions to the content it replaces.
+- **Tabs** — in-page view switching only, never page-level navigation (that is the sidebar's job).
+
+---
+
 ## Anti-patterns
 
 ### Banned everywhere
@@ -367,3 +419,20 @@ Icon sizes are relative to the component they live in. Button icon slots are siz
 3. **Tag colors implying status** — use icon + text for status; tag color is decorative.
 4. **Brand lime or forest as a chart data series** — those hues are reserved for UI affordances.
 5. **Reaching past the semantic layer** — component code references `--ds-*` semantics only, never primitives (`--p-*`) or raw values directly. If no semantic token exists for what you need, flag it with `// BRIGHTSEED-TBD: [BLOCKING]` and stop.
+6. **Marketing patterns inside Forager** — hero sections, editorial layouts, large display type belong to the marketing system, not the product. Flag them rather than build them.
+7. **Rounding scientific values for display** — show full precision with units; rounding is a data-layer decision, not a presentation one.
+8. **The ambiguous `--primary-*`** — Brightseed splits primary into `--ds-color-surface-brand` (chrome) and `--ds-color-action-primary` (the button). "Primary" alone is forbidden.
+9. **Importing from any library beyond shadcn/ui and Recharts** — no MUI, Chakra, Ant, or custom Tailwind plugins.
+
+---
+
+## Domain notes
+
+Forager is a biotech discovery tool; these domain facts shape UI decisions.
+
+- **Users are scientists, not consumers** — lean to information density over whitespace.
+- **Numeric precision matters** — use `tabular-nums` for any column of numbers; show scientific notation where apt (nM, EC50).
+- **Sample and compound IDs are first-class** — render them in `font-mono` so they stand out.
+- **Primary chart types are dose-response, time-series, and heatmaps** — bar and pie are rare.
+- **Units are non-negotiable** — never display a number without its unit (µM, nM, %).
+- **Never encode data by color alone** — pair color with a label or shape; some users are colorblind.

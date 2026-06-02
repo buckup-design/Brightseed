@@ -154,7 +154,7 @@ When the stock tailwind palette was retired Apr 2026, dark-mode shadcn surfaces 
 - "Floor" (#133019) and "Deep Forest" (#305536) remain named anchors in the brand palette, but they no longer back `--background`, `--card`, or `--surface-brand` in dark mode. They back `--foreground` (light mode text), `--primary-foreground` (text on lime), and other forest-specific roles. (Brand-link text moved to lime in May 2026 — see CLAUDE.md "Brand-link uses lime, not forest" decision.)
 
 **What this means for the CSS layer:**
-- `tokens/semantics.css` and `BrightseedDS.md` were realigned Apr 2026. Both now use `brightseed/sand/*` as the dark-theme anchor, matching the shadcn Theme variables in Figma. The previous forest-based dark theme is retired.
+- `tokens/semantics.css` was realigned Apr 2026 to use `brightseed/sand/*` as the dark-theme anchor, matching the shadcn Theme variables in Figma. The previous forest-based dark theme is retired.
 
 **Outstanding divergence:** Figma's `colors/ring-dark` aliases to `sand/500`, while `tokens/semantics.css` keeps `--color-border-focus` as lime in both light and dark themes. Pending a design call on whether the focus ring should switch palettes in dark mode.
 

@@ -246,4 +246,4 @@ This doc unblocks:
 
 ---
 
-*If you redline this doc, edit in place. Major decisions (renames, hierarchy changes) should also be reflected in `BrightseedDS.md` and `CLAUDE.md` so AI codegen stays in sync.*
+*If you redline this doc, edit in place. Major decisions (renames, hierarchy changes) should also be reflected in `CLAUDE.md` so AI codegen stays in sync.*
