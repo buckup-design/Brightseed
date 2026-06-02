@@ -13,134 +13,134 @@
 :root {
 
   /* ── Action: lime — CTAs, primary buttons, focus rings ── */
-  --action-primary-50:  var(--color-lime-50);
-  --action-primary-100: var(--color-lime-100);
-  --action-primary-200: var(--color-lime-200);
-  --action-primary-300: var(--color-lime-300);
-  --action-primary-400: var(--color-lime-400);
-  --action-primary-500: var(--color-lime-500);
-  --action-primary-600: var(--color-lime-600);
-  --action-primary-700: var(--color-lime-700);
-  --action-primary-800: var(--color-lime-800);
-  --action-primary-900: var(--color-lime-900);
-  --action-primary-950: var(--color-lime-950);
+  --action-primary-50:  var(--p-color-lime-50);
+  --action-primary-100: var(--p-color-lime-100);
+  --action-primary-200: var(--p-color-lime-200);
+  --action-primary-300: var(--p-color-lime-300);
+  --action-primary-400: var(--p-color-lime-400);
+  --action-primary-500: var(--p-color-lime-500);
+  --action-primary-600: var(--p-color-lime-600);
+  --action-primary-700: var(--p-color-lime-700);
+  --action-primary-800: var(--p-color-lime-800);
+  --action-primary-900: var(--p-color-lime-900);
+  --action-primary-950: var(--p-color-lime-950);
 
   /* ── Surface brand: Deep Forest — nav, headers, branded chrome ── */
-  --surface-brand-50:  var(--color-forest-50);
-  --surface-brand-100: var(--color-forest-100);
-  --surface-brand-200: var(--color-forest-200);
-  --surface-brand-300: var(--color-forest-300);
-  --surface-brand-400: var(--color-forest-400);
-  --surface-brand-500: var(--color-forest-500);
-  --surface-brand-600: var(--color-forest-600);
-  --surface-brand-700: var(--color-forest-700);
-  --surface-brand-800: var(--color-forest-800);
-  --surface-brand-900: var(--color-forest-900);
-  --surface-brand-950: var(--color-forest-950);
+  --surface-brand-50:  var(--p-color-forest-50);
+  --surface-brand-100: var(--p-color-forest-100);
+  --surface-brand-200: var(--p-color-forest-200);
+  --surface-brand-300: var(--p-color-forest-300);
+  --surface-brand-400: var(--p-color-forest-400);
+  --surface-brand-500: var(--p-color-forest-500);
+  --surface-brand-600: var(--p-color-forest-600);
+  --surface-brand-700: var(--p-color-forest-700);
+  --surface-brand-800: var(--p-color-forest-800);
+  --surface-brand-900: var(--p-color-forest-900);
+  --surface-brand-950: var(--p-color-forest-950);
 
   /* ── Success: forest — shares hue with surface-brand; uses light steps (50–300) ── */
-  --success-50:  var(--color-forest-50);
-  --success-100: var(--color-forest-100);
-  --success-200: var(--color-forest-200);
-  --success-300: var(--color-forest-300);
-  --success-400: var(--color-forest-400);
-  --success-500: var(--color-forest-500);
-  --success-600: var(--color-forest-600);
-  --success-700: var(--color-forest-700);
-  --success-800: var(--color-forest-800);
-  --success-900: var(--color-forest-900);
-  --success-950: var(--color-forest-950);
+  --success-50:  var(--p-color-forest-50);
+  --success-100: var(--p-color-forest-100);
+  --success-200: var(--p-color-forest-200);
+  --success-300: var(--p-color-forest-300);
+  --success-400: var(--p-color-forest-400);
+  --success-500: var(--p-color-forest-500);
+  --success-600: var(--p-color-forest-600);
+  --success-700: var(--p-color-forest-700);
+  --success-800: var(--p-color-forest-800);
+  --success-900: var(--p-color-forest-900);
+  --success-950: var(--p-color-forest-950);
 
   /* ── Info: Ocean/blue ── */
-  --info-50:  var(--color-blue-50);
-  --info-100: var(--color-blue-100);
-  --info-200: var(--color-blue-200);
-  --info-300: var(--color-blue-300);
-  --info-400: var(--color-blue-400);
-  --info-500: var(--color-blue-500);
-  --info-600: var(--color-blue-600);
-  --info-700: var(--color-blue-700);
-  --info-800: var(--color-blue-800);
-  --info-900: var(--color-blue-900);
-  --info-950: var(--color-blue-950);
+  --info-50:  var(--p-color-blue-50);
+  --info-100: var(--p-color-blue-100);
+  --info-200: var(--p-color-blue-200);
+  --info-300: var(--p-color-blue-300);
+  --info-400: var(--p-color-blue-400);
+  --info-500: var(--p-color-blue-500);
+  --info-600: var(--p-color-blue-600);
+  --info-700: var(--p-color-blue-700);
+  --info-800: var(--p-color-blue-800);
+  --info-900: var(--p-color-blue-900);
+  --info-950: var(--p-color-blue-950);
 
   /* ── Warning: yellow ── */
-  --warning-50:  var(--color-yellow-50);
-  --warning-100: var(--color-yellow-100);
-  --warning-200: var(--color-yellow-200);
-  --warning-300: var(--color-yellow-300);
-  --warning-400: var(--color-yellow-400);
-  --warning-500: var(--color-yellow-500);
-  --warning-600: var(--color-yellow-600);
-  --warning-700: var(--color-yellow-700);
-  --warning-800: var(--color-yellow-800);
-  --warning-900: var(--color-yellow-900);
-  --warning-950: var(--color-yellow-950);
+  --warning-50:  var(--p-color-yellow-50);
+  --warning-100: var(--p-color-yellow-100);
+  --warning-200: var(--p-color-yellow-200);
+  --warning-300: var(--p-color-yellow-300);
+  --warning-400: var(--p-color-yellow-400);
+  --warning-500: var(--p-color-yellow-500);
+  --warning-600: var(--p-color-yellow-600);
+  --warning-700: var(--p-color-yellow-700);
+  --warning-800: var(--p-color-yellow-800);
+  --warning-900: var(--p-color-yellow-900);
+  --warning-950: var(--p-color-yellow-950);
 
   /* ── Critical: red ── */
-  --critical-50:  var(--color-red-50);
-  --critical-100: var(--color-red-100);
-  --critical-200: var(--color-red-200);
-  --critical-300: var(--color-red-300);
-  --critical-400: var(--color-red-400);
-  --critical-500: var(--color-red-500);
-  --critical-600: var(--color-red-600);
-  --critical-700: var(--color-red-700);
-  --critical-800: var(--color-red-800);
-  --critical-900: var(--color-red-900);
-  --critical-950: var(--color-red-950);
+  --critical-50:  var(--p-color-red-50);
+  --critical-100: var(--p-color-red-100);
+  --critical-200: var(--p-color-red-200);
+  --critical-300: var(--p-color-red-300);
+  --critical-400: var(--p-color-red-400);
+  --critical-500: var(--p-color-red-500);
+  --critical-600: var(--p-color-red-600);
+  --critical-700: var(--p-color-red-700);
+  --critical-800: var(--p-color-red-800);
+  --critical-900: var(--p-color-red-900);
+  --critical-950: var(--p-color-red-950);
 
   /* ── Data: cyan — primary data viz series ── */
-  --data-cyan-50:  var(--color-cyan-50);
-  --data-cyan-100: var(--color-cyan-100);
-  --data-cyan-200: var(--color-cyan-200);
-  --data-cyan-300: var(--color-cyan-300);
-  --data-cyan-400: var(--color-cyan-400);
-  --data-cyan-500: var(--color-cyan-500);
-  --data-cyan-600: var(--color-cyan-600);
-  --data-cyan-700: var(--color-cyan-700);
-  --data-cyan-800: var(--color-cyan-800);
-  --data-cyan-900: var(--color-cyan-900);
-  --data-cyan-950: var(--color-cyan-950);
+  --data-cyan-50:  var(--p-color-cyan-50);
+  --data-cyan-100: var(--p-color-cyan-100);
+  --data-cyan-200: var(--p-color-cyan-200);
+  --data-cyan-300: var(--p-color-cyan-300);
+  --data-cyan-400: var(--p-color-cyan-400);
+  --data-cyan-500: var(--p-color-cyan-500);
+  --data-cyan-600: var(--p-color-cyan-600);
+  --data-cyan-700: var(--p-color-cyan-700);
+  --data-cyan-800: var(--p-color-cyan-800);
+  --data-cyan-900: var(--p-color-cyan-900);
+  --data-cyan-950: var(--p-color-cyan-950);
 
   /* ── Data: lavender — secondary data viz series ── */
-  --data-lavender-50:  var(--color-lavender-50);
-  --data-lavender-100: var(--color-lavender-100);
-  --data-lavender-200: var(--color-lavender-200);
-  --data-lavender-300: var(--color-lavender-300);
-  --data-lavender-400: var(--color-lavender-400);
-  --data-lavender-500: var(--color-lavender-500);
-  --data-lavender-600: var(--color-lavender-600);
-  --data-lavender-700: var(--color-lavender-700);
-  --data-lavender-800: var(--color-lavender-800);
-  --data-lavender-900: var(--color-lavender-900);
-  --data-lavender-950: var(--color-lavender-950);
+  --data-lavender-50:  var(--p-color-lavender-50);
+  --data-lavender-100: var(--p-color-lavender-100);
+  --data-lavender-200: var(--p-color-lavender-200);
+  --data-lavender-300: var(--p-color-lavender-300);
+  --data-lavender-400: var(--p-color-lavender-400);
+  --data-lavender-500: var(--p-color-lavender-500);
+  --data-lavender-600: var(--p-color-lavender-600);
+  --data-lavender-700: var(--p-color-lavender-700);
+  --data-lavender-800: var(--p-color-lavender-800);
+  --data-lavender-900: var(--p-color-lavender-900);
+  --data-lavender-950: var(--p-color-lavender-950);
 
   /* ── Data: orange — tertiary data viz / Eschscholzia accent ── */
-  --data-orange-50:  var(--color-orange-50);
-  --data-orange-100: var(--color-orange-100);
-  --data-orange-200: var(--color-orange-200);
-  --data-orange-300: var(--color-orange-300);
-  --data-orange-400: var(--color-orange-400);
-  --data-orange-500: var(--color-orange-500);
-  --data-orange-600: var(--color-orange-600);
-  --data-orange-700: var(--color-orange-700);
-  --data-orange-800: var(--color-orange-800);
-  --data-orange-900: var(--color-orange-900);
-  --data-orange-950: var(--color-orange-950);
+  --data-orange-50:  var(--p-color-orange-50);
+  --data-orange-100: var(--p-color-orange-100);
+  --data-orange-200: var(--p-color-orange-200);
+  --data-orange-300: var(--p-color-orange-300);
+  --data-orange-400: var(--p-color-orange-400);
+  --data-orange-500: var(--p-color-orange-500);
+  --data-orange-600: var(--p-color-orange-600);
+  --data-orange-700: var(--p-color-orange-700);
+  --data-orange-800: var(--p-color-orange-800);
+  --data-orange-900: var(--p-color-orange-900);
+  --data-orange-950: var(--p-color-orange-950);
 
   /* ── Data: orchid — quaternary data viz / Garlic Bloom accent ── */
-  --data-orchid-50:  var(--color-orchid-50);
-  --data-orchid-100: var(--color-orchid-100);
-  --data-orchid-200: var(--color-orchid-200);
-  --data-orchid-300: var(--color-orchid-300);
-  --data-orchid-400: var(--color-orchid-400);
-  --data-orchid-500: var(--color-orchid-500);
-  --data-orchid-600: var(--color-orchid-600);
-  --data-orchid-700: var(--color-orchid-700);
-  --data-orchid-800: var(--color-orchid-800);
-  --data-orchid-900: var(--color-orchid-900);
-  --data-orchid-950: var(--color-orchid-950);
+  --data-orchid-50:  var(--p-color-orchid-50);
+  --data-orchid-100: var(--p-color-orchid-100);
+  --data-orchid-200: var(--p-color-orchid-200);
+  --data-orchid-300: var(--p-color-orchid-300);
+  --data-orchid-400: var(--p-color-orchid-400);
+  --data-orchid-500: var(--p-color-orchid-500);
+  --data-orchid-600: var(--p-color-orchid-600);
+  --data-orchid-700: var(--p-color-orchid-700);
+  --data-orchid-800: var(--p-color-orchid-800);
+  --data-orchid-900: var(--p-color-orchid-900);
+  --data-orchid-950: var(--p-color-orchid-950);
 
 }
 

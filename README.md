@@ -24,7 +24,7 @@ components/
 
 ```
 Primitives  →  Intents  →  Semantics  →  Component code
---color-lime-400  →  --action-primary-400  →  --color-action-primary  →  bg-primary (via bridge)
+--p-color-lime-400  →  --action-primary-400  →  --color-action-primary  →  bg-primary (via bridge)
 ```
 
 - **Layer 1 — Primitives:** Raw hue scales, 11 steps each (50–950), OKLCH color space. No semantic meaning.
@@ -63,7 +63,7 @@ darkMode: ['selector', '[data-theme="dark"]']
 
 | Layer | Pattern | Example |
 |-------|---------|---------|
-| Primitive | `--color-{hue}-{step}` | `--color-lime-300` |
+| Primitive | `--color-{hue}-{step}` | `--p-color-lime-300` |
 | Intent | `--{role}-{step}` | `--action-primary-300` |
 | Semantic | `--color-{category}-{role}-{state}` | `--color-action-primary-hover` |
 | Component | `--{component}-{element}-{property}-{state}` | `--table-row-background-selected` |

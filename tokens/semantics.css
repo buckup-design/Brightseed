@@ -3,7 +3,7 @@
  * Layer 3 of 3: UI-function tokens. Component code references ONLY these.
  * Reference: BrightseedDS.md §3.3
  *
- * Naming: --color-{category}-{role}-{state}
+ * Naming: --p-color-{category}-{role}-{state}
  * State suffixes: -hover, -active, -disabled (never reach into primitives for states)
  *
  * Requires: primitives.css, intents.css
@@ -17,12 +17,12 @@
 :root {
 
   /* ── Surface ── */
-  --ds-color-surface-default:         var(--color-white);         /* #ffffff — page background */
-  --ds-color-surface-default-hover:   var(--color-sand-100);
-  --ds-color-surface-default-active:  var(--color-sand-200);
-  --ds-color-surface-alt:             var(--color-sand-100);      /* sidebar, table alt rows, inset panels */
-  --ds-color-surface-alt-hover:       var(--color-sand-200);
-  --ds-color-surface-scrim:           color-mix(in srgb, var(--color-sand-950) 50%, transparent);  /* modal / dialog veil — warm dark @ 50%, matches prior look */
+  --ds-color-surface-default:         var(--p-color-white);         /* #ffffff — page background */
+  --ds-color-surface-default-hover:   var(--p-color-sand-100);
+  --ds-color-surface-default-active:  var(--p-color-sand-200);
+  --ds-color-surface-alt:             var(--p-color-sand-100);      /* sidebar, table alt rows, inset panels */
+  --ds-color-surface-alt-hover:       var(--p-color-sand-200);
+  --ds-color-surface-scrim:           color-mix(in srgb, var(--p-color-sand-950) 50%, transparent);  /* modal / dialog veil — warm dark @ 50%, matches prior look */
 
   /* Brand surface — nav bar, header, branded panels */
   --ds-color-surface-brand:           var(--surface-brand-900);   /* Deep Forest */
@@ -57,7 +57,7 @@
      opacity in both themes — so the rule has one number to tune.
      Disabled UI is exempt from WCAG 1.4.3 contrast (we accept ~3.4:1 for the muted
      read on the destructive variant — the worst case of the cohort). */
-  --ds-color-disabled-surface-overlay: var(--color-sand-100);
+  --ds-color-disabled-surface-overlay: var(--p-color-sand-100);
   --ds-disabled-text-opacity:          0.55;
 
   /* Primary: lime fill. Surface ladder shifted down one step Apr 2026 to give the
@@ -73,10 +73,10 @@
      button is visibly distinct from page bg at default and steps darker per state.
      (Earlier the ladder anchored at page-bg, which made Secondary invisible on
      white surfaces — corrected Apr 2026.) */
-  --ds-color-action-secondary:          var(--color-sand-100);
-  --ds-color-action-secondary-hover:    var(--color-sand-200);
-  --ds-color-action-secondary-active:   var(--color-sand-300);
-  --ds-color-action-secondary-disabled: var(--color-sand-50);
+  --ds-color-action-secondary:          var(--p-color-sand-100);
+  --ds-color-action-secondary-hover:    var(--p-color-sand-200);
+  --ds-color-action-secondary-active:   var(--p-color-sand-300);
+  --ds-color-action-secondary-disabled: var(--p-color-sand-50);
 
   /* Critical: destructive — soft style. red-100 surface, red-600 text.
      Refactored Apr 2026 from solid red-500 fill to discrete-step soft tint —
@@ -87,15 +87,15 @@
   --ds-color-action-critical-disabled: color-mix(in srgb, var(--ds-color-action-critical), var(--ds-color-disabled-surface-overlay) 50%);
 
   /* ── Border ── */
-  --ds-color-border-subtle:           var(--color-sand-200);      /* hairlines, table grid */
-  --ds-color-border-default:          var(--color-sand-300);      /* input default */
-  --ds-color-border-bold:             var(--color-sand-500);      /* emphatic dividers */
+  --ds-color-border-subtle:           var(--p-color-sand-200);      /* hairlines, table grid */
+  --ds-color-border-default:          var(--p-color-sand-300);      /* input default */
+  --ds-color-border-bold:             var(--p-color-sand-500);      /* emphatic dividers */
   /* Focus rings — variant-aware. Default uses lime (the system action color);
      destructive uses its own hue scale; secondary uses sand. Linktext is in the
      lime family too, so its focus ring matches Default — kept as a separate
      token name for namespace clarity in case it ever diverges. */
   --ds-color-border-focus:             var(--action-primary-500);  /* lime/500 — Default, Outline, Ghost focus */
-  --ds-color-border-focus-secondary:   var(--color-sand-300);      /* sand/300 — Secondary focus (matches Figma base/ring) */
+  --ds-color-border-focus-secondary:   var(--p-color-sand-300);      /* sand/300 — Secondary focus (matches Figma base/ring) */
   --ds-color-border-focus-destructive: var(--critical-500);        /* red/500 — Destructive focus */
   --ds-color-border-focus-link-brand:  var(--action-primary-500);  /* lime/500 — Linktext focus (same as Default) */
 
@@ -109,17 +109,17 @@
   --ds-color-border-critical-bold:    var(--critical-600);
 
   /* ── Text ── */
-  --ds-color-text-default:            var(--color-sand-900);      /* #2a2925 — warm near-black */
-  --ds-color-text-default-hover:      var(--color-sand-950);      /* one step "more pronounced" — used by
+  --ds-color-text-default:            var(--p-color-sand-900);      /* #2a2925 — warm near-black */
+  --ds-color-text-default-hover:      var(--p-color-sand-950);      /* one step "more pronounced" — used by
                                                                   Secondary / Outline / Ghost button text on hover */
-  --ds-color-text-subtle:             var(--color-sand-700);      /* secondary / helper text */
-  --ds-color-text-disabled:           var(--color-sand-500);      /* generic flat disabled — for non-button contexts
+  --ds-color-text-subtle:             var(--p-color-sand-700);      /* secondary / helper text */
+  --ds-color-text-disabled:           var(--p-color-sand-500);      /* generic flat disabled — for non-button contexts
                                                                   (form labels, static text). Buttons use the alpha
                                                                   rule on their normal foreground instead. */
 
   /* Inverse — text on Deep Forest surfaces or any dark panel */
-  --ds-color-text-inverse:            var(--color-sand-50);
-  --ds-color-text-inverse-subtle:     var(--color-sand-300);
+  --ds-color-text-inverse:            var(--p-color-sand-50);
+  --ds-color-text-inverse-subtle:     var(--p-color-sand-300);
 
   /* Text/icons on the lime primary action.
      Three text steps to match the three surface states: forest-800 default →
@@ -127,9 +127,9 @@
      on the deeper lime-500 active surface (forest-800/900 fail AA on lime-500).
      Theme-invariant — same values in dark mode (lime button is the primary action
      in both themes). Mirrors Figma `base/primary-foreground`. */
-  --ds-color-text-on-action-primary:           var(--color-forest-800);
-  --ds-color-text-on-action-primary-hover:     var(--color-forest-900);
-  --ds-color-text-on-action-primary-active:    var(--color-forest-950);
+  --ds-color-text-on-action-primary:           var(--p-color-forest-800);
+  --ds-color-text-on-action-primary-hover:     var(--p-color-forest-900);
+  --ds-color-text-on-action-primary-active:    var(--p-color-forest-950);
   /* No -disabled token — disabled state uses --ds-color-text-on-action-primary at --ds-disabled-text-opacity. */
 
   /* Text on the destructive (soft red) action.
@@ -151,7 +151,7 @@
      must be explicit about which component they're in. */
   --ds-color-text-link-default:       var(--info-600);            /* blue-600 — :link */
   --ds-color-text-link-default-hover: var(--info-700);            /* blue-700 — :hover */
-  --ds-color-text-link-visited:       var(--color-sand-700);      /* sand-700 — :visited (warm, settled) */
+  --ds-color-text-link-visited:       var(--p-color-sand-700);      /* sand-700 — :visited (warm, settled) */
   --ds-color-text-link-active:        var(--info-900);            /* blue-900 — :active (pressed) */
   /* Brand-link uses lime — but a deeper step than the lime button surface.
      base/primary surface = lime-300 (#CDE67B); on white that's ~1.7:1, fine
@@ -159,8 +159,8 @@
      is text-only, so we step down the lime scale to lime-700 (light) /
      lime-300 (dark) for AA contrast on page surfaces.
      Decided May 2026 — replaced earlier forest-scale brand-link. */
-  --ds-color-text-link-brand:           var(--color-forest-800);    /* #3f6947 — matches Figma base/link-brand light mode */
-  --ds-color-text-link-brand-hover:     var(--color-forest-900);    /* one step more pronounced on hover */
+  --ds-color-text-link-brand:           var(--p-color-forest-800);    /* #3f6947 — matches Figma base/link-brand light mode */
+  --ds-color-text-link-brand-hover:     var(--p-color-forest-900);    /* one step more pronounced on hover */
   /* No -disabled token — disabled state uses --ds-color-text-link-brand at --ds-disabled-text-opacity. */
 
   /* Semantic text — all verified WCAG AA on sand-50 surface */
@@ -174,11 +174,11 @@
   --ds-color-text-data-orchid:        var(--data-orchid-700);     /* orchid-700 — 5.12:1 ✓ AA */
 
   /* ── Icon (mirrors text taxonomy exactly) ── */
-  --ds-color-icon-default:            var(--color-sand-900);
-  --ds-color-icon-subtle:             var(--color-sand-700);
-  --ds-color-icon-disabled:           var(--color-sand-500);
-  --ds-color-icon-inverse:            var(--color-sand-50);
-  --ds-color-icon-inverse-subtle:     var(--color-sand-300);
+  --ds-color-icon-default:            var(--p-color-sand-900);
+  --ds-color-icon-subtle:             var(--p-color-sand-700);
+  --ds-color-icon-disabled:           var(--p-color-sand-500);
+  --ds-color-icon-inverse:            var(--p-color-sand-50);
+  --ds-color-icon-inverse-subtle:     var(--p-color-sand-300);
   --ds-color-icon-brand:              var(--action-primary-400);  /* lime — brand icons on light bg */
   --ds-color-icon-success:            var(--success-700);
   --ds-color-icon-info:               var(--info-700);
@@ -191,8 +191,8 @@
   --ds-color-icon-data-orchid:        var(--data-orchid-700);
 
   /* ── Favorite / pin icon ── */
-  --ds-color-icon-favorite-inactive:  var(--color-sand-300);   /* appears on card hover — very light */
-  --ds-color-icon-favorite-active:    var(--color-yellow-500); /* favorited/pinned — theme-invariant */
+  --ds-color-icon-favorite-inactive:  var(--p-color-sand-300);   /* appears on card hover — very light */
+  --ds-color-icon-favorite-active:    var(--p-color-yellow-500); /* favorited/pinned — theme-invariant */
 
   /* ──────────────────────────────────────────────────────────────────
      Tag tokens — decorative color set for Forager's tag-dense surfaces.
@@ -203,55 +203,55 @@
      No intent layer — tag colors are decorative only, not semantic.
      ────────────────────────────────────────────────────────────────── */
 
-  --ds-color-surface-tag-sand:           var(--color-sand-100);
-  --ds-color-surface-tag-sand-hover:     var(--color-sand-200);
-  --ds-color-text-tag-sand:              var(--color-sand-800);
-  --ds-color-border-tag-sand-focus:      var(--color-sand-500);
+  --ds-color-surface-tag-sand:           var(--p-color-sand-100);
+  --ds-color-surface-tag-sand-hover:     var(--p-color-sand-200);
+  --ds-color-text-tag-sand:              var(--p-color-sand-800);
+  --ds-color-border-tag-sand-focus:      var(--p-color-sand-500);
 
-  --ds-color-surface-tag-forest:         var(--color-forest-100);
-  --ds-color-surface-tag-forest-hover:   var(--color-forest-200);
-  --ds-color-text-tag-forest:            var(--color-forest-700);
-  --ds-color-border-tag-forest-focus:    var(--color-forest-500);
+  --ds-color-surface-tag-forest:         var(--p-color-forest-100);
+  --ds-color-surface-tag-forest-hover:   var(--p-color-forest-200);
+  --ds-color-text-tag-forest:            var(--p-color-forest-700);
+  --ds-color-border-tag-forest-focus:    var(--p-color-forest-500);
 
-  --ds-color-surface-tag-lime:           var(--color-lime-100);
-  --ds-color-surface-tag-lime-hover:     var(--color-lime-200);
-  --ds-color-text-tag-lime:              var(--color-lime-700);
-  --ds-color-border-tag-lime-focus:      var(--color-lime-500);
+  --ds-color-surface-tag-lime:           var(--p-color-lime-100);
+  --ds-color-surface-tag-lime-hover:     var(--p-color-lime-200);
+  --ds-color-text-tag-lime:              var(--p-color-lime-700);
+  --ds-color-border-tag-lime-focus:      var(--p-color-lime-500);
 
-  --ds-color-surface-tag-cyan:           var(--color-cyan-100);
-  --ds-color-surface-tag-cyan-hover:     var(--color-cyan-200);
-  --ds-color-text-tag-cyan:              var(--color-cyan-700);
-  --ds-color-border-tag-cyan-focus:      var(--color-cyan-500);
+  --ds-color-surface-tag-cyan:           var(--p-color-cyan-100);
+  --ds-color-surface-tag-cyan-hover:     var(--p-color-cyan-200);
+  --ds-color-text-tag-cyan:              var(--p-color-cyan-700);
+  --ds-color-border-tag-cyan-focus:      var(--p-color-cyan-500);
 
-  --ds-color-surface-tag-blue:           var(--color-blue-100);
-  --ds-color-surface-tag-blue-hover:     var(--color-blue-200);
-  --ds-color-text-tag-blue:              var(--color-blue-700);
-  --ds-color-border-tag-blue-focus:      var(--color-blue-500);
+  --ds-color-surface-tag-blue:           var(--p-color-blue-100);
+  --ds-color-surface-tag-blue-hover:     var(--p-color-blue-200);
+  --ds-color-text-tag-blue:              var(--p-color-blue-700);
+  --ds-color-border-tag-blue-focus:      var(--p-color-blue-500);
 
-  --ds-color-surface-tag-yellow:         var(--color-yellow-100);
-  --ds-color-surface-tag-yellow-hover:   var(--color-yellow-200);
-  --ds-color-text-tag-yellow:            var(--color-yellow-700);
-  --ds-color-border-tag-yellow-focus:    var(--color-yellow-500);
+  --ds-color-surface-tag-yellow:         var(--p-color-yellow-100);
+  --ds-color-surface-tag-yellow-hover:   var(--p-color-yellow-200);
+  --ds-color-text-tag-yellow:            var(--p-color-yellow-700);
+  --ds-color-border-tag-yellow-focus:    var(--p-color-yellow-500);
 
-  --ds-color-surface-tag-orange:         var(--color-orange-100);
-  --ds-color-surface-tag-orange-hover:   var(--color-orange-200);
-  --ds-color-text-tag-orange:            var(--color-orange-700);
-  --ds-color-border-tag-orange-focus:    var(--color-orange-500);
+  --ds-color-surface-tag-orange:         var(--p-color-orange-100);
+  --ds-color-surface-tag-orange-hover:   var(--p-color-orange-200);
+  --ds-color-text-tag-orange:            var(--p-color-orange-700);
+  --ds-color-border-tag-orange-focus:    var(--p-color-orange-500);
 
-  --ds-color-surface-tag-red:            var(--color-red-100);
-  --ds-color-surface-tag-red-hover:      var(--color-red-200);
-  --ds-color-text-tag-red:               var(--color-red-700);
-  --ds-color-border-tag-red-focus:       var(--color-red-500);
+  --ds-color-surface-tag-red:            var(--p-color-red-100);
+  --ds-color-surface-tag-red-hover:      var(--p-color-red-200);
+  --ds-color-text-tag-red:               var(--p-color-red-700);
+  --ds-color-border-tag-red-focus:       var(--p-color-red-500);
 
-  --ds-color-surface-tag-lavender:       var(--color-lavender-100);
-  --ds-color-surface-tag-lavender-hover: var(--color-lavender-200);
-  --ds-color-text-tag-lavender:          var(--color-lavender-700);
-  --ds-color-border-tag-lavender-focus:  var(--color-lavender-500);
+  --ds-color-surface-tag-lavender:       var(--p-color-lavender-100);
+  --ds-color-surface-tag-lavender-hover: var(--p-color-lavender-200);
+  --ds-color-text-tag-lavender:          var(--p-color-lavender-700);
+  --ds-color-border-tag-lavender-focus:  var(--p-color-lavender-500);
 
-  --ds-color-surface-tag-orchid:         var(--color-orchid-100);
-  --ds-color-surface-tag-orchid-hover:   var(--color-orchid-200);
-  --ds-color-text-tag-orchid:            var(--color-orchid-700);
-  --ds-color-border-tag-orchid-focus:    var(--color-orchid-500);
+  --ds-color-surface-tag-orchid:         var(--p-color-orchid-100);
+  --ds-color-surface-tag-orchid-hover:   var(--p-color-orchid-200);
+  --ds-color-text-tag-orchid:            var(--p-color-orchid-700);
+  --ds-color-border-tag-orchid-focus:    var(--p-color-orchid-500);
 
 }
 
@@ -274,50 +274,50 @@
      dim/desaturated instead of light/desaturated. The surface-disabled tokens
      in :root cascade through this override via color-mix.
      Text fade is theme-invariant via --ds-disabled-text-opacity (no override needed). */
-  --ds-color-disabled-surface-overlay: var(--color-sand-700);
+  --ds-color-disabled-surface-overlay: var(--p-color-sand-700);
 
   /* ── Surfaces — warm dark sand ladder ── */
-  --ds-color-surface-default:         var(--color-sand-950);       /* #1F1F1E — page bg */
-  --ds-color-surface-default-hover:   var(--color-sand-900);
-  --ds-color-surface-default-active:  var(--color-sand-800);
-  --ds-color-surface-alt:             var(--color-sand-900);       /* raised panels, sidebars, cards */
-  --ds-color-surface-alt-hover:       var(--color-sand-800);
-  --ds-color-surface-scrim:           color-mix(in srgb, var(--color-black) 60%, transparent);     /* veil must go darker than the sand-950 page to register — DESIGN REVIEW: black vs warm */
+  --ds-color-surface-default:         var(--p-color-sand-950);       /* #1F1F1E — page bg */
+  --ds-color-surface-default-hover:   var(--p-color-sand-900);
+  --ds-color-surface-default-active:  var(--p-color-sand-800);
+  --ds-color-surface-alt:             var(--p-color-sand-900);       /* raised panels, sidebars, cards */
+  --ds-color-surface-alt-hover:       var(--p-color-sand-800);
+  --ds-color-surface-scrim:           color-mix(in srgb, var(--p-color-black) 60%, transparent);     /* veil must go darker than the sand-950 page to register — DESIGN REVIEW: black vs warm */
 
   /* Brand nav/header — sand-anchored in dark mode (forest exits surface vocabulary) */
-  --ds-color-surface-brand:           var(--color-sand-900);
-  --ds-color-surface-brand-hover:     var(--color-sand-800);
-  --ds-color-surface-brand-active:    var(--color-sand-950);
-  --ds-color-surface-brand-subtle:    var(--color-sand-950);
+  --ds-color-surface-brand:           var(--p-color-sand-900);
+  --ds-color-surface-brand-hover:     var(--p-color-sand-800);
+  --ds-color-surface-brand-active:    var(--p-color-sand-950);
+  --ds-color-surface-brand-subtle:    var(--p-color-sand-950);
 
   /* Semantic surfaces — intent tint at low opacity on sand-950 base.
      Visual judgment: dark mode alerts read better with a subtle tint than
      a pure deep-intent step. Recipe: intent step at 10-15% over sand-950.
      Source: dark mode mockup May 28 2026. */
-  --ds-color-surface-success:         color-mix(in srgb, var(--success-800) 15%, var(--color-sand-950));
-  --ds-color-surface-success-hover:   color-mix(in srgb, var(--success-800) 22%, var(--color-sand-950));
-  --ds-color-surface-success-active:  color-mix(in srgb, var(--success-800) 30%, var(--color-sand-950));
-  --ds-color-surface-info:            color-mix(in srgb, var(--info-400)    10%, var(--color-sand-950));
-  --ds-color-surface-info-hover:      color-mix(in srgb, var(--info-400)    16%, var(--color-sand-950));
-  --ds-color-surface-info-active:     color-mix(in srgb, var(--info-400)    22%, var(--color-sand-950));
-  --ds-color-surface-warning:         color-mix(in srgb, var(--warning-300) 10%, var(--color-sand-950));
-  --ds-color-surface-warning-hover:   color-mix(in srgb, var(--warning-300) 16%, var(--color-sand-950));
-  --ds-color-surface-warning-active:  color-mix(in srgb, var(--warning-300) 22%, var(--color-sand-950));
-  --ds-color-surface-critical:        color-mix(in srgb, var(--critical-400) 10%, var(--color-sand-950));
-  --ds-color-surface-critical-hover:  color-mix(in srgb, var(--critical-400) 16%, var(--color-sand-950));
-  --ds-color-surface-critical-active: color-mix(in srgb, var(--critical-400) 22%, var(--color-sand-950));
+  --ds-color-surface-success:         color-mix(in srgb, var(--success-800) 15%, var(--p-color-sand-950));
+  --ds-color-surface-success-hover:   color-mix(in srgb, var(--success-800) 22%, var(--p-color-sand-950));
+  --ds-color-surface-success-active:  color-mix(in srgb, var(--success-800) 30%, var(--p-color-sand-950));
+  --ds-color-surface-info:            color-mix(in srgb, var(--info-400)    10%, var(--p-color-sand-950));
+  --ds-color-surface-info-hover:      color-mix(in srgb, var(--info-400)    16%, var(--p-color-sand-950));
+  --ds-color-surface-info-active:     color-mix(in srgb, var(--info-400)    22%, var(--p-color-sand-950));
+  --ds-color-surface-warning:         color-mix(in srgb, var(--warning-300) 10%, var(--p-color-sand-950));
+  --ds-color-surface-warning-hover:   color-mix(in srgb, var(--warning-300) 16%, var(--p-color-sand-950));
+  --ds-color-surface-warning-active:  color-mix(in srgb, var(--warning-300) 22%, var(--p-color-sand-950));
+  --ds-color-surface-critical:        color-mix(in srgb, var(--critical-400) 10%, var(--p-color-sand-950));
+  --ds-color-surface-critical-hover:  color-mix(in srgb, var(--critical-400) 16%, var(--p-color-sand-950));
+  --ds-color-surface-critical-active: color-mix(in srgb, var(--critical-400) 22%, var(--p-color-sand-950));
   --ds-color-surface-data:            var(--data-cyan-950);
   --ds-color-surface-selected:        var(--info-950);
   --ds-color-surface-selected-hover:  var(--info-900);
   --ds-color-surface-selected-active: var(--info-800);
 
   /* ── Borders — mid-sand range for structure on dark bg ── */
-  --ds-color-border-subtle:           var(--color-sand-800);
-  --ds-color-border-default:          var(--color-sand-700);
-  --ds-color-border-bold:             var(--color-sand-600);
+  --ds-color-border-subtle:           var(--p-color-sand-800);
+  --ds-color-border-default:          var(--p-color-sand-700);
+  --ds-color-border-bold:             var(--p-color-sand-600);
   /* Focus rings — only Secondary changes in dark mode (sand step shifts).
      Default/Destructive/Link-Brand are theme-invariant per Figma. */
-  --ds-color-border-focus-secondary:  var(--color-sand-500);      /* sand/500 — matches Figma colors/ring-dark */
+  --ds-color-border-focus-secondary:  var(--p-color-sand-500);      /* sand/500 — matches Figma colors/ring-dark */
 
   /* Semi-transparent intent border on dark bg — 46% opacity matches mockup.
      Source: dark mode mockup May 28 2026. */
@@ -331,22 +331,22 @@
   --ds-color-border-critical-bold:    var(--critical-500);
 
   /* ── Text — sand palette inverted ── */
-  --ds-color-text-default:            var(--color-sand-50);       /* warm white on dark bg */
-  --ds-color-text-default-hover:      var(--color-sand-50);       /* boundary: sand-50 is already the lightest step.
+  --ds-color-text-default:            var(--p-color-sand-50);       /* warm white on dark bg */
+  --ds-color-text-default-hover:      var(--p-color-sand-50);       /* boundary: sand-50 is already the lightest step.
                                                                   Hover keeps the same color in dark mode; the weight
                                                                   bump (500→600) carries the hover signal alone. */
-  --ds-color-text-subtle:             var(--color-sand-300);
-  --ds-color-text-disabled:           var(--color-sand-600);
-  --ds-color-text-inverse:            var(--color-sand-900);
-  --ds-color-text-inverse-subtle:     var(--color-sand-700);
+  --ds-color-text-subtle:             var(--p-color-sand-300);
+  --ds-color-text-disabled:           var(--p-color-sand-600);
+  --ds-color-text-inverse:            var(--p-color-sand-900);
+  --ds-color-text-inverse-subtle:     var(--p-color-sand-700);
   --ds-color-text-link-default:       var(--info-500);            /* blue-500 — :link */
   --ds-color-text-link-default-hover: var(--info-400);            /* blue-400 — :hover (lighter on dark bg) */
-  --ds-color-text-link-visited:       var(--color-sand-300);      /* sand-300 — :visited */
+  --ds-color-text-link-visited:       var(--p-color-sand-300);      /* sand-300 — :visited */
   --ds-color-text-link-active:        var(--info-200);            /* blue-200 — :active */
-  --ds-color-text-link-brand:         var(--color-lime-300);      /* lime-300 — AA on sand-950 dark bg.
+  --ds-color-text-link-brand:         var(--p-color-lime-300);      /* lime-300 — AA on sand-950 dark bg.
                                                                   Same step as the lime button surface, but used
                                                                   here as TEXT (not surface) so contrast holds. */
-  --ds-color-text-link-brand-hover:   var(--color-lime-200);      /* one step lighter — "more pronounced on dark" */
+  --ds-color-text-link-brand-hover:   var(--p-color-lime-200);      /* one step lighter — "more pronounced on dark" */
 
   /* Semantic text — neutral foreground in dark mode.
      Design decision: intent-tinted text on dark tinted surfaces reads garish
@@ -363,11 +363,11 @@
   --ds-color-text-data-orchid:        var(--data-orchid-300);
 
   /* ── Icon — mirrors text ── */
-  --ds-color-icon-default:            var(--color-sand-50);
-  --ds-color-icon-subtle:             var(--color-sand-300);
-  --ds-color-icon-disabled:           var(--color-sand-600);
-  --ds-color-icon-inverse:            var(--color-sand-900);
-  --ds-color-icon-inverse-subtle:     var(--color-sand-700);
+  --ds-color-icon-default:            var(--p-color-sand-50);
+  --ds-color-icon-subtle:             var(--p-color-sand-300);
+  --ds-color-icon-disabled:           var(--p-color-sand-600);
+  --ds-color-icon-inverse:            var(--p-color-sand-900);
+  --ds-color-icon-inverse-subtle:     var(--p-color-sand-700);
   /* Icon dark mode = same base step as the border, solid.
      Border uses color-mix(intent-step 46%, transparent) — icon uses that step opaque.
      Source: dark mode visual judgment May 28 2026. */
@@ -383,15 +383,15 @@
   /* --ds-color-icon-brand unchanged — lime works on dark bg */
 
   /* ── Favorite / pin icon ── */
-  --ds-color-icon-favorite-inactive:  var(--color-sand-700);   /* subtle on dark surface */
+  --ds-color-icon-favorite-inactive:  var(--p-color-sand-700);   /* subtle on dark surface */
   /* --ds-color-icon-favorite-active unchanged — yellow-500 reads on dark bg */
 
   /* ── Action — secondary adapts to dark surface ── */
   /* primary unchanged — lime-400 reads on both themes */
-  --ds-color-action-secondary:          var(--color-sand-900);
-  --ds-color-action-secondary-hover:    var(--color-sand-800);
-  --ds-color-action-secondary-active:   var(--color-sand-700);
-  --ds-color-action-secondary-disabled: var(--color-sand-950);
+  --ds-color-action-secondary:          var(--p-color-sand-900);
+  --ds-color-action-secondary-hover:    var(--p-color-sand-800);
+  --ds-color-action-secondary-active:   var(--p-color-sand-700);
+  --ds-color-action-secondary-disabled: var(--p-color-sand-950);
 
   /* Critical: destructive — soft style mirrors light but on the dark side of the red ladder.
      red-900 surface on sand-950 page bg; red-300 text. Hover steps "more pronounced"
@@ -410,45 +410,45 @@
        Hover   — surface = step-800, text = step-300
        Focus   — surface = step-900, text = step-300, ring = step-500 (theme-invariant) */
 
-  --ds-color-surface-tag-sand:           var(--color-sand-800);
-  --ds-color-surface-tag-sand-hover:     var(--color-sand-700);
-  --ds-color-text-tag-sand:              var(--color-sand-200);
+  --ds-color-surface-tag-sand:           var(--p-color-sand-800);
+  --ds-color-surface-tag-sand-hover:     var(--p-color-sand-700);
+  --ds-color-text-tag-sand:              var(--p-color-sand-200);
   /* --ds-color-border-tag-sand-focus stays step-500 — focus rings are theme-invariant */
 
-  --ds-color-surface-tag-forest:         var(--color-forest-900);
-  --ds-color-surface-tag-forest-hover:   var(--color-forest-800);
-  --ds-color-text-tag-forest:            var(--color-forest-300);
+  --ds-color-surface-tag-forest:         var(--p-color-forest-900);
+  --ds-color-surface-tag-forest-hover:   var(--p-color-forest-800);
+  --ds-color-text-tag-forest:            var(--p-color-forest-300);
 
-  --ds-color-surface-tag-lime:           var(--color-lime-900);
-  --ds-color-surface-tag-lime-hover:     var(--color-lime-800);
-  --ds-color-text-tag-lime:              var(--color-lime-300);
+  --ds-color-surface-tag-lime:           var(--p-color-lime-900);
+  --ds-color-surface-tag-lime-hover:     var(--p-color-lime-800);
+  --ds-color-text-tag-lime:              var(--p-color-lime-300);
 
-  --ds-color-surface-tag-cyan:           var(--color-cyan-900);
-  --ds-color-surface-tag-cyan-hover:     var(--color-cyan-800);
-  --ds-color-text-tag-cyan:              var(--color-cyan-300);
+  --ds-color-surface-tag-cyan:           var(--p-color-cyan-900);
+  --ds-color-surface-tag-cyan-hover:     var(--p-color-cyan-800);
+  --ds-color-text-tag-cyan:              var(--p-color-cyan-300);
 
-  --ds-color-surface-tag-blue:           var(--color-blue-900);
-  --ds-color-surface-tag-blue-hover:     var(--color-blue-800);
-  --ds-color-text-tag-blue:              var(--color-blue-300);
+  --ds-color-surface-tag-blue:           var(--p-color-blue-900);
+  --ds-color-surface-tag-blue-hover:     var(--p-color-blue-800);
+  --ds-color-text-tag-blue:              var(--p-color-blue-300);
 
-  --ds-color-surface-tag-yellow:         var(--color-yellow-900);
-  --ds-color-surface-tag-yellow-hover:   var(--color-yellow-800);
-  --ds-color-text-tag-yellow:            var(--color-yellow-300);
+  --ds-color-surface-tag-yellow:         var(--p-color-yellow-900);
+  --ds-color-surface-tag-yellow-hover:   var(--p-color-yellow-800);
+  --ds-color-text-tag-yellow:            var(--p-color-yellow-300);
 
-  --ds-color-surface-tag-orange:         var(--color-orange-900);
-  --ds-color-surface-tag-orange-hover:   var(--color-orange-800);
-  --ds-color-text-tag-orange:            var(--color-orange-300);
+  --ds-color-surface-tag-orange:         var(--p-color-orange-900);
+  --ds-color-surface-tag-orange-hover:   var(--p-color-orange-800);
+  --ds-color-text-tag-orange:            var(--p-color-orange-300);
 
-  --ds-color-surface-tag-red:            var(--color-red-900);
-  --ds-color-surface-tag-red-hover:      var(--color-red-800);
-  --ds-color-text-tag-red:               var(--color-red-300);
+  --ds-color-surface-tag-red:            var(--p-color-red-900);
+  --ds-color-surface-tag-red-hover:      var(--p-color-red-800);
+  --ds-color-text-tag-red:               var(--p-color-red-300);
 
-  --ds-color-surface-tag-lavender:       var(--color-lavender-900);
-  --ds-color-surface-tag-lavender-hover: var(--color-lavender-800);
-  --ds-color-text-tag-lavender:          var(--color-lavender-300);
+  --ds-color-surface-tag-lavender:       var(--p-color-lavender-900);
+  --ds-color-surface-tag-lavender-hover: var(--p-color-lavender-800);
+  --ds-color-text-tag-lavender:          var(--p-color-lavender-300);
 
-  --ds-color-surface-tag-orchid:         var(--color-orchid-900);
-  --ds-color-surface-tag-orchid-hover:   var(--color-orchid-800);
-  --ds-color-text-tag-orchid:            var(--color-orchid-300);
+  --ds-color-surface-tag-orchid:         var(--p-color-orchid-900);
+  --ds-color-surface-tag-orchid-hover:   var(--p-color-orchid-800);
+  --ds-color-text-tag-orchid:            var(--p-color-orchid-300);
 
 }

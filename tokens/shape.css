@@ -1,37 +1,88 @@
 /*
- * Brightseed Design System — Shape Tokens
- * Radius, border width, and shadow.
+ * Brightseed Design System — Shape & Dimension Tokens
  * Reference: BrightseedDS.md §3.6
  *
- * Naming: --shape-{category}-{scale}
- * Shadow umbra tinted with green-950 (#133019) for earthy warmth.
- * Dark mode: shadows inherit — no override needed (they recede naturally on dark bg).
+ * Two tiers live in this file:
+ *   Layer 1 — Primitives  --p-radius-* / --p-border-width-* / --p-space-*
+ *                         Raw, $type:dimension values. No role meaning.
+ *   Layer 2 — Semantics   --ds-shape-* / --ds-shadow-*
+ *                         Role/usage aliases that component code references.
+ *
+ * Shadow is intentionally semantic-only: a shadow bakes in a color decision
+ * (umbra tinted with forest-950 #133019 for earthy warmth), so it is not a
+ * raw primitive. Dark mode: shadows recede naturally on dark bg — no override.
  */
 
 :root {
 
-  /* ── Radius ──
-     Aligns with the Figma `radius/*` scale used by component bindings.
-     Component code should reference these tokens via the conventions below;
-     never hardcode pixel values on individual elements. */
-  --ds-shape-radius-none:    0px;
-  --ds-shape-radius-xs:      2px;    /* subtle — tag indicators, inline chips */
-  --ds-shape-radius-sm:      6px;    /* small — badges, small tooltips */
-  --ds-shape-radius-md:      8px;    /* medium — buttons (xs/default/sm/lg/icon sizes), inputs */
-  --ds-shape-radius-lg:      10px;   /* large — cards, panels */
-  --ds-shape-radius-xl:      14px;   /* extra-large — dialogs */
-  --ds-shape-radius-2xl:     18px;   /* sheet overlays, popovers */
-  --ds-shape-radius-3xl:     22px;
-  --ds-shape-radius-4xl:     26px;   /* button XL sizes (xl, icon-xl) */
-  --ds-shape-radius-round:   9999px; /* pill — status badges, toggle chips */
+  /* ─────────────────────────────────────────────────────────────────────
+     LAYER 1 — DIMENSION PRIMITIVES ($type: dimension)
+     Raw values only. Mirrors the Figma `radius/*` and `spacing/*` scales.
+     ───────────────────────────────────────────────────────────────────── */
 
-  /* ── Border width ── */
-  --ds-shape-border-none:    0px;
-  --ds-shape-border-default: 1px;    /* inputs, cards, table grid lines */
-  --ds-shape-border-bold:    2px;    /* focus rings, selected-state indicators */
-  --ds-shape-border-heavy:   4px;    /* left-edge accent stripe on alert banners */
+  /* ── Radius ($type: dimension/radius) ── */
+  --p-radius-none:  0px;
+  --p-radius-xs:    2px;
+  --p-radius-sm:    6px;
+  --p-radius-md:    8px;
+  --p-radius-lg:    10px;
+  --p-radius-xl:    14px;
+  --p-radius-2xl:   18px;
+  --p-radius-3xl:   22px;
+  --p-radius-4xl:   26px;
+  --p-radius-round: 9999px;
 
-  /* ── Shadow ── */
+  /* ── Border width ($type: dimension/border-width) ── */
+  --p-border-width-none:    0px;
+  --p-border-width-default: 1px;
+  --p-border-width-bold:    2px;
+  --p-border-width-heavy:   4px;
+
+  /* ── Spacing ($type: dimension/space) ──
+     4px base ramp; step N === N×4px, mirroring Figma `spacing/N`
+     (spacing/1 = 4px). Added June 2026 to complete the primitive tier.
+     Not yet wired into component CSS (components use Tailwind's p-/gap-
+     scale); present for Figma parity and so the bridge can reference it. */
+  --p-space-0:  0px;
+  --p-space-1:  4px;
+  --p-space-2:  8px;
+  --p-space-3:  12px;
+  --p-space-4:  16px;
+  --p-space-5:  20px;
+  --p-space-6:  24px;
+  --p-space-8:  32px;
+  --p-space-10: 40px;
+  --p-space-12: 48px;
+  --p-space-16: 64px;
+  --p-space-20: 80px;
+  --p-space-24: 96px;
+
+  /* ─────────────────────────────────────────────────────────────────────
+     LAYER 2 — SHAPE SEMANTICS
+     Component code references THESE (or its own --c-* tokens), never the
+     raw --p-* values directly. Names kept stable so no component edits were
+     needed when the primitive tier was introduced (June 2026).
+     ───────────────────────────────────────────────────────────────────── */
+
+  /* ── Radius semantics ── */
+  --ds-shape-radius-none:    var(--p-radius-none);
+  --ds-shape-radius-xs:      var(--p-radius-xs);    /* subtle — tag indicators, inline chips */
+  --ds-shape-radius-sm:      var(--p-radius-sm);    /* small — badges, small tooltips */
+  --ds-shape-radius-md:      var(--p-radius-md);    /* medium — buttons (xs/default/sm/lg/icon sizes), inputs */
+  --ds-shape-radius-lg:      var(--p-radius-lg);    /* large — cards, panels */
+  --ds-shape-radius-xl:      var(--p-radius-xl);    /* extra-large — dialogs */
+  --ds-shape-radius-2xl:     var(--p-radius-2xl);   /* sheet overlays, popovers */
+  --ds-shape-radius-3xl:     var(--p-radius-3xl);
+  --ds-shape-radius-4xl:     var(--p-radius-4xl);   /* button XL sizes (xl, icon-xl) */
+  --ds-shape-radius-round:   var(--p-radius-round); /* pill — status badges, toggle chips */
+
+  /* ── Border width semantics ── */
+  --ds-shape-border-none:    var(--p-border-width-none);
+  --ds-shape-border-default: var(--p-border-width-default); /* inputs, cards, table grid lines */
+  --ds-shape-border-bold:    var(--p-border-width-bold);    /* focus rings, selected-state indicators */
+  --ds-shape-border-heavy:   var(--p-border-width-heavy);   /* left-edge accent stripe on alert banners */
+
+  /* ── Shadow (semantic-only; color-baked, see header) ── */
   --ds-shadow-sm: 0 1px 2px 0 rgba(19, 48, 25, 0.08);
   --ds-shadow-md: 0 4px 6px -1px rgba(19, 48, 25, 0.10),
                0 2px 4px -2px  rgba(19, 48, 25, 0.06);
@@ -43,7 +94,7 @@
 }
 
 /*
- * Radius conventions:
+ * Radius conventions (which semantic token each component uses):
  *   Input, Select, Textarea      → --ds-shape-radius-md       (8px)
  *   Button — xs/default/sm/lg/icon (and icon-xs/sm/lg) → --ds-shape-radius-md  (8px)
  *   Button — xl, icon-xl         → --ds-shape-radius-4xl     (26px — pronounced rounding for hero CTAs)

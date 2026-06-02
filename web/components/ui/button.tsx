@@ -63,7 +63,7 @@ import { cn } from "@/lib/utils"
  *   `data-force-state="hover|focus|active|disabled|loading"` renders the button
  *   in that state without real interaction. The `hovered`, `focused`, `pressed`,
  *   `disabled-state`, and `loading-state` Tailwind variants (declared in
- *   sandbox/app/globals.css) match both the real pseudo-class AND the data
+ *   web/app/globals.css) match both the real pseudo-class AND the data
  *   attribute, so the cva stays single-declaration.
  */
 

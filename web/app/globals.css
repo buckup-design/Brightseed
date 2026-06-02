@@ -1,5 +1,5 @@
 /*
- * Sandbox global stylesheet.
+ * Web app global stylesheet.
  *
  * Order matters:
  *   1. Tailwind v4 base
@@ -8,7 +8,7 @@
  *   4. tw-animate-css (provides the keyframe utilities shadcn components reference)
  *   5. @theme inline — exposes shadcn variables to Tailwind v4's utility generator
  *
- * The tokens/ and bridge/ directories at the sandbox root are symlinks to the
+ * The tokens/ and bridge/ directories at the web/ root are symlinks to the
  * canonical files at the parent repo root. Edits flow both directions.
  */
 

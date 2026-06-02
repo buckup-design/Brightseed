@@ -159,7 +159,7 @@ function OrDivider() {
 /* ─────────────────────────────────────────────────────────────────────────
  * Image Slot — marketing pane
  * Background graphic sourced from brand/graphic_login.bg.webp
- * (copied to sandbox/public/brand/ at install time).
+ * (copied to web/public/brand/ at install time).
  * ───────────────────────────────────────────────────────────────────────── */
 
 function ImageSlot() {

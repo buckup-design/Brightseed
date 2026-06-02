@@ -1,5 +1,5 @@
 /**
- * Sandbox root — placeholder during the Pro Blocks rebuild.
+ * Web app root — placeholder during the Pro Blocks rebuild.
  *
  * The Forager demo surfaces (/strategies, /compounds) and the components
  * that backed them (ChatPanel, CompoundCard, PlantCard, StrategyCard,
@@ -16,7 +16,7 @@ export default function Home() {
     <main className="min-h-dvh flex items-center justify-center bg-[var(--color-surface-default)]">
       <div className="max-w-md text-center space-y-4 px-6">
         <h1 className="text-2xl font-semibold text-[var(--color-text-default)]">
-          Brightseed sandbox — rebuilding on Pro Blocks
+          Brightseed — rebuilding on Pro Blocks
         </h1>
         <p className="text-sm text-[var(--color-text-subtle)]">
           The canonical view of the design system is Storybook
