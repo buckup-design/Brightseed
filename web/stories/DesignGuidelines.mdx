@@ -26,7 +26,7 @@ Component code references **semantic tokens only** (`--ds-*`), never primitives 
 | Semantics  | `--ds-*`            | `--ds-color-action-primary`      | Intent-based aliases. Map design intent to primitives. **Component code reads this tier.** |
 | Component  | `--c-{component}-*` | `--c-button-bg`                  | Optional escape hatch only, for a local value with no semantic home. None defined yet. |
 
-> **Note:** Primitives are organized by `$type` and all use the `--p-{type}-*` convention (`--p-color-forest-700`, `--p-color-lime-300`, etc.), the migration is complete; no bare `--color-*` primitives remain. Component code references `--ds-*` semantics directly; the `--c-*` tier is an optional escape hatch and no `--c-*` tokens exist today.
+> **Note:** Primitives are organized by `$type` and all use the `--p-{type}-*` convention (`--p-color-forest-700`, `--p-color-lime-300`, etc.). Component code references `--ds-*` semantics directly; the `--c-*` tier is an optional escape hatch and no `--c-*` tokens exist today.
 
 ---
 
@@ -44,15 +44,6 @@ All surfaces that change between light and dark theme list both values. State su
 | `--ds-color-surface-alt`           | sand-100   | sand-900   | Sidebars, table alt rows, inset panels           |
 | `--ds-color-surface-alt-hover`     | sand-200   | sand-800   | Hovered alt surfaces                             |
 | `--ds-color-surface-scrim`         | sand-950 @ 50% | black @ 60% | Modal / dialog backdrop veil              |
-
-#### Brand surfaces
-
-| Token                               | Light       | Dark       | Use                                         |
-| ----------------------------------- | ----------- | ---------- | ------------------------------------------- |
-| `--ds-color-surface-brand`          | forest-900  | sand-900   | Nav bar, header, branded panels             |
-| `--ds-color-surface-brand-hover`    | forest-800  | sand-800   | Hovered brand surface                       |
-| `--ds-color-surface-brand-active`   | forest-950  | sand-950   | Pressed brand surface                       |
-| `--ds-color-surface-brand-subtle`   | forest-50   | sand-950   | Light green tint; accent backgrounds        |
 
 #### Semantic intent surfaces
 
