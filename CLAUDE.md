@@ -67,7 +67,7 @@ Primitives are organized by `$type` (the W3C tokens axis): `--p-color-*`, `--p-r
 
 ◆ **Corner radii** reference `--ds-shape-radius-*` (→ `--p-radius-*`), never raw pixels.
 
-◆ **Brand-poetic names forbidden in code.** "Chlorophyll," "Deep Forest," "Garlic Bloom," etc. appear only in `brand/brand-colors-reference.md`. Everywhere else use functional names (`lime/400`, `forest/900`, `sand/100`). Seeing one elsewhere = a regression to fix.
+◆ **Brand-poetic names forbidden in code.** Names like "Chlorophyll," "Deep Forest," and "Garlic Bloom" must not appear anywhere in code. Everywhere else use functional names (`lime/400`, `forest/900`, `sand/100`). Seeing one elsewhere = a regression to fix.
 
 ◆ **If no token exists** for what you need, flag `// BRIGHTSEED-TBD: [BLOCKING] <reason>` and stop. Don't improvise.
 
