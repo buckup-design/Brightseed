@@ -42,7 +42,6 @@ Pushed: `web/`, `tokens/`, `bridge/`, `components/`, `README.md`, `CLAUDE.md`, `
 |---|---|
 | `brand/` | 178M of brand assets — needs curation before public-ish exposure |
 | `memory/` | Personal notes on Anna/Meng/Chuan/Becky — not appropriate for shared repo |
-| `.agents/` | Agent context loaders — internal reasoning artifacts |
 | `vector-pipeline/` | 27M, purpose unclear — curate first |
 | `OUTPUTS/` | Mix of canonical output (CompoundScreeningTable.tsx) and one-off artifacts — needs sorting |
 | `DOCS/` | Contains third-party content (TJ Pitre webinar transcript) — copyright caution |

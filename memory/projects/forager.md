@@ -75,6 +75,4 @@ focus token. Status colors map to the Brightseed semantic intents
 
 ## Reference files
 - `BrightseedDS.md` — AI agent source of truth (paste alongside prompts for Forager UI generation)
-- `.agents/context/PRODUCT.md` — distilled product context (loader-friendly)
-- `.agents/context/DESIGN.md` — distilled visual system (loader-friendly)
 - `anna's mocks 4-29-26/` — reference screenshots
