@@ -12,7 +12,6 @@ The deliverable is **the workflow** as much as the design system: an end-to-end 
 
 ## Memory pointer
 
-- `.agents/context/` — distilled context loaders (`PRODUCT.md`, `DESIGN.md`, handoff files) for the impeccable skill / general agents.
 - `memory/` — memory-management format: `glossary.md`, `people/`, `projects/`, `context/`.
 
 Tiered lookup: this file → `memory/glossary.md` → `memory/people|projects|context/`. If a term isn't in any of those, ask.
