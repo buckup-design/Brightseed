@@ -46,7 +46,7 @@ Pushed: `web/`, `tokens/`, `bridge/`, `components/`, `README.md`, `CLAUDE.md`, `
 | `OUTPUTS/` | Mix of canonical output (CompoundScreeningTable.tsx) and one-off artifacts, needs sorting |
 | `DOCS/` | Contains third-party content (TJ Pitre webinar transcript), copyright caution |
 | `anna's mocks 4-29-26/` | 2.2M of reference PNGs, fine to add later when needed |
-| `Forager refernce ui.pdf` | Typo in filename, single PDF, rename + move to DOCS/ before committing |
+| `Hummingbird reference ui.pdf` | Single reference PDF (gitignored). Renamed from `Forager refernce ui.pdf` June 2026. |
 
 Each is a "decide and add later" item, not a permanent exclusion.
 

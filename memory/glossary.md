@@ -57,6 +57,6 @@ Internal terms, project codenames, and shorthand specific to the Brightseed enga
 |---|---|
 | `Badg Primary` | Typo for "Badge Primary", fixed May 8. Quill Primary Badge component_set (id `26480:627833`). |
 | `Mantel` | Old name for Quill (renamed May 6, 2026). If you see Mantel anywhere, it's stale. |
-| Brand color names ("Chlorophyll", "Garlic Bloom", "Eschscholzia Californica") | Forbidden in code. Live ONLY in `brand/brand-colors-reference.md` as historical record. Code uses functional names (`lime-400`, `forest-900`). |
+| Brand color names ("Chlorophyll", "Garlic Bloom", "Eschscholzia Californica") | Forbidden in code. Code uses functional names (`lime-400`, `forest-900`). |
 | Original shadcn Badge (`26:169`) | The pre-Quill Badge that was rebound on May 8, its 24 consumers across Spinner/Card/Table/Input now point to Quill Primary. |
 | Tiempos Headline | NOT licensed yet (May 8). Display scale uses Tiempos Text (4 weights) as a placeholder. |

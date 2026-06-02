@@ -110,8 +110,6 @@ Group icons into labeled frames by semantic category. Suggested Brightseed categ
 | `Status` | Check, CheckCircle, Warning, Lightning, Info, X (error) |
 | `Data` | Filter, Sort, Chart, Table, Expand, Collapse |
 | `Navigation` | Calendar, Bell, Chat, People, Home, Settings |
-| `Forager` | Compound, Plant, Strategy, Screening-domain icons |
-| `Brand` | Hummingbird motif, Brightseed-specific |
 
 Each frame: category name is the frame name. Icons in a row, consistent spacing.
 

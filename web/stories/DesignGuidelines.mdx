@@ -392,7 +392,7 @@ Hummingbird-specific constraints on the shared components. Appearance lives in S
 - **Button:** never override `bg-*` / `text-*` via `className` (the bridge handles color); use the `disabled` prop, never reach for `-disabled` tokens in component code.
 - **Link vs Linktext:** never use a Button for an inline text link; never use a Link for a standalone CTA. Two components, two state machines.
 - **Input / Textarea / Select:** signal errors with `aria-invalid="true"`, not by changing the border color directly.
-- **Badge:** always `rounded-full`; never `rounded` (it reads as a button).
+- **Badge:** Primary badges are pill-shaped (`rounded-full`); secondary badges use the tight 2px radius (`--ds-shape-radius-xs`). Don't give either the button radius (it reads as a button).
 - **Card:** padding `p-4` (dense panels) or `p-6` (primary content); never nest a Card in a Card; use `--ds-color-surface-alt` for inset content.
 - **Dialog vs Sheet:** Dialog for confirmations and short forms (≤4 fields); Sheet for side panels with more context (`side="right"` only).
 - **Skeleton:** use for all loading states; match the skeleton's dimensions to the content it replaces.
@@ -414,7 +414,7 @@ Hummingbird-specific constraints on the shared components. Appearance lives in S
 
 ### Brightseed-specific
 
-1. **Brand-poetic names in code:** "Chlorophyll," "Deep Forest," "Garlic Bloom" do not appear in `tokens/`, `bridge/`, components, or documentation. They live only in `Obsolete/brand-colors-reference.md`.
+1. **Brand-poetic names in code:** "Chlorophyll," "Deep Forest," "Garlic Bloom" do not appear in `tokens/`, `bridge/`, components, or documentation.
 2. **Hardcoded hex, px, or font strings:** all values come from tokens via CSS custom properties.
 3. **Tag colors implying status:** use icon + text for status; tag color is decorative.
 4. **Brand lime or forest as a chart data series:** those hues are reserved for UI affordances.

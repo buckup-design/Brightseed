@@ -17,7 +17,7 @@ import * as React from "react";
  * Layout mirrors the v2 Figma "UI Color Scales" board (28498:7764). Labels are
  * functional; brand-origin names (Deep Forest, Chlorophyll, Garlic Bloom, …)
  * are intentionally omitted here per the "no brand-poetic names in code"
- * decision, they live in brand/brand-colors-reference.md.
+ * decision.
  * ───────────────────────────────────────────────────────────────────────── */
 
 const meta = {
