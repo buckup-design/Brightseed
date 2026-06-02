@@ -45,8 +45,8 @@ The system has three layers. An LLM reading tokens should understand which layer
 ```
 Layer 1 — Primitives         e.g. --p-forest-700  (legacy: --color-forest-700)
             ↓ var() reference
-Layer 2 — Semantics          e.g. --color-surface-success = var(--success-100)
-                             (includes intent aliases like --success-700)
+Layer 2 — Semantics          e.g. --ds-color-surface-success = var(--p-forest-100)
+                             (includes intent aliases like --ds-success-700)
             ↓ var() reference
 Layer 3 — Components         e.g. --c-badge-surface = var(--color-surface-success)
 ```
@@ -56,7 +56,7 @@ Layer 3 — Components         e.g. --c-badge-surface = var(--color-surface-succ
 | Tier | Prefix | Example |
 |---|---|---|
 | Primitives | `--p-*` | `--p-forest-700` |
-| Semantic | `--color-*` / `--success-*` (legacy naming, kept) | `--color-surface-success` |
+| Semantic | `--ds-*` | `--ds-color-surface-success` |
 | Components | `--c-{component}-*` | `--c-button-bg`, `--c-badge-surface` |
 
 Existing primitive tokens (`--color-forest-700`, etc.) predate this convention and are not renamed. New primitives use `--p-*`.
