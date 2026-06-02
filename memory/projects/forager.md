@@ -74,5 +74,5 @@ focus token. Status colors map to the Brightseed semantic intents
 (success / warning / critical) — not raw red/yellow/green.
 
 ## Reference files
-- `BrightseedDS.md` — AI agent source of truth (paste alongside prompts for Forager UI generation)
+- `CLAUDE.md` — canonical rules; Storybook → Design.mdx — design language, composition, component usage
 - `anna's mocks 4-29-26/` — reference screenshots

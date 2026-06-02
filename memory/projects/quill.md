@@ -8,7 +8,7 @@
 Brightseed's customized fork of shadcn/ui. Quill = shadcn + Brightseed Mode rebind + Brightseed-spec component tweaks (Button hover ladder, Badge inline-slot architecture, soft destructive treatment, etc.). Lives in the v3 Figma file as a parallel layer over the Pro Pack scaffolding.
 
 ## Architecture
-Three-layer token system (read `BrightseedDS.md` before generating any Forager UI):
+Three-layer token system (read `CLAUDE.md` + Storybook → Design.mdx before generating any Forager UI):
 
 ```
 Layer 1 — Primitives    --p-color-forest-700
@@ -40,7 +40,7 @@ Component code references **semantic** tokens only. Never reach past semantics t
 | 14 other shadcn components | 🟡 Stock — paint correctly through bridge but no Brightseed-spec tweaks |
 
 ## Reference files
-- `BrightseedDS.md` — canonical agent source
+- `CLAUDE.md` — canonical rules; Storybook → Design.mdx — design language + composition
 - `brightseed-shadcn-mapping.md` — Figma variable wiring guide
 - `tokens/` — primitives / intents / semantics / shape / charts / typography
 - `bridge/globals.css` — shadcn → Brightseed token bridge (intentionally thin)

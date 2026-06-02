@@ -3,7 +3,7 @@
  *
  * Order matters:
  *   1. Tailwind v4 base
- *   2. Brightseed tokens (primitives → intents → semantics → shape → charts)
+ *   2. Brightseed tokens (primitives → semantics → shape → charts)
  *   3. Brightseed → shadcn bridge (maps Brightseed semantics to shadcn variable names)
  *   4. tw-animate-css (provides the keyframe utilities shadcn components reference)
  *   5. @theme inline — exposes shadcn variables to Tailwind v4's utility generator
