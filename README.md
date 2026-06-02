@@ -6,20 +6,20 @@ A three-layer design token system for Forager — Brightseed's biotech compound 
 
 This README orients; it does not duplicate. For anything specific, go to the source — those can't go stale:
 
-- **Token names + values** → the CSS in `tokens/` (`primitives.css`, `intents.css`, `semantics.css`, `shape.css`, `charts.css`, `typography.css`). Import `index.css` to get everything.
+- **Token names + values** → the CSS in `tokens/` (`primitives.css`, `semantics.css`, `shape.css`, `charts.css`, `typography.css`). Import `index.css` to get everything.
 - **How components look** → the live library at https://brightseed-storybook.vercel.app (every variant + state, both themes).
 - **Rules + conventions** → `CLAUDE.md` (the canonical rules doc). Don't rely on rule statements copied into other files.
 
 ## The three layers
 
 ```
-Primitives  →  Intents  →  Semantics  →  Component code
---p-color-lime-300   →   --action-primary-300   →   --ds-color-action-primary   →   bg-[var(--ds-color-action-primary)]
+Primitives  →  Semantics  →  Components
+--p-color-lime-300   →   --ds-color-action-primary   →   bg-[var(--ds-color-action-primary)]
 ```
 
 - **Primitives** (`--p-{type}-*`) — raw values, organized by type. The palette. Never used in components.
-- **Intents** (`--{role}-{step}`) — role aliases pointing at primitives. Pure indirection.
-- **Semantics** (`--ds-*`) — named for UI function. **Component code references this tier only.**
+- **Semantics** (`--ds-*`) — named for UI function; the only layer that touches primitives. (The old separate "intents" tier is merged into this layer.)
+- **Components** — component code references the semantic layer only. Optional `--c-{component}-*` escape hatch for a local value with no semantic home.
 
 ## Using it in a Next.js + shadcn project
 

@@ -33,21 +33,23 @@ Next.js + shadcn/ui + Tailwind CSS · color via CSS custom properties (no hardco
 
 ## Design system — architecture & rules
 
-Two-tier token system. The CSS in `tokens/` is the source of truth for all names and values; this section is the rules, not a value list.
+Three-layer token system. The CSS in `tokens/` is the source of truth for all names and values; this section is the rules, not a value list. (What was once split into separate "intents" and "semantics" tiers is now one merged semantic layer — there is no `intents.css`.)
 
 ```
 Primitives   --p-color-forest-700        raw values, organized by $type
    ↓
-Semantics    --ds-color-surface-success  ← component code references THIS tier
+Semantics    --ds-color-surface-success  ← the only tier that touches primitives
+   ↓
+Components   bg-[var(--ds-color-...)]    ← component code references the semantic tier
 ```
 
 **Token prefixes**
 
-| Tier | Prefix | Example |
+| Layer | Prefix | Example |
 |---|---|---|
 | Primitive | `--p-{type}-*` | `--p-color-forest-700`, `--p-radius-md`, `--p-space-4` |
 | Semantic | `--ds-*` | `--ds-color-surface-success`, `--ds-shape-radius-md` |
-| Component (optional escape hatch) | `--c-{component}-*` | `--c-button-bg` — none defined yet |
+| Component | references `--ds-*` (optional `--c-{component}-*` token) | `bg-[var(--ds-color-surface-success)]`; `--c-button-bg` — none defined yet |
 
 Primitives are organized by `$type` (the W3C tokens axis): `--p-color-*`, `--p-radius-*` / `--p-space-*` / `--p-border-width-*`, `--p-font-family-*` / `--p-font-size-*` / `--p-font-weight-*`. The bare `--color-*` primitive names are fully retired. **Not primitives, deliberately:** shadow (`--ds-shadow-*`, a color recipe) and display roles `h1/h2/h3` (`--ds-text-display-*`).
 
@@ -63,7 +65,7 @@ Primitives are organized by `$type` (the W3C tokens axis): `--p-color-*`, `--p-r
 
 ◆ **Corner radii** reference `--ds-shape-radius-*` (→ `--p-radius-*`), never raw pixels.
 
-◆ **Brand-poetic names forbidden in code.** "Chlorophyll," "Deep Forest," "Garlic Bloom," etc. appear only in `Obsolete/brand-colors-reference.md`. Everywhere else use functional names (`lime/400`, `forest/900`, `sand/100`). Seeing one elsewhere = a regression to fix.
+◆ **Brand-poetic names forbidden in code.** "Chlorophyll," "Deep Forest," "Garlic Bloom," etc. appear only in `brand/brand-colors-reference.md`. Everywhere else use functional names (`lime/400`, `forest/900`, `sand/100`). Seeing one elsewhere = a regression to fix.
 
 ◆ **If no token exists** for what you need, flag `// BRIGHTSEED-TBD: [BLOCKING] <reason>` and stop. Don't improvise.
 
