@@ -50,17 +50,36 @@ Tiered lookup: this file → `memory/glossary.md` → `memory/people|projects|co
 Three-layer token system. Read `BrightseedDS.md` before generating any Forager UI.
 
 ```
-Layer 1 — Primitives    --color-forest-700
+Layer 1 — Primitives    --p-forest-700  (legacy names: --color-forest-700)
           ↓ var()
-Layer 2 — Intents       --success-700
+Layer 2 — Semantics     --color-surface-success  (includes intent aliases like --success-700)
           ↓ var()
-Layer 3 — Semantics     --color-surface-success   ← component code references THIS layer
+Layer 3 — Components    --c-{component}-*   ← component code references THIS layer
 ```
 
-**Hard rules:**
-- Component code references semantic tokens only. Never reach past semantics to intents or primitives.
-- Never hardcode hex, px, rem, or font strings in component code.
-- Light theme is default. Dark theme = `data-theme="dark"` on ancestor element — do not write dark-mode-specific component code.
+**Token naming prefixes** (adopted June 2026 — source: [shabirgilkar.github.io/claude-design-system](https://shabirgilkar.github.io/claude-design-system/))
+
+| Tier | Prefix | Example |
+|---|---|---|
+| Primitives | `--p-*` | `--p-forest-700` |
+| Semantic | `--color-*` / `--success-*` (legacy naming, kept) | `--color-surface-success` |
+| Components | `--c-{component}-*` | `--c-button-bg`, `--c-badge-surface` |
+
+Existing primitive tokens (`--color-forest-700`, `--color-lime-300`, etc.) predate this convention and are not being renamed. New primitive tokens use `--p-*`. Component code references `--c-*` tokens, not semantic tokens directly.
+
+**Rules:**
+
+◆ **No tier-skipping** — Components must reference `--c-*` tokens, not `--color-*` or `--p-*` directly.
+
+◆ **No hardcoded values** — No hex codes, px values, or font names in component styles.
+
+◆ **Semantic intent** — Semantic tokens convey usage (`--color-surface-default`) not appearance (`--color-dark-gray`).
+
+◆ **Component scoping** — Each component has its own `--c-{component}-*` namespace in the CSS.
+
+◆ **Light-first** — All default values assume a Light background. Dark theme overrides swap semantic tokens via `data-theme="dark"` on the ancestor — do not write dark-mode-specific component code.
+
+Additional rules:
 - If no token exists for what you need, flag with `// BRIGHTSEED-TBD: [BLOCKING]` and stop. Do not improvise. (See push-back protocol below.)
 - Corner radii on components reference shape tokens (`--shape-radius-*` in CSS, `border-radius/rounded-*` in Figma). Never hardcode pixel radii on individual variants — that's how drift happens between sizes.
 

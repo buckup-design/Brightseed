@@ -32,7 +32,7 @@ Five non-negotiables. These come before any token or component decision.
 
 1. **Tokens over values.** Every color, space, radius, and type style references a token. No hardcoded hex, px, rem, or font strings in component code.
 2. **Functional names only.** Colors are named by hue (`forest-700`, `lavender-400`, `cyan-300`), not by brand-poetic names. The brand names live in the brand reference file, nowhere else.
-3. **Semantic before primitive.** Prefer semantic tokens (`--color-surface-default`) over primitive tokens (`--color-neutral-50`) in component code. Primitives exist so semantics can reference them, not so you can reach past the semantic layer.
+3. **Component tokens only.** Component code references `--c-{component}-*` tokens only. Semantic tokens (`--color-*`) feed the component layer; primitives (`--p-*`) feed semantics. Never skip a layer — reaching past component tokens into semantic or primitive space is a violation.
 4. **One scale for sizing and spacing.** The same scale tokens handle width, height, padding, margin, gap, icon size, and radius. Do not split them.
 5. **Light-first, dark via CSS variable override.** The entire token system is authored for light theme. Dark theme is a single `[data-theme="dark"]` override on the primitives layer. Component code is theme-agnostic.
 
@@ -43,16 +43,39 @@ Five non-negotiables. These come before any token or component decision.
 The system has three layers. An LLM reading tokens should understand which layer it's allowed to reference.
 
 ```
-Layer 1 — Primitives         e.g. --color-forest-700
+Layer 1 — Primitives         e.g. --p-forest-700  (legacy: --color-forest-700)
             ↓ var() reference
-Layer 2 — Intents            e.g. --success-700 = var(--color-forest-700)
+Layer 2 — Semantics          e.g. --color-surface-success = var(--success-100)
+                             (includes intent aliases like --success-700)
             ↓ var() reference
-Layer 3 — Semantics          e.g. --color-surface-success = var(--success-100)
+Layer 3 — Components         e.g. --c-badge-surface = var(--color-surface-success)
 ```
 
-**Rule:** Component code references **semantics** (Layer 3) unless no semantic exists for the need. Intent tokens (Layer 2) are a fallback. Primitives (Layer 1) are a last resort and should almost never appear in component code.
+**Token naming prefixes** (adopted June 2026):
 
-**Never** ship compiled-flat CSS. All `var()` chains stay live so theme switching works by overriding Layer 1 at `:root[data-theme="dark"]`.
+| Tier | Prefix | Example |
+|---|---|---|
+| Primitives | `--p-*` | `--p-forest-700` |
+| Semantic | `--color-*` / `--success-*` (legacy naming, kept) | `--color-surface-success` |
+| Components | `--c-{component}-*` | `--c-button-bg`, `--c-badge-surface` |
+
+Existing primitive tokens (`--color-forest-700`, etc.) predate this convention and are not renamed. New primitives use `--p-*`.
+
+**Rules (mirrored in CLAUDE.md):**
+
+◆ **No tier-skipping** — Components must reference `--c-*` tokens, not `--color-*` or `--p-*` directly.
+
+◆ **No hardcoded values** — No hex codes, px values, or font names in component styles.
+
+◆ **Semantic intent** — Semantic tokens convey usage (`--color-surface-default`) not appearance (`--color-dark-gray`).
+
+◆ **Component scoping** — Each component has its own `--c-{component}-*` namespace in the CSS.
+
+◆ **Light-first** — All default values assume a Light background. Dark theme overrides swap semantic tokens via `[data-theme="dark"]` — component code is theme-agnostic.
+
+**Never** ship compiled-flat CSS. All `var()` chains stay live so theme switching works by overriding Layer 1 at `[data-theme="dark"]`.
+
+**Rule for missing tokens:** If no token exists in Layers 1–4 for the need, stop and flag `// BRIGHTSEED-TBD: [BLOCKING]`. Do not improvise or reach across layers.
 
 ---
 
