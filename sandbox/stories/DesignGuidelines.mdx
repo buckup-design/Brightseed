@@ -18,13 +18,13 @@ Charts and tag colors (forest, cyan, lavender, orchid, orange, blue, yellow, red
 
 ### Three layers
 
-Component code references **semantic tokens only** — never primitives or intents directly. The layers exist so that a single design decision (e.g., "primary action should be lime") flows everywhere automatically.
+Component code references **component tokens only** (`--c-{component}-*`) — never semantics or primitives directly. The layers exist so that a single design decision (e.g., "primary action should be lime") flows everywhere automatically.
 
-| Layer | Example | What it does |
-|---|---|---|
-| Primitives | `--color-lime-300` | Raw hue values — the palette |
-| Intents | `--action-primary-300` | Semantic groupings — what the color means |
-| Semantics | `--color-action-primary` | What a component uses — always this layer |
+| Layer | Prefix | Example | What it does |
+|---|---|---|---|
+| Primitives | `--p-*` | `--p-lime-300` | Raw hue values — the palette |
+| Semantics | `--color-*` | `--color-action-primary` | Intent aliases — what the color means |
+| Components | `--c-{component}-*` | `--c-button-bg` | What component code uses — always this layer |
 
 ### Key tokens
 
@@ -159,4 +159,4 @@ Icon sizes are relative to the component they live in. Button icon slots are siz
 2. **Hardcoded hex, px, or font strings** — all values come from tokens via CSS custom properties.
 3. **Tag colors implying status** — use icon + text for status; tag color is decorative.
 4. **Brand lime or forest as a chart data series** — those hues are reserved for UI affordances.
-5. **Reaching past semantic tokens** — component code never references intent or primitive tokens directly. If no semantic token exists for what you need, flag it with `// BRIGHTSEED-TBD: [BLOCKING]` and stop.
+5. **Reaching past component tokens** — component code never references semantic or primitive tokens directly. Always use `--c-{component}-*`. If no token exists for what you need, flag it with `// BRIGHTSEED-TBD: [BLOCKING]` and stop.
