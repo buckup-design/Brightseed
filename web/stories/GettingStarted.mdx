@@ -4,18 +4,6 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 # Prototyping Workflow
 
-## How to prototype a Hummingbird screen
-
-```
-idea  →  prompt in Cowork  →  preview in Storybook  →  refine  →  ship
-```
-
-1. **Open the app in Cowork.** The app lives in the `web/` folder. Open it as your working directory. The AI working there already reads the project's conventions; you bring the intent.
-2. **Describe the screen in plain language:** "a compound detail card with a header, a dose-response chart, and a row of source tags." Name existing components when you can (browse them under **Components** first); building on them beats describing from scratch.
-3. **Preview.** Run the library locally to see it: `npm run storybook` (component library) or `npm run dev` (full app). Toggle light/dark with the toolbar switch; your screen should hold up in both with no extra work, because the tokens handle it.
-4. **Refine against the system, not around it.** When something looks off, the fix is almost always "use the right token," not "override with a custom value." If you want a color or size that has no token, that's a signal: flag it rather than hardcoding. A missing token is a system gap worth a real decision.
-5. **Ship.** Changes reach the live Storybook through the project's git flow; a merge to the main branch auto-deploys.
-
 ## A few conventions worth knowing
 
 - **Light-first.** Build for light; dark comes free via the token override. Never write dark-specific styles.
