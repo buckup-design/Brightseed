@@ -168,6 +168,10 @@
   --ds-color-text-link-brand-hover:     var(--p-color-forest-900);    /* one step more pronounced on hover */
   /* No -disabled token, disabled state uses --ds-color-text-link-brand at --ds-disabled-text-opacity. */
 
+  /* Brand-green emphasis text (non-interactive), e.g. branded headings.
+     Distinct from text-link-brand, which is an interactive link state. */
+  --ds-color-text-brand:                var(--p-color-forest-800);    /* forest-800 #3f6947, 6.3:1 on white ✓ AA */
+
   /* Semantic text, all verified WCAG AA on sand-50 surface */
   --ds-color-text-success:            var(--p-color-forest-700);         /* forest-700, 4.98:1 ✓ AA */
   --ds-color-text-info:               var(--p-color-blue-700);            /* blue-700  , 8.95:1 ✓ AA */
@@ -353,6 +357,9 @@
                                                                   Same step as the lime button surface, but used
                                                                   here as TEXT (not surface) so contrast holds. */
   --ds-color-text-link-brand-hover:   var(--p-color-lime-200);      /* one step lighter, "more pronounced on dark" */
+
+  /* Brand-green emphasis text on dark, reuses the forest-on-dark value (matches text-tag-forest). */
+  --ds-color-text-brand:              var(--p-color-forest-300);    /* forest-300 #aad4b2 */
 
   /* Semantic text, neutral foreground in dark mode.
      Design decision: intent-tinted text on dark tinted surfaces reads garish
