@@ -32,12 +32,16 @@ import { Meta } from "@storybook/addon-docs/blocks";
     margin-bottom: 5rem; /* extra space under the page title, before "About" */
   }
   .sbdocs-content h2 {
-    /* Section headers stepped down one notch from display-h3, in brand green. */
-    font-size: 1.375rem;
-    line-height: 1.75rem;
-    letter-spacing: -0.01em;
+    /* Section headers at the display-h3 scale, in brand green. */
+    font-size: var(--ds-text-display-h3-size);
+    line-height: var(--ds-text-display-h3-line-height);
+    letter-spacing: var(--ds-text-display-h3-tracking);
     color: var(--ds-color-text-brand);
-    margin-top: 3.5rem; /* more space between content sections */
+    margin-top: 3.5rem;    /* space between content sections */
+    margin-bottom: 0.35rem; /* tighten gap to the body copy beneath */
+  }
+  .sbdocs-content h2 + * {
+    margin-top: 0; /* kill the following paragraph's top margin so the gap stays tight */
   }
   .sbdocs-content h3 {
     font-size: 1.375rem;
