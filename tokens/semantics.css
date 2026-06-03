@@ -89,6 +89,7 @@
   /* ── Border ── */
   --ds-color-border-subtle:           var(--p-color-sand-200);      /* hairlines, table grid */
   --ds-color-border-default:          var(--p-color-sand-300);      /* input default */
+  --ds-color-border-default-hover:    var(--p-color-sand-400);      /* input/select/textarea hover (one-step darken) */
   --ds-color-border-bold:             var(--p-color-sand-500);      /* emphatic dividers */
   /* Focus rings, variant-aware. Default uses lime (the system action color);
      destructive uses its own hue scale; secondary uses sand. Linktext is in the
@@ -314,6 +315,7 @@
   /* ── Borders, mid-sand range for structure on dark bg ── */
   --ds-color-border-subtle:           var(--p-color-sand-800);
   --ds-color-border-default:          var(--p-color-sand-700);
+  --ds-color-border-default-hover:    var(--p-color-sand-600);
   --ds-color-border-bold:             var(--p-color-sand-600);
   /* Focus rings, only Secondary changes in dark mode (sand step shifts).
      Default/Destructive/Link-Brand are theme-invariant per Figma. */
