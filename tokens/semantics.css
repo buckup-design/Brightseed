@@ -12,9 +12,13 @@
 
 /* ════════════════════════════════════════════════════════════════════════════
    LIGHT THEME (default :root)
+   [data-theme="light"] is also listed so a nested light context can re-establish
+   light values inside a dark app (e.g. an always-light brand panel). Without it,
+   a nested data-theme="light" would inherit the dark overrides and do nothing.
    ════════════════════════════════════════════════════════════════════════════ */
 
-:root {
+:root,
+[data-theme="light"] {
 
   /* ── Surface ── */
   --ds-color-surface-default:         var(--p-color-white);         /* #ffffff, page background */

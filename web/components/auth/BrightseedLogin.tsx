@@ -165,6 +165,11 @@ function OrDivider() {
 function ImageSlot() {
   return (
     <div
+      // Fixed light context: the brand graphic is always a light surface, so it
+      // opts out of app theming. Every descendant token (display text, body
+      // text, line-art) resolves against light-mode values in both themes,
+      // keeping "6x faster" (--ds-color-text-default) dark on light/dark alike.
+      data-theme="light"
       className="relative hidden overflow-hidden md:block"
       style={{
         backgroundImage: "url('/brand/graphic_login.bg.webp')",
