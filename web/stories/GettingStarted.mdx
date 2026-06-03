@@ -24,3 +24,50 @@ idea  →  prompt in Cowork  →  preview in Storybook  →  refine  →  ship
 - **Data series** use the `--chart-*` colors, never brand lime or forest.
 
 When a written doc ever disagrees with the live tokens or Storybook, the running system wins, and the disagreement is worth flagging so the docs get fixed.
+
+---
+
+{/* External reference card, faithful repro of the Storybook Addon MCP listing.
+    Storybook brand colors + fixed sizing are intentional here and exempt from
+    Brightseed token discipline, same as the stock Pro Pack reference pages. */}
+
+<div style={{ display: "flex", alignItems: "flex-start", gap: "2.5rem", padding: "2rem 0.5rem", fontFamily: "system-ui, -apple-system, 'Segoe UI', sans-serif" }}>
+  <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", flexShrink: 0, paddingTop: "0.4rem" }}>
+    <div style={{ width: 38, height: 38, borderRadius: 8, background: "#FF4785", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: 24, lineHeight: 1 }}>S</div>
+    <span style={{ fontSize: 22, fontWeight: 700, color: "#1b1c1d" }}>Storybook</span>
+  </div>
+
+  <div style={{ minWidth: 0 }}>
+    <h2 style={{ margin: 0, fontSize: 40, fontWeight: 800, color: "#1b1c1d", lineHeight: 1.1, borderBottom: "none" }}>Addon MCP</h2>
+    <p style={{ margin: "0.85rem 0 1.6rem", fontSize: 20, color: "#454545", maxWidth: 640, lineHeight: 1.35 }}>
+      Help agents automatically write and test stories for your UI components
+    </p>
+
+    <div style={{ display: "flex", alignItems: "center", gap: "2.25rem", flexWrap: "wrap" }}>
+      <button
+        type="button"
+        onClick={() => navigator.clipboard && navigator.clipboard.writeText("npm install -D @storybook/addon-mcp")}
+        title="Copy to clipboard"
+        style={{ display: "inline-flex", alignItems: "center", gap: "0.75rem", background: "#f3f4f5", border: "none", borderRadius: 8, padding: "0.7rem 1rem", fontFamily: "'SFMono-Regular', Consolas, monospace", fontSize: 17, color: "#1b1c1d", cursor: "pointer" }}
+      >
+        npm install -D @storybook/addon-mcp
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#73828c" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <rect x="9" y="9" width="13" height="13" rx="2" />
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+        </svg>
+      </button>
+
+      <a
+        href="https://github.com/storybookjs/mcp"
+        target="_blank"
+        rel="noreferrer"
+        style={{ display: "inline-flex", alignItems: "center", gap: "0.55rem", fontSize: 18, color: "#1b1c1d", textDecoration: "none", fontWeight: 500 }}
+      >
+        <svg width="22" height="22" viewBox="0 0 16 16" fill="#1b1c1d" aria-hidden="true">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
+        </svg>
+        View on Github
+      </a>
+    </div>
+  </div>
+</div>
