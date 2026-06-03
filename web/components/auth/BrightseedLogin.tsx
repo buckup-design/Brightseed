@@ -37,7 +37,7 @@ export function BrightseedLogin({ className, ...props }: BrightseedLoginProps) {
   return (
     <div
       className={cn(
-        "grid w-full overflow-hidden rounded-xl border bg-card shadow-sm",
+        "grid w-full overflow-hidden rounded-xl border border-[var(--ds-color-border-subtle)] bg-card shadow-sm",
         "md:grid-cols-2",
         className,
       )}
