@@ -176,6 +176,13 @@ function ImageSlot() {
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
+        // Establish a query container so the overlay can scale to the panel
+        // width instead of being pinned to absolute Figma px. 100cqw = the
+        // rendered panel width; the overlay below is expressed in cqw at the
+        // rate 640px (the Figma Image Slot width) = 100cqw, i.e. cqw = px / 6.4.
+        // inline-size (not size) so the panel's height still flows from the
+        // form column; size containment would collapse it.
+        containerType: "inline-size",
       }}
     >
       {/*
@@ -183,10 +190,15 @@ function ImageSlot() {
        * All 3 elements share col-start-1/row-start-1; vertical position is set
        * via top margin from the shared grid origin.
        *
-       * Typography (from Figma):
-       *   Label   , Geist Mono Medium, 32px / 36px lh, uppercase, forest-950
-       *   Headline, Tiempos Fine italic: "6x" 120px / " faster" 100px, text-default
-       *   Subtext , Geist Regular, 24px / 49px lh, forest-950
+       * Typography (from Figma, 640px-wide frame). Values are authored in cqw so
+       * the composition reproduces the Figma proportions at any panel width.
+       * Conversion: cqw = figmaPx / 6.4  (640px = 100cqw).
+       *   Label   , Geist Mono Medium, 32/36px  -> 5 / 5.625cqw, uppercase, forest-950
+       *   Headline, Tiempos Fine italic: "6x" 120 -> 18.75cqw / " faster" 100 -> 15.625cqw,
+       *             display lh 49.06px -> 7.665cqw, text-default
+       *   Subtext , Geist Regular, 24/49.06px -> 3.75 / 7.665cqw, forest-950
+       * Offsets: ml 20 -> 3.125cqw; mt 106 -> 16.5625cqw; mt 191 -> 29.84cqw.
+       * Widths : 284 -> 44.375cqw; 437 -> 68.28cqw; 303 -> 47.34cqw.
        *
        * [CONCERN] Label + subtext use --ds-color-surface-brand-active (forest-950)
        * as a text color, no dedicated --ds-color-text-on-brand-graphic token exists
@@ -196,14 +208,14 @@ function ImageSlot() {
       <div className="relative flex h-full items-center justify-center">
         <div className="inline-grid grid-cols-[max-content] grid-rows-[max-content] place-items-start leading-none">
 
-          {/* DISCOVER / NUTRACEUTICALS, Geist Mono Medium 32px */}
+          {/* DISCOVER / NUTRACEUTICALS, Geist Mono Medium 32px -> 5cqw */}
           <p
-            className="col-start-1 row-start-1 ml-5 w-[284px] whitespace-pre-wrap uppercase"
+            className="col-start-1 row-start-1 ml-[3.125cqw] w-[44.375cqw] whitespace-pre-wrap uppercase"
             style={{
               fontFamily: "var(--font-mono)",
               fontWeight: 500,
-              fontSize: "32px",
-              lineHeight: "36px",
+              fontSize: "5cqw",
+              lineHeight: "5.625cqw",
               color: "var(--ds-color-surface-brand-active)",
             }}
           >
@@ -212,25 +224,25 @@ function ImageSlot() {
 
           {/* 6x faster, Tiempos Fine italic, two sizes in one line */}
           <p
-            className="col-start-1 row-start-1 mt-[106px] w-[437px] text-[0px]"
+            className="col-start-1 row-start-1 mt-[16.5625cqw] w-[68.28cqw] text-[0px]"
             style={{
               fontFamily: "var(--font-display)",
               fontStyle: "italic",
               color: "var(--ds-color-text-default)",
             }}
           >
-            <span style={{ fontSize: "120px", lineHeight: "49.06px" }}>6x</span>
-            <span style={{ fontSize: "100px", lineHeight: "49.06px" }}> faster</span>
+            <span style={{ fontSize: "18.75cqw", lineHeight: "7.665cqw" }}>6x</span>
+            <span style={{ fontSize: "15.625cqw", lineHeight: "7.665cqw" }}> faster</span>
           </p>
 
-          {/* than the industry average., Geist Regular 24px */}
+          {/* than the industry average., Geist Regular 24px -> 3.75cqw */}
           <p
-            className="col-start-1 row-start-1 ml-5 mt-[191px] w-[303px]"
+            className="col-start-1 row-start-1 ml-[3.125cqw] mt-[29.84cqw] w-[47.34cqw]"
             style={{
               fontFamily: "var(--font-sans)",
               fontWeight: 400,
-              fontSize: "24px",
-              lineHeight: "49.06px",
+              fontSize: "3.75cqw",
+              lineHeight: "7.665cqw",
               color: "var(--ds-color-surface-brand-active)",
             }}
           >
