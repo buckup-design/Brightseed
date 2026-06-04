@@ -4,12 +4,12 @@ import * as React from "react";
 /* ─────────────────────────────────────────────────────────────────────────
  * Foundations / Color Scales, the Brightseed primitive hue scales.
  *
- * Layer 1 of the 3-layer token system (primitives → intents → semantics).
+ * Layer 1 of the 2-layer token system (primitives → semantics).
  * Each scale runs 50→950. Component code references SEMANTIC tokens, never
  * these primitives directly, this page is the reference for what the raw
  * scales contain.
  *
- * Swatches render from the live --color-{scale}-{step} tokens (defined in
+ * Swatches render from the live --p-color-{scale}-{step} tokens (defined in
  * tokens/primitives.css via the bridge), and each hex label is read back from
  * the rendered swatch, so the swatch and its label can never drift, and the
  * page updates automatically if a token value changes.
@@ -31,7 +31,7 @@ type Story = StoryObj<typeof meta>;
 const STEPS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const;
 
 type Scale = {
-  key: string; // token slug → --color-{key}-{step}
+  key: string; // token slug → --p-color-{key}-{step}
   label: string;
   desc: string;
   notes?: Partial<Record<(typeof STEPS)[number], string>>;
@@ -108,7 +108,7 @@ function Swatch({
       <div
         ref={ref}
         className="h-14 rounded-md border border-[var(--ds-color-border-subtle)]"
-        style={{ backgroundColor: `var(--color-${scaleKey}-${step})` }}
+        style={{ backgroundColor: `var(--p-color-${scaleKey}-${step})` }}
       />
       <div className="flex flex-col leading-tight">
         <span className="text-[11px] font-medium text-[var(--ds-color-text-default)]">{step}</span>
@@ -127,13 +127,13 @@ function ScaleRow({ scale }: { scale: Scale }) {
       <div className="flex flex-wrap items-baseline gap-x-2">
         <h3
           className="text-sm font-semibold"
-          style={{ color: `var(--color-${scale.key}-700)` }}
+          style={{ color: `var(--p-color-${scale.key}-700)` }}
         >
           {scale.label}
         </h3>
         <span className="text-sm text-[var(--ds-color-text-subtle)]">/ {scale.desc}</span>
         <span className="font-mono text-[11px] text-[var(--ds-color-text-subtle)]">
-          --color-{scale.key}-*
+          --p-color-{scale.key}-*
         </span>
       </div>
       <div
@@ -167,9 +167,9 @@ export const Scales: Story = {
         </h2>
         <p className="max-w-prose text-sm text-[var(--ds-color-text-subtle)]">
           The Brightseed primitive hue scales, Layer 1 of the token system
-          (primitives → intents → semantics). Each scale runs 50→950. Component
+          (primitives → semantics). Each scale runs 50→950. Component
           code references semantic tokens, never these primitives directly. Token
-          pattern: <code className="font-mono text-xs">--color-{`{scale}`}-{`{step}`}</code>.
+          pattern: <code className="font-mono text-xs">--p-color-{`{scale}`}-{`{step}`}</code>.
         </p>
       </header>
       {SCALES.map((scale) => (
