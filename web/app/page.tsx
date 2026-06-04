@@ -13,12 +13,12 @@
 
 export default function Home() {
   return (
-    <main className="min-h-dvh flex items-center justify-center bg-[var(--color-surface-default)]">
+    <main className="min-h-dvh flex items-center justify-center bg-[var(--ds-color-surface-default)]">
       <div className="max-w-md text-center space-y-4 px-6">
-        <h1 className="text-2xl font-semibold text-[var(--color-text-default)]">
+        <h1 className="text-2xl font-semibold text-[var(--ds-color-text-default)]">
           Brightseed, rebuilding on Pro Blocks
         </h1>
-        <p className="text-sm text-[var(--color-text-subtle)]">
+        <p className="text-sm text-[var(--ds-color-text-subtle)]">
           The canonical view of the design system is Storybook
           (<code className="font-mono text-xs">npm run storybook</code>)
           until the Hummingbird surfaces return.

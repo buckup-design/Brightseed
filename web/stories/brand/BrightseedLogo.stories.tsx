@@ -30,19 +30,19 @@ export const Mark: Story = {
     <div className="flex items-end gap-12">
       <div className="flex flex-col items-center gap-2">
         <BrightseedLogo variant="mark" className="h-6 w-6" />
-        <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+        <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
           sm, 24px
         </span>
       </div>
       <div className="flex flex-col items-center gap-2">
         <BrightseedLogo variant="mark" className="h-12 w-12" />
-        <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+        <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
           md, 48px
         </span>
       </div>
       <div className="flex flex-col items-center gap-2">
         <BrightseedLogo variant="mark" className="h-24 w-24" />
-        <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+        <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
           lg, 96px
         </span>
       </div>
@@ -55,19 +55,19 @@ export const Lockup: Story = {
     <div className="flex flex-col gap-12 max-w-3xl">
       <div className="flex flex-col gap-2">
         <BrightseedLogo variant="lockup" className="h-16" />
-        <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+        <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
           h-16 (64px), hero / marketing
         </span>
       </div>
       <div className="flex flex-col gap-2">
         <BrightseedLogo variant="lockup" className="h-12" />
-        <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+        <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
           h-12 (48px), default app-shell size
         </span>
       </div>
       <div className="flex flex-col gap-2">
         <BrightseedLogo variant="lockup" className="h-8" />
-        <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+        <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
           h-8 (32px), compact / footer
         </span>
       </div>
@@ -82,12 +82,12 @@ export const OnDarkSurface: Story = {
       data-theme="dark"
       className="flex flex-col gap-8 p-12 rounded-lg"
       style={{
-        background: "var(--color-surface-default)",
+        background: "var(--ds-color-surface-default)",
       }}
     >
       <BrightseedLogo variant="lockup" className="h-12" />
       <BrightseedLogo variant="mark" className="h-16 w-16" />
-      <p className="font-mono text-xs text-[var(--color-text-subtle)]">
+      <p className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
         Mark and wordmark are theme-invariant, the brand colors stay the same
         on light and dark surfaces. Forest-green wordmark on sand-950 passes
         contrast.
@@ -100,13 +100,13 @@ export const Comparison: Story = {
   render: () => (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-3">
-        <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+        <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
           Mark only
         </span>
         <BrightseedLogo variant="mark" className="h-16 w-16" />
       </div>
       <div className="flex flex-col gap-3">
-        <span className="font-mono text-xs text-[var(--color-text-subtle)]">
+        <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
           Lockup
         </span>
         <BrightseedLogo variant="lockup" className="h-16" />

@@ -74,8 +74,8 @@ const preview: Preview = {
         {
           "data-theme": theme,
           style: {
-            background: "var(--color-surface-default)",
-            color: "var(--color-text-default)",
+            background: "var(--ds-color-surface-default)",
+            color: "var(--ds-color-text-default)",
             padding: "2rem",
             borderRadius: "8px",
           },
