@@ -26,15 +26,18 @@ import { cn } from "@/lib/utils"
  *                                    Focus  , ring=step-500 (hue-specific)
  *
  *   `kind`, visual treatment (3 values)
- *     primary    Standard pill. rounded-full, comfortable px-2 py-0.5, text-xs.
+ *     chip       Standard pill. rounded-full, comfortable px-2 py-0.5, text-xs.
  *                Used in body content, table rows, chip-stacks of moderate density.
- *     secondary  Tight tag for tag-dense Hummingbird surfaces. cr=2 (sharp corners,
- *                bound to --ds-shape-radius-xs), px-1 horizontal, hugs content.
- *                More badges fit per row without column wrapping. Locked May 7.
+ *                Interactive: carries hover + focus states. (Renamed from "primary".)
+ *     tag        Tight, INFORMATIONAL tag for tag-dense Hummingbird surfaces. cr=2
+ *                (sharp corners, bound to --ds-shape-radius-xs), px-1 horizontal,
+ *                hugs content. More tags fit per row without column wrapping.
+ *                Static, NOT interactive: no hover, no focus state, by design.
+ *                (Renamed from "secondary".)
  *     number     Compact numeric chip for counts/notifications. Round, tabular-nums,
  *                min-w to stay even when displaying single/double digit numbers.
  *                The shadcn-default Badge Number, rebound through Brightseed Mode,
- *                IS the Quill version (May 8 2026 decision).
+ *                IS the Quill version (May 8 2026 decision). Unchanged.
  *
  * Inline slots, three composition paths, matching the Figma component_property
  * pattern (Show Inline Start/End booleans + Inline Start/End instance-swap):
@@ -59,6 +62,65 @@ import { cn } from "@/lib/utils"
  * single-declaration. Same dual-trigger pattern Button uses.
  */
 
+// All 12 color variants, used to generate the interactive compoundVariants.
+const VARIANT_NAMES = [
+  "default",
+  "outline",
+  "ghost",
+  "red",
+  "forest",
+  "lime",
+  "cyan",
+  "blue",
+  "yellow",
+  "orange",
+  "lavender",
+  "orchid",
+] as const
+
+// Kinds that are interactive (carry hover + focus). `tag` is intentionally
+// absent: it is informational/static and gets neither.
+const INTERACTIVE_KINDS = ["chip", "number"] as const
+
+// Focus ring geometry, 1px stroke + 1px offset (matches Figma Ring spec).
+// Kind-specific (interactive only), so `tag` never paints a ring.
+const RING_BASE =
+  "focused:ring-1 focused:ring-offset-1 focused:ring-offset-[var(--ds-color-surface-default)]"
+
+// Per-variant hover surface + focus ring color. Pulled out of the `variant`
+// map so these states only attach to interactive kinds via compoundVariants.
+const VARIANT_INTERACTIVE: Record<(typeof VARIANT_NAMES)[number], string> = {
+  default:
+    "hovered:bg-[var(--ds-color-action-secondary-hover)] focused:ring-[var(--ds-color-border-focus-secondary)]",
+  outline:
+    "hovered:bg-[var(--ds-color-action-secondary)] focused:ring-[var(--ds-color-border-focus-secondary)]",
+  ghost:
+    "hovered:bg-[var(--ds-color-action-secondary)] focused:ring-[var(--ds-color-border-focus-secondary)]",
+  red: "hovered:bg-[var(--ds-color-surface-tag-red-hover)] focused:ring-[var(--ds-color-border-tag-red-focus)]",
+  forest:
+    "hovered:bg-[var(--ds-color-surface-tag-forest-hover)] focused:ring-[var(--ds-color-border-tag-forest-focus)]",
+  lime: "hovered:bg-[var(--ds-color-surface-tag-lime-hover)] focused:ring-[var(--ds-color-border-tag-lime-focus)]",
+  cyan: "hovered:bg-[var(--ds-color-surface-tag-cyan-hover)] focused:ring-[var(--ds-color-border-tag-cyan-focus)]",
+  blue: "hovered:bg-[var(--ds-color-surface-tag-blue-hover)] focused:ring-[var(--ds-color-border-tag-blue-focus)]",
+  yellow:
+    "hovered:bg-[var(--ds-color-surface-tag-yellow-hover)] focused:ring-[var(--ds-color-border-tag-yellow-focus)]",
+  orange:
+    "hovered:bg-[var(--ds-color-surface-tag-orange-hover)] focused:ring-[var(--ds-color-border-tag-orange-focus)]",
+  lavender:
+    "hovered:bg-[var(--ds-color-surface-tag-lavender-hover)] focused:ring-[var(--ds-color-border-tag-lavender-focus)]",
+  orchid:
+    "hovered:bg-[var(--ds-color-surface-tag-orchid-hover)] focused:ring-[var(--ds-color-border-tag-orchid-focus)]",
+}
+
+// Cartesian product: every variant × every interactive kind → its hover/focus.
+const interactiveCompoundVariants = INTERACTIVE_KINDS.flatMap((kind) =>
+  VARIANT_NAMES.map((variant) => ({
+    variant,
+    kind,
+    class: cn(RING_BASE, VARIANT_INTERACTIVE[variant]),
+  }))
+)
+
 const badgeVariants = cva(
   cn(
     // ── Base layout / typography (kind-invariant) ────────────────────────
@@ -72,89 +134,46 @@ const badgeVariants = cva(
     // ── Disabled fade, single DOM level so opacity never stacks ─────────
     "disabled-state:cursor-not-allowed",
     "disabled-state:[&_[data-slot=badge-content]]:opacity-[var(--ds-disabled-text-opacity)]",
-    // ── Focus ring, 1px stroke, 1px offset (matches Figma Ring spec) ────
+    // Focus ring + hover live in compoundVariants (interactive kinds only),
+    // so the `tag` kind stays fully static. `outline-none` is kind-invariant.
     "outline-none",
-    "focused:ring-1 focused:ring-offset-1 focused:ring-offset-[var(--ds-color-surface-default)]",
   ),
   {
     variants: {
+      // Resting colors only. Hover surface + focus ring live in
+      // compoundVariants (interactive kinds), so `tag` stays static.
       variant: {
         // ── Neutral cohort (Default / Outline / Ghost) ──────────────────
-        // These three share the "Neutral" tag-active-color mode in Figma , 
+        // These three share the "Neutral" tag-active-color mode in Figma,
         // icon and text track --ds-color-text-default, surface treatment varies.
-        default: cn(
-          "bg-[var(--ds-color-action-secondary)] text-[var(--ds-color-text-default)]",
-          "hovered:bg-[var(--ds-color-action-secondary-hover)]",
-          "focused:ring-[var(--ds-color-border-focus-secondary)]",
-        ),
+        default: "bg-[var(--ds-color-action-secondary)] text-[var(--ds-color-text-default)]",
         outline: cn(
           "bg-transparent text-[var(--ds-color-text-default)]",
           "border-[var(--ds-color-border-default)]",
-          "hovered:bg-[var(--ds-color-action-secondary)]",
-          "focused:ring-[var(--ds-color-border-focus-secondary)]",
         ),
-        ghost: cn(
-          "bg-transparent text-[var(--ds-color-text-default)]",
-          "hovered:bg-[var(--ds-color-action-secondary)]",
-          "focused:ring-[var(--ds-color-border-focus-secondary)]",
-        ),
+        ghost: "bg-transparent text-[var(--ds-color-text-default)]",
         // ── Critical (red, soft tint) ──────────────────────────────────
-        red: cn(
-          "bg-[var(--ds-color-surface-tag-red)] text-[var(--ds-color-text-tag-red)]",
-          "hovered:bg-[var(--ds-color-surface-tag-red-hover)]",
-          "focused:ring-[var(--ds-color-border-tag-red-focus)]",
-        ),
+        red: "bg-[var(--ds-color-surface-tag-red)] text-[var(--ds-color-text-tag-red)]",
         // ── Tag decorative palette (8 hues) ─────────────────────────────
-        forest: cn(
-          "bg-[var(--ds-color-surface-tag-forest)] text-[var(--ds-color-text-tag-forest)]",
-          "hovered:bg-[var(--ds-color-surface-tag-forest-hover)]",
-          "focused:ring-[var(--ds-color-border-tag-forest-focus)]",
-        ),
-        lime: cn(
-          "bg-[var(--ds-color-surface-tag-lime)] text-[var(--ds-color-text-tag-lime)]",
-          "hovered:bg-[var(--ds-color-surface-tag-lime-hover)]",
-          "focused:ring-[var(--ds-color-border-tag-lime-focus)]",
-        ),
-        cyan: cn(
-          "bg-[var(--ds-color-surface-tag-cyan)] text-[var(--ds-color-text-tag-cyan)]",
-          "hovered:bg-[var(--ds-color-surface-tag-cyan-hover)]",
-          "focused:ring-[var(--ds-color-border-tag-cyan-focus)]",
-        ),
-        blue: cn(
-          "bg-[var(--ds-color-surface-tag-blue)] text-[var(--ds-color-text-tag-blue)]",
-          "hovered:bg-[var(--ds-color-surface-tag-blue-hover)]",
-          "focused:ring-[var(--ds-color-border-tag-blue-focus)]",
-        ),
-        yellow: cn(
-          "bg-[var(--ds-color-surface-tag-yellow)] text-[var(--ds-color-text-tag-yellow)]",
-          "hovered:bg-[var(--ds-color-surface-tag-yellow-hover)]",
-          "focused:ring-[var(--ds-color-border-tag-yellow-focus)]",
-        ),
-        orange: cn(
-          "bg-[var(--ds-color-surface-tag-orange)] text-[var(--ds-color-text-tag-orange)]",
-          "hovered:bg-[var(--ds-color-surface-tag-orange-hover)]",
-          "focused:ring-[var(--ds-color-border-tag-orange-focus)]",
-        ),
-        lavender: cn(
-          "bg-[var(--ds-color-surface-tag-lavender)] text-[var(--ds-color-text-tag-lavender)]",
-          "hovered:bg-[var(--ds-color-surface-tag-lavender-hover)]",
-          "focused:ring-[var(--ds-color-border-tag-lavender-focus)]",
-        ),
-        orchid: cn(
-          "bg-[var(--ds-color-surface-tag-orchid)] text-[var(--ds-color-text-tag-orchid)]",
-          "hovered:bg-[var(--ds-color-surface-tag-orchid-hover)]",
-          "focused:ring-[var(--ds-color-border-tag-orchid-focus)]",
-        ),
+        forest: "bg-[var(--ds-color-surface-tag-forest)] text-[var(--ds-color-text-tag-forest)]",
+        lime: "bg-[var(--ds-color-surface-tag-lime)] text-[var(--ds-color-text-tag-lime)]",
+        cyan: "bg-[var(--ds-color-surface-tag-cyan)] text-[var(--ds-color-text-tag-cyan)]",
+        blue: "bg-[var(--ds-color-surface-tag-blue)] text-[var(--ds-color-text-tag-blue)]",
+        yellow: "bg-[var(--ds-color-surface-tag-yellow)] text-[var(--ds-color-text-tag-yellow)]",
+        orange: "bg-[var(--ds-color-surface-tag-orange)] text-[var(--ds-color-text-tag-orange)]",
+        lavender: "bg-[var(--ds-color-surface-tag-lavender)] text-[var(--ds-color-text-tag-lavender)]",
+        orchid: "bg-[var(--ds-color-surface-tag-orchid)] text-[var(--ds-color-text-tag-orchid)]",
       },
       kind: {
-        // Primary, standard pill, rounded-full
-        primary: cn(
+        // Chip, standard pill, rounded-full. Interactive (hover + focus).
+        chip: cn(
           "h-5 px-2 py-0.5 gap-1 text-xs",
           "rounded-full",
         ),
-        // Secondary, tight tag, cr=2 (--ds-shape-radius-xs), 4px horizontal padding,
-        // hugs content. For dense rows where width matters more than air.
-        secondary: cn(
+        // Tag, tight informational tag, cr=2 (--ds-shape-radius-xs), 4px horizontal
+        // padding, hugs content. Static, no hover/focus. For dense rows where width
+        // matters more than air.
+        tag: cn(
           "h-[18px] px-1 gap-1 text-[11px] leading-none",
           "rounded-[var(--ds-shape-radius-xs)]",
         ),
@@ -166,9 +185,10 @@ const badgeVariants = cva(
         ),
       },
     },
+    compoundVariants: interactiveCompoundVariants,
     defaultVariants: {
       variant: "default",
-      kind: "primary",
+      kind: "chip",
     },
   }
 )
@@ -207,7 +227,7 @@ function StatusDot({ className }: { className?: string }) {
 function Badge({
   className,
   variant = "default",
-  kind = "primary",
+  kind = "chip",
   asChild = false,
   iconLeading,
   iconTrailing,

@@ -95,7 +95,7 @@ Color scale names: forest, lime, sand, cyan, blue, yellow, orange, lavender, orc
 | DoseResponseChart, StatCard | 🔲 API spec done, impl pending |
 | Brand evolution / color studies, icon system (line-art, hummingbird) | 🔲 In progress |
 | BrightseedLogo canonical vectors; Tiempos Headline license; Tiempos webfont domain confirm (ask Meng); Input `size` prop | 🔲 Deferred / open |
-| Onboard Anna as collaborator (GitHub + Cowork + Figma) | 🟡 In progress (June 2026), see `collaboration/` |
+| Onboard Anna as collaborator (GitHub + Storybook + Figma) | ✅ GitHub + Storybook done June 3, 2026 (both now multi-contributor); co-editing the Library Figma file. See `collaboration/` |
 
 ---
 
@@ -151,7 +151,12 @@ Values point to `tokens/semantics.css`; component appearance lives in Storybook;
 
 **Focus rings** (system invariant): all reference the local Brightseed Ring set (`26482:628558`), 1px stroke + 1px offset, instance at `(-1,-1)` sized `body+2`, `Shape=*` variant matching body radius, color via instance stroke override. No per-instance cornerRadius overrides. Variant colors: Default/Outline/Ghost lime-500, Secondary sand-300, Destructive red-500, Linktext lime-500.
 
-**Badge:** 12 variants, one recipe so tag-dense tables don't shout: default surface step-100 / text step-700; hover surface step-200; focus surface step-100 + ring step-500. Removed `verified` + `secondary`; `destructive`→`red`. Secondary Badges set `cr=2`, horizontal padding `spacing/1` (4px), hug content. Primary Badge has optional inline start/end slots (icon/dot) driven by component properties + a `Brightseed Tag Mode` variable-modes cascade (`tag/active-color`); swap targets must bind inner `Vector` stroke to `tag/active-color`.
+**Badge:** two axes, `variant` (12 colors) × `kind` (3 visual treatments). One color recipe so tag-dense tables don't shout: default surface step-100 / text step-700; hover surface step-200; focus surface step-100 + ring step-500. (Old shadcn `verified` + `secondary` color variants removed; `destructive`→`red`.)
+
+The three `kind` values (renamed June 5, 2026 — `primary`→**Chip**, `secondary`→**Tag**, `number` unchanged):
+- **Chip** — interactive pill, `rounded-full`, carries hover + focus. Has optional inline start/end slots (icon/dot) driven by component properties + a `Brightseed Tag Mode` variable-modes cascade (`tag/active-color`); swap targets must bind inner `Vector` stroke to `tag/active-color`.
+- **Tag** — informational/**static** tight tag: `cr=2`, horizontal padding `spacing/1` (4px), hugs content. **No hover, no focus state, by design** (not interactive). The hover/focus recipe above applies to Chip + Number only.
+- **Number** — count chip, unchanged.
 
 **Dark-mode semantic intent surfaces** (recipe; values in `tokens/semantics.css` `[data-theme="dark"]`): surface = `color-mix(intent-step 10–15%, sand-950)`; border = `color-mix(intent-step 46%, transparent)`; **text = neutral `--ds-color-text-default`** (no semantic tint in dark, signal lives in surface + border); icon = same hue as border, solid.
 
@@ -159,9 +164,9 @@ Values point to `tokens/semantics.css`; component appearance lives in Storybook;
 
 ## Figma, canonical references & quirks
 
-**File:** `shadcn Brightseed v3 (with pro blocks)`, key `ZZPjoeJ447MWuzNi3LL1BL`.
+**File:** `Brightseed Library (BB+AM collab)`, key `0zRpsdiJxOtnOoXEAeLPwA` (current canonical, June 3 2026 onward; updated version of v3, co-edited by Becky + Anna). WIP happens in `Collab Playground`, key `P3ZaaH0lNgFzBbQROvTK4L`. Prior v3 file `shadcn Brightseed v3 (with pro blocks)` (key `ZZPjoeJ447MWuzNi3LL1BL`) is superseded; node IDs below carried over from it (Brightseed Blocks `26465:212221` matches both), re-verify any ID that doesn't resolve in the Library file.
 
-**IDs:** Button page `34:6`; Button COMPONENT_SET `37:931` (330 variants); Quill Button skeleton `26465:249160`; Brightseed Blocks page `26465:212221`; Primary Badges set `26480:627833`; Secondary Badges set `26480:628051`; local Ring set `26482:628558`; Brightseed Mode collection `26462:212204`. **Brightseed Mode** (~50 vars) mirrors shadcn slot vocab (`base/primary`, `base/primary-hover`, `base/link-brand`, …) for name-match rebinds against Pro Pack components.
+**IDs:** Button page `34:6`; Button COMPONENT_SET `37:931` (330 variants); Quill Button skeleton `26465:249160`; Brightseed Blocks page `26465:212221`; Primary Badges set `26480:627833` (= **Chip** kind); Secondary Badges set `26480:628051` (= **Tag** kind, Figma object not yet renamed); local Ring set `26482:628558`; Brightseed Mode collection `26462:212204`. **Brightseed Mode** (~50 vars) mirrors shadcn slot vocab (`base/primary`, `base/primary-hover`, `base/link-brand`, …) for name-match rebinds against Pro Pack components.
 
 **Quirks (operational):**
 - **Chunk bulk mutations into batches of ≤12** per `figma_execute`, the WebSocket bridge times out ~30s, and on timeout the work often completes server-side but no response returns (confusing state). Probe between batches.

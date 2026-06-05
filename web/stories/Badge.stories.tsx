@@ -6,17 +6,23 @@ import { CowBadge, CompoundBadge, PlantBadge, RatBadge } from "@/components/ui/b
 
 /* ─────────────────────────────────────────────────────────────────────────
  * Badge stories, parity with Figma "Quill Components > Primary Badges"
- * (26480:627833) and "Secondary Badges" (26480:628051).
+ * (26480:627833 — the "Chip" kind) and "Secondary Badges" (26480:628051 —
+ * the "Tag" kind).
  *
  * Two prop axes:
  *   variant, color treatment (12: default / outline / ghost / red /
  *             forest / lime / cyan / blue / yellow / orange / lavender / orchid)
- *   kind   , visual treatment (3: primary / secondary / number)
+ *   kind   , visual treatment (3: chip / tag / number)
  *
- * The Quill matrix renders all 12 variants × 3 states (default / hover / focus)
- * for each kind. Hover and focus are forced via `data-force-state`, mapped by
- * the `hovered` and `focused` custom Tailwind variants in
- * web/app/globals.css, the same dual-trigger pattern Button uses.
+ * Interactivity differs by kind:
+ *   chip, number  interactive, carry hover + focus states.
+ *   tag           informational/static, NO hover and NO focus, by design.
+ *
+ * The Quill matrix renders chip + number across 3 states (default / hover /
+ * focus); tag renders default only, since it has no other states. Hover and
+ * focus are forced via `data-force-state`, mapped by the `hovered` and
+ * `focused` custom Tailwind variants in web/app/globals.css, the same
+ * dual-trigger pattern Button uses.
  *
  * Light + dark modes are toggled via the Storybook toolbar.
  * ───────────────────────────────────────────────────────────────────────── */
@@ -46,7 +52,7 @@ const meta = {
     },
     kind: {
       control: { type: "select" },
-      options: ["primary", "secondary", "number"],
+      options: ["chip", "tag", "number"],
     },
     statusDot: { control: { type: "boolean" } },
   },
@@ -58,7 +64,7 @@ type Story = StoryObj<typeof meta>;
 /* ── Inline glyphs for slot-prop demos ────────────────────────────────────
  * All Brightseed custom badge-scale icons, no Lucide placeholders here.
  * PlantBadge is the React equivalent of Figma's Leaf-badge (node 26485:632020),
- * the default inline-slot icon for Primary Badge's Inline Start/End swap.
+ * the default inline-slot icon for the Chip kind's Inline Start/End swap.
  * Full icon inventory lives on the Foundations/Icons Storybook page. */
 const PlantGlyph = () => <PlantBadge />;
 const CowGlyph = () => <CowBadge />;
@@ -85,8 +91,8 @@ export const Number: Story = {
   args: { kind: "number", variant: "default", children: "12" },
 };
 
-/* All 12 variants at primary kind, quickest visual diff across light/dark. */
-export const AllVariantsPrimary: Story = {
+/* All 12 variants at chip kind, quickest visual diff across light/dark. */
+export const AllVariantsChip: Story = {
   parameters: { layout: "padded" },
   render: () => (
     <div className="flex flex-wrap items-center gap-2">
@@ -106,46 +112,46 @@ export const AllVariantsPrimary: Story = {
   ),
 };
 
-/* All 12 variants at secondary kind, confirms the cr=2 + 4px padding
- * layout from the May 7 Secondary Badge tightening. */
-export const AllVariantsSecondary: Story = {
+/* All 12 variants at tag kind, confirms the cr=2 + 4px padding layout from
+ * the May 7 tightening. Tags are informational/static, no hover or focus. */
+export const AllVariantsTag: Story = {
   parameters: { layout: "padded" },
   render: () => (
     <div className="flex flex-wrap items-center gap-2">
-      <Badge variant="default" kind="secondary">
+      <Badge variant="default" kind="tag">
         Default
       </Badge>
-      <Badge variant="outline" kind="secondary">
+      <Badge variant="outline" kind="tag">
         Outline
       </Badge>
-      <Badge variant="ghost" kind="secondary">
+      <Badge variant="ghost" kind="tag">
         Ghost
       </Badge>
-      <Badge variant="red" kind="secondary">
+      <Badge variant="red" kind="tag">
         Red
       </Badge>
-      <Badge variant="forest" kind="secondary">
+      <Badge variant="forest" kind="tag">
         Forest
       </Badge>
-      <Badge variant="lime" kind="secondary">
+      <Badge variant="lime" kind="tag">
         Lime
       </Badge>
-      <Badge variant="cyan" kind="secondary">
+      <Badge variant="cyan" kind="tag">
         Cyan
       </Badge>
-      <Badge variant="blue" kind="secondary">
+      <Badge variant="blue" kind="tag">
         Blue
       </Badge>
-      <Badge variant="yellow" kind="secondary">
+      <Badge variant="yellow" kind="tag">
         Yellow
       </Badge>
-      <Badge variant="orange" kind="secondary">
+      <Badge variant="orange" kind="tag">
         Orange
       </Badge>
-      <Badge variant="lavender" kind="secondary">
+      <Badge variant="lavender" kind="tag">
         Lavender
       </Badge>
-      <Badge variant="orchid" kind="secondary">
+      <Badge variant="orchid" kind="tag">
         Orchid
       </Badge>
     </div>
@@ -153,33 +159,33 @@ export const AllVariantsSecondary: Story = {
 };
 
 /* Tag-dense row, Hummingbird use case. Three short labels per row,
- * showing how secondary kind packs more badges into the same column. */
+ * showing how the tag kind packs more badges into the same column. */
 export const TagDenseRow: Story = {
   parameters: { layout: "padded" },
   render: () => (
     <div className="flex flex-col gap-3 max-w-sm">
       <div className="flex flex-wrap items-center gap-1">
-        <Badge variant="forest" kind="secondary">
+        <Badge variant="forest" kind="tag">
           AkT
         </Badge>
-        <Badge variant="cyan" kind="secondary">
+        <Badge variant="cyan" kind="tag">
           Liver
         </Badge>
-        <Badge variant="lavender" kind="secondary">
+        <Badge variant="lavender" kind="tag">
           Phase II
         </Badge>
-        <Badge variant="orange" kind="secondary">
+        <Badge variant="orange" kind="tag">
           Hit
         </Badge>
       </div>
       <div className="flex flex-wrap items-center gap-1">
-        <Badge variant="forest" kind="secondary">
+        <Badge variant="forest" kind="tag">
           GPx1
         </Badge>
-        <Badge variant="blue" kind="secondary">
+        <Badge variant="blue" kind="tag">
           Heart
         </Badge>
-        <Badge variant="yellow" kind="secondary">
+        <Badge variant="yellow" kind="tag">
           Phase I
         </Badge>
       </div>
@@ -255,7 +261,7 @@ export const HummingbirdEntityBadges: Story = {
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-2">
         <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
-          primary kind
+          chip kind
         </span>
         <div className="flex flex-wrap items-center gap-2">
           <Badge variant="forest" iconLeading={<PlantGlyph />}>
@@ -274,19 +280,19 @@ export const HummingbirdEntityBadges: Story = {
       </div>
       <div className="flex flex-col gap-2">
         <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
-          secondary kind (tag-dense rows)
+          tag kind (tag-dense rows)
         </span>
         <div className="flex flex-wrap items-center gap-1">
-          <Badge variant="forest" kind="secondary" iconLeading={<PlantGlyph />}>
+          <Badge variant="forest" kind="tag" iconLeading={<PlantGlyph />}>
             Foeniculum vulgare
           </Badge>
-          <Badge variant="lime" kind="secondary" iconLeading={<CompoundGlyph />}>
+          <Badge variant="lime" kind="tag" iconLeading={<CompoundGlyph />}>
             Transanethole
           </Badge>
-          <Badge variant="cyan" kind="secondary" iconLeading={<CowGlyph />}>
+          <Badge variant="cyan" kind="tag" iconLeading={<CowGlyph />}>
             Rumen model
           </Badge>
-          <Badge variant="blue" kind="secondary" iconLeading={<RatGlyph />}>
+          <Badge variant="blue" kind="tag" iconLeading={<RatGlyph />}>
             Pre-clinical
           </Badge>
         </div>
@@ -348,18 +354,26 @@ const STATES = [
   { label: "Focus", forceState: "focus" as const },
 ] as const;
 
-const KIND_DEMO_LABEL: Record<string, string> = {
-  primary: "Compound",
-  secondary: "AkT",
+type Kind = "chip" | "tag" | "number";
+
+const KIND_DEMO_LABEL: Record<Kind, string> = {
+  chip: "Compound",
+  tag: "AkT",
   number: "12",
 };
+
+/* Tag is informational/static: only a Default state exists. chip + number are
+ * interactive, so they get the full Default / Hover / Focus sweep. */
+function statesForKind(kind: Kind) {
+  return kind === "tag" ? STATES.slice(0, 1) : STATES;
+}
 
 function MatrixRow({
   variant,
   kind,
 }: {
   variant: (typeof VARIANTS)[number];
-  kind: "primary" | "secondary" | "number";
+  kind: Kind;
 }) {
   const label = KIND_DEMO_LABEL[kind];
   return (
@@ -367,7 +381,7 @@ function MatrixRow({
       <div className="flex items-center justify-end pr-3 font-mono text-xs text-[var(--ds-color-text-subtle)]">
         {variant}
       </div>
-      {STATES.map((s) => (
+      {statesForKind(kind).map((s) => (
         <div
           key={s.label}
           className="flex items-center justify-center px-2 py-2 border border-dashed border-[var(--ds-color-border-subtle)]"
@@ -385,22 +399,22 @@ function MatrixRow({
   );
 }
 
-function KindMatrix({
-  kind,
-  title,
-}: {
-  kind: "primary" | "secondary" | "number";
-  title: string;
-}) {
+function KindMatrix({ kind, title }: { kind: Kind; title: string }) {
+  const states = statesForKind(kind);
   return (
     <section className="flex flex-col gap-3">
       <h3 className="font-mono text-sm text-[var(--ds-color-text-default)]">
         {title}
       </h3>
-      <div className="grid grid-cols-[auto_repeat(3,minmax(120px,1fr))] gap-y-1 border border-dashed border-[var(--ds-color-border-subtle)] p-2">
+      <div
+        className="grid gap-y-1 border border-dashed border-[var(--ds-color-border-subtle)] p-2"
+        style={{
+          gridTemplateColumns: `auto repeat(${states.length}, minmax(120px, 1fr))`,
+        }}
+      >
         {/* Header row */}
         <div />
-        {STATES.map((s) => (
+        {states.map((s) => (
           <div
             key={s.label}
             className="flex items-center justify-center pb-2 font-mono text-xs text-[var(--ds-color-text-subtle)]"
@@ -420,10 +434,10 @@ export const QuillMatrix: Story = {
   parameters: { layout: "padded" },
   render: () => (
     <div className="flex flex-col gap-10">
-      <KindMatrix kind="primary" title="Primary, 12 variants × 3 states" />
+      <KindMatrix kind="chip" title="Chip, 12 variants × 3 states" />
       <KindMatrix
-        kind="secondary"
-        title="Secondary, 12 variants × 3 states (cr=2, 4px padding)"
+        kind="tag"
+        title="Tag, 12 variants (static — informational, no hover/focus; cr=2, 4px padding)"
       />
       <KindMatrix kind="number" title="Number, 12 variants × 3 states" />
     </div>

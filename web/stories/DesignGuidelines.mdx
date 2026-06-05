@@ -273,7 +273,7 @@ All corner radii reference the shape token ladder. Never hardcode pixel values o
 | Token                       | Value  | Typical use                                        |
 | --------------------------- | ------ | -------------------------------------------------- |
 | `--ds-shape-radius-none`    | 0px    | Table rows, flush-edge elements                    |
-| `--ds-shape-radius-xs`      | 2px    | Tight secondary badges                             |
+| `--ds-shape-radius-xs`      | 2px    | Tight Tag badges (informational)                   |
 | `--ds-shape-radius-sm`      | 6px    | Small chips, tooltips, popovers                    |
 | `--ds-shape-radius-md`      | 8px    | Buttons (default/sm/lg/icon), inputs, cards, alerts|
 | `--ds-shape-radius-lg`      | 10px   | Larger cards, panels                               |
@@ -384,7 +384,7 @@ Hummingbird-specific constraints on the shared components. Appearance lives in S
 - **Button:** never override `bg-*` / `text-*` via `className` (the bridge handles color); use the `disabled` prop, never reach for `-disabled` tokens in component code.
 - **Link vs Linktext:** never use a Button for an inline text link; never use a Link for a standalone CTA. Two components, two state machines.
 - **Input / Textarea / Select:** signal errors with `aria-invalid="true"`, not by changing the border color directly.
-- **Badge:** Primary badges are pill-shaped (`rounded-full`); secondary badges use the tight 2px radius (`--ds-shape-radius-xs`). Don't give either the button radius (it reads as a button).
+- **Badge:** the `kind` prop has three values. **Chip** badges are interactive pills (`rounded-full`, hover + focus); **Tag** badges are informational/static (tight 2px radius `--ds-shape-radius-xs`, no hover or focus, never interactive); **Number** badges are count chips. Don't give Chip or Tag the button radius (it reads as a button), and don't wire a click handler onto a Tag.
 - **Card:** padding `p-4` (dense panels) or `p-6` (primary content); never nest a Card in a Card; use `--ds-color-surface-alt` for inset content.
 - **Dialog vs Sheet:** Dialog for confirmations and short forms (≤4 fields); Sheet for side panels with more context (`side="right"` only).
 - **Skeleton:** use for all loading states; match the skeleton's dimensions to the content it replaces.
