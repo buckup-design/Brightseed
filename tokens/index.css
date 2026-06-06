@@ -13,4 +13,4 @@
 @import './shape.css';      /* Radius, border width, shadow */
 @import './typography.css'; /* Font families + display scale (Tiempos H1/H2/H3) */
 @import './charts.css';     /* Data visualization tokens */
-@import './components.css'; /* Layer 3: per-component --c-* knobs aliasing --ds-* */
+@import './components.css'; /* Component-scoped semantics: --ds-{component}-* aliasing global --ds-* */

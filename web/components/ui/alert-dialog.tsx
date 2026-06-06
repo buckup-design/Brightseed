@@ -54,7 +54,7 @@ function AlertDialogOverlay({
     <AlertDialogPrimitive.Overlay
       data-slot="alert-dialog-overlay"
       className={cn(
-        "fixed inset-0 z-50 bg-[var(--c-alert-dialog-surface-scrim)]",
+        "fixed inset-0 z-50 bg-[var(--ds-alert-dialog-surface-scrim)]",
         "data-[state=closed]:animate-out data-[state=closed]:fade-out-0",
         "data-[state=open]:animate-in data-[state=open]:fade-in-0",
         className
@@ -82,9 +82,9 @@ function AlertDialogContent({
           "grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%]",
           "gap-4 p-6 duration-200",
           // Brightseed surface + border + radius
-          "bg-[var(--c-alert-dialog-surface-default)] text-[var(--c-alert-dialog-text-default)]",
-          "border border-[var(--c-alert-dialog-border-default)]",
-          "rounded-[var(--c-alert-dialog-shape-radius-lg)]",
+          "bg-[var(--ds-alert-dialog-surface-default)] text-[var(--ds-alert-dialog-text-default)]",
+          "border border-[var(--ds-alert-dialog-border-default)]",
+          "rounded-[var(--ds-alert-dialog-shape-radius-lg)]",
           "shadow-lg",
           // Sizing
           "data-[size=sm]:max-w-xs",
@@ -145,7 +145,7 @@ function AlertDialogTitle({
     <AlertDialogPrimitive.Title
       data-slot="alert-dialog-title"
       className={cn(
-        "text-lg font-semibold text-[var(--c-alert-dialog-text-default)]",
+        "text-lg font-semibold text-[var(--ds-alert-dialog-text-default)]",
         "sm:group-data-[size=default]/alert-dialog-content:group-has-data-[slot=alert-dialog-media]/alert-dialog-content:col-start-2",
         className
       )}
@@ -161,7 +161,7 @@ function AlertDialogDescription({
   return (
     <AlertDialogPrimitive.Description
       data-slot="alert-dialog-description"
-      className={cn("text-sm text-[var(--c-alert-dialog-text-subtle)]", className)}
+      className={cn("text-sm text-[var(--ds-alert-dialog-text-subtle)]", className)}
       {...props}
     />
   )
@@ -176,8 +176,8 @@ function AlertDialogMedia({
       data-slot="alert-dialog-media"
       className={cn(
         "mb-2 inline-flex size-16 items-center justify-center",
-        "rounded-[var(--c-alert-dialog-shape-radius-md)]",
-        "bg-[var(--c-alert-dialog-surface-alt)] text-[var(--c-alert-dialog-icon-default)]",
+        "rounded-[var(--ds-alert-dialog-shape-radius-md)]",
+        "bg-[var(--ds-alert-dialog-surface-alt)] text-[var(--ds-alert-dialog-icon-default)]",
         "sm:group-data-[size=default]/alert-dialog-content:row-span-2",
         "*:[svg:not([class*='size-'])]:size-8",
         className

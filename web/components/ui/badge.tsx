@@ -85,31 +85,31 @@ const INTERACTIVE_KINDS = ["chip", "number"] as const
 // Focus ring geometry, 1px stroke + 1px offset (matches Figma Ring spec).
 // Kind-specific (interactive only), so `tag` never paints a ring.
 const RING_BASE =
-  "focused:ring-1 focused:ring-offset-1 focused:ring-offset-[var(--c-badge-surface-default)]"
+  "focused:ring-1 focused:ring-offset-1 focused:ring-offset-[var(--ds-badge-surface-default)]"
 
 // Per-variant hover surface + focus ring color. Pulled out of the `variant`
 // map so these states only attach to interactive kinds via compoundVariants.
 const VARIANT_INTERACTIVE: Record<(typeof VARIANT_NAMES)[number], string> = {
   default:
-    "hovered:bg-[var(--c-badge-action-secondary-hover)] focused:ring-[var(--c-badge-border-focus-secondary)]",
+    "hovered:bg-[var(--ds-badge-action-secondary-hover)] focused:ring-[var(--ds-badge-border-focus-secondary)]",
   outline:
-    "hovered:bg-[var(--c-badge-action-secondary)] focused:ring-[var(--c-badge-border-focus-secondary)]",
+    "hovered:bg-[var(--ds-badge-action-secondary)] focused:ring-[var(--ds-badge-border-focus-secondary)]",
   ghost:
-    "hovered:bg-[var(--c-badge-action-secondary)] focused:ring-[var(--c-badge-border-focus-secondary)]",
-  red: "hovered:bg-[var(--c-badge-surface-tag-red-hover)] focused:ring-[var(--c-badge-border-tag-red-focus)]",
+    "hovered:bg-[var(--ds-badge-action-secondary)] focused:ring-[var(--ds-badge-border-focus-secondary)]",
+  red: "hovered:bg-[var(--ds-badge-surface-tag-red-hover)] focused:ring-[var(--ds-badge-border-tag-red-focus)]",
   forest:
-    "hovered:bg-[var(--c-badge-surface-tag-forest-hover)] focused:ring-[var(--c-badge-border-tag-forest-focus)]",
-  lime: "hovered:bg-[var(--c-badge-surface-tag-lime-hover)] focused:ring-[var(--c-badge-border-tag-lime-focus)]",
-  cyan: "hovered:bg-[var(--c-badge-surface-tag-cyan-hover)] focused:ring-[var(--c-badge-border-tag-cyan-focus)]",
-  blue: "hovered:bg-[var(--c-badge-surface-tag-blue-hover)] focused:ring-[var(--c-badge-border-tag-blue-focus)]",
+    "hovered:bg-[var(--ds-badge-surface-tag-forest-hover)] focused:ring-[var(--ds-badge-border-tag-forest-focus)]",
+  lime: "hovered:bg-[var(--ds-badge-surface-tag-lime-hover)] focused:ring-[var(--ds-badge-border-tag-lime-focus)]",
+  cyan: "hovered:bg-[var(--ds-badge-surface-tag-cyan-hover)] focused:ring-[var(--ds-badge-border-tag-cyan-focus)]",
+  blue: "hovered:bg-[var(--ds-badge-surface-tag-blue-hover)] focused:ring-[var(--ds-badge-border-tag-blue-focus)]",
   yellow:
-    "hovered:bg-[var(--c-badge-surface-tag-yellow-hover)] focused:ring-[var(--c-badge-border-tag-yellow-focus)]",
+    "hovered:bg-[var(--ds-badge-surface-tag-yellow-hover)] focused:ring-[var(--ds-badge-border-tag-yellow-focus)]",
   orange:
-    "hovered:bg-[var(--c-badge-surface-tag-orange-hover)] focused:ring-[var(--c-badge-border-tag-orange-focus)]",
+    "hovered:bg-[var(--ds-badge-surface-tag-orange-hover)] focused:ring-[var(--ds-badge-border-tag-orange-focus)]",
   lavender:
-    "hovered:bg-[var(--c-badge-surface-tag-lavender-hover)] focused:ring-[var(--c-badge-border-tag-lavender-focus)]",
+    "hovered:bg-[var(--ds-badge-surface-tag-lavender-hover)] focused:ring-[var(--ds-badge-border-tag-lavender-focus)]",
   orchid:
-    "hovered:bg-[var(--c-badge-surface-tag-orchid-hover)] focused:ring-[var(--c-badge-border-tag-orchid-focus)]",
+    "hovered:bg-[var(--ds-badge-surface-tag-orchid-hover)] focused:ring-[var(--ds-badge-border-tag-orchid-focus)]",
 }
 
 // Cartesian product: every variant × every interactive kind → its hover/focus.
@@ -133,7 +133,7 @@ const badgeVariants = cva(
     "[&_svg:not([class*='size-'])]:size-3.5",
     // ── Disabled fade, single DOM level so opacity never stacks ─────────
     "disabled-state:cursor-not-allowed",
-    "disabled-state:[&_[data-slot=badge-content]]:opacity-[var(--c-badge-disabled-text-opacity)]",
+    "disabled-state:[&_[data-slot=badge-content]]:opacity-[var(--ds-badge-disabled-text-opacity)]",
     // Focus ring + hover live in compoundVariants (interactive kinds only),
     // so the `tag` kind stays fully static. `outline-none` is kind-invariant.
     "outline-none",
@@ -146,23 +146,23 @@ const badgeVariants = cva(
         // ── Neutral cohort (Default / Outline / Ghost) ──────────────────
         // These three share the "Neutral" tag-active-color mode in Figma,
         // icon and text track --ds-color-text-default, surface treatment varies.
-        default: "bg-[var(--c-badge-action-secondary)] text-[var(--c-badge-text-default)]",
+        default: "bg-[var(--ds-badge-action-secondary)] text-[var(--ds-badge-text-default)]",
         outline: cn(
-          "bg-transparent text-[var(--c-badge-text-default)]",
-          "border-[var(--c-badge-border-default)]",
+          "bg-transparent text-[var(--ds-badge-text-default)]",
+          "border-[var(--ds-badge-border-default)]",
         ),
-        ghost: "bg-transparent text-[var(--c-badge-text-default)]",
+        ghost: "bg-transparent text-[var(--ds-badge-text-default)]",
         // ── Critical (red, soft tint) ──────────────────────────────────
-        red: "bg-[var(--c-badge-surface-tag-red)] text-[var(--c-badge-text-tag-red)]",
+        red: "bg-[var(--ds-badge-surface-tag-red)] text-[var(--ds-badge-text-tag-red)]",
         // ── Tag decorative palette (8 hues) ─────────────────────────────
-        forest: "bg-[var(--c-badge-surface-tag-forest)] text-[var(--c-badge-text-tag-forest)]",
-        lime: "bg-[var(--c-badge-surface-tag-lime)] text-[var(--c-badge-text-tag-lime)]",
-        cyan: "bg-[var(--c-badge-surface-tag-cyan)] text-[var(--c-badge-text-tag-cyan)]",
-        blue: "bg-[var(--c-badge-surface-tag-blue)] text-[var(--c-badge-text-tag-blue)]",
-        yellow: "bg-[var(--c-badge-surface-tag-yellow)] text-[var(--c-badge-text-tag-yellow)]",
-        orange: "bg-[var(--c-badge-surface-tag-orange)] text-[var(--c-badge-text-tag-orange)]",
-        lavender: "bg-[var(--c-badge-surface-tag-lavender)] text-[var(--c-badge-text-tag-lavender)]",
-        orchid: "bg-[var(--c-badge-surface-tag-orchid)] text-[var(--c-badge-text-tag-orchid)]",
+        forest: "bg-[var(--ds-badge-surface-tag-forest)] text-[var(--ds-badge-text-tag-forest)]",
+        lime: "bg-[var(--ds-badge-surface-tag-lime)] text-[var(--ds-badge-text-tag-lime)]",
+        cyan: "bg-[var(--ds-badge-surface-tag-cyan)] text-[var(--ds-badge-text-tag-cyan)]",
+        blue: "bg-[var(--ds-badge-surface-tag-blue)] text-[var(--ds-badge-text-tag-blue)]",
+        yellow: "bg-[var(--ds-badge-surface-tag-yellow)] text-[var(--ds-badge-text-tag-yellow)]",
+        orange: "bg-[var(--ds-badge-surface-tag-orange)] text-[var(--ds-badge-text-tag-orange)]",
+        lavender: "bg-[var(--ds-badge-surface-tag-lavender)] text-[var(--ds-badge-text-tag-lavender)]",
+        orchid: "bg-[var(--ds-badge-surface-tag-orchid)] text-[var(--ds-badge-text-tag-orchid)]",
       },
       kind: {
         // Chip, standard pill, rounded-full. Interactive (hover + focus).
@@ -175,7 +175,7 @@ const badgeVariants = cva(
         // matters more than air.
         tag: cn(
           "h-[18px] px-1 gap-1 text-[11px] leading-none",
-          "rounded-[var(--c-badge-shape-radius-xs)]",
+          "rounded-[var(--ds-badge-shape-radius-xs)]",
         ),
         // Number, compact numeric. tabular-nums keeps "9" and "10" the same width.
         // min-w-5 prevents single-digit numbers from collapsing too narrow.

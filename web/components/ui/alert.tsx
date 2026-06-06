@@ -25,7 +25,7 @@ import { cn } from "@/lib/utils"
 const alertVariants = cva(
   cn(
     "relative grid w-full grid-cols-[0_1fr] items-start gap-y-0.5",
-    "rounded-[var(--c-alert-shape-radius-md)] border px-4 py-3 text-sm",
+    "rounded-[var(--ds-alert-shape-radius-md)] border px-4 py-3 text-sm",
     "has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] has-[>svg]:gap-x-3",
     // Icon size + position, color set per-variant below, not inherited from text
     "[&>svg]:size-4 [&>svg]:translate-y-0.5"
@@ -34,29 +34,29 @@ const alertVariants = cva(
     variants: {
       variant: {
         default: cn(
-          "bg-[var(--c-alert-surface-default)] text-[var(--c-alert-text-default)]",
-          "border-[var(--c-alert-border-subtle)]",
-          "[&>svg]:text-[var(--c-alert-icon-default)]"
+          "bg-[var(--ds-alert-surface-default)] text-[var(--ds-alert-text-default)]",
+          "border-[var(--ds-alert-border-subtle)]",
+          "[&>svg]:text-[var(--ds-alert-icon-default)]"
         ),
         info: cn(
-          "bg-[var(--c-alert-surface-info)] text-[var(--c-alert-text-info)]",
-          "border-[var(--c-alert-border-info-default)]",
-          "[&>svg]:text-[var(--c-alert-icon-info)]"
+          "bg-[var(--ds-alert-surface-info)] text-[var(--ds-alert-text-info)]",
+          "border-[var(--ds-alert-border-info-default)]",
+          "[&>svg]:text-[var(--ds-alert-icon-info)]"
         ),
         success: cn(
-          "bg-[var(--c-alert-surface-success)] text-[var(--c-alert-text-success)]",
-          "border-[var(--c-alert-border-success-default)]",
-          "[&>svg]:text-[var(--c-alert-icon-success)]"
+          "bg-[var(--ds-alert-surface-success)] text-[var(--ds-alert-text-success)]",
+          "border-[var(--ds-alert-border-success-default)]",
+          "[&>svg]:text-[var(--ds-alert-icon-success)]"
         ),
         warning: cn(
-          "bg-[var(--c-alert-surface-warning)] text-[var(--c-alert-text-warning)]",
-          "border-[var(--c-alert-border-warning-default)]",
-          "[&>svg]:text-[var(--c-alert-icon-warning)]"
+          "bg-[var(--ds-alert-surface-warning)] text-[var(--ds-alert-text-warning)]",
+          "border-[var(--ds-alert-border-warning-default)]",
+          "[&>svg]:text-[var(--ds-alert-icon-warning)]"
         ),
         destructive: cn(
-          "bg-[var(--c-alert-surface-critical)] text-[var(--c-alert-text-critical)]",
-          "border-[var(--c-alert-border-critical-default)]",
-          "[&>svg]:text-[var(--c-alert-icon-destructive)]"
+          "bg-[var(--ds-alert-surface-critical)] text-[var(--ds-alert-text-critical)]",
+          "border-[var(--ds-alert-border-critical-default)]",
+          "[&>svg]:text-[var(--ds-alert-icon-destructive)]"
         ),
       },
     },
