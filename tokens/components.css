@@ -1,0 +1,185 @@
+/* tokens/components.css
+ *
+ * Component token tier (--c-*). Each component reads its OWN named knobs;
+ * every knob aliases a single semantic --ds-* token. Components reference
+ * --c-* only; the --ds-* tier remains the only one that touches primitives.
+ *
+ * Dark theme needs no overrides here: --c-* aliases resolve var(--ds-*) at
+ * point of use, so the [data-theme="dark"] swap on --ds-* flows through.
+ *
+ * Generated 1:1 from the --ds-* references in web/components/ui/*.tsx.
+ */
+
+:root {
+  /* alert */
+  --c-alert-border-critical-default: var(--ds-color-border-critical-default);
+  --c-alert-border-info-default: var(--ds-color-border-info-default);
+  --c-alert-border-subtle: var(--ds-color-border-subtle);
+  --c-alert-border-success-default: var(--ds-color-border-success-default);
+  --c-alert-border-warning-default: var(--ds-color-border-warning-default);
+  --c-alert-icon-default: var(--ds-color-icon-default);
+  --c-alert-icon-destructive: var(--ds-color-icon-destructive);
+  --c-alert-icon-info: var(--ds-color-icon-info);
+  --c-alert-icon-success: var(--ds-color-icon-success);
+  --c-alert-icon-warning: var(--ds-color-icon-warning);
+  --c-alert-shape-radius-md: var(--ds-shape-radius-md);
+  --c-alert-surface-critical: var(--ds-color-surface-critical);
+  --c-alert-surface-default: var(--ds-color-surface-default);
+  --c-alert-surface-info: var(--ds-color-surface-info);
+  --c-alert-surface-success: var(--ds-color-surface-success);
+  --c-alert-surface-warning: var(--ds-color-surface-warning);
+  --c-alert-text-critical: var(--ds-color-text-critical);
+  --c-alert-text-default: var(--ds-color-text-default);
+  --c-alert-text-info: var(--ds-color-text-info);
+  --c-alert-text-success: var(--ds-color-text-success);
+  --c-alert-text-warning: var(--ds-color-text-warning);
+
+  /* alert-dialog */
+  --c-alert-dialog-border-default: var(--ds-color-border-default);
+  --c-alert-dialog-icon-default: var(--ds-color-icon-default);
+  --c-alert-dialog-shape-radius-lg: var(--ds-shape-radius-lg);
+  --c-alert-dialog-shape-radius-md: var(--ds-shape-radius-md);
+  --c-alert-dialog-surface-alt: var(--ds-color-surface-alt);
+  --c-alert-dialog-surface-default: var(--ds-color-surface-default);
+  --c-alert-dialog-surface-scrim: var(--ds-color-surface-scrim);
+  --c-alert-dialog-text-default: var(--ds-color-text-default);
+  --c-alert-dialog-text-subtle: var(--ds-color-text-subtle);
+
+  /* badge */
+  --c-badge-action-secondary: var(--ds-color-action-secondary);
+  --c-badge-action-secondary-hover: var(--ds-color-action-secondary-hover);
+  --c-badge-border-default: var(--ds-color-border-default);
+  --c-badge-border-focus-secondary: var(--ds-color-border-focus-secondary);
+  --c-badge-border-tag-blue-focus: var(--ds-color-border-tag-blue-focus);
+  --c-badge-border-tag-cyan-focus: var(--ds-color-border-tag-cyan-focus);
+  --c-badge-border-tag-forest-focus: var(--ds-color-border-tag-forest-focus);
+  --c-badge-border-tag-lavender-focus: var(--ds-color-border-tag-lavender-focus);
+  --c-badge-border-tag-lime-focus: var(--ds-color-border-tag-lime-focus);
+  --c-badge-border-tag-orange-focus: var(--ds-color-border-tag-orange-focus);
+  --c-badge-border-tag-orchid-focus: var(--ds-color-border-tag-orchid-focus);
+  --c-badge-border-tag-red-focus: var(--ds-color-border-tag-red-focus);
+  --c-badge-border-tag-yellow-focus: var(--ds-color-border-tag-yellow-focus);
+  --c-badge-disabled-text-opacity: var(--ds-disabled-text-opacity);
+  --c-badge-shape-radius-xs: var(--ds-shape-radius-xs);
+  --c-badge-surface-default: var(--ds-color-surface-default);
+  --c-badge-surface-tag-blue: var(--ds-color-surface-tag-blue);
+  --c-badge-surface-tag-blue-hover: var(--ds-color-surface-tag-blue-hover);
+  --c-badge-surface-tag-cyan: var(--ds-color-surface-tag-cyan);
+  --c-badge-surface-tag-cyan-hover: var(--ds-color-surface-tag-cyan-hover);
+  --c-badge-surface-tag-forest: var(--ds-color-surface-tag-forest);
+  --c-badge-surface-tag-forest-hover: var(--ds-color-surface-tag-forest-hover);
+  --c-badge-surface-tag-lavender: var(--ds-color-surface-tag-lavender);
+  --c-badge-surface-tag-lavender-hover: var(--ds-color-surface-tag-lavender-hover);
+  --c-badge-surface-tag-lime: var(--ds-color-surface-tag-lime);
+  --c-badge-surface-tag-lime-hover: var(--ds-color-surface-tag-lime-hover);
+  --c-badge-surface-tag-orange: var(--ds-color-surface-tag-orange);
+  --c-badge-surface-tag-orange-hover: var(--ds-color-surface-tag-orange-hover);
+  --c-badge-surface-tag-orchid: var(--ds-color-surface-tag-orchid);
+  --c-badge-surface-tag-orchid-hover: var(--ds-color-surface-tag-orchid-hover);
+  --c-badge-surface-tag-red: var(--ds-color-surface-tag-red);
+  --c-badge-surface-tag-red-hover: var(--ds-color-surface-tag-red-hover);
+  --c-badge-surface-tag-yellow: var(--ds-color-surface-tag-yellow);
+  --c-badge-surface-tag-yellow-hover: var(--ds-color-surface-tag-yellow-hover);
+  --c-badge-text-default: var(--ds-color-text-default);
+  --c-badge-text-tag-blue: var(--ds-color-text-tag-blue);
+  --c-badge-text-tag-cyan: var(--ds-color-text-tag-cyan);
+  --c-badge-text-tag-forest: var(--ds-color-text-tag-forest);
+  --c-badge-text-tag-lavender: var(--ds-color-text-tag-lavender);
+  --c-badge-text-tag-lime: var(--ds-color-text-tag-lime);
+  --c-badge-text-tag-orange: var(--ds-color-text-tag-orange);
+  --c-badge-text-tag-orchid: var(--ds-color-text-tag-orchid);
+  --c-badge-text-tag-red: var(--ds-color-text-tag-red);
+  --c-badge-text-tag-yellow: var(--ds-color-text-tag-yellow);
+
+  /* button */
+  --c-button-action-critical: var(--ds-color-action-critical);
+  --c-button-action-critical-active: var(--ds-color-action-critical-active);
+  --c-button-action-critical-disabled: var(--ds-color-action-critical-disabled);
+  --c-button-action-critical-hover: var(--ds-color-action-critical-hover);
+  --c-button-action-primary: var(--ds-color-action-primary);
+  --c-button-action-primary-active: var(--ds-color-action-primary-active);
+  --c-button-action-primary-disabled: var(--ds-color-action-primary-disabled);
+  --c-button-action-primary-hover: var(--ds-color-action-primary-hover);
+  --c-button-action-secondary: var(--ds-color-action-secondary);
+  --c-button-action-secondary-active: var(--ds-color-action-secondary-active);
+  --c-button-action-secondary-disabled: var(--ds-color-action-secondary-disabled);
+  --c-button-action-secondary-hover: var(--ds-color-action-secondary-hover);
+  --c-button-border-default: var(--ds-color-border-default);
+  --c-button-border-focus: var(--ds-color-border-focus);
+  --c-button-border-focus-destructive: var(--ds-color-border-focus-destructive);
+  --c-button-border-focus-link-brand: var(--ds-color-border-focus-link-brand);
+  --c-button-border-focus-secondary: var(--ds-color-border-focus-secondary);
+  --c-button-disabled-text-opacity: var(--ds-disabled-text-opacity);
+  --c-button-shape-radius-4xl: var(--ds-shape-radius-4xl);
+  --c-button-shape-radius-md: var(--ds-shape-radius-md);
+  --c-button-text-default: var(--ds-color-text-default);
+  --c-button-text-default-hover: var(--ds-color-text-default-hover);
+  --c-button-text-link-brand: var(--ds-color-text-link-brand);
+  --c-button-text-link-brand-hover: var(--ds-color-text-link-brand-hover);
+  --c-button-text-on-action-critical: var(--ds-color-text-on-action-critical);
+  --c-button-text-on-action-critical-hover: var(--ds-color-text-on-action-critical-hover);
+  --c-button-text-on-action-primary: var(--ds-color-text-on-action-primary);
+  --c-button-text-on-action-primary-active: var(--ds-color-text-on-action-primary-active);
+  --c-button-text-on-action-primary-hover: var(--ds-color-text-on-action-primary-hover);
+
+  /* dropdown-menu */
+  --c-dropdown-menu-action-critical: var(--ds-color-action-critical);
+  --c-dropdown-menu-action-secondary-hover: var(--ds-color-action-secondary-hover);
+  --c-dropdown-menu-border-default: var(--ds-color-border-default);
+  --c-dropdown-menu-border-subtle: var(--ds-color-border-subtle);
+  --c-dropdown-menu-shadow-md: var(--ds-shadow-md);
+  --c-dropdown-menu-shape-radius-md: var(--ds-shape-radius-md);
+  --c-dropdown-menu-shape-radius-sm: var(--ds-shape-radius-sm);
+  --c-dropdown-menu-surface-default: var(--ds-color-surface-default);
+  --c-dropdown-menu-text-default: var(--ds-color-text-default);
+  --c-dropdown-menu-text-on-action-critical: var(--ds-color-text-on-action-critical);
+  --c-dropdown-menu-text-subtle: var(--ds-color-text-subtle);
+
+  /* input */
+  --c-input-border-default-hover: var(--ds-color-border-default-hover);
+
+  /* select */
+  --c-select-border-default-hover: var(--ds-color-border-default-hover);
+
+  /* sonner */
+  --c-sonner-border-critical-default: var(--ds-color-border-critical-default);
+  --c-sonner-border-default: var(--ds-color-border-default);
+  --c-sonner-border-info-default: var(--ds-color-border-info-default);
+  --c-sonner-border-success-default: var(--ds-color-border-success-default);
+  --c-sonner-border-warning-default: var(--ds-color-border-warning-default);
+  --c-sonner-shape-radius-md: var(--ds-shape-radius-md);
+  --c-sonner-surface-critical: var(--ds-color-surface-critical);
+  --c-sonner-surface-default: var(--ds-color-surface-default);
+  --c-sonner-surface-info: var(--ds-color-surface-info);
+  --c-sonner-surface-success: var(--ds-color-surface-success);
+  --c-sonner-surface-warning: var(--ds-color-surface-warning);
+  --c-sonner-text-critical: var(--ds-color-text-critical);
+  --c-sonner-text-default: var(--ds-color-text-default);
+  --c-sonner-text-info: var(--ds-color-text-info);
+  --c-sonner-text-success: var(--ds-color-text-success);
+  --c-sonner-text-warning: var(--ds-color-text-warning);
+
+  /* spinner */
+  --c-spinner-icon-subtle: var(--ds-color-icon-subtle);
+
+  /* switch */
+  --c-switch-action-primary: var(--ds-color-action-primary);
+  --c-switch-action-primary-hover: var(--ds-color-action-primary-hover);
+  --c-switch-border-default: var(--ds-color-border-default);
+  --c-switch-border-focus: var(--ds-color-border-focus);
+  --c-switch-disabled-text-opacity: var(--ds-disabled-text-opacity);
+  --c-switch-surface-default: var(--ds-color-surface-default);
+
+  /* table */
+  --c-table-border-default: var(--ds-color-border-default);
+  --c-table-border-subtle: var(--ds-color-border-subtle);
+  --c-table-surface-alt: var(--ds-color-surface-alt);
+  --c-table-surface-default-hover: var(--ds-color-surface-default-hover);
+  --c-table-surface-selected: var(--ds-color-surface-selected);
+  --c-table-surface-selected-hover: var(--ds-color-surface-selected-hover);
+  --c-table-text-default: var(--ds-color-text-default);
+  --c-table-text-subtle: var(--ds-color-text-subtle);
+
+  /* textarea */
+  --c-textarea-border-default-hover: var(--ds-color-border-default-hover);
+}

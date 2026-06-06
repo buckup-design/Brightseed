@@ -39,7 +39,7 @@ function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
     <thead
       data-slot="table-header"
       className={cn(
-        "[&_tr]:border-b [&_tr]:border-[var(--ds-color-border-subtle)]",
+        "[&_tr]:border-b [&_tr]:border-[var(--c-table-border-subtle)]",
         className
       )}
       {...props}
@@ -62,8 +62,8 @@ function TableFooter({ className, ...props }: React.ComponentProps<"tfoot">) {
     <tfoot
       data-slot="table-footer"
       className={cn(
-        "border-t border-[var(--ds-color-border-default)]",
-        "bg-[var(--ds-color-surface-alt)] text-[var(--ds-color-text-default)]",
+        "border-t border-[var(--c-table-border-default)]",
+        "bg-[var(--c-table-surface-alt)] text-[var(--c-table-text-default)]",
         "font-medium [&>tr]:last:border-b-0",
         className
       )}
@@ -77,12 +77,12 @@ function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
     <tr
       data-slot="table-row"
       className={cn(
-        "border-b border-[var(--ds-color-border-subtle)]",
+        "border-b border-[var(--c-table-border-subtle)]",
         "transition-colors duration-[120ms]",
-        "hover:bg-[var(--ds-color-surface-default-hover)]",
-        "has-aria-expanded:bg-[var(--ds-color-surface-default-hover)]",
-        "data-[state=selected]:bg-[var(--ds-color-surface-selected)]",
-        "data-[state=selected]:hover:bg-[var(--ds-color-surface-selected-hover)]",
+        "hover:bg-[var(--c-table-surface-default-hover)]",
+        "has-aria-expanded:bg-[var(--c-table-surface-default-hover)]",
+        "data-[state=selected]:bg-[var(--c-table-surface-selected)]",
+        "data-[state=selected]:hover:bg-[var(--c-table-surface-selected-hover)]",
         className
       )}
       {...props}
@@ -96,7 +96,7 @@ function TableHead({ className, ...props }: React.ComponentProps<"th">) {
       data-slot="table-head"
       className={cn(
         "h-10 px-2 text-left align-middle whitespace-nowrap",
-        "font-medium text-[var(--ds-color-text-default)]",
+        "font-medium text-[var(--c-table-text-default)]",
         "[&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
         className
       )}
@@ -111,7 +111,7 @@ function TableCell({ className, ...props }: React.ComponentProps<"td">) {
       data-slot="table-cell"
       className={cn(
         "p-2 align-middle whitespace-nowrap",
-        "text-[var(--ds-color-text-default)]",
+        "text-[var(--c-table-text-default)]",
         "[&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
         className
       )}
@@ -128,7 +128,7 @@ function TableCaption({
     <caption
       data-slot="table-caption"
       className={cn(
-        "mt-4 text-sm text-[var(--ds-color-text-subtle)]",
+        "mt-4 text-sm text-[var(--c-table-text-subtle)]",
         className
       )}
       {...props}

@@ -69,24 +69,24 @@ const Toaster = ({ ...props }: ToasterProps) => {
       style={
         {
           // Default toast, neutral surface
-          "--normal-bg": "var(--ds-color-surface-default)",
-          "--normal-text": "var(--ds-color-text-default)",
-          "--normal-border": "var(--ds-color-border-default)",
+          "--normal-bg": "var(--c-sonner-surface-default)",
+          "--normal-text": "var(--c-sonner-text-default)",
+          "--normal-border": "var(--c-sonner-border-default)",
           // Intent toasts, semantic surfaces / text / borders
-          "--success-bg": "var(--ds-color-surface-success)",
-          "--success-text": "var(--ds-color-text-success)",
-          "--success-border": "var(--ds-color-border-success-default)",
-          "--info-bg": "var(--ds-color-surface-info)",
-          "--info-text": "var(--ds-color-text-info)",
-          "--info-border": "var(--ds-color-border-info-default)",
-          "--warning-bg": "var(--ds-color-surface-warning)",
-          "--warning-text": "var(--ds-color-text-warning)",
-          "--warning-border": "var(--ds-color-border-warning-default)",
-          "--error-bg": "var(--ds-color-surface-critical)",
-          "--error-text": "var(--ds-color-text-critical)",
-          "--error-border": "var(--ds-color-border-critical-default)",
+          "--success-bg": "var(--c-sonner-surface-success)",
+          "--success-text": "var(--c-sonner-text-success)",
+          "--success-border": "var(--c-sonner-border-success-default)",
+          "--info-bg": "var(--c-sonner-surface-info)",
+          "--info-text": "var(--c-sonner-text-info)",
+          "--info-border": "var(--c-sonner-border-info-default)",
+          "--warning-bg": "var(--c-sonner-surface-warning)",
+          "--warning-text": "var(--c-sonner-text-warning)",
+          "--warning-border": "var(--c-sonner-border-warning-default)",
+          "--error-bg": "var(--c-sonner-surface-critical)",
+          "--error-text": "var(--c-sonner-text-critical)",
+          "--error-border": "var(--c-sonner-border-critical-default)",
           // Shape
-          "--border-radius": "var(--ds-shape-radius-md)",
+          "--border-radius": "var(--c-sonner-shape-radius-md)",
         } as React.CSSProperties
       }
       {...props}

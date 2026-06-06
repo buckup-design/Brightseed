@@ -39,15 +39,15 @@ function Switch({
         "data-[size=default]:h-[1.15rem] data-[size=default]:w-8",
         "data-[size=sm]:h-3.5 data-[size=sm]:w-6",
         // Track surface (Brightseed action-primary ladder for checked, border-default for unchecked)
-        "data-[state=unchecked]:bg-[var(--ds-color-border-default)]",
-        "data-[state=checked]:bg-[var(--ds-color-action-primary)]",
-        "hover:data-[state=checked]:bg-[var(--ds-color-action-primary-hover)]",
+        "data-[state=unchecked]:bg-[var(--c-switch-border-default)]",
+        "data-[state=checked]:bg-[var(--c-switch-action-primary)]",
+        "hover:data-[state=checked]:bg-[var(--c-switch-action-primary-hover)]",
         // Focus
         "outline-none",
-        "focus-visible:ring-[3px] focus-visible:ring-[var(--ds-color-border-focus)]/50",
-        "focus-visible:border-[var(--ds-color-border-focus)]",
+        "focus-visible:ring-[3px] focus-visible:ring-[var(--c-switch-border-focus)]/50",
+        "focus-visible:border-[var(--c-switch-border-focus)]",
         // Disabled
-        "disabled:cursor-not-allowed disabled:opacity-[var(--ds-disabled-text-opacity)]",
+        "disabled:cursor-not-allowed disabled:opacity-[var(--c-switch-disabled-text-opacity)]",
         className
       )}
       {...props}
@@ -56,7 +56,7 @@ function Switch({
         data-slot="switch-thumb"
         className={cn(
           "pointer-events-none block rounded-full",
-          "bg-[var(--ds-color-surface-default)]",
+          "bg-[var(--c-switch-surface-default)]",
           "ring-0 transition-transform",
           "group-data-[size=default]/switch:size-4",
           "group-data-[size=sm]/switch:size-3",

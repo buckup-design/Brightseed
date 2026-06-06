@@ -42,7 +42,8 @@ Primitives   --p-color-forest-700        raw values, organized by $type
    ↓
 Semantics    --ds-color-surface-success  ← the only tier that touches primitives
    ↓
-Components   bg-[var(--ds-color-...)]    ← component code references the semantic tier
+Components   --c-button-bg: var(--ds-...)  ← each component reads its own --c-* knobs
+             bg-[var(--c-button-bg)]      ← every --c-* knob aliases exactly one --ds-*
 ```
 
 **Token prefixes**
@@ -51,21 +52,21 @@ Components   bg-[var(--ds-color-...)]    ← component code references the seman
 |---|---|---|
 | Primitive | `--p-{type}-*` | `--p-color-forest-700`, `--p-radius-md`, `--p-space-4` |
 | Semantic | `--ds-*` | `--ds-color-surface-success`, `--ds-shape-radius-md` |
-| Component | references `--ds-*` (optional `--c-{component}-*` token) | `bg-[var(--ds-color-surface-success)]`; `--c-button-bg`, none defined yet |
+| Component | `--c-{component}-*` (each aliases one `--ds-*`) | `--c-alert-surface-success: var(--ds-color-surface-success)`; used as `bg-[var(--c-alert-surface-success)]` |
 
 Primitives are organized by `$type` (the W3C tokens axis): `--p-color-*`, `--p-radius-*` / `--p-space-*` / `--p-border-width-*`, `--p-font-family-*` / `--p-font-size-*` / `--p-font-weight-*`. The bare `--color-*` primitive names are fully retired. **Not primitives, deliberately:** shadow (`--ds-shadow-*`, a color recipe) and display roles `h1/h2/h3` (`--ds-text-display-*`).
 
 **Rules**
 
-◆ **No tier-skipping.** Component code references semantic `--ds-*` only, never primitives or raw values. Semantics are the only tier that touches primitives. (`--c-*` is an optional escape hatch for a local value with no semantic home; in practice components use `--ds-*` directly.)
+◆ **No tier-skipping.** Component code references its own component tier `--c-{component}-*` only, never `--ds-*`, primitives, or raw values directly. Each `--c-*` knob aliases exactly one `--ds-*` token; the `--c-*` definitions (the only place `--ds-*` is touched from the component side) live in `tokens/components.css`, generated 1:1 from each component's needs. Semantics remain the only tier that touches primitives. (Dark theme needs no `--c-*` overrides: a `--c-*` alias resolves `var(--ds-*)` at point of use, so the `data-theme="dark"` swap on `--ds-*` flows straight through.)
 
-◆ **No hardcoded values.** No hex, px, or font names in component styles. Use `var(--ds-*)` or Tailwind arbitrary refs (`bg-[var(--ds-color-surface-success)]`). CSS-variable arbitrary refs are allowed; hardcoded-hex arbitrary values are not.
+◆ **No hardcoded values.** No hex, px, or font names in component styles. Use `var(--c-{component}-*)` or Tailwind arbitrary refs (`bg-[var(--c-alert-surface-success)]`). CSS-variable arbitrary refs are allowed; hardcoded-hex arbitrary values are not.
 
 ◆ **Semantic intent.** Tokens name usage (`--ds-color-surface-default`), not appearance.
 
 ◆ **Light-first.** Defaults assume a light background. Dark theme swaps semantic tokens via `data-theme="dark"` on an ancestor, never write dark-mode-specific component code.
 
-◆ **Corner radii** reference `--ds-shape-radius-*` (→ `--p-radius-*`), never raw pixels.
+◆ **Corner radii** flow through the component knob (`--c-{component}-shape-radius-*` → `--ds-shape-radius-*` → `--p-radius-*`), never raw pixels.
 
 ◆ **Brand-poetic names forbidden in code.** Names like "Chlorophyll," "Deep Forest," and "Garlic Bloom" must not appear anywhere in code. Everywhere else use functional names (`lime/400`, `forest/900`, `sand/100`). Seeing one elsewhere = a regression to fix.
 
@@ -87,7 +88,7 @@ Color scale names: forest, lime, sand, cyan, blue, yellow, orange, lavender, orc
 
 | Area | Status |
 |---|---|
-| Token system (3-tier, dark theme, shadcn bridge) | ✅ Complete |
+| Token system (3-tier, dark theme, shadcn bridge); per-component `--c-*` tier in `tokens/components.css`, all 12 token-bearing components rewired to read `--c-*` only (June 5, 2026) | ✅ Complete |
 | Figma v3 (`shadcn Brightseed v3 (with pro blocks)`), primitives + tag tokens, ~50-var Brightseed Mode, Quill Button/Badge port, local Ring focus system, Logo/Login/Input sets, Geist + Tiempos | ✅ Complete |
 | Web app (`/web/`, Next.js 16 + Tailwind 4 + Storybook 10, on Pro Pack), Button + Badge to spec; Pro Blocks (App Shell 4, Sign In 2, nav); form primitives; Alert/AlertDialog/Table/Switch/Spinner/Sonner; BrightseedLogo + Login | ✅ Complete |
 | Infra: Vercel auto-deploys `main` → https://brightseed-storybook.vercel.app | ✅ In sync |
@@ -104,7 +105,7 @@ Color scale names: forest, lime, sand, cyan, blue, yellow, orange, lavender, orc
 | File | Purpose |
 |---|---|
 | `CLAUDE.md` | This file: canonical rules, conventions, status. |
-| `tokens/` | Token CSS: source of truth for names + values. |
+| `tokens/` | Token CSS: source of truth for names + values. `components.css` holds the per-component `--c-*` tier (each knob aliases one `--ds-*`). |
 | `bridge/globals.css` | shadcn bridge: maps Brightseed tokens onto shadcn variable names. Intentionally thin. |
 | `README.md` | Short orientation pointing to CSS + Storybook. |
 | `web/` | Next.js 16 + Tailwind 4 + Storybook 10 production app. `tokens/` + `bridge/` here are symlinks to root. |
