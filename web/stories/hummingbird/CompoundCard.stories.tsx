@@ -8,7 +8,7 @@ import { CompoundCard } from "@/components/hummingbird/cards/compound-card";
  * ───────────────────────────────────────────────────────────────────────── */
 
 const meta = {
-  title: "Components/Card - Compound",
+  title: "Components/Cards/Compound",
   component: CompoundCard,
   parameters: { layout: "padded" },
   tags: ["autodocs"],

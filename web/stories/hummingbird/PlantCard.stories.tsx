@@ -11,7 +11,7 @@ import { PlantCard } from "@/components/hummingbird/cards/plant-card";
  * ───────────────────────────────────────────────────────────────────────── */
 
 const meta = {
-  title: "Components/Card - Plant",
+  title: "Components/Cards/Plant",
   component: PlantCard,
   parameters: { layout: "padded" },
   tags: ["autodocs"],
