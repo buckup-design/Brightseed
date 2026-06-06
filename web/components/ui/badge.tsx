@@ -263,3 +263,4 @@ function Badge({
 }
 
 export { Badge, badgeVariants, StatusDot }
+export type { BadgeProps }
