@@ -17,7 +17,7 @@ function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
       role="status"
       aria-label="Loading"
       className={cn(
-        "size-4 animate-spin text-[var(--ds-spinner-icon-subtle)]",
+        "size-4 animate-spin text-[var(--c-spinner-icon-subtle)]",
         className
       )}
       {...props}

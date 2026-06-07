@@ -18,15 +18,15 @@ Charts and tag colors (forest, cyan, lavender, orchid, orange, blue, yellow, red
 
 ### Three layers
 
-Component code references **its own component-scoped semantics only** (`--ds-{component}-*`), never a global `--ds-*`, a primitive, or a raw value directly. Each `--ds-{component}-*` token aliases exactly one global semantic. The layers exist so that a single design decision (e.g., "primary action should be lime") flows everywhere automatically.
+Component code references **its own component-scoped tokens only** (`--c-{component}-*`), never a global `--ds-*`, a primitive, or a raw value directly. Each `--c-{component}-*` token aliases exactly one global semantic. The prefix encodes the tier, so any reference is auditable at a glance: `--p-` is a raw value, `--ds-` is a global semantic, `--c-` is component scope. The layers exist so that a single design decision (e.g., "primary action should be lime") flows everywhere automatically.
 
 | Layer      | Prefix              | Example                          | What it does                                              |
 | ---------- | ------------------- | -------------------------------- | --------------------------------------------------------- |
 | Primitives | `--p-{type}-*`      | `--p-color-lime-300`             | Raw values, organized by type, the palette. Never used in components. |
 | Semantics (global) | `--ds-*`    | `--ds-color-action-primary`, `--ds-shape-radius-md`, `--ds-shape-border-default` | Intent-based aliases. Map design intent to primitives. The only tier that touches primitives. |
-| Component (scoped) | `--ds-{component}-*` | `--ds-button-action-primary` | Each component owns a group (labelled `--c-{component}`); every token aliases one global `--ds-*`. **The tier component code reads.** Defined in `tokens/components.css`. |
+| Component (scoped) | `--c-{component}-*` | `--c-button-action-primary` | Each component owns its own token block; every token aliases exactly one global `--ds-*`. **The only tier component code reads.** Defined in `tokens/components.css`. |
 
-> **Note:** Primitives are organized by `$type` and all use the `--p-{type}-*` convention (`--p-color-forest-700`, `--p-color-lime-300`, etc.). Component code reads its own component-scoped `--ds-{component}-*` tokens (each aliasing one global `--ds-*`); these live in `tokens/components.css`, grouped under a `--c-{component}` label and generated 1:1 from what each component needs. The `--c-{component}` label names the group, it is not an emitted variable. Dark theme needs no overrides, a token resolves `var(--ds-*)` at point of use, so the `data-theme="dark"` swap flows straight through.
+> **Note:** Primitives are organized by `$type` and all use the `--p-{type}-*` convention (`--p-color-forest-700`, `--p-color-lime-300`, etc.). Component tokens live in `tokens/components.css`, one block per component, generated 1:1 from what each component needs. The tier discipline reduces to two greppable rules: **component code may reference only `--c-*`**, and **a `--c-*` definition may reference only a global `--ds-*`**. Anything else (a `--ds-*` or `--p-*` in a component file, a `--p-*` or raw value in `components.css`) is a regression. Dark theme needs no overrides, a `--c-*` token resolves `var(--ds-*)` at point of use, so the `data-theme="dark"` swap flows straight through.
 
 ---
 
@@ -398,7 +398,7 @@ Hummingbird-specific constraints on the shared components. Appearance lives in S
 
 - **Importing from any library beyond shadcn/ui and Recharts:** no MUI, Chakra, Ant, or custom Tailwind plugins.
 - **Em dashes in product copy:** use a comma, a colon, or a second sentence instead.
-- **Reaching past the component layer:** component code references its own component-scoped `--ds-{component}-*` tokens only, never a global `--ds-*`, a primitive (`--p-*`), or a raw value directly. If no component token exists for what you need, flag it with `// BRIGHTSEED-TBD: [BLOCKING]` and stop.
+- **Reaching past the component layer:** component code references its own `--c-{component}-*` tokens only, never a global `--ds-*`, a primitive (`--p-*`), or a raw value directly. The check is mechanical: the only token prefix allowed in component styles is `--c-`. If no component token exists for what you need, flag it with `// BRIGHTSEED-TBD: [BLOCKING]` and stop.
 - **Rounding scientific values for display:** show full precision with units; rounding is a data-layer decision, not a presentation one.
 
 ### Banned Aesthetics
