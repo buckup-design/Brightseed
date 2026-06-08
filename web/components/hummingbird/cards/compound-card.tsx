@@ -140,8 +140,9 @@ function SamplePill({ id, onSelect }: { id: string; onSelect?: () => void }) {
       onClick={onSelect}
       className={cn(
         PILL_BASE,
-        "bg-[var(--ds-color-surface-alt)] text-[var(--ds-color-text-subtle)]",
-        "hover:bg-[var(--ds-color-surface-alt-hover)] hover:text-[var(--ds-color-text-default)]",
+        // Ghost affordance: no resting background, surface fills in on hover.
+        "bg-transparent text-[var(--ds-color-text-subtle)]",
+        "hover:bg-[var(--ds-color-surface-alt)] hover:text-[var(--ds-color-text-default)]",
       )}
     >
       <TestTubeDiagonal className="size-3.5 shrink-0" strokeWidth={1.5} />
