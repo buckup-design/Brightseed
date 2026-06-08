@@ -339,7 +339,7 @@ const itemBaseClasses = cn(
   "rounded-[var(--c-sidebar-alt1-shape-radius-md)] text-[var(--c-sidebar-alt1-text-default)]",
   "hover:bg-[var(--c-sidebar-alt1-surface-alt)]",
   "outline-none focus-visible:ring-1 focus-visible:ring-[var(--c-sidebar-alt1-border-focus)]",
-  "data-[active=true]:bg-[var(--c-sidebar-alt1-surface-selected)] data-[active=true]:text-[var(--c-sidebar-alt1-text-brand)] data-[active=true]:font-medium",
+  "data-[active=true]:bg-[var(--c-sidebar-alt1-surface-selected-brand)] data-[active=true]:text-[var(--c-sidebar-alt1-text-brand)] data-[active=true]:font-medium",
   "[&>svg]:size-6 [&>svg]:shrink-0"
 )
 

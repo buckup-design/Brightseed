@@ -154,7 +154,7 @@
   --c-sidebar-alt1-shape-radius-md:     var(--ds-shape-radius-md);
   --c-sidebar-alt1-surface-alt:         var(--ds-color-surface-alt);
   --c-sidebar-alt1-surface-default:     var(--ds-color-surface-default);
-  --c-sidebar-alt1-surface-selected:    var(--ds-color-surface-selected);
+  --c-sidebar-alt1-surface-selected-brand:    var(--ds-color-surface-selected-brand);
   --c-sidebar-alt1-text-brand:          var(--ds-color-text-brand);
   --c-sidebar-alt1-text-default:        var(--ds-color-text-default);
   --c-sidebar-alt1-text-subtle:         var(--ds-color-text-subtle);

@@ -51,6 +51,7 @@
   --ds-color-surface-selected:        var(--p-color-blue-50);             /* selected row / focused item, blue-50 */
   --ds-color-surface-selected-hover:  var(--p-color-blue-100);
   --ds-color-surface-selected-active: var(--p-color-blue-200);
+  --ds-color-surface-selected-brand:  var(--p-color-lime-50);  /* brand-tinted selection (nav active item), lime-50 */
 
   /* ── Action ── */
   /* Disabled rule (uniform across all Button variants):
@@ -319,6 +320,7 @@
   --ds-color-surface-selected:        var(--p-color-blue-950);
   --ds-color-surface-selected-hover:  var(--p-color-blue-900);
   --ds-color-surface-selected-active: var(--p-color-blue-800);
+  --ds-color-surface-selected-brand:  var(--p-color-lime-950);  /* dark mirror of lime-50 selection */
 
   /* ── Borders, mid-sand range for structure on dark bg ── */
   --ds-color-border-subtle:           var(--p-color-sand-800);
