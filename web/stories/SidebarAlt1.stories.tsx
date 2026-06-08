@@ -10,6 +10,7 @@ import {
   SidebarAlt1PanelOnly,
   SidebarAlt1Provider,
 } from "@/components/ui/sidebar-alt1";
+import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 import {
   Compass,
   Database,
@@ -45,9 +46,7 @@ function DemoNav() {
   return (
     <SidebarAlt1>
       <SidebarAlt1Header>
-        <div className="flex size-8 items-center justify-center rounded-[var(--c-sidebar-alt1-shape-radius-md)] bg-[var(--c-sidebar-alt1-surface-selected)] text-xs font-semibold text-[var(--c-sidebar-alt1-text-brand)]">
-          BS
-        </div>
+        <BrightseedLogo variant="tile" className="size-8 shrink-0" />
         <SidebarAlt1PanelOnly>
           <span className="ml-2 truncate text-sm font-medium text-[var(--c-sidebar-alt1-text-default)]">
             Hummingbird

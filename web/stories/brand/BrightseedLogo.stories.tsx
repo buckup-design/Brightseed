@@ -50,6 +50,36 @@ export const Mark: Story = {
   ),
 };
 
+/**
+ * Tile (added June 7, 2026): app-icon treatment, mark on a pale-lime
+ * rounded-square. Canonical = MediaAsset.svg / Figma `Sidebar / MediaAsset`
+ * (Sidebar 07 block header). Used in app-shell / sidebar headers.
+ */
+export const Tile: Story = {
+  render: () => (
+    <div className="flex items-end gap-12">
+      <div className="flex flex-col items-center gap-2">
+        <BrightseedLogo variant="tile" className="h-8 w-8" />
+        <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
+          32px, sidebar header
+        </span>
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <BrightseedLogo variant="tile" className="h-16 w-16" />
+        <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
+          64px
+        </span>
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <BrightseedLogo variant="tile" className="h-24 w-24" />
+        <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
+          96px
+        </span>
+      </div>
+    </div>
+  ),
+};
+
 export const Lockup: Story = {
   render: () => (
     <div className="flex flex-col gap-12 max-w-3xl">
