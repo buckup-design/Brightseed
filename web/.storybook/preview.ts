@@ -31,6 +31,9 @@ const preview: Preview = {
           "Components",
           "Blocks",
           "Auth",
+          // Always last: incubating components live here until promoted to
+          // Components (rule in root CLAUDE.md, June 7, 2026).
+          "WORK IN PROGRESS",
         ],
       },
     },

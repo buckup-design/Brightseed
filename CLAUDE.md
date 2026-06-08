@@ -127,6 +127,7 @@ Color scale names: forest, lime, sand, cyan, blue, yellow, orange, lavender, orc
 7. **GitHub management is Claude's job, not Becky's.** Don't ask her to copy URLs or click through Settings. Use the GitHub Connector or Claude in Chrome. (The `plugin:engineering:github` MCP had an OAuth bug Cowork's SDK can't speak, don't retry that flow.)
 8. **Sandbox can't delete files or push** (FUSE mount, no git creds). Claude preps edits + hands Becky an exact command block for deletes/symlinks/commits/pushes. Clear stale locks at the top: `rm -f .git/index.lock .git/HEAD.lock .git/objects/maintenance.lock`.
 9. **Sandbox is Linux; Becky's machine is macOS.** Any `node_modules/` Claude installs has Linux-native binaries that break on macOS (rolldown). Claude writes source; Becky runs `npm install` + `npm run storybook` on her Mac. Don't trust sandbox-only verification.
+10. **New components start in "WORK IN PROGRESS".** Every new component's Storybook stories go under the `WORK IN PROGRESS` section, pinned last in the sidebar (below Blocks) via `storySort` in `web/.storybook/preview.ts`. Promote to `Components/*` only when Becky says it's done.
 
 **Push-back protocol** (chat + code comments): `[BLOCKING]` stop until resolved (code: `// BRIGHTSEED-TBD: [BLOCKING] <reason>`; chat: state it first) · `[CONCERN]` proceed but log the reservation · `[SUGGESTION]` take or leave. Keep flags atomic so they read without conversation context.
 

@@ -32,7 +32,7 @@ import {
  * nav and focuses that group.
  */
 const meta = {
-  title: "Components/Sidebar Alt1",
+  title: "WORK IN PROGRESS/Sidebar Alt1",
   component: SidebarAlt1,
   parameters: { layout: "fullscreen" },
   tags: ["autodocs"],

@@ -108,7 +108,7 @@ Exact `--ds-*` targets to be confirmed against `tokens/semantics.css` at impleme
 
 ## Storybook stories
 
-`web/stories/SidebarAlt1.stories.tsx`, entry `Components/Sidebar Alt1`:
+`web/stories/SidebarAlt1.stories.tsx`, entry `WORK IN PROGRESS/Sidebar Alt1` (per the WIP rule in CLAUDE.md; promotes to `Components/Sidebar Alt1` when done):
 
 1. **Default** — expanded, generic Hummingbird-flavored content (items + two groups + PanelOnly account card slot), live toggle.
 2. **Collapsed** — starts in rail state.
