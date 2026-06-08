@@ -34,13 +34,20 @@ type Scale = {
   key: string; // token slug → --p-color-{key}-{step}
   label: string;
   desc: string;
-  notes?: Partial<Record<(typeof STEPS)[number], string>>;
+  steps?: readonly number[]; // override default STEPS for scales with half-steps (e.g. forest-550)
+  notes?: Record<number, string>;
 };
 
 /* Order + descriptors mirror the Figma board, using functional language. */
 const SCALES: Scale[] = [
   { key: "sand", label: "Sand", desc: "Warm neutral surface", notes: { 50: "Surface anchor" } },
-  { key: "forest", label: "Forest", desc: "Brand green", notes: { 900: "Brand surface" } },
+  {
+    key: "forest",
+    label: "Forest",
+    desc: "Brand green",
+    steps: [50, 100, 200, 300, 400, 500, 550, 600, 700, 800, 900, 950],
+    notes: { 550: "Linktext hover", 800: "Linktext default", 900: "Brand surface" },
+  },
   {
     key: "lime",
     label: "Lime",
@@ -122,6 +129,7 @@ function Swatch({
 }
 
 function ScaleRow({ scale }: { scale: Scale }) {
+  const steps = scale.steps ?? STEPS;
   return (
     <section className="flex flex-col gap-3">
       <div className="flex flex-wrap items-baseline gap-x-2">
@@ -138,9 +146,9 @@ function ScaleRow({ scale }: { scale: Scale }) {
       </div>
       <div
         className="grid gap-2"
-        style={{ gridTemplateColumns: "repeat(11, minmax(0, 1fr))" }}
+        style={{ gridTemplateColumns: `repeat(${steps.length}, minmax(0, 1fr))` }}
       >
-        {STEPS.map((s) => (
+        {steps.map((s) => (
           <Swatch key={s} scaleKey={scale.key} step={s} note={scale.notes?.[s]} />
         ))}
       </div>
