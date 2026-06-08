@@ -19,7 +19,11 @@
  */
 
 import * as React from "react"
-import { PanelLeftIcon, type LucideIcon } from "lucide-react"
+import {
+  PanelLeftCloseIcon,
+  PanelLeftOpenIcon,
+  type LucideIcon,
+} from "lucide-react"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
@@ -223,6 +227,12 @@ function SidebarAlt1({
  * Hover-revealed toggle. Always mounted at opacity 0; fades in over 300ms
  * when the pointer enters the nav or focus lands inside it (Otter only does
  * hover; we add focus-within so keyboard users can find it).
+ *
+ * Icon carries the expand/collapse affordance: panel + chevron pointing the
+ * way the nav will move (PanelLeftOpen collapsed, PanelLeftClose expanded).
+ * Matches Becky's Figma comps `Sidebar / ExpandIcon` + `Sidebar /
+ * CollapseIcon` (Library, section 28517:1302397), which compose the same
+ * lucide panel-left-open/close geometry.
  */
 function SidebarAlt1Toggle({
   className,
@@ -255,7 +265,7 @@ function SidebarAlt1Toggle({
       )}
       {...props}
     >
-      <PanelLeftIcon />
+      {expanded ? <PanelLeftCloseIcon /> : <PanelLeftOpenIcon />}
     </button>
   )
 }
