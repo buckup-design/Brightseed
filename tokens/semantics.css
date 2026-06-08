@@ -115,9 +115,13 @@
   --ds-color-border-critical-bold:    var(--p-color-red-600);
 
   /* ── Text ── */
-  --ds-color-text-default:            var(--p-color-sand-900);      /* #2a2925, warm near-black */
-  --ds-color-text-default-hover:      var(--p-color-sand-950);      /* one step "more pronounced", used by
-                                                                  Secondary / Outline / Ghost button text on hover */
+  --ds-color-text-default:            var(--p-color-sand-800);      /* #46453f, warm dark. Softened one step from
+                                                                  sand-900 (June 2026) so default copy reads calmer;
+                                                                  still ~9.7:1 on white, comfortably AA. */
+  --ds-color-text-default-hover:      var(--p-color-sand-950);      /* #1F1F1E, the strong near-black. Default text
+                                                                  deepens to this on hover (e.g. clickable compound
+                                                                  name, "+N more"), and Secondary / Outline / Ghost
+                                                                  button text on hover. */
   --ds-color-text-subtle:             var(--p-color-sand-700);      /* secondary / helper text */
   --ds-color-text-disabled:           var(--p-color-sand-500);      /* generic flat disabled, for non-button contexts
                                                                   (form labels, static text). Buttons use the alpha

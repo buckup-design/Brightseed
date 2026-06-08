@@ -172,7 +172,7 @@ function TargetPill({
   );
 }
 
-/** Borderless "+N more" link. Transparent surface, underline on hover. */
+/** Borderless "+N more" link. Transparent surface, deepens color on hover. */
 function MoreLink({
   count,
   onSelect,
@@ -186,8 +186,8 @@ function MoreLink({
       onClick={onSelect}
       className={cn(
         PILL_BASE,
-        "bg-transparent text-[var(--ds-color-text-default)]",
-        "hover:underline underline-offset-2",
+        // No underline: deepen sand-800 to sand-950 on hover, same as the name.
+        "bg-transparent text-[var(--ds-color-text-default)] hover:text-[var(--ds-color-text-default-hover)]",
       )}
     >
       +{count} more
@@ -461,9 +461,11 @@ export function CompoundCard({
         onClick={onSelect}
         className={cn(
           "text-left text-[15px] font-semibold leading-tight line-clamp-2 min-h-[2.5em]",
-          "text-[var(--ds-color-text-default)]",
-          "hover:underline underline-offset-2 outline-none",
-          "focus-visible:underline",
+          // Clickable: no underline. Affordance is the color deepening from
+          // default (sand-800) to hover (sand-950) plus the pointer cursor.
+          "text-[var(--ds-color-text-default)] hover:text-[var(--ds-color-text-default-hover)]",
+          "transition-colors duration-[120ms] outline-none rounded-[var(--ds-shape-radius-sm)]",
+          "focus-visible:ring-2 focus-visible:ring-[var(--ds-color-border-focus)] focus-visible:ring-offset-1",
         )}
       >
         {name}
