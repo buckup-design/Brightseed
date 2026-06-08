@@ -34,6 +34,12 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 const SIDEBAR_ALT1_COOKIE_NAME = "sidebar_alt1_state"
 const SIDEBAR_ALT1_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -140,20 +146,22 @@ function SidebarAlt1Provider({
 
   return (
     <SidebarAlt1Context.Provider value={contextValue}>
-      <div
-        data-slot="sidebar-alt1-wrapper"
-        style={
-          {
-            "--sidebar-alt1-width": SIDEBAR_ALT1_WIDTH,
-            "--sidebar-alt1-width-rail": SIDEBAR_ALT1_WIDTH_RAIL,
-            ...style,
-          } as React.CSSProperties
-        }
-        className={cn("flex min-h-svh w-full", className)}
-        {...props}
-      >
-        {children}
-      </div>
+      <TooltipProvider delayDuration={0}>
+        <div
+          data-slot="sidebar-alt1-wrapper"
+          style={
+            {
+              "--sidebar-alt1-width": SIDEBAR_ALT1_WIDTH,
+              "--sidebar-alt1-width-rail": SIDEBAR_ALT1_WIDTH_RAIL,
+              ...style,
+            } as React.CSSProperties
+          }
+          className={cn("flex min-h-svh w-full", className)}
+          {...props}
+        >
+          {children}
+        </div>
+      </TooltipProvider>
     </SidebarAlt1Context.Provider>
   )
 }
@@ -242,7 +250,7 @@ function SidebarAlt1Toggle({
   const { state, isMobile, toggleSidebar } = useSidebarAlt1()
   const expanded = isMobile || state === "expanded"
 
-  return (
+  const button = (
     <button
       type="button"
       data-slot="sidebar-alt1-toggle"
@@ -267,6 +275,15 @@ function SidebarAlt1Toggle({
     >
       {expanded ? <PanelLeftCloseIcon /> : <PanelLeftOpenIcon />}
     </button>
+  )
+
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>{button}</TooltipTrigger>
+      <TooltipContent side="right" align="center">
+        {expanded ? "Close navigation" : "Open navigation"}
+      </TooltipContent>
+    </Tooltip>
   )
 }
 
@@ -370,7 +387,7 @@ function SidebarAlt1Item({
 }) {
   const expanded = usePanelComposition()
 
-  return (
+  const button = (
     <button
       type="button"
       data-slot="sidebar-alt1-item"
@@ -389,6 +406,20 @@ function SidebarAlt1Item({
       <Icon />
       {expanded && <span className="truncate">{label}</span>}
     </button>
+  )
+
+  // Labels are visible in the panel; tooltips only make sense on the rail.
+  if (expanded) {
+    return button
+  }
+
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>{button}</TooltipTrigger>
+      <TooltipContent side="right" align="center">
+        {label}
+      </TooltipContent>
+    </Tooltip>
   )
 }
 
@@ -427,19 +458,26 @@ function SidebarAlt1Group({
 
   if (!expanded) {
     return (
-      <button
-        type="button"
-        data-slot="sidebar-alt1-group-rail-icon"
-        data-active={isActive}
-        aria-label={`${label} — open navigation`}
-        onClick={() => {
-          pendingFocus.current = true
-          setOpen(true)
-        }}
-        className={cn(itemBaseClasses, "size-10 justify-center", className)}
-      >
-        <Icon />
-      </button>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            type="button"
+            data-slot="sidebar-alt1-group-rail-icon"
+            data-active={isActive}
+            aria-label={`${label} — open navigation`}
+            onClick={() => {
+              pendingFocus.current = true
+              setOpen(true)
+            }}
+            className={cn(itemBaseClasses, "size-10 justify-center", className)}
+          >
+            <Icon />
+          </button>
+        </TooltipTrigger>
+        <TooltipContent side="right" align="center">
+          {label}
+        </TooltipContent>
+      </Tooltip>
     )
   }
 

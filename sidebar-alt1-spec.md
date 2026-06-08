@@ -56,7 +56,7 @@ Why this feels better: labels never reflow or clip mid-animation because the ent
 
 Two compositions, conditionally rendered on `state` (`expanded` / `collapsed`):
 
-- **Rail (56px):** toggle/logo slot, then one 40×40 icon per `Item` and per `Group`. Nothing inside `PanelOnly` renders. No tooltips required for v1 (Otter doesn't use them; the rail is a summary, not a 1:1 icon map).
+- **Rail (56px):** toggle/logo slot, then one 40×40 icon per `Item` and per `Group`. Nothing inside `PanelOnly` renders. Rail icons and the toggle show tooltips on hover (side right, no delay), added June 7, 2026; panel items don't (labels are visible).
 - **Panel (240px):** full composition with labels, group headers, `PanelOnly` content.
 
 ## Behavior
