@@ -51,10 +51,12 @@ const SIDEBAR_ALT1_WIDTH_MOBILE = "18rem"
 const SIDEBAR_ALT1_KEYBOARD_SHORTCUT = "b"
 // Width wipe duration. Group focus-on-expand waits this out (+1 frame).
 const SIDEBAR_ALT1_WIPE_MS = 150
-// Rail item/group tooltips open after a slight delay so they don't pile on
-// top of the toggle's 300ms hover reveal. The toggle's own tooltip stays
-// instant (provider default 0).
-const SIDEBAR_ALT1_TOOLTIP_DELAY_MS = 300
+// Tooltip delay, measured live on otter.ai (June 7, 2026): their nav tooltips
+// are Radix Tooltip at the DEFAULT delayDuration (700ms; measured ~787ms
+// pointerover → data-state open, incl. event latency). Applies to all nav
+// tooltips including the toggle. Radix's default skipDelayDuration (300ms)
+// gives the instant follow-up tooltips when sweeping the rail, same as Otter.
+const SIDEBAR_ALT1_TOOLTIP_DELAY_MS = 700
 
 type SidebarAlt1ContextProps = {
   state: "expanded" | "collapsed"
@@ -150,7 +152,7 @@ function SidebarAlt1Provider({
 
   return (
     <SidebarAlt1Context.Provider value={contextValue}>
-      <TooltipProvider delayDuration={0}>
+      <TooltipProvider delayDuration={SIDEBAR_ALT1_TOOLTIP_DELAY_MS}>
         <div
           data-slot="sidebar-alt1-wrapper"
           style={
@@ -418,7 +420,7 @@ function SidebarAlt1Item({
   }
 
   return (
-    <Tooltip delayDuration={SIDEBAR_ALT1_TOOLTIP_DELAY_MS}>
+    <Tooltip>
       <TooltipTrigger asChild>{button}</TooltipTrigger>
       <TooltipContent side="right" align="center">
         {label}
@@ -462,7 +464,7 @@ function SidebarAlt1Group({
 
   if (!expanded) {
     return (
-      <Tooltip delayDuration={SIDEBAR_ALT1_TOOLTIP_DELAY_MS}>
+      <Tooltip>
         <TooltipTrigger asChild>
           <button
             type="button"
