@@ -51,6 +51,10 @@ const SIDEBAR_ALT1_WIDTH_MOBILE = "18rem"
 const SIDEBAR_ALT1_KEYBOARD_SHORTCUT = "b"
 // Width wipe duration. Group focus-on-expand waits this out (+1 frame).
 const SIDEBAR_ALT1_WIPE_MS = 150
+// Rail item/group tooltips open after a slight delay so they don't pile on
+// top of the toggle's 300ms hover reveal. The toggle's own tooltip stays
+// instant (provider default 0).
+const SIDEBAR_ALT1_TOOLTIP_DELAY_MS = 300
 
 type SidebarAlt1ContextProps = {
   state: "expanded" | "collapsed"
@@ -414,7 +418,7 @@ function SidebarAlt1Item({
   }
 
   return (
-    <Tooltip>
+    <Tooltip delayDuration={SIDEBAR_ALT1_TOOLTIP_DELAY_MS}>
       <TooltipTrigger asChild>{button}</TooltipTrigger>
       <TooltipContent side="right" align="center">
         {label}
@@ -458,7 +462,7 @@ function SidebarAlt1Group({
 
   if (!expanded) {
     return (
-      <Tooltip>
+      <Tooltip delayDuration={SIDEBAR_ALT1_TOOLTIP_DELAY_MS}>
         <TooltipTrigger asChild>
           <button
             type="button"
