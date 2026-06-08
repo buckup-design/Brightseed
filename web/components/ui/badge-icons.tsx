@@ -132,12 +132,12 @@ export function CowBadge({ className, ...props }: GlyphProps) {
 }
 
 /**
- * Compound (24px), chemical compound / molecule. Two hexagonal rings connected
- * by bond lines with terminal atom marks. App-scale glyph for headers, nav, and
- * entity cards. Honors the line-art house style (stroke, no fill).
- * Figma: Icon / Custom / Compound (node 26553:767). Use CompoundBadge at badge scale.
+ * CompoundMultiple (24px), chemical compound / molecule, multi-ring. Two hexagonal
+ * rings connected by bond lines with terminal atom marks. App-scale glyph for
+ * headers, nav, and entity cards. Honors the line-art house style (stroke, no fill).
+ * Figma: Icon / Custom / Compound-multiple (node 26553:767). Use CompoundBadge at badge scale.
  */
-export function Compound({ className, ...props }: GlyphProps) {
+export function CompoundMultiple({ className, ...props }: GlyphProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -165,6 +165,40 @@ export function Compound({ className, ...props }: GlyphProps) {
       <path d="M6.16129 4.29907C6.16129 3.35642 5.39716 2.59343 4.45565 2.59343C3.51413 2.59343 2.75 3.35642 2.75 4.29907C2.75 5.24059 3.51413 6.00472 4.45565 6.00472C5.39716 6.00472 6.16129 5.24059 6.16129 4.29907Z" />
       {/* terminal atom, lower-right */}
       <path d="M15.258 20.4509C15.258 19.5094 14.4938 18.7453 13.5523 18.7453C12.6108 18.7453 11.8467 19.5094 11.8467 20.4509C11.8467 21.3936 12.6108 22.1566 13.5523 22.1566C14.4938 22.1566 15.258 21.3936 15.258 20.4509Z" />
+    </svg>
+  )
+}
+
+/**
+ * CompoundSingle (24px), chemical compound / molecule, single-ring. One hexagonal
+ * ring with a terminal atom mark and bond line, the visual shorthand for a single
+ * bioactive small molecule (vs the two-ring CompoundMultiple). App-scale glyph,
+ * line-art house style (stroke, no fill).
+ * Figma: Icon / Custom / Compound-single (node 28523:1302443). Vectors exported
+ * verbatim; hardcoded stroke swapped to currentColor.
+ */
+export function CompoundSingle({ className, ...props }: GlyphProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+      {...props}
+    >
+      {/* hexagon ring */}
+      <path d="M7.90557 9.10591L9.30616 13.7357C9.36778 13.9386 9.48166 14.1217 9.63638 14.2667C9.79111 14.4117 9.98124 14.5135 10.1877 14.5618L14.9387 15.6513C15.1453 15.6996 15.3611 15.6927 15.5642 15.6313C15.7674 15.5698 15.9508 15.456 16.096 15.3011L19.4463 11.7609C19.5914 11.6062 19.6932 11.4161 19.7417 11.2097C19.7901 11.0032 19.7833 10.7877 19.7221 10.5846L18.3215 5.95487C18.2599 5.75196 18.146 5.56882 17.9913 5.42382C17.8366 5.27882 17.6465 5.17706 17.44 5.12875L12.689 4.03927C12.4824 3.99091 12.2666 3.99781 12.0635 4.05926C11.8603 4.12072 11.6769 4.23458 11.5317 4.38939L8.18136 7.92967C8.0363 8.08432 7.93446 8.27441 7.88605 8.48087C7.83765 8.68732 7.84438 8.90287 7.90557 9.10591Z" />
+      {/* terminal atom */}
+      <path d="M4.55406 17.061C4.02743 17.8011 4.20042 18.828 4.94044 19.3547C5.68047 19.8815 6.70731 19.7085 7.23394 18.9684C7.76058 18.2284 7.58759 17.2015 6.84756 16.6747C6.10753 16.148 5.0807 16.321 4.55406 17.061Z" />
+      {/* bond, ring-to-atom arm */}
+      <line y1="-0.75" x2="4.39403" y2="-0.75" transform="matrix(0.687425 -0.726256 0.726204 0.68748 7.23145 17.7665)" />
     </svg>
   )
 }
