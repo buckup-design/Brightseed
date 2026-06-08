@@ -34,11 +34,17 @@ const meta = {
     onFavorite: { action: "favorite" },
   },
   decorators: [
-    (Story) => (
-      <div style={{ maxWidth: 360 }}>
+    // Single-card stories sit in a 360px column so they read at real width.
+    // Grid stories opt out by setting parameters.layout = "fullscreen", otherwise
+    // the 360px cap would collapse the grid to a single column.
+    (Story, context) =>
+      context.parameters.layout === "fullscreen" ? (
         <Story />
-      </div>
-    ),
+      ) : (
+        <div style={{ maxWidth: 360 }}>
+          <Story />
+        </div>
+      ),
   ],
 } satisfies Meta<typeof CompoundCard>;
 
