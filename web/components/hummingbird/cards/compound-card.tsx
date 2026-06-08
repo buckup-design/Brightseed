@@ -140,9 +140,11 @@ function SamplePill({ id, onSelect }: { id: string; onSelect?: () => void }) {
       onClick={onSelect}
       className={cn(
         PILL_BASE,
-        // Ghost affordance: no resting background, surface fills in on hover.
+        // Ghost affordance: no resting background. On hover a blue tint fills in
+        // (surface-tag-blue = blue-100), differentiating Samples from the sand
+        // Target chips. Decorative blue, no status meaning.
         "bg-transparent text-[var(--ds-color-text-subtle)]",
-        "hover:bg-[var(--ds-color-surface-alt)] hover:text-[var(--ds-color-text-default)]",
+        "hover:bg-[var(--ds-color-surface-tag-blue)] hover:text-[var(--ds-color-text-default)]",
       )}
     >
       <TestTubeDiagonal className="size-3.5 shrink-0" strokeWidth={1.5} />
