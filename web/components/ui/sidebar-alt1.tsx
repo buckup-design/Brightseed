@@ -267,14 +267,14 @@ function SidebarAlt1Toggle({
         toggleSidebar()
       }}
       className={cn(
-        "flex size-10 shrink-0 items-center justify-center",
-        "rounded-[var(--c-sidebar-alt1-shape-radius-md)] text-[var(--c-sidebar-alt1-text-default)]",
+        "flex size-9 shrink-0 items-center justify-center",
+        "rounded-[var(--c-sidebar-alt1-shape-radius-md)] text-[var(--c-sidebar-alt1-text-subtle)]",
         "hover:bg-[var(--c-sidebar-alt1-surface-alt)]",
         "outline-none focus-visible:ring-1 focus-visible:ring-[var(--c-sidebar-alt1-border-focus)]",
         // The reveal: 300ms opacity fade scoped to nav hover / focus-within.
         "opacity-0 transition-opacity duration-300 motion-reduce:transition-none",
         "group-hover/alt1:opacity-100 group-focus-within/alt1:opacity-100",
-        "[&>svg]:size-6 [&>svg]:shrink-0",
+        "[&>svg]:size-5 [&>svg]:shrink-0",
         className
       )}
       {...props}
