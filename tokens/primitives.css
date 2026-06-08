@@ -21,6 +21,7 @@
   --p-color-forest-300: #aad4b2;
   --p-color-forest-400: #86b990;
   --p-color-forest-500: #669f71;
+  --p-color-forest-550: #50965a;  /* brighter, more saturated green; link-text hover (light). ~3.6:1 on white, AA large text. Added June 2026. */
   --p-color-forest-600: #51865c;
   --p-color-forest-700: #46764f;
   --p-color-forest-800: #3f6947;

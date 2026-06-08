@@ -166,7 +166,7 @@
      lime-300 (dark) for AA contrast on page surfaces.
      Decided May 2026, replaced earlier forest-scale brand-link. */
   --ds-color-text-link-brand:           var(--p-color-forest-800);    /* #3f6947, matches Figma base/link-brand light mode */
-  --ds-color-text-link-brand-hover:     var(--p-color-forest-900);    /* one step more pronounced on hover */
+  --ds-color-text-link-brand-hover:     var(--p-color-forest-550);    /* brighter, more saturated green on hover (dark default -> bright). Was forest-900; changed June 2026 because the darker step read as too subtle. */
   /* No -disabled token, disabled state uses --ds-color-text-link-brand at --ds-disabled-text-opacity. */
 
   /* Brand-green emphasis text (non-interactive), e.g. branded headings.

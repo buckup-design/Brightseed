@@ -150,7 +150,7 @@ Values point to `tokens/semantics.css`; component appearance lives in Storybook;
 
 **Link vs Linktext:** two distinct components, two state machines, don't collapse:
 - **Link:** inline `<a>`, always underlined, blue scale (`--ds-color-text-link-*`), anchor pseudo-class states. Figma set `28590:36956`.
-- **Linktext:** button-shaped, never underlined, lime scale (`--ds-color-text-link-brand`), button states. Brand-link is lime (lime-700 light / lime-300 dark, stepped down from the lime-300 button surface so standalone text passes AA).
+- **Linktext:** button-shaped, never underlined (`--ds-color-text-link-brand`), button states. Light mode rests on forest-800 and brightens to forest-550 on hover (dark default -> bright, branded green). Dark mode uses the lime scale (lime-300 default / lime-200 hover), so standalone text passes AA on the dark surface.
 
 **Focus rings** (system invariant): all reference the local Brightseed Ring set (`26482:628558`), 1px stroke + 1px offset, instance at `(-1,-1)` sized `body+2`, `Shape=*` variant matching body radius, color via instance stroke override. No per-instance cornerRadius overrides. Variant colors: Default/Outline/Ghost lime-500, Secondary sand-300, Destructive red-500, Linktext lime-500.
 

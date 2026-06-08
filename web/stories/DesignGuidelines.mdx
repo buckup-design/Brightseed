@@ -170,7 +170,7 @@ Used on Deep Forest (`--ds-color-surface-brand`) and other dark panels.
 
 #### Link text
 
-Two distinct components with separate state machines. `link-*` is the inline `<a>` in body copy (always underlined, blue scale). `link-brand` is the `Linktext` button variant (never underlined, lime scale, same family as the primary CTA).
+Two distinct components with separate state machines. `link-*` is the inline `<a>` in body copy (always underlined, blue scale). `link-brand` is the `Linktext` button variant (never underlined). In light mode it rests on a dark forest green and brightens to a more saturated green on hover (dark default -> bright, branded); in dark mode it uses the lime scale.
 
 | Token                             | Light      | Dark       | State           |
 | --------------------------------- | ---------- | ---------- | --------------- |
@@ -178,8 +178,8 @@ Two distinct components with separate state machines. `link-*` is the inline `<a
 | `--ds-color-text-link-default-hover` | blue-700 | blue-400  | `:hover`        |
 | `--ds-color-text-link-visited`    | sand-700   | sand-300   | `:visited`, warm, settled |
 | `--ds-color-text-link-active`     | blue-900   | blue-200   | `:active`       |
-| `--ds-color-text-link-brand`      | lime-700   | lime-300   | Linktext default, lime-700 passes AA on white; lime-300 passes AA on sand-950 |
-| `--ds-color-text-link-brand-hover`| lime-800   | lime-200   | One step more pronounced |
+| `--ds-color-text-link-brand`      | forest-800 | lime-300   | Linktext default; forest-800 passes AA on white, lime-300 passes AA on sand-950 |
+| `--ds-color-text-link-brand-hover`| forest-550 | lime-200   | Brighter, more saturated green on hover (light); one step lighter (dark) |
 
 #### Semantic text
 
