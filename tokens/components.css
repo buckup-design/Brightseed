@@ -68,6 +68,7 @@
   --c-badge-border-tag-yellow-focus:       var(--ds-color-border-tag-yellow-focus);
   --c-badge-disabled-text-opacity:         var(--ds-disabled-text-opacity);
   --c-badge-shape-radius-xs:               var(--ds-shape-radius-xs);
+  --c-badge-shape-radius-md:               var(--ds-shape-radius-md);
   --c-badge-surface-default:               var(--ds-color-surface-default);
   --c-badge-surface-tag-blue:              var(--ds-color-surface-tag-blue);
   --c-badge-surface-tag-blue-hover:        var(--ds-color-surface-tag-blue-hover);

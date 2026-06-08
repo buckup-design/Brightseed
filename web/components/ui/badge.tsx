@@ -79,8 +79,10 @@ const VARIANT_NAMES = [
 ] as const
 
 // Kinds that are interactive (carry hover + focus). `tag` is intentionally
-// absent: it is informational/static and gets neither.
-const INTERACTIVE_KINDS = ["chip", "number"] as const
+// absent: it is informational/static and gets neither. `evidence` is
+// interactive: on the Compound card the evidence tag is clickable (routes to
+// the compound detail), so it carries the same hover/focus the chip does.
+const INTERACTIVE_KINDS = ["chip", "number", "evidence"] as const
 
 // Focus ring geometry, 1px stroke + 1px offset (matches Figma Ring spec).
 // Kind-specific (interactive only), so `tag` never paints a ring.
@@ -182,6 +184,15 @@ const badgeVariants = cva(
         number: cn(
           "h-5 min-w-5 px-1.5 text-[11px] tabular-nums",
           "rounded-full",
+        ),
+        // Evidence, outlined rounded-md pill for the Compound card's data-
+        // validation tags (Animal / Clinical). Shape only: the outline color
+        // treatment comes from variant="outline" (border + transparent surface
+        // + default text), so EvidenceTag composes the two. Taller and softer-
+        // cornered than chip/tag to match the Figma Compound footer (cr=8, 24px).
+        evidence: cn(
+          "h-6 px-2.5 gap-1.5 text-[13px] leading-none",
+          "rounded-[var(--c-badge-shape-radius-md)]",
         ),
       },
     },

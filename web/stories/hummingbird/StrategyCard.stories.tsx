@@ -4,6 +4,7 @@ import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 import { StrategyCard, type AssessmentRow } from "@/components/hummingbird/cards/strategy-card";
+import { CardGrid } from "@/components/hummingbird/card-grid";
 
 /* ─────────────────────────────────────────────────────────────────────────
  * StrategyCard v2, Hummingbird Strategies view.
@@ -202,9 +203,9 @@ function StrategiesGrid() {
       <p className="text-[12px] font-mono text-[var(--ds-color-text-subtle)]">
         Favorite a card, then navigate away and back to see it sort to the top.
       </p>
-      {/* auto-fill + minmax: as many columns as fit at ≥340px each, growing to 1fr.
-          overflow-hidden: clips anything that escapes a cell (last-resort guard). */}
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(340px,1fr))] gap-4 max-w-5xl overflow-hidden bg-[var(--ds-color-surface-alt)] p-6 rounded-lg">
+      {/* Shared CardGrid: locked 300/420 bounds, cards fill left to right then
+          down. overflow-hidden is a last-resort guard against cell escape. */}
+      <CardGrid className="overflow-hidden rounded-lg bg-[var(--ds-color-surface-alt)] p-6">
         {sortedStrategies.map((strategy) => (
           <StrategyCard
             key={strategy.id}
@@ -215,7 +216,7 @@ function StrategiesGrid() {
             onFavorite={() => handleFavorite(strategy.id)}
           />
         ))}
-      </div>
+      </CardGrid>
     </div>
   );
 }

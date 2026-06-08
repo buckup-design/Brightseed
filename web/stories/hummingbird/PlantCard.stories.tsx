@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 import { PlantCard } from "@/components/hummingbird/cards/plant-card";
+import { CardGrid } from "@/components/hummingbird/card-grid";
 
 /* ─────────────────────────────────────────────────────────────────────────
  * PlantCard, Hummingbird Plants view.
@@ -56,7 +57,7 @@ export const StarAnise: Story = {
 export const Grid: Story = {
   parameters: { layout: "padded" },
   render: () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl bg-[var(--ds-color-surface-alt)] p-6 rounded-lg">
+    <CardGrid className="rounded-lg bg-[var(--ds-color-surface-alt)] p-6">
       <PlantCard
         scientificName="Foeniculum vulgare"
         commonName="Fennel"
@@ -85,7 +86,7 @@ export const Grid: Story = {
         bioactives={["MLCK", "HIF-1α", "Akt", "ZO-1", "MUC2"]}
         bioactiveOverflow={12}
       />
-    </div>
+    </CardGrid>
   ),
 };
 
