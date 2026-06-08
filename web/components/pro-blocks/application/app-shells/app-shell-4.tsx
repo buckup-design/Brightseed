@@ -16,13 +16,13 @@ import {
   Bot,
   Command,
   Frame,
-  GalleryVerticalEnd,
   Map,
   PieChart,
   Settings2,
   SquareTerminal,
   Search,
 } from "lucide-react";
+import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 
 import { NavMain } from "@/components/pro-blocks/application/nav-main";
 import { NavProjects } from "@/components/pro-blocks/application/nav-projects";
@@ -49,7 +49,7 @@ const data = {
   teams: [
     {
       name: "Acme Inc",
-      logo: GalleryVerticalEnd,
+      logo: BrightseedLogo,
       plan: "Enterprise",
     },
     {
