@@ -49,7 +49,7 @@ function DemoNav() {
         <BrightseedLogo variant="tile" className="size-8 shrink-0" />
         <SidebarAlt1PanelOnly>
           <span className="ml-2 truncate text-sm font-medium text-[var(--c-sidebar-alt1-text-default)]">
-            Hummingbird
+            Brightseed
           </span>
         </SidebarAlt1PanelOnly>
       </SidebarAlt1Header>
