@@ -94,8 +94,9 @@ Color scale names: forest, lime, sand, cyan, blue, yellow, orange, lavender, orc
 | Infra: Vercel auto-deploys `main` → https://brightseed-storybook.vercel.app | ✅ In sync |
 | Hummingbird surfaces (Compound/Plant/Strategy cards) | 🟡 To be re-derived on Pro Block primitives |
 | DoseResponseChart, StatCard | 🔲 API spec done, impl pending |
+| Prototyping-data layer for code prototypes (MSW vs static fixtures); the unlock that makes code prototypes credible and Figma a sketchpad | 🔲 Next investment (unparked June 7, 2026) |
 | Brand evolution / color studies, icon system (line-art, hummingbird) | 🔲 In progress |
-| BrightseedLogo canonical vectors; Tiempos Headline license; Tiempos webfont domain confirm (ask Meng); Input `size` prop | 🔲 Deferred / open |
+| BrightseedLogo canonical vectors; Tiempos Headline license; Tiempos webfont domain confirm (ask Meng); Input `size` prop; Figma `--c-*` mirror + Code Connect (parked, no trigger, see Figma section) | 🔲 Deferred / open |
 | Onboard Anna as collaborator (GitHub + Storybook + Figma) | ✅ GitHub + Storybook done June 3, 2026 (both now multi-contributor); co-editing the Library Figma file. See `collaboration/` |
 
 ---
@@ -166,6 +167,8 @@ Exposed in the web app as **three separate components** — `Chip`, `Tag`, `Numb
 ---
 
 ## Figma, canonical references & quirks
+
+**Figma's role (decided June 7, 2026): sketchpad, not spec.** Figma is for brand evolution, color studies, and Anna's fast loose exploration. The system of record for components, tokens, and screens is Storybook + the `tokens/` CSS. Consequences: the component-token tier (`--c-*`) is **not** mirrored into Figma variables, and Code Connect stays parked, neither has a revival trigger. A Figma mock is an input to a code prototype, never a spec to match pixel-for-pixel.
 
 **File:** `Brightseed Library (BB+AM collab)`, key `0zRpsdiJxOtnOoXEAeLPwA` (current canonical, June 3 2026 onward; updated version of v3, co-edited by Becky + Anna). WIP happens in `Collab Playground`, key `P3ZaaH0lNgFzBbQROvTK4L`. Prior v3 file `shadcn Brightseed v3 (with pro blocks)` (key `ZZPjoeJ447MWuzNi3LL1BL`) is superseded; node IDs below carried over from it (Brightseed Blocks `26465:212221` matches both), re-verify any ID that doesn't resolve in the Library file.
 
