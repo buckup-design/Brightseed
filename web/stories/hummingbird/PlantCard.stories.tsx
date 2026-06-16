@@ -12,7 +12,7 @@ import { CardGrid } from "@/components/hummingbird/card-grid";
  * ───────────────────────────────────────────────────────────────────────── */
 
 const meta = {
-  title: "Components/Cards/Plant",
+  title: "WORK IN PROGRESS/Plant Card",
   component: PlantCard,
   parameters: { layout: "padded" },
   tags: ["autodocs"],
