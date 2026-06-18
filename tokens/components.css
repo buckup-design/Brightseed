@@ -132,7 +132,7 @@
 
   /* --c-dropdown-menu */
   --c-dropdown-menu-action-critical:            var(--ds-color-action-critical);
-  --c-dropdown-menu-action-secondary-hover:     var(--ds-color-action-secondary-hover);
+  --c-dropdown-menu-action-secondary-hover:     var(--ds-color-action-secondary);
   --c-dropdown-menu-border-default:             var(--ds-color-border-default);
   --c-dropdown-menu-border-subtle:              var(--ds-color-border-subtle);
   --c-dropdown-menu-shadow-md:                  var(--ds-shadow-md);
