@@ -1,7 +1,15 @@
+"use client";
+
 import * as React from "react";
-import { Leaf, ShieldCheck, ShieldAlert } from "lucide-react";
+import { Leaf, Star, EllipsisVertical } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
 
 /**
  * PlantCard, Hummingbird Plants view.
@@ -11,12 +19,12 @@ import { cn } from "@/lib/utils";
  * typography and hierarchy on Brightseed Quill tokens.
  *
  * Visual hierarchy (top → bottom, attention loud → quiet):
- *   1. Scientific name (Tiempos italic, display, brand gravity)
- *   2. Strategy one-liner (sans-serif, default text)
- *   3. Evidence prose (sans-serif, subtle)
- *   4. Compound tag row (sand tags)
- *   5. Forager predicted bioactives microlabel + tag row (sand tags)
- *   6. Footer status badges (semantic tokens, GRAS=success, IP=warning)
+ *   1. Header row: leaf icon (left) + favorite star + kebab actions menu (right, reveal on hover)
+ *   2. Scientific name (sans-serif, SemiBold 15px — matches StrategyCard one-liner)
+ *   3. Strategy one-liner (sans-serif, default text)
+ *   4. Evidence prose (sans-serif, subtle)
+ *   5. Compound tag row (sand tags)
+ *   6. Forager predicted bioactives microlabel + tag row (sand tags)
  *
  * Card container layout inherits StrategyCard's rules:
  *   - Border steps subtle → default on hover
@@ -34,9 +42,8 @@ interface PlantCardProps extends React.HTMLAttributes<HTMLDivElement> {
   bioactives: string[];
   compoundOverflow?: number;
   bioactiveOverflow?: number;
-  bioactivePotential?: boolean;
-  gras?: boolean;
-  ipLandscape?: "clear" | "watch" | "blocked";
+  onFavorite?: () => void;
+  isFavorited?: boolean;
 }
 
 export function PlantCard({
@@ -48,12 +55,20 @@ export function PlantCard({
   bioactives,
   compoundOverflow = 0,
   bioactiveOverflow = 0,
-  bioactivePotential = true,
-  gras = true,
-  ipLandscape = "watch",
+  onFavorite,
+  isFavorited: isFavoritedProp = false,
   className,
   ...props
 }: PlantCardProps) {
+  // Internal toggle state so the star works without external wiring,
+  // identical to StrategyCard. Callers can pass onFavorite to sync.
+  const [favorited, setFavorited] = React.useState(isFavoritedProp);
+
+  const handleFavorite = () => {
+    setFavorited((prev) => !prev);
+    onFavorite?.();
+  };
+
   return (
     <div
       data-slot="plant-card"
@@ -78,30 +93,79 @@ export function PlantCard({
       )}
       {...props}
     >
-      {/* Header: leaf icon + scientific name + bioactive potential badge */}
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex items-start gap-2 min-w-0">
-          <Leaf className="size-4 mt-1 shrink-0 text-[var(--ds-color-icon-success)]" />
-          <h3
-            className="text-base leading-tight text-[var(--ds-color-text-default)] line-clamp-2 min-h-[2.5em]"
-            style={{
-              fontFamily: 'var(--font-display, "Tiempos Fine", serif)',
-              fontStyle: "italic",
-            }}
-          >
-            {scientificName}
-            {commonName && (
-              <span className="text-[var(--ds-color-text-subtle)]">
-                {" "}
-                ({commonName})
-              </span>
-            )}
-          </h3>
-        </div>
-        {bioactivePotential && (
-          <SemanticPill intent="success">Bioactive potential</SemanticPill>
-        )}
+      {/* Header: leaf icon (left) + kebab actions menu (right).
+          The favorite star now lives inline beside the scientific name below. */}
+      <div className="flex items-center justify-between">
+        <Leaf
+          className="size-6 shrink-0 text-[var(--ds-color-icon-success)]"
+          strokeWidth={1.5}
+        />
+
+        {/* Kebab actions menu, top-right. Always visible. */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button
+              type="button"
+              aria-label="More actions"
+              className={cn(
+                "size-8 flex items-center justify-center shrink-0",
+                "rounded-[var(--ds-shape-radius-md)]",
+                "text-[var(--ds-color-icon-subtle)] hover:text-[var(--ds-color-text-default)]",
+                // transparent border at rest (no layout shift); on hover a
+                // subtle gray outline appears.
+                "border border-transparent hover:border-[var(--ds-color-icon-subtle)]",
+                "transition-colors duration-[120ms] outline-none",
+                "focus-visible:ring-2 focus-visible:ring-[var(--ds-color-border-focus)] focus-visible:ring-offset-1"
+              )}
+            >
+              <EllipsisVertical className="size-4" strokeWidth={1.5} />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="min-w-[10rem]">
+            <DropdownMenuItem>Save to project</DropdownMenuItem>
+            <DropdownMenuItem>Share</DropdownMenuItem>
+            <DropdownMenuItem>Disable</DropdownMenuItem>
+            <DropdownMenuItem>Add note</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
+
+      {/* Scientific name — matches StrategyCard one-liner typography.
+          Favorite star sits inline, ~8px (ml-2) after the last bit of text. */}
+      <h3 className="text-[15px] font-semibold leading-tight text-[var(--ds-color-text-default)] line-clamp-2 min-h-[2.5em]">
+        {scientificName}
+        {commonName && (
+          <span className="font-normal text-[var(--ds-color-text-subtle)]">
+            {" "}
+            ({commonName})
+          </span>
+        )}
+        {/* Favorite toggle — always visible. Light gray (sand-300) by default;
+            colored + filled (yellow-500 stroke and fill) when selected. */}
+        <button
+          type="button"
+          onClick={handleFavorite}
+          aria-label={favorited ? "Remove from favorites" : "Add to favorites"}
+          aria-pressed={favorited}
+          className={cn(
+            "ml-2 inline-flex items-center justify-center align-middle shrink-0",
+            "rounded-[var(--ds-shape-radius-sm)] outline-none",
+            "focus-visible:ring-2 focus-visible:ring-[var(--ds-color-border-focus)] focus-visible:ring-offset-1"
+          )}
+        >
+          <Star
+            className={cn(
+              "size-4 transition-colors duration-[120ms]",
+              favorited
+                // selected: colored stroke + matching fill
+                ? "text-[var(--ds-color-icon-favorite-active)] fill-current"
+                // default: light gray outline, no fill
+                : "text-[var(--ds-color-icon-favorite-inactive)] fill-none"
+            )}
+            strokeWidth={1.5}
+          />
+        </button>
+      </h3>
 
       {/* Strategy one-liner */}
       <p className="text-sm text-[var(--ds-color-text-default)] leading-snug line-clamp-2 min-h-[2.75em]">
@@ -123,23 +187,6 @@ export function PlantCard({
         </span>
         <TagRow items={bioactives} overflow={bioactiveOverflow} />
       </div>
-
-      {/* Footer status badges */}
-      <div className="flex items-center gap-2 mt-2">
-        {gras && (
-          <StatusBadge intent="success" icon={<ShieldCheck className="size-3" />}>
-            GRAS
-          </StatusBadge>
-        )}
-        {ipLandscape && (
-          <StatusBadge
-            intent={ipLandscape === "clear" ? "success" : "warning"}
-            icon={<ShieldAlert className="size-3" />}
-          >
-            IP Landscape
-          </StatusBadge>
-        )}
-      </div>
     </div>
   );
 }
@@ -155,7 +202,17 @@ function TagRow({ items, overflow = 0 }: { items: string[]; overflow?: number })
         <NeutralTag key={item}>{item}</NeutralTag>
       ))}
       {overflow > 0 && (
-        <span className="text-xs text-[var(--ds-color-text-subtle)] font-medium px-1">
+        <span
+          className={cn(
+            // roll-up affordance, styled as Linktext (matches login screen):
+            // bold, rests on brand green, brightens to forest-550 on hover
+            // (lime in dark mode via token swap).
+            "text-xs font-bold px-1 cursor-pointer",
+            "text-[var(--ds-color-text-link-brand)]",
+            "hover:text-[var(--ds-color-text-link-brand-hover)]",
+            "transition-colors duration-[120ms]"
+          )}
+        >
           +{overflow} more
         </span>
       )}
@@ -176,79 +233,3 @@ function NeutralTag({ children }: { children: React.ReactNode }) {
   );
 }
 
-type IntentPill = "success" | "warning" | "critical" | "info";
-
-function SemanticPill({
-  intent,
-  children,
-}: {
-  intent: IntentPill;
-  children: React.ReactNode;
-}) {
-  const map = {
-    success: {
-      bg: "var(--ds-color-surface-tag-forest)",
-      text: "var(--ds-color-text-tag-forest)",
-    },
-    warning: {
-      bg: "var(--ds-color-surface-tag-orange)",
-      text: "var(--ds-color-text-tag-orange)",
-    },
-    critical: {
-      bg: "var(--ds-color-surface-tag-red)",
-      text: "var(--ds-color-text-tag-red)",
-    },
-    info: {
-      bg: "var(--ds-color-surface-tag-blue)",
-      text: "var(--ds-color-text-tag-blue)",
-    },
-  }[intent];
-
-  return (
-    <span
-      className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap shrink-0"
-      style={{ background: map.bg, color: map.text }}
-    >
-      {children}
-    </span>
-  );
-}
-
-function StatusBadge({
-  intent,
-  icon,
-  children,
-}: {
-  intent: IntentPill;
-  icon: React.ReactNode;
-  children: React.ReactNode;
-}) {
-  const map = {
-    success: {
-      bg: "var(--ds-color-surface-tag-forest)",
-      text: "var(--ds-color-text-tag-forest)",
-    },
-    warning: {
-      bg: "var(--ds-color-surface-tag-orange)",
-      text: "var(--ds-color-text-tag-orange)",
-    },
-    critical: {
-      bg: "var(--ds-color-surface-tag-red)",
-      text: "var(--ds-color-text-tag-red)",
-    },
-    info: {
-      bg: "var(--ds-color-surface-tag-blue)",
-      text: "var(--ds-color-text-tag-blue)",
-    },
-  }[intent];
-
-  return (
-    <span
-      className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium"
-      style={{ background: map.bg, color: map.text }}
-    >
-      {icon}
-      {children}
-    </span>
-  );
-}

@@ -32,9 +32,6 @@ export const Default: Story = {
     compoundOverflow: 2,
     bioactives: ["NF-kB", "HIF-1α", "Akt", "ZO-1", "MUC2"],
     bioactiveOverflow: 12,
-    bioactivePotential: true,
-    gras: true,
-    ipLandscape: "watch",
   },
 };
 
@@ -48,9 +45,6 @@ export const StarAnise: Story = {
     compounds: ["Transanethole", "Estragole", "Alpha-pinene"],
     bioactives: ["MLCK", "HIF-1α", "Akt", "ZO-1"],
     bioactiveOverflow: 5,
-    bioactivePotential: true,
-    gras: true,
-    ipLandscape: "watch",
   },
 };
 
@@ -90,7 +84,7 @@ export const Grid: Story = {
   ),
 };
 
-export const NoBioactivePotential: Story = {
+export const Favorited: Story = {
   args: {
     scientificName: "Allium sativum",
     commonName: "Garlic",
@@ -101,17 +95,6 @@ export const NoBioactivePotential: Story = {
     compounds: ["Allicin", "Diallyl disulfide"],
     bioactives: ["NF-kB", "Akt"],
     bioactiveOverflow: 3,
-    bioactivePotential: false,
-    gras: true,
-    ipLandscape: "clear",
-  },
-};
-
-export const IpClear: Story = {
-  args: {
-    ...((Default.args as object) ?? {}),
-    scientificName: "Coriandrum sativum",
-    commonName: "Coriander",
-    ipLandscape: "clear",
+    isFavorited: true,
   },
 };
