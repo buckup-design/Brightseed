@@ -10,7 +10,7 @@ import { hero, testimonials, footer } from "../content";
  *
  * Geist-forward, tighter grid, lighter neutral surfaces, lime accents, a
  * two-column hero with the product framed in browser chrome. Reads like a
- * modern software product page. Same content as /marketing/editorial.
+ * modern software product page. Same content as /marketing/minimal.
  */
 export default function ProductPage() {
   return (

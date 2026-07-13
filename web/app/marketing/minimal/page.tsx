@@ -6,13 +6,13 @@ import { SocialIcon } from "../_components/social-icons";
 import { hero, testimonials, footer } from "../content";
 
 /**
- * Marketing landing — EDITORIAL direction (brand-forward).
+ * Marketing landing — MINIMAL direction (brand-forward).
  *
  * Tiempos Fine italic display, deep-forest + lime, airy whitespace, a soft
  * lime radial glow behind a floating product preview. The "refined biotech"
  * look, closest to the Figma draft. Same content as /marketing/product.
  */
-export default function EditorialPage() {
+export default function MinimalPage() {
   return (
     <div className="min-h-dvh bg-[var(--ds-color-surface-default)] text-[var(--ds-color-text-default)]">
       {/* ── Nav ─────────────────────────────────────────────────────────── */}

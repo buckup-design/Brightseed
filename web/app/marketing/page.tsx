@@ -9,8 +9,8 @@ import { hero } from "./content";
  */
 const directions = [
   {
-    href: "/marketing/editorial",
-    name: "Editorial",
+    href: "/marketing/minimal",
+    name: "Minimal",
     tag: "Brand-forward",
     blurb:
       "Tiempos Fine italic display, deep-forest + lime, airy whitespace, a floating product preview. The refined biotech look.",
