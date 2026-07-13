@@ -74,9 +74,9 @@ export default function EditorialPage() {
       <section className="mx-auto max-w-6xl px-6 py-24">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-xs font-medium uppercase tracking-[0.28em] text-[var(--ds-color-text-brand)]">
-            In their words
+            Trusted Partner
           </p>
-          <h2 className="mt-4 font-display italic text-[var(--ds-color-text-default)] text-display-h2">
+          <h2 className="mt-4 font-display italic text-[var(--ds-color-text-brand)] text-display-h2">
             Built for real scientific decisions
           </h2>
         </div>
@@ -114,7 +114,7 @@ export default function EditorialPage() {
             {/* Signup */}
             <div>
               <BrightseedLogo variant="lockup" className="h-6" />
-              <h3 className="mt-8 font-display italic text-[var(--ds-color-text-default)] text-display-h3">
+              <h3 className="mt-8 font-display italic text-[var(--ds-color-text-brand)] text-display-h3">
                 {footer.signup.heading}
               </h3>
               <p className="mt-3 max-w-sm text-sm text-[var(--ds-color-text-subtle)]">
