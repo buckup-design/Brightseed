@@ -3,7 +3,6 @@ import { CircleArrowRight } from "lucide-react";
 import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { HeroPreview } from "../_components/hero-preview";
 import { BrandGraphicPanel } from "../_components/brand-graphic";
 import { SocialIcon } from "../_components/social-icons";
@@ -82,29 +81,21 @@ export default function SignaturePage() {
         <div className="mb-10">
           <Eyebrow>In their words</Eyebrow>
           <h2 className="mt-3 font-display italic text-[var(--ds-color-text-default)] text-display-h2">
-            Built for real scientific decisions
+            Scientific rigor, startup speed
           </h2>
         </div>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2">
           {testimonials.map((t) => (
             <figure
-              key={t.name + t.role}
-              className="flex flex-col rounded-xl border border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-default)] p-7 shadow-sm"
+              key={t.role}
+              className="flex flex-col rounded-xl border border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-default)] p-8 shadow-sm"
             >
               <p className="font-mono text-[0.65rem] font-medium uppercase tracking-[0.16em] text-[var(--ds-color-text-brand)]">
                 {t.role}
               </p>
-              <blockquote className="mt-4 flex-1 text-[0.95rem] leading-relaxed text-[var(--ds-color-text-default)]">
+              <blockquote className="mt-4 flex-1 text-base leading-relaxed text-[var(--ds-color-text-default)]">
                 {t.quote}
               </blockquote>
-              <figcaption className="mt-6 flex items-center gap-3 border-t border-[var(--ds-color-border-subtle)] pt-5">
-                <Avatar className="size-9">
-                  <AvatarFallback>{initials(t.name)}</AvatarFallback>
-                </Avatar>
-                <div className="text-sm font-semibold text-[var(--ds-color-text-default)]">
-                  {t.name}
-                </div>
-              </figcaption>
             </figure>
           ))}
         </div>
@@ -188,14 +179,4 @@ export default function SignaturePage() {
       </footer>
     </div>
   );
-}
-
-function initials(name: string) {
-  if (name === "Anonymous") return "A";
-  return name
-    .split(" ")
-    .map((p) => p[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
 }

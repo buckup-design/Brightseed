@@ -1,7 +1,6 @@
 import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { HeroPreview } from "../_components/hero-preview";
 import { SocialIcon } from "../_components/social-icons";
 import { hero, testimonials, footer } from "../content";
@@ -70,34 +69,26 @@ export default function ProductPage() {
       {/* ── Testimonials ────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-6xl px-6 py-20">
         <h2 className="text-3xl font-semibold tracking-tight text-[var(--ds-color-text-default)]">
-          Trusted by scientific teams
+          Scientific rigor, startup speed
         </h2>
         <p className="mt-3 max-w-xl text-base text-[var(--ds-color-text-subtle)]">
           Why R&D and product teams reach for Hummingbird.
         </p>
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
+        <div className="mt-12 grid gap-5 md:grid-cols-2">
           {testimonials.map((t) => (
             <figure
-              key={t.name + t.role}
+              key={t.role}
               className="flex flex-col rounded-xl border border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-default)] p-6"
             >
               <span
                 aria-hidden
                 className="h-1 w-10 rounded-full bg-[var(--ds-color-action-primary)]"
               />
-              <blockquote className="mt-5 flex-1 text-[0.95rem] leading-relaxed text-[var(--ds-color-text-default)]">
+              <blockquote className="mt-5 flex-1 text-base leading-relaxed text-[var(--ds-color-text-default)]">
                 {t.quote}
               </blockquote>
-              <figcaption className="mt-6 flex items-center gap-3 border-t border-[var(--ds-color-border-subtle)] pt-5">
-                <Avatar className="size-9">
-                  <AvatarFallback>{initials(t.name)}</AvatarFallback>
-                </Avatar>
-                <div>
-                  <div className="text-sm font-semibold text-[var(--ds-color-text-default)]">
-                    {t.name}
-                  </div>
-                  <div className="text-xs text-[var(--ds-color-text-subtle)]">{t.role}</div>
-                </div>
+              <figcaption className="mt-6 border-t border-[var(--ds-color-border-subtle)] pt-5 text-sm text-[var(--ds-color-text-subtle)]">
+                {t.role}
               </figcaption>
             </figure>
           ))}
@@ -180,14 +171,4 @@ export default function ProductPage() {
       </footer>
     </div>
   );
-}
-
-function initials(name: string) {
-  if (name === "Anonymous") return "A";
-  return name
-    .split(" ")
-    .map((p) => p[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
 }

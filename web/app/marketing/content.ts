@@ -32,29 +32,33 @@ export const hero = {
 } as const;
 
 export type Testimonial = {
-  name: string;
-  role: string;
   quote: string;
+  role: string;
 };
 
+// Exact copy from Figma node 2015:900 ("exact testimonials"): quote + role
+// title, no personal names. NOTE: cards 1 and 4 share the same quote in the
+// source — reproduced verbatim as instructed (flag to design if unintended).
 export const testimonials: Testimonial[] = [
   {
-    name: "Lauren R.",
-    role: "Nutriquest",
-    quote:
-      "The value isn't another chatbot. It's something more evidence-based, more specific, and more useful for real scientific decisions.",
-  },
-  {
-    name: "Anonymous",
-    role: "R&D Team Lead",
-    quote:
-      "The ability to start with a natural-language question and quickly get to a credible shortlist is very useful.",
-  },
-  {
-    name: "Ben P.",
-    role: "Science Leader",
     quote:
       "What makes this useful is having the rationale, biomarkers, dose guidance, and supporting evidence tied together in one place.",
+    role: "Director of Discovery, Supplement Manufacturing",
+  },
+  {
+    quote:
+      "The ability to start with a natural-language question and quickly get to a credible shortlist is powerful.",
+    role: "R&D Lead, Multinational Food & Beverage",
+  },
+  {
+    quote:
+      "The value isn't another chatbot. It's something more evidence-based, more specific, and more useful for real scientific decisions.",
+    role: "VP, Consulting & Innovation",
+  },
+  {
+    quote:
+      "What makes this useful is having the rationale, biomarkers, dose guidance, and supporting evidence tied together in one place.",
+    role: "Scientist III New Products, Global CPG",
   },
 ];
 

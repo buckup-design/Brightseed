@@ -1,7 +1,6 @@
 import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { HeroPreview } from "../_components/hero-preview";
 import { SocialIcon } from "../_components/social-icons";
 import { hero, testimonials, footer } from "../content";
@@ -74,30 +73,20 @@ export default function EditorialPage() {
             Trusted Partner
           </p>
           <h2 className="mt-4 font-display italic text-[var(--ds-color-text-brand)] text-display-h2">
-            Built for real scientific decisions
+            Scientific rigor, startup speed
           </h2>
         </div>
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
+        <div className="mt-14 grid gap-6 md:grid-cols-2">
           {testimonials.map((t) => (
             <figure
-              key={t.name + t.role}
-              className="flex flex-col rounded-2xl border border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-default)] p-7 shadow-sm"
+              key={t.role}
+              className="flex flex-col rounded-2xl border border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-default)] p-8 shadow-sm"
             >
-              <blockquote className="flex-1 font-display text-lg italic leading-relaxed text-[var(--ds-color-text-default)]">
+              <blockquote className="flex-1 font-display text-xl italic leading-relaxed text-[var(--ds-color-text-default)]">
                 “{t.quote}”
               </blockquote>
-              <figcaption className="mt-6 flex items-center gap-3">
-                <Avatar className="size-9">
-                  <AvatarFallback>{initials(t.name)}</AvatarFallback>
-                </Avatar>
-                <div className="text-left">
-                  <div className="text-sm font-semibold text-[var(--ds-color-text-default)]">
-                    {t.name}
-                  </div>
-                  <div className="text-xs text-[var(--ds-color-text-subtle)]">
-                    {t.role}
-                  </div>
-                </div>
+              <figcaption className="mt-6 text-sm text-[var(--ds-color-text-subtle)]">
+                {t.role}
               </figcaption>
             </figure>
           ))}
@@ -182,14 +171,4 @@ export default function EditorialPage() {
       </footer>
     </div>
   );
-}
-
-function initials(name: string) {
-  if (name === "Anonymous") return "A";
-  return name
-    .split(" ")
-    .map((p) => p[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
 }
