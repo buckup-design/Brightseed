@@ -43,7 +43,13 @@ export default function EditorialPage() {
           <p className="text-xs font-medium uppercase tracking-[0.28em] text-[var(--ds-color-text-brand)]">
             {hero.eyebrow}
           </p>
-          <h1 className="mt-6 font-display italic text-[var(--ds-color-text-brand)] leading-[0.95] tracking-[-0.02em] text-[clamp(3.5rem,11vw,8.5rem)]">
+          {/* Upright display: Tiempos Fine is loaded italic-only, so the
+              non-italic title uses the upright Tiempos Text cut (the only
+              upright Tiempos loaded) rather than falling back to Geist sans. */}
+          <h1
+            className="mt-6 not-italic text-[var(--ds-color-text-brand)] leading-[0.95] tracking-[-0.02em] text-[clamp(3.5rem,11vw,8.5rem)]"
+            style={{ fontFamily: '"Tiempos Text", Georgia, serif' }}
+          >
             {hero.product}
             <sup className="align-super text-[0.3em] tracking-normal not-italic">
               {hero.trademark}
