@@ -45,9 +45,6 @@ export default function RestrainedPage() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button size="lg">{hero.requestDemo}</Button>
-              <Button variant="secondary" size="lg">
-                {hero.login}
-              </Button>
             </div>
           </div>
 

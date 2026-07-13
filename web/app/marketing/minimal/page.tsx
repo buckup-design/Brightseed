@@ -54,9 +54,6 @@ export default function MinimalPage() {
           </h1>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <Button size="lg">{hero.requestDemo}</Button>
-            <Button variant="secondary" size="lg">
-              {hero.login}
-            </Button>
           </div>
 
           {/* Floating product preview */}

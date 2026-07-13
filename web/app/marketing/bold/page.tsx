@@ -55,9 +55,6 @@ export default function BoldPage() {
               <Button size="xl" className="rounded-full uppercase tracking-wide">
                 {hero.requestDemo}
               </Button>
-              <Button variant="secondary" size="xl" className="rounded-full">
-                {hero.login}
-              </Button>
             </div>
           </div>
 
