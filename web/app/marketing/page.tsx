@@ -4,7 +4,7 @@ import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 import { hero } from "./content";
 
 /**
- * Marketing review index — entry point for the client to compare the two
+ * Marketing review index — entry point for the client to compare the three
  * re-skin directions of the same content (hero / testimonials / footer).
  */
 const directions = [
@@ -12,19 +12,19 @@ const directions = [
     href: "/marketing/minimal",
     name: "Minimal",
     blurb:
-      "Tiempos Fine italic display, deep-forest + lime, airy whitespace, a floating product preview. The refined biotech look.",
+      "Mostly white with a subtle mint gradient. All-Geist type — no serif — and mint-green pill CTAs. The most understated of the three.",
   },
   {
     href: "/marketing/restrained",
     name: "Restrained",
     blurb:
-      "Geist-forward, tighter grid, lighter surfaces, lime accents, a two-column hero framed in browser chrome.",
+      "Restrained cream backgrounds with forest-green CTAs and occasional lime accents. Tiempos Fine italic headings over Geist body, a two-column hero framed in browser chrome.",
   },
   {
     href: "/marketing/bold",
     name: "Bold",
     blurb:
-      "The login aesthetic: lime line-art brand graphic, Geist Mono eyebrows, mixed-size Tiempos italic, pill buttons.",
+      "Vivid green with the line-art hummingbird, botanicals and blueprint-grid textures. Lime-green pill CTAs, Geist Mono eyebrows and mixed-size Tiempos italic.",
   },
 ];
 
