@@ -1,6 +1,6 @@
 /**
  * Brand-graphic panel — the lime line-art hummingbird/botanical graphic
- * (public/brand/graphic_login.bg.webp) with the signature Tiempos "6x faster"
+ * (public/brand/graphic_login.bg.webp) with the hallmark Tiempos "6x faster"
  * overlay, lifted from the BrightseedLogin ImageSlot (components/auth).
  *
  * The graphic is always a light surface, so the panel pins data-theme="light"

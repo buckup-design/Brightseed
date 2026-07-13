@@ -6,13 +6,13 @@ import { SocialIcon } from "../_components/social-icons";
 import { hero, testimonials, footer } from "../content";
 
 /**
- * Marketing landing — PRODUCT / SAAS direction (clean).
+ * Marketing landing — RESTRAINED direction (clean SaaS).
  *
  * Geist-forward, tighter grid, lighter neutral surfaces, lime accents, a
  * two-column hero with the product framed in browser chrome. Reads like a
  * modern software product page. Same content as /marketing/minimal.
  */
-export default function ProductPage() {
+export default function RestrainedPage() {
   return (
     <div className="min-h-dvh bg-[var(--ds-color-surface-default)] text-[var(--ds-color-text-default)]">
       {/* ── Nav ─────────────────────────────────────────────────────────── */}

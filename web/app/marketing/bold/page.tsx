@@ -9,7 +9,7 @@ import { SocialIcon } from "../_components/social-icons";
 import { hero, testimonials, footer } from "../content";
 
 /**
- * Marketing landing — SIGNATURE direction, echoing the BrightseedLogin
+ * Marketing landing — BOLD direction, echoing the BrightseedLogin
  * aesthetic (Auth/BrightseedLogin): the lime line-art brand graphic, Geist
  * Mono uppercase eyebrows, mixed-size Tiempos Fine italic display, pill
  * (rounded-full) buttons with an all-caps CTA + CircleArrowRight, and
@@ -25,7 +25,7 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function SignaturePage() {
+export default function BoldPage() {
   return (
     <div className="min-h-dvh bg-[var(--ds-color-surface-alt)] text-[var(--ds-color-text-default)]">
       {/* ── Nav ─────────────────────────────────────────────────────────── */}

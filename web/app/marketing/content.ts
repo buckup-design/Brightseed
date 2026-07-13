@@ -3,7 +3,7 @@
  *
  * Copy + structure lifted verbatim from the Figma draft
  * (BSD Hummingbird (Copy), node 23:183): Hero, Testimonials, Footer.
- * The page compositions (minimal / product / signature) import this so the
+ * The page compositions (minimal / restrained / bold) import this so the
  * client is comparing the SAME content in different skins.
  */
 

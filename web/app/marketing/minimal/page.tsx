@@ -10,7 +10,7 @@ import { hero, testimonials, footer } from "../content";
  *
  * Tiempos Fine italic display, deep-forest + lime, airy whitespace, a soft
  * lime radial glow behind a floating product preview. The "refined biotech"
- * look, closest to the Figma draft. Same content as /marketing/product.
+ * look, closest to the Figma draft. Same content as /marketing/restrained.
  */
 export default function MinimalPage() {
   return (

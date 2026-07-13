@@ -16,15 +16,15 @@ const directions = [
       "Tiempos Fine italic display, deep-forest + lime, airy whitespace, a floating product preview. The refined biotech look.",
   },
   {
-    href: "/marketing/product",
-    name: "Product",
+    href: "/marketing/restrained",
+    name: "Restrained",
     tag: "Clean SaaS",
     blurb:
       "Geist-forward, tighter grid, lighter surfaces, lime accents, a two-column hero framed in browser chrome.",
   },
   {
-    href: "/marketing/signature",
-    name: "Signature",
+    href: "/marketing/bold",
+    name: "Bold",
     tag: "Brand graphic",
     blurb:
       "The login aesthetic: lime line-art brand graphic, Geist Mono eyebrows, mixed-size Tiempos italic, pill buttons.",
