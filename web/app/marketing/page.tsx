@@ -11,21 +11,18 @@ const directions = [
   {
     href: "/marketing/minimal",
     name: "Minimal",
-    tag: "Brand-forward",
     blurb:
       "Tiempos Fine italic display, deep-forest + lime, airy whitespace, a floating product preview. The refined biotech look.",
   },
   {
     href: "/marketing/restrained",
     name: "Restrained",
-    tag: "Clean SaaS",
     blurb:
       "Geist-forward, tighter grid, lighter surfaces, lime accents, a two-column hero framed in browser chrome.",
   },
   {
     href: "/marketing/bold",
     name: "Bold",
-    tag: "Brand graphic",
     blurb:
       "The login aesthetic: lime line-art brand graphic, Geist Mono eyebrows, mixed-size Tiempos italic, pill buttons.",
   },
@@ -52,10 +49,7 @@ export default function MarketingIndex() {
               href={d.href}
               className="group rounded-2xl border border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-default)] p-7 transition-shadow hover:shadow-md"
             >
-              <div className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--ds-color-text-brand)]">
-                {d.tag}
-              </div>
-              <div className="mt-2 text-2xl font-semibold text-[var(--ds-color-text-default)]">
+              <div className="text-2xl font-semibold text-[var(--ds-color-text-default)]">
                 {d.name}
               </div>
               <p className="mt-3 text-sm leading-relaxed text-[var(--ds-color-text-subtle)]">
