@@ -10,7 +10,7 @@ import { hero, testimonials, footer } from "../content";
 /**
  * Marketing landing — MINIMAL direction (brand-forward).
  *
- * Tiempos Fine italic display, deep-forest + lime, airy whitespace, a soft
+ * All-Geist display (no serif), deep-forest + lime, airy whitespace, a soft
  * lime radial glow behind a floating product preview. Same content as
  * /marketing/restrained.
  *
@@ -58,17 +58,10 @@ export default function MinimalPage() {
           <p className="text-xs font-medium uppercase tracking-[0.28em] text-[var(--ds-color-text-brand)]">
             {hero.eyebrow}
           </p>
-          {/* Upright display: Tiempos Fine is loaded italic-only, so the
-              non-italic title uses the upright Tiempos Text cut (the only
-              upright Tiempos loaded) rather than falling back to Geist sans. */}
-          <h1
-            className="mt-6 not-italic text-[var(--ds-color-text-brand)] leading-[0.95] tracking-[-0.02em] text-[clamp(3.5rem,11vw,8.5rem)]"
-            style={{ fontFamily: '"Tiempos Text", Georgia, serif' }}
-          >
+          {/* Minimal is all-Geist — no serif display. */}
+          <h1 className="mt-6 font-semibold text-[var(--ds-color-text-brand)] leading-[0.95] tracking-[-0.03em] text-[clamp(3.5rem,11vw,8.5rem)]">
             {hero.product}
-            <sup className="align-super text-[0.3em] tracking-normal not-italic">
-              {hero.trademark}
-            </sup>
+            <sup className="align-super text-[0.3em]">{hero.trademark}</sup>
           </h1>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <Button size="lg" className="rounded-full">
@@ -89,7 +82,7 @@ export default function MinimalPage() {
           <p className="text-xs font-medium uppercase tracking-[0.28em] text-[var(--ds-color-text-brand)]">
             Trusted Partner
           </p>
-          <h2 className="mt-4 font-display italic text-[var(--ds-color-text-brand)] text-display-h2">
+          <h2 className="mt-4 text-4xl font-semibold tracking-tight text-[var(--ds-color-text-brand)]">
             Scientific rigor, startup speed
           </h2>
         </div>
@@ -99,7 +92,7 @@ export default function MinimalPage() {
               key={t.role}
               className="flex flex-col rounded-2xl border border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-default)] p-8 shadow-sm"
             >
-              <blockquote className="flex-1 font-display text-xl italic leading-relaxed text-[var(--ds-color-text-default)]">
+              <blockquote className="flex-1 text-xl leading-relaxed text-[var(--ds-color-text-default)]">
                 “{t.quote}”
               </blockquote>
               <figcaption className="mt-6 text-sm text-[var(--ds-color-text-subtle)]">
@@ -117,7 +110,7 @@ export default function MinimalPage() {
             {/* Signup */}
             <div>
               <BrightseedLogo variant="lockup" className="h-6" />
-              <h3 className="mt-8 font-display italic text-[var(--ds-color-text-brand)] text-display-h2">
+              <h3 className="mt-8 text-4xl font-semibold tracking-tight text-[var(--ds-color-text-brand)]">
                 {footer.signup.heading}
               </h3>
               <p className="mt-3 max-w-sm text-sm text-[var(--ds-color-text-subtle)]">

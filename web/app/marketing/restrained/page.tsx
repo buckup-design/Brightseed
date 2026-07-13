@@ -10,8 +10,9 @@ import { hero, testimonials, footer } from "../content";
 /**
  * Marketing landing — RESTRAINED direction (clean SaaS).
  *
- * Geist-forward, tighter grid, lighter neutral surfaces, a two-column hero
- * with the product framed in browser chrome. Same content as /marketing/minimal.
+ * Tiempos Fine italic display headings over Geist body, tighter grid, lighter
+ * neutral surfaces, a two-column hero with the product framed in browser
+ * chrome. Same content as /marketing/minimal.
  *
  * CTAs: forest green, 8px radius (Figma concepts board 2019:1485). Colors are
  * brand-exploration values, applied by overriding the primary-button tokens at
@@ -53,9 +54,9 @@ export default function RestrainedPage() {
             <span className="inline-flex items-center rounded-full border border-[var(--ds-color-border-default)] bg-[var(--ds-color-surface-default)] px-3 py-1 text-xs font-medium uppercase tracking-[0.14em] text-[var(--ds-color-text-brand)]">
               {hero.eyebrow}
             </span>
-            <h1 className="mt-6 text-5xl font-semibold leading-[1.05] tracking-tight text-[var(--ds-color-text-default)] sm:text-6xl">
+            <h1 className="mt-6 font-display italic leading-[0.95] tracking-[-0.02em] text-[var(--ds-color-text-default)] text-5xl sm:text-6xl">
               {hero.product}
-              <sup className="align-super text-[0.32em] font-normal">{hero.trademark}</sup>
+              <sup className="align-super text-[0.32em] not-italic">{hero.trademark}</sup>
             </h1>
             <p className="mt-6 max-w-lg text-base leading-relaxed text-[var(--ds-color-text-subtle)]">
               {hero.lede}
@@ -82,7 +83,7 @@ export default function RestrainedPage() {
 
       {/* ── Testimonials ────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-6xl px-6 py-20">
-        <h2 className="text-3xl font-semibold tracking-tight text-[var(--ds-color-text-default)]">
+        <h2 className="font-display italic text-display-h2 text-[var(--ds-color-text-default)]">
           Scientific rigor, startup speed
         </h2>
         <p className="mt-3 max-w-xl text-base text-[var(--ds-color-text-subtle)]">
@@ -116,7 +117,7 @@ export default function RestrainedPage() {
             {/* Signup */}
             <div>
               <BrightseedLogo variant="lockup" className="h-6" />
-              <h3 className="mt-6 text-xl font-semibold text-[var(--ds-color-text-default)]">
+              <h3 className="mt-6 font-display italic text-display-h3 text-[var(--ds-color-text-default)]">
                 {footer.signup.heading}
               </h3>
               <p className="mt-2 max-w-sm text-sm text-[var(--ds-color-text-subtle)]">
