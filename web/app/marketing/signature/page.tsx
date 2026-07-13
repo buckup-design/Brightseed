@@ -108,9 +108,9 @@ export default function SignaturePage() {
             {/* Signup */}
             <div>
               <BrightseedLogo variant="lockup" className="h-6" />
-              <div className="mt-6">
-                <Eyebrow>{footer.signup.heading}</Eyebrow>
-              </div>
+              <p className="mt-6 font-mono text-sm font-medium uppercase tracking-[0.18em] text-[var(--ds-color-text-brand)]">
+                {footer.signup.heading}
+              </p>
               <p className="mt-3 max-w-sm text-sm text-[var(--ds-color-text-subtle)]">
                 {footer.signup.body}
               </p>

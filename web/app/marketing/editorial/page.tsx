@@ -100,7 +100,7 @@ export default function EditorialPage() {
             {/* Signup */}
             <div>
               <BrightseedLogo variant="lockup" className="h-6" />
-              <h3 className="mt-8 font-display italic text-[var(--ds-color-text-brand)] text-display-h3">
+              <h3 className="mt-8 font-display italic text-[var(--ds-color-text-brand)] text-display-h2">
                 {footer.signup.heading}
               </h3>
               <p className="mt-3 max-w-sm text-sm text-[var(--ds-color-text-subtle)]">

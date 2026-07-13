@@ -102,7 +102,7 @@ export default function ProductPage() {
             {/* Signup */}
             <div>
               <BrightseedLogo variant="lockup" className="h-6" />
-              <h3 className="mt-6 text-lg font-semibold text-[var(--ds-color-text-default)]">
+              <h3 className="mt-6 text-xl font-semibold text-[var(--ds-color-text-default)]">
                 {footer.signup.heading}
               </h3>
               <p className="mt-2 max-w-sm text-sm text-[var(--ds-color-text-subtle)]">
