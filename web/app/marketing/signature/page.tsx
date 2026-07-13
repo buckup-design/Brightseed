@@ -1,4 +1,4 @@
-import { CircleArrowRight, Lock } from "lucide-react";
+import { CircleArrowRight } from "lucide-react";
 
 import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 import { Button } from "@/components/ui/button";
@@ -34,7 +34,7 @@ export default function SignaturePage() {
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
           <BrightseedLogo variant="lockup" className="h-6" />
           <Button variant="secondary" size="sm" className="rounded-full">
-            {hero.primaryCta}
+            {hero.login}
           </Button>
         </nav>
       </header>
@@ -53,13 +53,11 @@ export default function SignaturePage() {
               {hero.lede}
             </p>
             <div className="mt-2 flex flex-wrap gap-3">
-              <Button size="xl" className="gap-2 rounded-full uppercase tracking-wide">
-                {hero.secondaryCta}
-                <CircleArrowRight className="size-5" />
+              <Button size="xl" className="rounded-full uppercase tracking-wide">
+                {hero.requestDemo}
               </Button>
-              <Button variant="secondary" size="xl" className="gap-2 rounded-full">
-                <Lock className="size-4" />
-                {hero.primaryCta}
+              <Button variant="secondary" size="xl" className="rounded-full">
+                {hero.login}
               </Button>
             </div>
           </div>

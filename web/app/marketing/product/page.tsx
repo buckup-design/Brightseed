@@ -1,5 +1,3 @@
-import { Lock } from "lucide-react";
-
 import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,12 +22,9 @@ export default function ProductPage() {
           <BrightseedLogo variant="lockup" className="h-6" />
           <div className="flex items-center gap-2">
             <Button variant="ghost" size="sm">
-              {hero.primaryCta}
+              {hero.login}
             </Button>
-            <Button size="sm">
-              <Lock />
-              {hero.secondaryCta}
-            </Button>
+            <Button size="sm">{hero.requestDemo}</Button>
           </div>
         </nav>
       </header>
@@ -50,10 +45,9 @@ export default function ProductPage() {
               {hero.lede}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Button size="lg">{hero.primaryCta}</Button>
-              <Button variant="outline" size="lg">
-                <Lock />
-                {hero.secondaryCta}
+              <Button size="lg">{hero.requestDemo}</Button>
+              <Button variant="secondary" size="lg">
+                {hero.login}
               </Button>
             </div>
           </div>

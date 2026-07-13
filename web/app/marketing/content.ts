@@ -17,8 +17,8 @@ export const hero = {
     "Ask questions, explore mechanisms, compare ingredients, and develop " +
     "evidence-backed product concepts with Brightseed's AI interface — powered " +
     "by proprietary bioactive intelligence.",
-  primaryCta: "Log In",
-  secondaryCta: "Request a Demo",
+  login: "Log In",
+  requestDemo: "Request a Demo",
   // Product-preview mock (rebuilt as real DOM, not a screenshot).
   preview: {
     prompt: "What can I help you create today?",
