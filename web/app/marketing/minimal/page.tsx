@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,17 +11,33 @@ import { hero, testimonials, footer } from "../content";
  * Marketing landing — MINIMAL direction (brand-forward).
  *
  * Tiempos Fine italic display, deep-forest + lime, airy whitespace, a soft
- * lime radial glow behind a floating product preview. The "refined biotech"
- * look, closest to the Figma draft. Same content as /marketing/restrained.
+ * lime radial glow behind a floating product preview. Same content as
+ * /marketing/restrained.
+ *
+ * CTAs: mint green, pill-shaped (Figma concepts board 2019:1485). Colors are
+ * brand-exploration values, applied by overriding the primary-button tokens at
+ * the page root so every CTA on the page adopts them.
  */
+const CTA_THEME = {
+  "--c-button-action-primary": "#9bd097",
+  "--c-button-action-primary-hover": "color-mix(in srgb, #9bd097 90%, #000)",
+  "--c-button-action-primary-active": "color-mix(in srgb, #9bd097 82%, #000)",
+  "--c-button-text-on-action-primary": "#000000",
+  "--c-button-text-on-action-primary-hover": "#000000",
+  "--c-button-text-on-action-primary-active": "#000000",
+} as CSSProperties;
+
 export default function MinimalPage() {
   return (
-    <div className="min-h-dvh bg-[var(--ds-color-surface-default)] text-[var(--ds-color-text-default)]">
+    <div
+      style={CTA_THEME}
+      className="min-h-dvh bg-[var(--ds-color-surface-default)] text-[var(--ds-color-text-default)]"
+    >
       {/* ── Nav ─────────────────────────────────────────────────────────── */}
       <header className="sticky top-0 z-20 border-b border-[var(--ds-color-border-subtle)]/60 bg-[var(--ds-color-surface-default)]/80 backdrop-blur">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <BrightseedLogo variant="lockup" className="h-6" />
-          <Button variant="secondary" size="sm">
+          <Button variant="secondary" size="sm" className="rounded-full">
             {hero.login}
           </Button>
         </nav>
@@ -53,7 +71,9 @@ export default function MinimalPage() {
             </sup>
           </h1>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-            <Button size="lg">{hero.requestDemo}</Button>
+            <Button size="lg" className="rounded-full">
+              {hero.requestDemo}
+            </Button>
           </div>
 
           {/* Floating product preview */}
@@ -109,7 +129,7 @@ export default function MinimalPage() {
                   placeholder={footer.signup.emailPlaceholder}
                   aria-label={footer.signup.emailPlaceholder}
                 />
-                <Button type="submit" className="shrink-0">
+                <Button type="submit" className="shrink-0 rounded-full">
                   {footer.signup.submit}
                 </Button>
               </form>

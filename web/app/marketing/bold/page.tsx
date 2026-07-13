@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { CircleArrowRight } from "lucide-react";
 
 import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
@@ -25,9 +26,26 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   );
 }
 
+/**
+ * CTAs: lime green fill, forest text, pill-shaped (Figma concepts board
+ * 2019:1485). Brand-exploration colors, applied by overriding the primary-
+ * button tokens at the page root so every CTA on the page adopts them.
+ */
+const CTA_THEME = {
+  "--c-button-action-primary": "#c5e368",
+  "--c-button-action-primary-hover": "color-mix(in srgb, #c5e368 90%, #000)",
+  "--c-button-action-primary-active": "color-mix(in srgb, #c5e368 82%, #000)",
+  "--c-button-text-on-action-primary": "#235633",
+  "--c-button-text-on-action-primary-hover": "#235633",
+  "--c-button-text-on-action-primary-active": "#235633",
+} as CSSProperties;
+
 export default function BoldPage() {
   return (
-    <div className="min-h-dvh bg-[var(--ds-color-surface-alt)] text-[var(--ds-color-text-default)]">
+    <div
+      style={CTA_THEME}
+      className="min-h-dvh bg-[var(--ds-color-surface-alt)] text-[var(--ds-color-text-default)]"
+    >
       {/* ── Nav ─────────────────────────────────────────────────────────── */}
       <header className="sticky top-0 z-20 border-b border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-default)]/90 backdrop-blur">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">

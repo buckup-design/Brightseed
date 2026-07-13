@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,13 +10,28 @@ import { hero, testimonials, footer } from "../content";
 /**
  * Marketing landing — RESTRAINED direction (clean SaaS).
  *
- * Geist-forward, tighter grid, lighter neutral surfaces, lime accents, a
- * two-column hero with the product framed in browser chrome. Reads like a
- * modern software product page. Same content as /marketing/minimal.
+ * Geist-forward, tighter grid, lighter neutral surfaces, a two-column hero
+ * with the product framed in browser chrome. Same content as /marketing/minimal.
+ *
+ * CTAs: forest green, 8px radius (Figma concepts board 2019:1485). Colors are
+ * brand-exploration values, applied by overriding the primary-button tokens at
+ * the page root so every CTA on the page adopts them.
  */
+const CTA_THEME = {
+  "--c-button-action-primary": "#3e6646",
+  "--c-button-action-primary-hover": "color-mix(in srgb, #3e6646 90%, #000)",
+  "--c-button-action-primary-active": "color-mix(in srgb, #3e6646 82%, #000)",
+  "--c-button-text-on-action-primary": "#ffffff",
+  "--c-button-text-on-action-primary-hover": "#ffffff",
+  "--c-button-text-on-action-primary-active": "#ffffff",
+} as CSSProperties;
+
 export default function RestrainedPage() {
   return (
-    <div className="min-h-dvh bg-[var(--ds-color-surface-default)] text-[var(--ds-color-text-default)]">
+    <div
+      style={CTA_THEME}
+      className="min-h-dvh bg-[var(--ds-color-surface-default)] text-[var(--ds-color-text-default)]"
+    >
       {/* ── Nav ─────────────────────────────────────────────────────────── */}
       <header className="sticky top-0 z-20 border-b border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-default)]/90 backdrop-blur">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
