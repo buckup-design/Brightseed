@@ -1,29 +1,44 @@
-import { Lock } from "lucide-react";
+import type { CSSProperties } from "react";
 
 import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { HeroPreview } from "../_components/hero-preview";
 import { SocialIcon } from "../_components/social-icons";
 import { hero, testimonials, footer } from "../content";
 
 /**
- * Marketing landing — EDITORIAL direction (brand-forward).
+ * Marketing landing — MINIMAL direction (brand-forward).
  *
- * Tiempos Fine italic display, deep-forest + lime, airy whitespace, a soft
- * lime radial glow behind a floating product preview. The "refined biotech"
- * look, closest to the Figma draft. Same content as /marketing/product.
+ * All-Geist display (no serif), deep-forest + lime, airy whitespace, a soft
+ * lime radial glow behind a floating product preview. Same content as
+ * /marketing/restrained.
+ *
+ * CTAs: mint green, pill-shaped (Figma concepts board 2019:1485). Colors are
+ * brand-exploration values, applied by overriding the primary-button tokens at
+ * the page root so every CTA on the page adopts them.
  */
-export default function EditorialPage() {
+const CTA_THEME = {
+  "--c-button-action-primary": "#9bd097",
+  "--c-button-action-primary-hover": "color-mix(in srgb, #9bd097 90%, #000)",
+  "--c-button-action-primary-active": "color-mix(in srgb, #9bd097 82%, #000)",
+  "--c-button-text-on-action-primary": "#000000",
+  "--c-button-text-on-action-primary-hover": "#000000",
+  "--c-button-text-on-action-primary-active": "#000000",
+} as CSSProperties;
+
+export default function MinimalPage() {
   return (
-    <div className="min-h-dvh bg-[var(--ds-color-surface-default)] text-[var(--ds-color-text-default)]">
+    <div
+      style={CTA_THEME}
+      className="min-h-dvh bg-[var(--ds-color-surface-default)] text-[var(--ds-color-text-default)]"
+    >
       {/* ── Nav ─────────────────────────────────────────────────────────── */}
       <header className="sticky top-0 z-20 border-b border-[var(--ds-color-border-subtle)]/60 bg-[var(--ds-color-surface-default)]/80 backdrop-blur">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <BrightseedLogo variant="lockup" className="h-6" />
-          <Button variant="secondary" size="sm">
-            {hero.primaryCta}
+          <Button variant="secondary" size="sm" className="rounded-full">
+            {hero.login}
           </Button>
         </nav>
       </header>
@@ -43,17 +58,14 @@ export default function EditorialPage() {
           <p className="text-xs font-medium uppercase tracking-[0.28em] text-[var(--ds-color-text-brand)]">
             {hero.eyebrow}
           </p>
-          <h1 className="mt-6 font-display italic text-[var(--ds-color-text-brand)] leading-[0.95] tracking-[-0.02em] text-[clamp(3.5rem,11vw,8.5rem)]">
+          {/* Minimal is all-Geist — no serif display. */}
+          <h1 className="mt-6 font-semibold text-[var(--ds-color-text-brand)] leading-[0.95] tracking-[-0.03em] text-[clamp(3.5rem,11vw,8.5rem)]">
             {hero.product}
-            <sup className="align-super text-[0.3em] tracking-normal not-italic">
-              {hero.trademark}
-            </sup>
+            <sup className="align-super text-[0.3em]">{hero.trademark}</sup>
           </h1>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-            <Button size="lg">{hero.primaryCta}</Button>
-            <Button variant="outline" size="lg">
-              <Lock />
-              {hero.secondaryCta}
+            <Button size="lg" className="rounded-full">
+              {hero.requestDemo}
             </Button>
           </div>
 
@@ -68,33 +80,23 @@ export default function EditorialPage() {
       <section className="mx-auto max-w-6xl px-6 py-24">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-xs font-medium uppercase tracking-[0.28em] text-[var(--ds-color-text-brand)]">
-            In their words
+            Trusted Partner
           </p>
-          <h2 className="mt-4 font-display italic text-[var(--ds-color-text-default)] text-display-h2">
-            Built for real scientific decisions
+          <h2 className="mt-4 text-4xl font-semibold tracking-tight text-[var(--ds-color-text-brand)]">
+            Scientific rigor, startup speed
           </h2>
         </div>
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
+        <div className="mt-14 grid gap-6 md:grid-cols-2">
           {testimonials.map((t) => (
             <figure
-              key={t.name + t.role}
-              className="flex flex-col rounded-2xl border border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-default)] p-7 shadow-sm"
+              key={t.role}
+              className="flex flex-col rounded-2xl border border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-default)] p-8 shadow-sm"
             >
-              <blockquote className="flex-1 font-display text-lg italic leading-relaxed text-[var(--ds-color-text-default)]">
+              <blockquote className="flex-1 text-xl leading-relaxed text-[var(--ds-color-text-default)]">
                 “{t.quote}”
               </blockquote>
-              <figcaption className="mt-6 flex items-center gap-3">
-                <Avatar className="size-9">
-                  <AvatarFallback>{initials(t.name)}</AvatarFallback>
-                </Avatar>
-                <div className="text-left">
-                  <div className="text-sm font-semibold text-[var(--ds-color-text-default)]">
-                    {t.name}
-                  </div>
-                  <div className="text-xs text-[var(--ds-color-text-subtle)]">
-                    {t.role}
-                  </div>
-                </div>
+              <figcaption className="mt-6 text-sm text-[var(--ds-color-text-subtle)]">
+                {t.role}
               </figcaption>
             </figure>
           ))}
@@ -108,7 +110,7 @@ export default function EditorialPage() {
             {/* Signup */}
             <div>
               <BrightseedLogo variant="lockup" className="h-6" />
-              <h3 className="mt-8 font-display italic text-[var(--ds-color-text-default)] text-display-h3">
+              <h3 className="mt-8 text-4xl font-semibold tracking-tight text-[var(--ds-color-text-brand)]">
                 {footer.signup.heading}
               </h3>
               <p className="mt-3 max-w-sm text-sm text-[var(--ds-color-text-subtle)]">
@@ -120,7 +122,7 @@ export default function EditorialPage() {
                   placeholder={footer.signup.emailPlaceholder}
                   aria-label={footer.signup.emailPlaceholder}
                 />
-                <Button type="submit" className="shrink-0">
+                <Button type="submit" className="shrink-0 rounded-full">
                   {footer.signup.submit}
                 </Button>
               </form>
@@ -179,14 +181,4 @@ export default function EditorialPage() {
       </footer>
     </div>
   );
-}
-
-function initials(name: string) {
-  if (name === "Anonymous") return "A";
-  return name
-    .split(" ")
-    .map((p) => p[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
 }

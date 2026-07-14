@@ -1,35 +1,47 @@
-import { Lock } from "lucide-react";
+import type { CSSProperties } from "react";
 
 import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { HeroPreview } from "../_components/hero-preview";
 import { SocialIcon } from "../_components/social-icons";
 import { hero, testimonials, footer } from "../content";
 
 /**
- * Marketing landing — PRODUCT / SAAS direction (clean).
+ * Marketing landing — RESTRAINED direction (clean SaaS).
  *
- * Geist-forward, tighter grid, lighter neutral surfaces, lime accents, a
- * two-column hero with the product framed in browser chrome. Reads like a
- * modern software product page. Same content as /marketing/editorial.
+ * Tiempos Fine italic display headings over Geist body, tighter grid, lighter
+ * neutral surfaces, a two-column hero with the product framed in browser
+ * chrome. Same content as /marketing/minimal.
+ *
+ * CTAs: forest green, 8px radius (Figma concepts board 2019:1485). Colors are
+ * brand-exploration values, applied by overriding the primary-button tokens at
+ * the page root so every CTA on the page adopts them.
  */
-export default function ProductPage() {
+const CTA_THEME = {
+  "--c-button-action-primary": "#3e6646",
+  "--c-button-action-primary-hover": "color-mix(in srgb, #3e6646 90%, #000)",
+  "--c-button-action-primary-active": "color-mix(in srgb, #3e6646 82%, #000)",
+  "--c-button-text-on-action-primary": "#ffffff",
+  "--c-button-text-on-action-primary-hover": "#ffffff",
+  "--c-button-text-on-action-primary-active": "#ffffff",
+} as CSSProperties;
+
+export default function RestrainedPage() {
   return (
-    <div className="min-h-dvh bg-[var(--ds-color-surface-default)] text-[var(--ds-color-text-default)]">
+    <div
+      style={CTA_THEME}
+      className="min-h-dvh bg-[var(--ds-color-surface-default)] text-[var(--ds-color-text-default)]"
+    >
       {/* ── Nav ─────────────────────────────────────────────────────────── */}
       <header className="sticky top-0 z-20 border-b border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-default)]/90 backdrop-blur">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
           <BrightseedLogo variant="lockup" className="h-6" />
           <div className="flex items-center gap-2">
             <Button variant="ghost" size="sm">
-              {hero.primaryCta}
+              {hero.login}
             </Button>
-            <Button size="sm">
-              <Lock />
-              {hero.secondaryCta}
-            </Button>
+            <Button size="sm">{hero.requestDemo}</Button>
           </div>
         </nav>
       </header>
@@ -42,19 +54,15 @@ export default function ProductPage() {
             <span className="inline-flex items-center rounded-full border border-[var(--ds-color-border-default)] bg-[var(--ds-color-surface-default)] px-3 py-1 text-xs font-medium uppercase tracking-[0.14em] text-[var(--ds-color-text-brand)]">
               {hero.eyebrow}
             </span>
-            <h1 className="mt-6 text-5xl font-semibold leading-[1.05] tracking-tight text-[var(--ds-color-text-default)] sm:text-6xl">
+            <h1 className="mt-6 font-display italic leading-[0.95] tracking-[-0.02em] text-[var(--ds-color-text-default)] text-5xl sm:text-6xl">
               {hero.product}
-              <sup className="align-super text-[0.32em] font-normal">{hero.trademark}</sup>
+              <sup className="align-super text-[0.32em] not-italic">{hero.trademark}</sup>
             </h1>
             <p className="mt-6 max-w-lg text-base leading-relaxed text-[var(--ds-color-text-subtle)]">
               {hero.lede}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Button size="lg">{hero.primaryCta}</Button>
-              <Button variant="outline" size="lg">
-                <Lock />
-                {hero.secondaryCta}
-              </Button>
+              <Button size="lg">{hero.requestDemo}</Button>
             </div>
           </div>
 
@@ -75,35 +83,27 @@ export default function ProductPage() {
 
       {/* ── Testimonials ────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-6xl px-6 py-20">
-        <h2 className="text-3xl font-semibold tracking-tight text-[var(--ds-color-text-default)]">
-          Trusted by scientific teams
+        <h2 className="font-display italic text-display-h2 text-[var(--ds-color-text-default)]">
+          Scientific rigor, startup speed
         </h2>
         <p className="mt-3 max-w-xl text-base text-[var(--ds-color-text-subtle)]">
           Why R&D and product teams reach for Hummingbird.
         </p>
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
+        <div className="mt-12 grid gap-5 md:grid-cols-2">
           {testimonials.map((t) => (
             <figure
-              key={t.name + t.role}
+              key={t.role}
               className="flex flex-col rounded-xl border border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-default)] p-6"
             >
               <span
                 aria-hidden
                 className="h-1 w-10 rounded-full bg-[var(--ds-color-action-primary)]"
               />
-              <blockquote className="mt-5 flex-1 text-[0.95rem] leading-relaxed text-[var(--ds-color-text-default)]">
+              <blockquote className="mt-5 flex-1 text-base leading-relaxed text-[var(--ds-color-text-default)]">
                 {t.quote}
               </blockquote>
-              <figcaption className="mt-6 flex items-center gap-3 border-t border-[var(--ds-color-border-subtle)] pt-5">
-                <Avatar className="size-9">
-                  <AvatarFallback>{initials(t.name)}</AvatarFallback>
-                </Avatar>
-                <div>
-                  <div className="text-sm font-semibold text-[var(--ds-color-text-default)]">
-                    {t.name}
-                  </div>
-                  <div className="text-xs text-[var(--ds-color-text-subtle)]">{t.role}</div>
-                </div>
+              <figcaption className="mt-6 border-t border-[var(--ds-color-border-subtle)] pt-5 text-sm text-[var(--ds-color-text-subtle)]">
+                {t.role}
               </figcaption>
             </figure>
           ))}
@@ -117,7 +117,7 @@ export default function ProductPage() {
             {/* Signup */}
             <div>
               <BrightseedLogo variant="lockup" className="h-6" />
-              <h3 className="mt-6 text-lg font-semibold text-[var(--ds-color-text-default)]">
+              <h3 className="mt-6 font-display italic text-display-h3 text-[var(--ds-color-text-default)]">
                 {footer.signup.heading}
               </h3>
               <p className="mt-2 max-w-sm text-sm text-[var(--ds-color-text-subtle)]">
@@ -186,14 +186,4 @@ export default function ProductPage() {
       </footer>
     </div>
   );
-}
-
-function initials(name: string) {
-  if (name === "Anonymous") return "A";
-  return name
-    .split(" ")
-    .map((p) => p[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
 }

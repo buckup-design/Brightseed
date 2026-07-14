@@ -3,7 +3,7 @@
  *
  * Copy + structure lifted verbatim from the Figma draft
  * (BSD Hummingbird (Copy), node 23:183): Hero, Testimonials, Footer.
- * The two page compositions (editorial / product) import this so the
+ * The page compositions (minimal / restrained / bold) import this so the
  * client is comparing the SAME content in different skins.
  */
 
@@ -17,8 +17,8 @@ export const hero = {
     "Ask questions, explore mechanisms, compare ingredients, and develop " +
     "evidence-backed product concepts with Brightseed's AI interface — powered " +
     "by proprietary bioactive intelligence.",
-  primaryCta: "Log In",
-  secondaryCta: "Request a Demo",
+  login: "Log In",
+  requestDemo: "Request a Demo",
   // Product-preview mock (rebuilt as real DOM, not a screenshot).
   preview: {
     prompt: "What can I help you create today?",
@@ -32,29 +32,33 @@ export const hero = {
 } as const;
 
 export type Testimonial = {
-  name: string;
-  role: string;
   quote: string;
+  role: string;
 };
 
+// Exact copy from Figma node 2015:900 ("exact testimonials"): quote + role
+// title, no personal names. NOTE: cards 1 and 4 share the same quote in the
+// source — reproduced verbatim as instructed (flag to design if unintended).
 export const testimonials: Testimonial[] = [
   {
-    name: "Lauren R.",
-    role: "Nutriquest",
-    quote:
-      "The value isn't another chatbot. It's something more evidence-based, more specific, and more useful for real scientific decisions.",
-  },
-  {
-    name: "Anonymous",
-    role: "R&D Team Lead",
-    quote:
-      "The ability to start with a natural-language question and quickly get to a credible shortlist is very useful.",
-  },
-  {
-    name: "Ben P.",
-    role: "Science Leader",
     quote:
       "What makes this useful is having the rationale, biomarkers, dose guidance, and supporting evidence tied together in one place.",
+    role: "Director of Discovery, Supplement Manufacturing",
+  },
+  {
+    quote:
+      "The ability to start with a natural-language question and quickly get to a credible shortlist is powerful.",
+    role: "R&D Lead, Multinational Food & Beverage",
+  },
+  {
+    quote:
+      "The value isn't another chatbot. It's something more evidence-based, more specific, and more useful for real scientific decisions.",
+    role: "VP, Consulting & Innovation",
+  },
+  {
+    quote:
+      "What makes this useful is having the rationale, biomarkers, dose guidance, and supporting evidence tied together in one place.",
+    role: "Scientist III New Products, Global CPG",
   },
 ];
 

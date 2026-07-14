@@ -8,7 +8,7 @@ import { hero } from "../content";
  * Hero product preview — the Hummingbird chat interface rebuilt as real DOM
  * (Quill logo + prompt field + suggestion Chips), not a bitmap screenshot.
  * Theme-aware and crisp at any size. Each page frames it differently
- * (editorial: floating soft card; product: browser chrome).
+ * (minimal: floating soft card; restrained: browser chrome).
  */
 export function HeroPreview({ showLede = true }: { showLede?: boolean }) {
   return (

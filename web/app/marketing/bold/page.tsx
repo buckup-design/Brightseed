@@ -1,16 +1,16 @@
-import { CircleArrowRight, Lock } from "lucide-react";
+import type { CSSProperties } from "react";
+import { CircleArrowRight } from "lucide-react";
 
 import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { HeroPreview } from "../_components/hero-preview";
 import { BrandGraphicPanel } from "../_components/brand-graphic";
 import { SocialIcon } from "../_components/social-icons";
 import { hero, testimonials, footer } from "../content";
 
 /**
- * Marketing landing — SIGNATURE direction, echoing the BrightseedLogin
+ * Marketing landing — BOLD direction, echoing the BrightseedLogin
  * aesthetic (Auth/BrightseedLogin): the lime line-art brand graphic, Geist
  * Mono uppercase eyebrows, mixed-size Tiempos Fine italic display, pill
  * (rounded-full) buttons with an all-caps CTA + CircleArrowRight, and
@@ -26,15 +26,32 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function SignaturePage() {
+/**
+ * CTAs: lime green fill, forest text, pill-shaped (Figma concepts board
+ * 2019:1485). Brand-exploration colors, applied by overriding the primary-
+ * button tokens at the page root so every CTA on the page adopts them.
+ */
+const CTA_THEME = {
+  "--c-button-action-primary": "#c5e368",
+  "--c-button-action-primary-hover": "color-mix(in srgb, #c5e368 90%, #000)",
+  "--c-button-action-primary-active": "color-mix(in srgb, #c5e368 82%, #000)",
+  "--c-button-text-on-action-primary": "#235633",
+  "--c-button-text-on-action-primary-hover": "#235633",
+  "--c-button-text-on-action-primary-active": "#235633",
+} as CSSProperties;
+
+export default function BoldPage() {
   return (
-    <div className="min-h-dvh bg-[var(--ds-color-surface-alt)] text-[var(--ds-color-text-default)]">
+    <div
+      style={CTA_THEME}
+      className="min-h-dvh bg-[var(--ds-color-surface-alt)] text-[var(--ds-color-text-default)]"
+    >
       {/* ── Nav ─────────────────────────────────────────────────────────── */}
       <header className="sticky top-0 z-20 border-b border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-default)]/90 backdrop-blur">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
           <BrightseedLogo variant="lockup" className="h-6" />
           <Button variant="secondary" size="sm" className="rounded-full">
-            {hero.primaryCta}
+            {hero.login}
           </Button>
         </nav>
       </header>
@@ -53,13 +70,8 @@ export default function SignaturePage() {
               {hero.lede}
             </p>
             <div className="mt-2 flex flex-wrap gap-3">
-              <Button size="xl" className="gap-2 rounded-full uppercase tracking-wide">
-                {hero.secondaryCta}
-                <CircleArrowRight className="size-5" />
-              </Button>
-              <Button variant="secondary" size="xl" className="gap-2 rounded-full">
-                <Lock className="size-4" />
-                {hero.primaryCta}
+              <Button size="xl" className="rounded-full uppercase tracking-wide">
+                {hero.requestDemo}
               </Button>
             </div>
           </div>
@@ -84,29 +96,21 @@ export default function SignaturePage() {
         <div className="mb-10">
           <Eyebrow>In their words</Eyebrow>
           <h2 className="mt-3 font-display italic text-[var(--ds-color-text-default)] text-display-h2">
-            Built for real scientific decisions
+            Scientific rigor, startup speed
           </h2>
         </div>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2">
           {testimonials.map((t) => (
             <figure
-              key={t.name + t.role}
-              className="flex flex-col rounded-xl border border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-default)] p-7 shadow-sm"
+              key={t.role}
+              className="flex flex-col rounded-xl border border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-default)] p-8 shadow-sm"
             >
               <p className="font-mono text-[0.65rem] font-medium uppercase tracking-[0.16em] text-[var(--ds-color-text-brand)]">
                 {t.role}
               </p>
-              <blockquote className="mt-4 flex-1 text-[0.95rem] leading-relaxed text-[var(--ds-color-text-default)]">
+              <blockquote className="mt-4 flex-1 text-base leading-relaxed text-[var(--ds-color-text-default)]">
                 {t.quote}
               </blockquote>
-              <figcaption className="mt-6 flex items-center gap-3 border-t border-[var(--ds-color-border-subtle)] pt-5">
-                <Avatar className="size-9">
-                  <AvatarFallback>{initials(t.name)}</AvatarFallback>
-                </Avatar>
-                <div className="text-sm font-semibold text-[var(--ds-color-text-default)]">
-                  {t.name}
-                </div>
-              </figcaption>
             </figure>
           ))}
         </div>
@@ -119,9 +123,9 @@ export default function SignaturePage() {
             {/* Signup */}
             <div>
               <BrightseedLogo variant="lockup" className="h-6" />
-              <div className="mt-6">
-                <Eyebrow>{footer.signup.heading}</Eyebrow>
-              </div>
+              <p className="mt-6 font-mono text-sm font-medium uppercase tracking-[0.18em] text-[var(--ds-color-text-brand)]">
+                {footer.signup.heading}
+              </p>
               <p className="mt-3 max-w-sm text-sm text-[var(--ds-color-text-subtle)]">
                 {footer.signup.body}
               </p>
@@ -190,14 +194,4 @@ export default function SignaturePage() {
       </footer>
     </div>
   );
-}
-
-function initials(name: string) {
-  if (name === "Anonymous") return "A";
-  return name
-    .split(" ")
-    .map((p) => p[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
 }
