@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import Link from "next/link";
 
 import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 import { Button } from "@/components/ui/button";
@@ -38,8 +39,8 @@ export default function RestrainedPage() {
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
           <BrightseedLogo variant="lockup" className="h-6" />
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="sm">
-              {hero.login}
+            <Button asChild variant="ghost" size="sm">
+              <Link href="/marketing/restrained/login">{hero.login}</Link>
             </Button>
             <Button size="sm">{hero.requestDemo}</Button>
           </div>

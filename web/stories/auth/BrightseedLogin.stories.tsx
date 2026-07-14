@@ -30,12 +30,30 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const frame = (node: React.ReactNode) => (
+  <div className="flex min-h-svh items-center justify-center bg-muted p-6 md:p-10">
+    <div className="w-full max-w-sm md:max-w-5xl">{node}</div>
+  </div>
+);
+
 export const Default: Story = {
-  render: () => (
-    <div className="flex min-h-svh items-center justify-center bg-muted p-6 md:p-10">
-      <div className="w-full max-w-sm md:max-w-5xl">
-        <BrightseedLogin />
-      </div>
-    </div>
-  ),
+  render: () => frame(<BrightseedLogin />),
+};
+
+/* ─────────────────────────────────────────────────────────────────────────
+ * Concept variants (Figma concepts board 2019:1485). Same markup and the same
+ * responsive behaviour as Default (which is the Bold direction); they differ
+ * only in form surface, CTA, and the marketing pane's graphic + overlay.
+ * ───────────────────────────────────────────────────────────────────────── */
+
+/** Mint pill CTA, white surface, geometric dot arc. No serif: the "6x faster"
+ *  headline is Geist Black, not Tiempos — the defining move of this direction. */
+export const Minimal: Story = {
+  render: () => frame(<BrightseedLogin variant="minimal" />),
+};
+
+/** Forest CTA at 8px radius (not a pill), cream surfaces, olive Tiempos
+ *  headline over the hummingbird + botanical line art. */
+export const Restrained: Story = {
+  render: () => frame(<BrightseedLogin variant="restrained" />),
 };

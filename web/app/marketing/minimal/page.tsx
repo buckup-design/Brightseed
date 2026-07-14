@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import Link from "next/link";
 
 import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 import { Button } from "@/components/ui/button";
@@ -37,8 +38,8 @@ export default function MinimalPage() {
       <header className="sticky top-0 z-20 border-b border-[var(--ds-color-border-subtle)]/60 bg-[var(--ds-color-surface-default)]/80 backdrop-blur">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <BrightseedLogo variant="lockup" className="h-6" />
-          <Button variant="secondary" size="sm" className="rounded-full">
-            {hero.login}
+          <Button asChild variant="secondary" size="sm" className="rounded-full">
+            <Link href="/marketing/minimal/login">{hero.login}</Link>
           </Button>
         </nav>
       </header>
