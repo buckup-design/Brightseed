@@ -20,7 +20,7 @@ const sections = [
   {
     heading: "Context",
     body: (
-      <>
+      <p>
         Becky Buck (John&rsquo;s wife) has been doing some pro bono work for Brightseed.
         She&rsquo;s working on a design system
         <sup className="ml-0.5">*</sup> that will enable faster prototyping with ai tools and
@@ -29,7 +29,7 @@ const sections = [
         mockup for a new Hummingbird landing page for the website, and wants to check in with the
         decision makers for all things branding to ensure she is working from current best
         thinking.
-      </>
+      </p>
     ),
     footnote: (
       <>
@@ -51,7 +51,7 @@ const sections = [
   {
     heading: "Scope",
     body: (
-      <>
+      <p>
         The scope of this work is intended to be minimal: a single public landing page for
         Hummingbird added to the main site, a custom signup form (so that the signup linked from
         the website&rsquo;s Hummingbird banner is different than the standard intake), an updated
@@ -66,7 +66,7 @@ const sections = [
         </a>
         , and login screens. This is NOT intended to be a large brand update, nor a full website
         update.
-      </>
+      </p>
     ),
   },
 ];
@@ -76,10 +76,17 @@ const requestedFeedback = {
   heading: "Requested Feedback",
   body: (
     <>
-      We&rsquo;re looking for feedback on the attached concepts so we can align on a single
-      direction. To complete the work, Becky will also need finalized content. (For example, on the
-      login screens you see where Becky made up a headline and a claim &ldquo;6x faster&rdquo;.
-      She&rsquo;s made some placeholder suggestions but needs approved content).
+      <p>
+        We&rsquo;re looking for feedback on the attached concepts so we can align on a single
+        direction. To complete the work, Becky will also need finalized content. (For example, on
+        the login screens you see where Becky made up a headline and a claim &ldquo;6x
+        faster&rdquo;. She&rsquo;s made some placeholder suggestions but needs approved content).
+      </p>
+      <p>
+        If there isn&rsquo;t a specific time claim that the team is ready to make, the suggested
+        alternate copy for the login pages is &ldquo;The industry&rsquo;s most advanced bioactive
+        discovery engine.&rdquo;
+      </p>
     </>
   ),
 };
@@ -122,9 +129,10 @@ function Section({
       <h2 className="text-4xl font-semibold tracking-tight text-[var(--ds-color-text-default)]">
         {heading}
       </h2>
-      <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--ds-color-text-subtle)]">
+      {/* space-y-3 so a body may be one paragraph or several. */}
+      <div className="mt-3 max-w-2xl space-y-3 text-sm leading-relaxed text-[var(--ds-color-text-subtle)]">
         {body}
-      </p>
+      </div>
       {footnote ? (
         <p className="mt-4 max-w-2xl text-xs leading-relaxed text-[var(--ds-color-text-subtle)]">
           {footnote}
