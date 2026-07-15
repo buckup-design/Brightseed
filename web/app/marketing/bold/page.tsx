@@ -5,7 +5,6 @@ import { CircleArrowRight } from "lucide-react";
 
 import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 import { Button } from "@/components/ui/button";
-import { GridTexture } from "../_components/grid-texture";
 import { IndustryIcon } from "../_components/industry-icons";
 import { UiScreenshot } from "../_components/ui-screenshot";
 import { TestimonialCarousel } from "../_components/testimonial-carousel";
@@ -60,10 +59,6 @@ const SKIN = {
   "--mk-brand": "var(--p-color-forest-900)",
 } as CSSProperties;
 
-// Signature Bold gradient (mock Ellipse 435): dark plum → teal → lime.
-const DEMO_GRADIENT =
-  "linear-gradient(118deg, #301922 0%, #124e51 46%, #4f8a45 74%, #b8d258 100%)";
-
 function Eyebrow({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
     <p className={`font-mono text-xs font-medium uppercase tracking-[0.2em] ${className}`}>{children}</p>
@@ -85,13 +80,15 @@ export default function BoldPage() {
 
       {/* ── Hero ────────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden">
-        {/* soft green radial glow (mock Ellipse 7) */}
+        {/* Soft green glow sitting LOW behind the interface shot (mock Ellipse
+            7). Centered ~74% down so the header copy above reads on plain white
+            and the wash only haloes the screenshot. */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 -z-0 h-[46rem]"
+          className="pointer-events-none absolute inset-0 -z-0"
           style={{
             background:
-              "radial-gradient(70% 60% at 50% 22%, rgba(137,209,143,0.30) 0%, rgba(192,223,122,0.16) 45%, rgba(255,255,255,0) 74%)",
+              "radial-gradient(58% 42% at 50% 74%, rgba(137,209,143,0.34) 0%, rgba(192,223,122,0.15) 46%, rgba(255,255,255,0) 74%)",
           }}
         />
         {/* dashed sage grid (shared client asset), matching the industry cards.
@@ -173,11 +170,13 @@ export default function BoldPage() {
 
       {/* ── Request a Demo ──────────────────────────────────────────────── */}
       <section className="mx-auto max-w-6xl px-6 py-20">
+        {/* Client-supplied CTA background (green gradient + grid baked in), so
+            no separate GridTexture overlay. Fallback color covers the PNG's
+            transparent rounded corners under the card's own rounding. */}
         <div
-          className="relative grid overflow-hidden rounded-3xl md:grid-cols-2"
-          style={{ background: DEMO_GRADIENT }}
+          className="relative grid overflow-hidden rounded-3xl bg-cover bg-center md:grid-cols-2"
+          style={{ backgroundColor: "#5f9080", backgroundImage: "url('/marketing/bold-cta-bg.png')" }}
         >
-          <GridTexture color="rgba(255,255,255,0.08)" />
           <UiScreenshot
             src="/marketing/demo-bold.jpg"
             label="UI Screenshot hero"
