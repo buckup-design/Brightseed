@@ -44,7 +44,7 @@ const SKIN = {
   "--mk-industry-icon": "#AEAB9E",
   "--mk-industry-name": "#46453f",
   "--mk-industry-body": "var(--p-color-sand-700)",
-  "--mk-emphasis": "#5f7444",
+  "--mk-emphasis": "#8f9d35",
   "--mk-quote": "#272421",
   "--mk-muted": "var(--p-color-sand-700)",
   "--mk-dot-active": "#476549",
@@ -186,7 +186,7 @@ export default function RestrainedPage() {
           <div className="flex flex-col justify-center gap-7 px-6 pb-14 md:w-[40rem] md:shrink-0 md:py-16 md:pl-2 md:pr-[max(1.5rem,calc(50vw-36rem))]">
             <p className="text-2xl leading-snug text-[var(--p-color-sand-900)] sm:text-3xl">
               {requestDemo.lead}{" "}
-              <span className="font-display italic text-[var(--mk-emphasis)]">{requestDemo.emphasis}</span>
+              <span className="whitespace-nowrap font-display italic text-[var(--mk-emphasis)]">{requestDemo.emphasis}</span>
             </p>
             <div>
               <Button size="lg" className="px-6">

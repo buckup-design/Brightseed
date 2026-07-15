@@ -50,7 +50,6 @@ const SKIN = {
   "--mk-wordmark": "#89d18f",
   "--mk-label": "#545454",
   "--mk-accent": "#6aa16e",
-  "--mk-emphasis": "#8f9d35",
   "--mk-industry-icon": "#89d18f",
   "--mk-industry-name": "var(--p-color-neutral-900)",
   "--mk-industry-body": "var(--p-color-neutral-600)",
@@ -65,15 +64,13 @@ const SKIN = {
   "--mk-brand": "#5fa568",
 } as CSSProperties;
 
-const PAGE_GRADIENT = "linear-gradient(180deg, #e9f1e2 0%, #ffffff 60%)";
-
 export default function MinimalPage() {
   return (
     <div
       style={SKIN}
       className="mk-page min-h-dvh font-sans text-[var(--p-color-neutral-900)]"
     >
-      <div style={{ background: PAGE_GRADIENT }}>
+      <div className="bg-[#eaf2e3]">
         {/* ── Nav ───────────────────────────────────────────────────────── */}
         <header className="sticky top-0 z-20 border-b border-[var(--p-color-neutral-200)]/70 bg-white/70 backdrop-blur">
           <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
@@ -86,14 +83,15 @@ export default function MinimalPage() {
 
         {/* ── Hero ──────────────────────────────────────────────────────── */}
         <section className="relative overflow-hidden">
-          {/* soft mint radial glow (mock Ellipse 7) */}
-          <div
+          {/* Real Ellipse 7 (client-supplied soft green glow) over the #EAF2E3
+              base, replacing the old CSS-radial mock. Centered, bleeding above
+              the fold; the hero's overflow-hidden crops the top. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/marketing/ellipse-7.png"
+            alt=""
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 h-[42rem]"
-            style={{
-              background:
-                "radial-gradient(58% 46% at 50% 24%, rgba(137,209,143,0.26) 0%, rgba(192,223,122,0.12) 42%, rgba(255,255,255,0) 72%)",
-            }}
+            className="pointer-events-none absolute left-1/2 top-[-24rem] w-[78rem] max-w-none -translate-x-1/2 select-none"
           />
           <div className="relative mx-auto max-w-6xl px-6 pt-16 pb-10 text-center sm:pt-20">
             <p className="text-xs font-medium uppercase tracking-[0.24em] text-[var(--mk-eyebrow)]">
@@ -182,14 +180,11 @@ export default function MinimalPage() {
             className="block w-full px-6 pt-8 md:hidden"
           />
           <div className="relative z-10 flex flex-col justify-center gap-7 p-8 md:ml-[55%] md:min-h-[22rem] md:py-14 md:pr-14 md:pl-4">
-            <p className="text-2xl leading-snug text-[var(--p-color-neutral-900)] sm:text-3xl">
+            <p className="text-2xl font-semibold leading-snug text-[#545454] sm:text-3xl">
               {requestDemo.lead}{" "}
-              {/* Tiempos Fine italic flourish (font-display), set large + green
-                  per the Minimal mock — the one serif accent in an otherwise
-                  Instrument-Sans concept. */}
-              <span className="font-display text-[48px] italic leading-none text-[var(--mk-emphasis)]">
-                {requestDemo.emphasis}
-              </span>
+              {/* Minimal stays all Instrument Sans (no serif) — the emphasis
+                  reads bold + black against the semibold grey lead. */}
+              <span className="font-bold text-black">{requestDemo.emphasis}</span>
             </p>
             <div>
               <Button size="lg" className="rounded-xl px-6">

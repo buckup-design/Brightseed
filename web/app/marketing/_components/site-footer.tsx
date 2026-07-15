@@ -34,7 +34,10 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-[var(--mk-footer-border)] bg-[var(--mk-footer-surface)]">
       <div className="mx-auto max-w-6xl px-6 py-16">
-        <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr_1fr]">
+        {/* Signup takes the flexible 1fr (its content is left-aligned, so the
+            slack sits to its RIGHT); the two menu columns are content-width and
+            hug the right edge of the page. */}
+        <div className="grid gap-12 lg:grid-cols-[1fr_auto_auto]">
           {/* Signup */}
           <div>
             <BrightseedLogo variant="lockup" className="h-6 text-[var(--mk-text)]" />
