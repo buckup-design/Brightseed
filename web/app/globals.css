@@ -128,11 +128,13 @@ body {
 }
 
 /*
- * Marketing concept pages (`.mk-page` on each concept root): a subtle drop
+ * Marketing concept + login pages (`.mk-page` on each root): a subtle drop
  * shadow on every button (Figma spec: X0 Y4, blur 12, #000 @ 12%). Excluded on
- * :focus-visible so the button's own focus ring (also box-shadow) still shows.
+ * :focus-visible so the button's own focus ring (also box-shadow) still shows,
+ * and on the transparent linktext/ghost variants (a shadow box around bare text
+ * reads as a bug — e.g. the login "Forgot password?" / "Sign up" links).
  */
-.mk-page [data-slot="button"]:not(:focus-visible) {
+.mk-page [data-slot="button"]:not(:focus-visible):not([data-variant="linktext"]):not([data-variant="ghost"]) {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
