@@ -80,6 +80,9 @@ function Eyebrow({ children, className = "" }: { children: React.ReactNode; clas
 }
 
 export default function RestrainedPage() {
+  // Keep "industry’s most advanced" together so the lead breaks after "the" —
+  // per the mock, "industry’s" starts the second line instead of ending the first.
+  const [leadHead, leadTail] = requestDemo.lead.split(/\s+(?=industry)/);
   return (
     <div style={SKIN} className="mk-page min-h-dvh bg-[var(--p-color-sand-50)] text-[var(--p-color-sand-900)]">
       {/* ── Nav ─────────────────────────────────────────────────────────── */}
@@ -184,7 +187,8 @@ export default function RestrainedPage() {
           />
           <div className="flex flex-col justify-center gap-7">
             <p className="text-3xl leading-snug text-[var(--p-color-sand-900)] sm:text-4xl">
-              {requestDemo.lead}{" "}
+              {leadHead}{" "}
+              <span className="whitespace-nowrap">{leadTail}</span>{" "}
               <span className="whitespace-nowrap font-display italic text-[var(--mk-emphasis)]">{requestDemo.emphasis}</span>
             </p>
             <div>

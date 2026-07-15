@@ -6,7 +6,6 @@ import { CircleArrowRight } from "lucide-react";
 import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 import { Button } from "@/components/ui/button";
 import { IndustryIcon } from "../_components/industry-icons";
-import { UiScreenshot } from "../_components/ui-screenshot";
 import { TestimonialCarousel } from "../_components/testimonial-carousel";
 import { SiteFooter } from "../_components/site-footer";
 import {
@@ -179,17 +178,23 @@ export default function BoldPage() {
           className="relative grid overflow-hidden rounded-3xl bg-cover bg-center md:grid-cols-2 md:items-center"
           style={{ backgroundColor: "#5f9080", backgroundImage: "url('/marketing/bold-cta-bg.png')" }}
         >
-          <div className="p-6 md:py-10 md:pl-10 md:pr-4">
-            <UiScreenshot
+          {/* App-shell shot sits large and bleeds off the card's left edge
+              (cropped by the cell's overflow-hidden) rather than floating inset.
+              Mobile stacks it normally; the bleed is a desktop (md) treatment. */}
+          <div className="relative overflow-hidden p-6 md:min-h-[27rem] md:p-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src="/marketing/demo-bold.png"
-              label="UI Screenshot hero"
-              className="aspect-[1136/716] rounded-xl"
+              alt="Hummingbird interface"
+              className="rounded-xl md:pointer-events-none md:absolute md:top-1/2 md:right-0 md:w-[130%] md:max-w-none md:-translate-y-1/2"
             />
           </div>
           <div className="relative flex flex-col justify-center gap-7 p-10 md:py-14 md:pl-4 md:pr-14">
-            <p className="text-2xl leading-snug text-white sm:text-3xl">
+            {/* Dark forest copy on the gradient's pale-lime right side; emphasis
+                stays a single line (Tiempos italic) so it drops to its own row. */}
+            <p className="text-3xl leading-[1.16] text-[var(--mk-wordmark)] sm:text-4xl">
               {requestDemo.lead}{" "}
-              <span className="font-display italic">{requestDemo.emphasis}</span>
+              <span className="whitespace-nowrap font-display italic">{requestDemo.emphasis}</span>
             </p>
             <div>
               <Button size="lg" className="gap-2 rounded-full px-6">
