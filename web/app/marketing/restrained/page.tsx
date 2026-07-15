@@ -42,7 +42,7 @@ const SKIN = {
   "--mk-wordmark": "var(--p-color-forest-900)",
   "--mk-label": "#545454",
   "--mk-industry-icon": "#AEAB9E",
-  "--mk-industry-name": "var(--p-color-sand-800)",
+  "--mk-industry-name": "#46453f",
   "--mk-industry-body": "var(--p-color-sand-700)",
   "--mk-emphasis": "#5f7444",
   "--mk-quote": "#272421",
@@ -144,7 +144,7 @@ export default function RestrainedPage() {
                 name={it.icon}
                 className={`relative size-14 text-[var(--mk-industry-icon)] ${it.icon === "carrot" ? "-scale-x-100" : ""}`}
               />
-              <h3 className="relative mt-auto pt-14 text-lg font-semibold text-[var(--mk-industry-name)]">
+              <h3 className="relative mt-auto pt-14 font-mono text-[26px] font-bold text-[var(--mk-industry-name)]">
                 {it.name}
               </h3>
               <p className="relative mt-2 text-sm leading-relaxed text-[var(--mk-industry-body)]">{it.blurb}</p>
