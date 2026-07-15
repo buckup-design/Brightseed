@@ -107,10 +107,11 @@ export default function BoldPage() {
               <CircleArrowRight className="size-5" />
             </Button>
           </div>
-          <UiScreenshot
-            src="/marketing/hero-bold.jpg"
-            label="UI Screenshot hero"
-            className="mx-auto mt-14 aspect-[1200/650] w-full max-w-5xl rounded-2xl shadow-[0_40px_80px_-40px_rgba(48,85,54,0.4)]"
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/marketing/hero-bold.png"
+            alt="Hummingbird interface"
+            className="mx-auto mt-14 block w-full max-w-5xl rounded-2xl border border-[var(--p-color-sand-200)] shadow-[0_40px_80px_-40px_rgba(48,85,54,0.4)]"
           />
         </div>
       </section>

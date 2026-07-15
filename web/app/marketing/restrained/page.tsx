@@ -98,10 +98,11 @@ export default function RestrainedPage() {
               {hero.requestDemo}
             </Button>
           </div>
-          <UiScreenshot
-            src="/marketing/hero-restrained.jpg"
-            label="UI Screenshot hero"
-            className="mx-auto mt-14 aspect-[1200/650] w-full max-w-5xl rounded-2xl shadow-[0_40px_90px_-45px_rgba(53,56,38,0.5)]"
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/marketing/hero-restrained.png"
+            alt="Hummingbird interface"
+            className="mx-auto mt-14 block w-full max-w-5xl rounded-2xl border border-[var(--p-color-sand-200)] shadow-[0_40px_90px_-45px_rgba(53,56,38,0.5)]"
           />
         </div>
       </section>

@@ -6,7 +6,6 @@ import type { Metadata } from "next";
 
 import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 import { Button } from "@/components/ui/button";
-import { HeroPreview } from "../_components/hero-preview";
 import { IndustryIcon } from "../_components/industry-icons";
 import { TestimonialCarousel } from "../_components/testimonial-carousel";
 import { SiteFooter } from "../_components/site-footer";
@@ -26,10 +25,9 @@ export const metadata: Metadata = { title: "Hummingbird — Minimal" };
  *
  * Cool greys (the `neutral` scale) + mint. Instrument Sans throughout — no
  * serif, no mono, no grid texture. Airy: a mint page-gradient and a soft radial
- * glow. The hero + demo blocks show the LIVE rebuilt interface (HeroPreview)
- * rather than a screenshot, with a slot for the concentric "dot graphic" Becky
- * will supply (drop at /marketing/minimal-dots.svg — it layers behind the
- * interface; absent = nothing shows). Same five sections as the other concepts.
+ * glow. The hero + demo blocks use Becky's composited interface screenshot
+ * (`hero-minimal.png` — browser chrome + concentric dot graphic baked in). Same
+ * five sections as the other concepts.
  */
 const INSTRUMENT = "'Instrument Sans Variable', system-ui, sans-serif";
 const SKIN = {
@@ -67,33 +65,6 @@ const SKIN = {
 } as CSSProperties;
 
 const PAGE_GRADIENT = "linear-gradient(180deg, #e9f1e2 0%, #ffffff 60%)";
-
-/** Chrome-style browser frame around the live interface (mock hero + demo). */
-function BrowserFrame({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return (
-    <div
-      className={`overflow-hidden rounded-xl border border-[var(--p-color-neutral-200)] bg-white shadow-[0_40px_90px_-45px_rgba(48,85,54,0.35)] ${className}`}
-    >
-      <div className="flex items-center gap-2 border-b border-[var(--p-color-neutral-200)] bg-[var(--p-color-neutral-50)] px-4 py-2.5">
-        <span className="size-2.5 rounded-full bg-[var(--p-color-neutral-300)]" />
-        <span className="size-2.5 rounded-full bg-[var(--p-color-neutral-300)]" />
-        <span className="size-2.5 rounded-full bg-[var(--p-color-neutral-300)]" />
-        <span className="ml-3 flex-1 truncate rounded-md bg-white px-3 py-1 text-center text-xs text-[var(--p-color-neutral-500)]">
-          https://www.brightseed.ai
-        </span>
-      </div>
-      {/* dot-graphic slot (Becky supplies /marketing/minimal-dots.svg) + interface */}
-      <div className="relative">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-center bg-no-repeat opacity-70"
-          style={{ backgroundImage: "url('/marketing/minimal-dots.svg')", backgroundSize: "contain" }}
-        />
-        <div className="relative">{children}</div>
-      </div>
-    </div>
-  );
-}
 
 export default function MinimalPage() {
   return (
@@ -136,9 +107,12 @@ export default function MinimalPage() {
                 {hero.requestDemo}
               </Button>
             </div>
-            <BrowserFrame className="mx-auto mt-14 max-w-3xl">
-              <HeroPreview />
-            </BrowserFrame>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/marketing/hero-minimal.png"
+              alt="Hummingbird interface"
+              className="mx-auto mt-10 block w-full max-w-4xl"
+            />
           </div>
         </section>
 
@@ -189,9 +163,12 @@ export default function MinimalPage() {
           className="grid items-center gap-10 overflow-hidden rounded-3xl p-8 md:grid-cols-2 md:p-12"
           style={{ background: "#eaf2e3" }}
         >
-          <BrowserFrame>
-            <HeroPreview showLede={false} />
-          </BrowserFrame>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/marketing/hero-minimal.png"
+            alt="Hummingbird interface"
+            className="block w-full"
+          />
           <div className="flex flex-col gap-7">
             <p className="text-2xl leading-snug text-[var(--p-color-neutral-900)] sm:text-3xl">
               {requestDemo.lead}{" "}
