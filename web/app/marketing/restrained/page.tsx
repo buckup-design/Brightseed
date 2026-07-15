@@ -98,12 +98,12 @@ export default function RestrainedPage() {
               {hero.requestDemo}
             </Button>
           </div>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/marketing/hero-restrained.png"
-            alt="Hummingbird interface"
-            className="mx-auto mt-14 block w-full max-w-5xl rounded-2xl border border-[var(--p-color-sand-200)] shadow-[0_40px_90px_-45px_rgba(53,56,38,0.5)]"
-          />
+          {/* Cropped interface frame (Figma clips it wide + short); the big
+              wordmark above is the hero's, so the shot has none. */}
+          <div className="mx-auto mt-14 w-full max-w-5xl overflow-hidden rounded-[20px] shadow-[0_30px_80px_-40px_rgba(53,56,38,0.5)]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/marketing/hero-restrained.png" alt="Hummingbird interface" className="block w-full" />
+          </div>
         </div>
       </section>
 
