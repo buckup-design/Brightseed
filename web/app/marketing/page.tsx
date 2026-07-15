@@ -71,22 +71,39 @@ const sections = [
   },
 ];
 
-/** Shown below the concepts — it asks for a reaction to what you just saw. */
+/**
+ * Closing sections, shown below the concepts. `requestedFeedback` asks for a
+ * reaction; `contentNeeded` lists the copy Becky still needs approved.
+ */
 const requestedFeedback = {
   heading: "Requested Feedback",
   body: (
+    <p>
+      We&rsquo;re looking for feedback on the attached concepts so we can align on a single
+      direction.
+    </p>
+  ),
+};
+
+const contentNeeded = {
+  heading: "Content needed",
+  body: (
     <>
       <p>
-        We&rsquo;re looking for feedback on the attached concepts so we can align on a single
-        direction. To complete the work, Becky will also need finalized content. (For example, on
-        the login screens you see where Becky made up a headline and a claim &ldquo;6x
-        faster&rdquo;. She&rsquo;s made some placeholder suggestions but needs approved content).
+        To complete the work, Becky will also need finalized content. For example, on the login
+        screens you see where Becky made up a headline and a claim &ldquo;6x faster.&rdquo;
+        She&rsquo;s made some placeholder suggestions but needs approved content.
       </p>
-      <p>
-        If there isn&rsquo;t a specific time claim that the team is ready to make, the suggested
-        alternate copy for the login pages is &ldquo;The industry&rsquo;s most advanced bioactive
-        discovery engine.&rdquo;
-      </p>
+      <ul className="list-disc space-y-1 pl-5">
+        <li>One-liner copy for each of the industry cards</li>
+        <li>Title and industry for each anonymous testimonial</li>
+        <li>Confirmation (or preferred copy) for the Request a Demo block</li>
+        <li>
+          Copy for the login screens. If there isn&rsquo;t a specific claim about speed that can be
+          made yet, the suggested alternate copy for the login pages is &ldquo;The industry&rsquo;s
+          most advanced bioactive discovery engine.&rdquo;
+        </li>
+      </ul>
     </>
   ),
 };
@@ -195,6 +212,7 @@ export default function MarketingIndex() {
         </div>
 
         <Section heading={requestedFeedback.heading} body={requestedFeedback.body} />
+        <Section heading={contentNeeded.heading} body={contentNeeded.body} />
       </div>
     </main>
   );
