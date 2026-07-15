@@ -50,7 +50,7 @@ const SKIN = {
   "--mk-dot-active": "#476549",
   "--mk-dot": "#d3d1c6",
   // Shared footer contract
-  "--mk-footer-surface": "var(--p-color-sand-50)",
+  "--mk-footer-surface": "#ffffff",
   "--mk-footer-border": "var(--p-color-sand-300)",
   "--mk-text": "var(--p-color-sand-900)",
   "--mk-brand": "var(--p-color-forest-900)",

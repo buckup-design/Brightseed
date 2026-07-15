@@ -91,9 +91,9 @@ export default function MinimalPage() {
             src="/marketing/ellipse-7.png"
             alt=""
             aria-hidden
-            className="pointer-events-none absolute left-1/2 top-[-24rem] w-[78rem] max-w-none -translate-x-1/2 select-none"
+            className="pointer-events-none absolute left-1/2 top-[-24rem] w-full min-w-[78rem] max-w-none -translate-x-1/2 select-none"
           />
-          <div className="relative mx-auto max-w-6xl px-6 pt-16 pb-10 text-center sm:pt-20">
+          <div className="relative mx-auto max-w-6xl px-6 pt-16 text-center sm:pt-20">
             <p className="text-xs font-medium uppercase tracking-[0.24em] text-[var(--mk-eyebrow)]">
               {hero.eyebrow}
             </p>
@@ -106,17 +106,24 @@ export default function MinimalPage() {
                 {hero.requestDemo}
               </Button>
             </div>
+            {/* Bleeds past the hero section's bottom; the mint wrapper ends here
+                and overflow-hidden crops the shot to a straight edge, so the
+                mint→white boundary reads as a hard line under the interface. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/marketing/hero-minimal.png"
               alt="Hummingbird interface"
-              className="mx-auto mt-10 block w-full max-w-4xl"
+              className="mx-auto mt-10 -mb-12 block w-full max-w-4xl"
             />
           </div>
         </section>
+      </div>
 
-        {/* ── Industries ────────────────────────────────────────────────── */}
-        <section className="mx-auto max-w-6xl px-6 py-20">
+      {/* ── Industries ──────────────────────────────────────────────────── */}
+      {/* White band — the hard mint→white line above is the cropped hero's
+          bottom edge (mint wrapper closes above). */}
+      <section className="bg-white">
+        <div className="mx-auto max-w-6xl px-6 py-20">
           <p className="text-center text-xs font-medium uppercase tracking-[0.24em] text-[var(--mk-label)]">
             {industriesLabel}
           </p>
@@ -124,8 +131,8 @@ export default function MinimalPage() {
             {industries.map((it) => (
               <div
                 key={it.key}
-                className="flex min-h-[17rem] flex-col rounded-2xl border border-[var(--p-color-neutral-200)] p-7"
-                style={{ background: "linear-gradient(160deg, #eef5e8 0%, #ffffff 100%)" }}
+                className="flex min-h-[17rem] flex-col rounded-md p-7"
+                style={{ background: "linear-gradient(180deg, #e6f0dd 0%, #ffffff 68%)" }}
               >
                 {/* Fixed-height icon band: centers the icon horizontally + vertically
                     in the space above the heading, and keeps every card's heading
@@ -138,8 +145,8 @@ export default function MinimalPage() {
               </div>
             ))}
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
       {/* ── Testimonials ──────────────────────────────────────────────────── */}
       <section className="bg-[var(--p-color-neutral-50)]">
