@@ -1,190 +1,172 @@
 import type { CSSProperties } from "react";
 import Link from "next/link";
+import type { Metadata } from "next";
 
 import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { HeroPreview } from "../_components/hero-preview";
-import { SocialIcon } from "../_components/social-icons";
-import { hero, testimonials, footer } from "../content";
+import { GridTexture } from "../_components/grid-texture";
+import { IndustryIcon } from "../_components/industry-icons";
+import { UiScreenshot } from "../_components/ui-screenshot";
+import { TestimonialCarousel } from "../_components/testimonial-carousel";
+import { SiteFooter } from "../_components/site-footer";
+import {
+  hero,
+  industries,
+  industriesLabel,
+  testimonialsLabel,
+  carouselTestimonials,
+  requestDemo,
+} from "../content";
+
+export const metadata: Metadata = { title: "Hummingbird — Restrained" };
 
 /**
- * Marketing landing — RESTRAINED direction (clean SaaS).
+ * Marketing landing — RESTRAINED concept (Figma "Concept: restrained",
+ * 2036:4885).
  *
- * Tiempos Fine italic display headings over Geist body, tighter grid, lighter
- * neutral surfaces, a two-column hero with the product framed in browser
- * chrome. Same content as /marketing/minimal.
- *
- * CTAs: forest green, 8px radius (Figma concepts board 2019:1485). Colors are
- * brand-exploration values, applied by overriding the primary-button tokens at
- * the page root so every CTA on the page adopts them.
+ * Warm sand surfaces, a sage blueprint grid, forest-green rounded-rect CTAs,
+ * NO gradients. Geist + Geist Mono, with Tiempos Fine italic reserved for the
+ * demo emphasis. Neutral (not green) eyebrow. Industries reorder Nutrition to
+ * 2nd and flip the carrot horizontally, per the mock. Same five sections as the
+ * other concepts.
  */
-const CTA_THEME = {
-  "--c-button-action-primary": "#3e6646",
-  "--c-button-action-primary-hover": "color-mix(in srgb, #3e6646 90%, #000)",
-  "--c-button-action-primary-active": "color-mix(in srgb, #3e6646 82%, #000)",
+const SKIN = {
+  // Concept CTA — forest rounded-rect (mock #476549 / white).
+  "--c-button-action-primary": "#476549",
+  "--c-button-action-primary-hover": "#3b5540",
+  "--c-button-action-primary-active": "#324937",
   "--c-button-text-on-action-primary": "#ffffff",
   "--c-button-text-on-action-primary-hover": "#ffffff",
   "--c-button-text-on-action-primary-active": "#ffffff",
+  // Concept palette
+  "--mk-eyebrow": "#272421",
+  "--mk-wordmark": "var(--p-color-forest-900)",
+  "--mk-label": "#545454",
+  "--mk-industry-icon": "#5f7444",
+  "--mk-industry-name": "var(--p-color-sand-800)",
+  "--mk-industry-body": "var(--p-color-sand-700)",
+  "--mk-emphasis": "#5f7444",
+  "--mk-quote": "#272421",
+  "--mk-muted": "var(--p-color-sand-700)",
+  "--mk-dot-active": "#476549",
+  "--mk-dot": "#d3d1c6",
+  // Shared footer contract
+  "--mk-footer-surface": "var(--p-color-sand-50)",
+  "--mk-footer-border": "var(--p-color-sand-300)",
+  "--mk-text": "var(--p-color-sand-900)",
+  "--mk-brand": "var(--p-color-forest-900)",
 } as CSSProperties;
+
+const GRID = "rgba(150, 158, 120, 0.28)";
+
+// Restrained reorders Nutrition ahead of Personal Care (mock order).
+const RESTRAINED_ORDER = ["food", "nutrition", "personal", "pharma"];
+const restrainedIndustries = RESTRAINED_ORDER.map(
+  (k) => industries.find((i) => i.key === k)!,
+);
+
+function Eyebrow({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return (
+    <p className={`font-mono text-xs font-medium uppercase tracking-[0.2em] ${className}`}>{children}</p>
+  );
+}
 
 export default function RestrainedPage() {
   return (
-    <div
-      style={CTA_THEME}
-      className="min-h-dvh bg-[var(--ds-color-surface-default)] text-[var(--ds-color-text-default)]"
-    >
+    <div style={SKIN} className="min-h-dvh bg-[var(--p-color-sand-50)] text-[var(--p-color-sand-900)]">
       {/* ── Nav ─────────────────────────────────────────────────────────── */}
-      <header className="sticky top-0 z-20 border-b border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-default)]/90 backdrop-blur">
+      <header className="sticky top-0 z-20 border-b border-[var(--p-color-sand-200)] bg-[var(--p-color-sand-50)]/85 backdrop-blur">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
-          <BrightseedLogo variant="lockup" className="h-6" />
-          <div className="flex items-center gap-2">
-            <Button asChild variant="ghost" size="sm">
-              <Link href="/marketing/restrained/login">{hero.login}</Link>
-            </Button>
-            <Button size="sm">{hero.requestDemo}</Button>
-          </div>
+          <BrightseedLogo variant="lockup" className="h-6 text-[var(--p-color-forest-900)]" />
+          <Button asChild variant="secondary" size="sm" className="rounded-full">
+            <Link href="/marketing/restrained/login">{hero.login}</Link>
+          </Button>
         </nav>
       </header>
 
       {/* ── Hero ────────────────────────────────────────────────────────── */}
-      <section className="bg-[var(--ds-color-surface-alt)]">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-16 lg:grid-cols-2 lg:py-24">
-          {/* Copy */}
-          <div>
-            <span className="inline-flex items-center rounded-full border border-[var(--ds-color-border-default)] bg-[var(--ds-color-surface-default)] px-3 py-1 text-xs font-medium uppercase tracking-[0.14em] text-[var(--ds-color-text-brand)]">
-              {hero.eyebrow}
-            </span>
-            <h1 className="mt-6 font-display italic leading-[0.95] tracking-[-0.02em] text-[var(--ds-color-text-default)] text-5xl sm:text-6xl">
-              {hero.product}
-              <sup className="align-super text-[0.32em] not-italic">{hero.trademark}</sup>
-            </h1>
-            <p className="mt-6 max-w-lg text-base leading-relaxed text-[var(--ds-color-text-subtle)]">
-              {hero.lede}
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button size="lg">{hero.requestDemo}</Button>
-            </div>
+      <section className="relative overflow-hidden">
+        <GridTexture className="-z-0 h-[48rem]" color={GRID} />
+        <div className="relative mx-auto max-w-6xl px-6 pt-16 pb-14 text-center sm:pt-20">
+          <Eyebrow className="text-[var(--mk-eyebrow)]">{hero.eyebrow}</Eyebrow>
+          <h1 className="mt-5 font-semibold leading-[0.9] tracking-[-0.03em] text-[var(--mk-wordmark)] text-[clamp(3.5rem,9vw,7rem)]">
+            {hero.product}
+            <sup className="align-super text-[0.28em] font-normal">{hero.trademark}</sup>
+          </h1>
+          <div className="mt-8 flex justify-center">
+            <Button size="lg" className="px-6">
+              {hero.requestDemo}
+            </Button>
           </div>
-
-          {/* Product in browser chrome */}
-          <div className="overflow-hidden rounded-xl border border-[var(--ds-color-border-default)] bg-[var(--ds-color-surface-default)] shadow-[0_24px_60px_-30px_rgba(0,0,0,0.35)]">
-            <div className="flex items-center gap-2 border-b border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-alt)] px-4 py-2.5">
-              <span className="size-2.5 rounded-full bg-[var(--ds-color-border-default)]" />
-              <span className="size-2.5 rounded-full bg-[var(--ds-color-border-default)]" />
-              <span className="size-2.5 rounded-full bg-[var(--ds-color-border-default)]" />
-              <span className="ml-3 flex-1 truncate rounded-md bg-[var(--ds-color-surface-default)] px-3 py-1 text-center text-xs text-[var(--ds-color-text-subtle)]">
-                https://www.brightseed.ai
-              </span>
-            </div>
-            <HeroPreview showLede={false} />
-          </div>
+          <UiScreenshot
+            src="/marketing/hero-restrained.jpg"
+            label="UI Screenshot hero"
+            className="mx-auto mt-14 aspect-[1200/650] w-full max-w-5xl rounded-2xl shadow-[0_40px_90px_-45px_rgba(53,56,38,0.5)]"
+          />
         </div>
       </section>
 
-      {/* ── Testimonials ────────────────────────────────────────────────── */}
-      <section className="mx-auto max-w-6xl px-6 py-20">
-        <h2 className="font-display italic text-display-h2 text-[var(--ds-color-text-default)]">
-          Scientific rigor, startup speed
-        </h2>
-        <p className="mt-3 max-w-xl text-base text-[var(--ds-color-text-subtle)]">
-          Why R&D and product teams reach for Hummingbird.
-        </p>
-        <div className="mt-12 grid gap-5 md:grid-cols-2">
-          {testimonials.map((t) => (
-            <figure
-              key={t.role}
-              className="flex flex-col rounded-xl border border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-default)] p-6"
+      {/* ── Industries ──────────────────────────────────────────────────── */}
+      <section className="relative mx-auto max-w-6xl px-6 py-20">
+        <Eyebrow className="text-center text-[var(--mk-label)]">{industriesLabel}</Eyebrow>
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {restrainedIndustries.map((it) => (
+            <div
+              key={it.key}
+              className="relative flex min-h-[17rem] flex-col overflow-hidden rounded-2xl border border-[var(--p-color-sand-200)] bg-[var(--p-color-sand-50)] p-7"
             >
-              <span
-                aria-hidden
-                className="h-1 w-10 rounded-full bg-[var(--ds-color-action-primary)]"
+              <GridTexture color={GRID} />
+              <IndustryIcon
+                name={it.icon}
+                className={`relative size-14 text-[var(--mk-industry-icon)] ${it.icon === "carrot" ? "-scale-x-100" : ""}`}
               />
-              <blockquote className="mt-5 flex-1 text-base leading-relaxed text-[var(--ds-color-text-default)]">
-                {t.quote}
-              </blockquote>
-              <figcaption className="mt-6 border-t border-[var(--ds-color-border-subtle)] pt-5 text-sm text-[var(--ds-color-text-subtle)]">
-                {t.role}
-              </figcaption>
-            </figure>
+              <h3 className="relative mt-auto pt-14 text-lg font-semibold text-[var(--mk-industry-name)]">
+                {it.name}
+              </h3>
+              <p className="relative mt-2 text-sm leading-relaxed text-[var(--mk-industry-body)]">{it.blurb}</p>
+            </div>
           ))}
         </div>
       </section>
 
-      {/* ── Footer ──────────────────────────────────────────────────────── */}
-      <footer className="border-t border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-alt)]">
-        <div className="mx-auto max-w-6xl px-6 py-14">
-          <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr]">
-            {/* Signup */}
+      {/* ── Testimonials ────────────────────────────────────────────────── */}
+      <section className="mx-auto max-w-6xl px-6 pb-8">
+        <Eyebrow className="text-[var(--mk-quote)]">{testimonialsLabel}</Eyebrow>
+        <div className="mt-8 max-w-3xl">
+          <TestimonialCarousel
+            items={carouselTestimonials}
+            quoteClassName="text-3xl font-medium leading-[1.25] tracking-tight text-[var(--mk-quote)] sm:text-4xl"
+            roleClassName="mt-8 text-sm text-[var(--mk-muted)]"
+            dotActiveClassName="bg-[var(--mk-dot-active)]"
+            dotClassName="bg-[var(--mk-dot)] hover:bg-[var(--mk-dot-active)]/50"
+          />
+        </div>
+      </section>
+
+      {/* ── Request a Demo ──────────────────────────────────────────────── */}
+      <section className="mx-auto max-w-6xl px-6 py-20">
+        <div className="relative grid overflow-hidden rounded-3xl border border-[var(--p-color-sand-200)] bg-[var(--p-color-sand-50)] md:grid-cols-2">
+          <GridTexture color={GRID} />
+          <UiScreenshot
+            src="/marketing/demo-restrained.jpg"
+            label="UI Screenshot hero"
+            className="min-h-[16rem] md:min-h-full"
+          />
+          <div className="relative flex flex-col justify-center gap-7 p-10 md:p-14">
+            <p className="text-2xl leading-snug text-[var(--p-color-sand-900)] sm:text-3xl">
+              {requestDemo.lead}{" "}
+              <span className="font-display italic text-[var(--mk-emphasis)]">{requestDemo.emphasis}</span>
+            </p>
             <div>
-              <BrightseedLogo variant="lockup" className="h-6" />
-              <h3 className="mt-6 font-display italic text-display-h3 text-[var(--ds-color-text-default)]">
-                {footer.signup.heading}
-              </h3>
-              <p className="mt-2 max-w-sm text-sm text-[var(--ds-color-text-subtle)]">
-                {footer.signup.body}
-              </p>
-              <form className="mt-5 flex max-w-md flex-col gap-2.5 sm:flex-row">
-                <Input
-                  type="email"
-                  placeholder={footer.signup.emailPlaceholder}
-                  aria-label={footer.signup.emailPlaceholder}
-                />
-                <Button type="submit" className="shrink-0">
-                  {footer.signup.submit}
-                </Button>
-              </form>
-              <div className="mt-6 flex gap-4 text-[var(--ds-color-text-brand)]">
-                {footer.social.map((s) => (
-                  <a
-                    key={s}
-                    href="#"
-                    aria-label={s}
-                    className="transition-opacity hover:opacity-70"
-                  >
-                    <SocialIcon name={s} className="size-5" />
-                  </a>
-                ))}
-              </div>
+              <Button size="lg" className="px-6">
+                {requestDemo.cta}
+              </Button>
             </div>
-
-            {/* Menus */}
-            {footer.menus.map((m) => (
-              <div key={m.heading}>
-                <div className="text-sm font-semibold text-[var(--ds-color-text-default)]">
-                  {m.heading}
-                </div>
-                <ul className="mt-4 space-y-3">
-                  {m.links.map((l) => (
-                    <li key={l}>
-                      <a
-                        href="#"
-                        className="text-sm text-[var(--ds-color-text-subtle)] transition-colors hover:text-[var(--ds-color-text-default)]"
-                      >
-                        {l}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          {/* Legal */}
-          <div className="mt-12 flex flex-col gap-4 border-t border-[var(--ds-color-border-subtle)] pt-6 text-xs text-[var(--ds-color-text-subtle)] sm:flex-row sm:items-center sm:justify-between">
-            <ul className="flex flex-wrap gap-x-6 gap-y-2">
-              {footer.legal.map((l) => (
-                <li key={l}>
-                  <a href="#" className="transition-colors hover:text-[var(--ds-color-text-default)]">
-                    {l}
-                  </a>
-                </li>
-              ))}
-            </ul>
-            <span>{footer.copyright}</span>
           </div>
         </div>
-      </footer>
+      </section>
+
+      <SiteFooter />
     </div>
   );
 }

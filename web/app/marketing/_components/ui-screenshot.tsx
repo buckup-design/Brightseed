@@ -1,0 +1,49 @@
+"use client";
+
+import { useState } from "react";
+
+/**
+ * Swappable UI-screenshot placeholder — the gray "UI Screenshot hero" box from
+ * the Bold + Restrained mock. Renders the labeled placeholder by default; when
+ * an image exists at `src`, it covers the box. If the file is missing the
+ * <img> errors and we fall back to the placeholder, so Becky can drop her
+ * screenshots at the given paths and they appear on next load with no code
+ * change.
+ *
+ * Expected drop paths (public/): see each page for the exact filename.
+ */
+export function UiScreenshot({
+  src,
+  alt = "Hummingbird interface",
+  label = "UI Screenshot",
+  className = "",
+}: {
+  src?: string;
+  alt?: string;
+  label?: string;
+  className?: string;
+}) {
+  // Start hidden; reveal only once the image actually loads. A missing file
+  // (404) never fires onLoad, so it stays invisible and the placeholder shows —
+  // no broken-image glyph or alt text flashing through.
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <div className={`relative overflow-hidden ${className}`}>
+      {/* Placeholder fill — sand-500, matching the mock's neutral gray box. */}
+      <div className="absolute inset-0 grid place-items-center bg-[var(--p-color-sand-500)]">
+        <span className="text-lg font-medium tracking-tight text-white/95">{label}</span>
+      </div>
+      {src ? (
+        // eslint-disable-next-line @next/next/no-img-element -- swappable drop-in placeholder, not a build-time asset
+        <img
+          src={src}
+          alt={alt}
+          onLoad={() => setLoaded(true)}
+          onError={() => setLoaded(false)}
+          className={`relative z-10 h-full w-full object-cover transition-opacity duration-300 ${loaded ? "opacity-100" : "opacity-0"}`}
+        />
+      ) : null}
+    </div>
+  );
+}

@@ -62,6 +62,64 @@ export const testimonials: Testimonial[] = [
   },
 ];
 
+// ── Industries ──────────────────────────────────────────────────────────────
+// Four industry cards shared across all three concepts. `icon` keys map to the
+// shared Phosphor set in _components/industry-icons.tsx (same art everywhere,
+// recolored per concept; Restrained flips the carrot + reorders — handled on
+// the page). Body copy is the Figma placeholder ("content needed" per the
+// marketing index: real one-liners still to be approved).
+export const industriesLabel = "Industries Served";
+
+export type IndustryIconName = "cart" | "lotus" | "carrot" | "pill";
+export type Industry = {
+  key: string;
+  name: string;
+  icon: IndustryIconName;
+  blurb: string;
+};
+
+export const industries: Industry[] = [
+  {
+    key: "food",
+    name: "Food and Beverage",
+    icon: "cart",
+    blurb: "Wattle seed eggplant soybean garlic prairie turnip swiss chard.",
+  },
+  {
+    key: "personal",
+    name: "Personal Care",
+    icon: "lotus",
+    blurb: "Turnip greens rock melon chicory collard greens bok choy.",
+  },
+  {
+    key: "nutrition",
+    name: "Nutrition",
+    icon: "carrot",
+    blurb: "Desert raisin chard cabbage cress gumbo spinach mung bean.",
+  },
+  {
+    key: "pharma",
+    name: "Pharma",
+    icon: "pill",
+    blurb: "Carrot grape soko wakame plantain pea broccoli rabe.",
+  },
+];
+
+// ── Testimonials carousel label + Request-a-Demo block ────────────────────────
+export const testimonialsLabel = "Customer Stories";
+
+// Carousel shows 3 unique quotes (content.ts has 4; #1 and #4 are duplicates in
+// the Figma source, so we drop the trailing dupe).
+export const carouselTestimonials: Testimonial[] = testimonials.slice(0, 3);
+
+export const requestDemo = {
+  // "bioactive discovery engine." is set apart (Tiempos italic in Bold/
+  // Restrained; bold-weight sans in Minimal) — see each page.
+  lead: "Learn more about the industry’s most advanced",
+  emphasis: "bioactive discovery engine.",
+  cta: "Request a Demo",
+} as const;
+
 export const footer = {
   signup: {
     heading: "Get in Touch",
