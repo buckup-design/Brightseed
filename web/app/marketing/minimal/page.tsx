@@ -70,7 +70,7 @@ export default function MinimalPage() {
   return (
     <div
       style={SKIN}
-      className="min-h-dvh font-sans text-[var(--p-color-neutral-900)]"
+      className="mk-page min-h-dvh font-sans text-[var(--p-color-neutral-900)]"
     >
       <div style={{ background: PAGE_GRADIENT }}>
         {/* ── Nav ───────────────────────────────────────────────────────── */}

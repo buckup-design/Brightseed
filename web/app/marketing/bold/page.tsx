@@ -72,7 +72,7 @@ function Eyebrow({ children, className = "" }: { children: React.ReactNode; clas
 
 export default function BoldPage() {
   return (
-    <div style={SKIN} className="min-h-dvh bg-white text-[var(--p-color-sand-900)]">
+    <div style={SKIN} className="mk-page min-h-dvh bg-white text-[var(--p-color-sand-900)]">
       {/* ── Nav ─────────────────────────────────────────────────────────── */}
       <header className="sticky top-0 z-20 border-b border-[var(--p-color-sand-200)] bg-white/85 backdrop-blur">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">

@@ -125,6 +125,15 @@ body {
 }
 
 /*
+ * Marketing concept pages (`.mk-page` on each concept root): a subtle drop
+ * shadow on every button (Figma spec: X0 Y4, blur 12, #000 @ 12%). Excluded on
+ * :focus-visible so the button's own focus ring (also box-shadow) still shows.
+ */
+.mk-page [data-slot="button"]:not(:focus-visible) {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/*
  ---break---
  */
 
