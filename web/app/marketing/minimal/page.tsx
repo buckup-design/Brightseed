@@ -128,10 +128,13 @@ export default function MinimalPage() {
                 className="flex min-h-[17rem] flex-col rounded-2xl border border-[var(--p-color-neutral-200)] p-7"
                 style={{ background: "linear-gradient(160deg, #eef5e8 0%, #ffffff 100%)" }}
               >
-                <IndustryIcon name={it.icon} className="size-14 text-[var(--mk-industry-icon)]" />
-                <h3 className="mt-auto pt-14 text-lg font-semibold text-[var(--mk-industry-name)]">
-                  {it.name}
-                </h3>
+                {/* Fixed-height icon band: centers the icon horizontally + vertically
+                    in the space above the heading, and keeps every card's heading
+                    at the same height regardless of body length. */}
+                <div className="flex h-28 items-center justify-center">
+                  <IndustryIcon name={it.icon} className="size-14 text-[var(--mk-industry-icon)]" />
+                </div>
+                <h3 className="text-lg font-semibold text-[var(--mk-industry-name)]">{it.name}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-[var(--mk-industry-body)]">{it.blurb}</p>
               </div>
             ))}
