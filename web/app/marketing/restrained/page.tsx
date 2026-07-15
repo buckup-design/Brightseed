@@ -4,7 +4,6 @@ import type { Metadata } from "next";
 
 import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 import { Button } from "@/components/ui/button";
-import { GridTexture } from "../_components/grid-texture";
 import { IndustryIcon } from "../_components/industry-icons";
 import { UiScreenshot } from "../_components/ui-screenshot";
 import { TestimonialCarousel } from "../_components/testimonial-carousel";
@@ -57,7 +56,16 @@ const SKIN = {
   "--mk-brand": "var(--p-color-forest-900)",
 } as CSSProperties;
 
-const GRID = "rgba(150, 158, 120, 0.28)";
+/** Client-supplied dashed sage grid (SVG): grid-large = hero/CTA, grid-square = cards. */
+function GridOverlay({ src, className = "" }: { src: string; className?: string }) {
+  return (
+    <div
+      aria-hidden
+      className={`pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat ${className}`}
+      style={{ backgroundImage: `url('${src}')` }}
+    />
+  );
+}
 
 // Restrained reorders Nutrition ahead of Personal Care (mock order).
 const RESTRAINED_ORDER = ["food", "nutrition", "personal", "pharma"];
@@ -86,7 +94,7 @@ export default function RestrainedPage() {
 
       {/* ── Hero ────────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden">
-        <GridTexture className="-z-0 h-[48rem]" color={GRID} />
+        <GridOverlay src="/marketing/grid-large.svg" className="-z-0 h-[48rem]" />
         <div className="relative mx-auto max-w-6xl px-6 pt-16 pb-14 text-center sm:pt-20">
           <Eyebrow className="text-[var(--mk-eyebrow)]">{hero.eyebrow}</Eyebrow>
           <h1 className="mt-5 font-semibold leading-[0.9] tracking-[-0.03em] text-[var(--mk-wordmark)] text-[clamp(3.5rem,9vw,7rem)]">
@@ -116,7 +124,7 @@ export default function RestrainedPage() {
               key={it.key}
               className="relative flex min-h-[17rem] flex-col overflow-hidden rounded-2xl border border-[var(--p-color-sand-200)] bg-[var(--p-color-sand-50)] p-7"
             >
-              <GridTexture color={GRID} />
+              <GridOverlay src="/marketing/grid-square.svg" />
               <IndustryIcon
                 name={it.icon}
                 className={`relative size-14 text-[var(--mk-industry-icon)] ${it.icon === "carrot" ? "-scale-x-100" : ""}`}
@@ -147,7 +155,7 @@ export default function RestrainedPage() {
       {/* ── Request a Demo ──────────────────────────────────────────────── */}
       <section className="mx-auto max-w-6xl px-6 py-20">
         <div className="relative grid overflow-hidden rounded-3xl border border-[var(--p-color-sand-200)] bg-[var(--p-color-sand-50)] md:grid-cols-2">
-          <GridTexture color={GRID} />
+          <GridOverlay src="/marketing/grid-large.svg" />
           <UiScreenshot
             src="/marketing/demo-restrained.jpg"
             label="UI Screenshot hero"

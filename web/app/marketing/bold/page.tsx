@@ -94,7 +94,12 @@ export default function BoldPage() {
               "radial-gradient(70% 60% at 50% 22%, rgba(137,209,143,0.30) 0%, rgba(192,223,122,0.16) 45%, rgba(255,255,255,0) 74%)",
           }}
         />
-        <GridTexture className="-z-0 h-[46rem]" color="rgba(167,188,135,0.35)" />
+        {/* dashed sage grid (shared client asset), matching the industry cards */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-0 h-[46rem] bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/marketing/grid-large.svg')" }}
+        />
         <div className="relative mx-auto max-w-6xl px-6 pt-16 pb-14 text-center sm:pt-20">
           <Eyebrow className="text-[var(--mk-eyebrow)]">{hero.eyebrow}</Eyebrow>
           <h1 className="mt-5 font-semibold leading-[0.9] tracking-[-0.03em] text-[var(--mk-wordmark)] text-[clamp(3.5rem,9vw,7rem)]">
@@ -123,10 +128,9 @@ export default function BoldPage() {
           {industries.map((it) => (
             <div
               key={it.key}
-              className="relative flex min-h-[19rem] flex-col justify-between overflow-hidden rounded-2xl p-7"
-              style={{ background: "linear-gradient(150deg, #eaf6e3 0%, #d5ecd1 58%, #c2e3be 100%)" }}
+              className="relative flex min-h-[19rem] flex-col justify-between overflow-hidden rounded-2xl bg-cover bg-center p-7"
+              style={{ backgroundImage: `url('/marketing/bold-${it.key}-card.png')` }}
             >
-              <GridTexture color="rgba(120,160,110,0.28)" />
               <span className="relative grid size-14 place-items-center rounded-full bg-[var(--p-color-lime-100)]">
                 <IndustryIcon name={it.icon} className="size-7 text-[var(--mk-industry-icon)]" />
               </span>
