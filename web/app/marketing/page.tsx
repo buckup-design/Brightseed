@@ -184,7 +184,7 @@ export default function MarketingIndex() {
                   {d.blurb}
                 </p>
                 <span className="mt-5 inline-block text-sm font-medium text-[var(--ds-color-text-brand)] group-hover:underline">
-                  View direction →
+                  View concept →
                 </span>
               </div>
             </Link>
