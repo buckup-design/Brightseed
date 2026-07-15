@@ -170,19 +170,23 @@ export default function BoldPage() {
 
       {/* ── Request a Demo ──────────────────────────────────────────────── */}
       <section className="mx-auto max-w-6xl px-6 py-20">
-        {/* Client-supplied CTA background (green gradient + grid baked in), so
-            no separate GridTexture overlay. Fallback color covers the PNG's
-            transparent rounded corners under the card's own rounding. */}
+        {/* Full-bleed gradient card (green gradient + grid baked into the PNG,
+            so no separate GridTexture). The screenshot floats INSET on the
+            gradient — padded so the gradient shows above/below/around it —
+            rather than filling the whole left half. Fallback color covers the
+            PNG's transparent corners under the card's own rounding. */}
         <div
-          className="relative grid overflow-hidden rounded-3xl bg-cover bg-center md:grid-cols-2"
+          className="relative grid overflow-hidden rounded-3xl bg-cover bg-center md:grid-cols-2 md:items-stretch"
           style={{ backgroundColor: "#5f9080", backgroundImage: "url('/marketing/bold-cta-bg.png')" }}
         >
-          <UiScreenshot
-            src="/marketing/demo-bold.jpg"
-            label="UI Screenshot hero"
-            className="min-h-[16rem] md:min-h-full"
-          />
-          <div className="relative flex flex-col justify-center gap-7 p-10 md:p-14">
+          <div className="p-6 md:py-10 md:pl-10 md:pr-4">
+            <UiScreenshot
+              src="/marketing/demo-bold.jpg"
+              label="UI Screenshot hero"
+              className="h-full min-h-[13rem] rounded-xl md:min-h-[19rem]"
+            />
+          </div>
+          <div className="relative flex flex-col justify-center gap-7 p-10 md:py-14 md:pl-4 md:pr-14">
             <p className="text-2xl leading-snug text-white sm:text-3xl">
               {requestDemo.lead}{" "}
               <span className="font-display italic">{requestDemo.emphasis}</span>

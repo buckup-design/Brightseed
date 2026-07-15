@@ -165,15 +165,21 @@ export default function RestrainedPage() {
       </section>
 
       {/* ── Request a Demo ──────────────────────────────────────────────── */}
-      <section className="mx-auto max-w-6xl px-6 py-20">
-        <div className="relative grid overflow-hidden rounded-3xl border border-[var(--p-color-sand-200)] bg-[var(--p-color-sand-50)] md:grid-cols-2">
-          <GridOverlay src="/marketing/grid-large.svg" />
-          <UiScreenshot
-            src="/marketing/demo-restrained.jpg"
-            label="UI Screenshot hero"
-            className="min-h-[16rem] md:min-h-full"
-          />
-          <div className="relative flex flex-col justify-center gap-7 p-10 md:p-14">
+      {/* Full-width bleed (NOT a card): the sand + dashed grid span the page
+          edge-to-edge; the screenshot bleeds to the left viewport edge (inset
+          top/bottom) and the copy sits in the right half, aligned to the page
+          container's right edge. */}
+      <section className="relative overflow-hidden bg-[var(--p-color-sand-50)]">
+        <GridOverlay src="/marketing/grid-large.svg" />
+        <div className="relative flex flex-col md:flex-row md:items-stretch">
+          <div className="p-6 md:flex-1 md:py-16 md:pl-0 md:pr-10">
+            <UiScreenshot
+              src="/marketing/demo-restrained.jpg"
+              label="UI Screenshot hero"
+              className="h-full min-h-[16rem] rounded-xl md:min-h-[24rem]"
+            />
+          </div>
+          <div className="flex flex-col justify-center gap-7 px-6 pb-14 md:w-[40rem] md:shrink-0 md:py-16 md:pl-2 md:pr-[max(1.5rem,calc(50vw-36rem))]">
             <p className="text-2xl leading-snug text-[var(--p-color-sand-900)] sm:text-3xl">
               {requestDemo.lead}{" "}
               <span className="font-display italic text-[var(--mk-emphasis)]">{requestDemo.emphasis}</span>
