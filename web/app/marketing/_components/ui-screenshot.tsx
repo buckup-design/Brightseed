@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * Swappable UI-screenshot placeholder — the gray "UI Screenshot hero" box from
@@ -24,9 +24,19 @@ export function UiScreenshot({
   className?: string;
 }) {
   // Start hidden; reveal only once the image actually loads. A missing file
-  // (404) never fires onLoad, so it stays invisible and the placeholder shows —
-  // no broken-image glyph or alt text flashing through.
+  // (404) never resolves with pixels, so it stays invisible and the placeholder
+  // shows — no broken-image glyph or alt text flashing through.
   const [loaded, setLoaded] = useState(false);
+  const imgRef = useRef<HTMLImageElement | null>(null);
+
+  // A cached/fast image can finish loading before React attaches onLoad, so the
+  // event never fires and the box stays blank. Check img.complete on mount (and
+  // when src changes) and reveal if it already decoded (naturalWidth > 0 rules
+  // out a 404, whose complete is also true but has no pixels).
+  useEffect(() => {
+    const img = imgRef.current;
+    if (img?.complete && img.naturalWidth > 0) setLoaded(true);
+  }, [src]);
 
   return (
     <div className={`relative overflow-hidden ${className}`}>
@@ -37,6 +47,7 @@ export function UiScreenshot({
       {src ? (
         // eslint-disable-next-line @next/next/no-img-element -- swappable drop-in placeholder, not a build-time asset
         <img
+          ref={imgRef}
           src={src}
           alt={alt}
           onLoad={() => setLoaded(true)}

@@ -169,22 +169,21 @@ export default function RestrainedPage() {
       </div>
 
       {/* ── Request a Demo ──────────────────────────────────────────────── */}
-      {/* Full-width bleed (NOT a card): the sand + dashed grid span the page
-          edge-to-edge; the screenshot bleeds to the left viewport edge (inset
-          top/bottom) and the copy sits in the right half, aligned to the page
-          container's right edge. */}
+      {/* Full-width bleed section (sand + dashed grid span the page); the content
+          sits in a centered max-w-6xl grid — screenshot left, copy right — so
+          the copy keeps a readable measure. (The old calc-padding trick squeezed
+          it to one word per line on wide screens.) Stacks below xl so the
+          single-line Tiempos emphasis always has room. */}
       <section className="relative overflow-hidden bg-[var(--p-color-sand-50)]">
         <GridOverlay src="/marketing/grid-large.svg" />
-        <div className="relative flex flex-col md:flex-row md:items-stretch">
-          <div className="p-6 md:flex-1 md:py-16 md:pl-0 md:pr-10">
-            <UiScreenshot
-              src="/marketing/demo-restrained.jpg"
-              label="UI Screenshot hero"
-              className="h-full min-h-[16rem] rounded-xl md:min-h-[24rem]"
-            />
-          </div>
-          <div className="flex flex-col justify-center gap-7 px-6 pb-14 md:w-[40rem] md:shrink-0 md:py-16 md:pl-2 md:pr-[max(1.5rem,calc(50vw-36rem))]">
-            <p className="text-2xl leading-snug text-[var(--p-color-sand-900)] sm:text-3xl">
+        <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 py-16 md:gap-14 md:py-24 xl:grid-cols-2 xl:gap-16">
+          <UiScreenshot
+            src="/marketing/demo-restrained.png"
+            label="UI Screenshot hero"
+            className="aspect-[1136/716] w-full rounded-xl"
+          />
+          <div className="flex flex-col justify-center gap-7">
+            <p className="text-3xl leading-snug text-[var(--p-color-sand-900)] sm:text-4xl">
               {requestDemo.lead}{" "}
               <span className="whitespace-nowrap font-display italic text-[var(--mk-emphasis)]">{requestDemo.emphasis}</span>
             </p>
