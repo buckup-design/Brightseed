@@ -90,7 +90,7 @@ const contentNeeded = {
   body: (
     <>
       <p>
-        To complete the work, Becky will also need finalized content. For example, on the login
+        To complete the work, Becky would also need finalized content. For example, on the login
         screens you see where Becky made up a headline and a claim &ldquo;6x faster.&rdquo;
         She&rsquo;s made some placeholder suggestions but needs approved content.
       </p>

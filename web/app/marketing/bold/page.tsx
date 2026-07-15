@@ -176,14 +176,14 @@ export default function BoldPage() {
             rather than filling the whole left half. Fallback color covers the
             PNG's transparent corners under the card's own rounding. */}
         <div
-          className="relative grid overflow-hidden rounded-3xl bg-cover bg-center md:grid-cols-2 md:items-stretch"
+          className="relative grid overflow-hidden rounded-3xl bg-cover bg-center md:grid-cols-2 md:items-center"
           style={{ backgroundColor: "#5f9080", backgroundImage: "url('/marketing/bold-cta-bg.png')" }}
         >
           <div className="p-6 md:py-10 md:pl-10 md:pr-4">
             <UiScreenshot
-              src="/marketing/demo-bold.jpg"
+              src="/marketing/demo-bold.png"
               label="UI Screenshot hero"
-              className="h-full min-h-[13rem] rounded-xl md:min-h-[19rem]"
+              className="aspect-[1136/716] rounded-xl"
             />
           </div>
           <div className="relative flex flex-col justify-center gap-7 p-10 md:py-14 md:pl-4 md:pr-14">
