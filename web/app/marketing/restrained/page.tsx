@@ -127,6 +127,9 @@ export default function RestrainedPage() {
         </div>
       </section>
 
+      {/* Industries + Testimonials share one white full-width band (the rest of
+          the page — hero, demo, footer — stays sand-50). */}
+      <div className="bg-white">
       {/* ── Industries ──────────────────────────────────────────────────── */}
       <section className="relative mx-auto max-w-6xl px-6 py-20">
         <Eyebrow className="text-center text-[var(--mk-label)]">{industriesLabel}</Eyebrow>
@@ -163,6 +166,7 @@ export default function RestrainedPage() {
           />
         </div>
       </section>
+      </div>
 
       {/* ── Request a Demo ──────────────────────────────────────────────── */}
       {/* Full-width bleed (NOT a card): the sand + dashed grid span the page
