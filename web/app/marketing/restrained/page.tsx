@@ -94,8 +94,10 @@ export default function RestrainedPage() {
 
       {/* ── Hero ────────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden">
-        <GridOverlay src="/marketing/grid-large.svg" className="-z-0 h-[48rem]" />
-        <div className="relative mx-auto max-w-6xl px-6 pt-16 pb-14 text-center sm:pt-20">
+        {/* inset-0 (no fixed height) so the grid fills the section to its bottom
+            edge, where the Industries section crops the hero shot. */}
+        <GridOverlay src="/marketing/grid-large.svg" className="-z-0" />
+        <div className="relative mx-auto max-w-6xl px-6 pt-16 text-center sm:pt-20">
           <Eyebrow className="text-[var(--mk-eyebrow)]">{hero.eyebrow}</Eyebrow>
           <h1 className="mt-5 font-semibold leading-[0.9] tracking-[-0.03em] text-[var(--mk-wordmark)] text-[clamp(3.5rem,9vw,7rem)]">
             {hero.product}
@@ -107,10 +109,20 @@ export default function RestrainedPage() {
             </Button>
           </div>
           {/* Cropped interface frame (Figma clips it wide + short); the big
-              wordmark above is the hero's, so the shot has none. */}
-          <div className="mx-auto mt-14 w-full max-w-5xl overflow-hidden rounded-[20px] shadow-[0_30px_80px_-40px_rgba(53,56,38,0.5)]">
+              wordmark above is the hero's, so the shot has none. The PNG carries
+              its own rounded corners + stroke, so we DON'T re-clip it (that
+              sliced the stroke at the corners) — the shadow is a drop-shadow
+              filter that hugs the rounded alpha. The negative bottom margin
+              bleeds the shot past the section box so the hero's overflow-hidden
+              crops it to a straight bottom edge under the Industries section;
+              only the top corners stay rounded. */}
+          <div className="mx-auto mt-14 -mb-12 w-full max-w-5xl">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/marketing/hero-restrained.png" alt="Hummingbird interface" className="block w-full" />
+            <img
+              src="/marketing/hero-restrained.png"
+              alt="Hummingbird interface"
+              className="block w-full drop-shadow-[0_22px_40px_rgba(53,56,38,0.35)]"
+            />
           </div>
         </div>
       </section>

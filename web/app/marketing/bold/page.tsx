@@ -94,13 +94,15 @@ export default function BoldPage() {
               "radial-gradient(70% 60% at 50% 22%, rgba(137,209,143,0.30) 0%, rgba(192,223,122,0.16) 45%, rgba(255,255,255,0) 74%)",
           }}
         />
-        {/* dashed sage grid (shared client asset), matching the industry cards */}
+        {/* dashed sage grid (shared client asset), matching the industry cards.
+            inset-0 (no fixed height) so it fills the section all the way to the
+            bottom edge, where the Industries section crops the hero shot. */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-0 h-[46rem] bg-cover bg-center bg-no-repeat"
+          className="pointer-events-none absolute inset-0 -z-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: "url('/marketing/grid-large.svg')" }}
         />
-        <div className="relative mx-auto max-w-6xl px-6 pt-16 pb-14 text-center sm:pt-20">
+        <div className="relative mx-auto max-w-6xl px-6 pt-16 text-center sm:pt-20">
           <Eyebrow className="text-[var(--mk-eyebrow)]">{hero.eyebrow}</Eyebrow>
           <h1 className="mt-5 font-semibold leading-[0.9] tracking-[-0.03em] text-[var(--mk-wordmark)] text-[clamp(3.5rem,9vw,7rem)]">
             {hero.product}
@@ -113,10 +115,20 @@ export default function BoldPage() {
             </Button>
           </div>
           {/* Cropped interface frame (Figma clips it wide + short); the big
-              wordmark above is the hero's, so the shot has none. */}
-          <div className="mx-auto mt-14 w-full max-w-5xl overflow-hidden rounded-[20px] shadow-[0_30px_70px_-35px_rgba(48,85,54,0.4)]">
+              wordmark above is the hero's, so the shot has none. The PNG carries
+              its own rounded corners + stroke, so we DON'T re-clip it (that
+              sliced the stroke at the corners) — the shadow is a drop-shadow
+              filter that hugs the rounded alpha. The negative bottom margin
+              bleeds the shot past the section box so the hero's overflow-hidden
+              crops it to a straight bottom edge under the Industries section;
+              only the top corners stay rounded. */}
+          <div className="mx-auto mt-14 -mb-12 w-full max-w-5xl">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/marketing/hero-bold.png" alt="Hummingbird interface" className="block w-full" />
+            <img
+              src="/marketing/hero-bold.png"
+              alt="Hummingbird interface"
+              className="block w-full drop-shadow-[0_22px_38px_rgba(48,85,54,0.30)]"
+            />
           </div>
         </div>
       </section>
