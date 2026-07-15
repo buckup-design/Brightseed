@@ -159,7 +159,10 @@ export default function MarketingIndex() {
           <Section key={s.heading} heading={s.heading} body={s.body} footnote={s.footnote} />
         ))}
 
-        <div className="mt-16 flex flex-col gap-8">
+        <h2 className="mt-16 text-4xl font-semibold tracking-tight text-[var(--ds-color-text-default)]">
+          Concepts
+        </h2>
+        <div className="mt-6 flex flex-col gap-8">
           {directions.map((d) => (
             <Link
               key={d.href}
