@@ -187,7 +187,7 @@ export default function BoldPage() {
             <img
               src="/marketing/demo-bold.png"
               alt="Hummingbird interface"
-              className="rounded-xl md:pointer-events-none md:absolute md:top-1/2 md:right-16 md:w-[92%] md:max-w-none md:-translate-y-1/2"
+              className="rounded-xl md:pointer-events-none md:absolute md:top-1/2 md:right-8 md:w-[88%] md:max-w-none md:-translate-y-1/2"
             />
           </div>
           <div className="relative flex flex-col justify-center gap-7 p-10 md:py-14 md:pl-4 md:pr-14">
