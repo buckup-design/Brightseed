@@ -77,7 +77,7 @@ export default function MinimalPage() {
         <header className="sticky top-0 z-20 border-b border-[var(--p-color-neutral-200)]/70 bg-white/70 backdrop-blur">
           <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
             <BrightseedLogo variant="lockup" className="h-6 text-[var(--p-color-neutral-900)]" />
-            <Button asChild variant="secondary" size="sm" className="rounded-full">
+            <Button asChild variant="secondary" size="sm" className="rounded-full px-8">
               <Link href="/marketing/minimal/login">{hero.login}</Link>
             </Button>
           </nav>
@@ -163,16 +163,24 @@ export default function MinimalPage() {
       {/* ── Request a Demo ────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-6xl px-6 py-20">
         <div
-          className="grid items-center gap-10 overflow-hidden rounded-3xl p-8 md:grid-cols-2 md:p-12"
+          className="relative overflow-hidden rounded-3xl md:min-h-[22rem]"
           style={{ background: "#eaf2e3" }}
         >
+          {/* Desktop: interface enlarged, bleeding off the left + bottom edges. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/marketing/hero-minimal.png"
             alt="Hummingbird interface"
-            className="block w-full"
+            className="pointer-events-none absolute left-0 top-[8%] hidden w-[58%] max-w-none -translate-x-[13%] md:block"
           />
-          <div className="flex flex-col gap-7">
+          {/* Mobile: stacked, fully visible. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/marketing/hero-minimal.png"
+            alt="Hummingbird interface"
+            className="block w-full px-6 pt-8 md:hidden"
+          />
+          <div className="relative z-10 flex flex-col justify-center gap-7 p-8 md:ml-[55%] md:min-h-[22rem] md:py-14 md:pr-14 md:pl-4">
             <p className="text-2xl leading-snug text-[var(--p-color-neutral-900)] sm:text-3xl">
               {requestDemo.lead}{" "}
               <span className="font-bold">{requestDemo.emphasis}</span>

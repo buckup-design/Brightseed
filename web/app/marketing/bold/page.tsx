@@ -77,7 +77,7 @@ export default function BoldPage() {
       <header className="sticky top-0 z-20 border-b border-[var(--p-color-sand-200)] bg-white/85 backdrop-blur">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
           <BrightseedLogo variant="lockup" className="h-6 text-[var(--p-color-forest-900)]" />
-          <Button asChild variant="secondary" size="sm" className="rounded-full">
+          <Button asChild variant="secondary" size="sm" className="rounded-full px-8">
             <Link href="/marketing/bold/login">{hero.login}</Link>
           </Button>
         </nav>
