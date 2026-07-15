@@ -48,6 +48,7 @@ const SKIN = {
   "--mk-industry-name": "var(--p-color-forest-900)",
   "--mk-industry-body": "var(--p-color-sand-800)",
   "--mk-quote": "#272421",
+  "--mk-cta-lead": "#46453f",
   "--mk-muted": "var(--p-color-sand-700)",
   "--mk-dot-active": "#52a359",
   "--mk-dot": "#d9d9d9",
@@ -186,15 +187,15 @@ export default function BoldPage() {
             <img
               src="/marketing/demo-bold.png"
               alt="Hummingbird interface"
-              className="rounded-xl md:pointer-events-none md:absolute md:top-1/2 md:right-0 md:w-[130%] md:max-w-none md:-translate-y-1/2"
+              className="rounded-xl md:pointer-events-none md:absolute md:top-1/2 md:right-16 md:w-[92%] md:max-w-none md:-translate-y-1/2"
             />
           </div>
           <div className="relative flex flex-col justify-center gap-7 p-10 md:py-14 md:pl-4 md:pr-14">
-            {/* Dark forest copy on the gradient's pale-lime right side; emphasis
-                stays a single line (Tiempos italic) so it drops to its own row. */}
-            <p className="text-3xl leading-[1.16] text-[var(--mk-wordmark)] sm:text-4xl">
+            {/* Warm-taupe lead + forest italic emphasis on the gradient's pale
+                right side; emphasis stays one line so it drops to its own row. */}
+            <p className="text-3xl leading-[1.16] text-[var(--mk-cta-lead)] sm:text-4xl">
               {requestDemo.lead}{" "}
-              <span className="whitespace-nowrap font-display italic">{requestDemo.emphasis}</span>
+              <span className="whitespace-nowrap font-display italic text-[var(--mk-wordmark)]">{requestDemo.emphasis}</span>
             </p>
             <div>
               <Button size="lg" className="gap-2 rounded-full px-6">

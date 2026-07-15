@@ -83,19 +83,19 @@ export const industries: Industry[] = [
     key: "food",
     name: "Food and Beverage",
     icon: "cart",
-    blurb: "Wattle seed eggplant soybean garlic prairie turnip swiss chard.",
+    blurb: "Wattle seed eggplant soybean garlic prairie turnip swiss.",
   },
   {
     key: "personal",
     name: "Personal Care",
     icon: "lotus",
-    blurb: "Turnip greens rock melon chicory collard greens bok choy.",
+    blurb: "Turnip greens rock melon chicory collard greens bok.",
   },
   {
     key: "nutrition",
     name: "Nutrition",
     icon: "carrot",
-    blurb: "Desert raisin chard cabbage cress gumbo spinach mung bean.",
+    blurb: "Desert raisin chard cabbage cress gumbo spinach mung.",
   },
   {
     key: "pharma",
