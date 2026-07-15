@@ -41,7 +41,7 @@ const SKIN = {
   "--mk-eyebrow": "#272421",
   "--mk-wordmark": "var(--p-color-forest-900)",
   "--mk-label": "#545454",
-  "--mk-industry-icon": "#5f7444",
+  "--mk-industry-icon": "#AEAB9E",
   "--mk-industry-name": "var(--p-color-sand-800)",
   "--mk-industry-body": "var(--p-color-sand-700)",
   "--mk-emphasis": "#5f7444",

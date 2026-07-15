@@ -104,10 +104,13 @@
   /* Fonts.
    * --font-sans / --font-mono come from the Geist Next/font wrappers in
    * layout.tsx (which inject CSS vars --font-geist-sans / --font-geist-mono).
-   * --font-display is declared in tokens/typography.css and resolved by the
-   * @font-face rules at the top of that file (Tiempos Text from public/fonts/). */
+   * --font-display resolves to Tiempos Fine (--p-font-family-display, @font-face
+   * in tokens/typography.css). It MUST be registered here, not only as a plain
+   * :root var, or Tailwind never emits the `font-display` utility and the class
+   * silently falls back to Geist. */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--p-font-family-display);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);

@@ -50,6 +50,7 @@ const SKIN = {
   "--mk-wordmark": "#89d18f",
   "--mk-label": "#545454",
   "--mk-accent": "#6aa16e",
+  "--mk-emphasis": "#8f9d35",
   "--mk-industry-icon": "#89d18f",
   "--mk-industry-name": "var(--p-color-neutral-900)",
   "--mk-industry-body": "var(--p-color-neutral-600)",
@@ -183,7 +184,12 @@ export default function MinimalPage() {
           <div className="relative z-10 flex flex-col justify-center gap-7 p-8 md:ml-[55%] md:min-h-[22rem] md:py-14 md:pr-14 md:pl-4">
             <p className="text-2xl leading-snug text-[var(--p-color-neutral-900)] sm:text-3xl">
               {requestDemo.lead}{" "}
-              <span className="font-bold">{requestDemo.emphasis}</span>
+              {/* Tiempos Fine italic flourish (font-display), set large + green
+                  per the Minimal mock — the one serif accent in an otherwise
+                  Instrument-Sans concept. */}
+              <span className="font-display text-[48px] italic leading-none text-[var(--mk-emphasis)]">
+                {requestDemo.emphasis}
+              </span>
             </p>
             <div>
               <Button size="lg" className="rounded-xl px-6">
