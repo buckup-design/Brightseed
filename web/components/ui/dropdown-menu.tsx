@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { CircleIcon } from "lucide-react"
 import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui"
 
 import { cn } from "@/lib/utils"
@@ -17,8 +18,13 @@ import { cn } from "@/lib/utils"
  * directly for the semantic tokens it needs.
  *
  * Covers the 95% surface: Root, Trigger, Portal, Content, Item, Label,
- * Separator, Shortcut, Group. Submenu / checkbox-item / radio-item are not
- * included here, add when the first usage demands it.
+ * Separator, Shortcut, Group, RadioGroup + RadioItem. Submenu / checkbox-item
+ * are not included here, add when the first usage demands it.
+ *
+ * RadioGroup/RadioItem were added July 2026 for the Conversations and Reports
+ * list toolbars, whose Filter and Sort menus are single-select view state and
+ * must show which option is active. Menus carry view state; Select is for form
+ * fields.
  */
 
 function DropdownMenu({
@@ -125,6 +131,49 @@ function DropdownMenuItem({
   )
 }
 
+function DropdownMenuRadioGroup({
+  ...props
+}: React.ComponentProps<typeof DropdownMenuPrimitive.RadioGroup>) {
+  return (
+    <DropdownMenuPrimitive.RadioGroup
+      data-slot="dropdown-menu-radio-group"
+      {...props}
+    />
+  )
+}
+
+function DropdownMenuRadioItem({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof DropdownMenuPrimitive.RadioItem>) {
+  return (
+    <DropdownMenuPrimitive.RadioItem
+      data-slot="dropdown-menu-radio-item"
+      className={cn(
+        // Mirrors DropdownMenuItem, but reserves the left column for the
+        // selected indicator instead of a leading icon.
+        "relative flex cursor-pointer select-none items-center gap-2",
+        "rounded-[var(--c-dropdown-menu-shape-radius-sm)] py-1.5 pr-2 pl-8 text-sm outline-none",
+        "transition-colors duration-[120ms]",
+        "data-[highlighted]:bg-[var(--c-dropdown-menu-action-secondary-hover)]",
+        "data-[highlighted]:text-[var(--c-dropdown-menu-text-default)]",
+        "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        "[&_svg]:shrink-0 [&_svg]:pointer-events-none",
+        className
+      )}
+      {...props}
+    >
+      <span className="pointer-events-none absolute left-2 flex size-3.5 items-center justify-center">
+        <DropdownMenuPrimitive.ItemIndicator>
+          <CircleIcon className="size-2 fill-current" />
+        </DropdownMenuPrimitive.ItemIndicator>
+      </span>
+      {children}
+    </DropdownMenuPrimitive.RadioItem>
+  )
+}
+
 function DropdownMenuLabel({
   className,
   inset,
@@ -186,6 +235,8 @@ export {
   DropdownMenuGroup,
   DropdownMenuLabel,
   DropdownMenuItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
 }
