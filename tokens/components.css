@@ -82,7 +82,7 @@
   --c-badge-border-tag-red-focus:          var(--ds-color-border-tag-red-focus);
   --c-badge-border-tag-yellow-focus:       var(--ds-color-border-tag-yellow-focus);
   --c-badge-disabled-text-opacity:         var(--ds-disabled-text-opacity);
-  --c-badge-shape-radius-xs:               var(--ds-shape-radius-xs);
+  --c-badge-shape-radius-2xs:               var(--ds-shape-radius-2xs);
   --c-badge-shape-radius-md:               var(--ds-shape-radius-md);
   --c-badge-surface-default:               var(--ds-color-surface-default);
   --c-badge-surface-tag-blue:              var(--ds-color-surface-tag-blue);
@@ -162,6 +162,9 @@
   --c-checkbox-action-primary:            var(--ds-color-action-primary);
   --c-checkbox-border-default:            var(--ds-color-border-default);
   --c-checkbox-border-focus:              var(--ds-color-border-focus);
+  --c-checkbox-disabled-text-opacity: var(--ds-disabled-text-opacity);
+  --c-checkbox-shadow-xs: var(--ds-shadow-xs);
+  --c-checkbox-shape-radius-xs: var(--ds-shape-radius-xs);
   --c-checkbox-text-on-action-primary:    var(--ds-color-text-on-action-primary);
 
   /* --c-dialog */
@@ -170,7 +173,7 @@
   --c-dialog-icon-default:        var(--ds-color-icon-default);
   --c-dialog-shadow-lg:           var(--ds-shadow-lg);
   --c-dialog-shape-radius-lg:     var(--ds-shape-radius-lg);
-  --c-dialog-shape-radius-xs:     var(--ds-shape-radius-xs);
+  --c-dialog-shape-radius-2xs:     var(--ds-shape-radius-2xs);
   --c-dialog-surface-alt:         var(--ds-color-surface-alt);
   --c-dialog-surface-default:     var(--ds-color-surface-default);
   --c-dialog-surface-scrim:       var(--ds-color-surface-scrim);
@@ -182,6 +185,7 @@
   --c-dropdown-menu-action-secondary-hover:     var(--ds-color-action-secondary);
   --c-dropdown-menu-border-default:             var(--ds-color-border-default);
   --c-dropdown-menu-border-subtle:              var(--ds-color-border-subtle);
+  --c-dropdown-menu-disabled-text-opacity: var(--ds-disabled-text-opacity);
   --c-dropdown-menu-shadow-md:                  var(--ds-shadow-md);
   --c-dropdown-menu-shape-radius-md:            var(--ds-shape-radius-md);
   --c-dropdown-menu-shape-radius-sm:            var(--ds-shape-radius-sm);
@@ -192,6 +196,7 @@
 
   /* --c-field */
   --c-field-action-primary:             var(--ds-color-action-primary);
+  --c-field-disabled-text-opacity: var(--ds-disabled-text-opacity);
   --c-field-shape-radius-md:            var(--ds-shape-radius-md);
   --c-field-surface-default:            var(--ds-color-surface-default);
   --c-field-text-on-action-critical:    var(--ds-color-text-on-action-critical);
@@ -203,6 +208,8 @@
   --c-input-border-default:            var(--ds-color-border-default);
   --c-input-border-default-hover:      var(--ds-color-border-default-hover);
   --c-input-border-focus:              var(--ds-color-border-focus);
+  --c-input-disabled-text-opacity: var(--ds-disabled-text-opacity);
+  --c-input-shadow-xs: var(--ds-shadow-xs);
   --c-input-shape-radius-md:           var(--ds-shape-radius-md);
   --c-input-text-default:              var(--ds-color-text-default);
   --c-input-text-on-action-primary:    var(--ds-color-text-on-action-primary);
@@ -212,8 +219,13 @@
   --c-input-group-action-critical:    var(--ds-color-action-critical);
   --c-input-group-border-default:     var(--ds-color-border-default);
   --c-input-group-border-focus:       var(--ds-color-border-focus);
+  --c-input-group-disabled-text-opacity: var(--ds-disabled-text-opacity);
+  --c-input-group-shadow-xs: var(--ds-shadow-xs);
   --c-input-group-shape-radius-md:    var(--ds-shape-radius-md);
   --c-input-group-text-subtle:        var(--ds-color-text-subtle);
+
+  /* --c-label */
+  --c-label-disabled-text-opacity: var(--ds-disabled-text-opacity);
 
   /* --c-popover */
   --c-popover-border-default:      var(--ds-color-border-default);
@@ -232,14 +244,16 @@
   --c-resizable-border-default:      var(--ds-color-border-default);
   --c-resizable-border-focus:        var(--ds-color-border-focus);
   --c-resizable-icon-subtle:         var(--ds-color-icon-subtle);
-  --c-resizable-shape-radius-xs:     var(--ds-shape-radius-xs);
+  --c-resizable-shape-radius-2xs:     var(--ds-shape-radius-2xs);
 
   /* --c-select */
   --c-select-action-critical:         var(--ds-color-action-critical);
   --c-select-border-default:          var(--ds-color-border-default);
   --c-select-border-default-hover:    var(--ds-color-border-default-hover);
   --c-select-border-focus:            var(--ds-color-border-focus);
+  --c-select-disabled-text-opacity: var(--ds-disabled-text-opacity);
   --c-select-shadow-md:               var(--ds-shadow-md);
+  --c-select-shadow-xs: var(--ds-shadow-xs);
   --c-select-shape-radius-md:         var(--ds-shape-radius-md);
   --c-select-shape-radius-sm:         var(--ds-shape-radius-sm);
   --c-select-surface-brand-subtle:    var(--ds-color-surface-brand-subtle);
@@ -253,7 +267,7 @@
   /* --c-sheet */
   --c-sheet-border-focus:       var(--ds-color-border-focus);
   --c-sheet-shadow-lg:          var(--ds-shadow-lg);
-  --c-sheet-shape-radius-xs:    var(--ds-shape-radius-xs);
+  --c-sheet-shape-radius-2xs:    var(--ds-shape-radius-2xs);
   --c-sheet-surface-alt:        var(--ds-color-surface-alt);
   --c-sheet-surface-default:    var(--ds-color-surface-default);
   --c-sheet-surface-scrim:      var(--ds-color-surface-scrim);
@@ -263,6 +277,7 @@
   /* --c-sidebar */
   --c-sidebar-border-default:     var(--ds-color-border-default);
   --c-sidebar-border-focus:       var(--ds-color-border-focus);
+  --c-sidebar-disabled-text-opacity: var(--ds-disabled-text-opacity);
   --c-sidebar-shape-radius-lg:    var(--ds-shape-radius-lg);
   --c-sidebar-shape-radius-md:    var(--ds-shape-radius-md);
   --c-sidebar-shape-radius-xl:    var(--ds-shape-radius-xl);
@@ -327,6 +342,7 @@
   /* --c-tabs */
   --c-tabs-border-default:     var(--ds-color-border-default);
   --c-tabs-border-focus:       var(--ds-color-border-focus);
+  --c-tabs-disabled-text-opacity: var(--ds-disabled-text-opacity);
   --c-tabs-shadow-sm:          var(--ds-shadow-sm);
   --c-tabs-shape-radius-lg:    var(--ds-shape-radius-lg);
   --c-tabs-shape-radius-md:    var(--ds-shape-radius-md);
@@ -340,6 +356,8 @@
   --c-textarea-border-default:          var(--ds-color-border-default);
   --c-textarea-border-default-hover:    var(--ds-color-border-default-hover);
   --c-textarea-border-focus:            var(--ds-color-border-focus);
+  --c-textarea-disabled-text-opacity: var(--ds-disabled-text-opacity);
+  --c-textarea-shadow-xs: var(--ds-shadow-xs);
   --c-textarea-shape-radius-md:         var(--ds-shape-radius-md);
   --c-textarea-text-subtle:             var(--ds-color-text-subtle);
 
@@ -347,15 +365,20 @@
   --c-toggle-action-critical:         var(--ds-color-action-critical);
   --c-toggle-border-default:          var(--ds-color-border-default);
   --c-toggle-border-focus:            var(--ds-color-border-focus);
+  --c-toggle-disabled-text-opacity: var(--ds-disabled-text-opacity);
+  --c-toggle-shadow-xs: var(--ds-shadow-xs);
   --c-toggle-shape-radius-md:         var(--ds-shape-radius-md);
   --c-toggle-surface-alt:             var(--ds-color-surface-alt);
   --c-toggle-surface-brand-subtle:    var(--ds-color-surface-brand-subtle);
   --c-toggle-text-default:            var(--ds-color-text-default);
   --c-toggle-text-subtle:             var(--ds-color-text-subtle);
 
+  /* --c-toggle-group */
+  --c-toggle-group-shadow-xs: var(--ds-shadow-xs);
+
   /* --c-tooltip */
   --c-tooltip-shape-radius-md:    var(--ds-shape-radius-md);
-  --c-tooltip-shape-radius-xs:    var(--ds-shape-radius-xs);
+  --c-tooltip-shape-radius-2xs:    var(--ds-shape-radius-2xs);
   --c-tooltip-surface-default:    var(--ds-color-surface-default);
   --c-tooltip-text-default:       var(--ds-color-text-default);
 }

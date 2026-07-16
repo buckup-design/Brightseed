@@ -85,7 +85,7 @@ function DialogContent({
             className={cn(
               "absolute top-4 right-4 opacity-70 transition-opacity hover:opacity-100",
               "text-[var(--c-dialog-icon-default)]",
-              "rounded-[var(--c-dialog-shape-radius-xs)]",
+              "rounded-[var(--c-dialog-shape-radius-2xs)]",
               "focus-visible:ring-[3px] focus-visible:ring-[var(--c-dialog-border-focus)]/50",
               "focus-visible:outline-hidden",
               "disabled:pointer-events-none",

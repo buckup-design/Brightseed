@@ -112,7 +112,7 @@ function TabsTrigger({
         // Disabled. `opacity-50` left as stock Tailwind: --ds-disabled-text-opacity
         // is 0.55, so swapping it in would change the rendered fade. Matches
         // Input/DropdownMenu, which also keep the stock 50%.
-        "disabled:pointer-events-none disabled:opacity-50",
+        "disabled:pointer-events-none disabled:opacity-[var(--c-tabs-disabled-text-opacity)]",
         // Elevation of the active pill (default kind only).
         "group-data-[variant=default]/tabs-list:data-[state=active]:shadow-[var(--c-tabs-shadow-sm)]",
         "group-data-[variant=line]/tabs-list:data-[state=active]:shadow-none",

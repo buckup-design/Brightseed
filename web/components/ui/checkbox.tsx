@@ -15,6 +15,9 @@ import { cn } from "@/lib/utils"
  *   Check glyph          → --ds-color-text-on-action-primary (forest-800 on lime)
  *   Focus ring           → --ds-color-border-focus / 50     (lime-500 soft ring, same as Button/Switch)
  *   Invalid              → --ds-color-action-critical       (border + soft ring)
+ *   Corner               → --ds-shape-radius-xs             (4px; the step added for this box, July 2026)
+ *   Elevation            → --ds-shadow-xs                   (form-control step, added July 2026)
+ *   Disabled             → --ds-disabled-text-opacity       (0.55, the system-wide fade)
  */
 function Checkbox({
   className,
@@ -25,21 +28,15 @@ function Checkbox({
       data-slot="checkbox"
       className={cn(
         // Layout
-        // BRIGHTSEED-TBD: [BLOCKING] rounded-[4px] — the radius scale has no 4px step
-        // (xs=2px, sm=6px). Left as a raw value; needs a design call, not a guess.
-        "peer size-4 shrink-0 rounded-[4px]",
+        "peer size-4 shrink-0 rounded-[var(--c-checkbox-shape-radius-xs)]",
         // Border (unchecked)
         "border border-[var(--c-checkbox-border-default)]",
-        // BRIGHTSEED-TBD: [BLOCKING] shadow-xs — no --ds-shadow-xs exists (scale starts at
-        // sm, and --ds-shadow-sm is a different value). Left as stock Tailwind.
-        "shadow-xs transition-shadow outline-none",
+        "shadow-[var(--c-checkbox-shadow-xs)] transition-shadow outline-none",
         // Focus
         "focus-visible:border-[var(--c-checkbox-border-focus)]",
         "focus-visible:ring-[3px] focus-visible:ring-[var(--c-checkbox-border-focus)]/50",
         // Disabled
-        // BRIGHTSEED-TBD: [CONCERN] opacity-50 — --ds-disabled-text-opacity is 0.55.
-        // Tokenising here would shift the fade; left at stock for now.
-        "disabled:cursor-not-allowed disabled:opacity-50",
+        "disabled:cursor-not-allowed disabled:opacity-[var(--c-checkbox-disabled-text-opacity)]",
         // Invalid
         "aria-invalid:border-[var(--c-checkbox-action-critical)]",
         "aria-invalid:ring-[var(--c-checkbox-action-critical)]/20",
@@ -55,6 +52,16 @@ function Checkbox({
       )}
       {...props}
     >
+      {/*
+        BRIGHTSEED-TBD: [BLOCKING] indeterminate is half-built. Passing
+        checked="indeterminate" wires the semantics up correctly (measured live:
+        data-state="indeterminate", aria-checked="mixed"), but the Indicator
+        renders an unconditional CheckIcon with no dash branch — so indeterminate
+        draws a CHECK and is visually identical to checked. Screen readers get it
+        right; sighted users are told the opposite of the truth, which is worse
+        than not supporting it. Wants a MinusIcon on data-state=indeterminate.
+        Left for a design call rather than guessed at.
+      */}
       <CheckboxPrimitive.Indicator
         data-slot="checkbox-indicator"
         className="grid place-content-center text-current transition-none"

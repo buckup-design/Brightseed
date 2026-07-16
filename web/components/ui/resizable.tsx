@@ -50,7 +50,7 @@ function ResizableHandle({
         <div
           className={cn(
             "z-10 flex h-4 w-3 items-center justify-center",
-            "rounded-[var(--c-resizable-shape-radius-xs)]",
+            "rounded-[var(--c-resizable-shape-radius-2xs)]",
             "border border-[var(--c-resizable-border-default)]",
             "bg-[var(--c-resizable-border-default)]"
           )}

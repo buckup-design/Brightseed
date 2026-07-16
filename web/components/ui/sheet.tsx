@@ -88,7 +88,7 @@ function SheetContent({
           <SheetPrimitive.Close
             className={cn(
               "absolute top-4 right-4 opacity-70 transition-opacity hover:opacity-100",
-              "rounded-[var(--c-sheet-shape-radius-xs)]",
+              "rounded-[var(--c-sheet-shape-radius-2xs)]",
               "ring-offset-[var(--c-sheet-surface-default)]",
               "focus:ring-2 focus:ring-[var(--c-sheet-border-focus)] focus:ring-offset-2",
               "focus:outline-hidden",

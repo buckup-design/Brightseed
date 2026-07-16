@@ -14,17 +14,12 @@ function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="input-group"
       role="group"
       className={cn(
-        // BRIGHTSEED-TBD: [BLOCKING] `shadow-xs` left as a stock Tailwind class.
-        // --ds-shadow-* only has sm/md/lg/xl, no xs step, and `--shadow-*` is not
-        // remapped in @theme inline, so this resolves to Tailwind's stock shadow.
-        // Swapping in --ds-shadow-sm would change the rendered value. Matches the
-        // sibling Input/Textarea, which also still use stock `shadow-xs`.
-        //
-        // BRIGHTSEED-TBD: [CONCERN] `dark:bg-.../30` reuses the *border* token as a
-        // surface. That is stock shadcn's own `dark:bg-input/30` (--input →
-        // --ds-color-border-default), preserved verbatim; the tier is now clean but
-        // the semantic intent (border token painting a background) is inherited oddity.
-        "group/input-group relative flex w-full items-center rounded-[var(--c-input-group-shape-radius-md)] border border-[var(--c-input-group-border-default)] shadow-xs transition-[color,box-shadow] outline-none dark:bg-[var(--c-input-group-border-default)]/30",
+        // BRIGHTSEED-TBD: [CONCERN] the dark: rule below paints a *border* token
+        // as a surface. Inherited from stock shadcn's `dark:bg-input/30` (--input
+        // bridges to --ds-color-border-default), so it is value-correct and the
+        // tier is clean, but the semantic intent is wrong. A real
+        // --ds-color-surface-field would let this dark: variant retire entirely.
+        "group/input-group relative flex w-full items-center rounded-[var(--c-input-group-shape-radius-md)] border border-[var(--c-input-group-border-default)] shadow-[var(--c-input-group-shadow-xs)] transition-[color,box-shadow] outline-none dark:bg-[var(--c-input-group-border-default)]/30",
         "h-9 min-w-0 has-[>textarea]:h-auto",
 
         // Variants based on alignment.
@@ -61,7 +56,7 @@ function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
 //      is a fixed ladder, and inventing an arithmetic offset would be improvising.
 // Needs a design call on which radius step a <kbd> inside an addon should use.
 const inputGroupAddonVariants = cva(
-  "flex h-auto cursor-text items-center justify-center gap-2 py-1.5 text-sm font-medium text-[var(--c-input-group-text-subtle)] select-none group-data-[disabled=true]/input-group:opacity-50 [&>kbd]:rounded-[calc(var(--radius)-5px)] [&>svg:not([class*='size-'])]:size-4",
+  "flex h-auto cursor-text items-center justify-center gap-2 py-1.5 text-sm font-medium text-[var(--c-input-group-text-subtle)] select-none group-data-[disabled=true]/input-group:opacity-[var(--c-input-group-disabled-text-opacity)] [&>kbd]:rounded-[calc(var(--radius)-5px)] [&>svg:not([class*='size-'])]:size-4",
   {
     variants: {
       align: {

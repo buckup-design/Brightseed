@@ -59,11 +59,7 @@ function SelectTrigger({
         "data-[size=default]:h-9 data-[size=sm]:h-8",
         "transition-[color,box-shadow] outline-none",
         // Surface + border + radius.
-        // BRIGHTSEED-TBD: [BLOCKING] `shadow-xs` has no --ds-shadow-* equivalent
-        // (tokens/shape.css defines only sm/md/lg/xl). Left as the stock Tailwind
-        // utility (0 1px rgb(0 0 0 / 0.05)) rather than guessing a token. Input and
-        // Textarea carry the same unresolved `shadow-xs`; fix all three together.
-        "bg-transparent shadow-xs",
+        "bg-transparent shadow-[var(--c-select-shadow-xs)]",
         "rounded-[var(--c-select-shape-radius-md)]",
         "border border-[var(--c-select-border-default)]",
         "enabled:hover:not-focus-visible:not-aria-invalid:border-[var(--c-select-border-default-hover)]",
@@ -72,7 +68,7 @@ function SelectTrigger({
         "focus-visible:ring-[3px] focus-visible:ring-[var(--c-select-border-focus)]/50",
         // Disabled (opacity-50 kept verbatim: --ds-disabled-text-opacity is 0.55,
         // so swapping it would change the rendered value)
-        "disabled:cursor-not-allowed disabled:opacity-50",
+        "disabled:cursor-not-allowed disabled:opacity-[var(--c-select-disabled-text-opacity)]",
         // Invalid
         "aria-invalid:border-[var(--c-select-action-critical)]",
         "aria-invalid:ring-[var(--c-select-action-critical)]/20",
@@ -173,7 +169,7 @@ function SelectItem({
         // Highlight
         "focus:bg-[var(--c-select-surface-brand-subtle)] focus:text-[var(--c-select-text-default)]",
         // Disabled (opacity-50 kept verbatim, see SelectTrigger)
-        "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        "data-[disabled]:pointer-events-none data-[disabled]:opacity-[var(--c-select-disabled-text-opacity)]",
         // Icons
         "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         "[&_svg:not([class*='text-'])]:text-[var(--c-select-text-subtle)]",

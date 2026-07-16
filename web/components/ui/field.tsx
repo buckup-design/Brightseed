@@ -115,7 +115,7 @@ function FieldLabel({
     <Label
       data-slot="field-label"
       className={cn(
-        "group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50",
+        "group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-[var(--c-field-disabled-text-opacity)]",
         // `has-[>[data-slot=field]]:border` is a width-only utility: this repo has no
         // `* { @apply border-border }` base reset, so it renders at currentColor.
         // Tokenising it would repaint the border sand-300 — left as-is deliberately.
@@ -133,7 +133,7 @@ function FieldTitle({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="field-label"
       className={cn(
-        "flex w-fit items-center gap-2 text-sm leading-snug font-medium group-data-[disabled=true]/field:opacity-50",
+        "flex w-fit items-center gap-2 text-sm leading-snug font-medium group-data-[disabled=true]/field:opacity-[var(--c-field-disabled-text-opacity)]",
         className
       )}
       {...props}

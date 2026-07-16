@@ -119,7 +119,7 @@ function DropdownMenuItem({
         "data-[variant=destructive]:text-[var(--c-dropdown-menu-text-on-action-critical)]",
         "data-[variant=destructive]:data-[highlighted]:bg-[var(--c-dropdown-menu-action-critical)]",
         // Disabled
-        "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        "data-[disabled]:pointer-events-none data-[disabled]:opacity-[var(--c-dropdown-menu-disabled-text-opacity)]",
         // Inset (room for an alignment column)
         "data-[inset]:pl-8",
         // SVG defaults, leading icons size to text height
@@ -158,7 +158,7 @@ function DropdownMenuRadioItem({
         "transition-colors duration-[120ms]",
         "data-[highlighted]:bg-[var(--c-dropdown-menu-action-secondary-hover)]",
         "data-[highlighted]:text-[var(--c-dropdown-menu-text-default)]",
-        "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        "data-[disabled]:pointer-events-none data-[disabled]:opacity-[var(--c-dropdown-menu-disabled-text-opacity)]",
         "[&_svg]:shrink-0 [&_svg]:pointer-events-none",
         className
       )}
