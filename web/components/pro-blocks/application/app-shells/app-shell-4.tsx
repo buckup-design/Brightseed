@@ -44,7 +44,9 @@ const data = {
   user: {
     name: "shadcn",
     email: "m@example.com",
-    avatar: "https://github.com/shadcn.png",
+    // as const: the surrounding `data` object widens these to string otherwise
+    color: "cyan" as const,
+    icon: "leafy-green" as const,
   },
   teams: [
     {

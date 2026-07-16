@@ -71,19 +71,6 @@ function Avatar({
   )
 }
 
-function AvatarImage({
-  className,
-  ...props
-}: React.ComponentProps<typeof AvatarPrimitive.Image>) {
-  return (
-    <AvatarPrimitive.Image
-      data-slot="avatar-image"
-      className={cn("aspect-square size-full", className)}
-      {...props}
-    />
-  )
-}
-
 function AvatarFallback({
   className,
   ...props
@@ -100,9 +87,11 @@ function AvatarFallback({
   )
 }
 
-/** The assigned color + icon avatar. Sits in the Radix fallback slot, so an
- * uploaded AvatarImage wins when present and this shows otherwise. Omitting
- * either prop falls back to AVATAR_IDENTITY_FALLBACK. */
+/** The assigned color + icon avatar, and the only avatar the product renders —
+ * photo avatars were removed in July 2026. Still built on the Radix fallback
+ * slot, which renders while image status is idle; with no Avatar.Image sibling
+ * possible any more, that means it always renders. Omitting either prop falls
+ * back to AVATAR_IDENTITY_FALLBACK. */
 function AvatarIdentity({
   color = AVATAR_IDENTITY_FALLBACK.color,
   icon = AVATAR_IDENTITY_FALLBACK.icon,
@@ -178,7 +167,6 @@ function AvatarGroupCount({
 
 export {
   Avatar,
-  AvatarImage,
   AvatarFallback,
   AvatarIdentity,
   AvatarBadge,

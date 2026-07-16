@@ -37,7 +37,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarIdentity } from "@/components/ui/avatar"
 
 const PRIMARY_NAV = [
   { title: "Strategies", href: "/strategies", icon: Compass },
@@ -121,10 +121,8 @@ export function HummingbirdSidebar() {
           <SidebarMenuItem>
             <SidebarMenuButton tooltip="user@example.com" asChild>
               <button type="button" className="cursor-pointer">
-                <Avatar className="size-6">
-                  <AvatarFallback className="bg-[var(--ds-color-surface-tag-cyan)] text-[var(--ds-color-text-tag-cyan)] text-[10px]">
-                    BB
-                  </AvatarFallback>
+                <Avatar size="sm">
+                  <AvatarIdentity color="cyan" icon="leafy-green" />
                 </Avatar>
                 <span>Becky Buck</span>
               </button>
