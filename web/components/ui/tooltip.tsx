@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils"
  *   Surface (the chip + arrow) → --c-tooltip-text-default   (--ds-color-text-default)
  *   Text                       → --c-tooltip-surface-default (--ds-color-surface-default)
  *   Radius, content            → --c-tooltip-shape-radius-md (8px)
- *   Radius, arrow              → --c-tooltip-shape-radius-xs (2px)
+ *   Radius, arrow              → --c-tooltip-shape-radius-2xs (2px)
  *
  * The inversion flows through dark theme for free: `data-theme="dark"` swaps
  * text-default → sand-50 and surface-default → sand-950, so the tooltip stays
@@ -81,7 +81,7 @@ function TooltipContent({
         <TooltipPrimitive.Arrow
           className={cn(
             "z-50 size-2.5 translate-y-[calc(-50%_-_2px)] rotate-45",
-            "rounded-[var(--c-tooltip-shape-radius-xs)]",
+            "rounded-[var(--c-tooltip-shape-radius-2xs)]",
             "bg-[var(--c-tooltip-text-default)] fill-[var(--c-tooltip-text-default)]"
           )}
         />

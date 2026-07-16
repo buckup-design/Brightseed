@@ -22,7 +22,14 @@
 
   /* ── Radius ($type: dimension/radius) ── */
   --p-radius-none:  0px;
-  --p-radius-xs:    2px;
+  /* 4px step added July 16, 2026. The low end was 2/6/8, so Checkbox's 4px
+   * corner had no step to land on. Inserting it renamed the old xs (2px) to
+   * 2xs and gave xs the new 4px, making the low end a regular 2/4/6/8.
+   * BREAKING: --ds-shape-radius-xs changed 2px -> 4px. Anything that wants the
+   * old hairline corner (Tag's cr=2, Dialog close, Resizable grip, Sheet,
+   * Tooltip arrow) now reads --ds-shape-radius-2xs. */
+  --p-radius-2xs:   2px;
+  --p-radius-xs:    4px;
   --p-radius-sm:    6px;
   --p-radius-md:    8px;
   --p-radius-lg:    10px;
@@ -66,7 +73,8 @@
 
   /* ── Radius semantics ── */
   --ds-shape-radius-none:    var(--p-radius-none);
-  --ds-shape-radius-xs:      var(--p-radius-xs);    /* subtle, tag indicators, inline chips */
+  --ds-shape-radius-2xs:     var(--p-radius-2xs);   /* hairline, Tag cr=2, dialog close, resizable grip, tooltip arrow */
+  --ds-shape-radius-xs:      var(--p-radius-xs);    /* subtle, checkbox, tag indicators, inline chips */
   --ds-shape-radius-sm:      var(--p-radius-sm);    /* small, badges, small tooltips */
   --ds-shape-radius-md:      var(--p-radius-md);    /* medium, buttons (xs/default/sm/lg/icon sizes), inputs */
   --ds-shape-radius-lg:      var(--p-radius-lg);    /* large, cards, panels */
@@ -83,6 +91,11 @@
   --ds-shape-border-heavy:   var(--p-border-width-heavy);   /* left-edge accent stripe on alert banners */
 
   /* ── Shadow (semantic-only; color-baked, see header) ── */
+  /* xs added July 16, 2026: form controls (input/select/textarea/checkbox/
+   * toggle/input-group) were the last things still painting Tailwind's stock
+   * black shadow-xs on a forest-tinted system. Same geometry as that stock
+   * value, tinted to match the ramp and one step lighter than sm (0.05/0.08). */
+  --ds-shadow-xs: 0 1px 2px 0 rgba(19, 48, 25, 0.05);
   --ds-shadow-sm: 0 1px 2px 0 rgba(19, 48, 25, 0.08);
   --ds-shadow-md: 0 4px 6px -1px rgba(19, 48, 25, 0.10),
                0 2px 4px -2px  rgba(19, 48, 25, 0.06);
@@ -108,6 +121,7 @@
  *   Table row                    → --ds-shape-radius-none
  *
  * Shadow conventions:
+ *   Form control (input, select, textarea, checkbox, toggle) → --ds-shadow-xs
  *   Raised card on page bg       → --ds-shadow-sm
  *   Popover, dropdown menu       → --ds-shadow-md
  *   Dialog, modal                → --ds-shadow-lg

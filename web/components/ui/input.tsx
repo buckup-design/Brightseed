@@ -28,13 +28,7 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
         "bg-transparent",
         "border border-[var(--c-input-border-default)]",
         "rounded-[var(--c-input-shape-radius-md)]",
-        // BRIGHTSEED-TBD: [BLOCKING] `shadow-xs` is Tailwind's stock elevation
-        // (0 1px 2px 0 rgb(0 0 0 / 0.05)). The Brightseed shadow ramp starts at
-        // --ds-shadow-sm; there is no --ds-shadow-xs, and --ds-shadow-sm is a
-        // different, forest-tinted recipe. Left un-tokenised rather than guess a
-        // token that doesn't exist or silently restyle the field. Needs either a
-        // new --ds-shadow-xs or a decision to drop the shadow.
-        "shadow-xs",
+        "shadow-[var(--c-input-shadow-xs)]",
         // Text selection
         "selection:bg-[var(--c-input-action-primary)] selection:text-[var(--c-input-text-on-action-primary)]",
         // File-input button
@@ -43,7 +37,7 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
         // Placeholder
         "placeholder:text-[var(--c-input-text-subtle)]",
         // Disabled
-        "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
+        "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-[var(--c-input-disabled-text-opacity)]",
         // Dark-mode field fill. Restates the stock `dark:bg-input/30`; --input
         // bridges to --ds-color-border-default, so this is the same colour at 30%.
         "dark:bg-[var(--c-input-border-default)]/30",

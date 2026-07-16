@@ -30,7 +30,7 @@ import { cn } from "@/lib/utils"
  *                Used in body content, table rows, chip-stacks of moderate density.
  *                Interactive: carries hover + focus states. (Renamed from "primary".)
  *     tag        Tight, INFORMATIONAL tag for tag-dense Hummingbird surfaces. cr=2
- *                (sharp corners, bound to --ds-shape-radius-xs), px-1 horizontal,
+ *                (sharp corners, bound to --ds-shape-radius-2xs), px-1 horizontal,
  *                hugs content. More tags fit per row without column wrapping.
  *                Static, NOT interactive: no hover, no focus state, by design.
  *                (Renamed from "secondary".)
@@ -172,12 +172,12 @@ const badgeVariants = cva(
           "h-5 px-2 py-0.5 gap-1 text-xs",
           "rounded-full",
         ),
-        // Tag, tight informational tag, cr=2 (--ds-shape-radius-xs), 4px horizontal
+        // Tag, tight informational tag, cr=2 (--ds-shape-radius-2xs), 4px horizontal
         // padding, hugs content. Static, no hover/focus. For dense rows where width
         // matters more than air.
         tag: cn(
           "h-[18px] px-1 gap-1 text-[11px] leading-none",
-          "rounded-[var(--c-badge-shape-radius-xs)]",
+          "rounded-[var(--c-badge-shape-radius-2xs)]",
         ),
         // Number, compact numeric. tabular-nums keeps "9" and "10" the same width.
         // min-w-5 prevents single-digit numbers from collapsing too narrow.
