@@ -28,7 +28,9 @@ type AvatarIcon = keyof typeof AVATAR_ICONS
 /** Shown when an account has no stored pair — a row predating assignment, or a
  * read that came back empty. Note this is one of the 20 assignable pairs, not a
  * reserved 21st, so a fallback avatar is indistinguishable from a user who was
- * genuinely assigned orange + wheat. */
+ * genuinely assigned orange + wheat. That is deliberate: if identity loading ever
+ * breaks, it must not LOOK broken. Do not "fix" this into a neutral
+ * unknown-person avatar — that trade was considered and rejected. */
 const AVATAR_IDENTITY_FALLBACK = { color: "orange", icon: "wheat" } as const
 
 /* Written out in full so Tailwind's source scan can see each class literal. */
@@ -71,35 +73,57 @@ function Avatar({
   )
 }
 
+/** The avatar for an account with no stored pair — a row predating assignment, or
+ * a read that came back empty. Renders AVATAR_IDENTITY_FALLBACK (orange + wheat),
+ * so it is visually indistinguishable from an account genuinely assigned that
+ * pair. That is the design, not an oversight; see the constant.
+ *
+ * It earns its own component despite being a fixed pair: absence becomes explicit
+ * at the call site (`identity ? <AvatarIdentity …/> : <AvatarFallback />`), and
+ * the fallback pair is defined in exactly one place instead of hiding in
+ * AvatarIdentity's prop defaults, where a failed read was silently identical to a
+ * successful one. Same pixels, honest code. */
 function AvatarFallback({
   className,
   ...props
-}: React.ComponentProps<typeof AvatarPrimitive.Fallback>) {
+}: Omit<
+  React.ComponentProps<typeof AvatarPrimitive.Fallback>,
+  // `color` is a real HTML attribute, so it rides in on ComponentProps and would
+  // otherwise let a caller pass color="blue" and quietly repaint the fallback.
+  "children" | "color"
+>) {
   return (
-    <AvatarPrimitive.Fallback
-      data-slot="avatar-fallback"
-      className={cn(
-        "flex size-full items-center justify-center rounded-full bg-[var(--c-avatar-surface-alt)] text-sm text-[var(--c-avatar-text-subtle)] group-data-[size=sm]/avatar:text-xs",
-        className
-      )}
+    <AvatarIdentity
+      className={className}
       {...props}
+      // After {...props}, all three: the pair is not negotiable, and the DOM
+      // should say which component rendered even though the two are deliberately
+      // identical to look at.
+      color={AVATAR_IDENTITY_FALLBACK.color}
+      icon={AVATAR_IDENTITY_FALLBACK.icon}
+      data-slot="avatar-fallback"
     />
   )
 }
 
-/** The assigned color + icon avatar, and the only avatar the product renders —
- * photo avatars were removed in July 2026. Still built on the Radix fallback
- * slot, which renders while image status is idle; with no Avatar.Image sibling
- * possible any more, that means it always renders. Omitting either prop falls
- * back to AVATAR_IDENTITY_FALLBACK. */
+/** The assigned color + icon avatar — photo avatars were removed in July 2026.
+ * Still built on the Radix fallback slot, which renders while image status is
+ * idle; with no Avatar.Image sibling possible any more, that means it always
+ * renders.
+ *
+ * Both props are REQUIRED, deliberately. This component used to default to
+ * orange + wheat, which made "no stored identity" and "assigned orange + wheat"
+ * the same call with the same result. The RENDERING is still identical — that is
+ * AVATAR_IDENTITY_FALLBACK's entire point — but the code now has to say which one
+ * it means, and AvatarFallback is how it says it. Same pixels, honest code. */
 function AvatarIdentity({
-  color = AVATAR_IDENTITY_FALLBACK.color,
-  icon = AVATAR_IDENTITY_FALLBACK.icon,
+  color,
+  icon,
   className,
   ...props
 }: Omit<React.ComponentProps<typeof AvatarPrimitive.Fallback>, "children"> & {
-  color?: AvatarColor
-  icon?: AvatarIcon
+  color: AvatarColor
+  icon: AvatarIcon
 }) {
   const Icon = AVATAR_ICONS[icon]
   return (

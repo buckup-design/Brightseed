@@ -4,6 +4,7 @@ import {
   AVATAR_COLORS,
   AVATAR_ICONS,
   Avatar,
+  AvatarFallback,
   AvatarGroup,
   AvatarIdentity,
   randomAvatarIdentity,
@@ -35,13 +36,65 @@ export const Identity: Story = {
   ),
 };
 
-/** No stored pair, so AvatarIdentity falls back to orange + wheat. Identical to
- * an account genuinely assigned that pair, by design. */
-export const IdentityFallback: Story = {
+/* ─────────────────────────────────────────────────────────────────────────
+ * Fallback avatar, for accounts with no stored pair. AvatarIdentity used to
+ * self-default to orange + wheat; it no longer defaults, so a caller has to say
+ * "no identity" out loud. What it renders is unchanged — orange + wheat — the
+ * saying-so is the only new part.
+ * ───────────────────────────────────────────────────────────────────────── */
+
+/** The fallback avatar: orange + wheat, per AVATAR_IDENTITY_FALLBACK. */
+export const Fallback: Story = {
   render: () => (
     <Avatar size="lg">
-      <AvatarIdentity />
+      <AvatarFallback />
     </Avatar>
+  ),
+};
+
+/** The decision, made visible — and the one most likely to be "fixed" back into a
+ * bug by a well-meaning reader. The fallback is one of the 20 assignable pairs,
+ * NOT a reserved 21st, so these two are identical on purpose: an account
+ * genuinely assigned orange + wheat, and an account with nothing stored at all.
+ * If identity loading ever breaks, it must not LOOK broken. */
+export const FallbackIsIndistinguishable: Story = {
+  render: () => (
+    <div className="flex flex-col items-center gap-4">
+      <div className="flex items-end gap-8">
+        {[
+          { label: "assigned orange + wheat", node: <AvatarIdentity color="orange" icon="wheat" /> },
+          { label: "no stored pair", node: <AvatarFallback /> },
+        ].map(({ label, node }) => (
+          <div key={label} className="flex flex-col items-center gap-2">
+            <Avatar size="lg">{node}</Avatar>
+            <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
+              {label}
+            </span>
+          </div>
+        ))}
+      </div>
+      <p className="max-w-prose text-center text-sm text-[var(--ds-color-text-subtle)]">
+        The same avatar, deliberately. Only the code tells them apart, via{" "}
+        <code>data-slot</code>.
+      </p>
+    </div>
+  ),
+};
+
+export const FallbackSizes: Story = {
+  render: () => (
+    <div className="flex items-end gap-4">
+      {(["sm", "default", "lg"] as const).map((size) => (
+        <div key={size} className="flex flex-col items-center gap-2">
+          <Avatar size={size}>
+            <AvatarFallback />
+          </Avatar>
+          <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
+            {size}
+          </span>
+        </div>
+      ))}
+    </div>
   ),
 };
 
@@ -132,7 +185,11 @@ export const IdentityGroup: Story = {
 };
 
 /** Stands in for account creation: roll once, keep the result. The button is
- * what makes it a real assignment rather than a render-time reshuffle. */
+ * what makes it a real assignment rather than a render-time reshuffle.
+ *
+ * Before the roll there is no stored pair, which is precisely the fallback case
+ * — so this story also shows the branch every consumer now has to make, and why
+ * the two components are worth keeping apart. */
 export const RandomAssignment: Story = {
   render: function RandomAssignmentStory() {
     const [identity, setIdentity] = React.useState<{
@@ -143,15 +200,13 @@ export const RandomAssignment: Story = {
     return (
       <div className="flex flex-col items-center gap-4">
         <div className="flex h-10 items-center">
-          {identity ? (
-            <Avatar size="lg">
+          <Avatar size="lg">
+            {identity ? (
               <AvatarIdentity color={identity.color} icon={identity.icon} />
-            </Avatar>
-          ) : (
-            <span className="text-sm text-[var(--ds-color-text-subtle)]">
-              No account yet
-            </span>
-          )}
+            ) : (
+              <AvatarFallback />
+            )}
+          </Avatar>
         </div>
         <button
           type="button"
@@ -161,7 +216,7 @@ export const RandomAssignment: Story = {
           Create account
         </button>
         <span className="h-4 font-mono text-xs text-[var(--ds-color-text-subtle)]">
-          {identity ? `${identity.color} / ${identity.icon}` : ""}
+          {identity ? `${identity.color} / ${identity.icon}` : "no stored pair"}
         </span>
       </div>
     );
