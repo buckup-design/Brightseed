@@ -33,6 +33,13 @@
   --ds-color-surface-brand-hover:     var(--p-color-forest-800);
   --ds-color-surface-brand-active:    var(--p-color-forest-950);
   --ds-color-surface-brand-subtle:    var(--p-color-forest-50);    /* light green tint */
+  --ds-color-surface-brand-subtle-hover: var(--p-color-forest-100); /* -subtle, hovered (Toggle on+hover) */
+
+  /* Loading placeholder fill (Skeleton). Deliberately NOT -brand-subtle: a
+     skeleton wants a whisper, and Toggle's on-state wants a signal that clears
+     its own hover surface. One token cannot be both, so they split (July 2026).
+     Role-named, not "surface-skeleton", per the name-the-usage rule. */
+  --ds-color-surface-placeholder:     var(--p-color-forest-50);
 
   /* Semantic surfaces, alert backgrounds, callout tints */
   --ds-color-surface-success:         var(--p-color-forest-50);
@@ -326,7 +333,43 @@
   --ds-color-surface-brand:           var(--p-color-sand-900);
   --ds-color-surface-brand-hover:     var(--p-color-sand-800);
   --ds-color-surface-brand-active:    var(--p-color-sand-950);
-  --ds-color-surface-brand-subtle:    var(--p-color-sand-950);
+  /* sand-800, and it must step PAST sand-900. -subtle got swept to the page color
+     with the rest of this sand-anchored brand block, but nothing consumes it as a
+     nav/header: Toggle (on-state), ToggleGroup and Select (item focus) all use it
+     as a patch that must step AWAY from the page. At sand-950 it WAS the page, so
+     all of them rendered no signal at all in dark.
+
+     Why not sand-900, the obvious next rung: --ds-color-surface-alt is sand-900,
+     and Toggle's hover surface IS surface-alt — so at sand-900 a hovered OFF
+     toggle is pixel-identical to an ON one (the only delta is text at 1.31:1,
+     and for an icon-only toggle there is no text at all). sand-800 clears it
+     (page→hover 1.13:1, hover→on 1.51:1) and collides with nothing:
+     surface-alt-hover / surface-default-active share the hex but have no
+     component-tier alias, so no element can render them as two states of itself.
+
+     Skeleton used to ride this token and deliberately no longer does: a skeleton
+     wants a whisper, an on-state wants a signal that clears its own hover. One
+     token could not be both. See --ds-color-surface-placeholder.
+
+     Root cause worth keeping: light only ever worked because forest-50 and
+     sand-100 are the same LIGHTNESS and separate by HUE. Dark removed the hue on
+     purpose ("forest exits surface vocabulary", above), so lightness is the only
+     axis left here and every value is a lightness step. */
+  --ds-color-surface-brand-subtle:    var(--p-color-sand-800);
+  /* One rung further, for Toggle's on+hover. NOTE sand-700 is also dark
+     --ds-color-border-default, so an outline Toggle's border merges into its own
+     fill at on+hover. Accepted: the state still reads (it is the lightest rung of
+     the ladder) and sand-600 is a two-step jump that overshoots a hover. */
+  --ds-color-surface-brand-subtle-hover: var(--p-color-sand-700);
+
+  /* Loading placeholder fill (Skeleton). sand-900 keeps dark proportionate to the
+     light forest-50 whisper (ΔL* 4.84 vs light's 2.56); sand-800 measured ~6.8x
+     the light step and read as a solid block. Safe at sand-900: every skeleton in
+     the system sits on sand-950 (Card and Sidebar both paint surface-default, not
+     surface-alt), and SidebarMenuSkeleton — the one place a sand-900 skeleton
+     shares a list with sand-900 selected rows — paints only a size-4 square and a
+     h-4 bar, never a row fill, so it cannot be mistaken for a selected row. */
+  --ds-color-surface-placeholder:     var(--p-color-sand-900);
 
   /* Semantic surfaces, intent tint at low opacity on sand-950 base.
      Visual judgment: dark mode alerts read better with a subtle tint than
