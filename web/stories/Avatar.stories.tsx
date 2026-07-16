@@ -34,14 +34,6 @@ export const Default: Story = {
   ),
 };
 
-export const FallbackOnly: Story = {
-  render: () => (
-    <Avatar>
-      <AvatarFallback>BB</AvatarFallback>
-    </Avatar>
-  ),
-};
-
 /* ─────────────────────────────────────────────────────────────────────────
  * Identity avatars, the color + icon pair assigned at account creation.
  * ───────────────────────────────────────────────────────────────────────── */
@@ -117,24 +109,6 @@ export const IdentitySizes: Story = {
           </span>
         </div>
       ))}
-    </div>
-  ),
-};
-
-/** An uploaded photo wins over the assigned identity, which sits in the Radix
- * fallback slot. The second avatar has a deliberately broken src to show the
- * identity taking over. */
-export const IdentityWithImage: Story = {
-  render: () => (
-    <div className="flex items-center gap-4">
-      <Avatar size="lg">
-        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-        <AvatarIdentity color="blue" icon="wheat" />
-      </Avatar>
-      <Avatar size="lg">
-        <AvatarImage src="/does-not-exist.png" alt="" />
-        <AvatarIdentity color="blue" icon="wheat" />
-      </Avatar>
     </div>
   ),
 };
