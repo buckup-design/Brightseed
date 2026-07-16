@@ -35,6 +35,16 @@ export const Identity: Story = {
   ),
 };
 
+/** No stored pair, so AvatarIdentity falls back to orange + wheat. Identical to
+ * an account genuinely assigned that pair, by design. */
+export const IdentityFallback: Story = {
+  render: () => (
+    <Avatar size="lg">
+      <AvatarIdentity />
+    </Avatar>
+  ),
+};
+
 /** The full assignable set. Every avatar a new account can be given is on this
  * page, which makes it the one to review the white-on-color call against. */
 export const IdentityMatrix: Story = {

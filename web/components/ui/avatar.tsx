@@ -25,6 +25,12 @@ const AVATAR_ICONS = {
 } as const
 type AvatarIcon = keyof typeof AVATAR_ICONS
 
+/** Shown when an account has no stored pair — a row predating assignment, or a
+ * read that came back empty. Note this is one of the 20 assignable pairs, not a
+ * reserved 21st, so a fallback avatar is indistinguishable from a user who was
+ * genuinely assigned orange + wheat. */
+const AVATAR_IDENTITY_FALLBACK = { color: "orange", icon: "wheat" } as const
+
 /* Written out in full so Tailwind's source scan can see each class literal. */
 const AVATAR_COLOR_SURFACE: Record<AvatarColor, string> = {
   orchid: "bg-[var(--c-avatar-surface-orchid)]",
@@ -95,15 +101,16 @@ function AvatarFallback({
 }
 
 /** The assigned color + icon avatar. Sits in the Radix fallback slot, so an
- * uploaded AvatarImage wins when present and this shows otherwise. */
+ * uploaded AvatarImage wins when present and this shows otherwise. Omitting
+ * either prop falls back to AVATAR_IDENTITY_FALLBACK. */
 function AvatarIdentity({
-  color,
-  icon,
+  color = AVATAR_IDENTITY_FALLBACK.color,
+  icon = AVATAR_IDENTITY_FALLBACK.icon,
   className,
   ...props
 }: Omit<React.ComponentProps<typeof AvatarPrimitive.Fallback>, "children"> & {
-  color: AvatarColor
-  icon: AvatarIcon
+  color?: AvatarColor
+  icon?: AvatarIcon
 }) {
   const Icon = AVATAR_ICONS[icon]
   return (
@@ -179,6 +186,7 @@ export {
   AvatarGroupCount,
   AVATAR_COLORS,
   AVATAR_ICONS,
+  AVATAR_IDENTITY_FALLBACK,
   randomAvatarIdentity,
 }
 export type { AvatarColor, AvatarIcon }
