@@ -4,10 +4,8 @@ import {
   AVATAR_COLORS,
   AVATAR_ICONS,
   Avatar,
-  AvatarFallback,
   AvatarGroup,
   AvatarIdentity,
-  AvatarImage,
   randomAvatarIdentity,
   type AvatarColor,
   type AvatarIcon,
@@ -24,15 +22,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const ICON_NAMES = Object.keys(AVATAR_ICONS) as AvatarIcon[];
-
-export const Default: Story = {
-  render: () => (
-    <Avatar>
-      <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-      <AvatarFallback>BB</AvatarFallback>
-    </Avatar>
-  ),
-};
 
 /* ─────────────────────────────────────────────────────────────────────────
  * Identity avatars, the color + icon pair assigned at account creation.
