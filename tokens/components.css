@@ -62,8 +62,14 @@
 
   /* --c-avatar */
   --c-avatar-action-primary:            var(--ds-color-action-primary);
+  --c-avatar-icon-on-color:             var(--ds-color-icon-on-avatar);
   --c-avatar-surface-alt:               var(--ds-color-surface-alt);
+  --c-avatar-surface-blue:              var(--ds-color-surface-avatar-blue);
+  --c-avatar-surface-cyan:              var(--ds-color-surface-avatar-cyan);
   --c-avatar-surface-default:           var(--ds-color-surface-default);
+  --c-avatar-surface-lavender:          var(--ds-color-surface-avatar-lavender);
+  --c-avatar-surface-orange:            var(--ds-color-surface-avatar-orange);
+  --c-avatar-surface-orchid:            var(--ds-color-surface-avatar-orchid);
   --c-avatar-text-on-action-primary:    var(--ds-color-text-on-action-primary);
   --c-avatar-text-subtle:               var(--ds-color-text-subtle);
 

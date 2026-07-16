@@ -2,8 +2,48 @@
 
 import * as React from "react"
 import { Avatar as AvatarPrimitive } from "radix-ui"
+import { Flower, Flower2, LeafyGreen, Wheat } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { BADGE_ICON_STROKE } from "@/components/ui/badge-icons"
+
+/* ── Identity set ─────────────────────────────────────────────────────────
+ * A stored color + icon pair, assigned at account creation. These two lists
+ * are the vocabulary those stored values draw from; a persisted avatar is one
+ * value from each (5 x 4 = 20 pairs). Settings will later let a user override
+ * the assigned pair, so both fields are addressable by name, not by index —
+ * reordering these lists must never repaint an existing user's avatar. */
+
+const AVATAR_COLORS = ["orchid", "lavender", "orange", "blue", "cyan"] as const
+type AvatarColor = (typeof AVATAR_COLORS)[number]
+
+const AVATAR_ICONS = {
+  wheat: Wheat,
+  flower: Flower,
+  "flower-2": Flower2,
+  "leafy-green": LeafyGreen,
+} as const
+type AvatarIcon = keyof typeof AVATAR_ICONS
+
+/* Written out in full so Tailwind's source scan can see each class literal. */
+const AVATAR_COLOR_SURFACE: Record<AvatarColor, string> = {
+  orchid: "bg-[var(--c-avatar-surface-orchid)]",
+  lavender: "bg-[var(--c-avatar-surface-lavender)]",
+  orange: "bg-[var(--c-avatar-surface-orange)]",
+  blue: "bg-[var(--c-avatar-surface-blue)]",
+  cyan: "bg-[var(--c-avatar-surface-cyan)]",
+}
+
+/** Pick a random identity. Call once at account creation and persist the
+ * result — never derive it at render, which would reshuffle the avatar on
+ * every paint and mismatch between server and client on hydration. */
+function randomAvatarIdentity(): { color: AvatarColor; icon: AvatarIcon } {
+  const icons = Object.keys(AVATAR_ICONS) as AvatarIcon[]
+  return {
+    color: AVATAR_COLORS[Math.floor(Math.random() * AVATAR_COLORS.length)],
+    icon: icons[Math.floor(Math.random() * icons.length)],
+  }
+}
 
 function Avatar({
   className,
@@ -51,6 +91,36 @@ function AvatarFallback({
       )}
       {...props}
     />
+  )
+}
+
+/** The assigned color + icon avatar. Sits in the Radix fallback slot, so an
+ * uploaded AvatarImage wins when present and this shows otherwise. */
+function AvatarIdentity({
+  color,
+  icon,
+  className,
+  ...props
+}: Omit<React.ComponentProps<typeof AvatarPrimitive.Fallback>, "children"> & {
+  color: AvatarColor
+  icon: AvatarIcon
+}) {
+  const Icon = AVATAR_ICONS[icon]
+  return (
+    <AvatarPrimitive.Fallback
+      data-slot="avatar-identity"
+      data-color={color}
+      data-icon={icon}
+      className={cn(
+        "flex size-full items-center justify-center rounded-full text-[var(--c-avatar-icon-on-color)]",
+        "[&>svg]:size-4 group-data-[size=sm]/avatar:[&>svg]:size-3 group-data-[size=lg]/avatar:[&>svg]:size-5",
+        AVATAR_COLOR_SURFACE[color],
+        className
+      )}
+      {...props}
+    >
+      <Icon strokeWidth={BADGE_ICON_STROKE} aria-hidden="true" />
+    </AvatarPrimitive.Fallback>
   )
 }
 
@@ -103,7 +173,12 @@ export {
   Avatar,
   AvatarImage,
   AvatarFallback,
+  AvatarIdentity,
   AvatarBadge,
   AvatarGroup,
   AvatarGroupCount,
+  AVATAR_COLORS,
+  AVATAR_ICONS,
+  randomAvatarIdentity,
 }
+export type { AvatarColor, AvatarIcon }
