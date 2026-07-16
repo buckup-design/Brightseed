@@ -88,7 +88,9 @@ Color scale names: forest, lime, sand, cyan, blue, yellow, orange, lavender, orc
 
 | Area | Status |
 |---|---|
-| Token system (3-tier, dark theme, shadcn bridge); component-scoped tokens in `tokens/components.css` emitted as `--c-{component}-*` (renamed from `--ds-{component}-*` June 7, 2026, BSDS-102), all 12 token-bearing components read their own `--c-{component}-*` only | ✅ Complete |
+| Token system (3-tier, dark theme, shadcn bridge); component-scoped tokens in `tokens/components.css` emitted as `--c-{component}-*` (renamed from `--ds-{component}-*` June 7, 2026, BSDS-102). **All of `web/components/ui/` reads its own `--c-{component}-*` only** — 31 blocks, the last 16 migrated off the bridge July 16, 2026 | ✅ Complete |
+| Token gaps the `ui/` migration surfaced — grep `BRIGHTSEED-TBD` in `web/components/ui/`. `[BLOCKING]`: no `--ds-shadow-xs` (6 components hold stock Tailwind `shadow-xs`); no 4px radius step for Checkbox (scale is xs=2/sm=6/md=8). `[CONCERN]`: disabled opacity is split 0.50 vs `--ds-disabled-text-opacity` 0.55 | 🔲 Needs a design call |
+| Two latent bugs the migration exposed but did **not** cause, both rendering nothing today: `input-group`'s `calc(var(--radius)-5px)` (bare `--radius` is undefined project-wide → `<kbd>` + xs buttons have no radius); `sidebar`'s `shadow-[0_0_0_1px_hsl(var(--sidebar-border))]` (`hsl()` of a hex is invalid → outline variant has no ring) | 🔲 Own ticket |
 | Figma v3 (`shadcn Brightseed v3 (with pro blocks)`), primitives + tag tokens, ~50-var Brightseed Mode, Quill Button/Badge port, local Ring focus system, Logo/Login/Input sets, Geist + Tiempos | ✅ Complete |
 | Web app (`/web/`, Next.js 16 + Tailwind 4 + Storybook 10, on Pro Pack), Button + Badge to spec; Pro Blocks (App Shell 4, Sign In 2, nav); form primitives; Alert/AlertDialog/Table/Switch/Spinner/Sonner; BrightseedLogo + Login | ✅ Complete |
 | Infra: Vercel auto-deploys `main` → https://brightseed-storybook.vercel.app | ✅ In sync |
@@ -107,7 +109,7 @@ Color scale names: forest, lime, sand, cyan, blue, yellow, orange, lavender, orc
 |---|---|
 | `CLAUDE.md` | This file: canonical rules, conventions, status. |
 | `tokens/` | Token CSS: source of truth for names + values. `components.css` holds the component-scoped `--c-{component}-*` tokens (one block per component; each aliases one global `--ds-*`). |
-| `bridge/globals.css` | shadcn bridge: maps Brightseed tokens onto shadcn variable names. Intentionally thin. |
+| `bridge/globals.css` | shadcn bridge: maps Brightseed tokens onto shadcn variable names. Intentionally thin. Since the July 2026 `ui/` fork it serves only what we don't own — Pro Block markup, the login pages, story chrome — **not** `web/components/ui/`. |
 | `README.md` | Short orientation pointing to CSS + Storybook. |
 | `web/` | Next.js 16 + Tailwind 4 + Storybook 10 production app. `tokens/` + `bridge/` here are symlinks to root. |
 | `collaboration/` | Internal: workflow + Anna onboarding. |
@@ -186,7 +188,11 @@ Exposed in the web app as **three separate components** — `Chip`, `Tag`, `Numb
 
 ## Web app (`/web/`), operational
 
-Next.js 16 (App Router) + Tailwind 4 + Storybook 10, deployed to Vercel, **production, not staging.** Rebased on the shadcndesign.com Pro Pack; Pro Blocks are pure composition over stock shadcn primitives, so the customized Button + Badge are the paint surface and the bridge themes everything else. Geist via the `geist` npm package (`next/font/google` is blocked in-sandbox). Theme toggle via `data-theme="dark"` on `<html>`.
+Next.js 16 (App Router) + Tailwind 4 + Storybook 10, deployed to Vercel, **production, not staging.** Rebased on the shadcndesign.com Pro Pack; Pro Blocks are pure composition over stock shadcn primitives. Geist via the `geist` npm package (`next/font/google` is blocked in-sandbox). Theme toggle via `data-theme="dark"` on `<html>`.
+
+**The `ui/` layer is forked (July 16, 2026).** It used to be "Button + Badge are the paint surface, the bridge themes everything else". That is no longer true: **every component in `web/components/ui/` now reads its own `--c-{component}-*` tokens** and none of them style through shadcn slot classes. Two consequences, both load-bearing:
+- **The bridge is not dead, but its job shrank.** It still themes what we don't own or haven't forked: Pro Block markup (`components/pro-blocks/*`), the login pages (`app/login`, `app/marketing/*/login`, `components/auth`, `components/login-form.tsx`), and story demo chrome. It no longer themes `ui/`.
+- **The whole `ui/` layer must now be defended on every install, not just Button + Badge** (see the Defend gotcha below). The corollary is that Quill no longer takes upstream shadcn fixes for free — a11y patches and Radix bumps to a forked primitive have to be hand-merged.
 
 **Run (local, from the `~/dev/Brightseed` clone):** `cd ~/dev/Brightseed/web && npm install`, then `npm run storybook` (6006, the default preview surface) or `npm run dev` (3000). In Cowork/Claude Code, prefer `preview_start name=brightseed-storybook` (config in the Cowork-root `.claude/launch.json`). Don't run from the Documents copy — TCC blocks preview there (rule 8).
 
@@ -199,6 +205,12 @@ The `yes n |` is critical, it answers overwrite prompts `n`, preserving customiz
 **Gotchas:**
 - **Tailwind v4 `@source` directives go AFTER all `@import`s:** between imports silently invalidates the token/bridge load (every var resolves empty). Defensive `@source` for `app/`, `components/`, `stories/`, `lib/`, `hooks/`.
 - **Sidebar tokens:** the CLI inlines stock `hsl()` `--sidebar-*` values + a `.dark` block. Delete those; define `--sidebar-*` in `bridge/globals.css` aliasing Brightseed semantics (surface = `--ds-color-surface-default`, primary = `--ds-color-action-primary`, accent = `--ds-color-surface-alt`, border = `--ds-color-border-default`, ring = `--ds-color-border-focus`). Bridge wins; re-delete if re-injected.
-- **Defend Button + Badge:** recovery branch `button-badge-snapshot`. Pre/post-install `sha256sum components/ui/button.tsx components/ui/badge.tsx components/ui/chip.tsx components/ui/tag.tsx components/ui/number-badge.tsx` must match; restore via `git checkout button-badge-snapshot -- web/components/ui/button.tsx web/components/ui/badge.tsx web/components/ui/chip.tsx web/components/ui/tag.tsx web/components/ui/number-badge.tsx web/stories/Button.stories.tsx web/stories/Chip.stories.tsx web/stories/Tag.stories.tsx web/stories/BadgeNumber.stories.tsx`. (Badge is the internal engine; Chip/Tag/NumberBadge are the public wrappers. The old `Badge.stories.tsx` was removed when the stories split.)
+- **Defend the whole `ui/` layer, not just Button + Badge** (widened July 16, 2026 when `ui/` was forked onto `--c-*`). Every file in `web/components/ui/` is now customized, so any `shadcn add` / Pro Block install can clobber real work. The `yes n |` prefix is what actually protects them — it answers `n` to every overwrite prompt — so **never drop it**. Verify rather than trust: `sha256sum` the directory before and after and diff the two lists.
+  ```bash
+  cd ~/dev/Brightseed/web && shasum -a 256 components/ui/*.tsx > /tmp/ui-pre.txt
+  yes n | npx --yes shadcn@latest add @shadcndesign/<block> --yes
+  shasum -a 256 -c /tmp/ui-pre.txt   # every line must say OK
+  ```
+  Anything that fails the check: `git checkout HEAD -- web/components/ui/<file>.tsx`. (The `button-badge-snapshot` branch predates the fork and only covers Button/Badge/Chip/Tag/NumberBadge; `HEAD` is the better restore point now. Badge is the internal engine; Chip/Tag/NumberBadge are the public wrappers.)
 
 **Tiempos type system:** display = **Tiempos Fine RegularItalic** (italic intrinsic; h1 56/60, h2 40/44, h3 28/34; differentiation by size + tracking). Tiempos Text (Medium/Semibold/Bold) loaded for body emphasis. WOFF2 at `web/public/fonts/tiempos/` (Klim webfont license held; confirm the Vercel domain is registered). Allowed families on Brightseed-canonical pages: **Geist, Geist Mono, Tiempos Text, Tiempos Fine**. Stock Pro Pack reference pages are exempt from font discipline.

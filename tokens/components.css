@@ -60,6 +60,13 @@
   --c-alert-dialog-text-default:       var(--ds-color-text-default);
   --c-alert-dialog-text-subtle:        var(--ds-color-text-subtle);
 
+  /* --c-avatar */
+  --c-avatar-action-primary:            var(--ds-color-action-primary);
+  --c-avatar-surface-alt:               var(--ds-color-surface-alt);
+  --c-avatar-surface-default:           var(--ds-color-surface-default);
+  --c-avatar-text-on-action-primary:    var(--ds-color-text-on-action-primary);
+  --c-avatar-text-subtle:               var(--ds-color-text-subtle);
+
   /* --c-badge */
   --c-badge-action-secondary:              var(--ds-color-action-secondary);
   --c-badge-action-secondary-hover:        var(--ds-color-action-secondary-hover);
@@ -107,6 +114,10 @@
   --c-badge-text-tag-red:                  var(--ds-color-text-tag-red);
   --c-badge-text-tag-yellow:               var(--ds-color-text-tag-yellow);
 
+  /* --c-breadcrumb */
+  --c-breadcrumb-text-default:    var(--ds-color-text-default);
+  --c-breadcrumb-text-subtle:     var(--ds-color-text-subtle);
+
   /* --c-button */
   --c-button-action-critical:                  var(--ds-color-action-critical);
   --c-button-action-critical-active:           var(--ds-color-action-critical-active);
@@ -138,6 +149,21 @@
   --c-button-text-on-action-primary-active:    var(--ds-color-text-on-action-primary-active);
   --c-button-text-on-action-primary-hover:     var(--ds-color-text-on-action-primary-hover);
 
+  /* --c-card */
+  --c-card-border-default:     var(--ds-color-border-default);
+  --c-card-shadow-sm:          var(--ds-shadow-sm);
+  --c-card-shape-radius-xl:    var(--ds-shape-radius-xl);
+  --c-card-surface-default:    var(--ds-color-surface-default);
+  --c-card-text-default:       var(--ds-color-text-default);
+  --c-card-text-subtle:        var(--ds-color-text-subtle);
+
+  /* --c-checkbox */
+  --c-checkbox-action-critical:           var(--ds-color-action-critical);
+  --c-checkbox-action-primary:            var(--ds-color-action-primary);
+  --c-checkbox-border-default:            var(--ds-color-border-default);
+  --c-checkbox-border-focus:              var(--ds-color-border-focus);
+  --c-checkbox-text-on-action-primary:    var(--ds-color-text-on-action-primary);
+
   /* --c-dialog */
   --c-dialog-border-default:      var(--ds-color-border-default);
   --c-dialog-border-focus:        var(--ds-color-border-focus);
@@ -164,8 +190,30 @@
   --c-dropdown-menu-text-on-action-critical:    var(--ds-color-text-on-action-critical);
   --c-dropdown-menu-text-subtle:                var(--ds-color-text-subtle);
 
+  /* --c-field */
+  --c-field-action-primary:             var(--ds-color-action-primary);
+  --c-field-shape-radius-md:            var(--ds-shape-radius-md);
+  --c-field-surface-default:            var(--ds-color-surface-default);
+  --c-field-text-on-action-critical:    var(--ds-color-text-on-action-critical);
+  --c-field-text-subtle:                var(--ds-color-text-subtle);
+
   /* --c-input */
-  --c-input-border-default-hover:    var(--ds-color-border-default-hover);
+  --c-input-action-critical:           var(--ds-color-action-critical);
+  --c-input-action-primary:            var(--ds-color-action-primary);
+  --c-input-border-default:            var(--ds-color-border-default);
+  --c-input-border-default-hover:      var(--ds-color-border-default-hover);
+  --c-input-border-focus:              var(--ds-color-border-focus);
+  --c-input-shape-radius-md:           var(--ds-shape-radius-md);
+  --c-input-text-default:              var(--ds-color-text-default);
+  --c-input-text-on-action-primary:    var(--ds-color-text-on-action-primary);
+  --c-input-text-subtle:               var(--ds-color-text-subtle);
+
+  /* --c-input-group */
+  --c-input-group-action-critical:    var(--ds-color-action-critical);
+  --c-input-group-border-default:     var(--ds-color-border-default);
+  --c-input-group-border-focus:       var(--ds-color-border-focus);
+  --c-input-group-shape-radius-md:    var(--ds-shape-radius-md);
+  --c-input-group-text-subtle:        var(--ds-color-text-subtle);
 
   /* --c-popover */
   --c-popover-border-default:      var(--ds-color-border-default);
@@ -187,7 +235,40 @@
   --c-resizable-shape-radius-xs:     var(--ds-shape-radius-xs);
 
   /* --c-select */
+  --c-select-action-critical:         var(--ds-color-action-critical);
+  --c-select-border-default:          var(--ds-color-border-default);
   --c-select-border-default-hover:    var(--ds-color-border-default-hover);
+  --c-select-border-focus:            var(--ds-color-border-focus);
+  --c-select-shadow-md:               var(--ds-shadow-md);
+  --c-select-shape-radius-md:         var(--ds-shape-radius-md);
+  --c-select-shape-radius-sm:         var(--ds-shape-radius-sm);
+  --c-select-surface-brand-subtle:    var(--ds-color-surface-brand-subtle);
+  --c-select-surface-default:         var(--ds-color-surface-default);
+  --c-select-text-default:            var(--ds-color-text-default);
+  --c-select-text-subtle:             var(--ds-color-text-subtle);
+
+  /* --c-separator */
+  --c-separator-border-default:    var(--ds-color-border-default);
+
+  /* --c-sheet */
+  --c-sheet-border-focus:       var(--ds-color-border-focus);
+  --c-sheet-shadow-lg:          var(--ds-shadow-lg);
+  --c-sheet-shape-radius-xs:    var(--ds-shape-radius-xs);
+  --c-sheet-surface-alt:        var(--ds-color-surface-alt);
+  --c-sheet-surface-default:    var(--ds-color-surface-default);
+  --c-sheet-surface-scrim:      var(--ds-color-surface-scrim);
+  --c-sheet-text-default:       var(--ds-color-text-default);
+  --c-sheet-text-subtle:        var(--ds-color-text-subtle);
+
+  /* --c-sidebar */
+  --c-sidebar-border-default:     var(--ds-color-border-default);
+  --c-sidebar-border-focus:       var(--ds-color-border-focus);
+  --c-sidebar-shape-radius-lg:    var(--ds-shape-radius-lg);
+  --c-sidebar-shape-radius-md:    var(--ds-shape-radius-md);
+  --c-sidebar-shape-radius-xl:    var(--ds-shape-radius-xl);
+  --c-sidebar-surface-alt:        var(--ds-color-surface-alt);
+  --c-sidebar-surface-default:    var(--ds-color-surface-default);
+  --c-sidebar-text-default:       var(--ds-color-text-default);
 
   /* --c-sidebar-alt1 */
   --c-sidebar-alt1-border-default:      var(--ds-color-border-default);
@@ -199,6 +280,10 @@
   --c-sidebar-alt1-text-brand:          var(--ds-color-text-brand);
   --c-sidebar-alt1-text-default:        var(--ds-color-text-default);
   --c-sidebar-alt1-text-subtle:         var(--ds-color-text-subtle);
+
+  /* --c-skeleton */
+  --c-skeleton-shape-radius-md:         var(--ds-shape-radius-md);
+  --c-skeleton-surface-brand-subtle:    var(--ds-color-surface-brand-subtle);
 
   /* --c-sonner */
   --c-sonner-border-critical-default:    var(--ds-color-border-critical-default);
@@ -239,6 +324,38 @@
   --c-table-text-default:              var(--ds-color-text-default);
   --c-table-text-subtle:               var(--ds-color-text-subtle);
 
+  /* --c-tabs */
+  --c-tabs-border-default:     var(--ds-color-border-default);
+  --c-tabs-border-focus:       var(--ds-color-border-focus);
+  --c-tabs-shadow-sm:          var(--ds-shadow-sm);
+  --c-tabs-shape-radius-lg:    var(--ds-shape-radius-lg);
+  --c-tabs-shape-radius-md:    var(--ds-shape-radius-md);
+  --c-tabs-surface-alt:        var(--ds-color-surface-alt);
+  --c-tabs-surface-default:    var(--ds-color-surface-default);
+  --c-tabs-text-default:       var(--ds-color-text-default);
+  --c-tabs-text-subtle:        var(--ds-color-text-subtle);
+
   /* --c-textarea */
+  --c-textarea-action-critical:         var(--ds-color-action-critical);
+  --c-textarea-border-default:          var(--ds-color-border-default);
   --c-textarea-border-default-hover:    var(--ds-color-border-default-hover);
+  --c-textarea-border-focus:            var(--ds-color-border-focus);
+  --c-textarea-shape-radius-md:         var(--ds-shape-radius-md);
+  --c-textarea-text-subtle:             var(--ds-color-text-subtle);
+
+  /* --c-toggle */
+  --c-toggle-action-critical:         var(--ds-color-action-critical);
+  --c-toggle-border-default:          var(--ds-color-border-default);
+  --c-toggle-border-focus:            var(--ds-color-border-focus);
+  --c-toggle-shape-radius-md:         var(--ds-shape-radius-md);
+  --c-toggle-surface-alt:             var(--ds-color-surface-alt);
+  --c-toggle-surface-brand-subtle:    var(--ds-color-surface-brand-subtle);
+  --c-toggle-text-default:            var(--ds-color-text-default);
+  --c-toggle-text-subtle:             var(--ds-color-text-subtle);
+
+  /* --c-tooltip */
+  --c-tooltip-shape-radius-md:    var(--ds-shape-radius-md);
+  --c-tooltip-shape-radius-xs:    var(--ds-shape-radius-xs);
+  --c-tooltip-surface-default:    var(--ds-color-surface-default);
+  --c-tooltip-text-default:       var(--ds-color-text-default);
 }

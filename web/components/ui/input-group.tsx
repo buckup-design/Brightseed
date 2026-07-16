@@ -14,7 +14,17 @@ function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="input-group"
       role="group"
       className={cn(
-        "group/input-group relative flex w-full items-center rounded-md border border-input shadow-xs transition-[color,box-shadow] outline-none dark:bg-input/30",
+        // BRIGHTSEED-TBD: [BLOCKING] `shadow-xs` left as a stock Tailwind class.
+        // --ds-shadow-* only has sm/md/lg/xl, no xs step, and `--shadow-*` is not
+        // remapped in @theme inline, so this resolves to Tailwind's stock shadow.
+        // Swapping in --ds-shadow-sm would change the rendered value. Matches the
+        // sibling Input/Textarea, which also still use stock `shadow-xs`.
+        //
+        // BRIGHTSEED-TBD: [CONCERN] `dark:bg-.../30` reuses the *border* token as a
+        // surface. That is stock shadcn's own `dark:bg-input/30` (--input →
+        // --ds-color-border-default), preserved verbatim; the tier is now clean but
+        // the semantic intent (border token painting a background) is inherited oddity.
+        "group/input-group relative flex w-full items-center rounded-[var(--c-input-group-shape-radius-md)] border border-[var(--c-input-group-border-default)] shadow-xs transition-[color,box-shadow] outline-none dark:bg-[var(--c-input-group-border-default)]/30",
         "h-9 min-w-0 has-[>textarea]:h-auto",
 
         // Variants based on alignment.
@@ -24,10 +34,15 @@ function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
         "has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-end]]:[&>input]:pt-3",
 
         // Focus state.
-        "has-[[data-slot=input-group-control]:focus-visible]:border-ring has-[[data-slot=input-group-control]:focus-visible]:ring-[3px] has-[[data-slot=input-group-control]:focus-visible]:ring-ring/50",
+        "has-[[data-slot=input-group-control]:focus-visible]:border-[var(--c-input-group-border-focus)] has-[[data-slot=input-group-control]:focus-visible]:ring-[3px] has-[[data-slot=input-group-control]:focus-visible]:ring-[var(--c-input-group-border-focus)]/50",
 
         // Error state.
-        "has-[[data-slot][aria-invalid=true]]:border-destructive has-[[data-slot][aria-invalid=true]]:ring-destructive/20 dark:has-[[data-slot][aria-invalid=true]]:ring-destructive/40",
+        // BRIGHTSEED-TBD: [CONCERN] `border-destructive` / `ring-destructive` both
+        // resolve through the bridge to --ds-color-action-critical (the soft red-100
+        // *surface* step), not a border/text step. Tokenised 1:1 to preserve the
+        // current look; if the invalid outline reads too faint, that is a pre-existing
+        // shadcn choice to revisit, not a regression from this migration.
+        "has-[[data-slot][aria-invalid=true]]:border-[var(--c-input-group-action-critical)] has-[[data-slot][aria-invalid=true]]:ring-[var(--c-input-group-action-critical)]/20 dark:has-[[data-slot][aria-invalid=true]]:ring-[var(--c-input-group-action-critical)]/40",
 
         className
       )}
@@ -36,8 +51,17 @@ function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+// BRIGHTSEED-TBD: [BLOCKING] `[&>kbd]:rounded-[calc(var(--radius)-5px)]` left as-is.
+// Two reasons it cannot be mechanically tokenised:
+//   1. Bare `--radius` is not defined anywhere in this project (app/globals.css
+//      registers --radius-sm/md/lg/xl only), so this calc() is already dead today
+//      and kbd renders with no radius. Binding it to a real token would CHANGE
+//      appearance, which is out of scope for a re-plumb.
+//   2. There is no --ds-* semantic for "radius-md minus 5px"; --ds-shape-radius-*
+//      is a fixed ladder, and inventing an arithmetic offset would be improvising.
+// Needs a design call on which radius step a <kbd> inside an addon should use.
 const inputGroupAddonVariants = cva(
-  "flex h-auto cursor-text items-center justify-center gap-2 py-1.5 text-sm font-medium text-muted-foreground select-none group-data-[disabled=true]/input-group:opacity-50 [&>kbd]:rounded-[calc(var(--radius)-5px)] [&>svg:not([class*='size-'])]:size-4",
+  "flex h-auto cursor-text items-center justify-center gap-2 py-1.5 text-sm font-medium text-[var(--c-input-group-text-subtle)] select-none group-data-[disabled=true]/input-group:opacity-50 [&>kbd]:rounded-[calc(var(--radius)-5px)] [&>svg:not([class*='size-'])]:size-4",
   {
     variants: {
       align: {
@@ -84,8 +108,12 @@ const inputGroupButtonVariants = cva(
   {
     variants: {
       size: {
+        // BRIGHTSEED-TBD: [BLOCKING] `rounded-[calc(var(--radius)-5px)]` on xs +
+        // icon-xs left as-is, same reason as the kbd radius above: bare `--radius`
+        // is undefined in this project and no --ds-shape-radius-* expresses an
+        // arithmetic offset. Needs a design call, not a guess.
         xs: "h-6 gap-1 rounded-[calc(var(--radius)-5px)] px-2 has-[>svg]:px-2 [&>svg:not([class*='size-'])]:size-3.5",
-        sm: "h-8 gap-1.5 rounded-md px-2.5 has-[>svg]:px-2.5",
+        sm: "h-8 gap-1.5 rounded-[var(--c-input-group-shape-radius-md)] px-2.5 has-[>svg]:px-2.5",
         "icon-xs":
           "size-6 rounded-[calc(var(--radius)-5px)] p-0 has-[>svg]:p-0",
         "icon-sm": "size-8 p-0 has-[>svg]:p-0",
@@ -120,7 +148,7 @@ function InputGroupText({ className, ...props }: React.ComponentProps<"span">) {
   return (
     <span
       className={cn(
-        "flex items-center gap-2 text-sm text-muted-foreground [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
+        "flex items-center gap-2 text-sm text-[var(--c-input-group-text-subtle)] [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}

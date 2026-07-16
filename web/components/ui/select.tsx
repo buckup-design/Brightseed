@@ -6,6 +6,23 @@ import { Select as SelectPrimitive } from "radix-ui"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Select, Brightseed Quill design system.
+ *
+ * Migrated from stock shadcn bridge classes to component-scoped tokens
+ * (BSDS-102): component code references only --c-select-*, each of which
+ * aliases exactly one global --ds-* semantic in tokens/components.css.
+ *
+ * Mechanical re-plumb, no redesign. Bridge equivalences applied:
+ *   border-input / border-border / bg-border → --c-select-border-default
+ *   ring-ring / border-ring                  → --c-select-border-focus
+ *   bg-popover / text-popover-foreground     → --c-select-surface-default / -text-default
+ *   text-muted-foreground                    → --c-select-text-subtle
+ *   bg-accent / text-accent-foreground       → --c-select-surface-brand-subtle / -text-default
+ *   border-destructive / ring-destructive    → --c-select-action-critical
+ *   rounded-md / rounded-sm                  → --c-select-shape-radius-md / -sm
+ */
+
 function Select({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Root>) {
@@ -37,7 +54,39 @@ function SelectTrigger({
       data-slot="select-trigger"
       data-size={size}
       className={cn(
-        "flex w-fit items-center justify-between gap-2 rounded-md border border-input bg-transparent px-3 py-2 text-sm whitespace-nowrap shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 data-[placeholder]:text-muted-foreground data-[size=default]:h-9 data-[size=sm]:h-8 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 dark:bg-input/30 dark:aria-invalid:ring-destructive/40 enabled:hover:not-focus-visible:not-aria-invalid:border-[var(--c-select-border-default-hover)] [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-muted-foreground",
+        // Layout / sizing (untouched)
+        "flex w-fit items-center justify-between gap-2 px-3 py-2 text-sm whitespace-nowrap",
+        "data-[size=default]:h-9 data-[size=sm]:h-8",
+        "transition-[color,box-shadow] outline-none",
+        // Surface + border + radius.
+        // BRIGHTSEED-TBD: [BLOCKING] `shadow-xs` has no --ds-shadow-* equivalent
+        // (tokens/shape.css defines only sm/md/lg/xl). Left as the stock Tailwind
+        // utility (0 1px rgb(0 0 0 / 0.05)) rather than guessing a token. Input and
+        // Textarea carry the same unresolved `shadow-xs`; fix all three together.
+        "bg-transparent shadow-xs",
+        "rounded-[var(--c-select-shape-radius-md)]",
+        "border border-[var(--c-select-border-default)]",
+        "enabled:hover:not-focus-visible:not-aria-invalid:border-[var(--c-select-border-default-hover)]",
+        // Focus
+        "focus-visible:border-[var(--c-select-border-focus)]",
+        "focus-visible:ring-[3px] focus-visible:ring-[var(--c-select-border-focus)]/50",
+        // Disabled (opacity-50 kept verbatim: --ds-disabled-text-opacity is 0.55,
+        // so swapping it would change the rendered value)
+        "disabled:cursor-not-allowed disabled:opacity-50",
+        // Invalid
+        "aria-invalid:border-[var(--c-select-action-critical)]",
+        "aria-invalid:ring-[var(--c-select-action-critical)]/20",
+        "dark:aria-invalid:ring-[var(--c-select-action-critical)]/40",
+        // Placeholder
+        "data-[placeholder]:text-[var(--c-select-text-subtle)]",
+        // Dark: stock shadcn tints the field with the input/border color at 30%.
+        // Tokenised in place; see notes in the migration spec.
+        "dark:bg-[var(--c-select-border-default)]/30",
+        // Value slot
+        "*:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2",
+        // Icons
+        "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "[&_svg:not([class*='text-'])]:text-[var(--c-select-text-subtle)]",
         className
       )}
       {...props}
@@ -62,7 +111,14 @@ function SelectContent({
       <SelectPrimitive.Content
         data-slot="select-content"
         className={cn(
-          "relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem] origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-md border bg-popover text-popover-foreground shadow-md data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
+          "relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem] origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto",
+          // Surface + border + radius + shadow
+          "rounded-[var(--c-select-shape-radius-md)]",
+          "border border-[var(--c-select-border-default)]",
+          "bg-[var(--c-select-surface-default)] text-[var(--c-select-text-default)]",
+          "shadow-[var(--c-select-shadow-md)]",
+          // Animations
+          "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
           position === "popper" &&
             "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
           className
@@ -94,7 +150,10 @@ function SelectLabel({
   return (
     <SelectPrimitive.Label
       data-slot="select-label"
-      className={cn("px-2 py-1.5 text-xs text-muted-foreground", className)}
+      className={cn(
+        "px-2 py-1.5 text-xs text-[var(--c-select-text-subtle)]",
+        className
+      )}
       {...props}
     />
   )
@@ -109,7 +168,16 @@ function SelectItem({
     <SelectPrimitive.Item
       data-slot="select-item"
       className={cn(
-        "relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-muted-foreground *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
+        "relative flex w-full cursor-default items-center gap-2 py-1.5 pr-8 pl-2 text-sm outline-hidden select-none",
+        "rounded-[var(--c-select-shape-radius-sm)]",
+        // Highlight
+        "focus:bg-[var(--c-select-surface-brand-subtle)] focus:text-[var(--c-select-text-default)]",
+        // Disabled (opacity-50 kept verbatim, see SelectTrigger)
+        "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        // Icons
+        "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "[&_svg:not([class*='text-'])]:text-[var(--c-select-text-subtle)]",
+        "*:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
         className
       )}
       {...props}
@@ -134,7 +202,10 @@ function SelectSeparator({
   return (
     <SelectPrimitive.Separator
       data-slot="select-separator"
-      className={cn("pointer-events-none -mx-1 my-1 h-px bg-border", className)}
+      className={cn(
+        "pointer-events-none -mx-1 my-1 h-px bg-[var(--c-select-border-default)]",
+        className
+      )}
       {...props}
     />
   )

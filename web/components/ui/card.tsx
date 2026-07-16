@@ -2,12 +2,29 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Card, Brightseed Quill design system.
+ *
+ * Color tokens (Brightseed semantics):
+ *   Surface     → --ds-color-surface-default   (white in light, sand-950 in dark)
+ *   Text        → --ds-color-text-default      (sand-800 in light, sand-50 in dark)
+ *   Description → --ds-color-text-subtle       (sand-700 / sand-300)
+ *   Border      → --ds-color-border-default    (sand-300 / sand-700)
+ *   Radius      → --ds-shape-radius-xl         (14px; what `rounded-xl` already
+ *                                               resolved to via the @theme
+ *                                               --radius-xl alias in globals.css)
+ *   Shadow      → --ds-shadow-sm               (raised card on page bg, per shape.css)
+ */
 function Card({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card"
       className={cn(
-        "flex flex-col gap-6 rounded-xl border bg-card py-6 text-card-foreground shadow-sm",
+        "flex flex-col gap-6 py-6",
+        "bg-[var(--c-card-surface-default)] text-[var(--c-card-text-default)]",
+        "border border-[var(--c-card-border-default)]",
+        "rounded-[var(--c-card-shape-radius-xl)]",
+        "shadow-[var(--c-card-shadow-sm)]",
         className
       )}
       {...props}
@@ -42,7 +59,7 @@ function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card-description"
-      className={cn("text-sm text-muted-foreground", className)}
+      className={cn("text-sm text-[var(--c-card-text-subtle)]", className)}
       {...props}
     />
   )
