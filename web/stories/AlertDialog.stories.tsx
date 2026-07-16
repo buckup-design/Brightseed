@@ -60,7 +60,7 @@ export const NonDestructive: Story = {
         <AlertDialogHeader>
           <AlertDialogTitle>Submit batch for review?</AlertDialogTitle>
           <AlertDialogDescription>
-            Once submitted, you won't be able to edit compounds in this batch
+            Once submitted, you won&rsquo;t be able to edit compounds in this batch
             until the reviewer responds.
           </AlertDialogDescription>
         </AlertDialogHeader>
