@@ -114,7 +114,10 @@ export const WithAction: Story = {
   ),
 };
 
-export const Promise: Story = {
+// PromiseToast, not Promise — a `Promise` export shadows the JS global inside
+// this module, so `new Promise(...)` below would resolve to the story object.
+// Same rule as NumberBadge vs Number (CLAUDE.md).
+export const PromiseToast: Story = {
   render: () => (
     <>
       <Toaster />

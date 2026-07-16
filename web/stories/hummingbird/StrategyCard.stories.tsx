@@ -92,6 +92,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+// Gallery stories build their own set of cards, so there is no single instance
+// for args to describe. They opt out of the args contract.
+type GalleryStory = StoryObj;
 
 // ─── Single-card stories ──────────────────────────────────────────────────────
 
@@ -221,7 +224,7 @@ function StrategiesGrid() {
   );
 }
 
-export const Grid: Story = {
+export const Grid: GalleryStory = {
   parameters: { layout: "padded" },
   render: () => <StrategiesGrid />,
 };

@@ -13,8 +13,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const ViewSwitcher: Story = {
-  render: () => (
-    <ToggleGroup type="single" defaultValue="grid" variant="outline">
+  args: { type: "single", defaultValue: "grid", variant: "outline" },
+  render: (args) => (
+    <ToggleGroup {...args}>
       <ToggleGroupItem value="grid" aria-label="Grid view">
         <LayoutGrid />
       </ToggleGroupItem>

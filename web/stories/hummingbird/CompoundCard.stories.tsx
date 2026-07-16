@@ -50,6 +50,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+// Gallery stories build their own set of cards, so there is no single instance
+// for args to describe. They opt out of the args contract.
+type GalleryStory = StoryObj;
 
 // ─── The three types ─────────────────────────────────────────────────────────
 
@@ -239,7 +242,7 @@ const GRID_CARDS = [
   },
 ];
 
-export const ResponsiveGrid: Story = {
+export const ResponsiveGrid: GalleryStory = {
   name: "Responsive grid (CardGrid, 300 / 420)",
   parameters: { layout: "fullscreen" },
   render: () => (
@@ -255,7 +258,7 @@ export const ResponsiveGrid: Story = {
 
 // ─── Fixed-height check: mixed content, same height ──────────────────────────
 
-export const HeightConsistency: Story = {
+export const HeightConsistency: GalleryStory = {
   name: "Height consistency (grid)",
   parameters: { layout: "fullscreen" },
   render: () => (

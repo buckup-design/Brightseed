@@ -20,6 +20,9 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+// Gallery stories build their own set of cards, so there is no single instance
+// for args to describe. They opt out of the args contract.
+type GalleryStory = StoryObj;
 
 export const Default: Story = {
   args: {
@@ -48,7 +51,7 @@ export const StarAnise: Story = {
   },
 };
 
-export const Grid: Story = {
+export const Grid: GalleryStory = {
   parameters: { layout: "padded" },
   render: () => (
     <CardGrid className="rounded-lg bg-[var(--ds-color-surface-alt)] p-6">
