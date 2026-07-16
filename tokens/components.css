@@ -18,6 +18,14 @@
  */
 
 :root {
+  /* --c-accordion */
+  --c-accordion-border-focus:           var(--ds-color-border-focus);
+  --c-accordion-border-subtle:          var(--ds-color-border-subtle);
+  --c-accordion-disabled-text-opacity:  var(--ds-disabled-text-opacity);
+  --c-accordion-icon-subtle:            var(--ds-color-icon-subtle);
+  --c-accordion-shape-radius-md:        var(--ds-shape-radius-md);
+  --c-accordion-text-default:           var(--ds-color-text-default);
+
   /* --c-alert */
   --c-alert-border-critical-default:    var(--ds-color-border-critical-default);
   --c-alert-border-info-default:        var(--ds-color-border-info-default);
@@ -130,6 +138,19 @@
   --c-button-text-on-action-primary-active:    var(--ds-color-text-on-action-primary-active);
   --c-button-text-on-action-primary-hover:     var(--ds-color-text-on-action-primary-hover);
 
+  /* --c-dialog */
+  --c-dialog-border-default:      var(--ds-color-border-default);
+  --c-dialog-border-focus:        var(--ds-color-border-focus);
+  --c-dialog-icon-default:        var(--ds-color-icon-default);
+  --c-dialog-shadow-lg:           var(--ds-shadow-lg);
+  --c-dialog-shape-radius-lg:     var(--ds-shape-radius-lg);
+  --c-dialog-shape-radius-xs:     var(--ds-shape-radius-xs);
+  --c-dialog-surface-alt:         var(--ds-color-surface-alt);
+  --c-dialog-surface-default:     var(--ds-color-surface-default);
+  --c-dialog-surface-scrim:       var(--ds-color-surface-scrim);
+  --c-dialog-text-default:        var(--ds-color-text-default);
+  --c-dialog-text-subtle:         var(--ds-color-text-subtle);
+
   /* --c-dropdown-menu */
   --c-dropdown-menu-action-critical:            var(--ds-color-action-critical);
   --c-dropdown-menu-action-secondary-hover:     var(--ds-color-action-secondary);
@@ -145,6 +166,25 @@
 
   /* --c-input */
   --c-input-border-default-hover:    var(--ds-color-border-default-hover);
+
+  /* --c-popover */
+  --c-popover-border-default:      var(--ds-color-border-default);
+  --c-popover-shadow-md:           var(--ds-shadow-md);
+  --c-popover-shape-radius-md:     var(--ds-shape-radius-md);
+  --c-popover-surface-default:     var(--ds-color-surface-default);
+  --c-popover-text-default:        var(--ds-color-text-default);
+  --c-popover-text-subtle:         var(--ds-color-text-subtle);
+
+  /* --c-progress */
+  --c-progress-action-primary:        var(--ds-color-action-primary);
+  --c-progress-shape-radius-round:    var(--ds-shape-radius-round);
+  --c-progress-surface-alt:           var(--ds-color-surface-alt);
+
+  /* --c-resizable */
+  --c-resizable-border-default:      var(--ds-color-border-default);
+  --c-resizable-border-focus:        var(--ds-color-border-focus);
+  --c-resizable-icon-subtle:         var(--ds-color-icon-subtle);
+  --c-resizable-shape-radius-xs:     var(--ds-shape-radius-xs);
 
   /* --c-select */
   --c-select-border-default-hover:    var(--ds-color-border-default-hover);
