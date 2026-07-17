@@ -301,8 +301,16 @@ function SidebarToggle({
         "hover:bg-[var(--c-sidebar-surface-alt)]",
         "outline-none focus-visible:ring-1 focus-visible:ring-[var(--c-sidebar-border-focus)]",
         // The reveal: 300ms opacity fade scoped to nav hover / focus-within.
-        "opacity-0 transition-opacity duration-300 motion-reduce:transition-none",
-        "group-hover/sidebar:opacity-100 group-focus-within/sidebar:opacity-100",
+        // DESKTOP ONLY. Touch has no hover to key off, and in the mobile Sheet
+        // this toggle is the *only* visible way to close the nav (the Sheet's own
+        // X is hidden by [&>button]:hidden on SheetContent). Left at opacity 0 it
+        // becomes an invisible-but-tappable phantom in the nav header. So on
+        // mobile it renders solid. Closes DOCS/tickets/sidebar-mobile-phantom-tap.md.
+        !isMobile &&
+          cn(
+            "opacity-0 transition-opacity duration-300 motion-reduce:transition-none",
+            "group-hover/sidebar:opacity-100 group-focus-within/sidebar:opacity-100"
+          ),
         "[&>svg]:size-5 [&>svg]:shrink-0",
         className
       )}

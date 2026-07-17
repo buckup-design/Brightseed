@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import * as React from "react";
+import { expect, screen, userEvent, waitFor, within } from "storybook/test";
 
 import { Building2, FlaskConical, Sprout } from "lucide-react";
 
@@ -98,3 +99,51 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+/* A single custom phone viewport, locked on the Mobile story below. Storybook 10
+ * ships viewport in core, so no addon is needed; locking it via story `globals`
+ * narrows the preview iframe, which is what trips useIsMobile() (it reads
+ * window.innerWidth, not a container). */
+const MOBILE_VIEWPORT = {
+  mobile: {
+    name: "Mobile (390×844)",
+    styles: { width: "390px", height: "844px" },
+    type: "mobile" as const,
+  },
+};
+
+/**
+ * Below md the sidebar renders inside a Sheet — the composition neither
+ * Components/Sidebar nor the desktop App Shell story ever exercised, which is
+ * exactly how the phantom-tap bug shipped (DOCS/tickets/sidebar-mobile-phantom-tap.md).
+ *
+ * This story locks the preview to a phone width so useIsMobile() trips and that
+ * Sheet mounts, then drives the real path: the inset header's opener (the only
+ * way IN on mobile) opens the nav, and the toggle in the Sheet header is now the
+ * visible way OUT. The play function asserts that toggle is SOLID, not the
+ * opacity-0 phantom it used to be — reintroduce the bug and this story fails.
+ */
+export const Mobile: Story = {
+  parameters: { viewport: { options: MOBILE_VIEWPORT } },
+  globals: { viewport: { value: "mobile" } },
+  play: async ({ canvasElement }) => {
+    // Wait for the locked viewport to narrow the iframe so useIsMobile() flips
+    // and the Sheet composition (not the desktop rail) is what mounts.
+    await waitFor(() => expect(window.innerWidth).toBeLessThan(768));
+
+    // The way IN: the inset header opener is md:hidden, so mobile-only.
+    const canvas = within(canvasElement);
+    await userEvent.click(
+      await canvas.findByRole("button", { name: "Open navigation" })
+    );
+
+    // The way OUT: the toggle lives in the Sheet, which Radix portals to
+    // document.body — hence screen, not canvas. It must render solid.
+    const closeToggle = await screen.findByRole("button", {
+      name: "Close navigation",
+    });
+    await waitFor(() =>
+      expect(getComputedStyle(closeToggle).opacity).toBe("1")
+    );
+  },
+};

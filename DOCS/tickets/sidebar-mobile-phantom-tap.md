@@ -2,8 +2,14 @@
 
 **Component:** `web/components/ui/sidebar.tsx`
 **Severity:** Major — affects every mobile user of the nav
-**Status:** Open
+**Status:** Fixed July 17, 2026 (see Resolution).
 **Found:** July 16, 2026, during the adversarial review of the app-shell → sidebar port. Not introduced by that work; it predates the branch and shipped the moment the sidebar became the only one.
+
+## Resolution (July 17, 2026)
+
+Applied the prescribed fix: the toggle's opacity-reveal in `SidebarToggle` is now gated on `!isMobile`, so on mobile the toggle renders solid instead of at `opacity: 0`. That single change resolves both halves — the phantom is gone (nothing invisible-but-tappable), and the now-visible toggle *is* the close control (`aria-label="Close navigation"`, fires `toggleSidebar()` → `setOpenMobile(false)`). The Sheet's own X stays hidden, so there is exactly one close control. Desktop hover-reveal is untouched: when `!isMobile` the generated class list is byte-identical to before.
+
+Also did the "worth doing": added a mobile-viewport regression story to **both** surfaces the bug hid behind — `Components/Sidebar → Mobile` and `Blocks/App Shell Quill → Mobile`. Each locks the preview to 390×844 (Storybook 10 ships viewport in core; no addon), opens the nav in a play function, and **asserts the in-Sheet toggle is `opacity: 1`** — so a reintroduction of the phantom fails the story rather than shipping silently. Verified live at mobile width: both plays PASS, a11y reports 0 violations on the open nav, and desktop rests hidden as before.
 
 ## What's wrong
 

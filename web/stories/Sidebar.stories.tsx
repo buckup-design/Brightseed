@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { expect, screen, userEvent, waitFor, within } from "storybook/test";
 import {
   Sidebar,
   SidebarContent,
@@ -9,6 +10,7 @@ import {
   SidebarItem,
   SidebarPanelOnly,
   SidebarProvider,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 import {
@@ -18,6 +20,7 @@ import {
   Home,
   Leaf,
   MessageSquare,
+  PanelLeftOpen,
   Settings,
   Sprout,
 } from "lucide-react";
@@ -159,4 +162,80 @@ export const Dark: Story = {
       </SidebarProvider>
     </div>
   ),
+};
+
+/* Mobile-only opener. Below md the nav lives in a Sheet with no on-screen way in
+ * of its own, so the surrounding app supplies one (the real shell has the same
+ * in app-shell-quill.tsx). SidebarToggle can't serve here: its reveal keys off
+ * group/sidebar on the nav root, so outside that ancestor it stays invisible. */
+function MobileOpener() {
+  const { toggleSidebar } = useSidebar();
+  return (
+    <button
+      type="button"
+      onClick={toggleSidebar}
+      aria-label="Open navigation"
+      className="flex size-9 shrink-0 items-center justify-center rounded-[var(--c-sidebar-shape-radius-md)] text-[var(--c-sidebar-text-subtle)] outline-none hover:bg-[var(--c-sidebar-surface-alt)] focus-visible:ring-1 focus-visible:ring-[var(--c-sidebar-border-focus)] md:hidden [&>svg]:size-5"
+    >
+      <PanelLeftOpen />
+    </button>
+  );
+}
+
+/* One custom phone viewport, locked on the Mobile story. Storybook 10 ships
+ * viewport in core (no addon); locking it via story `globals` narrows the
+ * preview iframe, which is what trips useIsMobile() — it reads window.innerWidth,
+ * so a narrow *container* would not do it. */
+const MOBILE_VIEWPORT = {
+  mobile: {
+    name: "Mobile (390×844)",
+    styles: { width: "390px", height: "844px" },
+    type: "mobile" as const,
+  },
+};
+
+/**
+ * Below md the sidebar is a Sheet, and its only close control is the toggle in
+ * its own header. This is the composition the desktop stories never showed —
+ * the gap that let the phantom-tap bug ship (DOCS/tickets/sidebar-mobile-phantom-tap.md).
+ *
+ * Locked to a phone width so useIsMobile() trips and the Sheet mounts. The play
+ * function opens it and asserts the in-Sheet toggle is SOLID (opacity 1), not
+ * the opacity-0 phantom it used to be. Excluded from autodocs: that page renders
+ * stories inline at full width, where the mobile composition can't form.
+ */
+export const Mobile: Story = {
+  tags: ["!autodocs"],
+  parameters: { viewport: { options: MOBILE_VIEWPORT } },
+  globals: { viewport: { value: "mobile" } },
+  render: () => (
+    <SidebarProvider>
+      <DemoNav />
+      <SidebarInset>
+        <div className="flex h-14 shrink-0 items-center border-b border-[var(--c-sidebar-border-default)] px-4 md:hidden">
+          <MobileOpener />
+        </div>
+        <div className="flex-1 p-6 text-sm text-[var(--c-sidebar-text-subtle)]">
+          Tap the opener above. The nav slides in; its header toggle is the
+          visible way back out — not an invisible tap target.
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
+  ),
+  play: async ({ canvasElement }) => {
+    await waitFor(() => expect(window.innerWidth).toBeLessThan(768));
+
+    const canvas = within(canvasElement);
+    await userEvent.click(
+      await canvas.findByRole("button", { name: "Open navigation" })
+    );
+
+    // The Sheet portals to document.body — query with screen, not canvas.
+    const closeToggle = await screen.findByRole("button", {
+      name: "Close navigation",
+    });
+    await waitFor(() =>
+      expect(getComputedStyle(closeToggle).opacity).toBe("1")
+    );
+  },
 };
