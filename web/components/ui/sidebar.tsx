@@ -27,7 +27,11 @@ import {
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
-const SIDEBAR_WIDTH = "16rem"
+// 240px, down from stock's 256px. Becky's number, measured off Otter — the same
+// panel width sidebar-alt1 carries (SIDEBAR_ALT1_WIDTH). The rail already
+// matched at 56px; the panel was the half that never got ported. Decided
+// July 16, 2026.
+const SIDEBAR_WIDTH = "15rem"
 const SIDEBAR_WIDTH_MOBILE = "18rem"
 // 56px rail, widened from stock's 48px so the 40px item box keeps 8px either
 // side. Matches sidebar-alt1, which measured both off Otter.
