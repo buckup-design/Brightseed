@@ -46,17 +46,19 @@ function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-// BRIGHTSEED-TBD: [BLOCKING] `[&>kbd]:rounded-[calc(var(--radius)-5px)]` left as-is.
-// Two reasons it cannot be mechanically tokenised:
-//   1. Bare `--radius` is not defined anywhere in this project (app/globals.css
-//      registers --radius-sm/md/lg/xl only), so this calc() is already dead today
-//      and kbd renders with no radius. Binding it to a real token would CHANGE
-//      appearance, which is out of scope for a re-plumb.
-//   2. There is no --ds-* semantic for "radius-md minus 5px"; --ds-shape-radius-*
-//      is a fixed ladder, and inventing an arithmetic offset would be improvising.
-// Needs a design call on which radius step a <kbd> inside an addon should use.
+// The <kbd> radius was stock's `calc(var(--radius) - 5px)`. Bare `--radius` is
+// undefined project-wide (only --radius-sm/md/lg/xl are registered), so that
+// calc() was dead and kbd rendered SQUARE. Now --ds-shape-radius-xs (4px).
+//
+// Why 4px: stock's base `--radius` is 10px, so its kbd step is 5px. Our ladder is
+// NOT rescaled from stock — 6/8/10/14 is bit-for-bit what stock's
+// calc(radius-4|-2|+0|+4) produces — so the honest answer is that 4px is simply
+// the nearest rung to stock's 5px, which has no step of its own here. It is a
+// rounding, not a derivation. It only became available in July 2026: --p-radius-xs
+// moved 2px -> 4px in 3d95499, which is what unblocked this flag. Checkbox reads
+// the same step for the same reason (small control, nested inside an 8px group).
 const inputGroupAddonVariants = cva(
-  "flex h-auto cursor-text items-center justify-center gap-2 py-1.5 text-sm font-medium text-[var(--c-input-group-text-subtle)] select-none group-data-[disabled=true]/input-group:opacity-[var(--c-input-group-disabled-text-opacity)] [&>kbd]:rounded-[calc(var(--radius)-5px)] [&>svg:not([class*='size-'])]:size-4",
+  "flex h-auto cursor-text items-center justify-center gap-2 py-1.5 text-sm font-medium text-[var(--c-input-group-text-subtle)] select-none group-data-[disabled=true]/input-group:opacity-[var(--c-input-group-disabled-text-opacity)] [&>kbd]:rounded-[var(--c-input-group-shape-radius-xs)] [&>svg:not([class*='size-'])]:size-4",
   {
     variants: {
       align: {
@@ -103,14 +105,13 @@ const inputGroupButtonVariants = cva(
   {
     variants: {
       size: {
-        // BRIGHTSEED-TBD: [BLOCKING] `rounded-[calc(var(--radius)-5px)]` on xs +
-        // icon-xs left as-is, same reason as the kbd radius above: bare `--radius`
-        // is undefined in this project and no --ds-shape-radius-* expresses an
-        // arithmetic offset. Needs a design call, not a guess.
-        xs: "h-6 gap-1 rounded-[calc(var(--radius)-5px)] px-2 has-[>svg]:px-2 [&>svg:not([class*='size-'])]:size-3.5",
+        // xs + icon-xs were the same dead `calc(var(--radius) - 5px)` as the kbd
+        // radius above, so both rendered square. Now radius-xs (4px) against sm's
+        // radius-md (8px) — see the note on inputGroupAddonVariants for why 4px.
+        xs: "h-6 gap-1 rounded-[var(--c-input-group-shape-radius-xs)] px-2 has-[>svg]:px-2 [&>svg:not([class*='size-'])]:size-3.5",
         sm: "h-8 gap-1.5 rounded-[var(--c-input-group-shape-radius-md)] px-2.5 has-[>svg]:px-2.5",
         "icon-xs":
-          "size-6 rounded-[calc(var(--radius)-5px)] p-0 has-[>svg]:p-0",
+          "size-6 rounded-[var(--c-input-group-shape-radius-xs)] p-0 has-[>svg]:p-0",
         "icon-sm": "size-8 p-0 has-[>svg]:p-0",
       },
     },

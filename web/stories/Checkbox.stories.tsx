@@ -29,10 +29,12 @@ import {
  *     be a following sibling of the Checkbox inside the same parent. Nest the
  *     Checkbox inside the Label and the disabled fade silently stops working.
  *
- *   - `checked="indeterminate"` is the correct API for a select-all header,
- *     and the state is wired, but the Indicator only ever draws a check glyph
- *     — so today indeterminate is visually identical to checked. Live with it
- *     or reach for the header cell's own affordance; do not fork the component.
+ *   - `checked="indeterminate"` is the correct API for a select-all header, and
+ *     it draws a dash on the same filled box as checked. Fixed July 2026: the
+ *     Indicator used to draw a CHECK for indeterminate, so screen readers got
+ *     aria-checked="mixed" while sighted users were shown the opposite of the
+ *     truth. The glyph branches on Radix's own data-state, so it works for
+ *     uncontrolled checkboxes too.
  * ───────────────────────────────────────────────────────────────────────── */
 
 const meta = {
@@ -61,7 +63,7 @@ export const Checked: Story = {
 };
 
 export const Indeterminate: Story = {
-  name: "Indeterminate (renders as a check — see header)",
+  name: "Indeterminate (dash, not check)",
   args: { checked: "indeterminate", "aria-label": "Select all compounds" },
   render: (args) => <Checkbox {...args} />,
 };

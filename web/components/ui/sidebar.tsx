@@ -486,19 +486,26 @@ const sidebarMenuButtonVariants = cva(
       variant: {
         default:
           "hover:bg-[var(--c-sidebar-surface-alt)] hover:text-[var(--c-sidebar-text-default)]",
-        // BRIGHTSEED-TBD: [BLOCKING] the two shadow-[...] refs below are left
-        // un-tokenised on purpose. They are stock shadcn v3-era code: `hsl(var(--x))`
-        // assumed --sidebar-border/--sidebar-accent held bare HSL channel triplets.
-        // Under our bridge they resolve to full hex values (sand-300 #dddbcf /
-        // sand-100 #f3f2ec), so `hsl(#dddbcf)` is invalid at computed-value time and
-        // the box-shadow silently drops to `none` — this variant renders with NO ring
-        // today. Rewriting them to var(--c-sidebar-border-default) / -surface-alt is
-        // the obvious fix, but it MAKES A RING APPEAR where there is none, i.e. a
-        // visual change, not a re-plumb. Needs Becky's sign-off, then swap to:
-        //   shadow-[0_0_0_1px_var(--c-sidebar-border-default)]
-        //   hover:shadow-[0_0_0_1px_var(--c-sidebar-surface-alt)]
+        // Both rings were stock shadcn v3-era `hsl(var(--x))`, which assumed
+        // --sidebar-border / --sidebar-accent held bare HSL channel triplets.
+        // Under our bridge they resolve to full hex, so `hsl(#dddbcf)` was invalid
+        // at computed-value time and the box-shadow silently dropped to none —
+        // this variant rendered with NO ring at all. Bound to real tokens July
+        // 2026, which makes the ring appear for the first time.
+        //
+        // The hover ring deliberately does NOT port stock's. Stock hovers the ring
+        // to --sidebar-accent, i.e. its own hover fill, so the outline dissolves
+        // and the fill takes over defining the button. That works for stock because
+        // stock keeps --sidebar distinct from --background and steps the hover fill
+        // away from the panel. Quill collapsed both onto --ds-color-surface-default
+        // (bridge/globals.css:33 and :67), so here the resting fill is the SAME
+        // colour as the panel behind it — the ring is the button's only definition,
+        // and stock's dissolve would delete it and leave a 1.12:1 whisper, making
+        // hover read weaker than rest. Instead the ring darkens one step on hover
+        // via --ds-color-border-default-hover (2.05:1 light / 4.16:1 dark), which
+        // is the same idiom Input/Select/Textarea already use for hover borders.
         outline:
-          "bg-[var(--c-sidebar-surface-default)] shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-[var(--c-sidebar-surface-alt)] hover:text-[var(--c-sidebar-text-default)] hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]",
+          "bg-[var(--c-sidebar-surface-default)] shadow-[0_0_0_1px_var(--c-sidebar-border-default)] hover:bg-[var(--c-sidebar-surface-alt)] hover:text-[var(--c-sidebar-text-default)] hover:shadow-[0_0_0_1px_var(--c-sidebar-border-default-hover)]",
       },
       size: {
         default: "h-8 text-sm",

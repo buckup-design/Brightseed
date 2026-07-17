@@ -39,10 +39,20 @@ import { cn } from "@/lib/utils"
 // [data-theme="dark"] — it only raises the ring opacity 20 -> 40. Deleting it
 // would change appearance, so it stays until a semantic token bakes the step in.
 //
-// BRIGHTSEED-TBD: [CONCERN] on variant="default" the focus-visible and
-// aria-invalid rules set border-COLOR on an element with no border-WIDTH, so they
-// paint nothing — only the ring renders. Pre-existing, inherited from stock
-// shadcn; harmless today because the ring carries the signal.
+// BRIGHTSEED-TBD: [BLOCKING] on variant="default", aria-invalid renders NOTHING.
+// It sets border-COLOR on an element with no border-WIDTH, and ring-COLOR with no
+// ring-WIDTH — width only ever arrives via focus-visible:ring-[3px]. So a resting
+// invalid toggle is pixel-identical to a valid one. (An earlier revision of this
+// comment claimed it was "harmless because the ring carries the signal"; that was
+// wrong — the ring is not painted at rest either.)
+//
+// Pre-existing and inherited from stock, but it is the same bar as the sidebar
+// outline ring that was rated BLOCKING: a state that renders nothing. Not fixed
+// here because it is not local — the aria-invalid recipe is shared across five
+// components, and its root cause is that --ds-color-action-critical is red-100, a
+// soft SURFACE tint, being used in border/ring slots. The right token
+// (--ds-color-border-critical-bold) already exists, so this is a scoping call,
+// not a token gap. Own ticket.
 const toggleVariants = cva(
   "inline-flex items-center justify-center gap-2 rounded-[var(--c-toggle-shape-radius-md)] text-sm font-medium whitespace-nowrap transition-[color,box-shadow] outline-none hover:bg-[var(--c-toggle-surface-alt)] hover:text-[var(--c-toggle-text-subtle)] focus-visible:border-[var(--c-toggle-border-focus)] focus-visible:ring-[3px] focus-visible:ring-[var(--c-toggle-border-focus)]/50 disabled:pointer-events-none disabled:opacity-[var(--c-toggle-disabled-text-opacity)] aria-invalid:border-[var(--c-toggle-action-critical)] aria-invalid:ring-[var(--c-toggle-action-critical)]/20 data-[state=on]:bg-[var(--c-toggle-surface-brand-subtle)] data-[state=on]:text-[var(--c-toggle-text-default)] data-[state=on]:hover:bg-[var(--c-toggle-surface-brand-subtle-hover)] dark:aria-invalid:ring-[var(--c-toggle-action-critical)]/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {

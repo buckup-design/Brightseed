@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { CheckIcon } from "lucide-react"
+import { CheckIcon, MinusIcon } from "lucide-react"
 import { Checkbox as CheckboxPrimitive } from "radix-ui"
 
 import { cn } from "@/lib/utils"
@@ -12,7 +12,8 @@ import { cn } from "@/lib/utils"
  * Color tokens (Brightseed semantics, via --c-checkbox-*):
  *   Box border unchecked → --ds-color-border-default        (sand-300 light / sand-700 dark)
  *   Box fill checked     → --ds-color-action-primary        (lime-300; brand action)
- *   Check glyph          → --ds-color-text-on-action-primary (forest-800 on lime)
+ *   Box fill indeterminate → same as checked; only the glyph differs
+ *   Check / dash glyph   → --ds-color-text-on-action-primary (forest-800 on lime)
  *   Focus ring           → --ds-color-border-focus / 50     (lime-500 soft ring, same as Button/Switch)
  *   Invalid              → --ds-color-action-critical       (border + soft ring)
  *   Corner               → --ds-shape-radius-xs             (4px; the step added for this box, July 2026)
@@ -46,27 +47,32 @@ function Checkbox({
         "data-[state=checked]:bg-[var(--c-checkbox-action-primary)]",
         "data-[state=checked]:text-[var(--c-checkbox-text-on-action-primary)]",
         "dark:data-[state=checked]:bg-[var(--c-checkbox-action-primary)]",
+        // Indeterminate: identical box to checked — a filled box saying "some of
+        // the below". Only the glyph differs (dash, not check). Spelled out
+        // rather than folded in with checked because Tailwind has no variant
+        // union; the dark: line re-asserts the fill for the same reason it does
+        // above — otherwise dark:bg-…/30 on the unchecked box wins.
+        "data-[state=indeterminate]:border-[var(--c-checkbox-action-primary)]",
+        "data-[state=indeterminate]:bg-[var(--c-checkbox-action-primary)]",
+        "data-[state=indeterminate]:text-[var(--c-checkbox-text-on-action-primary)]",
+        "dark:data-[state=indeterminate]:bg-[var(--c-checkbox-action-primary)]",
         // Dark unchecked box gets a faint fill so it reads on the dark surface
         "dark:bg-[var(--c-checkbox-border-default)]/30",
         className
       )}
       {...props}
     >
-      {/*
-        BRIGHTSEED-TBD: [BLOCKING] indeterminate is half-built. Passing
-        checked="indeterminate" wires the semantics up correctly (measured live:
-        data-state="indeterminate", aria-checked="mixed"), but the Indicator
-        renders an unconditional CheckIcon with no dash branch — so indeterminate
-        draws a CHECK and is visually identical to checked. Screen readers get it
-        right; sighted users are told the opposite of the truth, which is worse
-        than not supporting it. Wants a MinusIcon on data-state=indeterminate.
-        Left for a design call rather than guessed at.
-      */}
+      {/* Radix renders the Indicator for BOTH checked and indeterminate, and
+          stamps its own data-state on it — so the glyph branches in CSS off that
+          state rather than off a prop. A prop branch would miss the uncontrolled
+          (defaultChecked) case, where this component never sees the state at
+          all. */}
       <CheckboxPrimitive.Indicator
         data-slot="checkbox-indicator"
-        className="grid place-content-center text-current transition-none"
+        className="group/indicator grid place-content-center text-current transition-none"
       >
-        <CheckIcon className="size-3.5" />
+        <CheckIcon className="size-3.5 group-data-[state=indeterminate]/indicator:hidden" />
+        <MinusIcon className="hidden size-3.5 group-data-[state=indeterminate]/indicator:block" />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
   )

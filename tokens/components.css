@@ -228,6 +228,7 @@
   --c-input-group-disabled-text-opacity: var(--ds-disabled-text-opacity);
   --c-input-group-shadow-xs: var(--ds-shadow-xs);
   --c-input-group-shape-radius-md:    var(--ds-shape-radius-md);
+  --c-input-group-shape-radius-xs:    var(--ds-shape-radius-xs);
   --c-input-group-text-subtle:        var(--ds-color-text-subtle);
 
   /* --c-label */
@@ -281,8 +282,9 @@
   --c-sheet-text-subtle:        var(--ds-color-text-subtle);
 
   /* --c-sidebar */
-  --c-sidebar-border-default:     var(--ds-color-border-default);
-  --c-sidebar-border-focus:       var(--ds-color-border-focus);
+  --c-sidebar-border-default:       var(--ds-color-border-default);
+  --c-sidebar-border-default-hover: var(--ds-color-border-default-hover);
+  --c-sidebar-border-focus:         var(--ds-color-border-focus);
   --c-sidebar-disabled-text-opacity: var(--ds-disabled-text-opacity);
   --c-sidebar-shape-radius-lg:    var(--ds-shape-radius-lg);
   --c-sidebar-shape-radius-md:    var(--ds-shape-radius-md);
