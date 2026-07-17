@@ -124,10 +124,14 @@ export function NavUserQuill({
             align="end"
             sideOffset={4}
           >
+            {/* No avatar here. The identity is already established by the
+             * trigger this menu hangs off, so repeating it inside adds a second
+             * 32px focal point and makes the header out-shout the actions.
+             * The avatar lives in the sidebar trigger only. */}
             <DropdownMenuLabel className="p-0 font-normal">
-              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">{avatar}</Avatar>
-                <span className="truncate text-[var(--c-nav-user-text-default)]">
+              {/* px-2 to align with the menu items below, which are px-2. */}
+              <div className="px-2 py-1.5 text-left text-sm">
+                <span className="block truncate text-[var(--c-nav-user-text-subtle)]">
                   {user.email}
                 </span>
               </div>
@@ -161,8 +165,13 @@ export function NavUserQuill({
             {/* Not a DropdownMenuItem: this row is a readout, so it must not
              * take focus, highlight on hover, or close the menu when clicked.
              * No aria-label either — on a roleless div it is widely ignored,
-             * and the two spans already read as "Version v1.3.2" in order. */}
-            <div className="flex items-center justify-between px-2 py-1.5 text-sm text-[var(--c-nav-user-text-subtle)]">
+             * and the two spans already read as "Version v1.3.2" in order.
+             *
+             * mb-8 buys a blank row's worth of space before Log out: a menu row
+             * is py-1.5 + text-sm's 20px line box = 32px, and mb-8 is the same
+             * 32px. Log out is the one destructive-ish action in here, so it
+             * gets separated by space rather than by another hairline. */}
+            <div className="mb-8 flex items-center justify-between px-2 py-1.5 text-sm text-[var(--c-nav-user-text-subtle)]">
               <span>Version</span>
               <span>{version}</span>
             </div>
