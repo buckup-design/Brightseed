@@ -6,6 +6,7 @@ import { Building2, FlaskConical, Sprout } from "lucide-react";
 
 import { AppShellQuill } from "@/components/quill/app-shell-quill";
 import type {
+  Appearance,
   SettingsAccount,
   SettingsUser,
 } from "@/components/quill/settings-modal";
@@ -68,6 +69,27 @@ function ShellHost() {
   const [user, setUser] = React.useState<SettingsUser>(INITIAL_USER);
   const [active, setActive] = React.useState("Compounds");
   const [team, setTeam] = React.useState<Team>(TEAMS[0]);
+  const [appearance, setAppearance] = React.useState<Appearance>("system");
+
+  /* Apply the appearance the way the app will (data-theme on <html>), so the
+   * settings modal's Appearance toggle repaints the shell live. "system"
+   * follows the OS. */
+  React.useEffect(() => {
+    if (typeof document === "undefined") return;
+    const resolve = () =>
+      appearance === "system"
+        ? window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light"
+        : appearance;
+    const apply = () =>
+      document.documentElement.setAttribute("data-theme", resolve());
+    apply();
+    if (appearance !== "system") return;
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, [appearance]);
 
   return (
     <AppShellQuill
@@ -80,6 +102,8 @@ function ShellHost() {
       activeTeam={team}
       onTeamChange={setTeam}
       onUserChange={setUser}
+      appearance={appearance}
+      onAppearanceChange={setAppearance}
     >
       <p className="text-muted-foreground text-sm">
         {active} — main content area. The nav, the footer menu, Settings and

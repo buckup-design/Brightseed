@@ -252,6 +252,7 @@
   /* --c-settings */
   --c-settings-border-default:     var(--ds-color-border-default);
   --c-settings-border-focus:       var(--ds-color-border-focus);
+  --c-settings-scrollbar-thumb:    var(--ds-color-border-default-hover);
   --c-settings-shape-radius-md:    var(--ds-shape-radius-md);
   --c-settings-surface-alt:        var(--ds-color-surface-alt);
   --c-settings-surface-default:    var(--ds-color-surface-default);

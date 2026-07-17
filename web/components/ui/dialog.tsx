@@ -83,7 +83,11 @@ function DialogContent({
           <DialogPrimitive.Close
             data-slot="dialog-close"
             className={cn(
-              "absolute top-4 right-4 opacity-70 transition-opacity hover:opacity-100",
+              // z-20 keeps the close above dialog body chrome. A content pane
+              // with a sticky header (e.g. the settings modal) carries its own
+              // z-index to cover scrolling rows; without this the header paints
+              // over the X and it reads as a stray chevron.
+              "absolute top-4 right-4 z-20 opacity-70 transition-opacity hover:opacity-100",
               "text-[var(--c-dialog-icon-default)]",
               "rounded-[var(--c-dialog-shape-radius-2xs)]",
               "focus-visible:ring-[3px] focus-visible:ring-[var(--c-dialog-border-focus)]/50",

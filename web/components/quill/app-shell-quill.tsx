@@ -41,6 +41,7 @@ import {
 } from "@/components/quill/nav-user-quill";
 import {
   SettingsModal,
+  type Appearance,
   type SettingsAccount,
   type SettingsSectionId,
   type SettingsUser,
@@ -112,6 +113,8 @@ export function AppShellQuill({
   onAddTeam,
   onNavigate,
   onUserChange,
+  appearance,
+  onAppearanceChange,
   children,
 }: {
   user: SettingsUser;
@@ -128,6 +131,10 @@ export function AppShellQuill({
    * shell owns no router. Without this the nav is inert, which reads as broken. */
   onNavigate?: (title: string) => void;
   onUserChange?: (next: SettingsUser) => void;
+  /** Appearance preference, threaded to the settings modal. The shell doesn't
+   * apply the theme — the app owns that (see the story for the reference wiring). */
+  appearance?: Appearance;
+  onAppearanceChange?: (next: Appearance) => void;
   children?: React.ReactNode;
 }) {
   const [settingsOpen, setSettingsOpen] = React.useState(false);
@@ -208,6 +215,8 @@ export function AppShellQuill({
         user={user}
         account={account}
         onUserChange={onUserChange}
+        appearance={appearance}
+        onAppearanceChange={onAppearanceChange}
       />
       <FeedbackDialog open={feedbackOpen} onOpenChange={setFeedbackOpen} />
     </SidebarProvider>
