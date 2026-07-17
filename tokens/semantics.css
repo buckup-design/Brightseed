@@ -283,19 +283,19 @@
      way the tag scales do. Same rule as --ds-color-icon-favorite-active
      above, and there is deliberately no override in the dark block.
 
-     Icon is always white, so each surface must clear 3:1 against it
-     (WCAG 1.4.11, non-text). The set is step-500 except orange + cyan,
-     which sit at step-600: they are the two light steps of the five, and
-     white on their 500 lands at 2.49 / 2.56, under the bar. At 600 the
-     whole set clears it, 3.84 through 4.30. Keep that invariant if any
-     of these five are ever retuned.
+     Icon is always white. These are DECORATIVE identity avatars — no critical
+     information rides on the white icon standing off its surface — so the whole
+     set sits at step-500 for one uniform ramp. White on the two light steps
+     (orange, cyan) lands at 2.49 / 2.56, under WCAG 1.4.11's 3:1 non-text bar;
+     that is an accepted trade here, contrast is not critical for a decorative
+     component (July 2026, reversing the earlier orange/cyan step-600 exception).
      ────────────────────────────────────────────────────────────────── */
 
   --ds-color-surface-avatar-orchid:      var(--p-color-orchid-500);
   --ds-color-surface-avatar-lavender:    var(--p-color-lavender-500);
-  --ds-color-surface-avatar-orange:      var(--p-color-orange-600);
+  --ds-color-surface-avatar-orange:      var(--p-color-orange-500);
   --ds-color-surface-avatar-blue:        var(--p-color-blue-500);
-  --ds-color-surface-avatar-cyan:        var(--p-color-cyan-600);
+  --ds-color-surface-avatar-cyan:        var(--p-color-cyan-500);
   --ds-color-icon-on-avatar:             var(--p-color-white);
 
 }

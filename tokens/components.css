@@ -264,8 +264,19 @@
   /* --c-avatar-picker */
   --c-avatar-picker-border-default: var(--ds-color-border-default);
   --c-avatar-picker-border-focus:  var(--ds-color-border-focus);
+  --c-avatar-picker-icon-default:  var(--ds-color-icon-default);
   --c-avatar-picker-shape-radius-md: var(--ds-shape-radius-md);
   --c-avatar-picker-surface-alt:   var(--ds-color-surface-alt);
+  --c-avatar-picker-surface-default: var(--ds-color-surface-default);
+  /* One picker-owned token per avatar colour, each aliasing the matching global
+   * avatar surface. The colour selector renders these as flat swatches (no icon),
+   * so it must reach the colour without borrowing the Avatar component's own
+   * --c-avatar-* tokens. */
+  --c-avatar-picker-swatch-blue:     var(--ds-color-surface-avatar-blue);
+  --c-avatar-picker-swatch-cyan:     var(--ds-color-surface-avatar-cyan);
+  --c-avatar-picker-swatch-lavender: var(--ds-color-surface-avatar-lavender);
+  --c-avatar-picker-swatch-orange:   var(--ds-color-surface-avatar-orange);
+  --c-avatar-picker-swatch-orchid:   var(--ds-color-surface-avatar-orchid);
   --c-avatar-picker-text-default:  var(--ds-color-text-default);
   --c-avatar-picker-text-subtle:   var(--ds-color-text-subtle);
 

@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { Avatar as AvatarPrimitive } from "radix-ui"
-import { Flower, Flower2, LeafyGreen, Wheat } from "lucide-react"
+import { Flower, Flower2, Hop, LeafyGreen, Wheat } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { BADGE_ICON_STROKE } from "@/components/ui/badge-icons"
@@ -10,11 +10,13 @@ import { BADGE_ICON_STROKE } from "@/components/ui/badge-icons"
 /* ── Identity set ─────────────────────────────────────────────────────────
  * A stored color + icon pair, assigned at account creation. These two lists
  * are the vocabulary those stored values draw from; a persisted avatar is one
- * value from each (5 x 4 = 20 pairs). Settings will later let a user override
- * the assigned pair, so both fields are addressable by name, not by index —
- * reordering these lists must never repaint an existing user's avatar. */
+ * value from each (5 x 5 = 25 pairs). Settings lets a user override the assigned
+ * pair (see avatar-picker-dialog), so both fields are addressable by name, not
+ * by index — reordering these lists must never repaint an existing user's
+ * avatar. Colour order here is the display order in the picker; it was reordered
+ * July 2026 and, by that name-not-index rule, no stored avatar changed. */
 
-const AVATAR_COLORS = ["orchid", "lavender", "orange", "blue", "cyan"] as const
+const AVATAR_COLORS = ["orange", "lavender", "cyan", "orchid", "blue"] as const
 type AvatarColor = (typeof AVATAR_COLORS)[number]
 
 const AVATAR_ICONS = {
@@ -22,12 +24,13 @@ const AVATAR_ICONS = {
   flower: Flower,
   "flower-2": Flower2,
   "leafy-green": LeafyGreen,
+  hop: Hop,
 } as const
 type AvatarIcon = keyof typeof AVATAR_ICONS
 
 /** Shown when an account has no stored pair — a row predating assignment, or a
- * read that came back empty. Note this is one of the 20 assignable pairs, not a
- * reserved 21st, so a fallback avatar is indistinguishable from a user who was
+ * read that came back empty. Note this is one of the 25 assignable pairs, not a
+ * reserved 26th, so a fallback avatar is indistinguishable from a user who was
  * genuinely assigned orange + wheat. That is deliberate: if identity loading ever
  * breaks, it must not LOOK broken. Do not "fix" this into a neutral
  * unknown-person avatar — that trade was considered and rejected. */

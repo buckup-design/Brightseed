@@ -53,8 +53,8 @@ export const Fallback: Story = {
 };
 
 /** The decision, made visible — and the one most likely to be "fixed" back into a
- * bug by a well-meaning reader. The fallback is one of the 20 assignable pairs,
- * NOT a reserved 21st, so these two are identical on purpose: an account
+ * bug by a well-meaning reader. The fallback is one of the 25 assignable pairs,
+ * NOT a reserved 26th, so these two are identical on purpose: an account
  * genuinely assigned orange + wheat, and an account with nothing stored at all.
  * If identity loading ever breaks, it must not LOOK broken. */
 export const FallbackIsIndistinguishable: Story = {
@@ -105,12 +105,13 @@ export const IdentityMatrix: Story = {
   render: () => (
     <div className="flex flex-col gap-4 p-6">
       <p className="max-w-prose text-sm text-[var(--ds-color-text-subtle)]">
-        All 20 assignable pairs, 5 colors &times; 4 icons. Icons are white on
-        every color, and every pair clears the 3:1 non-text contrast bar
-        (3.84&ndash;4.30). <strong>Orange</strong> and <strong>cyan</strong> sit
-        at step-600 rather than 500 to get there, they are the two light steps.
-        Toggle the theme to confirm the colors hold, they are theme-invariant by
-        design.
+        All 25 assignable pairs, 5 colors &times; 5 icons. These are decorative
+        identity avatars, so the whole set sits at step-500 and white-on-color
+        contrast is intentionally not a constraint. <strong>Orange</strong> and{" "}
+        <strong>cyan</strong>, the two light steps, land just under the 3:1
+        non-text bar (2.49&nbsp;/&nbsp;2.56) &mdash; an accepted trade for a
+        decorative component. Toggle the theme to confirm the colors hold, they
+        are theme-invariant by design.
       </p>
       <table className="border-separate border-spacing-3">
         <thead>
