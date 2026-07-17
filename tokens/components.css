@@ -255,6 +255,25 @@
   --c-nav-user-text-muted:         var(--ds-color-text-muted);
   --c-nav-user-text-subtle:        var(--ds-color-text-subtle);
 
+  /* --c-new-chat */
+  --c-new-chat-border-default:     var(--ds-color-border-default);
+  --c-new-chat-shape-radius-md:    var(--ds-shape-radius-md);
+  --c-new-chat-surface-field:      var(--ds-color-surface-field);
+  --c-new-chat-text-default:       var(--ds-color-text-default);
+  --c-new-chat-text-subtle:        var(--ds-color-text-subtle);
+
+  /* --c-projects-list */
+  --c-projects-list-shape-radius-md: var(--ds-shape-radius-md);
+  --c-projects-list-surface-alt:     var(--ds-color-surface-alt);
+  --c-projects-list-text-default:    var(--ds-color-text-default);
+  --c-projects-list-text-subtle:     var(--ds-color-text-subtle);
+
+  /* --c-reports-list */
+  --c-reports-list-shape-radius-md:  var(--ds-shape-radius-md);
+  --c-reports-list-surface-alt:      var(--ds-color-surface-alt);
+  --c-reports-list-text-default:     var(--ds-color-text-default);
+  --c-reports-list-text-subtle:      var(--ds-color-text-subtle);
+
   /* --c-settings */
   --c-settings-border-default:     var(--ds-color-border-default);
   --c-settings-border-focus:       var(--ds-color-border-focus);

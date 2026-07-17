@@ -22,7 +22,7 @@ import { BrightseedLogin } from "@/components/auth/BrightseedLogin";
  * ───────────────────────────────────────────────────────────────────────── */
 
 const meta = {
-  title: "Auth/BrightseedLogin",
+  title: "Blocks/Login",
   component: BrightseedLogin,
   parameters: { layout: "fullscreen" },
 } satisfies Meta<typeof BrightseedLogin>;
