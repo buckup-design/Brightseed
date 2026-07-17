@@ -242,7 +242,13 @@ function Sidebar({
           // Adjust the padding for floating and inset variants.
           variant === "floating" || variant === "inset"
             ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]"
-            : "group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l",
+            // The border needs an explicit colour. Tailwind v4 defaults
+            // border-color to currentColor, and :216 above sets the sidebar's
+            // text colour on an ancestor — so a bare `border-r` painted the
+            // divider sand-800 in light and sand-50 in dark, instead of the
+            // sand-300 it is meant to be. Measured, not theorised. The only
+            // bare border in this file; :253 and :701 already bind a colour.
+            : "group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l border-[var(--c-sidebar-border-default)]",
           className
         )}
         {...props}

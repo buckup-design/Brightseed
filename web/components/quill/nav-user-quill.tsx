@@ -99,15 +99,23 @@ export function NavUserQuill({
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
+            {/* In the collapsed rail the button is a 40px box with no padding
+             * (size="lg" is the one size where p-0! wins). The name and the
+             * kebab are panel-only content, so they are removed rather than
+             * left to be clipped — the kebab would otherwise land at x=48,
+             * outside the box, and simply vanish while the avatar sat
+             * off-centre. Same call Alt1 makes with SidebarAlt1PanelOnly.
+             * group-data-[collapsible=icon] resolves against the Sidebar root,
+             * so this works with no prop threading. */}
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-[var(--c-sidebar-surface-alt)]"
+              className="data-[state=open]:bg-[var(--c-nav-user-surface-alt)] group-data-[collapsible=icon]:justify-center"
             >
               <Avatar className="h-8 w-8 rounded-lg">{avatar}</Avatar>
-              <span className="flex-1 truncate text-left text-sm font-semibold">
+              <span className="flex-1 truncate text-left text-sm font-semibold group-data-[collapsible=icon]:hidden">
                 {user.name}
               </span>
-              <EllipsisVertical className="ml-auto size-4" />
+              <EllipsisVertical className="ml-auto size-4 group-data-[collapsible=icon]:hidden" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent

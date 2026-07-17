@@ -234,7 +234,16 @@
   /* --c-label */
   --c-label-disabled-text-opacity: var(--ds-disabled-text-opacity);
 
+  /* --c-app-shell */
+  --c-app-shell-border-default:    var(--ds-color-border-default);
+  --c-app-shell-border-focus:      var(--ds-color-border-focus);
+  --c-app-shell-shape-radius-md:   var(--ds-shape-radius-md);
+  --c-app-shell-surface-alt:       var(--ds-color-surface-alt);
+  --c-app-shell-text-default:      var(--ds-color-text-default);
+  --c-app-shell-text-subtle:       var(--ds-color-text-subtle);
+
   /* --c-nav-user */
+  --c-nav-user-surface-alt:        var(--ds-color-surface-alt);
   --c-nav-user-text-default:       var(--ds-color-text-default);
   --c-nav-user-text-subtle:        var(--ds-color-text-subtle);
 
