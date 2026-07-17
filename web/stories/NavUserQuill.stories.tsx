@@ -1,51 +1,60 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { Building2, FlaskConical, Sprout } from "lucide-react";
 import { NavUserQuill } from "@/components/quill/nav-user-quill";
+import type { Team } from "@/components/quill/team-switcher";
 import {
-  SidebarAlt1,
-  SidebarAlt1Content,
-  SidebarAlt1Footer,
-  SidebarAlt1Inset,
-  SidebarAlt1Provider,
-} from "@/components/ui/sidebar-alt1";
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarInset,
+  SidebarProvider,
+} from "@/components/ui/sidebar";
 
 /* ─────────────────────────────────────────────────────────────────────────
  * The sidebar footer account menu, per Anna's proposal (Collab Playground
- * 89:1547 → 89:1596, July 16 2026). Replaces the Pro Block nav-user, which
- * still ships in App Shell 4 until app-shell-quill is signed off.
+ * 89:1547 → 89:1596, July 16 2026). The Pro Block nav-user it replaces is gone,
+ * deleted with App Shell 4 and the stock sidebar.
  *
  * What to look for:
  *   - Trigger: display name + kebab. No email, no ChevronsUpDown.
  *   - Menu: email header, then Settings / (Get help, Give feedback) / Teams /
  *     Version + Log out. The separators are the sketch's grouping.
- *   - The Version row is a readout: it should not highlight on hover, take
- *     focus by keyboard, or close the menu when clicked.
+ *   - Teams EXPANDS into the instance list rather than navigating — hover it.
+ *     That is the Team Switcher, reached from here (Becky, July 16 2026).
+ *   - Email and Version are readouts: sand-700 at weight 200, no role, no
+ *     hover, no focus, and they do not close the menu.
  *
  * Open the menu to review it — the trigger alone is only half the component.
  * ───────────────────────────────────────────────────────────────────────── */
 
+const TEAMS: Team[] = [
+  { name: "Instance 1", logo: Sprout, plan: "Enterprise" },
+  { name: "Instance 2", logo: FlaskConical, plan: "Enterprise" },
+  { name: "Instance 3", logo: Building2, plan: "Trial" },
+];
+
 const meta = {
-  title: "WORK IN PROGRESS/Nav User Quill",
+  title: "Components/Nav User Quill",
   component: NavUserQuill,
   parameters: { layout: "fullscreen", previewPadding: false },
+  args: { teams: TEAMS, activeTeam: TEAMS[0] },
   render: (args) => (
-    /* Alt1's provider, not stock's — NavUserQuill reads useSidebarAlt1 so it
-     * can render the panel and rail forms as two compositions. */
-    <SidebarAlt1Provider>
-      <SidebarAlt1>
+    <SidebarProvider>
+      <Sidebar>
         {/* Empty, but present: it takes the free space so the footer sits at the
          * bottom, which is where the menu has to open upward from. */}
-        <SidebarAlt1Content />
-        <SidebarAlt1Footer>
+        <SidebarContent />
+        <SidebarFooter>
           <NavUserQuill {...args} />
-        </SidebarAlt1Footer>
-      </SidebarAlt1>
-      <SidebarAlt1Inset>
+        </SidebarFooter>
+      </Sidebar>
+      <SidebarInset>
         <div className="text-muted-foreground p-6 text-sm">
           Open the menu from the footer, bottom left. Cmd/Ctrl+B collapses the
           nav — the name and kebab are absent from the rail, not hidden in it.
         </div>
-      </SidebarAlt1Inset>
-    </SidebarAlt1Provider>
+      </SidebarInset>
+    </SidebarProvider>
   ),
 } satisfies Meta<typeof NavUserQuill>;
 

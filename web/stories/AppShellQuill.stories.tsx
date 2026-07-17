@@ -1,11 +1,22 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import * as React from "react";
 
+import { Building2, FlaskConical, Sprout } from "lucide-react";
+
 import { AppShellQuill } from "@/components/quill/app-shell-quill";
 import type {
   SettingsAccount,
   SettingsUser,
 } from "@/components/quill/settings-modal";
+import type { Team } from "@/components/quill/team-switcher";
+
+/* The instances, surfaced through the account menu's Teams row. Same names the
+ * Account settings pane lists, so the two agree. */
+const TEAMS: Team[] = [
+  { name: "Instance 1", logo: Sprout, plan: "Enterprise" },
+  { name: "Instance 2", logo: FlaskConical, plan: "Enterprise" },
+  { name: "Instance 3", logo: Building2, plan: "Trial" },
+];
 
 /* ─────────────────────────────────────────────────────────────────────────
  * The Hummingbird app shell, assembled from Anna's proposal (Collab Playground
@@ -55,6 +66,7 @@ const INITIAL_USER: SettingsUser = {
 function ShellHost() {
   const [user, setUser] = React.useState<SettingsUser>(INITIAL_USER);
   const [active, setActive] = React.useState("Compounds");
+  const [team, setTeam] = React.useState<Team>(TEAMS[0]);
 
   return (
     <AppShellQuill
@@ -63,6 +75,9 @@ function ShellHost() {
       version="v1.3.2"
       activeItem={active}
       onNavigate={setActive}
+      teams={TEAMS}
+      activeTeam={team}
+      onTeamChange={setTeam}
       onUserChange={setUser}
     >
       <p className="text-muted-foreground text-sm">
@@ -74,7 +89,7 @@ function ShellHost() {
 }
 
 const meta = {
-  title: "WORK IN PROGRESS/App Shell Quill",
+  title: "Blocks/App Shell Quill",
   component: ShellHost,
   parameters: { layout: "fullscreen", previewPadding: false },
 } satisfies Meta<typeof ShellHost>;

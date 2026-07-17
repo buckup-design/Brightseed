@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { CircleIcon } from "lucide-react"
+import { ChevronRightIcon, CircleIcon } from "lucide-react"
 import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui"
 
 import { cn } from "@/lib/utils"
@@ -18,8 +18,11 @@ import { cn } from "@/lib/utils"
  * directly for the semantic tokens it needs.
  *
  * Covers the 95% surface: Root, Trigger, Portal, Content, Item, Label,
- * Separator, Shortcut, Group, RadioGroup + RadioItem. Submenu / checkbox-item
- * are not included here, add when the first usage demands it.
+ * Separator, Shortcut, Group, RadioGroup + RadioItem, Sub + SubTrigger +
+ * SubContent. Checkbox-item is still not included; add when a usage demands it.
+ *
+ * Submenu landed July 2026 for the account menu's Teams row, which expands into
+ * the instance list rather than navigating — the first usage that demanded it.
  *
  * RadioGroup/RadioItem were added July 2026 for the Conversations and Reports
  * list toolbars, whose Filter and Sort menus are single-select view state and
@@ -81,6 +84,84 @@ function DropdownMenuContent({
           "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
           "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
           "data-[side=bottom]:slide-in-from-top-2",
+          "data-[side=left]:slide-in-from-right-2",
+          "data-[side=right]:slide-in-from-left-2",
+          "data-[side=top]:slide-in-from-bottom-2",
+          className
+        )}
+        {...props}
+      />
+    </DropdownMenuPrimitive.Portal>
+  )
+}
+
+/* ── Submenu ─────────────────────────────────────────────────────────────
+ * "add when the first usage demands it" (see the header note) — July 16 2026,
+ * the account menu's Teams row, which expands into the instance list rather
+ * than navigating anywhere. SubContent deliberately mirrors Content's recipe
+ * rather than inventing a second panel style; the only difference is that a
+ * submenu has no `side=bottom` case to animate from. */
+
+function DropdownMenuSub({
+  ...props
+}: React.ComponentProps<typeof DropdownMenuPrimitive.Sub>) {
+  return <DropdownMenuPrimitive.Sub data-slot="dropdown-menu-sub" {...props} />
+}
+
+function DropdownMenuSubTrigger({
+  className,
+  inset,
+  children,
+  ...props
+}: React.ComponentProps<typeof DropdownMenuPrimitive.SubTrigger> & {
+  inset?: boolean
+}) {
+  return (
+    <DropdownMenuPrimitive.SubTrigger
+      data-slot="dropdown-menu-sub-trigger"
+      data-inset={inset || undefined}
+      className={cn(
+        // Same row recipe as DropdownMenuItem — a submenu trigger IS an item,
+        // and must not read as a different kind of row.
+        "relative flex cursor-pointer select-none items-center gap-2",
+        "rounded-[var(--c-dropdown-menu-shape-radius-sm)] px-2 py-1.5 text-sm outline-none",
+        "transition-colors duration-[120ms]",
+        // Radix sets data-state=open on the trigger while its submenu is up; it
+        // has to stay highlighted then, or the open submenu looks orphaned.
+        "data-[highlighted]:bg-[var(--c-dropdown-menu-action-secondary-hover)]",
+        "data-[highlighted]:text-[var(--c-dropdown-menu-text-default)]",
+        "data-[state=open]:bg-[var(--c-dropdown-menu-action-secondary-hover)]",
+        "data-[state=open]:text-[var(--c-dropdown-menu-text-default)]",
+        "data-[disabled]:pointer-events-none data-[disabled]:opacity-[var(--c-dropdown-menu-disabled-text-opacity)]",
+        "data-[inset]:pl-8",
+        "[&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:pointer-events-none",
+        className
+      )}
+      {...props}
+    >
+      {children}
+      <ChevronRightIcon className="ml-auto" />
+    </DropdownMenuPrimitive.SubTrigger>
+  )
+}
+
+function DropdownMenuSubContent({
+  className,
+  ...props
+}: React.ComponentProps<typeof DropdownMenuPrimitive.SubContent>) {
+  return (
+    <DropdownMenuPrimitive.Portal>
+      <DropdownMenuPrimitive.SubContent
+        data-slot="dropdown-menu-sub-content"
+        className={cn(
+          "z-50 min-w-[8rem] overflow-hidden",
+          "rounded-[var(--c-dropdown-menu-shape-radius-md)]",
+          "border border-[var(--c-dropdown-menu-border-default)]",
+          "bg-[var(--c-dropdown-menu-surface-default)] text-[var(--c-dropdown-menu-text-default)]",
+          "p-1 shadow-[var(--c-dropdown-menu-shadow-md)]",
+          "data-[state=open]:animate-in data-[state=closed]:animate-out",
+          "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+          "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
           "data-[side=left]:slide-in-from-right-2",
           "data-[side=right]:slide-in-from-left-2",
           "data-[side=top]:slide-in-from-bottom-2",
@@ -230,6 +311,9 @@ function DropdownMenuShortcut({
 export {
   DropdownMenu,
   DropdownMenuPortal,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuGroup,

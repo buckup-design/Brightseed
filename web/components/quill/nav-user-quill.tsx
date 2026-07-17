@@ -15,19 +15,18 @@
  *      Notifications are gone — none of them exist in this product — and
  *      Settings / Get help / Give feedback / Teams / Version take their place.
  *
- * nav-user.tsx is deliberately left in place: App Shell 4 still renders it, and
- * it stays the side-by-side comparison until app-shell-quill is signed off.
+ * The Pro Block nav-user it replaces is gone, deleted with App Shell 4 and the
+ * stock sidebar (July 16 2026).
  *
  * The sketch is annotated "treat as a hand drawing, intent only. spacing, colors
  * and radius are not intentional" — so the grouping below is taken from it, the
  * measurements are not. Those come from the DS defaults.
  *
- * Built on sidebar-alt1, per Becky's July 16 2026 call to move the shell. The
- * trigger is a plain button rather than a stock SidebarMenuButton: Alt1 has no
- * such primitive, and it is what caused the rail clipping anyway — the name and
- * kebab are panel-only content, so in the rail they are ABSENT, not hidden.
- * SidebarAlt1Item cannot be reused here because it takes a LucideIcon and this
- * leads with an Avatar; the geometry below is copied from it instead.
+ * The trigger is a plain button, not a sidebar primitive: the sidebar has none
+ * to offer, and the old SidebarMenuButton is what caused the rail clipping
+ * anyway. The name and kebab are panel-only, so in the rail they are ABSENT,
+ * not hidden. SidebarItem cannot be reused here because it takes a LucideIcon
+ * and this leads with an Avatar; the geometry below is copied from it instead.
  */
 
 import {
@@ -36,7 +35,6 @@ import {
   LogOut,
   MessageSquarePlus,
   Settings,
-  UsersRound,
 } from "lucide-react";
 
 import {
@@ -55,7 +53,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useSidebarAlt1 } from "@/components/ui/sidebar-alt1";
+import { useSidebar } from "@/components/ui/sidebar";
+import {
+  TeamSwitcherMenuSub,
+  type Team,
+} from "@/components/quill/team-switcher";
 import {
   Tooltip,
   TooltipContent,
@@ -75,22 +77,30 @@ export type NavUserQuillUser = {
 export function NavUserQuill({
   user,
   version,
+  teams,
+  activeTeam,
+  onTeamChange,
+  onAddTeam,
   onSettings,
   onGetHelp,
   onGiveFeedback,
-  onTeams,
   onLogOut,
 }: {
   user: NavUserQuillUser;
   /** Rendered in the non-interactive Version row. */
   version: string;
+  /* Teams is not a link — it expands into the instance list in place (Becky,
+   * July 16 2026). So the menu needs the instances, not an onTeams handler. */
+  teams: Team[];
+  activeTeam: Team;
+  onTeamChange?: (team: Team) => void;
+  onAddTeam?: () => void;
   onSettings?: () => void;
   onGetHelp?: () => void;
   onGiveFeedback?: () => void;
-  onTeams?: () => void;
   onLogOut?: () => void;
 }) {
-  const { state, isMobile } = useSidebarAlt1();
+  const { state, isMobile } = useSidebar();
   const expanded = isMobile || state === "expanded";
 
   /* An identity needs both halves of the stored pair to be renderable, so a
@@ -201,10 +211,17 @@ export function NavUserQuill({
             </DropdownMenuGroup>
 
             <DropdownMenuSeparator />
-            <DropdownMenuItem onSelect={onTeams}>
-              <UsersRound />
-              Teams
-            </DropdownMenuItem>
+            {/* Not a DropdownMenuItem — Teams expands into the instance list in
+             * place. Anna's annotation on 89:1560 says this row IS the instance
+             * switcher ("shown as 'Teams' in app shell 4"); Becky's call was
+             * that it links to the switcher rather than opening a fourth
+             * surface, and that the header keeps the Brightseed mark. */}
+            <TeamSwitcherMenuSub
+              teams={teams}
+              value={activeTeam}
+              onChange={onTeamChange}
+              onAddTeam={onAddTeam}
+            />
 
             <DropdownMenuSeparator />
             {/* Not a DropdownMenuItem: this row is a readout, so it must not
