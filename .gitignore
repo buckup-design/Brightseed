@@ -16,6 +16,19 @@ anna's mocks 4-29-26/
 # Stray PDF (rename + move into DOCS/ before committing)
 Hummingbird reference ui.pdf
 
+# Claude Code local state (worktrees are multi-GB)
+.claude/
+
+# Marketing / brand asset exports (large; keep local, like /brand)
+hummingbird.website/
+
+# Generated DS diagram artifact (regenerate; move into DOCS/ to keep it)
+design-system-architecture-diagrams.html
+
+# Stray root package — the app's package.json lives in web/
+/package.json
+/package-lock.json
+
 # --- standard ---
 node_modules/
 .next/
