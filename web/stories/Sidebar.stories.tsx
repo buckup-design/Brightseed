@@ -39,13 +39,14 @@ const NAV = [
   { title: "Chat", icon: MessageSquare },
 ];
 
-/**
- * Icon-rail collapsed sidebar, the variant Anna's mocks use.
- * sidebar-07 equivalent. Brightseed icon and color tweaks come later.
- */
-export const IconRail: Story = {
-  render: () => (
-    <SidebarProvider defaultOpen={false}>
+/* Compounds is marked active in both stories. Until July 2026 no story set
+ * isActive at all, which is how the sidebar shipped for months with a selected
+ * state painted the same sand-100 as hover without anyone catching it. */
+const ACTIVE = "Compounds";
+
+function SidebarDemo({ defaultOpen }: { defaultOpen: boolean }) {
+  return (
+    <SidebarProvider defaultOpen={defaultOpen}>
       <Sidebar collapsible="icon">
         <SidebarHeader>
           <SidebarMenu>
@@ -65,7 +66,10 @@ export const IconRail: Story = {
               <SidebarMenu>
                 {NAV.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton tooltip={item.title}>
+                    <SidebarMenuButton
+                      tooltip={item.title}
+                      isActive={item.title === ACTIVE}
+                    >
                       <item.icon />
                       <span>{item.title}</span>
                     </SidebarMenuButton>
@@ -93,5 +97,22 @@ export const IconRail: Story = {
         </div>
       </SidebarInset>
     </SidebarProvider>
-  ),
+  );
+}
+
+/**
+ * Icon-rail collapsed sidebar, the variant Anna's mocks use.
+ * sidebar-07 equivalent. 56px rail, 40px item boxes, 24px icons.
+ */
+export const IconRail: Story = {
+  render: () => <SidebarDemo defaultOpen={false} />,
+};
+
+/**
+ * The same sidebar expanded. The selected item carries the lime-50 pill with
+ * forest-800 text; hover any other item to check that hover (sand-100) still
+ * reads as clearly different from selected.
+ */
+export const Expanded: Story = {
+  render: () => <SidebarDemo defaultOpen />,
 };

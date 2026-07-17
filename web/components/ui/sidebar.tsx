@@ -29,8 +29,14 @@ const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
 const SIDEBAR_WIDTH = "16rem"
 const SIDEBAR_WIDTH_MOBILE = "18rem"
-const SIDEBAR_WIDTH_ICON = "3rem"
+// 56px rail, widened from stock's 48px so the 40px item box keeps 8px either
+// side. Matches sidebar-alt1, which measured both off Otter.
+const SIDEBAR_WIDTH_ICON = "3.5rem"
 const SIDEBAR_KEYBOARD_SHORTCUT = "b"
+// Radix's default. Stock shipped 0, which fired a tooltip on every pointer
+// crossing; 700ms waits for intent. Radix's 300ms skipDelayDuration still makes
+// follow-ups instant when sweeping the rail. Same value as sidebar-alt1.
+const SIDEBAR_TOOLTIP_DELAY_MS = 700
 
 type SidebarContextProps = {
   state: "expanded" | "collapsed"
@@ -128,7 +134,7 @@ function SidebarProvider({
 
   return (
     <SidebarContext.Provider value={contextValue}>
-      <TooltipProvider delayDuration={0}>
+      <TooltipProvider delayDuration={SIDEBAR_TOOLTIP_DELAY_MS}>
         <div
           data-slot="sidebar-wrapper"
           style={
@@ -479,8 +485,20 @@ function SidebarMenuItem({ className, ...props }: React.ComponentProps<"li">) {
   )
 }
 
+/* Selected vs hover: stock painted data-[active=true] the same --c-sidebar-
+ * surface-alt as hover, so the current page was indistinguishable from whatever
+ * the pointer happened to be over — the sidebar had no selected state at all.
+ * Active now takes the brand pair (lime-50 surface + forest-800 text, 6.3:1);
+ * hover stays sand-100 so the two never collide. Ported from sidebar-alt1,
+ * which is where this recipe was designed.
+ *
+ * Icon sizing is two rules, not one. Only the LEADING icon goes to 24px; every
+ * other svg in the row (disclosure chevrons, ChevronsUpDown affordances) stays
+ * at 16px. A single `[&>svg]:size-6` would catch them all — and would win over
+ * a per-icon `size-4`, since `.cls > svg` outranks a bare utility class, so the
+ * callers that already ask for 16px would be silently overridden. */
 const sidebarMenuButtonVariants = cva(
-  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-[var(--c-sidebar-shape-radius-md)] p-2 text-left text-sm ring-[var(--c-sidebar-border-focus)] outline-hidden transition-[width,height,padding] group-has-data-[sidebar=menu-action]/menu-item:pr-8 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! hover:bg-[var(--c-sidebar-surface-alt)] hover:text-[var(--c-sidebar-text-default)] focus-visible:ring-2 active:bg-[var(--c-sidebar-surface-alt)] active:text-[var(--c-sidebar-text-default)] disabled:pointer-events-none disabled:opacity-[var(--c-sidebar-disabled-text-opacity)] aria-disabled:pointer-events-none aria-disabled:opacity-[var(--c-sidebar-disabled-text-opacity)] data-[active=true]:bg-[var(--c-sidebar-surface-alt)] data-[active=true]:font-medium data-[active=true]:text-[var(--c-sidebar-text-default)] data-[state=open]:hover:bg-[var(--c-sidebar-surface-alt)] data-[state=open]:hover:text-[var(--c-sidebar-text-default)] [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
+  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-[var(--c-sidebar-shape-radius-md)] p-2 text-left text-sm ring-[var(--c-sidebar-border-focus)] outline-hidden transition-[width,height,padding] group-has-data-[sidebar=menu-action]/menu-item:pr-8 group-data-[collapsible=icon]:size-10! group-data-[collapsible=icon]:p-2! hover:bg-[var(--c-sidebar-surface-alt)] hover:text-[var(--c-sidebar-text-default)] focus-visible:ring-2 active:bg-[var(--c-sidebar-surface-alt)] active:text-[var(--c-sidebar-text-default)] disabled:pointer-events-none disabled:opacity-[var(--c-sidebar-disabled-text-opacity)] aria-disabled:pointer-events-none aria-disabled:opacity-[var(--c-sidebar-disabled-text-opacity)] data-[active=true]:bg-[var(--c-sidebar-surface-selected-brand)] data-[active=true]:font-medium data-[active=true]:text-[var(--c-sidebar-text-brand)] data-[state=open]:hover:bg-[var(--c-sidebar-surface-alt)] data-[state=open]:hover:text-[var(--c-sidebar-text-default)] [&>span:last-child]:truncate [&>svg]:size-4 [&>svg:first-child]:size-6 [&>svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -508,7 +526,9 @@ const sidebarMenuButtonVariants = cva(
           "bg-[var(--c-sidebar-surface-default)] shadow-[0_0_0_1px_var(--c-sidebar-border-default)] hover:bg-[var(--c-sidebar-surface-alt)] hover:text-[var(--c-sidebar-text-default)] hover:shadow-[0_0_0_1px_var(--c-sidebar-border-default-hover)]",
       },
       size: {
-        default: "h-8 text-sm",
+        // 40px, up from stock's 32px. With 24px icons, 32px left 4px of
+        // vertical breathing room and the row read as cramped.
+        default: "h-10 text-sm",
         sm: "h-7 text-xs",
         lg: "h-12 text-sm group-data-[collapsible=icon]:p-0!",
       },
