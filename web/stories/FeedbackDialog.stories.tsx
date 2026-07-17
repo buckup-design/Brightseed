@@ -41,7 +41,7 @@ function FeedbackHost({ startOpen }: { startOpen: boolean }) {
 }
 
 const meta = {
-  title: "WORK IN PROGRESS/Feedback Dialog",
+  title: "Blocks/Feedback Dialog",
   component: FeedbackHost,
   parameters: { layout: "centered" },
 } satisfies Meta<typeof FeedbackHost>;

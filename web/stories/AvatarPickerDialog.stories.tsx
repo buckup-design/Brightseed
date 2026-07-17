@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button";
  * recombines the two into the real avatar, live.
  */
 const meta = {
-  title: "WORK IN PROGRESS/Avatar Picker",
+  title: "Blocks/Avatar Picker",
   component: AvatarPickerDialog,
   parameters: { layout: "centered" },
   // The picker's props are all required, but every story drives it through a
