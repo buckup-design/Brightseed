@@ -58,11 +58,14 @@ function SelectTrigger({
         "flex w-fit items-center justify-between gap-2 px-3 py-2 text-sm whitespace-nowrap",
         "data-[size=default]:h-9 data-[size=sm]:h-8",
         "transition-[color,box-shadow] outline-none",
-        // Surface + border + radius.
-        "bg-transparent shadow-[var(--c-select-shadow-xs)]",
+        // Surface + border + radius. Field fill is a lighter inset than the
+        // panel it sits on; see --ds-color-surface-field.
+        "bg-[var(--c-select-surface-field)] shadow-[var(--c-select-shadow-xs)]",
         "rounded-[var(--c-select-shape-radius-md)]",
         "border border-[var(--c-select-border-default)]",
+        // Hover: border deepens (resting only) and the field brightens one step.
         "enabled:hover:not-focus-visible:not-aria-invalid:border-[var(--c-select-border-default-hover)]",
+        "enabled:hover:bg-[var(--c-select-surface-field-hover)]",
         // Focus
         "focus-visible:border-[var(--c-select-border-focus)]",
         "focus-visible:ring-[3px] focus-visible:ring-[var(--c-select-border-focus)]/50",
@@ -75,9 +78,6 @@ function SelectTrigger({
         "dark:aria-invalid:ring-[var(--c-select-border-critical-bold)]/40",
         // Placeholder
         "data-[placeholder]:text-[var(--c-select-text-subtle)]",
-        // Dark: stock shadcn tints the field with the input/border color at 30%.
-        // Tokenised in place; see notes in the migration spec.
-        "dark:bg-[var(--c-select-border-default)]/30",
         // Value slot
         "*:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2",
         // Icons

@@ -26,6 +26,13 @@
   --ds-color-surface-default-active:  var(--p-color-sand-200);
   --ds-color-surface-alt:             var(--p-color-sand-100);      /* sidebar, table alt rows, inset panels */
   --ds-color-surface-alt-hover:       var(--p-color-sand-200);
+  /* Field fill (input / textarea / input-group). A field reads as a lighter
+     inset than the muted panel it sits on and BRIGHTENS on hover — the opposite
+     direction to surface-default's hover, because a field is a well you reach
+     into, not a raised control. One step lighter than surface-alt (sand-100) at
+     rest, one more on hover. */
+  --ds-color-surface-field:           var(--p-color-sand-50);
+  --ds-color-surface-field-hover:     var(--p-color-white);
   --ds-color-surface-scrim:           color-mix(in srgb, var(--p-color-sand-950) 50%, transparent);  /* modal / dialog veil, warm dark @ 50%, matches prior look */
 
   /* Brand surface, nav bar, header, branded panels */
@@ -327,6 +334,10 @@
   --ds-color-surface-default-active:  var(--p-color-sand-800);
   --ds-color-surface-alt:             var(--p-color-sand-900);       /* raised panels, sidebars, cards */
   --ds-color-surface-alt-hover:       var(--p-color-sand-800);
+  /* One step lighter than surface-alt (sand-900) at rest, one more on hover —
+     see the light block for the reasoning. */
+  --ds-color-surface-field:           var(--p-color-sand-800);
+  --ds-color-surface-field-hover:     var(--p-color-sand-700);
   --ds-color-surface-scrim:           color-mix(in srgb, var(--p-color-black) 60%, transparent);     /* veil must go darker than the sand-950 page to register, DESIGN REVIEW: black vs warm */
 
   /* Brand nav/header, sand-anchored in dark mode (forest exits surface vocabulary) */

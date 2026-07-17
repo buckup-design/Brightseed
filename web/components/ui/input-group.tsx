@@ -14,12 +14,12 @@ function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="input-group"
       role="group"
       className={cn(
-        // BRIGHTSEED-TBD: [CONCERN] the dark: rule below paints a *border* token
-        // as a surface. Inherited from stock shadcn's `dark:bg-input/30` (--input
-        // bridges to --ds-color-border-default), so it is value-correct and the
-        // tier is clean, but the semantic intent is wrong. A real
-        // --ds-color-surface-field would let this dark: variant retire entirely.
-        "group/input-group relative flex w-full items-center rounded-[var(--c-input-group-shape-radius-md)] border border-[var(--c-input-group-border-default)] shadow-[var(--c-input-group-shadow-xs)] transition-[color,box-shadow] outline-none dark:bg-[var(--c-input-group-border-default)]/30",
+        // Field fill: a lighter inset than the panel it sits on, brightening one
+        // step on hover. Closes the old [CONCERN] here — the dark-only
+        // `bg-[border]/30` hack is retired now that --ds-color-surface-field
+        // exists. The inner control is bg-transparent (below), so this surface,
+        // and its hover, is what shows.
+        "group/input-group relative flex w-full items-center rounded-[var(--c-input-group-shape-radius-md)] border border-[var(--c-input-group-border-default)] shadow-[var(--c-input-group-shadow-xs)] transition-[color,box-shadow] outline-none bg-[var(--c-input-group-surface-default)] hover:bg-[var(--c-input-group-surface-hover)]",
         "h-9 min-w-0 has-[>textarea]:h-auto",
 
         // Variants based on alignment.
@@ -161,7 +161,9 @@ function InputGroupInput({
     <Input
       data-slot="input-group-control"
       className={cn(
-        "flex-1 rounded-none border-0 bg-transparent shadow-none focus-visible:ring-0 dark:bg-transparent",
+        // Transparent at rest AND on hover so the group owns the field surface;
+        // enabled:hover:bg-transparent cancels the base Input's own hover fill.
+        "flex-1 rounded-none border-0 bg-transparent enabled:hover:bg-transparent shadow-none focus-visible:ring-0",
         className
       )}
       {...props}
@@ -177,7 +179,7 @@ function InputGroupTextarea({
     <Textarea
       data-slot="input-group-control"
       className={cn(
-        "flex-1 resize-none rounded-none border-0 bg-transparent py-3 shadow-none focus-visible:ring-0 dark:bg-transparent",
+        "flex-1 resize-none rounded-none border-0 bg-transparent enabled:hover:bg-transparent py-3 shadow-none focus-visible:ring-0",
         className
       )}
       {...props}

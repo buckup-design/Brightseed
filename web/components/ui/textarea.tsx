@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils"
  *   Border hover        → --ds-color-border-default-hover
  *   Border/ring focus   → --ds-color-border-focus
  *   Border/ring invalid → --ds-color-border-critical-bold
+ *   Surface rest/hover  → --ds-color-surface-field / --ds-color-surface-field-hover
  *   Placeholder         → --ds-color-text-subtle
  *   Radius              → --ds-shape-radius-md   (8px; the Input/Select/Textarea convention)
  */
@@ -21,22 +22,22 @@ function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
         // Layout / sizing
         "flex field-sizing-content min-h-16 w-full px-3 py-2 text-base md:text-sm",
         "transition-[color,box-shadow] outline-none",
-        // Surface + border + radius
-        "bg-transparent",
+        // Surface + border + radius. Field fill is a lighter inset than the
+        // panel it sits on; see --ds-color-surface-field.
+        "bg-[var(--c-textarea-surface-default)]",
         "border border-[var(--c-textarea-border-default)]",
         "rounded-[var(--c-textarea-shape-radius-md)]",
         "shadow-[var(--c-textarea-shadow-xs)]",
         // Placeholder
         "placeholder:text-[var(--c-textarea-text-subtle)]",
         "disabled:cursor-not-allowed disabled:opacity-[var(--c-textarea-disabled-text-opacity)]",
-        // Dark-mode field fill. Restates the stock `dark:bg-input/30`; --input
-        // bridges to --ds-color-border-default, so this is the same colour at 30%.
-        "dark:bg-[var(--c-textarea-border-default)]/30",
         // Focus
         "focus-visible:border-[var(--c-textarea-border-focus)]",
         "focus-visible:ring-[3px] focus-visible:ring-[var(--c-textarea-border-focus)]/50",
-        // Hover (resting only, focus and invalid own the border in their states)
+        // Hover: border deepens (resting only; focus and invalid own the border
+        // in their states) and the field brightens one step.
         "enabled:hover:not-focus-visible:not-aria-invalid:border-[var(--c-textarea-border-default-hover)]",
+        "enabled:hover:bg-[var(--c-textarea-surface-hover)]",
         // Invalid
         "aria-invalid:border-[var(--c-textarea-border-critical-bold)]",
         "aria-invalid:ring-[var(--c-textarea-border-critical-bold)]/20",

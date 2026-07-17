@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils"
  *   Border hover        → --ds-color-border-default-hover
  *   Border/ring focus   → --ds-color-border-focus
  *   Border/ring invalid → --ds-color-border-critical-bold
+ *   Surface rest/hover  → --ds-color-surface-field / --ds-color-surface-field-hover
  *   Placeholder         → --ds-color-text-subtle
  *   File-button label   → --ds-color-text-default
  *   Selection           → --ds-color-action-primary / --ds-color-text-on-action-primary
@@ -24,8 +25,9 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
         // Layout / sizing
         "h-9 w-full min-w-0 px-3 py-1 text-base md:text-sm",
         "transition-[color,box-shadow] outline-none",
-        // Surface + border + radius
-        "bg-transparent",
+        // Surface + border + radius. Field fill is a lighter inset than the
+        // panel it sits on; see --ds-color-surface-field.
+        "bg-[var(--c-input-surface-default)]",
         "border border-[var(--c-input-border-default)]",
         "rounded-[var(--c-input-shape-radius-md)]",
         "shadow-[var(--c-input-shadow-xs)]",
@@ -38,14 +40,13 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
         "placeholder:text-[var(--c-input-text-subtle)]",
         // Disabled
         "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-[var(--c-input-disabled-text-opacity)]",
-        // Dark-mode field fill. Restates the stock `dark:bg-input/30`; --input
-        // bridges to --ds-color-border-default, so this is the same colour at 30%.
-        "dark:bg-[var(--c-input-border-default)]/30",
         // Focus
         "focus-visible:border-[var(--c-input-border-focus)]",
         "focus-visible:ring-[3px] focus-visible:ring-[var(--c-input-border-focus)]/50",
-        // Hover (resting only, focus and invalid own the border in their states)
+        // Hover: border deepens (resting only; focus and invalid own the border
+        // in their states) and the field brightens one step.
         "enabled:hover:not-focus-visible:not-aria-invalid:border-[var(--c-input-border-default-hover)]",
+        "enabled:hover:bg-[var(--c-input-surface-hover)]",
         // Invalid
         "aria-invalid:border-[var(--c-input-border-critical-bold)]",
         "aria-invalid:ring-[var(--c-input-border-critical-bold)]/20",

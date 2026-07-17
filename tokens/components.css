@@ -168,6 +168,8 @@
   --c-checkbox-action-primary:            var(--ds-color-action-primary);
   --c-checkbox-border-default:            var(--ds-color-border-default);
   --c-checkbox-border-focus:              var(--ds-color-border-focus);
+  --c-checkbox-surface-default:           var(--ds-color-surface-field);
+  --c-checkbox-surface-hover:             var(--ds-color-surface-field-hover);
   --c-checkbox-disabled-text-opacity: var(--ds-disabled-text-opacity);
   --c-checkbox-shadow-xs: var(--ds-shadow-xs);
   --c-checkbox-shape-radius-xs: var(--ds-shape-radius-xs);
@@ -214,6 +216,8 @@
   --c-input-border-default:            var(--ds-color-border-default);
   --c-input-border-default-hover:      var(--ds-color-border-default-hover);
   --c-input-border-focus:              var(--ds-color-border-focus);
+  --c-input-surface-default:           var(--ds-color-surface-field);
+  --c-input-surface-hover:             var(--ds-color-surface-field-hover);
   --c-input-disabled-text-opacity: var(--ds-disabled-text-opacity);
   --c-input-shadow-xs: var(--ds-shadow-xs);
   --c-input-shape-radius-md:           var(--ds-shape-radius-md);
@@ -225,6 +229,8 @@
   --c-input-group-border-critical-bold:    var(--ds-color-border-critical-bold);
   --c-input-group-border-default:     var(--ds-color-border-default);
   --c-input-group-border-focus:       var(--ds-color-border-focus);
+  --c-input-group-surface-default:    var(--ds-color-surface-field);
+  --c-input-group-surface-hover:      var(--ds-color-surface-field-hover);
   --c-input-group-disabled-text-opacity: var(--ds-disabled-text-opacity);
   --c-input-group-shadow-xs: var(--ds-shadow-xs);
   --c-input-group-shape-radius-md:    var(--ds-shape-radius-md);
@@ -311,6 +317,8 @@
   --c-select-shape-radius-sm:         var(--ds-shape-radius-sm);
   --c-select-surface-brand-subtle:    var(--ds-color-surface-brand-subtle);
   --c-select-surface-default:         var(--ds-color-surface-default);
+  --c-select-surface-field:           var(--ds-color-surface-field);
+  --c-select-surface-field-hover:     var(--ds-color-surface-field-hover);
   --c-select-text-default:            var(--ds-color-text-default);
   --c-select-text-subtle:             var(--ds-color-text-subtle);
 
@@ -415,6 +423,8 @@
   --c-textarea-border-default:          var(--ds-color-border-default);
   --c-textarea-border-default-hover:    var(--ds-color-border-default-hover);
   --c-textarea-border-focus:            var(--ds-color-border-focus);
+  --c-textarea-surface-default:         var(--ds-color-surface-field);
+  --c-textarea-surface-hover:           var(--ds-color-surface-field-hover);
   --c-textarea-disabled-text-opacity: var(--ds-disabled-text-opacity);
   --c-textarea-shadow-xs: var(--ds-shadow-xs);
   --c-textarea-shape-radius-md:         var(--ds-shape-radius-md);
