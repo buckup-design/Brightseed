@@ -24,7 +24,7 @@ import {
 const meta = {
   title: "Components/Sidebar",
   component: Sidebar,
-  parameters: { layout: "fullscreen" },
+  parameters: { layout: "fullscreen", previewPadding: false },
   tags: ["autodocs"],
 } satisfies Meta<typeof Sidebar>;
 

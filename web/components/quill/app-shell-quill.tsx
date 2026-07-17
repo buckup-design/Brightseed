@@ -3,23 +3,28 @@
 /**
  * AppShellQuill — the Hummingbird application shell.
  *
- * Successor to pro-blocks/application/app-shells/app-shell-4.tsx. Both exist on
- * purpose right now: App Shell 4 is the comparison baseline, and it retires
- * once this is signed off (Becky, July 16 2026). Nothing here mutates it.
+ * Built on sidebar-alt1, not the stock sidebar (Becky, July 16 2026). The two
+ * differ in what happens during the 200ms nobody thinks about:
  *
- * What it is, versus what it replaces:
- *   - Reads --c-sidebar-* through the ui/ Sidebar. App Shell 4 composes Pro
- *     Block nav parts (nav-main, nav-projects, team-switcher) that still reach
- *     for --ds-* directly, which component code is not allowed to do.
- *   - Nav is the five Hummingbird surfaces, not the Pro Block's demo IA of
- *     Playground / Models / Documentation / Projects.
- *   - The footer account menu is NavUserQuill, and Settings and Give feedback
- *     are wired to real surfaces rather than being inert menu rows.
+ *   Stock morphs one composition. The labels stay mounted and get squeezed —
+ *   measured, "Compounds" went 79px → 0px while the panel narrowed. Text
+ *   reflows and clips in real time, and the rail ends up a crushed panel.
+ *   Alt1 swaps two compositions. The rail mounts fully formed at its final
+ *   width and the wrapper wipes 240 → 56 over 150ms with overflow-hidden doing
+ *   the reveal. Nothing is ever mid-squeeze, because the rail composition never
+ *   had labels to squeeze.
  *
- * Where the instance switcher went: App Shell 4 puts a TeamSwitcher in the
- * header. Anna's sketch moves it into the footer menu as "Teams" (annotation on
- * 89:1560: "this is the instance switcher component, shown as 'Teams' in app
- * shell 4"), so the header here carries the brand mark instead.
+ * sidebar-alt1-spec.md is the argument in full; it is why Alt1 was built. This
+ * shell used to sit on the losing side of that decision, and the "B" bug Becky
+ * filed was that showing through — the wordmark was being squeezed rather than
+ * removed.
+ *
+ * The toggle, the hover reveal, the logo crossfade and the rail curation are
+ * all Alt1's now. This file previously hand-ported them onto stock; that code
+ * is gone, which is most of the point.
+ *
+ * Still true from before: app-shell-4 retires once this is signed off, and
+ * nothing here touches it.
  */
 
 import * as React from "react";
@@ -29,7 +34,6 @@ import {
   FlaskConical,
   Layers,
   MessageSquare,
-  PanelLeftCloseIcon,
   PanelLeftOpenIcon,
   type LucideIcon,
 } from "lucide-react";
@@ -47,26 +51,16 @@ import {
   type SettingsUser,
 } from "@/components/quill/settings-modal";
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarHeader,
-  SidebarInset,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarProvider,
-  SidebarTrigger,
-  useSidebar,
-} from "@/components/ui/sidebar";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { cn } from "@/lib/utils";
+  SidebarAlt1,
+  SidebarAlt1Content,
+  SidebarAlt1Footer,
+  SidebarAlt1Header,
+  SidebarAlt1Inset,
+  SidebarAlt1Item,
+  SidebarAlt1PanelOnly,
+  SidebarAlt1Provider,
+  useSidebarAlt1,
+} from "@/components/ui/sidebar-alt1";
 
 export type AppShellQuillNavItem = {
   title: string;
@@ -82,115 +76,31 @@ const DEFAULT_NAV: AppShellQuillNavItem[] = [
 ];
 
 /**
- * The collapse toggle, ported from SidebarAlt1Toggle (sidebar-alt1.tsx:251-294).
- * The 300ms reveal is written as a literal `duration-300` rather than a
- * constant because Tailwind only sees literal class strings — a constant here
- * would be dead code that reads like the source of truth.
- * Four behaviours, all load-bearing — placement alone is not parity:
- *   1. Lives in the nav header, not the content bar (which is App Shell 4's
- *      placement, and what Becky rejected).
- *   2. Hover/focus-revealed: opacity 0 → 1 over 300ms, scoped to the whole nav
- *      via group/nav, not to the header cell.
- *   3. The icon states the direction the nav will move.
- *   4. aria-label flips, aria-expanded is set, and it carries a tooltip. Stock
- *      SidebarTrigger has a static sr-only "Toggle Sidebar" and no aria-expanded.
+ * Mobile-only opener.
  *
- * Reads --c-app-shell-* rather than Alt1's --c-sidebar-alt1-*; both alias the
- * same --ds-* semantics, so they render identically.
+ * SidebarAlt1Toggle cannot be reused here, and the reason is worth stating: its
+ * reveal is `opacity-0` lifted by `group-hover/alt1`, and `group/alt1` lives on
+ * the nav root. Placed in the inset — outside that ancestor — the variant never
+ * matches and the button stays invisible at opacity 0 forever. It would look
+ * like a missing button, not a misconfigured one.
+ *
+ * It also has to exist at all: below md, Alt1 renders the nav inside a Sheet,
+ * and its only toggle is inside that Sheet. Once the sheet closes there is no
+ * way back except Cmd/Ctrl+B. Alt1's own story never noticed because it has no
+ * mobile viewport story.
  */
-function NavToggle({ className }: { className?: string }) {
-  const { state, isMobile, toggleSidebar } = useSidebar();
-  const expanded = isMobile || state === "expanded";
+function MobileNavOpener() {
+  const { toggleSidebar } = useSidebarAlt1();
 
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <button
-          type="button"
-          data-slot="app-shell-quill-toggle"
-          aria-label={expanded ? "Close navigation" : "Open navigation"}
-          aria-expanded={expanded}
-          onClick={toggleSidebar}
-          className={cn(
-            "flex size-9 shrink-0 items-center justify-center",
-            "rounded-[var(--c-app-shell-shape-radius-md)] text-[var(--c-app-shell-text-subtle)]",
-            "hover:bg-[var(--c-app-shell-surface-alt)]",
-            "outline-none focus-visible:ring-1 focus-visible:ring-[var(--c-app-shell-border-focus)]",
-            "opacity-0 transition-opacity duration-300 motion-reduce:transition-none",
-            "group-hover/nav:opacity-100 group-focus-within/nav:opacity-100",
-            "[&>svg]:size-5 [&>svg]:shrink-0",
-            className
-          )}
-        >
-          {expanded ? <PanelLeftCloseIcon /> : <PanelLeftOpenIcon />}
-        </button>
-      </TooltipTrigger>
-      <TooltipContent side="right" align="center">
-        {expanded ? "Close navigation" : "Open navigation"}
-      </TooltipContent>
-    </Tooltip>
-  );
-}
-
-/**
- * The brand header, ported from SidebarAlt1Header (sidebar-alt1.tsx:302-348).
- *
- * Deliberately NOT a SidebarMenuButton. That is what the previous version got
- * wrong, and it caused both of Becky's bugs at once:
- *   - The wordmark survived collapse as a clipped 8px "B". size="lg" is the one
- *     size where `p-0!` beats `p-2!` (twMerge drops the loser from the class
- *     list), leaving a 40px box with no padding: 40 − 24 logo − 8 gap = 8px of
- *     slack, and truncate's overflow:hidden lets the span settle into exactly
- *     that. One glyph.
- *   - The logo rendered 24px, not 32px, because the button's
- *     `[&>svg:first-child]:size-6` outranks a bare `size-8`.
- * Outside a menu button there is no cva, no padding fight, and no icon rule —
- * both bugs stop existing rather than getting patched.
- *
- * Geometry: the logo centres at x=28 in BOTH states, which is also where the
- * nav icons below it sit, so the rail reads as one column and the mark does not
- * jump on collapse. Expanded: px-3 → 12 + 16 = 28. Collapsed: the 40px cell
- * centres in the 56px rail at 8..48 → 28. This requires SidebarHeader's own p-2
- * to be turned off; see the call site.
- */
-function NavHeader() {
-  const { state, isMobile } = useSidebar();
-  const expanded = isMobile || state === "expanded";
-
-  if (expanded) {
-    return (
-      <div className="flex h-14 shrink-0 items-center justify-between gap-2 px-3">
-        <div className="flex min-w-0 items-center gap-2">
-          <BrightseedLogo variant="tile" className="size-8 shrink-0" />
-          <span className="truncate text-sm font-medium text-[var(--c-app-shell-text-default)]">
-            Brightseed
-          </span>
-        </div>
-        <NavToggle />
-      </div>
-    );
-  }
-
-  /* The wordmark is not rendered here at all — the same call Alt1 makes with
-   * SidebarAlt1PanelOnly (sidebar-alt1.tsx:516-520). Panel-only content is
-   * absent from the rail rather than hidden in it, which is why there is
-   * nothing left to clip into a "B". */
-  return (
-    <div className="flex h-14 shrink-0 items-center justify-center">
-      {/* One 40x40 cell holding logo and toggle stacked, crossfading. */}
-      <div className="relative size-10">
-        <div
-          className={cn(
-            "absolute inset-0 flex items-center justify-center",
-            "transition-opacity duration-300 motion-reduce:transition-none",
-            "group-hover/nav:opacity-0 group-focus-within/nav:opacity-0"
-          )}
-        >
-          <BrightseedLogo variant="tile" className="size-8 shrink-0" />
-        </div>
-        <NavToggle className="absolute inset-0 size-10" />
-      </div>
-    </div>
+    <button
+      type="button"
+      onClick={toggleSidebar}
+      aria-label="Open navigation"
+      className="flex size-9 shrink-0 items-center justify-center rounded-[var(--c-app-shell-shape-radius-md)] text-[var(--c-app-shell-text-subtle)] outline-none hover:bg-[var(--c-app-shell-surface-alt)] focus-visible:ring-1 focus-visible:ring-[var(--c-app-shell-border-focus)] md:hidden [&>svg]:size-5"
+    >
+      <PanelLeftOpenIcon />
+    </button>
   );
 }
 
@@ -200,6 +110,7 @@ export function AppShellQuill({
   version,
   nav = DEFAULT_NAV,
   activeItem = "Compounds",
+  onNavigate,
   onUserChange,
   children,
 }: {
@@ -208,6 +119,9 @@ export function AppShellQuill({
   version: string;
   nav?: AppShellQuillNavItem[];
   activeItem?: string;
+  /** Fired when a nav item is chosen. Routing is the caller's problem — the
+   * shell owns no router. Without this the nav is inert, which reads as broken. */
+  onNavigate?: (title: string) => void;
   onUserChange?: (next: SettingsUser) => void;
   children?: React.ReactNode;
 }) {
@@ -231,43 +145,32 @@ export function AppShellQuill({
   };
 
   return (
-    <SidebarProvider>
-      {/* group/nav scopes the toggle's reveal to the whole nav, as Alt1 does
-       * with group/alt1. It has to be a NAMED group: className lands on the
-       * sidebar-container, a descendant of the root that carries
-       * data-collapsible, so group-data-[collapsible=icon] and group-hover/nav
-       * resolve against different ancestors and can stack on one element.
-       * Reusing the root's bare `group` would make both resolve to the same
-       * element, which does not work. */}
-      <Sidebar collapsible="icon" className="group/nav">
-        {/* p-0: NavHeader owns its own padding so the logo can sit at x=28 in
-         * both states. SidebarHeader's default p-2 would put it at 24 expanded
-         * and 28 collapsed — a 4px jump on every toggle. */}
-        <SidebarHeader className="p-0">
-          <NavHeader />
-        </SidebarHeader>
+    <SidebarAlt1Provider>
+      <SidebarAlt1>
+        <SidebarAlt1Header>
+          <BrightseedLogo variant="tile" className="size-8 shrink-0" />
+          {/* PanelOnly, not a hidden class: the wordmark is absent from the rail
+           * DOM rather than clipped inside it. This is the fix for the "B". */}
+          <SidebarAlt1PanelOnly>
+            <span className="ml-2 truncate text-sm font-medium text-[var(--c-app-shell-text-default)]">
+              Brightseed
+            </span>
+          </SidebarAlt1PanelOnly>
+        </SidebarAlt1Header>
 
-        <SidebarContent>
-          <SidebarGroup>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {nav.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton
-                      tooltip={item.title}
-                      isActive={item.title === activeItem}
-                    >
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        </SidebarContent>
+        <SidebarAlt1Content>
+          {nav.map((item) => (
+            <SidebarAlt1Item
+              key={item.title}
+              icon={item.icon}
+              label={item.title}
+              isActive={item.title === activeItem}
+              onClick={() => onNavigate?.(item.title)}
+            />
+          ))}
+        </SidebarAlt1Content>
 
-        <SidebarFooter>
+        <SidebarAlt1Footer>
           <NavUserQuill
             user={menuUser}
             version={version}
@@ -283,21 +186,15 @@ export function AppShellQuill({
             /* Get help is annotated "will open jira ticket. ignore flow for
              * now", so it is deliberately left unwired. */
           />
-        </SidebarFooter>
-      </Sidebar>
+        </SidebarAlt1Footer>
+      </SidebarAlt1>
 
-      <SidebarInset>
-        <header className="flex h-14 shrink-0 items-center gap-2 border-b border-[var(--c-app-shell-border-default)] px-4">
-          {/* Mobile only. Alt1 puts its ONLY toggle inside the nav, which on
-           * mobile means inside the Sheet — so once the sheet closes there is
-           * no way to reopen it except Cmd/Ctrl+B. Matching Alt1's placement
-           * would inherit that dead end, so below md the trigger stays out
-           * here where it can actually be reached. Above md it is gone and
-           * NavHeader's hover-revealed toggle is the only one, per Becky. */}
-          <SidebarTrigger className="md:hidden" />
+      <SidebarAlt1Inset>
+        <header className="flex h-14 shrink-0 items-center gap-2 border-b border-[var(--c-app-shell-border-default)] px-4 md:hidden">
+          <MobileNavOpener />
         </header>
         <div className="flex-1 p-6">{children}</div>
-      </SidebarInset>
+      </SidebarAlt1Inset>
 
       <SettingsModal
         open={settingsOpen}
@@ -308,6 +205,6 @@ export function AppShellQuill({
         onUserChange={onUserChange}
       />
       <FeedbackDialog open={feedbackOpen} onOpenChange={setFeedbackOpen} />
-    </SidebarProvider>
+    </SidebarAlt1Provider>
   );
 }

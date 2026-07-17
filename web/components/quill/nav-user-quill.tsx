@@ -21,6 +21,13 @@
  * The sketch is annotated "treat as a hand drawing, intent only. spacing, colors
  * and radius are not intentional" — so the grouping below is taken from it, the
  * measurements are not. Those come from the DS defaults.
+ *
+ * Built on sidebar-alt1, per Becky's July 16 2026 call to move the shell. The
+ * trigger is a plain button rather than a stock SidebarMenuButton: Alt1 has no
+ * such primitive, and it is what caused the rail clipping anyway — the name and
+ * kebab are panel-only content, so in the rail they are ABSENT, not hidden.
+ * SidebarAlt1Item cannot be reused here because it takes a LucideIcon and this
+ * leads with an Avatar; the geometry below is copied from it instead.
  */
 
 import {
@@ -48,12 +55,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useSidebarAlt1 } from "@/components/ui/sidebar-alt1";
 import {
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar,
-} from "@/components/ui/sidebar";
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 
 export type NavUserQuillUser = {
   /** The display name from Settings > Profile > Full name. Free text, 20 chars,
@@ -82,7 +90,8 @@ export function NavUserQuill({
   onTeams?: () => void;
   onLogOut?: () => void;
 }) {
-  const { isMobile } = useSidebar();
+  const { state, isMobile } = useSidebarAlt1();
+  const expanded = isMobile || state === "expanded";
 
   /* An identity needs both halves of the stored pair to be renderable, so a
    * half-written row falls to the fallback rather than inventing a match. Same
@@ -94,30 +103,66 @@ export function NavUserQuill({
       <AvatarFallback className="rounded-lg" />
     );
 
+  /* Geometry lifted from SidebarAlt1Item so the footer sits in the same column
+   * as the nav above it: 40px row either way, and in the rail a 40px box that
+   * centres the 32px avatar at x=28 — where every nav icon already is. */
+  const trigger = (
+    <button
+      type="button"
+      data-slot="nav-user-quill-trigger"
+      /* In the rail the name is not rendered, so the button would otherwise have
+       * no accessible name at all — the avatar is aria-hidden decoration. Same
+       * fix SidebarAlt1Item applies (it sets aria-label when collapsed). The
+       * tooltip is not a substitute: it is not announced. */
+      aria-label={expanded ? undefined : user.name}
+      className={cn(
+        "flex items-center rounded-[var(--c-nav-user-shape-radius-md)] text-[var(--c-nav-user-text-default)]",
+        "hover:bg-[var(--c-nav-user-surface-alt)]",
+        "outline-none focus-visible:ring-1 focus-visible:ring-[var(--c-nav-user-border-focus)]",
+        "data-[state=open]:bg-[var(--c-nav-user-surface-alt)]",
+        expanded ? "h-10 w-full gap-3 px-2.5 text-left" : "size-10 justify-center"
+      )}
+    >
+      <Avatar className="size-8 shrink-0 rounded-lg">{avatar}</Avatar>
+      {/* Panel-only. In the rail these are absent from the DOM rather than
+       * hidden in it — the same call Alt1 makes everywhere else. Hiding them
+       * was what pushed the kebab to x=48 and clipped it away silently. */}
+      {expanded && (
+        <>
+          <span className="flex-1 truncate text-sm font-semibold">
+            {user.name}
+          </span>
+          <EllipsisVertical className="size-4 shrink-0" />
+        </>
+      )}
+    </button>
+  );
+
   return (
-    <SidebarMenu>
-      <SidebarMenuItem>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            {/* In the collapsed rail the button is a 40px box with no padding
-             * (size="lg" is the one size where p-0! wins). The name and the
-             * kebab are panel-only content, so they are removed rather than
-             * left to be clipped — the kebab would otherwise land at x=48,
-             * outside the box, and simply vanish while the avatar sat
-             * off-centre. Same call Alt1 makes with SidebarAlt1PanelOnly.
-             * group-data-[collapsible=icon] resolves against the Sidebar root,
-             * so this works with no prop threading. */}
-            <SidebarMenuButton
-              size="lg"
-              className="data-[state=open]:bg-[var(--c-nav-user-surface-alt)] group-data-[collapsible=icon]:justify-center"
-            >
-              <Avatar className="h-8 w-8 rounded-lg">{avatar}</Avatar>
-              <span className="flex-1 truncate text-left text-sm font-semibold group-data-[collapsible=icon]:hidden">
-                {user.name}
-              </span>
-              <EllipsisVertical className="ml-auto size-4 group-data-[collapsible=icon]:hidden" />
-            </SidebarMenuButton>
-          </DropdownMenuTrigger>
+    <DropdownMenu>
+      {/* The label is visible in the panel, so the tooltip is rail-only — same
+       * rule SidebarAlt1Item follows.
+       *
+       * Nesting order is load-bearing and was wrong once already: Tooltip must
+       * be OUTSIDE and DropdownMenuTrigger INSIDE. asChild clones its single
+       * child and merges props onto it, so the chain has to bottom out at a real
+       * DOM node. With DropdownMenuTrigger on the outside, its child was
+       * <Tooltip> — a Radix Root that renders no element and forwards nothing —
+       * so aria-haspopup/aria-expanded and the click handler evaporated and the
+       * menu could never open in the rail. Nested this way both asChild links
+       * chain down to the same <button>. */}
+      {expanded ? (
+        <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
+      ) : (
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
+          </TooltipTrigger>
+          <TooltipContent side="right" align="center">
+            {user.name}
+          </TooltipContent>
+        </Tooltip>
+      )}
           <DropdownMenuContent
             className="w-[--radix-dropdown-menu-trigger-width] min-w-60 rounded-lg"
             side={isMobile ? "bottom" : "right"}
@@ -189,9 +234,7 @@ export function NavUserQuill({
               <LogOut />
               Log out
             </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </SidebarMenuItem>
-    </SidebarMenu>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

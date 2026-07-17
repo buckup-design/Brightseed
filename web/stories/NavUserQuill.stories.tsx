@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { NavUserQuill } from "@/components/quill/nav-user-quill";
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarInset,
-  SidebarProvider,
-} from "@/components/ui/sidebar";
+  SidebarAlt1,
+  SidebarAlt1Content,
+  SidebarAlt1Footer,
+  SidebarAlt1Inset,
+  SidebarAlt1Provider,
+} from "@/components/ui/sidebar-alt1";
 
 /* ─────────────────────────────────────────────────────────────────────────
  * The sidebar footer account menu, per Anna's proposal (Collab Playground
@@ -26,23 +26,26 @@ import {
 const meta = {
   title: "WORK IN PROGRESS/Nav User Quill",
   component: NavUserQuill,
-  parameters: { layout: "fullscreen" },
+  parameters: { layout: "fullscreen", previewPadding: false },
   render: (args) => (
-    <SidebarProvider>
-      <Sidebar>
+    /* Alt1's provider, not stock's — NavUserQuill reads useSidebarAlt1 so it
+     * can render the panel and rail forms as two compositions. */
+    <SidebarAlt1Provider>
+      <SidebarAlt1>
         {/* Empty, but present: it takes the free space so the footer sits at the
          * bottom, which is where the menu has to open upward from. */}
-        <SidebarContent />
-        <SidebarFooter>
+        <SidebarAlt1Content />
+        <SidebarAlt1Footer>
           <NavUserQuill {...args} />
-        </SidebarFooter>
-      </Sidebar>
-      <SidebarInset>
+        </SidebarAlt1Footer>
+      </SidebarAlt1>
+      <SidebarAlt1Inset>
         <div className="text-muted-foreground p-6 text-sm">
-          Open the menu from the footer, bottom left.
+          Open the menu from the footer, bottom left. Cmd/Ctrl+B collapses the
+          nav — the name and kebab are absent from the rail, not hidden in it.
         </div>
-      </SidebarInset>
-    </SidebarProvider>
+      </SidebarAlt1Inset>
+    </SidebarAlt1Provider>
   ),
 } satisfies Meta<typeof NavUserQuill>;
 

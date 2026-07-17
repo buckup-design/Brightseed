@@ -12,12 +12,20 @@ import type {
  * 88:1547). Successor to Blocks/App Shell 4 — open both side by side; App Shell
  * 4 retires once this one is signed off.
  *
+ * Built on sidebar-alt1 (Becky, July 16 2026), so collapsing SWAPS two
+ * compositions rather than morphing one. The rail is a designed artifact, not a
+ * squeezed panel: labels, the wordmark and the account name are absent from it
+ * rather than clipped inside it.
+ *
  * What to look for:
- *   - Nav: 24px icons, 40px rows, lime-50 selected pill on Compounds, 700ms
- *     tooltips when collapsed. Collapse it with the trigger in the header.
- *   - Footer menu: display name + kebab, then the proposal's IA.
- *   - Settings opens the modal on Profile. Change the avatar or the name and
- *     it flows straight back to the footer trigger — one `user`, two surfaces.
+ *   - Hover the nav to reveal the toggle. Expanded it sits right of the logo;
+ *     collapsed it takes the logo's cell and the mark crossfades out. Cmd/Ctrl+B
+ *     also toggles.
+ *   - Watch the LABELS as it collapses, not the end state — nothing squeezes.
+ *     Compare against Blocks/App Shell 4, which still morphs.
+ *   - Footer menu: display name + kebab in the panel, avatar alone in the rail.
+ *   - Settings opens the modal on Profile. Change the avatar or the name and it
+ *     flows straight back to the footer trigger — one `user`, two surfaces.
  *   - Give feedback opens the feedback dialog.
  *   - Teams opens Settings > Account. See the [CONCERN] in app-shell-quill.tsx:
  *     the sketch never says what Teams should open, so this is a placeholder
@@ -41,21 +49,25 @@ const INITIAL_USER: SettingsUser = {
   icon: "leafy-green",
 };
 
-/** The shell takes `user` and hands edits back; the app owns the store. The
- * story plays that part so the settings round-trip is actually exercisable. */
+/** The shell takes `user` and `activeItem` and hands changes back; the app owns
+ * the store and the router. The story plays both parts so the settings
+ * round-trip and the nav are actually exercisable rather than inert. */
 function ShellHost() {
   const [user, setUser] = React.useState<SettingsUser>(INITIAL_USER);
+  const [active, setActive] = React.useState("Compounds");
 
   return (
     <AppShellQuill
       user={user}
       account={ACCOUNT}
       version="v1.3.2"
+      activeItem={active}
+      onNavigate={setActive}
       onUserChange={setUser}
     >
       <p className="text-muted-foreground text-sm">
-        Main content area. The nav, the footer menu, Settings and Give feedback
-        are all live — open them.
+        {active} — main content area. The nav, the footer menu, Settings and
+        Give feedback are all live; click a nav item and this updates.
       </p>
     </AppShellQuill>
   );
@@ -64,7 +76,7 @@ function ShellHost() {
 const meta = {
   title: "WORK IN PROGRESS/App Shell Quill",
   component: ShellHost,
-  parameters: { layout: "fullscreen" },
+  parameters: { layout: "fullscreen", previewPadding: false },
 } satisfies Meta<typeof ShellHost>;
 
 export default meta;

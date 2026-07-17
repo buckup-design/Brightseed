@@ -72,6 +72,16 @@ const preview: Preview = {
       // value, so transparent/outline components are invisible until a hover
       // state adds a fill. The wrapper carries its own data-theme so the subtree
       // resolves the right tokens even in Docs inline previews.
+      //
+      // The 2rem is real chrome, not decoration: the component galleries (Button,
+      // Icons, Avatar, ColorScales) set no padding of their own and would render
+      // edge-to-edge without it. But it breaks any story whose component owns the
+      // viewport — sidebar-alt1 and sidebar are `h-svh`, so inside a padded box
+      // they overflow by 64px and the footer gets clipped off the bottom. Those
+      // stories opt out with `previewPadding: false` rather than everyone paying
+      // for it; `layout: "fullscreen"` alone is not the signal, since the
+      // galleries use that too and still want the padding.
+      const padded = context.parameters.previewPadding !== false;
       return React.createElement(
         "div",
         {
@@ -79,8 +89,7 @@ const preview: Preview = {
           style: {
             background: "var(--ds-color-surface-default)",
             color: "var(--ds-color-text-default)",
-            padding: "2rem",
-            borderRadius: "8px",
+            ...(padded ? { padding: "2rem", borderRadius: "8px" } : null),
           },
         },
         React.createElement(Story)

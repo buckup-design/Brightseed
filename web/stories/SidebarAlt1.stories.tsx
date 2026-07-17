@@ -35,7 +35,7 @@ import {
 const meta = {
   title: "WORK IN PROGRESS/Sidebar Alt1",
   component: SidebarAlt1,
-  parameters: { layout: "fullscreen" },
+  parameters: { layout: "fullscreen", previewPadding: false },
   tags: ["autodocs"],
 } satisfies Meta<typeof SidebarAlt1>;
 
