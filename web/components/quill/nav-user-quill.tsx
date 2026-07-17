@@ -126,7 +126,7 @@ export function NavUserQuill({
        * tooltip is not a substitute: it is not announced. */
       aria-label={expanded ? undefined : user.name}
       className={cn(
-        "flex items-center rounded-[var(--c-nav-user-shape-radius-md)] text-[var(--c-nav-user-text-default)]",
+        "flex items-center rounded-[var(--c-nav-user-shape-radius-md)] text-[var(--c-nav-user-text-muted)]",
         "hover:bg-[var(--c-nav-user-surface-alt)]",
         "outline-none focus-visible:ring-1 focus-visible:ring-[var(--c-nav-user-border-focus)]",
         "data-[state=open]:bg-[var(--c-nav-user-surface-alt)]",

@@ -137,6 +137,12 @@
                                                                   name, "+N more"), and Secondary / Outline / Ghost
                                                                   button text on hover. */
   --ds-color-text-subtle:             var(--p-color-sand-700);      /* secondary / helper text */
+  --ds-color-text-muted:              var(--p-color-sand-700);      /* recessive chrome text — persistent nav labels,
+                                                                  app-shell wordmark. Light matches subtle (the light
+                                                                  sand ramp is compressed at the dark end, sand-700/800
+                                                                  sit close), so the role earns its keep in DARK, where
+                                                                  it pulls back to sand-500 instead of near-white
+                                                                  sand-50. Added July 17 2026 for the app shell. */
   --ds-color-text-disabled:           var(--p-color-sand-500);      /* generic flat disabled, for non-button contexts
                                                                   (form labels, static text). Buttons use the alpha
                                                                   rule on their normal foreground instead. */
@@ -430,6 +436,10 @@
                                                                   Hover keeps the same color in dark mode; the weight
                                                                   bump (500→600) carries the hover signal alone. */
   --ds-color-text-subtle:             var(--p-color-sand-300);
+  --ds-color-text-muted:              var(--p-color-sand-500);      /* recessive chrome text on dark: persistent nav
+                                                                  labels / wordmark sit here (~7:1) instead of default
+                                                                  sand-50 (~15:1), so the SELECTED row is the brightest
+                                                                  thing in the panel — the Cowork-style dark sidebar. */
   --ds-color-text-disabled:           var(--p-color-sand-600);
   --ds-color-text-inverse:            var(--p-color-sand-900);
   --ds-color-text-inverse-subtle:     var(--p-color-sand-700);

@@ -406,7 +406,7 @@ function SidebarContent({
 
 const itemBaseClasses = cn(
   "flex items-center text-sm",
-  "rounded-[var(--c-sidebar-shape-radius-md)] text-[var(--c-sidebar-text-default)]",
+  "rounded-[var(--c-sidebar-shape-radius-md)] text-[var(--c-sidebar-text-muted)]",
   "hover:bg-[var(--c-sidebar-surface-alt)]",
   "outline-none focus-visible:ring-1 focus-visible:ring-[var(--c-sidebar-border-focus)]",
   "data-[active=true]:bg-[var(--c-sidebar-surface-selected-brand)] data-[active=true]:text-[var(--c-sidebar-text-brand)] data-[active=true]:font-medium",

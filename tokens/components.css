@@ -245,14 +245,14 @@
   --c-app-shell-border-focus:      var(--ds-color-border-focus);
   --c-app-shell-shape-radius-md:   var(--ds-shape-radius-md);
   --c-app-shell-surface-alt:       var(--ds-color-surface-alt);
-  --c-app-shell-text-default:      var(--ds-color-text-default);
+  --c-app-shell-text-muted:        var(--ds-color-text-muted);
   --c-app-shell-text-subtle:       var(--ds-color-text-subtle);
 
   /* --c-nav-user */
   --c-nav-user-border-focus:       var(--ds-color-border-focus);
   --c-nav-user-shape-radius-md:    var(--ds-shape-radius-md);
   --c-nav-user-surface-alt:        var(--ds-color-surface-alt);
-  --c-nav-user-text-default:       var(--ds-color-text-default);
+  --c-nav-user-text-muted:         var(--ds-color-text-muted);
   --c-nav-user-text-subtle:        var(--ds-color-text-subtle);
 
   /* --c-settings */
@@ -349,7 +349,7 @@
   --c-sidebar-surface-default:           var(--ds-color-surface-default);
   --c-sidebar-surface-selected-brand:    var(--ds-color-surface-selected-brand);
   --c-sidebar-text-brand:                var(--ds-color-text-brand);
-  --c-sidebar-text-default:              var(--ds-color-text-default);
+  --c-sidebar-text-muted:                var(--ds-color-text-muted);
   --c-sidebar-text-subtle:               var(--ds-color-text-subtle);
 
   /* --c-team-switcher */

@@ -72,7 +72,7 @@ function DemoNav() {
       <SidebarHeader>
         <BrightseedLogo variant="tile" className="size-8 shrink-0" />
         <SidebarPanelOnly>
-          <span className="ml-2 truncate text-sm font-medium text-[var(--c-sidebar-text-default)]">
+          <span className="ml-2 truncate text-sm font-medium text-[var(--c-sidebar-text-muted)]">
             Brightseed
           </span>
         </SidebarPanelOnly>
@@ -106,7 +106,7 @@ function DemoNav() {
 function DemoContent() {
   return (
     <SidebarInset>
-      <div className="flex h-14 items-center border-b border-[var(--c-sidebar-border-default)] px-6 text-sm font-medium text-[var(--c-sidebar-text-default)]">
+      <div className="flex h-14 items-center border-b border-[var(--c-sidebar-border-default)] px-6 text-sm font-medium text-[var(--c-sidebar-text-muted)]">
         Content pushes when the nav expands
       </div>
       <div className="flex-1 p-6 text-sm text-[var(--c-sidebar-text-subtle)]">

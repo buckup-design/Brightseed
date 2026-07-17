@@ -24,12 +24,10 @@
 
 import * as React from "react";
 import {
-  Compass,
-  Database,
-  FlaskConical,
-  Layers,
-  MessageSquare,
+  FileText,
+  Folder,
   PanelLeftOpenIcon,
+  Plus,
   type LucideIcon,
 } from "lucide-react";
 
@@ -64,12 +62,14 @@ export type AppShellQuillNavItem = {
   icon: LucideIcon;
 };
 
+/* The Hummingbird IA, aligned to the live product (brightseed.ai v1.3.2), whose
+ * rail is New Chat · Conversations · Reports. "Projects" evolves the flat
+ * Conversations list into named containers that hold both chats and reports — a
+ * known need, not yet in the live product (Becky, July 17 2026). */
 const DEFAULT_NAV: AppShellQuillNavItem[] = [
-  { title: "Strategies", icon: Compass },
-  { title: "Compounds", icon: FlaskConical },
-  { title: "Plants", icon: Layers },
-  { title: "Datasets", icon: Database },
-  { title: "Chat", icon: MessageSquare },
+  { title: "New chat", icon: Plus },
+  { title: "Projects", icon: Folder },
+  { title: "Reports", icon: FileText },
 ];
 
 /**
@@ -106,7 +106,7 @@ export function AppShellQuill({
   account,
   version,
   nav = DEFAULT_NAV,
-  activeItem = "Compounds",
+  activeItem = "New chat",
   teams,
   activeTeam,
   onTeamChange,
@@ -164,7 +164,7 @@ export function AppShellQuill({
           {/* PanelOnly, not a hidden class: the wordmark is absent from the rail
            * DOM rather than clipped inside it. This is the fix for the "B". */}
           <SidebarPanelOnly>
-            <span className="ml-2 truncate text-sm font-medium text-[var(--c-app-shell-text-default)]">
+            <span className="ml-2 truncate text-sm font-medium text-[var(--c-app-shell-text-muted)]">
               Brightseed
             </span>
           </SidebarPanelOnly>
