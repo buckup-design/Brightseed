@@ -14,7 +14,7 @@
  * That difference is the reason the old sidebar is gone: stock kept labels
  * mounted and squeezed them as the panel narrowed ("Compounds" measured 79px →
  * 0px), which is what produced the clipped "B" in the brand mark. Here the rail
- * composition simply has no labels to squeeze. sidebar-alt1-spec.md is the
+ * composition simply has no labels to squeeze. See Components/Sidebar for the
  * argument in full.
  *
  * The toggle, the hover reveal, the logo crossfade and the rail curation all

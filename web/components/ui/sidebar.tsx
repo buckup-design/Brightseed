@@ -1,8 +1,9 @@
 "use client"
 
 /**
- * Sidebar — the Quill sidebar. Composition-swap, Otter.ai pattern.
- * Spec: /sidebar-alt1-spec.md (named for the experiment this began as).
+ * Sidebar — the Quill sidebar. Composition-swap, after Otter.ai. The design
+ * rationale lives in this file and in Components/Sidebar's docs page; the
+ * original spec doc was deleted July 16 2026 once both carried it.
  *
  * This WAS sidebar-alt1, built alongside stock shadcn's sidebar to prove a
  * different collapse model. It won: Becky took the Hummingbird shell onto it,
@@ -21,10 +22,17 @@
  *      nav hover or focus-within.
  *
  * What stock did instead — morph one composition in place, squeezing labels to
- * nothing as the width animates — is what the spec was written against, and is
- * what produced the clipped "B" in the brand mark that finally killed it.
+ * nothing as the width animates — is what this was built against, and is what
+ * produced the clipped "B" in the brand mark that finally killed it.
  * Panel-only content here is ABSENT from the rail (SidebarPanelOnly), never
  * hidden inside it. Keep it that way; that is the whole thesis.
+ *
+ * Deliberately absent, so nobody helpfully restores them:
+ *   - Stock's SidebarRail, the clickable/draggable border strip. The
+ *     hover-revealed toggle and Cmd/Ctrl+B are the two ways to collapse; an
+ *     invisible third hit target on the border is not a third.
+ *   - Stock's collapsible="icon" morph classes and its per-item tooltip
+ *     plumbing, both of which existed to compensate for the morph.
  */
 
 import * as React from "react"
@@ -53,12 +61,24 @@ import {
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
 // Structural layout constants (not brand tokens), same bucket as shadcn's
-// SIDEBAR_WIDTH. Values measured from Otter: panel 240px, rail 56px.
+// SIDEBAR_WIDTH. Measured live off otter.ai, June 7 2026 — panel 240px, rail
+// 56px, and on the rail: 40x40 item hit areas, 24px icons, 16px horizontal
+// content padding. These are measurements, not preferences; do not round them.
 const SIDEBAR_WIDTH = "15rem"
 const SIDEBAR_WIDTH_RAIL = "3.5rem"
 const SIDEBAR_WIDTH_MOBILE = "18rem"
 const SIDEBAR_KEYBOARD_SHORTCUT = "b"
+// The motion values below (150ms wipe, 300ms fade, the easing) are hardcoded on
+// purpose — same bucket as the widths above. The token system has no motion
+// primitives: no --p-duration-*, no --p-easing-*. Standing up a whole tier for
+// one component is not worth it. The trigger to change that is a SECOND
+// component needing motion values; promote them then. Until then this is a
+// considered exemption from the no-hardcoded-values rule, not an oversight.
+//
 // Width wipe duration. Group focus-on-expand waits this out (+1 frame).
+// CAUTION: this constant only drives the JS focus timer. The CSS wipe is a
+// literal `duration-150` on the outer wrapper, because Tailwind needs literal
+// class strings. Change one and you must change the other.
 const SIDEBAR_WIPE_MS = 150
 // Tooltip delay, measured live on otter.ai (June 7, 2026): their nav tooltips
 // are Radix Tooltip at the DEFAULT delayDuration (700ms; measured ~787ms
@@ -442,6 +462,18 @@ function SidebarItem({
  * Curated group. Panel: label header + children.
  * Rail: ONE representative 40x40 icon; clicking it expands the nav, then
  * scrolls the group into view and focuses its header after the wipe.
+ *
+ * Clicking the rail icon EXPANDS. It does not navigate, and it does not open a
+ * popover flyout — both were considered and rejected. A flyout is what most
+ * collapsed navs do, so expect it to be proposed again: the answer is that it
+ * would put panel content back on the rail, which is the one thing this
+ * component exists to prevent. The rail icon is a way into the panel, not a
+ * shortcut past it.
+ *
+ * `isActive` on a group is a ROLLUP, not the header's own state: pass true when
+ * any child route is active. Otherwise the rail loses all active signal the
+ * moment the labels go, which is exactly the degraded-collapsed-state failure
+ * this component was built to avoid.
  */
 function SidebarGroup({
   icon: Icon,

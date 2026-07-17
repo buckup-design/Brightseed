@@ -23,14 +23,35 @@ import {
 } from "lucide-react";
 
 /**
- * Composition-swap sidebar (Otter.ai pattern). Spec: /sidebar-alt1-spec.md.
+ * The Quill sidebar. Composition-swap, after Otter.ai — every value below was
+ * measured live on otter.ai (June 7 2026, logged-in web app) rather than
+ * guessed, which is why they are oddly specific. Treat them as measurements.
  *
  * Collapsed (56px rail) and expanded (240px panel) are two distinct
  * compositions. The transition is a 150ms overflow-hidden width wipe, not a
- * morph: the entering layout mounts fully formed, so labels never clip or
- * rewrap. The toggle fades in on hover/focus (300ms). Cmd/Ctrl+B toggles.
- * Groups collapse to ONE representative rail icon; clicking it expands the
- * nav and focuses that group.
+ * morph: the entering layout mounts fully formed at its destination width, so
+ * labels never clip or rewrap. Panel-only content is ABSENT from the rail, not
+ * hidden in it — that is the whole thesis. The alternative, morphing one
+ * composition and squeezing the labels to nothing, is what the old shadcn
+ * sidebar did, and it is why the brand mark used to clip to a stray "B".
+ *
+ * The toggle is always mounted at opacity 0 and fades in over 300ms when the
+ * pointer enters the nav or focus lands inside it. Otter reveals on hover only;
+ * focus-within is ours, so keyboard users can find it. Cmd/Ctrl+B also toggles.
+ *
+ * Rail icons and the toggle show a tooltip on the right after 700ms — Radix's
+ * default delay, which is what Otter uses. Radix's 300ms skip-delay makes
+ * follow-up tooltips instant when sweeping the rail. Panel items get no
+ * tooltip: their labels are already visible.
+ *
+ * Groups collapse to ONE representative rail icon. Clicking it expands the nav
+ * and focuses that group — it does not navigate, and it does not open a popover
+ * flyout. Both were considered and rejected: a flyout would put panel content
+ * back on the rail.
+ *
+ * Open question: the toggle rests at opacity 0, following Otter. Resting it at
+ * ~40% would make it discoverable without hovering, at the cost of a busier
+ * nav. Never settled — compare both here before changing it.
  */
 const meta = {
   title: "Components/Sidebar",
