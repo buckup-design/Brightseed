@@ -164,7 +164,7 @@
   --c-card-text-subtle:        var(--ds-color-text-subtle);
 
   /* --c-checkbox */
-  --c-checkbox-action-critical:           var(--ds-color-action-critical);
+  --c-checkbox-border-critical-bold:           var(--ds-color-border-critical-bold);
   --c-checkbox-action-primary:            var(--ds-color-action-primary);
   --c-checkbox-border-default:            var(--ds-color-border-default);
   --c-checkbox-border-focus:              var(--ds-color-border-focus);
@@ -209,7 +209,7 @@
   --c-field-text-subtle:                var(--ds-color-text-subtle);
 
   /* --c-input */
-  --c-input-action-critical:           var(--ds-color-action-critical);
+  --c-input-border-critical-bold:           var(--ds-color-border-critical-bold);
   --c-input-action-primary:            var(--ds-color-action-primary);
   --c-input-border-default:            var(--ds-color-border-default);
   --c-input-border-default-hover:      var(--ds-color-border-default-hover);
@@ -222,7 +222,7 @@
   --c-input-text-subtle:               var(--ds-color-text-subtle);
 
   /* --c-input-group */
-  --c-input-group-action-critical:    var(--ds-color-action-critical);
+  --c-input-group-border-critical-bold:    var(--ds-color-border-critical-bold);
   --c-input-group-border-default:     var(--ds-color-border-default);
   --c-input-group-border-focus:       var(--ds-color-border-focus);
   --c-input-group-disabled-text-opacity: var(--ds-disabled-text-opacity);
@@ -254,7 +254,7 @@
   --c-resizable-shape-radius-2xs:     var(--ds-shape-radius-2xs);
 
   /* --c-select */
-  --c-select-action-critical:         var(--ds-color-action-critical);
+  --c-select-border-critical-bold:         var(--ds-color-border-critical-bold);
   --c-select-border-default:          var(--ds-color-border-default);
   --c-select-border-default-hover:    var(--ds-color-border-default-hover);
   --c-select-border-focus:            var(--ds-color-border-focus);
@@ -360,7 +360,7 @@
   --c-tabs-text-subtle:        var(--ds-color-text-subtle);
 
   /* --c-textarea */
-  --c-textarea-action-critical:         var(--ds-color-action-critical);
+  --c-textarea-border-critical-bold:         var(--ds-color-border-critical-bold);
   --c-textarea-border-default:          var(--ds-color-border-default);
   --c-textarea-border-default-hover:    var(--ds-color-border-default-hover);
   --c-textarea-border-focus:            var(--ds-color-border-focus);
@@ -370,7 +370,7 @@
   --c-textarea-text-subtle:             var(--ds-color-text-subtle);
 
   /* --c-toggle */
-  --c-toggle-action-critical:         var(--ds-color-action-critical);
+  --c-toggle-border-critical-bold:         var(--ds-color-border-critical-bold);
   --c-toggle-border-default:          var(--ds-color-border-default);
   --c-toggle-border-focus:            var(--ds-color-border-focus);
   --c-toggle-disabled-text-opacity: var(--ds-disabled-text-opacity);

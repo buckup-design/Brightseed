@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils"
  *   Box fill indeterminate → same as checked; only the glyph differs
  *   Check / dash glyph   → --ds-color-text-on-action-primary (forest-800 on lime)
  *   Focus ring           → --ds-color-border-focus / 50     (lime-500 soft ring, same as Button/Switch)
- *   Invalid              → --ds-color-action-critical       (border + soft ring)
+ *   Invalid              → --ds-color-border-critical-bold  (border + soft ring)
  *   Corner               → --ds-shape-radius-xs             (4px; the step added for this box, July 2026)
  *   Elevation            → --ds-shadow-xs                   (form-control step, added July 2026)
  *   Disabled             → --ds-disabled-text-opacity       (0.55, the system-wide fade)
@@ -39,9 +39,9 @@ function Checkbox({
         // Disabled
         "disabled:cursor-not-allowed disabled:opacity-[var(--c-checkbox-disabled-text-opacity)]",
         // Invalid
-        "aria-invalid:border-[var(--c-checkbox-action-critical)]",
-        "aria-invalid:ring-[var(--c-checkbox-action-critical)]/20",
-        "dark:aria-invalid:ring-[var(--c-checkbox-action-critical)]/40",
+        "aria-invalid:border-[var(--c-checkbox-border-critical-bold)]",
+        "aria-invalid:ring-[var(--c-checkbox-border-critical-bold)]/20",
+        "dark:aria-invalid:ring-[var(--c-checkbox-border-critical-bold)]/40",
         // Checked: lime fill + forest check glyph
         "data-[state=checked]:border-[var(--c-checkbox-action-primary)]",
         "data-[state=checked]:bg-[var(--c-checkbox-action-primary)]",

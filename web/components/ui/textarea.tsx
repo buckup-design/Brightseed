@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils"
  *   Border resting      → --ds-color-border-default
  *   Border hover        → --ds-color-border-default-hover
  *   Border/ring focus   → --ds-color-border-focus
- *   Border/ring invalid → --ds-color-action-critical
+ *   Border/ring invalid → --ds-color-border-critical-bold
  *   Placeholder         → --ds-color-text-subtle
  *   Radius              → --ds-shape-radius-md   (8px; the Input/Select/Textarea convention)
  */
@@ -38,9 +38,9 @@ function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
         // Hover (resting only, focus and invalid own the border in their states)
         "enabled:hover:not-focus-visible:not-aria-invalid:border-[var(--c-textarea-border-default-hover)]",
         // Invalid
-        "aria-invalid:border-[var(--c-textarea-action-critical)]",
-        "aria-invalid:ring-[var(--c-textarea-action-critical)]/20",
-        "dark:aria-invalid:ring-[var(--c-textarea-action-critical)]/40",
+        "aria-invalid:border-[var(--c-textarea-border-critical-bold)]",
+        "aria-invalid:ring-[var(--c-textarea-border-critical-bold)]/20",
+        "dark:aria-invalid:ring-[var(--c-textarea-border-critical-bold)]/40",
         className
       )}
       {...props}

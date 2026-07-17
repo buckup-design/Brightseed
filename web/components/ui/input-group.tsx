@@ -31,13 +31,14 @@ function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
         // Focus state.
         "has-[[data-slot=input-group-control]:focus-visible]:border-[var(--c-input-group-border-focus)] has-[[data-slot=input-group-control]:focus-visible]:ring-[3px] has-[[data-slot=input-group-control]:focus-visible]:ring-[var(--c-input-group-border-focus)]/50",
 
-        // Error state.
-        // BRIGHTSEED-TBD: [CONCERN] `border-destructive` / `ring-destructive` both
-        // resolve through the bridge to --ds-color-action-critical (the soft red-100
-        // *surface* step), not a border/text step. Tokenised 1:1 to preserve the
-        // current look; if the invalid outline reads too faint, that is a pre-existing
-        // shadcn choice to revisit, not a regression from this migration.
-        "has-[[data-slot][aria-invalid=true]]:border-[var(--c-input-group-action-critical)] has-[[data-slot][aria-invalid=true]]:ring-[var(--c-input-group-action-critical)]/20 dark:has-[[data-slot][aria-invalid=true]]:ring-[var(--c-input-group-action-critical)]/40",
+        // Error state. Was --ds-color-action-critical until July 2026 — red-100, a
+        // soft *surface* tint sitting in border/ring slots, which read 1.19:1 on
+        // white (fainter than the VALID border's 1.39:1) and 1.01:1 in dark. Now
+        // --ds-color-border-critical-bold: 5.90:1 light / 4.19:1 dark. The /20 and
+        // /40 halo opacities are stock's and are kept — red-600 at /20 lands at
+        // 1.43:1, next to the valid lime halo's 1.46:1, so the opacity was never
+        // the bug. The colour was.
+        "has-[[data-slot][aria-invalid=true]]:border-[var(--c-input-group-border-critical-bold)] has-[[data-slot][aria-invalid=true]]:ring-[var(--c-input-group-border-critical-bold)]/20 dark:has-[[data-slot][aria-invalid=true]]:ring-[var(--c-input-group-border-critical-bold)]/40",
 
         className
       )}

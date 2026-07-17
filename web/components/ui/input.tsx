@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils"
  *   Border resting      → --ds-color-border-default
  *   Border hover        → --ds-color-border-default-hover
  *   Border/ring focus   → --ds-color-border-focus
- *   Border/ring invalid → --ds-color-action-critical
+ *   Border/ring invalid → --ds-color-border-critical-bold
  *   Placeholder         → --ds-color-text-subtle
  *   File-button label   → --ds-color-text-default
  *   Selection           → --ds-color-action-primary / --ds-color-text-on-action-primary
@@ -47,9 +47,9 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
         // Hover (resting only, focus and invalid own the border in their states)
         "enabled:hover:not-focus-visible:not-aria-invalid:border-[var(--c-input-border-default-hover)]",
         // Invalid
-        "aria-invalid:border-[var(--c-input-action-critical)]",
-        "aria-invalid:ring-[var(--c-input-action-critical)]/20",
-        "dark:aria-invalid:ring-[var(--c-input-action-critical)]/40",
+        "aria-invalid:border-[var(--c-input-border-critical-bold)]",
+        "aria-invalid:ring-[var(--c-input-border-critical-bold)]/20",
+        "dark:aria-invalid:ring-[var(--c-input-border-critical-bold)]/40",
         className
       )}
       {...props}

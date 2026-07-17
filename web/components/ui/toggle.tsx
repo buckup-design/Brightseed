@@ -16,8 +16,14 @@ import { cn } from "@/lib/utils"
  *   On + hover          → --ds-color-surface-brand-subtle-hover
  *   Outline border      → --ds-color-border-default
  *   Focus ring          → --ds-color-border-focus / 50 (same recipe as Button + Switch)
- *   aria-invalid        → --ds-color-action-critical
+ *   aria-invalid        → --ds-color-border-critical-bold (border + soft ring)
  *   Radius              → --ds-shape-radius-md
+ *
+ * The base carries `border border-transparent` so BOTH variants have a border-box
+ * to paint into. Without it, default had no border-WIDTH, so its focus-visible and
+ * aria-invalid border rules set a colour on nothing and silently painted zero.
+ * Transparent means default still looks borderless at rest, and box-sizing is
+ * border-box so the 1px costs padding, not outer size.
  *
  * The state ladder is three rungs and every rung must be a distinct surface:
  * page → hover → on (dark: sand-950 → sand-900 → sand-800). That is what forced
@@ -35,26 +41,19 @@ import { cn } from "@/lib/utils"
  */
 // BRIGHTSEED-TBD: [CONCERN] `dark:aria-invalid:ring-*/40` is dark-mode-specific
 // component code, which CLAUDE.md would rather not exist. It carries no
-// dark-only colour — --ds-color-action-critical already swaps under
+// dark-only colour — --ds-color-border-critical-bold already swaps under
 // [data-theme="dark"] — it only raises the ring opacity 20 -> 40. Deleting it
 // would change appearance, so it stays until a semantic token bakes the step in.
 //
-// BRIGHTSEED-TBD: [BLOCKING] on variant="default", aria-invalid renders NOTHING.
-// It sets border-COLOR on an element with no border-WIDTH, and ring-COLOR with no
-// ring-WIDTH — width only ever arrives via focus-visible:ring-[3px]. So a resting
-// invalid toggle is pixel-identical to a valid one. (An earlier revision of this
-// comment claimed it was "harmless because the ring carries the signal"; that was
-// wrong — the ring is not painted at rest either.)
-//
-// Pre-existing and inherited from stock, but it is the same bar as the sidebar
-// outline ring that was rated BLOCKING: a state that renders nothing. Not fixed
-// here because it is not local — the aria-invalid recipe is shared across five
-// components, and its root cause is that --ds-color-action-critical is red-100, a
-// soft SURFACE tint, being used in border/ring slots. The right token
-// (--ds-color-border-critical-bold) already exists, so this is a scoping call,
-// not a token gap. Own ticket.
+// Note on aria-invalid: the RING is still colour-only here — ring-width arrives
+// solely from focus-visible:ring-[3px], so a resting invalid toggle shows the red
+// border and no halo, and picks up the halo when focused. That is the intended
+// stock recipe and it is fine now that the border actually paints. It was NOT fine
+// before July 2026, when this rule pointed at --ds-color-action-critical (red-100,
+// a soft surface tint) on an element with no border-width: colour on nothing, plus
+// a halo at 1.03:1 — an invalid toggle was pixel-identical to a valid one.
 const toggleVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-[var(--c-toggle-shape-radius-md)] text-sm font-medium whitespace-nowrap transition-[color,box-shadow] outline-none hover:bg-[var(--c-toggle-surface-alt)] hover:text-[var(--c-toggle-text-subtle)] focus-visible:border-[var(--c-toggle-border-focus)] focus-visible:ring-[3px] focus-visible:ring-[var(--c-toggle-border-focus)]/50 disabled:pointer-events-none disabled:opacity-[var(--c-toggle-disabled-text-opacity)] aria-invalid:border-[var(--c-toggle-action-critical)] aria-invalid:ring-[var(--c-toggle-action-critical)]/20 data-[state=on]:bg-[var(--c-toggle-surface-brand-subtle)] data-[state=on]:text-[var(--c-toggle-text-default)] data-[state=on]:hover:bg-[var(--c-toggle-surface-brand-subtle-hover)] dark:aria-invalid:ring-[var(--c-toggle-action-critical)]/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "inline-flex items-center justify-center gap-2 rounded-[var(--c-toggle-shape-radius-md)] border border-transparent text-sm font-medium whitespace-nowrap transition-[color,box-shadow] outline-none hover:bg-[var(--c-toggle-surface-alt)] hover:text-[var(--c-toggle-text-subtle)] focus-visible:border-[var(--c-toggle-border-focus)] focus-visible:ring-[3px] focus-visible:ring-[var(--c-toggle-border-focus)]/50 disabled:pointer-events-none disabled:opacity-[var(--c-toggle-disabled-text-opacity)] aria-invalid:border-[var(--c-toggle-border-critical-bold)] aria-invalid:ring-[var(--c-toggle-border-critical-bold)]/20 data-[state=on]:bg-[var(--c-toggle-surface-brand-subtle)] data-[state=on]:text-[var(--c-toggle-text-default)] data-[state=on]:hover:bg-[var(--c-toggle-surface-brand-subtle-hover)] dark:aria-invalid:ring-[var(--c-toggle-border-critical-bold)]/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {

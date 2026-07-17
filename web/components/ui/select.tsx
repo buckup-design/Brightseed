@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils"
  *   bg-popover / text-popover-foreground     → --c-select-surface-default / -text-default
  *   text-muted-foreground                    → --c-select-text-subtle
  *   bg-accent / text-accent-foreground       → --c-select-surface-brand-subtle / -text-default
- *   border-destructive / ring-destructive    → --c-select-action-critical
+ *   border-destructive / ring-destructive    → --c-select-border-critical-bold
  *   rounded-md / rounded-sm                  → --c-select-shape-radius-md / -sm
  */
 
@@ -70,9 +70,9 @@ function SelectTrigger({
         // so swapping it would change the rendered value)
         "disabled:cursor-not-allowed disabled:opacity-[var(--c-select-disabled-text-opacity)]",
         // Invalid
-        "aria-invalid:border-[var(--c-select-action-critical)]",
-        "aria-invalid:ring-[var(--c-select-action-critical)]/20",
-        "dark:aria-invalid:ring-[var(--c-select-action-critical)]/40",
+        "aria-invalid:border-[var(--c-select-border-critical-bold)]",
+        "aria-invalid:ring-[var(--c-select-border-critical-bold)]/20",
+        "dark:aria-invalid:ring-[var(--c-select-border-critical-bold)]/40",
         // Placeholder
         "data-[placeholder]:text-[var(--c-select-text-subtle)]",
         // Dark: stock shadcn tints the field with the input/border color at 30%.
