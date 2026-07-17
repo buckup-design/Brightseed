@@ -91,14 +91,15 @@ Color scale names: forest, lime, sand, cyan, blue, yellow, orange, lavender, orc
 | Token system (3-tier, dark theme, shadcn bridge); component-scoped tokens in `tokens/components.css` emitted as `--c-{component}-*` (renamed from `--ds-{component}-*` June 7, 2026, BSDS-102). **All of `web/components/ui/` reads its own `--c-{component}-*` only** — 31 blocks, the last 16 migrated off the bridge July 16, 2026 | ✅ Complete |
 | Token gaps the `ui/` migration surfaced — grep `BRIGHTSEED-TBD` in `web/components/ui/`. `[BLOCKING]`: no `--ds-shadow-xs` (6 components hold stock Tailwind `shadow-xs`); no 4px radius step for Checkbox (scale is xs=2/sm=6/md=8). `[CONCERN]`: disabled opacity is split 0.50 vs `--ds-disabled-text-opacity` 0.55 | 🔲 Needs a design call |
 | Two latent bugs the migration exposed but did **not** cause: `input-group`'s `calc(var(--radius)-5px)`; `sidebar`'s `shadow-[0_0_0_1px_hsl(var(--sidebar-border))]`. Both were in fact closed by the July 16 `ui/` migration itself — `var(--radius)` appears nowhere in `ui/` code and the sidebar ring is now `var(--c-sidebar-border-default)`. Row was stale; verified + closed July 16, 2026 | ✅ Complete |
-| Sidebar styling harmonised on `sidebar-alt1`'s values (July 16, 2026): 24px leading icons, 40px rows, 56px rail, 700ms tooltips, and a real selected state (lime-50 + forest-800; stock painted it the same sand-100 as hover, so the current page was invisible). One edit to `ui/sidebar.tsx`, so `Components/Sidebar`, `Blocks/App Shell 4` and the three `Blocks/Nav *` stories all inherit it | ✅ Complete |
-| `components/quill/` — Anna's proposal (Collab Playground `88:1547`) built out: `nav-user-quill` (kebab + Settings/Get help/Give feedback/Teams/Version/Log out), `settings-modal` (+ `avatar-picker-dialog`), `feedback-dialog`, and `app-shell-quill`. All under `WORK IN PROGRESS/` per rule 10 | 🟡 Built, awaiting review |
-| `app-shell-4` retires once `app-shell-quill` is signed off (Becky, July 16, 2026). Both ship meanwhile as the side-by-side comparison; `pro-blocks/…/nav-user.tsx` stays for the same reason | 🔲 Blocked on sign-off |
-| `[CONCERN]` What "Teams" opens from the footer menu is undrawn — the sketch says it *is* the instance switcher but never shows the surface. Currently routed to Settings › Account, the only place the instances are listed. Grep `BRIGHTSEED-TBD` in `components/quill/` | 🔲 Needs a design call |
+| **The stock shadcn sidebar is gone** (July 16, 2026). `sidebar-alt1` — the composition-swap experiment — won, took the name `sidebar`, and stock was deleted along with everything that only existed to serve it: App Shell 4, the Pro Block nav parts (`nav-main`, `nav-projects`, `team-switcher`, `nav-user`), the old hummingbird shell, and five stories. `components/pro-blocks/application/` no longer exists. One sidebar, one `--c-sidebar-*` block | ✅ Complete |
+| `components/quill/` — Anna's proposal (Collab Playground `88:1547`) built out: `app-shell-quill` (**Blocks/**), `team-switcher` (**Blocks/**), `nav-user-quill` (**Components/**), `settings-modal` (+ `avatar-picker-dialog`) and `feedback-dialog` (both still `WORK IN PROGRESS/`, not yet reviewed) | 🟡 Shell + menu signed off; settings + feedback awaiting review |
+| Sidebar values, all measured off Otter and now documented on the `Components/Sidebar` docs page rather than in a spec doc: 240px panel / 56px rail, 150ms wipe, 300ms toggle reveal, 700ms tooltips (+300ms Radix skip-delay), 24px icons, 40px rows, lime-50 + forest-800 selected. `sidebar-alt1-spec.md` deleted July 16 2026 once the story and the component carried it | ✅ Complete |
+| Sidebar's mobile nav has an invisible-but-tappable toggle and no visible close — pre-existing, shipped when this became the only sidebar. See `DOCS/tickets/sidebar-mobile-phantom-tap.md` | 🔲 Own ticket |
+| `[CONCERN]` Open on the sidebar: the toggle rests at opacity 0 (Otter's behaviour), never compared against ~40% for discoverability. Noted on the `Components/Sidebar` docs page | 🔲 Needs a design call |
 | Figma v3 (`shadcn Brightseed v3 (with pro blocks)`), primitives + tag tokens, ~50-var Brightseed Mode, Quill Button/Badge port, local Ring focus system, Logo/Login/Input sets, Geist + Tiempos | ✅ Complete |
-| Web app (`/web/`, Next.js 16 + Tailwind 4 + Storybook 10, on Pro Pack), Button + Badge to spec; Pro Blocks (App Shell 4, Sign In 2, nav); form primitives; Alert/AlertDialog/Table/Switch/Spinner/Sonner; BrightseedLogo + Login | ✅ Complete |
+| Web app (`/web/`, Next.js 16 + Tailwind 4 + Storybook 10), Button + Badge to spec; Sign In 2; form primitives; Alert/AlertDialog/Table/Switch/Spinner/Sonner; BrightseedLogo + Login. The Pro Block nav parts and App Shell 4 are gone — see the sidebar row above | ✅ Complete |
 | Infra: Vercel auto-deploys `main` → https://brightseed-storybook.vercel.app | ✅ In sync |
-| Hummingbird surfaces (Compound/Plant/Strategy cards) | 🟡 To be re-derived on Pro Block primitives |
+| Hummingbird surfaces (Compound/Plant/Strategy cards) | 🟡 To be re-derived on `ui/` primitives |
 | DoseResponseChart, StatCard | 🔲 API spec done, impl pending |
 | Prototyping-data layer for code prototypes (MSW vs static fixtures); the unlock that makes code prototypes credible and Figma a sketchpad | 🔲 Next investment (unparked June 7, 2026) |
 | Brand evolution / color studies, icon system (line-art, hummingbird) | 🔲 In progress |
@@ -113,13 +114,14 @@ Color scale names: forest, lime, sand, cyan, blue, yellow, orange, lavender, orc
 |---|---|
 | `CLAUDE.md` | This file: canonical rules, conventions, status. |
 | `tokens/` | Token CSS: source of truth for names + values. `components.css` holds the component-scoped `--c-{component}-*` tokens (one block per component; each aliases one global `--ds-*`). |
-| `bridge/globals.css` | shadcn bridge: maps Brightseed tokens onto shadcn variable names. Intentionally thin. Since the July 2026 `ui/` fork it serves only what we don't own — Pro Block markup, the login pages, story chrome — **not** `web/components/ui/`. |
+| `bridge/globals.css` | shadcn bridge: maps Brightseed tokens onto shadcn variable names. Nearly vestigial after the July 2026 `ui/` fork and the sidebar retirement — it serves the login pages and story chrome, and **not** `web/components/ui/`. Its `--sidebar-*` block is dead; see the Web app section. |
 | `README.md` | Short orientation pointing to CSS + Storybook. |
 | `web/` | Next.js 16 + Tailwind 4 + Storybook 10 production app. `tokens/` + `bridge/` here are symlinks to root. |
-| `web/components/quill/` | Quill-owned app compositions (app shell, footer account menu, settings, feedback). Reads `--c-*` only, same discipline as `ui/`, and explicitly **not** bridge-themed — that is what separates it from `components/pro-blocks/`. |
+| `web/components/quill/` | Quill-owned app compositions (app shell, team switcher, footer account menu, settings, feedback). Reads `--c-*` only, same discipline as `ui/`, and explicitly **not** bridge-themed. |
 | `collaboration/` | Internal: workflow + Anna onboarding. |
 | `brightseed-shadcn-mapping.md` | Figma variable-collection wiring guide. |
 | `DOCS/DESIGN.mdx` | Storybook design guidelines (symlink to `web/stories/DesignGuidelines.mdx`). |
+| `DOCS/tickets/` | Filed bugs that need their own pass. One line of context each, enough to act without the originating conversation. |
 
 ---
 
@@ -193,11 +195,11 @@ Exposed in the web app as **three separate components** — `Chip`, `Tag`, `Numb
 
 ## Web app (`/web/`), operational
 
-Next.js 16 (App Router) + Tailwind 4 + Storybook 10, deployed to Vercel, **production, not staging.** Rebased on the shadcndesign.com Pro Pack; Pro Blocks are pure composition over stock shadcn primitives. Geist via the `geist` npm package (`next/font/google` is blocked in-sandbox). Theme toggle via `data-theme="dark"` on `<html>`.
+Next.js 16 (App Router) + Tailwind 4 + Storybook 10, deployed to Vercel, **production, not staging.** Originally rebased on the shadcndesign.com Pro Pack; almost nothing of it survives — the nav Pro Blocks and App Shell 4 were deleted July 16, 2026 with the stock sidebar, and `components/pro-blocks/` is now a single e-commerce logo. Geist via the `geist` npm package (`next/font/google` is blocked in-sandbox). Theme toggle via `data-theme="dark"` on `<html>`.
 
 **The `ui/` layer is forked (July 16, 2026).** It used to be "Button + Badge are the paint surface, the bridge themes everything else". That is no longer true: **every component in `web/components/ui/` now reads its own `--c-{component}-*` tokens** and none of them style through shadcn slot classes. Two consequences, both load-bearing:
-- **The bridge is not dead, but its job shrank.** It still themes what we don't own or haven't forked: Pro Block markup (`components/pro-blocks/*`), the login pages (`app/login`, `app/marketing/*/login`, `components/auth`, `components/login-form.tsx`), and story demo chrome. It no longer themes `ui/`.
-- **The whole `ui/` layer must now be defended on every install, not just Button + Badge** (see the Defend gotcha below). The corollary is that Quill no longer takes upstream shadcn fixes for free — a11y patches and Radix bumps to a forked primitive have to be hand-merged.
+- **The bridge's job has nearly evaporated.** It no longer themes `ui/`, and the Pro Block markup it used to serve is gone. What's left is the login pages (`app/login`, `app/marketing/*/login`, `components/auth`, `components/login-form.tsx`) and story demo chrome. Its `--sidebar-*` block is now **dead** — nothing renders through `bg-sidebar`/`text-sidebar-*` since stock left. Left in place rather than removed, because the shadcn CLI re-injects stock `--sidebar-*` values on install and the bridge block is what has always overridden them; delete it only alongside the `@theme inline` mapping in `app/globals.css`.
+- **The whole `ui/` layer must now be defended on every install, not just Button + Badge** (see the Defend gotcha below). The corollary is that Quill no longer takes upstream shadcn fixes for free — a11y patches and Radix bumps to a forked primitive have to be hand-merged. `ui/sidebar.tsx` is the extreme case: it shares nothing with upstream but the name.
 
 **Run (local, from the `~/dev/Brightseed` clone):** `cd ~/dev/Brightseed/web && npm install`, then `npm run storybook` (6006, the default preview surface) or `npm run dev` (3000). In Cowork/Claude Code, prefer `preview_start name=brightseed-storybook` (config in the Cowork-root `.claude/launch.json`). Don't run from the Documents copy — TCC blocks preview there (rule 8).
 
@@ -209,7 +211,7 @@ The `yes n |` is critical, it answers overwrite prompts `n`, preserving customiz
 
 **Gotchas:**
 - **Tailwind v4 `@source` directives go AFTER all `@import`s:** between imports silently invalidates the token/bridge load (every var resolves empty). Defensive `@source` for `app/`, `components/`, `stories/`, `lib/`, `hooks/`.
-- **Sidebar tokens:** the CLI inlines stock `hsl()` `--sidebar-*` values + a `.dark` block. Delete those; define `--sidebar-*` in `bridge/globals.css` aliasing Brightseed semantics (surface = `--ds-color-surface-default`, primary = `--ds-color-action-primary`, accent = `--ds-color-surface-alt`, border = `--ds-color-border-default`, ring = `--ds-color-border-focus`). Bridge wins; re-delete if re-injected.
+- **Sidebar tokens:** the CLI still inlines stock `hsl()` `--sidebar-*` values + a `.dark` block on install. Delete those; `bridge/globals.css` already defines `--sidebar-*` against Brightseed semantics and wins. Re-delete if re-injected. Note this is now purely defensive housekeeping — **our sidebar does not read those vars at all**, it reads `--c-sidebar-*`. Nothing breaks if the CLI wins; it just leaves lies in the bridge.
 - **Defend the whole `ui/` layer, not just Button + Badge** (widened July 16, 2026 when `ui/` was forked onto `--c-*`). Every file in `web/components/ui/` is now customized, so any `shadcn add` / Pro Block install can clobber real work. The `yes n |` prefix is what actually protects them — it answers `n` to every overwrite prompt — so **never drop it**. Verify rather than trust: `sha256sum` the directory before and after and diff the two lists.
   ```bash
   cd ~/dev/Brightseed/web && shasum -a 256 components/ui/*.tsx > /tmp/ui-pre.txt

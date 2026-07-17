@@ -346,7 +346,7 @@ All corner radii reference the shape token ladder. Never hardcode pixel values o
 
 ### Tooltip timing
 
-Tooltips appear on a **delay**, never instantly, so a pointer crossing a control on its way somewhere else doesn't trigger a flash of labels. Values verified live against Sidebar Alt1:
+Tooltips appear on a **delay**, never instantly, so a pointer crossing a control on its way somewhere else doesn't trigger a flash of labels. Values verified live against the Sidebar:
 
 - **First-hover delay, 700ms.** A tooltip waits 700ms before it appears (Radix `delayDuration`, set on the sidebar's `TooltipProvider`; matches the reference nav measured on Otter). Deliberately patient: on an icon rail the pointer often sweeps past icons toward content, and a shorter delay flickers.
 - **Skip-delay, 300ms.** Once one tooltip has shown, moving to another trigger within 300ms opens it instantly (Radix `skipDelayDuration` default). The first label is patient; sweeping the rail after that is instant.

@@ -22,7 +22,7 @@ The left sidebar runs from the raw materials up to full product screens:
 
 - **Foundations:** the design tokens and typography everything else is built on.
 - **Components:** the core UI building blocks (buttons, badges, inputs, tables, and more), styled to the Brightseed brand.
-- **Pro Blocks:** larger, pre-composed pieces like application shells and navigation.
+- **Blocks:** larger, pre-composed pieces like application shells and navigation. A Block composes multiple Components; that is what makes it a Block.
 - **Hummingbird:** product surfaces (cards and screens) assembled from the components above.
 - **Brand & Auth:** the logo and sign-in patterns.
 
