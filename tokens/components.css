@@ -259,8 +259,6 @@
   --c-new-chat-border-default:     var(--ds-color-border-default);
   --c-new-chat-shape-radius-md:    var(--ds-shape-radius-md);
   --c-new-chat-surface-field:      var(--ds-color-surface-field);
-  --c-new-chat-text-default:       var(--ds-color-text-default);
-  --c-new-chat-text-subtle:        var(--ds-color-text-subtle);
 
   /* --c-projects-list */
   --c-projects-list-shape-radius-md: var(--ds-shape-radius-md);
@@ -304,6 +302,10 @@
   --c-avatar-picker-swatch-orchid:   var(--ds-color-surface-avatar-orchid);
   --c-avatar-picker-text-default:  var(--ds-color-text-default);
   --c-avatar-picker-text-subtle:   var(--ds-color-text-subtle);
+
+  /* --c-page-heading */
+  --c-page-heading-text-default:   var(--ds-color-text-default);
+  --c-page-heading-text-subtle:    var(--ds-color-text-subtle);
 
   /* --c-popover */
   --c-popover-border-default:      var(--ds-color-border-default);

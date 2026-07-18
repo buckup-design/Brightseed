@@ -5,9 +5,9 @@
  *
  * The first thing a user sees in the product: a greeting, a context composer,
  * and a set of suggested prompts. Mirrors the live product's /new-chat screen
- * (brightseed.ai v1.3.2). A Block — it composes Textarea + Button + Chip — and
- * is the content behind App Shell Quill's "New chat" tab, imported there so the
- * screen and the standalone Block never drift.
+ * (brightseed.ai v1.3.2). A Block — it composes PageHeading + Textarea + Button
+ * + Chip — and is the content behind App Shell Quill's "New chat" tab, imported
+ * there so the screen and the standalone Block never drift.
  *
  * Deliberately light on wiring: the composer holds local text and hands it to
  * onSend; a suggested prompt fills the composer and fires onSelectPrompt. The
@@ -19,6 +19,7 @@ import { ArrowUp, Sparkles } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Chip } from "@/components/ui/chip";
+import { PageHeading } from "@/components/ui/page-heading";
 import { Textarea } from "@/components/ui/textarea";
 
 /** The six starter prompts from the live product's New Chat screen. */
@@ -59,12 +60,7 @@ export function NewChat({
 
   return (
     <div className="mx-auto flex w-full max-w-2xl flex-col gap-8 py-16">
-      <div className="space-y-2 text-center">
-        <h1 className="text-2xl font-semibold text-[var(--c-new-chat-text-default)]">
-          {greeting}
-        </h1>
-        <p className="text-[var(--c-new-chat-text-subtle)]">{subtitle}</p>
-      </div>
+      <PageHeading align="center" title={greeting} description={subtitle} />
 
       {/* Context composer — the Textarea sits seamless inside a field-surface shell */}
       <div className="space-y-3 rounded-[var(--c-new-chat-shape-radius-md)] border border-[var(--c-new-chat-border-default)] bg-[var(--c-new-chat-surface-field)] p-3">
