@@ -202,6 +202,10 @@
   --c-dropdown-menu-text-on-action-critical:    var(--ds-color-text-on-action-critical);
   --c-dropdown-menu-text-subtle:                var(--ds-color-text-subtle);
 
+  /* --c-favorite-button */
+  --c-favorite-button-icon-active:   var(--ds-color-icon-favorite-active);
+  --c-favorite-button-icon-inactive: var(--ds-color-icon-favorite-inactive);
+
   /* --c-field */
   --c-field-action-primary:             var(--ds-color-action-primary);
   --c-field-disabled-text-opacity: var(--ds-disabled-text-opacity);
@@ -267,8 +271,12 @@
   --c-projects-list-text-subtle:     var(--ds-color-text-subtle);
 
   /* --c-reports-list */
+  --c-reports-list-border-default:   var(--ds-color-border-default);
+  --c-reports-list-border-focus:     var(--ds-color-border-focus);
+  --c-reports-list-border-hover:     var(--ds-color-border-default-hover);
   --c-reports-list-shape-radius-md:  var(--ds-shape-radius-md);
   --c-reports-list-surface-alt:      var(--ds-color-surface-alt);
+  --c-reports-list-surface-canvas:   var(--ds-color-surface-canvas);
   --c-reports-list-text-default:     var(--ds-color-text-default);
   --c-reports-list-text-subtle:      var(--ds-color-text-subtle);
 
@@ -346,6 +354,13 @@
   /* --c-separator */
   --c-separator-border-default:    var(--ds-color-border-default);
 
+  /* --c-share-dialog */
+  --c-share-dialog-icon-subtle:    var(--ds-color-icon-subtle);
+  --c-share-dialog-shape-radius-md: var(--ds-shape-radius-md);
+  --c-share-dialog-surface-alt:    var(--ds-color-surface-alt);
+  --c-share-dialog-text-default:   var(--ds-color-text-default);
+  --c-share-dialog-text-subtle:    var(--ds-color-text-subtle);
+
   /* --c-sheet */
   --c-sheet-border-focus:       var(--ds-color-border-focus);
   --c-sheet-shadow-lg:          var(--ds-shadow-lg);
@@ -408,6 +423,14 @@
 
   /* --c-spinner */
   --c-spinner-icon-subtle:    var(--ds-color-icon-subtle);
+
+  /* --c-status-badge */
+  --c-status-badge-surface-neutral: var(--ds-color-surface-alt);
+  --c-status-badge-text-neutral:    var(--ds-color-text-subtle);
+  --c-status-badge-dot-neutral:     var(--ds-color-icon-subtle);
+  --c-status-badge-surface-success: var(--ds-color-surface-success);
+  --c-status-badge-text-success:    var(--ds-color-text-success);
+  --c-status-badge-dot-success:     var(--ds-color-icon-success);
 
   /* --c-switch */
   --c-switch-action-primary:           var(--ds-color-action-primary);

@@ -19,6 +19,7 @@ const meta = {
   tags: ["autodocs"],
   argTypes: {
     align: { control: "inline-radio", options: ["left", "center"] },
+    size: { control: "inline-radio", options: ["sm", "md"] },
     as: { control: "inline-radio", options: ["h1", "h2", "h3"] },
     title: { control: "text" },
     description: { control: "text" },
@@ -27,6 +28,7 @@ const meta = {
     title: "Reports",
     description: "Every formula brief and analysis you've generated.",
     align: "left",
+    size: "md",
     as: "h1",
   },
   decorators: [
@@ -56,5 +58,11 @@ export const Centered: Story = {
     description:
       "I’m Hummingbird, your agent for innovating new product concepts.",
     align: "center",
+    size: "md",
   },
+};
+
+/** Compact (`size="sm"`) — the list masthead that sits above a toolbar (Reports, Projects). */
+export const Compact: Story = {
+  args: { size: "sm" },
 };

@@ -33,6 +33,12 @@
      rest, one more on hover. */
   --ds-color-surface-field:           var(--p-color-sand-50);
   --ds-color-surface-field-hover:     var(--p-color-white);
+  /* Surface CANVAS — a warm tinted page base (light-mode only; the dark block
+     holds today's sand-950 page). On the canvas, cards paint the existing
+     surface-default (white) and fields the existing surface-field (sand-50), so
+     the surfaces read as a layered stack: sand-100 page → sand-50 field → white
+     card. Trialled on the Reports Block. */
+  --ds-color-surface-canvas:          var(--p-color-sand-100);
   --ds-color-surface-scrim:           color-mix(in srgb, var(--p-color-sand-950) 50%, transparent);  /* modal / dialog veil, warm dark @ 50%, matches prior look */
 
   /* Brand surface, nav bar, header, branded panels */
@@ -225,7 +231,7 @@
   --ds-color-icon-data-orchid:        var(--p-color-orchid-700);
 
   /* ── Favorite / pin icon ── */
-  --ds-color-icon-favorite-inactive:  var(--p-color-sand-300);   /* appears on card hover, very light */
+  --ds-color-icon-favorite-inactive:  var(--p-color-sand-400);   /* resting unselected favorite/star, muted */
   --ds-color-icon-favorite-active:    var(--p-color-yellow-500); /* favorited/pinned, theme-invariant */
 
   /* ──────────────────────────────────────────────────────────────────
@@ -344,6 +350,9 @@
      see the light block for the reasoning. */
   --ds-color-surface-field:           var(--p-color-sand-800);
   --ds-color-surface-field-hover:     var(--p-color-sand-700);
+  /* Canvas, dark: holds today's look — the dark app already sits on sand-950,
+     so the canvas page background resolves the same. */
+  --ds-color-surface-canvas:          var(--p-color-sand-950);
   --ds-color-surface-scrim:           color-mix(in srgb, var(--p-color-black) 60%, transparent);     /* veil must go darker than the sand-950 page to register, DESIGN REVIEW: black vs warm */
 
   /* Brand nav/header, sand-anchored in dark mode (forest exits surface vocabulary) */
