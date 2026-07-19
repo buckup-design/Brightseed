@@ -337,6 +337,18 @@
   --c-progress-shape-radius-round:    var(--ds-shape-radius-round);
   --c-progress-surface-alt:           var(--ds-color-surface-alt);
 
+  /* --c-score-meter — the shared 0–1 magnitude meter (result cards, detail
+     slide-over, IP gauges). NOT Progress: Progress's fill is lime (banned as a
+     data series, 1.23:1). Fill steps by tier through the forest magnitude ramp. */
+  --c-score-meter-fill-soft:          var(--ds-color-data-magnitude-soft);    /* low tier */
+  --c-score-meter-fill:               var(--ds-color-data-magnitude-default); /* med tier */
+  --c-score-meter-fill-strong:        var(--ds-color-data-magnitude-strong);  /* high tier */
+  --c-score-meter-track:              var(--ds-color-border-subtle);
+  --c-score-meter-tick:               var(--ds-color-text-subtle);
+  --c-score-meter-label:              var(--ds-color-text-subtle);
+  --c-score-meter-value:              var(--ds-color-text-default);
+  --c-score-meter-shape-radius-round: var(--ds-shape-radius-round);
+
   /* --c-resizable */
   --c-resizable-border-default:      var(--ds-color-border-default);
   --c-resizable-border-focus:        var(--ds-color-border-focus);

@@ -205,6 +205,7 @@
 
   /* Semantic text, all verified WCAG AA on sand-50 surface */
   --ds-color-text-success:            var(--p-color-forest-700);         /* forest-700, 4.98:1 ✓ AA */
+  --ds-color-text-success-strong:     var(--p-color-forest-800);         /* forest-800, for success text on a TINTED success surface (forest-200): 5.11:1 ✓ AA, where forest-700 is only 3.99:1 */
   --ds-color-text-info:               var(--p-color-blue-700);            /* blue-700  , 8.95:1 ✓ AA */
   --ds-color-text-warning:            var(--p-color-yellow-700);         /* yellow-700, 4.92:1 ✓ AA */
   --ds-color-text-critical:           var(--p-color-red-700);        /* red-700   , 7.85:1 ✓ AA */
@@ -229,6 +230,16 @@
   --ds-color-icon-data-lavender:      var(--p-color-lavender-700);
   --ds-color-icon-data-orange:        var(--p-color-orange-700);
   --ds-color-icon-data-orchid:        var(--p-color-orchid-700);
+
+  /* ── Data magnitude (score / confidence meter fill) ──
+     One sequential-forest ramp for 0–100% magnitude, tier-darkened. Reuses
+     --chart-seq-forest-* (sanctioned for magnitude, unlike brand lime/forest as
+     a data SERIES). The floor is forest-600 (3.81:1 on the sand-100 card footer);
+     forest-500 (2.77:1) and lime (1.23:1) FAIL 3:1 as a data fill, so they are
+     out of band. This is the one --ds-* the --c-score-meter-* tier aliases. */
+  --ds-color-data-magnitude-soft:     var(--chart-seq-forest-600);  /* low tier / contrast floor */
+  --ds-color-data-magnitude-default:  var(--chart-seq-forest-700);  /* med tier / single-hue default */
+  --ds-color-data-magnitude-strong:   var(--chart-seq-forest-900);  /* high tier */
 
   /* ── Favorite / pin icon ── */
   --ds-color-icon-favorite-inactive:  var(--p-color-sand-400);   /* resting unselected favorite/star, muted */
@@ -470,6 +481,7 @@
      tint + border only; text uses warm white so it stays readable.
      Source: dark mode mockup May 28 2026. */
   --ds-color-text-success:            var(--ds-color-text-default);  /* sand-50, same as neutral foreground */
+  --ds-color-text-success-strong:     var(--ds-color-text-default);  /* dark success surfaces already carry neutral text */
   --ds-color-text-info:               var(--ds-color-text-default);
   --ds-color-text-warning:            var(--ds-color-text-default);
   --ds-color-text-critical:           var(--ds-color-text-default);
@@ -497,6 +509,17 @@
   --ds-color-icon-data-orange:        var(--p-color-orange-300);
   --ds-color-icon-data-orchid:        var(--p-color-orchid-300);
   /* --ds-color-icon-brand unchanged, lime works on dark bg */
+
+  /* ── Data magnitude (dark) ──
+     --chart-seq-forest-* is theme-invariant (light values), so the light ramp
+     would sit dark-on-dark here. Remap to lighter forest steps and INVERT the
+     tier direction — on a dark card the stronger tier reads lighter/more
+     prominent. On sand-950 forest-500 is already well past 3:1.
+     BRIGHTSEED-TBD: [CONCERN] dark contrast picked by luminance estimate, not
+     formally measured against the dark card + footer; verify before promote. */
+  --ds-color-data-magnitude-soft:     var(--p-color-forest-500);  /* low tier */
+  --ds-color-data-magnitude-default:  var(--p-color-forest-400);  /* med tier */
+  --ds-color-data-magnitude-strong:   var(--p-color-forest-300);  /* high tier */
 
   /* ── Favorite / pin icon ── */
   --ds-color-icon-favorite-inactive:  var(--p-color-sand-700);   /* subtle on dark surface */
