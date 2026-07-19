@@ -13,7 +13,7 @@ import { Toaster } from "@/components/ui/sonner";
  * ───────────────────────────────────────────────────────────────────────── */
 
 const meta = {
-  title: "WORK IN PROGRESS/Comment Dialog",
+  title: "Blocks/Comment Dialog",
   component: CommentDialog,
   parameters: { layout: "centered" },
   // Required props; the render function drives them from local state.

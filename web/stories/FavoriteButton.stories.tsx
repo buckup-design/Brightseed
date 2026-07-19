@@ -11,7 +11,7 @@ import { FavoriteButton } from "@/components/ui/favorite-button";
  * ───────────────────────────────────────────────────────────────────────── */
 
 const meta = {
-  title: "WORK IN PROGRESS/Favorite Button",
+  title: "Components/Favorite Button",
   component: FavoriteButton,
   parameters: { layout: "centered" },
   args: { favorited: false, label: "report" },

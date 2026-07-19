@@ -12,7 +12,7 @@ import { StatusBadge } from "@/components/ui/status-badge";
  * ───────────────────────────────────────────────────────────────────────── */
 
 const meta = {
-  title: "WORK IN PROGRESS/Status Badge",
+  title: "Components/Status Badge",
   component: StatusBadge,
   parameters: { layout: "centered" },
   args: { status: "draft" },
