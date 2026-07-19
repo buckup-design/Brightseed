@@ -205,7 +205,9 @@ export function AppShellQuill({
         <header className="flex h-14 shrink-0 items-center gap-2 border-b border-[var(--c-app-shell-border-default)] px-4 md:hidden">
           <MobileNavOpener />
         </header>
-        <div className="flex-1 p-6">{children}</div>
+        <div className="flex-1 bg-[var(--c-app-shell-surface-canvas)] p-6">
+          {children}
+        </div>
       </SidebarInset>
 
       <SettingsModal

@@ -125,7 +125,6 @@ export function ReportsList({
 
   return (
     <>
-    <div className="min-h-svh bg-[var(--c-reports-list-surface-canvas)] px-6 py-8">
     <div className="mx-auto flex w-full max-w-4xl flex-col gap-6">
       <div className="flex items-center justify-between gap-4">
         <PageHeading
@@ -296,7 +295,6 @@ export function ReportsList({
           )}
         </>
       )}
-    </div>
     </div>
 
     <ShareDialog
