@@ -9,8 +9,10 @@
  *
  *   1. The trigger shows the display name alone, not name-over-email. The email
  *      moves into the menu header, where it is read rather than scanned.
- *   2. The affordance is a kebab, not ChevronsUpDown. Annotated on the sketch:
- *      "use kebob dots as the icon affordance".
+ *   2. The affordance is a down chevron. Anna's sketch annotated "use kebob dots
+ *      as the icon affordance" and it shipped as a kebab; Becky's later call
+ *      (July 18 2026) swaps it for a down chevron, which reads as "opens a menu"
+ *      rather than "more actions" — right for a single account menu.
  *   3. The menu is Hummingbird's actual IA. Upgrade to Pro / Account / Billing /
  *      Notifications are gone — none of them exist in this product — and
  *      Settings / Get help / Give feedback / Teams / Version take their place.
@@ -24,14 +26,14 @@
  *
  * The trigger is a plain button, not a sidebar primitive: the sidebar has none
  * to offer, and the old SidebarMenuButton is what caused the rail clipping
- * anyway. The name and kebab are panel-only, so in the rail they are ABSENT,
+ * anyway. The name and chevron are panel-only, so in the rail they are ABSENT,
  * not hidden. SidebarItem cannot be reused here because it takes a LucideIcon
  * and this leads with an Avatar; the geometry below is copied from it instead.
  */
 
 import {
+  ChevronDown,
   CircleHelp,
-  EllipsisVertical,
   LogOut,
   MessageSquarePlus,
   Settings,
@@ -136,13 +138,13 @@ export function NavUserQuill({
       <Avatar className="size-8 shrink-0 rounded-lg">{avatar}</Avatar>
       {/* Panel-only. In the rail these are absent from the DOM rather than
        * hidden in it — the same call Alt1 makes everywhere else. Hiding them
-       * was what pushed the kebab to x=48 and clipped it away silently. */}
+       * was what pushed the trailing icon to x=48 and clipped it away silently. */}
       {expanded && (
         <>
           <span className="flex-1 truncate text-sm font-semibold">
             {user.name}
           </span>
-          <EllipsisVertical className="size-4 shrink-0" />
+          <ChevronDown className="size-4 shrink-0" />
         </>
       )}
     </button>
@@ -173,10 +175,13 @@ export function NavUserQuill({
           </TooltipContent>
         </Tooltip>
       )}
+          {/* Stacks directly on top of the trigger (Becky, July 18 2026): the
+           * trigger is anchored to the very bottom of the sidebar, so the menu
+           * opens upward, same left edge, rather than flying out to the right. */}
           <DropdownMenuContent
             className="w-[--radix-dropdown-menu-trigger-width] min-w-60 rounded-lg"
-            side={isMobile ? "bottom" : "right"}
-            align="end"
+            side="top"
+            align="start"
             sideOffset={4}
           >
             {/* No avatar here. The identity is already established by the
