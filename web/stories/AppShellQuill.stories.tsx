@@ -5,6 +5,7 @@ import { expect, screen, userEvent, waitFor, within } from "storybook/test";
 import { Building2, FlaskConical, Sprout } from "lucide-react";
 
 import { AppShellQuill } from "@/components/quill/app-shell-quill";
+import { ConversationsList } from "@/components/quill/conversations-list";
 import { NewChat } from "@/components/quill/new-chat";
 import { ProjectsList } from "@/components/quill/projects-list";
 import { ReportsList } from "@/components/quill/reports-list";
@@ -115,10 +116,11 @@ function ShellHost() {
 
 /* ── Tab content ─────────────────────────────────────────────────────────────
  * Each tab renders its own Blocks component, imported above (New chat /
- * Projects list view / Reports list view), so the shell and the standalone
- * Blocks entries are one and the same and never drift. */
+ * Conversations / Projects list view / Reports list view), so the shell and the
+ * standalone Blocks entries are one and the same and never drift. */
 
 function TabContent({ active }: { active: string }) {
+  if (active === "Conversations") return <ConversationsList />;
   if (active === "Projects") return <ProjectsList />;
   if (active === "Reports") return <ReportsList />;
   return <NewChat />;

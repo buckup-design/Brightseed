@@ -26,6 +26,7 @@ import * as React from "react";
 import {
   FileText,
   Folder,
+  MessageSquare,
   PanelLeftOpenIcon,
   Plus,
   type LucideIcon,
@@ -63,11 +64,15 @@ export type AppShellQuillNavItem = {
 };
 
 /* The Hummingbird IA, aligned to the live product (brightseed.ai v1.3.2), whose
- * rail is New Chat · Conversations · Reports. "Projects" evolves the flat
- * Conversations list into named containers that hold both chats and reports — a
- * known need, not yet in the live product (Becky, July 17 2026). */
+ * rail is New Chat · Conversations · Reports. Conversations is the flat thread
+ * list — the history of chats, and the door into each one's Workspace. Projects
+ * sits ALONGSIDE it (Becky, July 18 2026), evolving that flat list into named
+ * containers that hold both chats and reports — a known need, not yet in the
+ * live product. Both earn a slot: Conversations for live parity, Projects for
+ * the container concept. */
 const DEFAULT_NAV: AppShellQuillNavItem[] = [
   { title: "New chat", icon: Plus },
+  { title: "Conversations", icon: MessageSquare },
   { title: "Projects", icon: Folder },
   { title: "Reports", icon: FileText },
 ];
