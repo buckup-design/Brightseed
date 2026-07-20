@@ -162,7 +162,12 @@ export function ChatPanel({
 
   return (
     <div className={cn("flex h-full min-h-0 flex-col bg-[var(--ds-color-surface-default)]", className)}>
-      <div className="scrollbar-overlay flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto p-4">
+      {/* mr-2: the overlay scrollbar is pinned to this element's right edge,
+          which butts against the resize handle. A right margin insets the whole
+          scroll container (scrollbar included) so the thumb clears the handle
+          pill instead of touching it. Padding can't do this — it moves content,
+          not the edge-anchored scrollbar. */}
+      <div className="scrollbar-overlay mr-2 flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto p-4">
         {messages.map((message, i) =>
           message.role === "assistant" ? (
             <AgentMessage
