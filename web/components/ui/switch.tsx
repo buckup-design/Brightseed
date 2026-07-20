@@ -44,7 +44,7 @@ function Switch({
         "hover:data-[state=checked]:bg-[var(--c-switch-action-primary-hover)]",
         // Focus
         "outline-none",
-        "focus-visible:ring-[3px] focus-visible:ring-[var(--c-switch-border-focus)]/50",
+        "focus-visible:ring-[2px] focus-visible:ring-[var(--c-switch-border-focus)]/50",
         "focus-visible:border-[var(--c-switch-border-focus)]",
         // Disabled
         "disabled:cursor-not-allowed disabled:opacity-[var(--c-switch-disabled-text-opacity)]",

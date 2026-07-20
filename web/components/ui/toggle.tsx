@@ -46,14 +46,14 @@ import { cn } from "@/lib/utils"
 // would change appearance, so it stays until a semantic token bakes the step in.
 //
 // Note on aria-invalid: the RING is still colour-only here — ring-width arrives
-// solely from focus-visible:ring-[3px], so a resting invalid toggle shows the red
+// solely from focus-visible:ring-[2px], so a resting invalid toggle shows the red
 // border and no halo, and picks up the halo when focused. That is the intended
 // stock recipe and it is fine now that the border actually paints. It was NOT fine
 // before July 2026, when this rule pointed at --ds-color-action-critical (red-100,
 // a soft surface tint) on an element with no border-width: colour on nothing, plus
 // a halo at 1.03:1 — an invalid toggle was pixel-identical to a valid one.
 const toggleVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-[var(--c-toggle-shape-radius-md)] border border-transparent text-sm font-medium whitespace-nowrap transition-[color,box-shadow] outline-none hover:bg-[var(--c-toggle-surface-alt)] hover:text-[var(--c-toggle-text-subtle)] focus-visible:border-[var(--c-toggle-border-focus)] focus-visible:ring-[3px] focus-visible:ring-[var(--c-toggle-border-focus)]/50 disabled:pointer-events-none disabled:opacity-[var(--c-toggle-disabled-text-opacity)] aria-invalid:border-[var(--c-toggle-border-critical-bold)] aria-invalid:ring-[var(--c-toggle-border-critical-bold)]/20 data-[state=on]:bg-[var(--c-toggle-surface-brand-subtle)] data-[state=on]:text-[var(--c-toggle-text-default)] data-[state=on]:hover:bg-[var(--c-toggle-surface-brand-subtle-hover)] dark:aria-invalid:ring-[var(--c-toggle-border-critical-bold)]/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "inline-flex items-center justify-center gap-2 rounded-[var(--c-toggle-shape-radius-md)] border border-transparent text-sm font-medium whitespace-nowrap transition-[color,box-shadow] outline-none hover:bg-[var(--c-toggle-surface-alt)] hover:text-[var(--c-toggle-text-subtle)] focus-visible:border-[var(--c-toggle-border-focus)] focus-visible:ring-[2px] focus-visible:ring-[var(--c-toggle-border-focus)]/50 disabled:pointer-events-none disabled:opacity-[var(--c-toggle-disabled-text-opacity)] aria-invalid:border-[var(--c-toggle-border-critical-bold)] aria-invalid:ring-[var(--c-toggle-border-critical-bold)]/20 data-[state=on]:bg-[var(--c-toggle-surface-brand-subtle)] data-[state=on]:text-[var(--c-toggle-text-default)] data-[state=on]:hover:bg-[var(--c-toggle-surface-brand-subtle-hover)] dark:aria-invalid:ring-[var(--c-toggle-border-critical-bold)]/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {

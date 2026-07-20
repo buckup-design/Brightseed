@@ -36,7 +36,7 @@ function Checkbox({
         "shadow-[var(--c-checkbox-shadow-xs)] transition-shadow outline-none",
         // Focus
         "focus-visible:border-[var(--c-checkbox-border-focus)]",
-        "focus-visible:ring-[3px] focus-visible:ring-[var(--c-checkbox-border-focus)]/50",
+        "focus-visible:ring-[2px] focus-visible:ring-[var(--c-checkbox-border-focus)]/50",
         // Disabled
         "disabled:cursor-not-allowed disabled:opacity-[var(--c-checkbox-disabled-text-opacity)]",
         // Invalid

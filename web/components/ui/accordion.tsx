@@ -43,7 +43,7 @@ function AccordionTrigger({
           "text-[var(--c-accordion-text-default)]",
           "rounded-[var(--c-accordion-shape-radius-md)]",
           "focus-visible:border-[var(--c-accordion-border-focus)]",
-          "focus-visible:ring-[3px] focus-visible:ring-[var(--c-accordion-border-focus)]/50",
+          "focus-visible:ring-[2px] focus-visible:ring-[var(--c-accordion-border-focus)]/50",
           "disabled:pointer-events-none disabled:opacity-[var(--c-accordion-disabled-text-opacity)]",
           "[&[data-state=open]>svg]:rotate-180",
           className
