@@ -175,6 +175,14 @@
   --c-checkbox-shape-radius-xs: var(--ds-shape-radius-xs);
   --c-checkbox-text-on-action-primary:    var(--ds-color-text-on-action-primary);
 
+  /* --c-description-list — the shared label→value <dl> (result-detail's
+     Dosage/ADME, the report's Formulation). Each aliases the exact --ds-* the
+     inline DataRows used, so the extraction is provably zero-visual-change.
+     Transparent + square, so no radius/surface token. */
+  --c-description-list-border-subtle: var(--ds-color-border-subtle);
+  --c-description-list-text-subtle:   var(--ds-color-text-subtle);
+  --c-description-list-text-default:  var(--ds-color-text-default);
+
   /* --c-dialog */
   --c-dialog-border-default:      var(--ds-color-border-default);
   --c-dialog-border-focus:        var(--ds-color-border-focus);

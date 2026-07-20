@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { FileText } from "lucide-react";
 
 import { CompoundMultiple, CompoundSingle } from "@/components/ui/badge-icons";
@@ -21,6 +20,16 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { DescriptionList } from "@/components/ui/description-list";
+import {
+  Section,
+  Pills,
+  Prose,
+  NaturalSourceItem,
+  ReferenceList,
+  type NaturalSource,
+  type Citation,
+} from "@/components/hummingbird/document-parts";
 import type { EvidenceClass } from "@/components/hummingbird/cards/result-card";
 
 /**
@@ -47,20 +56,10 @@ import type { EvidenceClass } from "@/components/hummingbird/cards/result-card";
 
 export type ResultDetailType = "single" | "combo";
 
-export type NaturalSource = {
-  /** Binomial, e.g. "Vitis vinifera". Rendered italic. */
-  species: string;
-  common: string;
-  gras?: boolean;
-};
-
-export type Citation = {
-  authors: string;
-  year: string;
-  journal: string;
-  /** PMID / DOI, e.g. "PMID: 17086191". */
-  ref: string;
-};
+// NaturalSource + Citation now live in ./document-parts (shared with the Report
+// Document). Re-exported so existing importers (data.ts's ResultDetail literals)
+// keep resolving them from here.
+export type { NaturalSource, Citation };
 
 export type DataPoint = { label: string; value: string };
 
@@ -107,60 +106,6 @@ const EVIDENCE_LABEL: Record<Exclude<EvidenceClass, "predicted" | "none">, strin
   animal: "Animal",
   "in-vitro": "In Vitro",
 };
-
-// ─── Section + row helpers ───────────────────────────────────────────────────
-
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <section>
-      <h3 className="mb-2 text-[11px] font-semibold tracking-[0.06em] text-[var(--ds-color-text-subtle)] uppercase">
-        {title}
-      </h3>
-      {children}
-    </section>
-  );
-}
-
-function Pills({ items }: { items: string[] }) {
-  return (
-    <div className="flex flex-wrap gap-1.5">
-      {items.map((item) => (
-        <span
-          key={item}
-          className="inline-flex h-6 items-center rounded-[var(--ds-shape-radius-md)] bg-[var(--ds-color-surface-alt)] px-2 text-[13px] leading-none text-[var(--ds-color-text-default)]"
-        >
-          {item}
-        </span>
-      ))}
-    </div>
-  );
-}
-
-function DataRows({ rows }: { rows: DataPoint[] }) {
-  return (
-    <dl className="flex flex-col">
-      {rows.map((row) => (
-        <div
-          key={row.label}
-          className="flex items-baseline justify-between gap-4 border-b border-[var(--ds-color-border-subtle)] py-2 last:border-b-0"
-        >
-          <dt className="text-[var(--ds-color-text-subtle)]">{row.label}</dt>
-          <dd className="text-right font-medium text-[var(--ds-color-text-default)]">
-            {row.value}
-          </dd>
-        </div>
-      ))}
-    </dl>
-  );
-}
-
-function Prose({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="text-sm leading-relaxed text-[var(--ds-color-text-default)]">
-      {children}
-    </p>
-  );
-}
 
 // ─── ResultDetailSheet ───────────────────────────────────────────────────────
 
@@ -318,18 +263,7 @@ export function ResultDetailSheet({
                 <ul className="flex flex-col gap-2.5">
                   {detail.naturalSources.map((s) => (
                     <li key={s.species} className="flex items-baseline gap-2">
-                      <span className="text-sm text-[var(--ds-color-text-default)]">
-                        <span className="italic">{s.species}</span>
-                        <span className="text-[var(--ds-color-text-subtle)]">
-                          {" "}
-                          · {s.common}
-                        </span>
-                      </span>
-                      {s.gras && (
-                        <span className="inline-flex h-5 shrink-0 items-center rounded-full bg-[var(--ds-color-surface-success-active)] px-2 text-[10px] font-semibold tracking-[0.04em] text-[var(--ds-color-text-success-strong)] uppercase">
-                          GRAS
-                        </span>
-                      )}
+                      <NaturalSourceItem source={s} />
                     </li>
                   ))}
                 </ul>
@@ -341,7 +275,7 @@ export function ResultDetailSheet({
               <AccordionItem value="dosage">
                 <AccordionTrigger>Dosage guidance</AccordionTrigger>
                 <AccordionContent>
-                  <DataRows rows={detail.dosage} />
+                  <DescriptionList rows={detail.dosage} />
                 </AccordionContent>
               </AccordionItem>
             )}
@@ -350,7 +284,7 @@ export function ResultDetailSheet({
               <AccordionItem value="adme">
                 <AccordionTrigger>ADME properties</AccordionTrigger>
                 <AccordionContent>
-                  <DataRows rows={detail.adme} />
+                  <DescriptionList rows={detail.adme} />
                 </AccordionContent>
               </AccordionItem>
             )}
@@ -368,19 +302,7 @@ export function ResultDetailSheet({
               <AccordionItem value="references">
                 <AccordionTrigger>References</AccordionTrigger>
                 <AccordionContent>
-                  <ol className="flex flex-col gap-3">
-                    {detail.references.map((r) => (
-                      <li
-                        key={r.ref}
-                        className="text-[13px] leading-snug text-[var(--ds-color-text-subtle)]"
-                      >
-                        <span className="text-[var(--ds-color-text-default)]">
-                          {r.authors}
-                        </span>{" "}
-                        ({r.year}). <span className="italic">{r.journal}</span>. {r.ref}
-                      </li>
-                    ))}
-                  </ol>
+                  <ReferenceList references={detail.references} />
                 </AccordionContent>
               </AccordionItem>
             )}

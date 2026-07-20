@@ -18,6 +18,7 @@ import {
   type SingleResult,
 } from "@/components/hummingbird/cards/result-card"
 import type { ResultDetail } from "@/components/hummingbird/result-detail"
+import type { ReportDocument } from "@/components/hummingbird/report-document"
 
 // Pillar evaluation status for a strategy's evidence / feasibility / legal axes.
 // (Was imported from the now-removed ui/strategy-card; defined locally here.)
@@ -670,4 +671,244 @@ export function resolveWorkspaceDetail(
     ipNote: "",
     references: [],
   }
+}
+
+// ── Report documents (the /report/{uuid} concept brief) ─────────────────────
+//
+// A report is minted from a result's "Generate report". REPORT_DOCUMENTS is
+// keyed by the reports-list report id, mirroring WORKSPACE_DETAILS. Only the
+// flagship r1 "Berberine + Biochanin A" (the favorited, top-of-list, live-
+// captured draft) is fully authored; r2–r4 render a header-only "still
+// generating" state. Wiring onView(r1) on the reports list → resolveReport
+// Document("r1") is a real navigation into the read view.
+//
+// Cross-surface invariant: the Berberine half is copied verbatim from
+// WORKSPACE_DETAILS["Berberine"] (targets, natural sources gras:false,
+// references PMID 18442638 / 22377320, the AMPK/PCSK9 mechanism) so opening the
+// Berberine slide-over and this report in one session never contradict.
+
+/** A header-only placeholder for an unauthored / still-generating report. */
+function pendingReport(id: string, title: string): ReportDocument {
+  return {
+    id,
+    displayId: "",
+    type: "single",
+    title,
+    status: "draft",
+    created: "Jul 20, 2026",
+    pending: true,
+    ingredients: [],
+    rationale: "",
+    ingredientBriefs: [],
+    ipNote: "",
+    claims: [],
+    targets: [],
+    biomarkers: [],
+    references: [],
+  }
+}
+
+export const REPORT_DOCUMENTS: Record<string, ReportDocument> = {
+  r1: {
+    id: "r1",
+    displayId: "RPT-2026-0142",
+    type: "combo",
+    title: "Berberine + Biochanin A",
+    subtitle: "Metabolic Health · Women 35–50",
+    status: "draft",
+    created: "Jul 20, 2026",
+    ingredients: ["Berberine", "Biochanin A"],
+    rationale:
+      "Berberine and biochanin A were paired for metabolic support in women aged 35–50. Berberine activates AMPK to improve glucose disposal and steer hepatic metabolism away from lipogenesis; biochanin A — an ERβ-selective isoflavone from red clover — engages PPARα and PPARγ to promote fatty-acid oxidation and temper adipocyte expansion. The two reach AMPK through independent upstream routes, which underlies the predicted synergy, and biochanin A's phytoestrogenic activity adds a rationale specific to the peri- and post-menopausal metabolic shift. A preliminary scan found no prior art claiming this pairing for a weight-management formulation.",
+    ingredientBriefs: [
+      {
+        name: "Berberine",
+        formulation: {
+          dosage: "500 mg",
+          hed: true,
+          delivery: "Oral capsule, enteric-coated",
+          source: "Berberis spp. — root & stem bark",
+          extraction: "Acid–base extraction; isolated as berberine chloride",
+        },
+        mechanism: {
+          title: "Berberine",
+          text: "Berberine raises the cellular AMP:ATP ratio, activating AMPK — the same energy switch exercise engages — which drives glucose uptake and suppresses hepatic gluconeogenesis and lipogenesis. Secondary PCSK9 down-regulation increases LDL-receptor recycling.",
+          evidenceStrength: 0.82,
+        },
+        pathways: [
+          "AMPK activation → increased glucose uptake (GLUT4), decreased hepatic gluconeogenesis",
+          "AMPK → decreased SREBP-1c / ACC → decreased de novo lipogenesis",
+          "PCSK9 down-regulation → increased LDL-receptor recycling → decreased circulating LDL-C",
+        ],
+        sources: {
+          shown: 3,
+          total: 24,
+          items: [
+            {
+              species: "Berberis vulgaris",
+              common: "Barberry",
+              gras: false,
+              family: "Berberidaceae",
+              tissue: "Root & stem bark",
+              abundancePct: 96,
+            },
+            {
+              species: "Coptis chinensis",
+              common: "Chinese goldthread",
+              gras: false,
+              family: "Ranunculaceae",
+              tissue: "Rhizome",
+              abundancePct: 91,
+            },
+            {
+              species: "Hydrastis canadensis",
+              common: "Goldenseal",
+              gras: false,
+              family: "Ranunculaceae",
+              tissue: "Root & rhizome",
+              abundancePct: 84,
+            },
+          ],
+        },
+      },
+      {
+        name: "Biochanin A",
+        formulation: {
+          dosage: "40 mg",
+          hed: true,
+          delivery: "Oral capsule (co-encapsulated)",
+          source: "Trifolium pratense — aerial parts (flower & leaf)",
+          extraction:
+            "Ethanol extraction; glycoside hydrolysis to aglycone, solid-phase enrichment",
+        },
+        mechanism: {
+          title: "Biochanin A",
+          text: "Biochanin A acts as a dual PPARα/γ ligand, up-regulating fatty-acid oxidation while restraining adipocyte hypertrophy, and as an ERβ-selective phytoestrogen that partially offsets the estrogen decline driving midlife visceral-fat gain. Aromatase (CYP19A1) modulation shifts local estrogen balance.",
+          evidenceStrength: 0.64,
+        },
+        pathways: [
+          "PPARα agonism → increased CPT1-mediated fatty-acid β-oxidation",
+          "PPARγ modulation → controlled adipocyte differentiation, increased adiponectin",
+          "ERβ engagement + aromatase (CYP19A1) inhibition → shifted local estrogen balance",
+          "NF-κB down-regulation → reduced adipose-tissue inflammatory tone",
+        ],
+        sources: {
+          shown: 3,
+          total: 41,
+          items: [
+            {
+              species: "Trifolium pratense",
+              common: "Red clover",
+              gras: true,
+              family: "Fabaceae",
+              tissue: "Aerial parts (flower & leaf)",
+              abundancePct: 98,
+            },
+            {
+              species: "Cicer arietinum",
+              common: "Chickpea",
+              gras: true,
+              family: "Fabaceae",
+              tissue: "Seed & sprout",
+              abundancePct: 72,
+            },
+            {
+              species: "Glycine max",
+              common: "Soybean",
+              gras: true,
+              family: "Fabaceae",
+              tissue: "Seed",
+              abundancePct: 61,
+            },
+          ],
+        },
+      },
+    ],
+    synergy: {
+      title: "Synergistic Action",
+      text: "Berberine and biochanin A converge on AMPK from independent upstream mechanisms — energy-charge sensing versus nuclear-receptor signaling — so their effects on fat oxidation are predicted to be additive rather than redundant, with biochanin A's estrogen-receptor activity addressing a driver berberine does not touch.",
+      evidenceStrength: 0.58,
+    },
+    // An alkaloid and an isoflavone don't co-occur, so there are no shared
+    // botanical sources — an accurate empty state, not a gap. The UI omits the
+    // Shared group entirely.
+    sharedSources: [],
+    ipNote:
+      "A preliminary landscape scan found no blocking prior art for this combination. Run the full analysis for a formal freedom-to-operate and patentability assessment — Hummingbird will search issued patents and applications for composition-of-matter, ratio, and method-of-use claims covering berberine + biochanin A in metabolic and weight-management indications.",
+    claims: [
+      {
+        text: "Supports healthy glucose metabolism already within the normal range",
+        fdaCompliant: true,
+        clinicalStudy: true,
+      },
+      {
+        text: "Helps maintain healthy cholesterol levels already within the normal range",
+        fdaCompliant: true,
+        clinicalStudy: true,
+      },
+      {
+        text: "Supports the body's natural fat-oxidation processes",
+        fdaCompliant: true,
+      },
+      {
+        text: "Supports metabolic balance for women through midlife",
+        fdaCompliant: true,
+      },
+    ],
+    // Exactly 12 targets, so the section heading count "· 12" matches the pills.
+    targets: [
+      "AMPK",
+      "PCSK9",
+      "GLUT4",
+      "PTP1B",
+      "PPARα",
+      "PPARγ",
+      "FABP4",
+      "CYP19A1",
+      "ERβ",
+      "NF-κB",
+      "SREBP-1c",
+      "ACC",
+    ],
+    biomarkers: [
+      "Fasting glucose",
+      "HbA1c",
+      "LDL-C",
+      "HDL-C",
+      "Adiponectin",
+      "hs-CRP",
+    ],
+    // Refs 1–2 are the REAL berberine PMIDs carried verbatim from WORKSPACE_
+    // DETAILS. Refs 3–5 are representative fixture citations (real journals /
+    // authors / isoflavone-metabolic topics) — illustrative, NOT literature-verified.
+    references: [
+      { authors: "Yin J, Xing H, Ye J", year: "2008", journal: "Metabolism", ref: "PMID: 18442638" },
+      { authors: "Hu Y, et al.", year: "2012", journal: "Phytomedicine", ref: "PMID: 22377320" },
+      {
+        authors: "Mueller M, Jungbauer A",
+        year: "2008",
+        journal: "Molecular Nutrition & Food Research",
+        ref: "DOI: 10.1002/mnfr.200700529",
+      },
+      {
+        authors: "Szkudelska K, Nogowski L",
+        year: "2007",
+        journal: "Journal of Steroid Biochemistry and Molecular Biology",
+        ref: "PMID: 17693070",
+      },
+      { authors: "Terzic MM, et al.", year: "2009", journal: "Menopause", ref: "PMID: 19407672" },
+    ],
+  },
+  r2: pendingReport("r2", "Resveratrol Longevity Concept"),
+  r3: pendingReport("r3", "Sulforaphane Gut Health Brief"),
+  r4: pendingReport("r4", "Quercetin + Fisetin Senolytic Stack"),
+}
+
+/**
+ * Resolve a reports-list id to its report document. Returns the authored entry
+ * when present, else a header-only "still generating" placeholder — the demo's
+ * stand-in for the app's real report fetch (mirrors resolveWorkspaceDetail).
+ */
+export function resolveReportDocument(id: string): ReportDocument {
+  return REPORT_DOCUMENTS[id] ?? pendingReport(id, "Untitled report")
 }

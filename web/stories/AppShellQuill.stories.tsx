@@ -9,6 +9,8 @@ import { ConversationsList } from "@/components/quill/conversations-list";
 import { NewChat } from "@/components/quill/new-chat";
 import { ProjectsList } from "@/components/quill/projects-list";
 import { ReportsList } from "@/components/quill/reports-list";
+import { ReportDocument } from "@/components/hummingbird/report-document";
+import { resolveReportDocument } from "@/components/hummingbird/data";
 import type {
   Appearance,
   SettingsAccount,
@@ -74,6 +76,15 @@ function ShellHost() {
   const [active, setActive] = React.useState("New chat");
   const [team, setTeam] = React.useState<Team>(TEAMS[0]);
   const [appearance, setAppearance] = React.useState<Appearance>("system");
+  // The Reports drill-down lives HERE, not in TabContent, so navigating away —
+  // or re-clicking the active nav item — clears it and returns to the list.
+  // (Keying TabContent on `active` instead would remount every tab and wipe
+  // ReportsList's search/filter/sort/favorite state on each switch.)
+  const [reportId, setReportId] = React.useState<string | null>(null);
+  const navigate = (item: string) => {
+    setActive(item);
+    setReportId(null);
+  };
 
   /* Apply the appearance the way the app will (data-theme on <html>), so the
    * settings modal's Appearance toggle repaints the shell live. "system"
@@ -101,7 +112,7 @@ function ShellHost() {
       account={ACCOUNT}
       version="v1.3.2"
       activeItem={active}
-      onNavigate={setActive}
+      onNavigate={navigate}
       teams={TEAMS}
       activeTeam={team}
       onTeamChange={setTeam}
@@ -109,7 +120,12 @@ function ShellHost() {
       appearance={appearance}
       onAppearanceChange={setAppearance}
     >
-      <TabContent active={active} />
+      <TabContent
+        active={active}
+        reportId={reportId}
+        onView={setReportId}
+        onClearReport={() => setReportId(null)}
+      />
     </AppShellQuill>
   );
 }
@@ -119,10 +135,28 @@ function ShellHost() {
  * Conversations / Projects list view / Reports list view), so the shell and the
  * standalone Blocks entries are one and the same and never drift. */
 
-function TabContent({ active }: { active: string }) {
+function TabContent({
+  active,
+  reportId,
+  onView,
+  onClearReport,
+}: {
+  active: string;
+  reportId: string | null;
+  onView: (id: string) => void;
+  onClearReport: () => void;
+}) {
+  // Reports → View opens the report document in place; Back (or navigating away)
+  // returns to the list. The app owns real routing; the story plays it so the
+  // flow is exercisable. Drill-down state is owned by ShellHost (see there).
   if (active === "Conversations") return <ConversationsList />;
   if (active === "Projects") return <ProjectsList />;
-  if (active === "Reports") return <ReportsList />;
+  if (active === "Reports")
+    return reportId ? (
+      <ReportDocument doc={resolveReportDocument(reportId)} onBack={onClearReport} />
+    ) : (
+      <ReportsList onView={(report) => onView(report.id)} />
+    );
   return <NewChat />;
 }
 
