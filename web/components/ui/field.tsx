@@ -230,7 +230,11 @@ function FieldError({
       role="alert"
       data-slot="field-error"
       className={cn(
-        "text-sm font-normal text-[var(--c-field-text-on-action-critical)]",
+        // Hug the control it belongs to. The Field lays children out on gap-3
+        // (12px); pull the message up so it reads as bound to its own field, not
+        // floating midway to the next one. Same negative-margin idiom as
+        // FieldDescription above.
+        "-mt-1.5 text-sm font-normal text-[var(--c-field-text-on-action-critical)]",
         className
       )}
       {...props}
