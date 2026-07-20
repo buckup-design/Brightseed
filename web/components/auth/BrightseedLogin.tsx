@@ -4,7 +4,7 @@ import { CircleArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 
 /**
@@ -171,11 +171,11 @@ function FormPane({ spec }: { spec: VariantSpec }) {
 
         <OrDivider />
 
-        <div className="flex w-full flex-col gap-3">
-          <div>
-            <Label htmlFor="brightseed-login-email" className="sr-only">
+        <FieldGroup className="gap-3">
+          <Field>
+            <FieldLabel htmlFor="brightseed-login-email" className="sr-only">
               Email
-            </Label>
+            </FieldLabel>
             <Input
               id="brightseed-login-email"
               type="email"
@@ -184,11 +184,11 @@ function FormPane({ spec }: { spec: VariantSpec }) {
               required
               className="h-12"
             />
-          </div>
-          <div>
-            <Label htmlFor="brightseed-login-password" className="sr-only">
+          </Field>
+          <Field>
+            <FieldLabel htmlFor="brightseed-login-password" className="sr-only">
               Password
-            </Label>
+            </FieldLabel>
             <Input
               id="brightseed-login-password"
               type="password"
@@ -197,8 +197,8 @@ function FormPane({ spec }: { spec: VariantSpec }) {
               required
               className="h-12"
             />
-          </div>
-        </div>
+          </Field>
+        </FieldGroup>
 
         <Button
           type="submit"
