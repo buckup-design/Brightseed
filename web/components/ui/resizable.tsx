@@ -1,6 +1,5 @@
 "use client"
 
-import { GripVerticalIcon } from "lucide-react"
 import * as ResizablePrimitive from "react-resizable-panels"
 
 import { cn } from "@/lib/utils"
@@ -36,7 +35,7 @@ function ResizableHandle({
     <ResizablePrimitive.Separator
       data-slot="resizable-handle"
       className={cn(
-        "relative flex w-px items-center justify-center",
+        "group relative flex w-px items-center justify-center",
         "bg-[var(--c-resizable-border-default)]",
         "after:absolute after:inset-y-0 after:left-1/2 after:w-1 after:-translate-x-1/2",
         "focus-visible:ring-[3px] focus-visible:ring-[var(--c-resizable-border-focus)]/50",
@@ -47,16 +46,21 @@ function ResizableHandle({
       {...props}
     >
       {withHandle && (
+        // A clean pill, no grip dots or bordered box. Sits centered on the
+        // hairline; the whole handle strip is the `group`, so the pill picks up
+        // its hover/drag color from a hover anywhere on the handle, not just on
+        // the 6px pill itself.
         <div
           className={cn(
-            "z-10 flex h-4 w-3 items-center justify-center",
-            "rounded-[var(--c-resizable-shape-radius-2xs)]",
-            "border border-[var(--c-resizable-border-default)]",
-            "bg-[var(--c-resizable-border-default)]"
+            // shrink-0 is load-bearing: the pill is a flex child of the 1px-wide
+            // separator, so without it flex-shrink collapses the 6px width down
+            // to 1px (the old grip box only escaped this because its icon gave it
+            // intrinsic width).
+            "z-10 h-10 w-1.5 shrink-0 rounded-full",
+            "bg-[var(--c-resizable-grip-default)]",
+            "transition-colors group-hover:bg-[var(--c-resizable-grip-hover)]"
           )}
-        >
-          <GripVerticalIcon className="size-2.5 text-[var(--c-resizable-icon-subtle)]" />
-        </div>
+        />
       )}
     </ResizablePrimitive.Separator>
   )

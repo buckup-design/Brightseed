@@ -358,10 +358,10 @@
   --c-score-meter-shape-radius-round: var(--ds-shape-radius-round);
 
   /* --c-resizable */
-  --c-resizable-border-default:      var(--ds-color-border-default);
-  --c-resizable-border-focus:        var(--ds-color-border-focus);
-  --c-resizable-icon-subtle:         var(--ds-color-icon-subtle);
-  --c-resizable-shape-radius-2xs:     var(--ds-shape-radius-2xs);
+  --c-resizable-border-default:      var(--ds-color-border-default);        /* hairline divider between panels */
+  --c-resizable-border-focus:        var(--ds-color-border-focus);          /* keyboard focus ring */
+  --c-resizable-grip-default:        var(--ds-color-border-default-hover);  /* drag-handle pill at rest (sand-500 / sand-600) */
+  --c-resizable-grip-hover:          var(--ds-color-icon-subtle);           /* pill on hover/drag — darkens in light, brightens in dark */
 
   /* --c-select */
   --c-select-border-critical-bold:         var(--ds-color-border-critical-bold);
