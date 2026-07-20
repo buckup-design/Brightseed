@@ -107,7 +107,13 @@ function MessageComposer({ onSend }: { onSend?: (value: string) => void }) {
 
   return (
     <div className="shrink-0 border-t border-[var(--ds-color-border-subtle)] p-3">
-      <div className="flex items-end gap-2 rounded-[var(--ds-shape-radius-md)] border border-[var(--ds-color-border-default)] bg-[var(--ds-color-surface-field)] p-2.5">
+      {/* The wrapper — not the inner Textarea — is the visible "field": it owns
+          the surface, border, and the focus affordance. focus-within lightens
+          the whole box (surface-field → hover step) and picks up the focus
+          border when the textarea inside is focused. The Textarea is chromeless,
+          incl. its hover fill (enabled:hover:bg-transparent), so it never paints
+          a lighter rectangle inset inside the wrapper. */}
+      <div className="flex items-end gap-2 rounded-[var(--ds-shape-radius-md)] border border-[var(--ds-color-border-default)] bg-[var(--ds-color-surface-field)] p-2.5 transition-[color,box-shadow,background-color] focus-within:border-[var(--ds-color-border-focus)] focus-within:bg-[var(--ds-color-surface-field-hover)] focus-within:ring-[2px] focus-within:ring-[var(--ds-color-ring-focus)]">
         <Textarea
           value={value}
           onChange={(event) => setValue(event.target.value)}
@@ -118,7 +124,7 @@ function MessageComposer({ onSend }: { onSend?: (value: string) => void }) {
             }
           }}
           placeholder="Message Hummingbird"
-          className="min-h-16 resize-none border-0 bg-transparent p-0 shadow-none focus-visible:ring-0"
+          className="min-h-16 resize-none border-0 bg-transparent p-0 shadow-none focus-visible:ring-0 enabled:hover:bg-transparent"
         />
         <Button size="icon" aria-label="Send message" onClick={send}>
           <ArrowUp />
