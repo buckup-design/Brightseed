@@ -383,6 +383,7 @@
   --c-share-dialog-text-subtle:    var(--ds-color-text-subtle);
 
   /* --c-sheet */
+  --c-sheet-border-default:     var(--ds-color-border-default);
   --c-sheet-border-focus:       var(--ds-color-border-focus);
   --c-sheet-shadow-lg:          var(--ds-shadow-lg);
   --c-sheet-shape-radius-2xs:    var(--ds-shape-radius-2xs);

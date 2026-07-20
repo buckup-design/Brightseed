@@ -61,16 +61,17 @@ function SheetContent({
         data-slot="sheet-content"
         className={cn(
           "fixed z-50 flex flex-col gap-4 transition ease-in-out data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:animate-in data-[state=open]:duration-500",
-          // Brightseed surface + shadow
+          // Brightseed surface + shadow + edge border.
           "bg-[var(--c-sheet-surface-default)]",
           "shadow-[var(--c-sheet-shadow-lg)]",
-          // BRIGHTSEED-TBD: [CONCERN] the per-side `border-{l,r,t,b}` below are width-only
-          // utilities with no colour class. Tailwind v4's preflight sets
-          // `border: 0 solid`, and this project has no `* { border-color }` base
-          // reset, so they resolve to `currentColor` (inherited text colour), not
-          // a token. Inherited from stock shadcn, which assumes that reset exists.
-          // Binding them to --c-sheet-border-default would change appearance, so
-          // it's out of scope for this mechanical re-plumb. Needs a design call.
+          // Binds the edge border to a token. The per-side `border-{l,r,t,b}`
+          // below are width-only; without this the missing colour resolved to
+          // `currentColor` (inherited text colour), painting a dark hairline on
+          // the panel edge (Tailwind v4's preflight sets `border: 0 solid` and
+          // this project has no `* { border-color }` reset). Set the colour here
+          // once; each side only turns on its own width. (Closed the sheet
+          // [CONCERN] surfaced by the ui/ fork.)
+          "border-[var(--c-sheet-border-default)]",
           side === "right" &&
             "inset-y-0 right-0 h-full w-3/4 border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm",
           side === "left" &&
