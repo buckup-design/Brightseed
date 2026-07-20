@@ -124,6 +124,11 @@ function MessageComposer({ onSend }: { onSend?: (value: string) => void }) {
             }
           }}
           placeholder="Message Hummingbird"
+          // Prompt field, never a credential — stop the browser's password
+          // manager (iCloud Passwords et al.) offering autofill on focus.
+          autoComplete="off"
+          data-1p-ignore
+          data-lpignore="true"
           className="min-h-16 resize-none border-0 bg-transparent p-0 shadow-none focus-visible:ring-0 enabled:hover:bg-transparent"
         />
         <Button size="icon" aria-label="Send message" onClick={send}>

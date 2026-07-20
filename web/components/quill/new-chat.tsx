@@ -73,6 +73,11 @@ export function NewChat({
           value={value}
           onChange={(event) => setValue(event.target.value)}
           placeholder="Ask about compounds, combinations, mechanisms, or dosing…"
+          // Prompt field, never a credential — stop the browser's password
+          // manager (iCloud Passwords et al.) offering autofill on focus.
+          autoComplete="off"
+          data-1p-ignore
+          data-lpignore="true"
           className="min-h-20 resize-none border-0 bg-transparent p-0 shadow-none focus-visible:ring-0 enabled:hover:bg-transparent"
         />
         <div className="flex items-center justify-between">
