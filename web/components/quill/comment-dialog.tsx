@@ -3,7 +3,7 @@
 /**
  * CommentDialog — leave a note on a report (raised from the report row's ⋮ menu).
  *
- * Composition-only (Dialog + Label + Textarea + Button), so it carries no
+ * Composition-only (Dialog + Field + Textarea + Button), so it carries no
  * --c-comment-dialog-* tokens of its own; each composed component owns its
  * appearance. Controlled by `open`/`onOpenChange`; the app owns what a saved
  * note does (onSubmit). Follows the feedback-dialog pattern: the field is
@@ -21,7 +21,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
+import { Field, FieldLabel } from "@/components/ui/field";
 import { Textarea } from "@/components/ui/textarea";
 
 export function CommentDialog({
@@ -61,8 +61,8 @@ export function CommentDialog({
           ) : null}
         </DialogHeader>
 
-        <div className="space-y-2">
-          <Label htmlFor="comment-note">Comment</Label>
+        <Field>
+          <FieldLabel htmlFor="comment-note">Comment</FieldLabel>
           <Textarea
             id="comment-note"
             rows={5}
@@ -70,7 +70,7 @@ export function CommentDialog({
             value={note}
             onChange={(event) => setNote(event.target.value)}
           />
-        </div>
+        </Field>
 
         <DialogFooter>
           <Button variant="secondary" onClick={() => onOpenChange(false)}>

@@ -9,7 +9,7 @@
  * Controlled by `open`/`onOpenChange`; fields reset on OPEN, not close, so the
  * dialog doesn't visibly empty as it leaves (see feedback-dialog).
  *
- * Composes Dialog + Input + Label + Button; the email chips and link row are
+ * Composes Dialog + Field + Input + Button; the email chips and link row are
  * this component's own chrome, so it carries a --c-share-dialog-* block.
  */
 
@@ -25,8 +25,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
@@ -103,8 +103,8 @@ export function ShareDialog({
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-2">
-          <Label htmlFor="share-email">People</Label>
+        <Field>
+          <FieldLabel htmlFor="share-email">People</FieldLabel>
           <div className="flex gap-2">
             <Input
               id="share-email"
@@ -126,7 +126,7 @@ export function ShareDialog({
             </Button>
           </div>
           {emails.length > 0 ? (
-            <div className="flex flex-wrap gap-1.5 pt-1">
+            <div className="flex flex-wrap gap-1.5">
               {emails.map((email) => (
                 <span
                   key={email}
@@ -145,7 +145,7 @@ export function ShareDialog({
               ))}
             </div>
           ) : null}
-        </div>
+        </Field>
 
         {/* Copy-link row */}
         <div className="flex items-center gap-2 rounded-[var(--c-share-dialog-shape-radius-md)] bg-[var(--c-share-dialog-surface-alt)] py-2 pr-2 pl-3">

@@ -26,7 +26,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
+import { Field, FieldLabel } from "@/components/ui/field";
 import {
   Select,
   SelectContent,
@@ -88,8 +88,8 @@ export function FeedbackDialog({
           <DialogTitle>Give feedback</DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-2">
-          <Label htmlFor="feedback-topic">Topic</Label>
+        <Field>
+          <FieldLabel htmlFor="feedback-topic">Topic</FieldLabel>
           <Select
             value={topic}
             onValueChange={(v) => setTopic(v as FeedbackTopic)}
@@ -105,10 +105,10 @@ export function FeedbackDialog({
               ))}
             </SelectContent>
           </Select>
-        </div>
+        </Field>
 
-        <div className="space-y-2">
-          <Label htmlFor="feedback-message">Feedback</Label>
+        <Field>
+          <FieldLabel htmlFor="feedback-message">Feedback</FieldLabel>
           <Textarea
             id="feedback-message"
             rows={5}
@@ -116,7 +116,7 @@ export function FeedbackDialog({
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-        </div>
+        </Field>
 
         <DialogFooter>
           <Button variant="secondary" onClick={() => onOpenChange(false)}>
