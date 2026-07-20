@@ -104,10 +104,17 @@ export function AvatarPickerDialog({
    * repaint its ring. */
   const optionBase = cn(
     "relative flex items-center justify-center outline-none transition",
+    // Focus + selection match the Input field: the sand-500 ring carries a faint
+    // lime whisper halo (--ds-color-ring-focus) just outside it. The whisper is a
+    // box-shadow one step wider than the ring, so it peeks out past the sand —
+    // 4px on focus (2px ring), 6px when selected (the ring sits 2px further out
+    // behind ring-offset-2).
     "focus-visible:ring-2 focus-visible:ring-[var(--c-avatar-picker-border-focus)]",
+    "focus-visible:shadow-[0_0_0_4px_var(--c-avatar-picker-ring-focus)]",
     "data-[selected=false]:hover:ring-2 data-[selected=false]:hover:ring-[var(--c-avatar-picker-border-default)]",
     "data-[selected=true]:ring-2 data-[selected=true]:ring-[var(--c-avatar-picker-border-focus)]",
-    "data-[selected=true]:ring-offset-2 data-[selected=true]:ring-offset-[var(--c-avatar-picker-surface-default)]"
+    "data-[selected=true]:ring-offset-2 data-[selected=true]:ring-offset-[var(--c-avatar-picker-surface-default)]",
+    "data-[selected=true]:shadow-[0_0_0_6px_var(--c-avatar-picker-ring-focus)]"
   );
 
   return (

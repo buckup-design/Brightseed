@@ -314,6 +314,7 @@
   /* --c-avatar-picker */
   --c-avatar-picker-border-default: var(--ds-color-border-default);
   --c-avatar-picker-border-focus:  var(--ds-color-border-focus);
+  --c-avatar-picker-ring-focus:    var(--ds-color-ring-focus);
   --c-avatar-picker-icon-default:  var(--ds-color-icon-default);
   --c-avatar-picker-shape-radius-md: var(--ds-shape-radius-md);
   --c-avatar-picker-surface-alt:   var(--ds-color-surface-alt);
