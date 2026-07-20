@@ -162,7 +162,7 @@ export function ChatPanel({
 
   return (
     <div className={cn("flex h-full min-h-0 flex-col bg-[var(--ds-color-surface-default)]", className)}>
-      <div className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto p-4">
+      <div className="scrollbar-overlay flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto p-4">
         {messages.map((message, i) =>
           message.role === "assistant" ? (
             <AgentMessage

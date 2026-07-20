@@ -128,6 +128,59 @@ body {
 }
 
 /*
+ * .scrollbar-overlay — an auto-hiding, theme-aware scrollbar for tall scroll
+ * regions (the Workspace chat + results panels).
+ *
+ * The thumb is transparent at rest and only paints while the container is
+ * hovered, focused within, or being dragged — so an idle panel shows NO
+ * scrollbar, even when macOS "Show scroll bars" is set to "Always" (which
+ * otherwise forces a persistent classic bar). The track is always transparent,
+ * so it reads as an overlay with no visible gutter.
+ *
+ * Colour is the theme-aware --ds-color-border-default-hover (sand-500 light /
+ * sand-600 dark — the same token settings-modal uses), so the thumb is legible
+ * in both themes on its own. The global `color-scheme` in tokens/semantics.css
+ * covers any *unstyled* native scrollbar elsewhere; this utility fully takes
+ * over the bars it's applied to.
+ *
+ * WebKit/Blink drives the reveal through the ::-webkit-scrollbar pseudo-
+ * elements; Firefox through the standard scrollbar-width/-color pair. The
+ * 3px transparent border + padding-box clip insets the visible pill from the
+ * track edges without a JS measurement.
+ */
+.scrollbar-overlay {
+  scrollbar-width: thin;                      /* Firefox */
+  scrollbar-color: transparent transparent;   /* Firefox: hidden at rest */
+}
+.scrollbar-overlay:hover,
+.scrollbar-overlay:focus-within {
+  scrollbar-color: var(--ds-color-border-default-hover) transparent; /* Firefox: reveal */
+}
+.scrollbar-overlay::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.scrollbar-overlay::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-overlay::-webkit-scrollbar-thumb {
+  /* background-color longhand, NOT the `background` shorthand: a var() inside
+     the shorthand fails to resolve to a colour here (CSSOM drops it), so the
+     reveal below would never paint. The 3px transparent border + padding-box
+     clip insets the visible pill from the track edges. */
+  background-color: transparent;              /* hidden at rest */
+  background-clip: padding-box;
+  border: 3px solid transparent;
+  border-radius: 9999px;
+  transition: background-color 150ms ease;
+}
+.scrollbar-overlay:hover::-webkit-scrollbar-thumb,
+.scrollbar-overlay:focus-within::-webkit-scrollbar-thumb,
+.scrollbar-overlay::-webkit-scrollbar-thumb:active {
+  background-color: var(--ds-color-border-default-hover); /* reveal on hover / scroll / drag */
+}
+
+/*
  * Marketing concept + login pages (`.mk-page` on each root): a subtle drop
  * shadow on every button (Figma spec: X0 Y4, blur 12, #000 @ 12%). Excluded on
  * :focus-visible so the button's own focus ring (also box-shadow) still shows,

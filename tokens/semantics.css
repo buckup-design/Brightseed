@@ -20,6 +20,13 @@
 :root,
 [data-theme="light"] {
 
+  /* Tell the browser this subtree is light, so native UI it draws itself —
+     scrollbars, form controls, spellcheck underlines — matches. The dark block
+     flips this; without the pair, a dark surface still gets a light-rendered
+     native scrollbar (a near-invisible ghost). See also the .scrollbar-overlay
+     utility in web/app/globals.css, which styles the Workspace panels' bars. */
+  color-scheme: light;
+
   /* ── Surface ── */
   --ds-color-surface-default:         var(--p-color-white);         /* #ffffff, page background */
   --ds-color-surface-default-hover:   var(--p-color-sand-100);
@@ -344,6 +351,11 @@
    ════════════════════════════════════════════════════════════════════════════ */
 
 [data-theme="dark"] {
+
+  /* Render native UI (scrollbars, form controls) dark. Without this the browser
+     assumes a light page and paints a light-on-dark scrollbar you can barely
+     see against the sand-950 surface. Pairs with the light color-scheme above. */
+  color-scheme: dark;
 
   /* Disabled surface overlay, flips to dark sand so the rule pulls toward
      dim/desaturated instead of light/desaturated. The surface-disabled tokens

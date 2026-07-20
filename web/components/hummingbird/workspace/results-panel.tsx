@@ -320,7 +320,7 @@ export function ResultsPanel({
           )}
 
           {/* ── Scroll region ────────────────────────────────────────────── */}
-          <div className="min-h-0 flex-1 overflow-y-auto p-4">
+          <div className="scrollbar-overlay min-h-0 flex-1 overflow-y-auto p-4">
             {isEmpty ? (
               <CenteredState
                 title="No results yet"
