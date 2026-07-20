@@ -4,7 +4,7 @@ import { CircleArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 
 /**
@@ -136,13 +136,52 @@ export function BrightseedLogin({
  * ───────────────────────────────────────────────────────────────────────── */
 
 function FormPane({ spec }: { spec: VariantSpec }) {
+  const [errors, setErrors] = React.useState<{
+    email?: string;
+    password?: string;
+  }>({});
+
+  // `noValidate` on the form suppresses the browser's native validation bubble
+  // (the un-styleable OS popup) so the error state is rendered as Quill: an
+  // aria-invalid red outline + inline FieldError. The `required` / `type=email`
+  // constraints stay on the inputs and remain the source of truth — we read
+  // each control's `validity` here rather than re-implementing the rules.
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const email = form.elements.namedItem(
+      "brightseed-login-email",
+    ) as HTMLInputElement | null;
+    const password = form.elements.namedItem(
+      "brightseed-login-password",
+    ) as HTMLInputElement | null;
+
+    const next: { email?: string; password?: string } = {};
+    if (email && !email.validity.valid) {
+      next.email = email.validity.valueMissing
+        ? "Enter your email to sign in."
+        : "Enter a valid email address.";
+    }
+    if (password && !password.validity.valid) {
+      next.password = "Enter your password.";
+    }
+    setErrors(next);
+    // Clean pass: no backend in this block — wire the real auth call here.
+  }
+
+  // Clear a field's error as soon as the user starts correcting it; it
+  // re-validates on the next submit.
+  const clearError = (field: "email" | "password") =>
+    setErrors((prev) => (prev[field] ? { ...prev, [field]: undefined } : prev));
+
   return (
     <form
       className={cn(
         "flex flex-col items-center justify-between gap-8 p-8 md:px-12 md:py-16",
         spec.formSurface,
       )}
-      onSubmit={(e) => e.preventDefault()}
+      onSubmit={handleSubmit}
+      noValidate
     >
       <div className="flex w-full max-w-sm flex-col items-center gap-6">
         <BrightseedLogo variant="mark" className="h-14 w-14" />
@@ -172,7 +211,7 @@ function FormPane({ spec }: { spec: VariantSpec }) {
         <OrDivider />
 
         <FieldGroup className="gap-3">
-          <Field>
+          <Field data-invalid={errors.email ? "true" : undefined}>
             <FieldLabel htmlFor="brightseed-login-email" className="sr-only">
               Email
             </FieldLabel>
@@ -182,10 +221,13 @@ function FormPane({ spec }: { spec: VariantSpec }) {
               placeholder="Email"
               autoComplete="email"
               required
+              aria-invalid={errors.email ? true : undefined}
+              onChange={() => clearError("email")}
               className="h-12"
             />
+            {errors.email ? <FieldError>{errors.email}</FieldError> : null}
           </Field>
-          <Field>
+          <Field data-invalid={errors.password ? "true" : undefined}>
             <FieldLabel htmlFor="brightseed-login-password" className="sr-only">
               Password
             </FieldLabel>
@@ -195,8 +237,11 @@ function FormPane({ spec }: { spec: VariantSpec }) {
               placeholder="Password"
               autoComplete="current-password"
               required
+              aria-invalid={errors.password ? true : undefined}
+              onChange={() => clearError("password")}
               className="h-12"
             />
+            {errors.password ? <FieldError>{errors.password}</FieldError> : null}
           </Field>
         </FieldGroup>
 
