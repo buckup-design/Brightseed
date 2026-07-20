@@ -62,13 +62,18 @@ export function NewChat({
     <div className="mx-auto flex w-full max-w-2xl flex-col gap-8 py-16">
       <PageHeading align="center" title={greeting} description={subtitle} />
 
-      {/* Context composer — the Textarea sits seamless inside a field-surface shell */}
-      <div className="space-y-3 rounded-[var(--c-new-chat-shape-radius-md)] border border-[var(--c-new-chat-border-default)] bg-[var(--c-new-chat-surface-field)] p-3">
+      {/* Context composer — the shell (not the inner Textarea) is the visible
+          field: it owns the surface, border, and focus affordance. focus-within
+          lightens the whole box and adds the sand-500 border + lime whisper ring,
+          matching every other field. The Textarea is chromeless, incl. its hover
+          fill (enabled:hover:bg-transparent), so it never paints a lighter
+          rectangle inset inside the shell. */}
+      <div className="space-y-3 rounded-[var(--c-new-chat-shape-radius-md)] border border-[var(--c-new-chat-border-default)] bg-[var(--c-new-chat-surface-field)] p-3 transition-[color,box-shadow,background-color] focus-within:border-[var(--c-new-chat-border-focus)] focus-within:bg-[var(--c-new-chat-surface-field-hover)] focus-within:ring-[2px] focus-within:ring-[var(--c-new-chat-ring-focus)]">
         <Textarea
           value={value}
           onChange={(event) => setValue(event.target.value)}
           placeholder="Ask about compounds, combinations, mechanisms, or dosing…"
-          className="min-h-20 resize-none border-0 bg-transparent p-0 shadow-none focus-visible:ring-0"
+          className="min-h-20 resize-none border-0 bg-transparent p-0 shadow-none focus-visible:ring-0 enabled:hover:bg-transparent"
         />
         <div className="flex items-center justify-between">
           <Button variant="ghost" size="sm" onClick={onCreateBrief}>

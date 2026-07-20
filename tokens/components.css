@@ -272,8 +272,11 @@
 
   /* --c-new-chat */
   --c-new-chat-border-default:     var(--ds-color-border-default);
+  --c-new-chat-border-focus:       var(--ds-color-border-focus);
+  --c-new-chat-ring-focus:         var(--ds-color-ring-focus);
   --c-new-chat-shape-radius-md:    var(--ds-shape-radius-md);
   --c-new-chat-surface-field:      var(--ds-color-surface-field);
+  --c-new-chat-surface-field-hover: var(--ds-color-surface-field-hover);
 
   /* --c-projects-list */
   --c-projects-list-shape-radius-md: var(--ds-shape-radius-md);
