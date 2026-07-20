@@ -8,7 +8,8 @@ import { cn } from "@/lib/utils"
  * Color tokens (via the component tier, --c-input-*):
  *   Border resting      → --ds-color-border-default
  *   Border hover        → --ds-color-border-default-hover
- *   Border/ring focus   → --ds-color-border-focus
+ *   Border focus        → --ds-color-border-focus  (sand-500, neutral)
+ *   Ring focus          → --ds-color-ring-focus    (faint lime whisper, 2px)
  *   Border/ring invalid → --ds-color-border-critical-bold
  *   Surface rest/hover  → --ds-color-surface-field / --ds-color-surface-field-hover
  *   Placeholder         → --ds-color-text-subtle
@@ -42,7 +43,7 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
         "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-[var(--c-input-disabled-text-opacity)]",
         // Focus
         "focus-visible:border-[var(--c-input-border-focus)]",
-        "focus-visible:ring-[3px] focus-visible:ring-[var(--c-input-border-focus)]/50",
+        "focus-visible:ring-[2px] focus-visible:ring-[var(--c-input-ring-focus)]",
         // Hover: border deepens (resting only; focus and invalid own the border
         // in their states) and the field brightens one step.
         "enabled:hover:not-focus-visible:not-aria-invalid:border-[var(--c-input-border-default-hover)]",

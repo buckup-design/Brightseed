@@ -123,14 +123,19 @@
   --ds-color-border-default:          var(--p-color-sand-300);      /* input default */
   --ds-color-border-default-hover:    var(--p-color-sand-500);      /* input/select/textarea hover (one-step darken) */
   --ds-color-border-bold:             var(--p-color-sand-500);      /* emphatic dividers */
-  /* Focus rings, variant-aware. Default uses lime (the system action color);
-     destructive uses its own hue scale; secondary uses sand. Linktext is in the
-     lime family too, so its focus ring matches Default, kept as a separate
-     token name for namespace clarity in case it ever diverges. */
-  --ds-color-border-focus:             var(--p-color-lime-500);  /* lime/500, Default, Outline, Ghost focus */
+  /* Focus rings, variant-aware. Default is neutral sand — the lime focus ring
+     was retuned out July 2026 ("focus green too heavy"). Destructive keeps its
+     own hue scale; secondary is sand. Linktext matches Default (kept as a
+     separate token name in case it ever diverges). Text-entry fields layer a
+     faint lime whisper (--ds-color-ring-focus) over this sand border; see below. */
+  --ds-color-border-focus:             var(--p-color-sand-500);  /* sand/500, Default/Outline/Ghost focus (was lime/500) */
   --ds-color-border-focus-secondary:   var(--p-color-sand-300);      /* sand/300, Secondary focus (matches Figma base/ring) */
   --ds-color-border-focus-destructive: var(--p-color-red-500);        /* red/500, Destructive focus */
-  --ds-color-border-focus-link-brand:  var(--p-color-lime-500);  /* lime/500, Linktext focus (same as Default) */
+  --ds-color-border-focus-link-brand:  var(--p-color-sand-500);  /* sand/500, Linktext focus (same as Default) */
+  /* Ring accent — a faint lime "whisper" layered over the sand focus border on
+     text-entry fields only (input/textarea/select/input-group + the composer).
+     Pre-composited to 12% so components can reference it with no opacity modifier. */
+  --ds-color-ring-focus:               color-mix(in srgb, var(--p-color-lime-500) 12%, transparent);  /* lime/500 @ 12% */
 
   --ds-color-border-success-default:  var(--p-color-forest-200);
   --ds-color-border-success-bold:     var(--p-color-forest-600);

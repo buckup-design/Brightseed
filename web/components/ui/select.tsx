@@ -68,7 +68,7 @@ function SelectTrigger({
         "enabled:hover:bg-[var(--c-select-surface-field-hover)]",
         // Focus
         "focus-visible:border-[var(--c-select-border-focus)]",
-        "focus-visible:ring-[3px] focus-visible:ring-[var(--c-select-border-focus)]/50",
+        "focus-visible:ring-[2px] focus-visible:ring-[var(--c-select-ring-focus)]",
         // Disabled (opacity-50 kept verbatim: --ds-disabled-text-opacity is 0.55,
         // so swapping it would change the rendered value)
         "disabled:cursor-not-allowed disabled:opacity-[var(--c-select-disabled-text-opacity)]",

@@ -228,6 +228,7 @@
   --c-input-border-default:            var(--ds-color-border-default);
   --c-input-border-default-hover:      var(--ds-color-border-default-hover);
   --c-input-border-focus:              var(--ds-color-border-focus);
+  --c-input-ring-focus:                var(--ds-color-ring-focus);
   --c-input-surface-default:           var(--ds-color-surface-field);
   --c-input-surface-hover:             var(--ds-color-surface-field-hover);
   --c-input-disabled-text-opacity: var(--ds-disabled-text-opacity);
@@ -241,6 +242,7 @@
   --c-input-group-border-critical-bold:    var(--ds-color-border-critical-bold);
   --c-input-group-border-default:     var(--ds-color-border-default);
   --c-input-group-border-focus:       var(--ds-color-border-focus);
+  --c-input-group-ring-focus:         var(--ds-color-ring-focus);
   --c-input-group-surface-default:    var(--ds-color-surface-field);
   --c-input-group-surface-hover:      var(--ds-color-surface-field-hover);
   --c-input-group-disabled-text-opacity: var(--ds-disabled-text-opacity);
@@ -368,6 +370,7 @@
   --c-select-border-default:          var(--ds-color-border-default);
   --c-select-border-default-hover:    var(--ds-color-border-default-hover);
   --c-select-border-focus:            var(--ds-color-border-focus);
+  --c-select-ring-focus:              var(--ds-color-ring-focus);
   --c-select-disabled-text-opacity: var(--ds-disabled-text-opacity);
   --c-select-shadow-md:               var(--ds-shadow-md);
   --c-select-shadow-xs: var(--ds-shadow-xs);
@@ -497,6 +500,7 @@
   --c-textarea-border-default:          var(--ds-color-border-default);
   --c-textarea-border-default-hover:    var(--ds-color-border-default-hover);
   --c-textarea-border-focus:            var(--ds-color-border-focus);
+  --c-textarea-ring-focus:              var(--ds-color-ring-focus);
   --c-textarea-surface-default:         var(--ds-color-surface-field);
   --c-textarea-surface-hover:           var(--ds-color-surface-field-hover);
   --c-textarea-disabled-text-opacity: var(--ds-disabled-text-opacity);

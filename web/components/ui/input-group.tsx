@@ -29,7 +29,7 @@ function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
         "has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-end]]:[&>input]:pt-3",
 
         // Focus state.
-        "has-[[data-slot=input-group-control]:focus-visible]:border-[var(--c-input-group-border-focus)] has-[[data-slot=input-group-control]:focus-visible]:ring-[3px] has-[[data-slot=input-group-control]:focus-visible]:ring-[var(--c-input-group-border-focus)]/50",
+        "has-[[data-slot=input-group-control]:focus-visible]:border-[var(--c-input-group-border-focus)] has-[[data-slot=input-group-control]:focus-visible]:ring-[2px] has-[[data-slot=input-group-control]:focus-visible]:ring-[var(--c-input-group-ring-focus)]",
 
         // Error state. Was --ds-color-action-critical until July 2026 — red-100, a
         // soft *surface* tint sitting in border/ring slots, which read 1.19:1 on
