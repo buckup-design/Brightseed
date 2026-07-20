@@ -64,8 +64,13 @@ export function CheckYourEmail({
         </h1>
         <p className="text-base leading-relaxed text-balance text-[var(--ds-color-text-subtle)]">
           Please check the email address{" "}
-          <span className="break-words">{email}</span> for instructions to reset
-          your password.
+          {/* Emphasised so the user can see at a glance WHICH address was used:
+              bumped to the darker default foreground + semibold against the
+              subtle body copy. */}
+          <span className="font-semibold break-words text-[var(--ds-color-text-default)]">
+            {email}
+          </span>{" "}
+          for instructions to reset your password.
         </p>
       </div>
 
