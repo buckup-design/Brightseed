@@ -128,10 +128,22 @@ const COMBO_BORDER: Partial<Record<EvidenceClass, string>> = {
   animal: "border-l-[3px] border-l-[var(--ds-color-border-warning-bold)]",
 };
 
-function displayName(result: Result): string {
+export function displayName(result: Result): string {
   return result.type === "combo"
     ? `${result.names[0]} + ${result.names[1]}`
     : result.name;
+}
+
+/**
+ * Identity key for a result — the React key in grids/stacks AND the key the
+ * Workspace favorites Set is stored under, so a star toggled on a grid card,
+ * on the same result rendered inline in chat, and on the detail sheet's Pin all
+ * refer to one entry. Detail fixtures MUST set detail.name === resultKey(result)
+ * for that sync to hold. Coincides with displayName today; kept a separate seam
+ * so a future ResultBase.id can change identity without touching the label.
+ */
+export function resultKey(result: Result): string {
+  return displayName(result);
 }
 
 // ─── Pills + targets overflow ────────────────────────────────────────────────
@@ -142,16 +154,19 @@ const PILL_BASE = cn(
   "focus-visible:ring-1 focus-visible:ring-[var(--ds-color-border-focus)] focus-visible:ring-offset-1",
 );
 
+// A target pill / overflow link is only a control when the card navigates. When
+// onSelect is absent (a non-navigating card, e.g. predicted) it renders as a
+// static span so it isn't a focusable no-op stop for keyboard / SR users.
 function TargetPill({ label, onSelect }: { label: string; onSelect?: () => void }) {
+  const surface = "bg-[var(--ds-color-surface-alt)] text-[var(--ds-color-text-default)]";
+  if (!onSelect) {
+    return <span className={cn(PILL_BASE, surface)}>{label}</span>;
+  }
   return (
     <button
       type="button"
       onClick={onSelect}
-      className={cn(
-        PILL_BASE,
-        "bg-[var(--ds-color-surface-alt)] text-[var(--ds-color-text-default)]",
-        "hover:bg-[var(--ds-color-surface-alt-hover)]",
-      )}
+      className={cn(PILL_BASE, surface, "hover:bg-[var(--ds-color-surface-alt-hover)]")}
     >
       {label}
     </button>
@@ -159,6 +174,13 @@ function TargetPill({ label, onSelect }: { label: string; onSelect?: () => void 
 }
 
 function MoreLink({ count, onSelect }: { count: number; onSelect?: () => void }) {
+  if (!onSelect) {
+    return (
+      <span className={cn(PILL_BASE, "bg-transparent text-[var(--ds-color-text-subtle)]")}>
+        +{count} more
+      </span>
+    );
+  }
   return (
     <button
       type="button"
@@ -208,6 +230,11 @@ export function ResultCard({
 }: ResultCardProps) {
   const { Icon, iconClass } = TYPE_CONFIG[result.type];
   const isPredicted = result.type === "predicted";
+  // Predicted results have no detail, so the card must not route anywhere — its
+  // name and targets render as static text rather than focusable no-op buttons
+  // (dead keyboard / screen-reader stops). Non-predicted cards navigate when the
+  // caller supplies onSelect.
+  const canNavigate = !isPredicted && !!onSelect;
   const targets = result.targets ?? [];
   const categories = result.categories ?? [];
 
@@ -269,19 +296,25 @@ export function ResultCard({
         </div>
       </div>
 
-      {/* ── Name(s) — clickable, routes to detail ─────────────────────────── */}
-      <button
-        type="button"
-        onClick={onSelect}
-        className={cn(
-          "line-clamp-2 min-h-[2.5em] text-left text-[15px] leading-tight font-semibold",
-          "text-[var(--ds-color-text-default)] hover:text-[var(--ds-color-text-default-hover)]",
-          "rounded-[var(--ds-shape-radius-sm)] outline-none transition-colors duration-[120ms]",
-          "focus-visible:ring-2 focus-visible:ring-[var(--ds-color-border-focus)] focus-visible:ring-offset-1",
-        )}
-      >
-        {displayName(result)}
-      </button>
+      {/* ── Name(s) — routes to detail when the card navigates ────────────── */}
+      {canNavigate ? (
+        <button
+          type="button"
+          onClick={onSelect}
+          className={cn(
+            "line-clamp-2 min-h-[2.5em] text-left text-[15px] leading-tight font-semibold",
+            "text-[var(--ds-color-text-default)] hover:text-[var(--ds-color-text-default-hover)]",
+            "rounded-[var(--ds-shape-radius-sm)] outline-none transition-colors duration-[120ms]",
+            "focus-visible:ring-2 focus-visible:ring-[var(--ds-color-border-focus)] focus-visible:ring-offset-1",
+          )}
+        >
+          {displayName(result)}
+        </button>
+      ) : (
+        <span className="line-clamp-2 block min-h-[2.5em] text-[15px] leading-tight font-semibold text-[var(--ds-color-text-default)]">
+          {displayName(result)}
+        </span>
+      )}
 
       {/* ── Benefit / intent line ─────────────────────────────────────────── */}
       <p className="text-[13px] leading-snug font-medium text-[var(--ds-color-text-subtle)]">
@@ -304,7 +337,9 @@ export function ResultCard({
 
       {/* ── Targets (height always reserved so a grid stays even) ─────────── */}
       <div className="h-6">
-        {targets.length > 0 && <TargetsRow targets={targets} onSelect={onSelect} />}
+        {targets.length > 0 && (
+          <TargetsRow targets={targets} onSelect={canNavigate ? onSelect : undefined} />
+        )}
       </div>
 
       {/* ── Footer: ScoreMeter (left) + evidence chip (right) ─────────────────
