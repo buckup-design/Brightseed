@@ -18,15 +18,6 @@ The deliverable is **the workflow** as much as the design system: an end-to-end 
 
 Tiered lookup: this file → `memory/glossary.md` → `memory/people|projects|context/`. If a term isn't in any of those, ask.
 
-## Team
-
-| Person | Role | Notes |
-|---|---|---|
-| Becky Buck | Design lead | Runs the design system + brand evolution. |
-| Anna | Consultant / acting Head of Design | Drives visual direction at the mock layer. Active collaborator on the repo and the Figma library since June 2026. |
-| Meng | VP, Platform Development | Owns the platform side of Hummingbird. |
-| Chuan | Platform team, reports to Meng | Confirms prototypes for visual + intent fit. |
-
 ## Tech stack
 
 Next.js + shadcn/ui + Tailwind CSS · color via CSS custom properties (no hardcoded hex) · Vercel hosting · Figma (shadcn base, re-skinned to Brightseed) · GitHub (`github.com/buckup-design/Brightseed`).
