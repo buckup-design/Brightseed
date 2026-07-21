@@ -95,7 +95,3 @@ Alpha, in active development, and honest about which is which.
 - Accessibility is an intent, not a verified property. `@storybook/addon-a11y` is wired up and ARIA is written deliberately, but nothing here has had an expert audit.
 - Forking `ui/` bought full token control at the cost of free upstream fixes. Accessibility patches and Radix bumps to a forked primitive now have to be hand-merged.
 - There is no test suite. At this stage the review surface is Storybook plus a Vercel preview, which is a deliberate trade for prototyping speed — and a decision worth revisiting as the product firms up.
-
----
-
-Built by [Becky Buck](https://github.com/buckup-design) as a pro bono engagement with Brightseed.
