@@ -1,45 +1,101 @@
-# Brightseed Design System
+# Quill
 
-A three-layer design token system for Hummingbird, Brightseed's biotech compound-screening application. Built on shadcn/ui + Tailwind, with one base palette mapped through CSS variables and full light/dark theming.
+**The design system behind Hummingbird, Brightseed's compound-discovery application.**
+
+Quill is a Brightseed-skinned fork of [shadcn/ui](https://ui.shadcn.com): a three-tier CSS-variable token system, a component library, and the application blocks composed from it.
+
+It is built to be **prototyped against by prompting**. The token vocabulary and component API are shaped so that an AI assistant assembles a screen out of components that already exist — already on-brand, already themed, already handling their own states — instead of inventing a new button every time. The constraint is the point: a small, closed, greppable vocabulary is what makes generated UI reviewable.
+
+**Live component library → [brightseed-storybook.vercel.app](https://brightseed-storybook.vercel.app)**
 
 ## Where the truth lives
 
-This README orients; it does not duplicate. For anything specific, go to the source, those can't go stale:
+This README orients; it does not duplicate. For anything specific, go to the source — those can't go stale:
 
-- **Token names + values** → the CSS in `tokens/` (`primitives.css`, `semantics.css`, `shape.css`, `charts.css`, `typography.css`). Import `index.css` to get everything.
-- **How components look** → the live library at https://brightseed-storybook.vercel.app (every variant + state, both themes).
-- **Rules + conventions** → `CLAUDE.md` (the canonical rules doc). Don't rely on rule statements copied into other files.
+| Question | Source |
+|---|---|
+| What tokens exist, and what are their values? | the CSS in [`tokens/`](tokens/) |
+| What does a component look like, in every variant and state? | [the live Storybook](https://brightseed-storybook.vercel.app) |
+| What are the rules and conventions? | [`CLAUDE.md`](CLAUDE.md) |
+| How do design and engineering hand off? | [`collaboration/`](collaboration/) |
 
-## The three layers
+When a doc disagrees with `tokens/*.css` or Storybook, the running system wins.
+
+## The token architecture
+
+Three tiers. Each may reference only the tier above it, and the prefix encodes the tier — so the discipline is greppable rather than a matter of convention:
 
 ```
-Primitives  →  Semantics  →  Components
---p-color-lime-300   →   --ds-color-action-primary   →   bg-[var(--ds-color-action-primary)]
+--p-color-lime-300            #CDE67B                          primitive — a raw value
+    ↓
+--ds-color-action-primary     var(--p-color-lime-300)          semantic — named for UI function
+    ↓
+--c-button-action-primary     var(--ds-color-action-primary)   component-scoped
+    ↓
+bg-[var(--c-button-action-primary)]                            what button.tsx actually writes
 ```
 
-- **Primitives** (`--p-{type}-*`), raw values, organized by type. The palette. Never used in components.
-- **Semantics** (`--ds-*`), named for UI function; the only layer that touches primitives. (The old separate "intents" tier is merged into this layer.)
-- **Components:** component code references the semantic layer only. Optional `--c-{component}-*` escape hatch for a local value with no semantic home.
+Two rules carry it:
 
-## Using it in a Next.js + shadcn project
+1. **Component code references only `--c-{component}-*`** — never a global `--ds-*`, never a primitive, never a raw value.
+2. **Each `--c-*` definition aliases exactly one global `--ds-*`.** Component tokens are aliases, not new values, so the palette can't quietly fork.
+
+Why a third tier rather than using semantics directly: it gives every component a small, self-describing vocabulary (`--c-button-*`, `--c-alert-*`) that is closed and enumerable. A violation becomes a string match instead of a judgment call — `grep 'var(--ds-' components/ui/` should return nothing, and today it does. That checkability is what makes the system safe to point an LLM at. Definitions live in [`tokens/components.css`](tokens/components.css), one block per component, generated from each component's actual usage.
+
+**Light-first, one code path.** Dark theme swaps the semantic tier under `[data-theme="dark"]`. Component tokens resolve `var(--ds-*)` at point of use, so the swap flows straight through — there is no dark-mode-specific component code anywhere in the system.
+
+## Running it
+
+```bash
+cd web && npm install
+npm run storybook   # component library, localhost:6006
+npm run dev         # the Next.js app, localhost:3000
+```
+
+Node 20+. `main` auto-deploys Storybook to Vercel.
+
+## Consuming the tokens
 
 ```css
-/* globals.css */
-@import '@/tokens/index.css';
-@import '@/bridge/globals.css';
+/* globals.css — @import statements must come first */
+@import "tailwindcss";
+@import "@/tokens/index.css";
+@import "@/bridge/globals.css";   /* only if you also use stock shadcn components */
 ```
 
-```ts
-/* tailwind config */
-darkMode: ['selector', '[data-theme="dark"]']
-```
-
-Toggle dark by setting `data-theme="dark"` on `<html>`. The semantic tokens swap underneath; you never write dark-specific component code.
+Toggle dark by setting `data-theme="dark"` on `<html>`.
 
 ## Repo map
 
-- `tokens/`, the token CSS (source of truth for names + values).
-- `bridge/globals.css`, maps Brightseed tokens onto shadcn's variable names.
-- `web/`, the Next.js + Storybook app (production). `tokens/` and `bridge/` here are symlinks to the root copies.
-- `CLAUDE.md`, canonical rules, conventions, and current status.
-- Storybook (https://brightseed-storybook.vercel.app), the live design-system handoff: Getting Started, Foundations, Design.mdx, Components.
+| Path | What it is |
+|---|---|
+| [`tokens/`](tokens/) | The token CSS. Source of truth for every name and value. |
+| [`web/`](web/) | Next.js 16 + Tailwind 4 + Storybook 10. `tokens/` and `bridge/` here are symlinks to the root copies. |
+| `web/components/ui/` | The forked shadcn primitives — 43 components, each reading its own `--c-*` tokens. |
+| `web/components/quill/` | Application compositions: app shell, team switcher, settings, feedback, account menu, nav lists. |
+| `web/components/hummingbird/` | Product surfaces: the workspace canvas, result cards, report document. |
+| `web/stories/` | Storybook — 65 stories, plus the Foundations and guidelines pages. |
+| [`bridge/globals.css`](bridge/globals.css) | Maps Brightseed tokens onto stock shadcn variable names. Now nearly vestigial: `ui/` no longer routes through it. |
+| [`DOCS/`](DOCS/) | The Hummingbird object model, prototyping notes, tickets, and archived decisions. |
+| [`collaboration/`](collaboration/) | How exploration, prototyping, review, and merge fit together. |
+| [`CLAUDE.md`](CLAUDE.md) | Canonical rules, conventions, and current status. |
+
+## State of things
+
+Alpha, in active development, and honest about which is which.
+
+**Settled** — the token system and dark theme; all 43 `ui/` primitives migrated onto component-scoped tokens; the application shell, sidebar, settings, and dialog patterns.
+
+**In flight** — the Hummingbird product surfaces (workspace canvas, result detail, report document). These live under **WORK IN PROGRESS** in the Storybook sidebar and are promoted to `Components/` or `Blocks/` only once reviewed.
+
+**Not yet built** — a prototyping data layer (mock API or fixtures) so prototypes can render realistic data without a backend. This is the next meaningful unlock.
+
+**Known gaps**, stated plainly because they're the useful thing to review:
+
+- Accessibility is an intent, not a verified property. `@storybook/addon-a11y` is wired up and ARIA is written deliberately, but nothing here has had an expert audit.
+- Forking `ui/` bought full token control at the cost of free upstream fixes. Accessibility patches and Radix bumps to a forked primitive now have to be hand-merged.
+- There is no test suite. At this stage the review surface is Storybook plus a Vercel preview, which is a deliberate trade for prototyping speed — and a decision worth revisiting as the product firms up.
+
+---
+
+Built by [Becky Buck](https://github.com/buckup-design) as a pro bono engagement with Brightseed.
