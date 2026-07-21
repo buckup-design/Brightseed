@@ -197,7 +197,7 @@ const MOBILE_VIEWPORT = {
 /**
  * Below md the sidebar is a Sheet, and its only close control is the toggle in
  * its own header. This is the composition the desktop stories never showed —
- * the gap that let the phantom-tap bug ship (DOCS/tickets/sidebar-mobile-phantom-tap.md).
+ * the gap that let the phantom-tap bug ship.
  *
  * Locked to a phone width so useIsMobile() trips and the Sheet mounts. The play
  * function opens it and asserts the in-Sheet toggle is SOLID (opacity 1), not

@@ -76,7 +76,7 @@ Toggle dark by setting `data-theme="dark"` on `<html>`.
 | `web/components/hummingbird/` | Product surfaces: the workspace canvas, result cards, report document. |
 | `web/stories/` | Storybook — 65 stories, plus the Foundations and guidelines pages. |
 | [`bridge/globals.css`](bridge/globals.css) | Maps Brightseed tokens onto stock shadcn variable names. Now nearly vestigial: `ui/` no longer routes through it. |
-| [`DOCS/`](DOCS/) | The Hummingbird object model, prototyping notes, tickets, and archived decisions. |
+| [`DOCS/`](DOCS/) | The Hummingbird object model, prototyping notes, and archived decisions. |
 | [`collaboration/`](collaboration/) | How exploration, prototyping, review, and merge fit together. |
 | [`CLAUDE.md`](CLAUDE.md) | Canonical rules, conventions, and current status. |
 

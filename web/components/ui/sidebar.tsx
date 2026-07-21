@@ -305,7 +305,7 @@ function SidebarToggle({
         // this toggle is the *only* visible way to close the nav (the Sheet's own
         // X is hidden by [&>button]:hidden on SheetContent). Left at opacity 0 it
         // becomes an invisible-but-tappable phantom in the nav header. So on
-        // mobile it renders solid. Closes DOCS/tickets/sidebar-mobile-phantom-tap.md.
+        // mobile it renders solid.
         !isMobile &&
           cn(
             "opacity-0 transition-opacity duration-300 motion-reduce:transition-none",

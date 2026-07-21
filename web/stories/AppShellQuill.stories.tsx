@@ -186,7 +186,7 @@ const MOBILE_VIEWPORT = {
 /**
  * Below md the sidebar renders inside a Sheet — the composition neither
  * Components/Sidebar nor the desktop App Shell story ever exercised, which is
- * exactly how the phantom-tap bug shipped (DOCS/tickets/sidebar-mobile-phantom-tap.md).
+ * exactly how the phantom-tap bug shipped.
  *
  * This story locks the preview to a phone width so useIsMobile() trips and that
  * Sheet mounts, then drives the real path: the inset header's opener (the only
