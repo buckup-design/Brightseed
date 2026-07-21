@@ -94,7 +94,7 @@ Color scale names: forest, lime, sand, cyan, blue, yellow, orange, lavender, orc
 | DoseResponseChart, StatCard | 🔲 API spec done, impl pending |
 | Prototyping-data layer — decided **Full MSW**, client cut landed July 21 2026. Disposable `web/mocks/` (a fake `/api/*` backend over the existing fixtures) + a permanent `web/lib/api.ts` fetch client + `web/hooks/use-resource.ts`. Wired into Storybook (`.storybook/preview.ts`: direct worker start + a loader that applies per-story `parameters.msw.handlers` — **not** `msw-storybook-addon`, whose SB10 support is unconfirmed) and `next dev` (client `MSWProvider` + the `/workspace` route). Proof: `WORK IN PROGRESS/Workspace (Connected)` (Default/Loading/Empty/Error) with an on-demand detail fetch — `WorkspaceCanvas.resolveDetail` went **async** (Sheet shows a Spinner while it resolves). `tokens/` stays SoT; the seam is delete-`mocks/`-and-point-`lib/api.ts`-at-a-host. **Deferred fast-follow:** RSC/server fetches (`mocks/server.ts` + root `instrumentation.ts`) | ✅ Client cut complete |
 | Brand evolution / color studies, icon system (line-art, hummingbird) | 🔲 In progress |
-| BrightseedLogo canonical vectors; Tiempos Headline license; Tiempos webfont domain confirm (ask Meng); Input `size` prop; Figma `--c-*` mirror + Code Connect (parked, no trigger, see Figma section) | 🔲 Deferred / open |
+| BrightseedLogo canonical vectors; Tiempos Headline license; Input `size` prop; Figma `--c-*` mirror + Code Connect (parked, no trigger, see Figma section) | 🔲 Deferred / open |
 | Onboard Anna as collaborator (GitHub + Storybook + Figma) | ✅ GitHub + Storybook done June 3, 2026 (both now multi-contributor); co-editing the Library Figma file. See `collaboration/` |
 
 ---
@@ -109,7 +109,7 @@ Color scale names: forest, lime, sand, cyan, blue, yellow, orange, lavender, orc
 | `README.md` | Short orientation pointing to CSS + Storybook. |
 | `web/` | Next.js 16 + Tailwind 4 + Storybook 10 production app. `tokens/` + `bridge/` here are symlinks to root. |
 | `web/components/quill/` | Quill-owned app compositions (app shell, team switcher, footer account menu, settings, feedback). Reads `--c-*` only, same discipline as `ui/`, and explicitly **not** bridge-themed. |
-| `collaboration/` | Internal: workflow + Anna onboarding. |
+| `collaboration/` | How exploration, prototyping, review, and merge fit together, plus machine + push-access setup. |
 | `DOCS/archive/` | Superseded docs kept for the record, each with a header saying what replaced it. Not a reference. |
 | `DESIGN.md` | **Canonical design guidance**, in the [Google design.md format](https://github.com/google-labs-code/design.md): YAML front matter carrying machine-readable tokens for coding agents, plus the prose guidance. Repo root is where the format expects it. Storybook's `Design.mdx` page renders this file rather than duplicating it, so the two cannot drift — edit here, never there. Verify changes with `npx @google/design.md lint DESIGN.md`. |
 
@@ -168,7 +168,7 @@ Exposed in the web app as **three separate components** — `Chip`, `Tag`, `Numb
 
 ## Figma, canonical references & quirks
 
-**Figma's role (decided June 7, 2026): sketchpad, not spec.** Figma is for brand evolution, color studies, and Anna's fast loose exploration. The system of record for components, tokens, and screens is Storybook + the `tokens/` CSS. Consequences: the component-token tier (`--c-*`) is **not** mirrored into Figma variables, and Code Connect stays parked, neither has a revival trigger. A Figma mock is an input to a code prototype, never a spec to match pixel-for-pixel.
+**Figma's role (decided June 7, 2026): sketchpad, not spec.** Figma is for brand evolution, color studies, and fast loose exploration. The system of record for components, tokens, and screens is Storybook + the `tokens/` CSS. Consequences: the component-token tier (`--c-*`) is **not** mirrored into Figma variables, and Code Connect stays parked, neither has a revival trigger. A Figma mock is an input to a code prototype, never a spec to match pixel-for-pixel.
 
 **File:** `Brightseed Library (BB+AM collab)`, key `0zRpsdiJxOtnOoXEAeLPwA` (current canonical, June 3 2026 onward; updated version of v3, co-edited by Becky + Anna). WIP happens in `Collab Playground`, key `P3ZaaH0lNgFzBbQROvTK4L`. Prior v3 file `shadcn Brightseed v3 (with pro blocks)` (key `ZZPjoeJ447MWuzNi3LL1BL`) is superseded; node IDs below carried over from it (Brightseed Blocks `26465:212221` matches both), re-verify any ID that doesn't resolve in the Library file.
 
