@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/accordion";
 import { FavoriteButton } from "@/components/ui/favorite-button";
 import { ScoreMeter } from "@/components/ui/score-meter";
+import { Spinner } from "@/components/ui/spinner";
 import {
   Sheet,
   SheetContent,
@@ -117,7 +118,12 @@ export function ResultDetailSheet({
   onFavorite,
   onGenerateReport,
 }: {
-  detail: ResultDetail;
+  /**
+   * The resolved detail, or `null` while it's still being fetched. The seam is
+   * async now (a card open kicks off a fetch), so the sheet opens immediately
+   * into a loading state and fills in when the detail lands.
+   */
+  detail: ResultDetail | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   /** Pin state — controlled, owned by the app (as the results grid owns it). */
@@ -126,6 +132,29 @@ export function ResultDetailSheet({
   /** Mints a report from this result — the bridge to the Reports tab. */
   onGenerateReport?: () => void;
 }) {
+  // Loading state: the sheet is open but the detail hasn't resolved yet. A
+  // SheetTitle is still required for Radix's a11y contract, so give it a real
+  // (visible) "Loading details…" heading over a centered spinner.
+  if (!detail) {
+    return (
+      <Sheet open={open} onOpenChange={onOpenChange}>
+        <SheetContent side="right" className="w-full gap-0 p-0 sm:max-w-lg">
+          <SheetHeader className="shrink-0 gap-3 border-b border-[var(--ds-color-border-subtle)] pr-12">
+            <SheetTitle className="text-base leading-tight">
+              Loading details…
+            </SheetTitle>
+            <SheetDescription className="sr-only">
+              Fetching result detail
+            </SheetDescription>
+          </SheetHeader>
+          <div className="flex flex-1 items-center justify-center p-10">
+            <Spinner className="size-6" />
+          </div>
+        </SheetContent>
+      </Sheet>
+    );
+  }
+
   const { Icon, iconClass, scoreLabel } = TYPE_CONFIG[detail.type];
 
   return (

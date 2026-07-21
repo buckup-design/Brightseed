@@ -42,7 +42,10 @@ const meta = {
   args: {
     messages: SAMPLE_WORKSPACE_THREAD,
     results: SAMPLE_WORKSPACE_RESULTS,
-    resolveDetail: resolveWorkspaceDetail,
+    // resolveDetail is the async fetch seam; this presentational story resolves
+    // straight from the fixture (see Workspace (Connected) for the MSW-backed
+    // version that fetches /api/results/:key on open).
+    resolveDetail: async (result) => resolveWorkspaceDetail(result),
     searchesCompleted: 1,
     updateCount: SAMPLE_WORKSPACE_RESULTS.length,
     onGenerateReport: (detail) => toast(`Generating report for “${detail.name}”…`),

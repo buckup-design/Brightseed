@@ -41,6 +41,7 @@
 @source "../stories/**/*.{ts,tsx,mdx}";
 @source "../lib/**/*.{ts,tsx}";
 @source "../hooks/**/*.{ts,tsx}";
+@source "../mocks/**/*.{ts,tsx}";
 
 @custom-variant dark (&:is([data-theme="dark"] *));
 

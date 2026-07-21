@@ -15,6 +15,19 @@ const nextConfig: NextConfig = {
    * longer lints at all, so the old ignoreDuringBuilds escape hatch is moot.
    */
   typescript: { ignoreBuildErrors: true },
+
+  /*
+   * NOTE: `npm run dev` / `build` pass `--webpack` (see package.json) rather
+   * than using the Next 16 default, Turbopack. Turbopack refuses to resolve any
+   * file whose realpath escapes the project root, and `web/tokens` + `web/bridge`
+   * are symlinks into the repo root (../tokens, ../bridge) that `app/globals.css`
+   * @imports — so Turbopack panics ("leaves the filesystem root") and 500s every
+   * route. The obvious `turbopack: { root: "../" }` fix works but widens the dev
+   * file-watcher to the whole parent tree (incl. web/node_modules), which OOM'd
+   * the machine. Webpack follows the symlinks with the root left at web/ (node_
+   * modules excluded from watch) — same reason Storybook's Vite build already
+   * works. tokens/ stays the single source of truth; no CSS is copied.
+   */
 };
 
 export default nextConfig;

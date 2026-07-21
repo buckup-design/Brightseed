@@ -101,7 +101,7 @@ Color scale names: forest, lime, sand, cyan, blue, yellow, orange, lavender, orc
 | Infra: Vercel auto-deploys `main` → https://brightseed-storybook.vercel.app | ✅ In sync |
 | Hummingbird surfaces (Compound/Plant/Strategy cards) | 🟡 To be re-derived on `ui/` primitives |
 | DoseResponseChart, StatCard | 🔲 API spec done, impl pending |
-| Prototyping-data layer for code prototypes (MSW vs static fixtures); the unlock that makes code prototypes credible and Figma a sketchpad | 🔲 Next investment (unparked June 7, 2026) |
+| Prototyping-data layer — decided **Full MSW**, client cut landed July 21 2026. Disposable `web/mocks/` (a fake `/api/*` backend over the existing fixtures) + a permanent `web/lib/api.ts` fetch client + `web/hooks/use-resource.ts`. Wired into Storybook (`.storybook/preview.ts`: direct worker start + a loader that applies per-story `parameters.msw.handlers` — **not** `msw-storybook-addon`, whose SB10 support is unconfirmed) and `next dev` (client `MSWProvider` + the `/workspace` route). Proof: `WORK IN PROGRESS/Workspace (Connected)` (Default/Loading/Empty/Error) with an on-demand detail fetch — `WorkspaceCanvas.resolveDetail` went **async** (Sheet shows a Spinner while it resolves). `tokens/` stays SoT; the seam is delete-`mocks/`-and-point-`lib/api.ts`-at-a-host. **Deferred fast-follow:** RSC/server fetches (`mocks/server.ts` + root `instrumentation.ts`) | ✅ Client cut complete |
 | Brand evolution / color studies, icon system (line-art, hummingbird) | 🔲 In progress |
 | BrightseedLogo canonical vectors; Tiempos Headline license; Tiempos webfont domain confirm (ask Meng); Input `size` prop; Figma `--c-*` mirror + Code Connect (parked, no trigger, see Figma section) | 🔲 Deferred / open |
 | Onboard Anna as collaborator (GitHub + Storybook + Figma) | ✅ GitHub + Storybook done June 3, 2026 (both now multi-contributor); co-editing the Library Figma file. See `collaboration/` |
@@ -202,6 +202,8 @@ Next.js 16 (App Router) + Tailwind 4 + Storybook 10, deployed to Vercel, **produ
 - **The whole `ui/` layer must now be defended on every install, not just Button + Badge** (see the Defend gotcha below). The corollary is that Quill no longer takes upstream shadcn fixes for free — a11y patches and Radix bumps to a forked primitive have to be hand-merged. `ui/sidebar.tsx` is the extreme case: it shares nothing with upstream but the name.
 
 **Run (local, from the `~/dev/Brightseed` clone):** `cd ~/dev/Brightseed/web && npm install`, then `npm run storybook` (6006, the default preview surface) or `npm run dev` (3000). In Cowork/Claude Code, prefer `preview_start name=brightseed-storybook` (config in the Cowork-root `.claude/launch.json`). Don't run from the Documents copy — TCC blocks preview there (rule 8).
+
+**`npm run dev` / `build` pass `--webpack` (July 21 2026), not the Next 16 default (Turbopack).** Turbopack refuses to resolve any import whose realpath escapes the project root, and `web/tokens` + `web/bridge` are symlinks into the repo root that `app/globals.css` `@import`s — so Turbopack 500s every route (`"leaves the filesystem root"`). Webpack follows the symlinks with the root left at `web/`. The obvious `turbopack: { root: "../" }` fix also works but widens Turbopack's file-watcher to the whole parent tree (incl. `web/node_modules`) and OOM'd the machine — **do not re-add it** (noted in `next.config.ts`). Storybook (Vite) is unaffected — it ignores `next.config.ts` and already follows the symlinks.
 
 **Pro Block install pattern:**
 ```bash

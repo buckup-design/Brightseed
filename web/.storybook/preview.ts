@@ -1,6 +1,22 @@
 import type { Preview } from "@storybook/nextjs-vite";
 import "../app/globals.css";
 import React from "react";
+import { worker } from "../mocks/browser";
+
+/*
+ * Mock Service Worker, wired directly (no msw-storybook-addon).
+ *
+ * The addon's Storybook-10 support is unconfirmed (SB10 is ESM-only), and its
+ * two moving parts are small enough to inline: start the worker once here, and
+ * a loader that resets to the default handlers + applies any per-story override
+ * from `parameters.msw.handlers`. Storybook serves public/ (staticDirs), so
+ * /mockServiceWorker.js resolves. onUnhandledRequest:"bypass" lets the font
+ * CDN, static assets, and HMR through untouched.
+ */
+const workerStarted =
+  typeof window !== "undefined"
+    ? worker.start({ onUnhandledRequest: "bypass", quiet: true })
+    : Promise.resolve(undefined);
 
 /*
  * Geist + Geist Mono load via .storybook/preview-head.html (Google Fonts CDN),
@@ -15,6 +31,17 @@ import React from "react";
  */
 
 const preview: Preview = {
+  loaders: [
+    async (context) => {
+      await workerStarted;
+      worker.resetHandlers();
+      const extra = context.parameters?.msw?.handlers;
+      if (Array.isArray(extra) && extra.length > 0) {
+        worker.use(...extra);
+      }
+      return {};
+    },
+  ],
   parameters: {
     // Sidebar order. Without this, Storybook falls back to default ordering and
     // the sections land alphabetically. Pinning the order puts the intro doc

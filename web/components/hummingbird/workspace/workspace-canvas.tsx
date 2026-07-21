@@ -68,11 +68,15 @@ export interface WorkspaceCanvasProps {
   results: Result[];
   /**
    * Resolve a studied result to its detail for the slide-over. Predicted results
-   * are never passed here (they have no detail). Returning undefined leaves the
-   * card non-navigating (a missing detail never opens an empty Sheet). This is
-   * the seam an app swaps a fetch into.
+   * are never passed here (they have no detail). Resolving to undefined leaves
+   * the card non-navigating (a missing detail never opens an empty Sheet).
+   *
+   * Async: this IS the fetch seam. On open the sheet shows a loading state until
+   * the promise settles. A synchronous source can wrap in `async () => value`.
    */
-  resolveDetail: (result: SingleResult | ComboResult) => ResultDetail | undefined;
+  resolveDetail: (
+    result: SingleResult | ComboResult,
+  ) => Promise<ResultDetail | undefined>;
   /** Breadcrumb: "Workspace › N searches completed". */
   searchesCompleted?: number;
   /** Replaces the results with a "Preparing workspace…" state. */
@@ -156,15 +160,25 @@ export function WorkspaceCanvas({
   );
 
   const handleSelect = React.useCallback(
-    (result: Result) => {
+    async (result: Result) => {
       // Predicted results are unstudied — no detail exists, so the card is
-      // non-navigating (its favorite star still works). Guard resolveDetail too,
-      // so a missing detail never opens an empty Sheet.
+      // non-navigating (its favorite star still works).
       if (result.type === "predicted") return;
-      const resolved = resolveDetail(result);
-      if (!resolved) return;
-      setDetail(resolved);
+      // Open immediately into the loading state (detail = null), then fetch.
+      setDetail(null);
       setDetailOpen(true);
+      try {
+        const resolved = await resolveDetail(result);
+        // Resolving to undefined (or a fetch error) means "no detail" — close
+        // rather than leave an empty Sheet open.
+        if (!resolved) {
+          setDetailOpen(false);
+          return;
+        }
+        setDetail(resolved);
+      } catch {
+        setDetailOpen(false);
+      }
     },
     [resolveDetail],
   );
@@ -245,16 +259,20 @@ export function WorkspaceCanvas({
       )}
 
       {/* Mounted once, portaled to body — the reused slide-over, not a third
-          panel. Rendered only when a detail exists; the sheet's Pin reads the
-          same favorites Set (keyed by detail.name === resultKey). */}
-      {detail && (
+          panel. Mounted while open (so the loading state shows before the
+          detail resolves) or while a detail lingers through the close
+          animation. The Pin reads the same favorites Set (detail.name ===
+          resultKey); during loading (detail null) those controls are absent. */}
+      {(detailOpen || detail) && (
         <ResultDetailSheet
           detail={detail}
           open={detailOpen}
           onOpenChange={setDetailOpen}
-          favorited={favoritedIds.has(detail.name)}
-          onFavorite={(favorited) => toggleFavoriteKey(detail.name, favorited)}
-          onGenerateReport={() => onGenerateReport?.(detail)}
+          favorited={detail ? favoritedIds.has(detail.name) : false}
+          onFavorite={(favorited) =>
+            detail && toggleFavoriteKey(detail.name, favorited)
+          }
+          onGenerateReport={() => detail && onGenerateReport?.(detail)}
         />
       )}
     </div>
