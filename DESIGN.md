@@ -2,6 +2,195 @@
 version: alpha
 name: Hummingbird
 description: Brightseed Bio's design system for Hummingbird, a calm, credible, efficient UI for biotech discovery. Three-tier tokens (primitive, semantic, component), light and dark, WCAG 2.1 AA floor.
+
+# Values below are the LIGHT theme and are generated from tokens/*.css, which
+# remains the source of truth. Dark theme swaps the same semantic names under
+# [data-theme="dark"]; see the Colors section. Token names mirror the --ds-*
+# semantic tier with the prefix dropped.
+colors:
+  # The spec's recommended vocabulary, mapped onto Brightseed's roles, so an
+  # agent that reaches for a conventional name lands on the right value.
+  primary: "#CDE67B"        # lime-300, the primary action surface
+  secondary: "#f3f2ec"      # sand-100, secondary action surface
+  tertiary: "#305536"       # forest-900, the brand surface
+  neutral: "#f3f2ec"        # sand-100, alt/neutral surface
+  surface: "#ffffff"
+  on-surface: "#46453f"     # sand-800, default body text
+  error: "#a00020"          # red-700
+
+  # Brightseed's own semantic names, mirroring the --ds-* tier.
+  surface-default: "#ffffff"
+  surface-alt: "#f3f2ec"
+  surface-field: "#F9F8F3"
+  surface-brand: "#305536"
+  surface-brand-subtle: "#eefbf1"
+  action-primary: "#CDE67B"
+  action-primary-hover: "#b8d258"
+  action-primary-active: "#a1b833"
+  action-secondary: "#f3f2ec"
+  action-critical: "#ffe6e2"
+  text-default: "#46453f"
+  text-subtle: "#68665e"
+  text-inverse: "#F9F8F3"
+  text-on-action-primary: "#3f6947"
+  text-link: "#0059b8"
+  text-link-brand: "#3f6947"
+  border-default: "#dddbcf"
+  border-subtle: "#eae8df"
+  border-bold: "#aeab9e"
+  border-focus: "#aeab9e"
+  ring-focus: "color-mix(in srgb, #a1b833 12%, transparent)"
+  surface-success: "#eefbf1"
+  surface-info: "#eef8ff"
+  surface-warning: "#faf9e4"
+  surface-critical: "#fff3f0"
+  text-success: "#46764f"
+  text-info: "#00448c"
+  text-warning: "#7d6c00"
+  text-critical: "#a00020"
+
+typography:
+  display-h1:
+    fontFamily: Tiempos Fine
+    fontSize: 56px
+    fontWeight: 400
+    lineHeight: 1.07
+    letterSpacing: -0.02em
+  display-h2:
+    fontFamily: Tiempos Fine
+    fontSize: 40px
+    fontWeight: 400
+    lineHeight: 1.1
+    letterSpacing: -0.015em
+  display-h3:
+    fontFamily: Tiempos Fine
+    fontSize: 28px
+    fontWeight: 400
+    lineHeight: 1.21
+    letterSpacing: -0.01em
+  body-md:
+    fontFamily: Geist
+    fontSize: 16px
+    fontWeight: 400
+    lineHeight: 1.5
+  body-sm:
+    fontFamily: Geist
+    fontSize: 14px
+    fontWeight: 400
+    lineHeight: 1.43
+  label-md:
+    fontFamily: Geist
+    fontSize: 14px
+    fontWeight: 500
+    lineHeight: 1.43
+  data-md:
+    fontFamily: Geist Mono
+    fontSize: 14px
+    fontWeight: 400
+    lineHeight: 1.43
+
+rounded:
+  none: 0px
+  2xs: 2px
+  xs: 4px
+  sm: 6px
+  md: 8px
+  lg: 10px
+  xl: 14px
+  2xl: 18px
+  3xl: 22px
+  4xl: 26px
+  full: 9999px
+
+spacing:
+  base: 4px
+  "0": 0px
+  "1": 4px
+  "2": 8px
+  "3": 12px
+  "4": 16px
+  "5": 20px
+  "6": 24px
+  "8": 32px
+  "10": 40px
+  "12": 48px
+  "16": 64px
+  "20": 80px
+  "24": 96px
+
+components:
+  button-primary:
+    backgroundColor: "{colors.action-primary}"
+    textColor: "{colors.text-on-action-primary}"
+    rounded: "{rounded.md}"
+  button-primary-hover:
+    backgroundColor: "{colors.action-primary-hover}"
+  button-primary-active:
+    backgroundColor: "{colors.action-primary-active}"
+  button-secondary:
+    backgroundColor: "{colors.action-secondary}"
+    textColor: "{colors.text-default}"
+    rounded: "{rounded.md}"
+  button-destructive:
+    backgroundColor: "{colors.action-critical}"
+    textColor: "{colors.text-critical}"
+    rounded: "{rounded.md}"
+  tag:
+    backgroundColor: "{colors.surface-alt}"
+    textColor: "{colors.text-default}"
+    rounded: "{rounded.2xs}"
+  chip:
+    backgroundColor: "{colors.surface-alt}"
+    textColor: "{colors.text-default}"
+    rounded: "{rounded.full}"
+  input:
+    backgroundColor: "{colors.surface-field}"
+    textColor: "{colors.text-default}"
+    rounded: "{rounded.md}"
+  card:
+    backgroundColor: "{colors.surface-default}"
+    textColor: "{colors.text-default}"
+    rounded: "{rounded.lg}"
+  dialog:
+    backgroundColor: "{colors.surface-default}"
+    rounded: "{rounded.xl}"
+  link:
+    textColor: "{colors.text-link}"
+  linktext:
+    textColor: "{colors.text-link-brand}"
+  sidebar:
+    backgroundColor: "{colors.surface-default}"
+    textColor: "{colors.text-subtle}"
+  sidebar-item-selected:
+    backgroundColor: "{colors.surface-brand-subtle}"
+    textColor: "{colors.text-link-brand}"
+  topbar-brand:
+    backgroundColor: "{colors.surface-brand}"
+    textColor: "{colors.text-inverse}"
+  alert-success:
+    backgroundColor: "{colors.surface-success}"
+    textColor: "{colors.text-success}"
+    rounded: "{rounded.md}"
+  alert-info:
+    backgroundColor: "{colors.surface-info}"
+    textColor: "{colors.text-info}"
+    rounded: "{rounded.md}"
+  alert-warning:
+    backgroundColor: "{colors.surface-warning}"
+    textColor: "{colors.text-warning}"
+    rounded: "{rounded.md}"
+  alert-critical:
+    backgroundColor: "{colors.surface-critical}"
+    textColor: "{colors.text-critical}"
+    rounded: "{rounded.md}"
+  table:
+    backgroundColor: "{colors.surface-default}"
+    textColor: "{colors.text-default}"
+    rounded: "{rounded.none}"
+  tooltip:
+    backgroundColor: "{colors.surface-brand}"
+    textColor: "{colors.text-inverse}"
+    rounded: "{rounded.sm}"
 ---
 
 # Design Guidelines
@@ -316,7 +505,8 @@ All corner radii reference the shape token ladder. Never hardcode pixel values o
 | Token                       | Value  | Typical use                                        |
 | --------------------------- | ------ | -------------------------------------------------- |
 | `--ds-shape-radius-none`    | 0px    | Table rows, flush-edge elements                    |
-| `--ds-shape-radius-xs`      | 2px    | Tight Tag badges (informational)                   |
+| `--ds-shape-radius-2xs`     | 2px    | Tight Tag badges (informational), dialog close, tooltip arrow |
+| `--ds-shape-radius-xs`      | 4px    | Checkbox                                           |
 | `--ds-shape-radius-sm`      | 6px    | Small chips, tooltips, popovers                    |
 | `--ds-shape-radius-md`      | 8px    | Buttons (default/sm/lg/icon), inputs, cards, alerts|
 | `--ds-shape-radius-lg`      | 10px   | Larger cards, panels                               |
@@ -432,7 +622,7 @@ Hummingbird-specific constraints on the shared components. Appearance lives in S
 - **Button:** never override `bg-*` / `text-*` via `className` (the bridge handles color); use the `disabled` prop, never reach for `-disabled` tokens in component code.
 - **Link vs Linktext:** never use a Button for an inline text link; never use a Link for a standalone CTA. Two components, two state machines.
 - **Input / Textarea / Select:** signal errors with `aria-invalid="true"`, not by changing the border color directly.
-- **Badge:** three separate components share one styling engine. **`Chip`** is the interactive pill (`rounded-full`, hover + focus); **`Tag`** is informational/static (tight 2px radius `--ds-shape-radius-xs`, no hover or focus, never interactive); **`NumberBadge`** is the count chip. Reach for these by component (`<Chip>`, `<Tag>`, `<NumberBadge>`), not the underlying `Badge` engine. Don't give Chip or Tag the button radius (it reads as a button), and don't wire a click handler onto a Tag.
+- **Badge:** three separate components share one styling engine. **`Chip`** is the interactive pill (`rounded-full`, hover + focus); **`Tag`** is informational/static (tight 2px radius `--ds-shape-radius-2xs`, no hover or focus, never interactive); **`NumberBadge`** is the count chip. Reach for these by component (`<Chip>`, `<Tag>`, `<NumberBadge>`), not the underlying `Badge` engine. Don't give Chip or Tag the button radius (it reads as a button), and don't wire a click handler onto a Tag.
 - **Card:** padding `p-4` (dense panels) or `p-6` (primary content); never nest a Card in a Card; use `--ds-color-surface-alt` for inset content.
 - **Dialog vs Sheet:** Dialog for confirmations and short forms (≤4 fields); Sheet for side panels with more context (`side="right"` only).
 - **Skeleton:** use for all loading states; match the skeleton's dimensions to the content it replaces.

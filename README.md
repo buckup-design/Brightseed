@@ -16,6 +16,7 @@ This README orients; it does not duplicate. For anything specific, go to the sou
 |---|---|
 | What tokens exist, and what are their values? | the CSS in [`tokens/`](tokens/) |
 | What does a component look like, in every variant and state? | [the live Storybook](https://brightseed-storybook.vercel.app) |
+| What's the design guidance, and what should an agent read? | [`DESIGN.md`](DESIGN.md) |
 | What are the rules and conventions? | [`CLAUDE.md`](CLAUDE.md) |
 | How do design and engineering hand off? | [`collaboration/`](collaboration/) |
 
@@ -69,6 +70,7 @@ Toggle dark by setting `data-theme="dark"` on `<html>`.
 
 | Path | What it is |
 |---|---|
+| [`DESIGN.md`](DESIGN.md) | Design guidance in the [Google design.md format](https://github.com/google-labs-code/design.md) — machine-readable tokens in front matter, rationale in prose. What a coding agent reads. Storybook renders this file; it isn't duplicated. |
 | [`tokens/`](tokens/) | The token CSS. Source of truth for every name and value. |
 | [`web/`](web/) | Next.js 16 + Tailwind 4 + Storybook 10. `tokens/` and `bridge/` here are symlinks to the root copies. |
 | `web/components/ui/` | The forked shadcn primitives — 43 components, each reading its own `--c-*` tokens. |

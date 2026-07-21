@@ -120,7 +120,7 @@ Color scale names: forest, lime, sand, cyan, blue, yellow, orange, lavender, orc
 | `web/components/quill/` | Quill-owned app compositions (app shell, team switcher, footer account menu, settings, feedback). Reads `--c-*` only, same discipline as `ui/`, and explicitly **not** bridge-themed. |
 | `collaboration/` | Internal: workflow + Anna onboarding. |
 | `DOCS/archive/` | Superseded docs kept for the record, each with a header saying what replaced it. Not a reference. |
-| `DOCS/DESIGN.mdx` | Storybook design guidelines (symlink to `web/stories/DesignGuidelines.mdx`). |
+| `DESIGN.md` | **Canonical design guidance**, in the [Google design.md format](https://github.com/google-labs-code/design.md): YAML front matter carrying machine-readable tokens for coding agents, plus the prose guidance. Repo root is where the format expects it. Storybook's `Design.mdx` page renders this file rather than duplicating it, so the two cannot drift — edit here, never there. Verify changes with `npx @google/design.md lint DESIGN.md`. |
 
 ---
 
