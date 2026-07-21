@@ -4,7 +4,7 @@
  * SettingsModal — the large settings surface behind "Settings" in the sidebar
  * footer menu. A subcomponent of AppShellQuill (Blocks/App Shell Quill).
  *
- * Per Anna's sketches (Collab Playground 89:1597 Profile, 89:1693 Account),
+ * Per the proposal sketches (Collab Playground 89:1597 Profile, 89:1693 Account),
  * which are patterned on Claude's own settings modal (86:1539, 89:1548): a
  * search-topped left rail of grouped sections, a wide content pane, X to close.
  *

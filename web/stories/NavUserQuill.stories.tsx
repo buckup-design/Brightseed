@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/sidebar";
 
 /* ─────────────────────────────────────────────────────────────────────────
- * The sidebar footer account menu, per Anna's proposal (Collab Playground
+ * The sidebar footer account menu, per the app-shell proposal (Collab Playground
  * 89:1547 → 89:1596, July 16 2026). The Pro Block nav-user it replaces is gone,
  * deleted with App Shell 4 and the stock sidebar.
  *
@@ -20,7 +20,7 @@ import {
  *   - Menu: email header, then Settings / (Get help, Give feedback) / Teams /
  *     Version + Log out. The separators are the sketch's grouping.
  *   - Teams EXPANDS into the instance list rather than navigating — hover it.
- *     That is the Team Switcher, reached from here (Becky, July 16 2026).
+ *     That is the Team Switcher, reached from here (July 16 2026).
  *   - Email and Version are readouts: sand-700 at weight 200, no role, no
  *     hover, no focus, and they do not close the menu.
  *

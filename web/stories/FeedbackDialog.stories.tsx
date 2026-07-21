@@ -8,7 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 /* ─────────────────────────────────────────────────────────────────────────
- * The feedback dialog, per Anna's spec sketch (Collab Playground 89:1549).
+ * The feedback dialog, per the spec sketch (Collab Playground 89:1549).
  * Raised from "Give feedback" in the sidebar footer menu; replaces the green
  * bubble pinned to the bottom-right of every screen in live Hummingbird.
  *

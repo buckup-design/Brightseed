@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 /* ─────────────────────────────────────────────────────────────────────────
- * The settings modal, per Anna's sketches (Collab Playground 89:1597 Profile,
+ * The settings modal, per the proposal sketches (Collab Playground 89:1597 Profile,
  * 89:1693 Account), patterned on Claude's own settings (86:1539). A subcomponent
  * of Blocks/App Shell Quill — the account menu's "Settings" raises it.
  *

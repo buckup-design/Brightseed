@@ -3,7 +3,7 @@
 /**
  * FeedbackDialog — "Give feedback" from the sidebar footer menu.
  *
- * Per Anna's spec sketch (Collab Playground 89:1549). Two annotations bound it:
+ * Per the spec sketch (Collab Playground 89:1549). Two annotations bound it:
  *   - "Topics: General Feedback, Bug Report, Feature Request, Usability Issue"
  *   - "ignore emojis. text input only"
  *

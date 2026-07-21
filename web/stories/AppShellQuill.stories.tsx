@@ -27,11 +27,11 @@ const TEAMS: Team[] = [
 ];
 
 /* ─────────────────────────────────────────────────────────────────────────
- * The Hummingbird app shell, assembled from Anna's proposal (Collab Playground
- * 88:1547). Successor to Blocks/App Shell 4 — open both side by side; App Shell
- * 4 retires once this one is signed off.
+ * The Hummingbird app shell, assembled from the app-shell proposal (Collab
+ * Playground 88:1547). Successor to Blocks/App Shell 4 — open both side by
+ * side; App Shell 4 retires once this one is signed off.
  *
- * Built on sidebar-alt1 (Becky, July 16 2026), so collapsing SWAPS two
+ * Built on sidebar-alt1 (July 16 2026), so collapsing SWAPS two
  * compositions rather than morphing one. The rail is a designed artifact, not a
  * squeezed panel: labels, the wordmark and the account name are absent from it
  * rather than clipped inside it.

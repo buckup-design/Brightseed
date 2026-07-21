@@ -3,15 +3,15 @@
 /**
  * NavUserQuill — the sidebar footer account menu.
  *
- * Successor to pro-blocks/application/nav-user.tsx, per Anna's proposal sketch
+ * Successor to pro-blocks/application/nav-user.tsx, per the app-shell proposal
  * (Collab Playground 89:1596, July 16 2026). Three things change from the Pro
  * Block it replaces:
  *
  *   1. The trigger shows the display name alone, not name-over-email. The email
  *      moves into the menu header, where it is read rather than scanned.
- *   2. The affordance is a down chevron. Anna's sketch annotated "use kebob dots
- *      as the icon affordance" and it shipped as a kebab; Becky's later call
- *      (July 18 2026) swaps it for a down chevron, which reads as "opens a menu"
+ *   2. The affordance is a down chevron. The sketch annotated "use kebob dots
+ *      as the icon affordance" and it shipped as a kebab; a later call
+ *      (July 18 2026) swapped it for a down chevron, which reads as "opens a menu"
  *      rather than "more actions" — right for a single account menu.
  *   3. The menu is Hummingbird's actual IA. Upgrade to Pro / Account / Billing /
  *      Notifications are gone — none of them exist in this product — and
@@ -217,8 +217,8 @@ export function NavUserQuill({
 
             <DropdownMenuSeparator />
             {/* Not a DropdownMenuItem — Teams expands into the instance list in
-             * place. Anna's annotation on 89:1560 says this row IS the instance
-             * switcher ("shown as 'Teams' in app shell 4"); Becky's call was
+             * place. The annotation on 89:1560 says this row IS the instance
+             * switcher ("shown as 'Teams' in app shell 4"); the decision was
              * that it links to the switcher rather than opening a fourth
              * surface, and that the header keeps the Brightseed mark. */}
             <TeamSwitcherMenuSub

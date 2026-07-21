@@ -4,10 +4,10 @@
  * TeamSwitcher — pick the active instance.
  *
  * Descends from the Pro Block of the same name, which lived in App Shell 4's
- * sidebar header and died with the stock sidebar (July 16 2026). Restored on
- * Becky's call, with two things changed:
+ * sidebar header and died with the stock sidebar (July 16 2026). Restored
+ * deliberately, with two things changed:
  *
- *   1. It is no longer a header widget. Anna's sketch moves instance switching
+ *   1. It is no longer a header widget. The sketch moves instance switching
  *      into the account menu's "Teams" row (annotation on 89:1560: "this is the
  *      instance switcher component, shown as 'Teams' in app shell 4"), and the
  *      shell's header keeps the Brightseed mark. So the switcher's home is the
