@@ -36,3 +36,6 @@ node_modules/
 .env*
 *.log
 .DS_Store
+
+# Agent scratch context (superseded by CLAUDE.md + memory/)
+.agents/

@@ -14,7 +14,7 @@ The deliverable is **the workflow** as much as the design system: an end-to-end 
 
 ## Memory pointer
 
-- `memory/`, memory-management format: `glossary.md`, `people/`, `projects/`, `context/`.
+- `memory/` (local only, not in the repo), memory-management format: `glossary.md`, `people/`, `projects/`, `context/`.
 
 Tiered lookup: this file → `memory/glossary.md` → `memory/people|projects|context/`. If a term isn't in any of those, ask.
 
@@ -119,7 +119,7 @@ Color scale names: forest, lime, sand, cyan, blue, yellow, orange, lavender, orc
 | `web/` | Next.js 16 + Tailwind 4 + Storybook 10 production app. `tokens/` + `bridge/` here are symlinks to root. |
 | `web/components/quill/` | Quill-owned app compositions (app shell, team switcher, footer account menu, settings, feedback). Reads `--c-*` only, same discipline as `ui/`, and explicitly **not** bridge-themed. |
 | `collaboration/` | Internal: workflow + Anna onboarding. |
-| `brightseed-shadcn-mapping.md` | Figma variable-collection wiring guide. |
+| `DOCS/archive/` | Superseded docs kept for the record, each with a header saying what replaced it. Not a reference. |
 | `DOCS/DESIGN.mdx` | Storybook design guidelines (symlink to `web/stories/DesignGuidelines.mdx`). |
 | `DOCS/tickets/` | Filed bugs that need their own pass. One line of context each, enough to act without the originating conversation. |
 
@@ -132,7 +132,7 @@ Color scale names: forest, lime, sand, cyan, blue, yellow, orange, lavender, orc
 3. **Line-art visual style:** icons/illustration are clean line art, never 3D or filled.
 4. **Never hand-roll an SVG glyph.** Use the approved icon library (Storybook → Foundations → Icons). Not in the inventory → flag it, don't improvise paths.
 5. **Hummingbird is alpha**, a small number of customer POCs. Speed of prototyping > code quality. Heavy review tooling / AI code-review actions / formal PR review are premature. **Hold the line only on brand quality + token discipline:** code cleanliness underneath can be loose.
-6. **Document as you go.** Name things clearly and keep work documentable, what was the problem, what was tried, what was chosen.
+6. **Document as you go.** Name things clearly and keep work legible to an outside reader: what was the problem, what was tried, what was chosen.
 7. **GitHub management is Claude's job, not Becky's.** Don't ask her to copy URLs or click through Settings. Claude has working git credentials in the `~/dev/Brightseed` clone (`gh` authed as `buckup-design`, osxkeychain helper) — commit, push, branch, and use `gh` directly. (The `plugin:engineering:github` MCP had an OAuth bug Cowork's SDK can't speak; use git + `gh` from the clone, not that flow.)
 8. **Work from `~/dev/Brightseed`, never the Documents copy.** macOS TCC blocks the Claude Preview MCP inside `~/Documents/CLAUDE COWORK/…`, so the live working copy is the `~/dev/Brightseed` clone (same pattern as the Portfolio site and Varo) — edit, run, preview, commit, and push from there. The Documents copy is a stale reference kept only because Cowork auto-loads its `CLAUDE.md`; treat `~/dev` as canonical. Both point at the same `buckup-design/Brightseed` remote. Fresh-machine setup: `cd ~/dev/Brightseed/web && npm install`.
 9. **Default to local preview; push to `main` at checkpoints.** Work like the Portfolio site: iterate in the working tree and verify each change in the local Storybook (`preview_start name=brightseed-storybook`, port 6006; or `npm run storybook` from `web/`) before claiming done. Batch a handful of changes, then commit + push to `main` only when Becky says ship — `main` auto-deploys to https://brightseed-storybook.vercel.app. Running locally on the Mac, verification is now trustworthy (no Linux-sandbox caveat). New components still land in WORK IN PROGRESS (rule 10), and `main` stays the convergence gate (`collaboration/workflow.md`).
