@@ -12,7 +12,7 @@ The goal: exploration, prototyping, and review of Hummingbird screens can happen
 | **Becky** | The design system, tokens, components, brand discipline. The gate on what gets systematized. Reconciling Anna's explorations into the canonical system | Slowing Anna's exploration down to system speed |
 | **Claude** | Plumbing, GitHub, branches, scaffolding, token work, accuracy passes, the prototyping loop's mechanics | Brand/visual judgment calls (those are yours) |
 
-The principle underneath: **exploration diverges, the system converges.** Exploration is deliberately unconstrained; the design-system owner decides what is load-bearing enough to enter the system. Exploration is not expected to happen inside components - the system exists precisely so it does not have to.
+The principle underneath: **exploration diverges, the system converges.** Exploration is deliberately unconstrained; the design-system owner decides what's load-bearing enough to enter the system. Exploration is not expected to happen inside components — the system exists precisely so it doesn't have to.
 
 ## The change lifecycle
 
