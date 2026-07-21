@@ -1,8 +1,10 @@
 # Hummingbird, Object Model & IA
 
-**Status:** First pass, Apr 29 2026
+**Status:** Placeholder DRAFT, Apr 29, 2026
 
-This doc locks the names, hierarchy, and relationships of the top-level objects in Hummingbird. It exists to unblock UX team from itterating on the "app shell" (meaning: navigaion patterns, breadcrumbs, icon systems, and copy decisions). When something is unresolved, it lives in **Open questions** at the bottom rather than being decided here.
+> **Treat this as a working hypothesis, not a specification.** It was reverse-engineered from draft mocks, and much of it is probably wrong or already out of date. It stands in until the real product documentation is available, at which point that supersedes this entirely. Don't cite it as authoritative, and don't let a naming decision rest on it alone.
+
+This doc proposes names, hierarchy, and relationships for the top-level objects in Hummingbird. It exists to unblock the UX team from iterating on the "app shell" (meaning: navigation patterns, breadcrumbs, icon systems, and copy decisions). When something is unresolved, it lives in **Open questions** at the bottom rather than being decided here.
 
 Field-level details (like what's in a Strategy, what's on a Project, what's on a Sample Group) is captured here when it's been confirmed in mocks; component specs live elsewhere.
 
