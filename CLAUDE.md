@@ -4,7 +4,7 @@
 
 ## What this project is
 
-A pro bono engagement to build **Quill**, an AI-ready design system, and evolve the visual brand for **Hummingbird**, Brightseed's biotech compound-screening application. The deliverable is a production design system Brightseed's team can build on. The design bar is high: Hummingbird is an enterprise product and needs to look like one.
+This project builds **Quill**, an AI-ready design system, and evolves the visual brand for **Hummingbird**, Brightseed's biotech compound-screening application. The deliverable is a production design system Brightseed's team can build on. The design bar is high: Hummingbird is an enterprise product and needs to look like one.
 
 **Naming:** **Quill** = the design system (this project's deliverable). **Hummingbird** = the Brightseed application that Quill skins. **Forager** = the AI discovery model that powers Hummingbird. In these docs, "screens / surfaces / regions / the product UI" means Hummingbird; "the model / discovery engine" means Forager.
 
@@ -22,7 +22,7 @@ Tiered lookup: this file → `memory/glossary.md` → `memory/people|projects|co
 
 | Person | Role | Notes |
 |---|---|---|
-| Becky Buck | Design lead (pro bono) | Runs the design system + brand evolution. |
+| Becky Buck | Design lead | Runs the design system + brand evolution. |
 | Anna | Consultant / acting Head of Design | Drives visual direction at the mock layer. Active collaborator on the repo and the Figma library since June 2026. |
 | Meng | VP, Platform Development | Owns the platform side of Hummingbird. |
 | Chuan | Platform team, reports to Meng | Confirms prototypes for visual + intent fit. |
