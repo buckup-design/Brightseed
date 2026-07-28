@@ -78,7 +78,7 @@
   --ds-color-surface-selected:        var(--p-color-blue-50);             /* selected row / focused item, blue-50 */
   --ds-color-surface-selected-hover:  var(--p-color-blue-100);
   --ds-color-surface-selected-active: var(--p-color-blue-200);
-  --ds-color-surface-selected-brand:  var(--p-color-lime-50);  /* brand-tinted selection (nav active item), lime-50 */
+  --ds-color-surface-selected-brand:  var(--p-color-lime-75);  /* brand-tinted selection (nav active item), lime-75 muted mint */
 
   /* ── Action ── */
   /* Disabled rule (uniform across all Button variants):

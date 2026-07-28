@@ -30,6 +30,9 @@
 
   /* ── Lime (brand action, anchor at 400) ── */
   --p-color-lime-50:  #f2fde0;
+  --p-color-lime-75:  #e8f1da;  /* muted mint, nav-selection pill only. Intentionally lower-chroma
+                                   and a touch darker than lime-100 (L94.5 C0.032 vs L96 C0.065), so
+                                   it is NOT a pure ramp step, do not "correct" it to interpolate. */
   --p-color-lime-100: #e9faca;
   --p-color-lime-200: #e0f6ab;
   --p-color-lime-300: #CDE67B;  /* Retuned Apr 2026, was #CAE279. Adjusted to pass WCAG AA with forest-800 text (4.57:1). lime-300 is now the default surface of the lime button. */
