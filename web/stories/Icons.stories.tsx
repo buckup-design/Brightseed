@@ -12,6 +12,7 @@ import {
   CompoundBadge,
   HummingbirdLine,
   HummingbirdFill,
+  HummingbirdFilledWing,
   PlantBadge,
   RatBadge,
 } from "@/components/ui/badge-icons";
@@ -85,6 +86,7 @@ const CUSTOM_ICONS: IconEntry[] = [
   { name: "CompoundBadge", Comp: CompoundBadge, scale: "badge" },
   { name: "HummingbirdLine", Comp: HummingbirdLine, scale: "app" },
   { name: "HummingbirdFill", Comp: HummingbirdFill, scale: "app" },
+  { name: "HummingbirdFilledWing", Comp: HummingbirdFilledWing, scale: "app" },
   { name: "PlantBadge", Comp: PlantBadge, scale: "badge" },
   { name: "RatBadge", Comp: RatBadge, scale: "badge" },
 ];
@@ -288,6 +290,10 @@ export const AppScaleGlyphs: Story = {
         {[
           { label: "Hummingbird (line)", node: <HummingbirdLine className="size-6" /> },
           { label: "Hummingbird (fill)", node: <HummingbirdFill className="size-6" /> },
+          {
+            label: "Hummingbird (filled wing)",
+            node: <HummingbirdFilledWing className="size-6" />,
+          },
           { label: "Cow", node: <Cow className="size-6" /> },
           { label: "Compound (multiple)", node: <CompoundMultiple className="size-6" /> },
           { label: "Compound (single)", node: <CompoundSingle className="size-6" /> },
