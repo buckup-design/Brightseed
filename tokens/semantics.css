@@ -33,6 +33,19 @@
   --ds-color-surface-default-active:  var(--p-color-sand-200);
   --ds-color-surface-alt:             var(--p-color-sand-100);      /* sidebar, table alt rows, inset panels */
   --ds-color-surface-alt-hover:       var(--p-color-sand-200);
+  /* RAISED — a card lifted off the page, plus the nested ladder that goes with it.
+     In LIGHT all three are identical to their surface-default/alt counterparts, so
+     this is a dark-only change by construction (same pattern as border-field).
+
+     Why -raised-alt exists at all: surface-alt means "one step up from the PAGE".
+     Once a card is itself lifted, a chip or footer inside it needs "one step up
+     from the CARD" — and in dark those are different values. Without this, a
+     sand-900 surface-alt chip on a sand-850 card renders DARKER than the card it
+     sits in, inverting the elevation. Use -raised-alt for fills nested inside a
+     Card; keep plain -alt for fills sitting directly on the page or canvas. */
+  --ds-color-surface-raised:          var(--p-color-white);         /* = surface-default in light */
+  --ds-color-surface-raised-alt:      var(--p-color-sand-100);      /* = surface-alt in light */
+  --ds-color-surface-raised-alt-hover: var(--p-color-sand-200);     /* = surface-alt-hover in light */
   /* Field fill (input / textarea / input-group). A field reads as a lighter
      inset than the muted panel it sits on and BRIGHTENS on hover — the opposite
      direction to surface-default's hover, because a field is a well you reach
@@ -384,8 +397,15 @@
   --ds-color-surface-default:         var(--p-color-sand-950);       /* #1F1F1E, page bg */
   --ds-color-surface-default-hover:   var(--p-color-sand-900);
   --ds-color-surface-default-active:  var(--p-color-sand-800);
-  --ds-color-surface-alt:             var(--p-color-sand-900);       /* raised panels, sidebars, cards */
+  --ds-color-surface-alt:             var(--p-color-sand-900);       /* raised panels, sidebars, fills ON the page */
   --ds-color-surface-alt-hover:       var(--p-color-sand-800);
+  /* The dark elevation ladder: page sand-950 → card sand-850 → nested-in-card
+     sand-800. Note sand-850 is LIGHTER than surface-alt (sand-900), which is why
+     nested fills must move to -raised-alt rather than staying on -alt; see the
+     light block for the full reasoning. */
+  --ds-color-surface-raised:          var(--p-color-sand-850);       /* #353430, lifts off the sand-950 page */
+  --ds-color-surface-raised-alt:      var(--p-color-sand-800);       /* chips/footers inside a raised card */
+  --ds-color-surface-raised-alt-hover: var(--p-color-sand-700);
   /* One step lighter than surface-alt (sand-900) at rest, one more on hover —
      see the light block for the reasoning. */
   --ds-color-surface-field:           var(--p-color-sand-800);

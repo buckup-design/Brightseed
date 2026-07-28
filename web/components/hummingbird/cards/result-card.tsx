@@ -149,7 +149,9 @@ const PILL_BASE = cn(
 // onSelect is absent (a non-navigating card, e.g. predicted) it renders as a
 // static span so it isn't a focusable no-op stop for keyboard / SR users.
 function TargetPill({ label, onSelect }: { label: string; onSelect?: () => void }) {
-  const surface = "bg-[var(--ds-color-surface-alt)] text-[var(--ds-color-text-default)]";
+  // -raised-alt, not -alt: this pill sits inside a Card, which is itself lifted in
+  // dark. Plain surface-alt would render darker than the card behind it.
+  const surface = "bg-[var(--ds-color-surface-raised-alt)] text-[var(--ds-color-text-default)]";
   if (!onSelect) {
     return <span className={cn(PILL_BASE, surface)}>{label}</span>;
   }
@@ -157,7 +159,7 @@ function TargetPill({ label, onSelect }: { label: string; onSelect?: () => void 
     <button
       type="button"
       onClick={onSelect}
-      className={cn(PILL_BASE, surface, "hover:bg-[var(--ds-color-surface-alt-hover)]")}
+      className={cn(PILL_BASE, surface, "hover:bg-[var(--ds-color-surface-raised-alt-hover)]")}
     >
       {label}
     </button>
@@ -248,10 +250,11 @@ export function ResultCard({
         "rounded-[var(--ds-shape-radius-md)] border border-[var(--ds-color-border-subtle)]",
         "shadow-[var(--ds-shadow-xs)] transition-[border-color,box-shadow] duration-[120ms]",
         "hover:border-[var(--ds-color-border-default)] hover:shadow-[var(--ds-shadow-sm)]",
-        // PREDICTED gets a faint forest body tint; others sit on plain white.
+        // PREDICTED gets a faint forest body tint; others sit on the raised card
+        // surface (white in light, sand-850 in dark so the card lifts off the page).
         isPredicted
           ? "bg-[var(--ds-color-surface-success)]"
-          : "bg-[var(--ds-color-surface-default)]",
+          : "bg-[var(--ds-color-surface-raised)]",
         className,
       )}
       {...props}
@@ -316,7 +319,7 @@ export function ResultCard({
           {categories.map((c) => (
             <span
               key={c}
-              className="inline-flex h-5 items-center rounded-full bg-[var(--ds-color-surface-alt)] px-2 text-[11px] font-medium text-[var(--ds-color-text-subtle)]"
+              className="inline-flex h-5 items-center rounded-full bg-[var(--ds-color-surface-raised-alt)] px-2 text-[11px] font-medium text-[var(--ds-color-text-subtle)]"
             >
               {c}
             </span>
@@ -334,7 +337,7 @@ export function ResultCard({
       {/* ── Footer: ScoreMeter (left) + evidence chip (right) ─────────────────
           mt-auto pins it to the card bottom, so in a stretch-height grid every
           footer lines up even when cards carry different content above. */}
-      <div className="-mx-4 -mb-4 mt-auto flex h-14 items-center gap-3 rounded-b-[var(--ds-shape-radius-md)] border-t border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-alt)] px-4">
+      <div className="-mx-4 -mb-4 mt-auto flex h-14 items-center gap-3 rounded-b-[var(--ds-shape-radius-md)] border-t border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-raised-alt)] px-4">
         <div className="min-w-0 flex-1">
           <ScoreMeter
             value={result.score}

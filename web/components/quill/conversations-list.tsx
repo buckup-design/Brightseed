@@ -167,7 +167,7 @@ export function ConversationsList({
                     onClick={() => onOpen?.(conversation)}
                     className="absolute inset-0 rounded-[var(--c-conversations-list-shape-radius-md)] outline-none focus-visible:ring-[2px] focus-visible:ring-[var(--c-conversations-list-border-focus)]/50"
                   />
-                  <div className="pointer-events-none flex size-9 shrink-0 items-center justify-center rounded-[var(--c-conversations-list-shape-radius-md)] bg-[var(--c-conversations-list-surface-alt)] text-[var(--c-conversations-list-text-subtle)]">
+                  <div className="pointer-events-none flex size-9 shrink-0 items-center justify-center rounded-[var(--c-conversations-list-shape-radius-md)] bg-[var(--c-conversations-list-surface-raised-alt)] text-[var(--c-conversations-list-text-subtle)]">
                     <MessageSquare className="size-5" />
                   </div>
                   <div className="pointer-events-none min-w-0 flex-1 space-y-0.5">

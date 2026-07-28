@@ -159,7 +159,7 @@
   --c-card-border-default:     var(--ds-color-border-default);
   --c-card-shadow-sm:          var(--ds-shadow-sm);
   --c-card-shape-radius-xl:    var(--ds-shape-radius-xl);
-  --c-card-surface-default:    var(--ds-color-surface-default);
+  --c-card-surface-default:    var(--ds-color-surface-raised);
   --c-card-text-default:       var(--ds-color-text-default);
   --c-card-text-subtle:        var(--ds-color-text-subtle);
 
@@ -280,7 +280,7 @@
 
   /* --c-projects-list */
   --c-projects-list-shape-radius-md: var(--ds-shape-radius-md);
-  --c-projects-list-surface-alt:     var(--ds-color-surface-alt);
+  --c-projects-list-surface-alt:     var(--ds-color-surface-raised-alt);  /* the folder tile sits INSIDE a Card */
   --c-projects-list-text-default:    var(--ds-color-text-default);
   --c-projects-list-text-subtle:     var(--ds-color-text-subtle);
 
@@ -289,7 +289,11 @@
   --c-reports-list-border-focus:     var(--ds-color-border-focus);
   --c-reports-list-border-hover:     var(--ds-color-border-default-hover);
   --c-reports-list-shape-radius-md:  var(--ds-shape-radius-md);
+  /* Two contexts, two tokens (same split as --c-select-border-*): the empty-state
+     icon sits on the CANVAS, the per-row tile sits INSIDE a Card. In dark those
+     are different rungs, so one token cannot serve both. */
   --c-reports-list-surface-alt:      var(--ds-color-surface-alt);
+  --c-reports-list-surface-raised-alt: var(--ds-color-surface-raised-alt);
   --c-reports-list-text-default:     var(--ds-color-text-default);
   --c-reports-list-text-subtle:      var(--ds-color-text-subtle);
 
@@ -298,7 +302,9 @@
   --c-conversations-list-border-focus:    var(--ds-color-border-focus);
   --c-conversations-list-border-hover:    var(--ds-color-border-default-hover);
   --c-conversations-list-shape-radius-md: var(--ds-shape-radius-md);
+  /* Same two-context split as reports-list above. */
   --c-conversations-list-surface-alt:     var(--ds-color-surface-alt);
+  --c-conversations-list-surface-raised-alt: var(--ds-color-surface-raised-alt);
   --c-conversations-list-text-default:    var(--ds-color-text-default);
   --c-conversations-list-text-subtle:     var(--ds-color-text-subtle);
 
@@ -467,7 +473,10 @@
   --c-spinner-icon-subtle:    var(--ds-color-icon-subtle);
 
   /* --c-status-badge */
-  --c-status-badge-surface-neutral: var(--ds-color-surface-alt);
+  /* -raised-alt: the badge almost always sits inside a Card, and plain surface-alt
+     (sand-900) renders darker than a raised sand-850 card. Safe on the page too —
+     it just reads one rung higher there. */
+  --c-status-badge-surface-neutral: var(--ds-color-surface-raised-alt);
   --c-status-badge-text-neutral:    var(--ds-color-text-subtle);
   --c-status-badge-dot-neutral:     var(--ds-color-icon-subtle);
   --c-status-badge-surface-success: var(--ds-color-surface-success);

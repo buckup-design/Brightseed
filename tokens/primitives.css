@@ -54,6 +54,10 @@
   --p-color-sand-600: #8c897f;
   --p-color-sand-700: #68665e;
   --p-color-sand-800: #46453f;
+  --p-color-sand-850: #353430;  /* Raised card surface in dark. A deliberate HALF-step:
+                                   fills the wide sand-800 (L39) → sand-900 (L28) gap at
+                                   L32.5, keeping the ramp's warm chroma (C0.007). Only
+                                   sand carries half-steps; other scales stay 50–950. */
   --p-color-sand-900: #2a2925;
   --p-color-sand-950: #1F1F1E;
 
