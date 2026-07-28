@@ -53,12 +53,21 @@
      rest, one more on hover. */
   --ds-color-surface-field:           var(--p-color-sand-50);
   --ds-color-surface-field-hover:     var(--p-color-white);
-  /* Surface CANVAS — a warm tinted page base (light-mode only; the dark block
-     holds today's sand-950 page). On the canvas, cards paint the existing
-     surface-default (white) and fields the existing surface-field (sand-50), so
-     the surfaces read as a layered stack: sand-100 page → sand-50 field → white
-     card. Trialled on the Reports Block. */
-  --ds-color-surface-canvas:          var(--p-color-sand-100);
+  /* Surface CANVAS — a warm near-white page base (light-mode only; the dark block
+     holds the sand-950 page). Lifted sand-100 → sand-25 July 28 2026 for a
+     brighter, airier base.
+
+     This deliberately CHANGES the light stack, and the tradeoff is real. Before:
+     sand-100 page → sand-50 field → white card, a monotonic ladder where every
+     layer sat lighter than the one under it. Now the page is the brightest fill,
+     so the field (sand-50) reads as a recessed well rather than a lighter inset,
+     and a white card separates from the page by only 1.03:1 (was 1.12:1).
+
+     What carries the layout instead is the BORDER, which gets better on the
+     brighter base: sand-300 on sand-25 is 1.35:1, up from 1.24:1 on sand-100. So
+     cards and fields are now defined by edge, not by fill. Do not "fix" the field
+     back to a lighter-than-page value without re-deciding the whole stack. */
+  --ds-color-surface-canvas:          var(--p-color-sand-25);
   --ds-color-surface-scrim:           color-mix(in srgb, var(--p-color-sand-950) 50%, transparent);  /* modal / dialog veil, warm dark @ 50%, matches prior look */
   /* Sticky-chrome veil — distinct from surface-scrim above. The modal scrim
      DARKENS to push a dialog forward; this one is the PAGE colour at partial

@@ -45,6 +45,11 @@
   --p-color-lime-950: #212404;
 
   /* ── Sand (warm neutral surface, Sand at 50) ── */
+  --p-color-sand-25:  #fdfcf8;  /* Light canvas base. Computed, not eyeballed: OKLCH
+                                   L99.0 C0.005 H96 extends the ramp one step above
+                                   sand-50 (L97.9 C0.007) keeping its warm hue. The
+                                   eyeballed #fdfdfc was rejected — C0.001 H106 reads
+                                   faintly COLD against warm sand. */
   --p-color-sand-50:  #F9F8F3;  /* Sand, warm surface anchor */
   --p-color-sand-100: #f3f2ec;
   --p-color-sand-200: #eae8df;

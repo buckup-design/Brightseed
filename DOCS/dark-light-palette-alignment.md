@@ -1,9 +1,10 @@
 # Dark & Light Palette Alignment Plan
 
-> **Status:** Proposal, not yet applied. Drafted 2026-07-23 from the Figma "desired look and feel" board. No token files changed yet; no commits.
+> **Status:** Largely **applied** as of 2026-07-28. Drafted 2026-07-23 from the Figma "desired look and feel" board. The prose below is the original plan — where it disagrees with what shipped, the **Decisions** section at the bottom is authoritative, and `tokens/*.css` beats both.
 > **Source of truth reminder:** `tokens/*.css` + Storybook win. This doc is a plan; when it lands, delete the parts that become stale.
 >
-> **Decisions:** `lime-75` = `#e8f1da` **applied** (light nav selection). Dark field border → `sand-600` **applied** via a new `--ds-color-border-field` pair, verified in Storybook. Settled, not yet applied: `sand-25` = `#fdfcf8`. Still open: dark cards `sand-850`, AA stance.
+> **Applied:** `lime-75` light nav pill · dark field border `sand-600` (new `--ds-color-border-field` pair) · dark cards `sand-850` (new `--ds-color-surface-raised` + `-raised-alt`) · light canvas `sand-25`.
+> **Still open:** the dark canvas lift to `sand-900`; the AA stance; dark intent surfaces on raised cards.
 
 ## Where this came from
 
@@ -65,7 +66,7 @@ Takeaways, stated plainly:
 1. **The depth is real but gentle.** No two adjacent planes clear 3:1. It reads as depth because the ladder has *four* steps and because hue does work the luminance does not (the green selected label, the warm card). This is a legitimate, restrained approach. It is **not** WCAG 1.4.11 compliance for surface boundaries, and it should not be sold as such.
 2. **The input border is being lifted to `sand-600` (decided).** At 1.51:1 the composer fill does not separate from the canvas on its own, and in the desired dark screen its border is `sand-900` (*darker* than its `sand-800` fill), so it does nothing. A `sand-600` (`#8c897f`) border reads **4.16:1 against the canvas** it sits on (and 2.75:1 against the field interior): clearly findable, clears 3:1. `sand-600` is already the dark value of `--ds-color-border-bold`, so this needs no new primitive.
 3. **The light change is a lateral move, not a clear win.** Today's `sand-100` canvas gives white cards genuine separation (white on warm-gray). Lifting the canvas to near-white `#fdfdfc` is airier but drops card separation to **1.02:1**, leaning entirely on borders + shadows. Fine if "open and bright" is the goal; know the tradeoff going in.
-4. **`sand-25` may be unnecessary.** Since `#fdfdfc` is perceptually white and cooler than the ramp, consider using the existing **`sand-50`** (`#F9F8F3`, genuinely warm) for the light canvas instead of minting a near-duplicate-of-white primitive. Recommended.
+4. ~~**`sand-25` may be unnecessary.**~~ **Superseded.** This objection was against the *eyeballed* `#fdfdfc`, which was cold (C0.001, H106) and so read as a near-duplicate of white. The computed `#fdfcf8` (L99.0 **C0.005** H96) keeps the ramp's warm hue, which `sand-50` at L97.9 cannot do without also being visibly darker. `sand-25` was minted and applied.
 
 ## Proposed token edits
 
@@ -182,7 +183,10 @@ Also repoint the Quill composer's field border (in `components/quill/`) at `--ds
   - Swept the Workspace canvas in dark: **exactly one** element paints the new border (the composer). No collateral.
 
 **Settled, not yet applied:**
-- **`sand-25`** = `#fdfcf8` (OKLCH `L99.0 C0.005 H96`) for the light canvas.
+- **`sand-25` light canvas — APPLIED.** `--p-color-sand-25` = `#fdfcf8` (OKLCH `L99.0 C0.005 H96`); light `--ds-color-surface-canvas` moved `sand-100` → `sand-25`. Dark canvas untouched (still `sand-950`), so this is a light-only change.
+  - **It inverts the light stack, deliberately.** Before: `sand-100` page → `sand-50` field → white card, every layer lighter than the one beneath. Now the page is the brightest fill, so the field reads as a **recessed well** rather than a lighter inset, and a white card separates from the page by only **1.027:1** (measured; was 1.12:1).
+  - **What carries the layout instead is the border**, which improves on the brighter base: `sand-300` on `sand-25` is **1.354:1**, up from 1.24:1 on `sand-100`. Cards and fields are now defined by **edge, not fill**. Do not "fix" the field back to lighter-than-page without re-deciding the whole stack.
+  - Verified in Storybook light on Reports list and New chat; dark confirmed unchanged.
 
 - **`sand-850` dark cards — APPLIED.** New `--p-color-sand-850` (`#353430`) + a `--ds-color-surface-raised` role. Light is identical to `surface-default` (white), so dark-only by construction. Cards lifted: the `Card` primitive (reports / conversations / projects / report-document / login) and `ResultCard`'s non-predicted body.
   - **It could not be a one-line swap.** `--ds-color-surface-alt` (dark `sand-900`) means "one step up from the PAGE", and it is used for chips, footers and icon tiles *inside* cards. Because `sand-850` is **lighter** than `sand-900`, every one of those nested fills would have rendered **darker than the card containing it** — an elevation inversion, most visibly in ResultCard (pills + the ScoreMeter footer). So this adds a companion **`--ds-color-surface-raised-alt`** (dark `sand-800`, light `sand-100` = unchanged) for fills nested inside a raised card, giving a real dark ladder: page `sand-950` → card `sand-850` → nested `sand-800`.
