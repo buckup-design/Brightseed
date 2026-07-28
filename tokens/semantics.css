@@ -123,6 +123,12 @@
   --ds-color-border-default:          var(--p-color-sand-300);      /* input default */
   --ds-color-border-default-hover:    var(--p-color-sand-500);      /* input/select/textarea hover (one-step darken) */
   --ds-color-border-bold:             var(--p-color-sand-500);      /* emphatic dividers */
+  /* Text-entry + select boundary. Split off border-default July 2026 so dark can
+     lift the field edge without moving every hairline in the system. Light is
+     deliberately IDENTICAL to border-default — the lift is dark-only until the AA
+     stance is settled. See DOCS/dark-light-palette-alignment.md. */
+  --ds-color-border-field:            var(--p-color-sand-300);      /* = border-default; light unchanged */
+  --ds-color-border-field-hover:      var(--p-color-sand-500);      /* = border-default-hover */
   /* Focus rings, variant-aware. Default is neutral sand — the lime focus ring
      was retuned out July 2026 ("focus green too heavy"). Destructive keeps its
      own hue scale; secondary is sand. Linktext matches Default (kept as a
@@ -452,6 +458,13 @@
   --ds-color-border-default:          var(--p-color-sand-700);
   --ds-color-border-default-hover:    var(--p-color-sand-600);
   --ds-color-border-bold:             var(--p-color-sand-600);
+  /* Fields lift a rung above border-default so an input is findable on the dark
+     canvas. sand-600 reads 4.71:1 on today's sand-950 canvas (sand-700 was 2.87:1,
+     under 3:1) and 4.16:1 if the canvas later lifts to sand-900. Hover must be its
+     own step: border-default-hover is ALREADY sand-600, so reusing it here would
+     leave rest and hover identical and kill the hover signal. */
+  --ds-color-border-field:            var(--p-color-sand-600);      /* #8c897f */
+  --ds-color-border-field-hover:      var(--p-color-sand-500);      /* 7.16:1, a clear rung above rest */
   /* Focus rings, only Secondary changes in dark mode (sand step shifts).
      Default/Destructive/Link-Brand are theme-invariant per Figma. */
   --ds-color-border-focus-secondary:  var(--p-color-sand-500);      /* sand/500, matches Figma colors/ring-dark */

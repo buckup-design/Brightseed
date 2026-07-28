@@ -6,8 +6,8 @@ import { cn } from "@/lib/utils"
  * Textarea, Brightseed Quill design system.
  *
  * Color tokens (via the component tier, --c-textarea-*):
- *   Border resting      → --ds-color-border-default
- *   Border hover        → --ds-color-border-default-hover
+ *   Border resting      → --ds-color-border-field       (sand-300 light / sand-600 dark)
+ *   Border hover        → --ds-color-border-field-hover (sand-500 both themes)
  *   Border focus        → --ds-color-border-focus  (sand-500, neutral)
  *   Ring focus          → --ds-color-ring-focus    (faint lime whisper, 2px)
  *   Border/ring invalid → --ds-color-border-critical-bold

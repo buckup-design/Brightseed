@@ -14,7 +14,8 @@ import { cn } from "@/lib/utils"
  * aliases exactly one global --ds-* semantic in tokens/components.css.
  *
  * Mechanical re-plumb, no redesign. Bridge equivalences applied:
- *   border-input / border-border / bg-border → --c-select-border-default
+ *   border-input (trigger)      → --c-select-border-field  (→ --ds-color-border-field)
+ *   border-border / bg-border   → --c-select-border-default (popover edge + separator)
  *   ring-ring / border-ring                  → --c-select-border-focus
  *   bg-popover / text-popover-foreground     → --c-select-surface-default / -text-default
  *   text-muted-foreground                    → --c-select-text-subtle
@@ -62,9 +63,9 @@ function SelectTrigger({
         // panel it sits on; see --ds-color-surface-field.
         "bg-[var(--c-select-surface-field)] shadow-[var(--c-select-shadow-xs)]",
         "rounded-[var(--c-select-shape-radius-md)]",
-        "border border-[var(--c-select-border-default)]",
+        "border border-[var(--c-select-border-field)]",
         // Hover: border deepens (resting only) and the field brightens one step.
-        "enabled:hover:not-focus-visible:not-aria-invalid:border-[var(--c-select-border-default-hover)]",
+        "enabled:hover:not-focus-visible:not-aria-invalid:border-[var(--c-select-border-field-hover)]",
         "enabled:hover:bg-[var(--c-select-surface-field-hover)]",
         // Focus
         "focus-visible:border-[var(--c-select-border-focus)]",

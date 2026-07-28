@@ -166,7 +166,7 @@
   /* --c-checkbox */
   --c-checkbox-border-critical-bold:           var(--ds-color-border-critical-bold);
   --c-checkbox-action-primary:            var(--ds-color-action-primary);
-  --c-checkbox-border-default:            var(--ds-color-border-default);
+  --c-checkbox-border-default:            var(--ds-color-border-field);
   --c-checkbox-border-focus:              var(--ds-color-border-focus);
   --c-checkbox-surface-default:           var(--ds-color-surface-field);
   --c-checkbox-surface-hover:             var(--ds-color-surface-field-hover);
@@ -225,8 +225,8 @@
   /* --c-input */
   --c-input-border-critical-bold:           var(--ds-color-border-critical-bold);
   --c-input-action-primary:            var(--ds-color-action-primary);
-  --c-input-border-default:            var(--ds-color-border-default);
-  --c-input-border-default-hover:      var(--ds-color-border-default-hover);
+  --c-input-border-default:            var(--ds-color-border-field);
+  --c-input-border-default-hover:      var(--ds-color-border-field-hover);
   --c-input-border-focus:              var(--ds-color-border-focus);
   --c-input-ring-focus:                var(--ds-color-ring-focus);
   --c-input-surface-default:           var(--ds-color-surface-field);
@@ -240,7 +240,7 @@
 
   /* --c-input-group */
   --c-input-group-border-critical-bold:    var(--ds-color-border-critical-bold);
-  --c-input-group-border-default:     var(--ds-color-border-default);
+  --c-input-group-border-default:     var(--ds-color-border-field);
   --c-input-group-border-focus:       var(--ds-color-border-focus);
   --c-input-group-ring-focus:         var(--ds-color-ring-focus);
   --c-input-group-surface-default:    var(--ds-color-surface-field);
@@ -271,7 +271,7 @@
   --c-nav-user-text-subtle:        var(--ds-color-text-subtle);
 
   /* --c-new-chat */
-  --c-new-chat-border-default:     var(--ds-color-border-default);
+  --c-new-chat-border-default:     var(--ds-color-border-field);
   --c-new-chat-border-focus:       var(--ds-color-border-focus);
   --c-new-chat-ring-focus:         var(--ds-color-ring-focus);
   --c-new-chat-shape-radius-md:    var(--ds-shape-radius-md);
@@ -371,8 +371,13 @@
 
   /* --c-select */
   --c-select-border-critical-bold:         var(--ds-color-border-critical-bold);
+  /* Two different jobs, deliberately two tokens: -border-default is the dropdown
+     POPOVER edge + the in-menu separator (a hairline, stays with every other
+     popover); -border-field is the TRIGGER, which is a field and lifts with the
+     rest of them in dark. Matches this block's existing surface-field naming. */
   --c-select-border-default:          var(--ds-color-border-default);
-  --c-select-border-default-hover:    var(--ds-color-border-default-hover);
+  --c-select-border-field:            var(--ds-color-border-field);
+  --c-select-border-field-hover:      var(--ds-color-border-field-hover);
   --c-select-border-focus:            var(--ds-color-border-focus);
   --c-select-ring-focus:              var(--ds-color-ring-focus);
   --c-select-disabled-text-opacity: var(--ds-disabled-text-opacity);
@@ -501,8 +506,8 @@
 
   /* --c-textarea */
   --c-textarea-border-critical-bold:         var(--ds-color-border-critical-bold);
-  --c-textarea-border-default:          var(--ds-color-border-default);
-  --c-textarea-border-default-hover:    var(--ds-color-border-default-hover);
+  --c-textarea-border-default:          var(--ds-color-border-field);
+  --c-textarea-border-default-hover:    var(--ds-color-border-field-hover);
   --c-textarea-border-focus:            var(--ds-color-border-focus);
   --c-textarea-ring-focus:              var(--ds-color-ring-focus);
   --c-textarea-surface-default:         var(--ds-color-surface-field);

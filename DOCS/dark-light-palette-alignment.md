@@ -3,7 +3,7 @@
 > **Status:** Proposal, not yet applied. Drafted 2026-07-23 from the Figma "desired look and feel" board. No token files changed yet; no commits.
 > **Source of truth reminder:** `tokens/*.css` + Storybook win. This doc is a plan; when it lands, delete the parts that become stale.
 >
-> **Decisions:** `lime-75` = `#e8f1da` **applied** to tokens (light nav selection), verified in Storybook. Settled, not yet applied: dark input border → `sand-600`; `sand-25` = `#fdfcf8`. Still open: dark cards `sand-850`, AA stance.
+> **Decisions:** `lime-75` = `#e8f1da` **applied** (light nav selection). Dark field border → `sand-600` **applied** via a new `--ds-color-border-field` pair, verified in Storybook. Settled, not yet applied: `sand-25` = `#fdfcf8`. Still open: dark cards `sand-850`, AA stance.
 
 ## Where this came from
 
@@ -158,7 +158,7 @@ Also repoint the Quill composer's field border (in `components/quill/`) at `--ds
 
 - **`surface-alt` == `surface-canvas` in dark** once canvas moves to `sand-900` (both `sand-900`). Panels/regions are fine merging, but `surface-alt` also drives hover states, table alt-rows, and toggle surfaces. Those hovers will now match the canvas and may lose visibility. Audit Toggle, Table, and any `*-hover` that resolves to `surface-alt`.
 - **Cards on white light canvas**: with the light canvas at `sand-50`/`sand-25`, white cards (`surface-raised`) separate only ~1.0–1.4:1. Confirm the card border (`sand-300`, 1.39:1) plus shadow still reads.
-- **Dark input boundary**: decide whether to lift the composer/field border to `sand-600` (~3.2:1) so the input is findable, per honest-read #2.
+- ~~**Dark input boundary**~~: done — see Decisions.
 - **Contrast floor**: DESIGN.md claims a WCAG 2.1 AA floor. This plan improves perceived depth but does not make surface boundaries clear 3:1. If AA-for-boundaries is a hard requirement, that is a separate, larger change (visible borders on every interactive surface).
 
 ## Implementation phases
@@ -175,8 +175,13 @@ Also repoint the Quill composer's field border (in `components/quill/`) at `--ds
 **Applied to `tokens/` (uncommitted):**
 - **`lime-75` = `#e8f1da`** — new primitive (`primitives.css`); light nav selection (`--ds-color-surface-selected-brand`, `semantics.css:81`) now points at it. Verified in Storybook `Components/Sidebar`: active item paints `rgb(232,241,218)`, forest-800 label 5.42:1. It is a *muted mint*, deliberately lower-chroma and slightly darker than lime-100, so it is **not** a pure ramp step (documented in the primitive's comment so nobody "fixes" it). Dark selection unchanged (part of the still-open dark rework).
 
+- **Dark field border** → `sand-600`, **applied** as the `--ds-color-border-field` / `-field-hover` pair (`semantics.css`, both theme blocks). Rolled across the whole field family, not just Input: Input, Textarea, Select **trigger**, Input Group, Checkbox, and both composers (the `new-chat` Block token and the Workspace chat panel's leaf `--ds-*`). Light is byte-identical to before (`border-field` == `border-default` == sand-300 there), so this is a dark-only change by construction.
+  - **Hover needed its own token.** Dark `border-default-hover` is *already* `sand-600`, so pointing field-hover at it would have made rest and hover identical and killed the hover signal. `border-field-hover` is `sand-500` (7.16:1) in both themes.
+  - **Select needed a token split.** `--c-select-border-default` was serving three jobs — the trigger (a field), the dropdown popover edge, and the in-menu separator. Lifting all three would have brightened a hairline divider in dark. The trigger now reads a new `--c-select-border-field`; popover + separator keep `-border-default`. Verified: trigger sand-600, popover edge sand-700.
+  - **Measured, correcting this doc's own number:** sand-600 reads **4.71:1 against today's `sand-950` canvas** (the 4.16:1 above is against the *proposed* `sand-900` canvas). Either way it clears 3:1; the previous `sand-700` was **2.87:1**, under. So this change stands on its own whether or not the canvas lift lands.
+  - Swept the Workspace canvas in dark: **exactly one** element paints the new border (the composer). No collateral.
+
 **Settled, not yet applied:**
-- **Dark input border** → `sand-600` via a new `border-field` semantic. Findable (4.16:1 vs canvas), dark-only for now.
 - **`sand-25`** = `#fdfcf8` (OKLCH `L99.0 C0.005 H96`) for the light canvas.
 
 **Still open (Becky thinking):**

@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils"
  * Checkbox, Brightseed Quill design system.
  *
  * Color tokens (Brightseed semantics, via --c-checkbox-*):
- *   Box border unchecked → --ds-color-border-default        (sand-300 light / sand-700 dark)
+ *   Box border unchecked → --ds-color-border-field          (sand-300 light / sand-600 dark)
  *   Box fill unchecked   → --ds-color-surface-field         (sand-50 light / sand-800 dark; brightens on hover)
  *   Box fill checked     → --ds-color-action-primary        (lime-300; brand action)
  *   Box fill indeterminate → same as checked; only the glyph differs
