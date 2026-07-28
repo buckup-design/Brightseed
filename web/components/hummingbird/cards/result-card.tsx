@@ -24,10 +24,8 @@ import { ScoreMeter } from "@/components/ui/score-meter";
  *   single     one compound. CompoundSingle glyph (orange). Score = CONFIDENCE
  *              %. Evidence = an inline EvidenceTag chip in the footer.
  *   combo      a synergy pair ("A + B"). CompoundMultiple glyph (lime). Score =
- *              SYNERGY %. Evidence = a coloured LEFT BORDER (green clinical /
- *              amber animal) AND the same footer chip — the chip keeps evidence
- *              text-carried, so the colour is a redundant accent, never the sole
- *              signal (per the "colour never implies status" rule).
+ *              SYNERGY %. Evidence = the footer EvidenceTag chip (Clinical /
+ *              Animal), text-carried, per the "colour never implies status" rule.
  *   predicted  ML-predicted / unstudied. Sparkles glyph (lavender). Score = a
  *              raw 0–1 BIOACTIVITY decimal (".85"). A green "Predicted" badge +
  *              a faint forest body tint mark it; the footer stays sand so the
@@ -47,7 +45,7 @@ import { ScoreMeter } from "@/components/ui/score-meter";
 
 // ─── Model ───────────────────────────────────────────────────────────────────
 
-/** Evidence backing a result. Drives SINGLE/COMBO's chip + COMBO's border. */
+/** Evidence backing a result. Drives SINGLE/COMBO's footer evidence chip. */
 export type EvidenceClass =
   | "clinical"
   | "animal"
@@ -119,13 +117,6 @@ const EVIDENCE_LABEL: Record<Exclude<EvidenceClass, "none" | "predicted">, strin
   clinical: "Clinical",
   animal: "Animal",
   "in-vitro": "In Vitro",
-};
-
-/** COMBO's coloured left border — only clinical/animal get a hue (matches the
- * live product); everything else keeps the subtle border. */
-const COMBO_BORDER: Partial<Record<EvidenceClass, string>> = {
-  clinical: "border-l-[3px] border-l-[var(--ds-color-border-success-bold)]",
-  animal: "border-l-[3px] border-l-[var(--ds-color-border-warning-bold)]",
 };
 
 export function displayName(result: Result): string {
@@ -261,8 +252,6 @@ export function ResultCard({
         isPredicted
           ? "bg-[var(--ds-color-surface-success)]"
           : "bg-[var(--ds-color-surface-default)]",
-        // COMBO's evidence-keyed left border (redundant accent to the chip).
-        result.type === "combo" && COMBO_BORDER[result.evidence],
         className,
       )}
       {...props}
