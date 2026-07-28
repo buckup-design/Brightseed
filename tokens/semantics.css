@@ -47,6 +47,12 @@
      card. Trialled on the Reports Block. */
   --ds-color-surface-canvas:          var(--p-color-sand-100);
   --ds-color-surface-scrim:           color-mix(in srgb, var(--p-color-sand-950) 50%, transparent);  /* modal / dialog veil, warm dark @ 50%, matches prior look */
+  /* Sticky-chrome veil — distinct from surface-scrim above. The modal scrim
+     DARKENS to push a dialog forward; this one is the PAGE colour at partial
+     opacity, so content scrolling beneath sticky chrome (the Workspace composer)
+     tints out into the surface instead of going dark. Pair it with a backdrop
+     blur; the tint alone is too thin to obscure text. */
+  --ds-color-surface-scrim-chrome:    color-mix(in srgb, var(--p-color-sand-50) 72%, transparent);
 
   /* Brand surface, nav bar, header, branded panels */
   --ds-color-surface-brand:           var(--p-color-forest-900);   /* Deep Forest */
@@ -388,6 +394,7 @@
      so the canvas page background resolves the same. */
   --ds-color-surface-canvas:          var(--p-color-sand-950);
   --ds-color-surface-scrim:           color-mix(in srgb, var(--p-color-black) 60%, transparent);     /* veil must go darker than the sand-950 page to register, DESIGN REVIEW: black vs warm */
+  --ds-color-surface-scrim-chrome:    color-mix(in srgb, var(--p-color-sand-950) 72%, transparent);  /* page-coloured sticky-chrome veil; see the light block */
 
   /* Brand nav/header, sand-anchored in dark mode (forest exits surface vocabulary) */
   --ds-color-surface-brand:           var(--p-color-sand-900);

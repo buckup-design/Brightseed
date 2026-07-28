@@ -105,15 +105,17 @@ function MessageComposer({ onSend }: { onSend?: (value: string) => void }) {
     setValue("");
   };
 
+  // No top divider: the thread scrolls *behind* this, so the separation is
+  // carried by the scrim + blur (see ChatPanel), not by a hairline.
   return (
-    <div className="shrink-0 border-t border-[var(--ds-color-border-subtle)] p-3">
+    <div className="p-3">
       {/* The wrapper — not the inner Textarea — is the visible "field": it owns
           the surface, border, and the focus affordance. focus-within lightens
           the whole box (surface-field → hover step) and picks up the focus
           border when the textarea inside is focused. The Textarea is chromeless,
           incl. its hover fill (enabled:hover:bg-transparent), so it never paints
           a lighter rectangle inset inside the wrapper. */}
-      <div className="flex items-end gap-2 rounded-[var(--ds-shape-radius-md)] border border-[var(--ds-color-border-default)] bg-[var(--ds-color-surface-field)] p-2.5 transition-[color,box-shadow,background-color] focus-within:border-[var(--ds-color-border-focus)] focus-within:bg-[var(--ds-color-surface-field-hover)] focus-within:ring-[2px] focus-within:ring-[var(--ds-color-ring-focus)]">
+      <div className="flex items-end gap-2 rounded-[var(--ds-shape-radius-md)] border border-[var(--ds-color-border-field)] bg-[var(--ds-color-surface-field)] p-2.5 transition-[color,box-shadow,background-color] focus-within:border-[var(--ds-color-border-focus)] focus-within:bg-[var(--ds-color-surface-field-hover)] focus-within:ring-[2px] focus-within:ring-[var(--ds-color-ring-focus)]">
         <Textarea
           value={value}
           onChange={(event) => setValue(event.target.value)}
@@ -163,6 +165,8 @@ export function ChatPanel({
   className,
 }: ChatPanelProps) {
   const bottomRef = React.useRef<HTMLDivElement>(null);
+  const composerRef = React.useRef<HTMLDivElement>(null);
+  const [composerHeight, setComposerHeight] = React.useState(0);
 
   // Follow the conversation as it grows. Keyed to length so a fixture edit that
   // doesn't add a turn won't yank scroll. scrollIntoView targets the message
@@ -171,14 +175,32 @@ export function ChatPanel({
     bottomRef.current?.scrollIntoView({ block: "end" });
   }, [messages.length]);
 
+  // The composer is lifted OUT of flex flow (absolute) so the thread scrolls
+  // behind it. That costs us the layout it used to reserve, so measure it and
+  // pay it back as scroll padding — otherwise the last message parks under the
+  // composer and can never be scrolled clear. Measured, not hardcoded: the
+  // textarea is field-sizing-content and grows as you type.
+  React.useEffect(() => {
+    const el = composerRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver(([entry]) => {
+      setComposerHeight(entry.borderBoxSize?.[0]?.blockSize ?? el.offsetHeight);
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className={cn("flex h-full min-h-0 flex-col bg-[var(--ds-color-surface-default)]", className)}>
+    <div className={cn("relative flex h-full min-h-0 flex-col bg-[var(--ds-color-surface-default)]", className)}>
       {/* mr-2: the overlay scrollbar is pinned to this element's right edge,
           which butts against the resize handle. A right margin insets the whole
           scroll container (scrollbar included) so the thumb clears the handle
           pill instead of touching it. Padding can't do this — it moves content,
           not the edge-anchored scrollbar. */}
-      <div className="scrollbar-overlay mr-2 flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto p-4">
+      <div
+        className="scrollbar-overlay mr-2 flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto p-4"
+        style={{ paddingBottom: composerHeight }}
+      >
         {messages.map((message, i) =>
           message.role === "assistant" ? (
             <AgentMessage
@@ -197,7 +219,29 @@ export function ChatPanel({
         )}
         <div ref={bottomRef} />
       </div>
-      <MessageComposer onSend={onSend} />
+      <div ref={composerRef} className="absolute inset-x-0 bottom-0">
+        {/* Pinned over the thread, iOS-style. The veil is its OWN masked layer,
+            separate from the composer, for two reasons:
+              1. A uniform backdrop-blur box has a hard top edge — you see the
+                 exact line where the blur switches on. The mask ramps blur AND
+                 tint in from zero, so there is no edge at all.
+              2. Masking the composer itself would fade the top of the input.
+            It extends 3.5rem above the composer (-top-14, ~2.5 message lines at
+            the 22.75px thread line-height) and the mask reaches full strength
+            exactly at the composer's top edge — so the line directly above the
+            input is blurred, the one above that barely, and the third is clean.
+            The mask stop is an absolute LENGTH, not a percentage, on purpose: the
+            textarea grows as you type, and a percentage stop would slide the ramp
+            down the veil as it does. `black` here is an alpha channel, not a
+            colour — only opacity is read, so it is deliberately not a token. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 -top-14 bottom-0 bg-[var(--ds-color-surface-scrim-chrome)] backdrop-blur-md [-webkit-mask-image:linear-gradient(to_bottom,transparent_0,black_3.5rem)] [mask-image:linear-gradient(to_bottom,transparent_0,black_3.5rem)]"
+        />
+        <div className="relative">
+          <MessageComposer onSend={onSend} />
+        </div>
+      </div>
     </div>
   );
 }
