@@ -1,6 +1,6 @@
 "use client";
 
-import { FileText } from "lucide-react";
+import { ChevronDown, ChevronUp, FileText } from "lucide-react";
 
 import { CompoundMultiple, CompoundSingle } from "@/components/ui/badge-icons";
 import { Button } from "@/components/ui/button";
@@ -64,6 +64,17 @@ export type { NaturalSource, Citation };
 
 export type DataPoint = { label: string; value: string };
 
+/**
+ * Position of the open detail within the set the user is browsing, 1-based.
+ *
+ * Borrowed from Linear's issue view (`6 / 129` + prev/next), which lets you walk
+ * peers without returning to the list. Two rules come with it, both observed in
+ * the original: the set is the *filtered, navigable* one the user is actually
+ * looking at (not every result), and when the open record isn't in that set the
+ * counter is **omitted rather than shown stale** — hence the optional prop.
+ */
+export type ResultPosition = { index: number; total: number };
+
 export type ResultDetail = {
   type: ResultDetailType;
   /** One compound, or the pair pre-joined as "Berberine + Sulforaphane". */
@@ -108,6 +119,59 @@ const EVIDENCE_LABEL: Record<Exclude<EvidenceClass, "predicted" | "none">, strin
   "in-vitro": "In Vitro",
 };
 
+// ─── PositionStepper ─────────────────────────────────────────────────────────
+
+/**
+ * `6 / 126` + prev/next, sat left of the Sheet's close button.
+ *
+ * Rendered in the loading branch as well as the loaded one, so stepping doesn't
+ * make the control vanish and reflow the header between fetches.
+ */
+function PositionStepper({
+  position,
+  onPrev,
+  onNext,
+}: {
+  position: ResultPosition;
+  onPrev?: () => void;
+  onNext?: () => void;
+}) {
+  const { index, total } = position;
+  return (
+    <div className="flex items-center justify-end gap-0.5">
+      {/* The glyph is shorthand; the sr-only span carries the real sentence, so
+          a screen reader doesn't hear "6 slash 126". */}
+      <span
+        aria-hidden="true"
+        className="mr-1 text-[13px] tabular-nums text-[var(--ds-color-text-subtle)]"
+      >
+        {index} / {total}
+      </span>
+      <span className="sr-only">
+        Result {index} of {total}
+      </span>
+      <Button
+        variant="ghost"
+        size="icon-xs"
+        onClick={onPrev}
+        disabled={index <= 1}
+        aria-label="Previous result"
+      >
+        <ChevronUp />
+      </Button>
+      <Button
+        variant="ghost"
+        size="icon-xs"
+        onClick={onNext}
+        disabled={index >= total}
+        aria-label="Next result"
+      >
+        <ChevronDown />
+      </Button>
+    </div>
+  );
+}
+
 // ─── ResultDetailSheet ───────────────────────────────────────────────────────
 
 export function ResultDetailSheet({
@@ -117,6 +181,9 @@ export function ResultDetailSheet({
   favorited = false,
   onFavorite,
   onGenerateReport,
+  position,
+  onPrev,
+  onNext,
 }: {
   /**
    * The resolved detail, or `null` while it's still being fetched. The seam is
@@ -131,6 +198,10 @@ export function ResultDetailSheet({
   onFavorite?: (favorited: boolean) => void;
   /** Mints a report from this result — the bridge to the Reports tab. */
   onGenerateReport?: () => void;
+  /** Omit to hide the stepper — see ResultPosition. */
+  position?: ResultPosition;
+  onPrev?: () => void;
+  onNext?: () => void;
 }) {
   // Loading state: the sheet is open but the detail hasn't resolved yet. A
   // SheetTitle is still required for Radix's a11y contract, so give it a real
@@ -140,6 +211,9 @@ export function ResultDetailSheet({
       <Sheet open={open} onOpenChange={onOpenChange}>
         <SheetContent side="right" className="w-full gap-0 p-0 sm:max-w-lg">
           <SheetHeader className="shrink-0 gap-3 border-b border-[var(--ds-color-border-subtle)] pr-12">
+            {position && (
+              <PositionStepper position={position} onPrev={onPrev} onNext={onNext} />
+            )}
             <SheetTitle className="text-base leading-tight">
               Loading details…
             </SheetTitle>
@@ -162,6 +236,10 @@ export function ResultDetailSheet({
       <SheetContent side="right" className="w-full gap-0 p-0 sm:max-w-lg">
         {/* ── Header (fixed) ─────────────────────────────────────────────── */}
         <SheetHeader className="shrink-0 gap-3 border-b border-[var(--ds-color-border-subtle)] pr-12">
+          {position && (
+            <PositionStepper position={position} onPrev={onPrev} onNext={onNext} />
+          )}
+
           <div className="flex items-start gap-3">
             <Icon className={cn("mt-0.5 size-6 shrink-0", iconClass)} strokeWidth={1.5} />
             <div className="min-w-0 flex-1">

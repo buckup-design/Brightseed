@@ -132,6 +132,13 @@ export function WorkspaceCanvas({
   }, [results, favoriteOverrides]);
   const [detail, setDetail] = React.useState<ResultDetail | null>(null);
   const [detailOpen, setDetailOpen] = React.useState(false);
+  // Which result the open sheet belongs to, so the stepper can place it in the
+  // set. Kept as a key (not the Result) so it survives `results` re-identifying.
+  const [selectedKey, setSelectedKey] = React.useState<string | null>(null);
+  // Guards against out-of-order resolves. Stepping makes rapid successive opens
+  // likely (hold next), and without this a slow earlier fetch can land after a
+  // faster later one and show the wrong detail.
+  const requestId = React.useRef(0);
 
   const counts = React.useMemo(() => evidenceCounts(results), [results]);
   const visible = React.useMemo(
@@ -164,11 +171,16 @@ export function WorkspaceCanvas({
       // Predicted results are unstudied — no detail exists, so the card is
       // non-navigating (its favorite star still works).
       if (result.type === "predicted") return;
+      const id = ++requestId.current;
       // Open immediately into the loading state (detail = null), then fetch.
       setDetail(null);
       setDetailOpen(true);
+      setSelectedKey(resultKey(result));
       try {
         const resolved = await resolveDetail(result);
+        // A newer open superseded this one — drop the result on the floor
+        // rather than overwrite what the user is now looking at.
+        if (id !== requestId.current) return;
         // Resolving to undefined (or a fetch error) means "no detail" — close
         // rather than leave an empty Sheet open.
         if (!resolved) {
@@ -177,10 +189,45 @@ export function WorkspaceCanvas({
         }
         setDetail(resolved);
       } catch {
+        if (id !== requestId.current) return;
         setDetailOpen(false);
       }
     },
     [resolveDetail],
+  );
+
+  // The set the stepper walks: what's actually on screen (post-filter), minus
+  // predicted results — those have no detail and handleSelect refuses them, so
+  // including them would give the stepper dead stops.
+  const navigable = React.useMemo(
+    () => visible.filter((r) => r.type !== "predicted"),
+    [visible],
+  );
+
+  const navigableIndex = React.useMemo(
+    () =>
+      selectedKey == null
+        ? -1
+        : navigable.findIndex((r) => resultKey(r) === selectedKey),
+    [navigable, selectedKey],
+  );
+
+  // Omitted (not stale) when the open result has left the set — e.g. the user
+  // changed the evidence filter while the sheet was open. Linear's behaviour.
+  const position = React.useMemo(
+    () =>
+      navigableIndex >= 0
+        ? { index: navigableIndex + 1, total: navigable.length }
+        : undefined,
+    [navigableIndex, navigable.length],
+  );
+
+  const step = React.useCallback(
+    (delta: number) => {
+      const next = navigable[navigableIndex + delta];
+      if (next) void handleSelect(next);
+    },
+    [navigable, navigableIndex, handleSelect],
   );
 
   // Keep `detail` set through the Sheet's close animation; the next open
@@ -273,6 +320,9 @@ export function WorkspaceCanvas({
             detail && toggleFavoriteKey(detail.name, favorited)
           }
           onGenerateReport={() => detail && onGenerateReport?.(detail)}
+          position={position}
+          onPrev={() => step(-1)}
+          onNext={() => step(1)}
         />
       )}
     </div>
