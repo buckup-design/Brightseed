@@ -228,7 +228,7 @@ export function ReportsList({
                       type="button"
                       aria-label={`View ${report.title}`}
                       onClick={() => onView?.(report)}
-                      className="absolute inset-0 rounded-[var(--c-reports-list-shape-radius-md)] outline-none focus-visible:ring-[2px] focus-visible:ring-[var(--c-reports-list-border-focus)]/50"
+                      className="absolute inset-0 rounded-[var(--c-reports-list-shape-radius-xl)] outline-none focus-visible:ring-[2px] focus-visible:ring-[var(--c-reports-list-border-focus)]"
                     />
                     <div className="pointer-events-none flex size-9 shrink-0 items-center justify-center rounded-[var(--c-reports-list-shape-radius-md)] bg-[var(--c-reports-list-surface-raised-alt)] text-[var(--c-reports-list-text-subtle)]">
                       <FileText className="size-5" />

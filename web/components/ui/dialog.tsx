@@ -90,7 +90,7 @@ function DialogContent({
               "absolute top-4 right-4 z-20 opacity-70 transition-opacity hover:opacity-100",
               "text-[var(--c-dialog-icon-default)]",
               "rounded-[var(--c-dialog-shape-radius-2xs)]",
-              "focus-visible:ring-[2px] focus-visible:ring-[var(--c-dialog-border-focus)]/50",
+              "focus-visible:ring-[2px] focus-visible:ring-[var(--c-dialog-border-focus)]",
               "focus-visible:outline-hidden",
               "disabled:pointer-events-none",
               "data-[state=open]:bg-[var(--c-dialog-surface-alt)]",

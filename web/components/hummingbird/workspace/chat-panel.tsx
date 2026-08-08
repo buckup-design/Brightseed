@@ -115,7 +115,7 @@ function MessageComposer({ onSend }: { onSend?: (value: string) => void }) {
           border when the textarea inside is focused. The Textarea is chromeless,
           incl. its hover fill (enabled:hover:bg-transparent), so it never paints
           a lighter rectangle inset inside the wrapper. */}
-      <div className="flex items-end gap-2 rounded-[var(--ds-shape-radius-md)] border border-[var(--ds-color-border-field)] bg-[var(--ds-color-surface-field)] p-2.5 transition-[color,box-shadow,background-color] focus-within:border-[var(--ds-color-border-focus)] focus-within:bg-[var(--ds-color-surface-field-hover)] focus-within:ring-[2px] focus-within:ring-[var(--ds-color-ring-focus)]">
+      <div className="flex items-end gap-2 rounded-[var(--ds-shape-radius-md)] border border-[var(--ds-color-border-field)] bg-[var(--ds-color-surface-field)] p-2.5 transition-[color,box-shadow,background-color] focus-within:border-[var(--ds-color-border-field-focus)] focus-within:bg-[var(--ds-color-surface-field-focus)] focus-within:ring-[2px] focus-within:ring-[var(--ds-color-ring-focus)]">
         <Textarea
           value={value}
           onChange={(event) => setValue(event.target.value)}

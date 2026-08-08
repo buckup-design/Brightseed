@@ -10,12 +10,12 @@ import { cn } from "@/lib/utils"
  * Checkbox, Brightseed Quill design system.
  *
  * Color tokens (Brightseed semantics, via --c-checkbox-*):
- *   Box border unchecked → --ds-color-border-field          (sand-300 light / sand-600 dark)
+ *   Box border unchecked → --ds-color-border-field          (sand-600 both themes)
  *   Box fill unchecked   → --ds-color-surface-field         (sand-50 light / sand-800 dark; brightens on hover)
  *   Box fill checked     → --ds-color-action-primary        (lime-300; brand action)
  *   Box fill indeterminate → same as checked; only the glyph differs
  *   Check / dash glyph   → --ds-color-text-on-action-primary (forest-800 on lime)
- *   Focus ring           → --ds-color-border-focus / 50     (lime-500 soft ring, same as Button/Switch)
+ *   Focus ring           → --ds-color-border-focus     (sand, opaque, same as Button/Switch)
  *   Invalid              → --ds-color-border-critical-bold  (border + soft ring)
  *   Corner               → --ds-shape-radius-xs             (4px; the step added for this box, July 2026)
  *   Elevation            → --ds-shadow-xs                   (form-control step, added July 2026)
@@ -36,7 +36,7 @@ function Checkbox({
         "shadow-[var(--c-checkbox-shadow-xs)] transition-shadow outline-none",
         // Focus
         "focus-visible:border-[var(--c-checkbox-border-focus)]",
-        "focus-visible:ring-[2px] focus-visible:ring-[var(--c-checkbox-border-focus)]/50",
+        "focus-visible:ring-[2px] focus-visible:ring-[var(--c-checkbox-border-focus)]",
         // Disabled
         "disabled:cursor-not-allowed disabled:opacity-[var(--c-checkbox-disabled-text-opacity)]",
         // Invalid

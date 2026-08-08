@@ -165,7 +165,7 @@ export function ConversationsList({
                     type="button"
                     aria-label={`Open ${conversation.title}`}
                     onClick={() => onOpen?.(conversation)}
-                    className="absolute inset-0 rounded-[var(--c-conversations-list-shape-radius-md)] outline-none focus-visible:ring-[2px] focus-visible:ring-[var(--c-conversations-list-border-focus)]/50"
+                    className="absolute inset-0 rounded-[var(--c-conversations-list-shape-radius-xl)] outline-none focus-visible:ring-[2px] focus-visible:ring-[var(--c-conversations-list-border-focus)]"
                   />
                   <div className="pointer-events-none flex size-9 shrink-0 items-center justify-center rounded-[var(--c-conversations-list-shape-radius-md)] bg-[var(--c-conversations-list-surface-raised-alt)] text-[var(--c-conversations-list-text-subtle)]">
                     <MessageSquare className="size-5" />

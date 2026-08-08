@@ -9,11 +9,20 @@ import { cn } from "@/lib/utils"
  * Switch, Brightseed Quill design system.
  *
  * Color tokens (Brightseed semantics):
- *   Track unchecked   → --ds-color-border-default       (sand-300; soft neutral track)
+ *   Track unchecked   → --ds-color-border-default       (sand-300 light / sand-700 dark)
  *   Track checked     → --ds-color-action-primary       (lime-300; brand action)
  *   Thumb             → --ds-color-surface-default      (white in light, sand-950 in dark)
- *   Focus ring        → --ds-color-border-focus / 50    (lime-500 soft ring, same as Button)
+ *   Thumb outline     → --ds-color-border-switch-thumb  (sand-700 light / none in dark)
+ *   Focus ring        → --ds-color-border-focus         (sand, opaque, same as Button)
  *   Disabled          → uses --ds-disabled-text-opacity
+ *
+ * Accessibility note (Aug 6 2026). In light mode the two track colours are
+ * 1.01:1 apart — lime-300 and sand-300 are the same shade in greyscale — so
+ * colour cannot be what tells you the state (SC 1.4.1, Level A). The thumb's
+ * POSITION carries it instead, which only works if the thumb is visible: a bare
+ * white thumb was 1.39:1 / 1.38:1 against the two tracks. The thumb therefore
+ * carries an outline in light mode (4.14:1 / 4.16:1). Do not remove it without
+ * replacing the non-colour cue with another one.
  *
  * Sizes
  *   sm        h-3.5 w-6   thumb size-3
@@ -44,7 +53,7 @@ function Switch({
         "hover:data-[state=checked]:bg-[var(--c-switch-action-primary-hover)]",
         // Focus
         "outline-none",
-        "focus-visible:ring-[2px] focus-visible:ring-[var(--c-switch-border-focus)]/50",
+        "focus-visible:ring-[2px] focus-visible:ring-[var(--c-switch-border-focus)]",
         "focus-visible:border-[var(--c-switch-border-focus)]",
         // Disabled
         "disabled:cursor-not-allowed disabled:opacity-[var(--c-switch-disabled-text-opacity)]",
@@ -57,6 +66,12 @@ function Switch({
         className={cn(
           "pointer-events-none block rounded-full",
           "bg-[var(--c-switch-surface-default)]",
+          // Outline makes the thumb — and therefore its position, the non-colour
+          // state cue — perceivable on both tracks. Width and colour are set
+          // together: a bare `border` would paint currentColor, and a colour with
+          // no width paints nothing. Transparent in dark, so the box size (and
+          // thus the checked translate) is identical across themes.
+          "border border-[var(--c-switch-border-thumb)]",
           "ring-0 transition-transform",
           "group-data-[size=default]/switch:size-4",
           "group-data-[size=sm]/switch:size-3",

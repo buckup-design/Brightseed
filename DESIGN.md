@@ -7,11 +7,17 @@ description: Brightseed Bio's design system for Hummingbird, a calm, credible, e
 # remains the source of truth. Dark theme swaps the same semantic names under
 # [data-theme="dark"]; see the Colors section. Token names mirror the --ds-*
 # semantic tier with the prefix dropped.
+#
+# WARNING for coding agents: border-focus below is the LIGHT value (sand-700).
+# Dark is sand-500 and is NOT derivable from it — applying sand-700 to a dark
+# surface gives 2.87:1 and fails SC 1.4.11. Same for border-field-hover
+# (sand-700 light / sand-500 dark). Read Borders > Focus rings before using
+# either, and never assume a focus token is theme-invariant.
 colors:
   # The spec's recommended vocabulary, mapped onto Brightseed's roles, so an
   # agent that reaches for a conventional name lands on the right value.
   primary: "#CDE67B"        # lime-300, the primary action surface
-  secondary: "#f3f2ec"      # sand-100, secondary action surface
+  secondary: "#eae8df"      # sand-200, secondary action surface
   tertiary: "#305536"       # forest-900, the brand surface
   neutral: "#f3f2ec"        # sand-100, alt/neutral surface
   surface: "#ffffff"
@@ -21,13 +27,13 @@ colors:
   # Brightseed's own semantic names, mirroring the --ds-* tier.
   surface-default: "#ffffff"
   surface-alt: "#f3f2ec"
-  surface-field: "#F9F8F3"
+  surface-field: "#fdfcf8"
   surface-brand: "#305536"
   surface-brand-subtle: "#eefbf1"
   action-primary: "#CDE67B"
   action-primary-hover: "#b8d258"
   action-primary-active: "#a1b833"
-  action-secondary: "#f3f2ec"
+  action-secondary: "#eae8df"
   action-critical: "#ffe6e2"
   text-default: "#46453f"
   text-subtle: "#68665e"
@@ -38,7 +44,11 @@ colors:
   border-default: "#dddbcf"
   border-subtle: "#eae8df"
   border-bold: "#aeab9e"
-  border-focus: "#aeab9e"
+  border-field: "#dddbcf"
+  border-field-hover: "#aeab9e"
+  border-field-focus: "#8c897f"
+  surface-field-focus: "#ffffff"
+  border-focus: "#68665e"
   ring-focus: "color-mix(in srgb, #a1b833 12%, transparent)"
   surface-success: "#eefbf1"
   surface-info: "#eef8ff"
@@ -273,10 +283,12 @@ Each variant has three surface states (default → hover → active) and one dis
 | `--ds-color-action-primary-hover`       | lime-400              | lime-400              | One step more pronounced                   |
 | `--ds-color-action-primary-active`      | lime-500              | lime-500              | Pressed                                    |
 | `--ds-color-action-primary-disabled`    | lime-300 + sand-100 overlay | lime-300 + sand-700 overlay | Desaturated surface overlay       |
-| `--ds-color-action-secondary`           | sand-100              | sand-900              | Faint sand bg, visibly distinct from page |
-| `--ds-color-action-secondary-hover`     | sand-200              | sand-800              |                                            |
-| `--ds-color-action-secondary-active`    | sand-300              | sand-700              |                                            |
-| `--ds-color-action-secondary-disabled`  | sand-50               | sand-950              | Fades toward page bg                       |
+| `--ds-color-action-secondary`           | sand-200              | sand-900              | Faint sand bg, distinct from page and from `surface-alt` |
+| `--ds-color-action-secondary-hover`     | sand-300              | sand-800              |                                            |
+| `--ds-color-action-secondary-active`    | sand-400              | sand-700              |                                            |
+| `--ds-color-action-secondary-disabled`  | sand-100              | sand-950              | Fades toward page bg                       |
+
+Light shifted one rung Aug 7 2026. The old resting sand-100 was the *same value* as `--ds-color-surface-alt`, so a secondary button on an alt-toned panel was 1.00:1 and disappeared; on the sand-25 canvas it was 1.09:1. **Dark still has that exact collision** — `action-secondary` and `surface-alt` are both sand-900 — and is knowingly unfixed, because every adjacent dark rung is occupied (sand-800 is `surface-field` + `surface-raised-alt`, sand-700 is `surface-raised-alt-hover`). Fixing it means re-basing the dark ramp, which was attempted and reverted in July 2026.
 | `--ds-color-action-critical`            | red-100               | red-900               | Soft destructive, tinted, not alarming    |
 | `--ds-color-action-critical-hover`      | red-200               | red-800               |                                            |
 | `--ds-color-action-critical-active`     | red-300               | red-700               |                                            |
@@ -308,19 +320,45 @@ Each variant has three surface states (default → hover → active) and one dis
 | Token                       | Light      | Dark       | Use                                     |
 | --------------------------- | ---------- | ---------- | --------------------------------------- |
 | `--ds-color-border-subtle`  | sand-200   | sand-800   | Hairlines, table grid lines             |
-| `--ds-color-border-default` | sand-300   | sand-700   | Input default border, card outlines     |
+| `--ds-color-border-default` | sand-300   | sand-700   | Card outlines, structural edges         |
 | `--ds-color-border-bold`    | sand-500   | sand-600   | Emphatic dividers, selected indicators  |
+| `--ds-color-border-field`   | sand-300   | sand-600   | Text-entry + select boundary, at rest    |
+| `--ds-color-border-field-hover` | sand-500 | sand-500  | Field hover                             |
+| `--ds-color-border-field-focus` | sand-600 | sand-500  | Field engaged                           |
+| `--ds-color-border-control` | sand-600   | sand-600   | Unchecked checkbox — see below           |
+
+#### Fields lift; they do not recede
+
+A field is **flush** with its canvas at rest and **lifts** when engaged:
+
+| State | Fill (light) | Border (light) |
+| ----- | ------------ | -------------- |
+| rest  | sand-25 — the canvas value, so the border *is* the field | sand-300 |
+| hover | white | sand-500 |
+| focus | white | sand-600 |
+
+This has a structural consequence worth knowing: in a light theme "lighter than its surface" has a **ceiling**. White is the lightest value, so the largest fill step available is white-on-sand-300 = 1.39:1. **The fill can never identify a field — it delivers depth; the border delivers identification.** That is why the border carries the whole 3:1 obligation in the engaged state, and why surfaces that host fields must step down (sand-25 canvas, not white) for the lift to read at all.
+
+`--ds-color-border-control` exists because the resting sand-300 edge is only defensible on a control that has *other* evidence it exists — a label, a placeholder. An unchecked checkbox has none, so it holds sand-600 in both themes. **Never point a label-less control at `border-field`.** The two themes are symmetric at sand-600.
 
 #### Focus rings
 
-1px stroke, 1px offset from the component body. Variant-aware color, visible without dominating. `--ds-color-border-focus-link-brand` is a separate token from `--ds-color-border-focus` for namespace clarity, even though they currently resolve to the same value.
+**Opaque**, no offset. Variant-aware color, visible without dominating. Ring *width* is **2px on controls** (Button, Tabs, Switch, Checkbox, Accordion, Resizable, Dialog and the list-row overlays) and **1px on nav rows** (Sidebar, Nav User, Team Switcher, App Shell, via `ring-1`). Button was the lone 3px holdout and was brought in line Aug 6 2026. `--ds-color-border-focus-link-brand` is a separate token from `--ds-color-border-focus` for namespace clarity, even though they currently resolve to the same value.
 
 | Variant                | Token                                  | Light    | Dark     |
 | ---------------------- | -------------------------------------- | -------- | -------- |
-| Default / Outline / Ghost | `--ds-color-border-focus`           | lime-500 | lime-500 |
-| Secondary              | `--ds-color-border-focus-secondary`    | sand-300 | sand-500 |
+| Default / Outline / Ghost | `--ds-color-border-focus`           | sand-700 | sand-500 |
+| Secondary              | `--ds-color-border-focus-secondary`    | sand-700 | sand-500 |
 | Destructive            | `--ds-color-border-focus-destructive`  | red-500  | red-500  |
-| Linktext               | `--ds-color-border-focus-link-brand`   | lime-500 | lime-500 |
+| Linktext               | `--ds-color-border-focus-link-brand`   | sand-700 | sand-500 |
+
+**Focus rings are not theme-invariant.** Light uses sand-700 and dark uses sand-500 because each is the step that clears 3:1 on its own surfaces — sand-700 measures 5.75:1 on white and 4.16:1 even against the lime-300 primary fill, while on the dark page it would be only 2.87:1. Adding a focus token means adding both halves.
+
+Rings are opaque by design. An alpha modifier costs roughly a third of the contrast ratio, which is what previously put light-mode focus below the threshold.
+
+There is no ring offset. What carries the indicator is the ring's **outer** edge against the page — 5.75:1 light, 7.16:1 dark. The inner edge against a component's own fill clears only in light (sand-700 on lime-300 is 4.16:1; in dark, sand-500 on that same lime-300 is 1.67:1), which is acceptable — 1.4.11 asks that the indicator be perceivable, not perceivable on both sides. Do not add `ring-offset` to "fix" the inner edge: it does not help, and Tailwind's `--tw-ring-offset-color` defaults to `#fff`, which paints a white gap around every focused control in dark mode. Eight sites in `components/hummingbird/cards/` currently do exactly that and are a known bug, not a pattern to copy.
+
+`--ds-color-ring-focus` (lime-500 @ 12%) is a **decorative** brand whisper layered on text-entry fields. At ~1.09:1 it is not a focus indicator and never counts toward conformance. Never ship a focus state that has the whisper and no sand ring.
 
 #### Semantic intent borders
 
@@ -547,12 +585,37 @@ Tooltips appear on a **delay**, never instantly, so a pointer crossing a control
 
 ## Accessibility
 
-WCAG 2.1 AA is the floor on all action surfaces. Notable decisions in the system:
+### Contrast stance
+
+**The floor is WCAG 2.1 AA for text (SC 1.4.3) and for non-text elements that fall within SC 1.4.11.**
+
+**What 1.4.11 governs, and what it does not.** SC 1.4.11 requires 3:1 for *visual information required to identify a user interface component or its state*, and for *parts of graphics required to understand content*. It sets **no** contrast requirement between adjacent surface planes. Quill's surface ladder — page, canvas, raised card, nested fill, field — is **deliberately gentle**, in the 1.03:1–1.51:1 range that every major design system ships (IBM Carbon 1.10, Material 3 1.09–1.14, Shopify Polaris 1.13, GitHub Primer 1.06). Depth comes from a four-step ladder, hue, borders and shadow rather than luminance. This is a design choice and is **not** presented as 1.4.11 conformance for surface boundaries.
+
+**Where 3:1 is owed.** The obligation is scoped by function, not by element type, and must be re-checked at each point of use:
+
+- Any boundary that is the **only** thing identifying that a control is present or where it ends — borderless fields, unchecked checkboxes, icon-only buttons with no glyph contrast.
+- Any **state** painted as a surface fill — selected nav rows, tabs, segmented controls, filter pills, switch tracks — unless the state is redundantly carried by an indicator that independently passes.
+- **Focus indicators**, measured against the surface the indicator actually sits on (which inside an overlay or a card is *not* the page).
+- **Chart series and data regions** where the boundary conveys the data.
+
+**Where colour carries meaning below 3:1, a non-colour cue is mandatory (SC 1.4.1, Level A).** The lightness allowance in 1.4.1 is only available when the two colours differ by ≥3:1; below that it is closed. Two live examples:
+
+- The dark active-nav wash is 1.14:1 against the sidebar, so it is reinforced by a `forest-500` label and icon with unselected labels dropping to `sand-500`. **The wash is reinforcement, never the sole signal.**
+- The light Switch tracks are 1.01:1 apart — lime-300 and sand-300 are the same shade in greyscale — so state is carried by thumb *position*, made perceivable by a sand-700 thumb outline (4.14:1 / 4.16:1).
+
+Any new meaning-bearing tint must ship with an equivalent cue.
+
+**Known gaps, tracked not hidden.** The light Toggle / segmented-control selected fill measures 1.07:1 against its unselected sibling and currently relies on colour plus text weight alone; dark is 1.72:1. Both are recorded and open.
+
+*We do not benchmark contrast against terminal or CLI interfaces. WCAG reaches non-web software only through WCAG2ICT, a non-normative W3C Group Note, and terminal apps can discharge contrast obligations by deferring to the user's palette (technique G148) — a route unavailable to a web application.*
+
+### Notable decisions
 
 1. **Lime-300 retuned:** `#CDE67B` (was `#CAE279`) so `forest-800` text passes AA at 4.57:1 on the default button surface
 2. **Hover and pressed pass AA:** at 5.00:1 and 6.43:1 respectively
-3. **Focus rings:** 1px stroke, 1px offset, variant-aware color; visible without dominating
-4. **Disabled is exempt from WCAG 1.4.3:** we apply 0.55 opacity over a desaturating surface overlay, accepting ~3.4:1 worst case in exchange for a clear "inactive" read
+3. **Focus rings:** 3px, opaque, no offset; sand-700 light / sand-500 dark, variant-aware. Not theme-invariant — see Focus rings under Borders
+4. **Field borders are heavier than card borders:** sand-600 in both themes. A card edge is decorative; a field edge identifies a control
+5. **Disabled is exempt from WCAG 1.4.3:** we apply 0.55 opacity over a desaturating surface overlay, accepting ~3.4:1 worst case in exchange for a clear "inactive" read
 
 ---
 
@@ -577,8 +640,8 @@ How to assemble tokens into the common Hummingbird regions. These map intent →
 
 **Forms**
 
-- Input background → `--ds-color-surface-default`; border → `--ds-color-border-default`; focus → `--ds-color-border-focus`
-- Input / Select / Textarea hover → border `--ds-color-border-default-hover` (subtle one-step darken; focus and error states take precedence)
+- Input background → `--ds-color-surface-field`; border → `--ds-color-border-field`; focus → `--ds-color-border-focus`
+- Input / Select / Textarea hover → border `--ds-color-border-field-hover` (one-step darken; focus and error states take precedence)
 - Label → `text-sm font-medium` + `--ds-color-text-default`
 - Helper text → `text-sm` + `--ds-color-text-subtle`
 - Error text → `text-sm` + `--ds-color-text-critical` (pair with `aria-invalid="true"` on the input)

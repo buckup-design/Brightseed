@@ -107,7 +107,7 @@ function TabsTrigger({
         "hover:text-[var(--c-tabs-text-default)]",
         // Focus
         "focus-visible:border-[var(--c-tabs-border-focus)]",
-        "focus-visible:ring-[2px] focus-visible:ring-[var(--c-tabs-border-focus)]/50",
+        "focus-visible:ring-[2px] focus-visible:ring-[var(--c-tabs-border-focus)]",
         "focus-visible:outline-1 focus-visible:outline-[var(--c-tabs-border-focus)]",
         // Disabled. `opacity-50` left as stock Tailwind: --ds-disabled-text-opacity
         // is 0.55, so swapping it in would change the rendered fade. Matches

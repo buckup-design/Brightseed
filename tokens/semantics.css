@@ -51,8 +51,13 @@
      direction to surface-default's hover, because a field is a well you reach
      into, not a raised control. One step lighter than surface-alt (sand-100) at
      rest, one more on hover. */
-  --ds-color-surface-field:           var(--p-color-sand-50);
-  --ds-color-surface-field-hover:     var(--p-color-white);
+  /* Field fill. Becky, Aug 7 2026: a resting field is FLUSH with its canvas —
+     the same value, not a darker well — and LIFTS to white when engaged. So at
+     rest the border is the entire field; on focus the field becomes a raised
+     white plane. sand-25 is the canvas value, which is what makes rest flush. */
+  --ds-color-surface-field:           var(--p-color-sand-25);       /* rest — flush with the canvas */
+  --ds-color-surface-field-hover:     var(--p-color-white);         /* lifts */
+  --ds-color-surface-field-focus:     var(--p-color-white);         /* lifts — the lightest thing on the page */
   /* Surface CANVAS — a warm near-white page base (light-mode only; the dark block
      holds the sand-950 page). Lifted sand-100 → sand-25 July 28 2026 for a
      brighter, airier base.
@@ -133,10 +138,22 @@
      button is visibly distinct from page bg at default and steps darker per state.
      (Earlier the ladder anchored at page-bg, which made Secondary invisible on
      white surfaces, corrected Apr 2026.) */
-  --ds-color-action-secondary:          var(--p-color-sand-100);
-  --ds-color-action-secondary-hover:    var(--p-color-sand-200);
-  --ds-color-action-secondary-active:   var(--p-color-sand-300);
-  --ds-color-action-secondary-disabled: var(--p-color-sand-50);
+  /* Secondary ladder shifted one rung Aug 7 2026 (100→200→300 becomes 200→300→400).
+     The old resting value was sand-100 — IDENTICAL to --ds-color-surface-alt — so a
+     secondary button sitting on any alt-toned panel was 1.00:1 and simply vanished,
+     and on the sand-25 canvas it was 1.09:1. sand-200 reads 1.20:1 on the canvas and
+     1.09:1 on an alt panel: still quiet, but no longer the same value as its ground.
+     Label contrast is unaffected — sand-800 text is 7.83:1 on sand-200.
+     [CONCERN] DARK HAS THE SAME COLLISION AND IS NOT FIXED HERE. Dark
+     action-secondary is sand-900, which is also surface-alt (and six other tokens —
+     see the reverted-experiment note in the dark block). It cannot simply shift:
+     sand-800 is surface-field + surface-raised-alt, sand-700 is raised-alt-hover.
+     Fixing dark means re-basing the dark ramp, which was attempted and reverted in
+     July for producing dead fills. Deliberately deferred, not overlooked. */
+  --ds-color-action-secondary:          var(--p-color-sand-200);
+  --ds-color-action-secondary-hover:    var(--p-color-sand-300);
+  --ds-color-action-secondary-active:   var(--p-color-sand-400);
+  --ds-color-action-secondary-disabled: var(--p-color-sand-100);
 
   /* Critical: destructive, soft style. red-100 surface, red-600 text.
      Refactored Apr 2026 from solid red-500 fill to discrete-step soft tint , 
@@ -151,25 +168,89 @@
   --ds-color-border-default:          var(--p-color-sand-300);      /* input default */
   --ds-color-border-default-hover:    var(--p-color-sand-500);      /* input/select/textarea hover (one-step darken) */
   --ds-color-border-bold:             var(--p-color-sand-500);      /* emphatic dividers */
-  /* Text-entry + select boundary. Split off border-default July 2026 so dark can
-     lift the field edge without moving every hairline in the system. Light is
-     deliberately IDENTICAL to border-default — the lift is dark-only until the AA
-     stance is settled. See DOCS/dark-light-palette-alignment.md. */
-  --ds-color-border-field:            var(--p-color-sand-300);      /* = border-default; light unchanged */
-  --ds-color-border-field-hover:      var(--p-color-sand-500);      /* = border-default-hover */
-  /* Focus rings, variant-aware. Default is neutral sand — the lime focus ring
-     was retuned out July 2026 ("focus green too heavy"). Destructive keeps its
-     own hue scale; secondary is sand. Linktext matches Default (kept as a
-     separate token name in case it ever diverges). Text-entry fields layer a
-     faint lime whisper (--ds-color-ring-focus) over this sand border; see below. */
-  --ds-color-border-focus:             var(--p-color-sand-500);  /* sand/500, Default/Outline/Ghost focus (was lime/500) */
-  --ds-color-border-focus-secondary:   var(--p-color-sand-300);      /* sand/300, Secondary focus (matches Figma base/ring) */
-  --ds-color-border-focus-destructive: var(--p-color-red-500);        /* red/500, Destructive focus */
-  --ds-color-border-focus-link-brand:  var(--p-color-sand-500);  /* sand/500, Linktext focus (same as Default) */
+  /* ── Field state ladder (light). Becky, Aug 7 2026. ──────────────────────
+     THE RULE: an input field is LIGHTER than the surface it sits on, and it
+     LIFTS when you engage it — fill brightens to white, edge firms to sand-600.
+     Reference: Collab Playground frame 139:13968, the canonical light-mode
+     elevation study (canvas sand-25, sidebar sand-50, composer white + sand-300
+     edge + a 6% y4/blur20 shadow).
+
+     Structural note, because it constrains everything here: in a light theme
+     "lighter than its surface" has a CEILING. White is the lightest value, so
+     the biggest fill step available is white-on-sand-300 = 1.39:1. The fill can
+     therefore NEVER identify a field on its own — it delivers depth, not
+     identification. The BORDER is the only thing that can do that job, which is
+     why it carries the whole 3:1 obligation in the engaged state.
+
+       rest   fill sand-50   border sand-300   quiet, recedes into the page
+       hover  fill white     border sand-500
+       focus  fill white     border sand-600   3.50:1 on its own white interior,
+                                               3.41:1 on the sand-25 canvas
+
+     [CONCERN] The REST state is a deliberate, designer-owned trade. sand-300
+     measures 1.31:1 against the sand-50 interior and 1.35:1 against the canvas —
+     failing on both sides, which is the WCAG Understanding 1.4.11 Figure 22/33
+     "control with no perceivable boundary" case. It is defensible HERE because
+     every text field in Quill carries a visible label or placeholder, and
+     Figure 33's reasoning turns on a field that "lacks any form of label to hint
+     at its presence". It would NOT be defensible on a control with no label
+     inside it — which is exactly why the unchecked Checkbox was moved off this
+     token onto --ds-color-border-control below. Do not point a label-less
+     control at border-field. */
+  --ds-color-border-field:            var(--p-color-sand-300);      /* rest — quiet edge, matches the Figma study */
+  --ds-color-border-field-hover:      var(--p-color-sand-500);      /* one rung up; must sit BETWEEN rest and focus */
+  --ds-color-border-field-focus:      var(--p-color-sand-600);      /* engaged — 3.50:1 on white, 3.41:1 on canvas */
+  /* Controls whose boundary is the ONLY thing announcing them: unchecked
+     checkbox, and anything else with no label, placeholder or fill inside it.
+     Held at sand-600 in both themes so the box stays a findable target even
+     while text fields rest quietly at sand-300. */
+  --ds-color-border-control:          var(--p-color-sand-600);      /* 3.50:1 white / 3.41:1 canvas */
+  /* Focus rings, variant-aware. Neutral sand — the lime focus ring was retuned
+     out July 2026 ("focus green too heavy").
+     RETUNED AGAIN Aug 6 2026: light moved sand-500 → sand-700. The July retune
+     left light focus non-conformant with 1.4.11, which DOES cover focus
+     indicators ("the visual focus indicator for a component must have sufficient
+     contrast against the adjacent background"). sand-500 measured 2.30:1 on
+     white and 2.24:1 on the canvas — under 3:1 before the /50 alpha the
+     components were also applying, which dropped it to ~1.47:1.
+     WHY sand-700 AND NOT sand-600: sand-600 clears the page (3.50) but is only
+     2.53:1 against the lime-300 primary button fill, and the ring hugs that
+     fill. sand-700 clears every side — 5.75 white, 5.60 canvas, 5.13 sand-100,
+     and 4.16 against lime-300 — so it needs no ring-offset to be findable.
+     DARK KEEPS sand-500 and is overridden explicitly in the dark block below.
+     Do not "simplify" that away: sand-700 on the sand-950 page is 2.87:1, i.e.
+     applying this light value to dark would fail the criterion it just fixed. */
+  --ds-color-border-focus:             var(--p-color-sand-700);       /* sand/700, Default/Outline/Ghost focus */
+  --ds-color-border-focus-secondary:   var(--p-color-sand-700);       /* sand/700 — was sand/300, which read 1.05:1 against the button's own fill */
+  --ds-color-border-focus-destructive: var(--p-color-red-500);        /* red/500, Destructive focus — 3.93:1 on white, opaque */
+  --ds-color-border-focus-link-brand:  var(--p-color-sand-700);       /* sand/700, Linktext focus (same as Default) */
   /* Ring accent — a faint lime "whisper" layered over the sand focus border on
      text-entry fields only (input/textarea/select/input-group + the composer).
-     Pre-composited to 12% so components can reference it with no opacity modifier. */
+     Pre-composited to 12% so components can reference it with no opacity modifier.
+     DECORATION ONLY: at 12% this measures ~1.09:1 in light and ~1.24:1 in dark.
+     It is the brand signature and is deliberately kept, but it is NOT the focus
+     indicator and must never be counted toward 1.4.11. The sand border above is
+     the indicator. Never ship a focus state that has the whisper and no border. */
   --ds-color-ring-focus:               color-mix(in srgb, var(--p-color-lime-500) 12%, transparent);  /* lime/500 @ 12% */
+  /* Switch thumb outline. The thumb's POSITION is what conveys on/off without
+     relying on colour (SC 1.4.1, Level A) — but only if the thumb is visible.
+     A white thumb reads 1.39:1 on the sand-300 track and 1.38:1 on the lime-300
+     track, so in light mode the position cue was effectively invisible and the
+     two track colours were themselves 1.01:1 apart. A sand-700 outline makes the
+     thumb perceivable on both: 4.14:1 unchecked, 4.16:1 checked.
+     Dark needs no outline — see the dark block. */
+  --ds-color-border-switch-thumb:      var(--p-color-sand-700);      /* 4.14:1 / 4.16:1 against the two light tracks */
+  /* Selected-state boundary for controls whose ON state is a surface fill —
+     Toggle and ToggleGroup today. The fill alone cannot carry the state: the
+     light on-fill (forest-50) is 1.07:1 against the page and the dark on-fill
+     (sand-800) is 1.72:1, both under 3:1, so an unselected and a selected
+     segment differ only by a tint. This border is the identifying signal.
+     Light forest-600 keeps the brand's "selected is green" language and clears
+     both sides (4.01:1 vs the on-fill, 4.27:1 vs the page). Dark uses sand-500
+     (4.18:1 / 7.16:1) because the dark on-fill is neutral sand, not green, so a
+     forest edge there would read as an unrelated accent — and forest-500 would
+     only just scrape 3.10:1. */
+  --ds-color-border-selected-brand:    var(--p-color-forest-600);    /* 4.01:1 on the forest-50 on-fill */
 
   --ds-color-border-success-default:  var(--p-color-forest-200);
   --ds-color-border-success-bold:     var(--p-color-forest-600);
@@ -417,10 +498,21 @@
   --ds-color-surface-raised-alt-hover: var(--p-color-sand-700);
   /* One step lighter than surface-alt (sand-900) at rest, one more on hover —
      see the light block for the reasoning. */
-  --ds-color-surface-field:           var(--p-color-sand-800);
-  --ds-color-surface-field-hover:     var(--p-color-sand-700);
-  /* Canvas, dark: holds today's look — the dark app already sits on sand-950,
-     so the canvas page background resolves the same. */
+  --ds-color-surface-field:           var(--p-color-sand-800);      /* rest — already lighter than the sand-950 canvas */
+  --ds-color-surface-field-hover:     var(--p-color-sand-700);      /* lifts */
+  --ds-color-surface-field-focus:     var(--p-color-sand-700);      /* lifts — dark's mirror of light's white */
+  /* Canvas, dark: stays sand-950, matching the chrome.
+     ATTEMPTED AND REVERTED July 28 2026 — the plan's "lift the inset to sand-900".
+     sand-900 is a heavily occupied rung: SEVEN other dark tokens resolve to it
+     (surface-default-hover, surface-brand, surface-placeholder, text-inverse,
+     icon-inverse, action-secondary, and surface-alt). Making it the ground turns
+     every one of them invisible on the canvas — measured 23 dead fills in the
+     Report Document alone (pills, markers, inset boxes, the neutral Tag, which
+     rides action-secondary). Re-basing surface-alt to sand-850 cut that to 4, but
+     the rest would all have to follow and would then collide with the sand-850
+     card. The payoff was 1.13:1 of chrome/content separation, which this doc's own
+     honest-read already marks as failing its 3:1 target. Not worth a ramp rewrite;
+     see DOCS/dark-light-palette-alignment.md before retrying. */
   --ds-color-surface-canvas:          var(--p-color-sand-950);
   --ds-color-surface-scrim:           color-mix(in srgb, var(--p-color-black) 60%, transparent);     /* veil must go darker than the sand-950 page to register, DESIGN REVIEW: black vs warm */
   --ds-color-surface-scrim-chrome:    color-mix(in srgb, var(--p-color-sand-950) 72%, transparent);  /* page-coloured sticky-chrome veil; see the light block */
@@ -499,11 +591,35 @@
      under 3:1) and 4.16:1 if the canvas later lifts to sand-900. Hover must be its
      own step: border-default-hover is ALREADY sand-600, so reusing it here would
      leave rest and hover identical and kill the hover signal. */
-  --ds-color-border-field:            var(--p-color-sand-600);      /* #8c897f */
+  /* Dark keeps a FIRM resting edge and does not follow light's sand-300 rest.
+     The rule ("field lighter than its surface") is already satisfied here by the
+     fill alone — the sand-800 interior is lighter than the sand-950 canvas — so
+     dark spends nothing to express it. And dark has no white ceiling working
+     against it: a quiet sand-700 rest would read 2.87:1 on the canvas, undoing
+     the July decision that made an input findable on dark in the first place.
+     Light rests quiet because its fill CAN'T carry depth; dark's already does. */
+  --ds-color-border-field:            var(--p-color-sand-600);      /* #8c897f, 4.71:1 on the sand-950 canvas */
   --ds-color-border-field-hover:      var(--p-color-sand-500);      /* 7.16:1, a clear rung above rest */
-  /* Focus rings, only Secondary changes in dark mode (sand step shifts).
-     Default/Destructive/Link-Brand are theme-invariant per Figma. */
+  --ds-color-border-field-focus:      var(--p-color-sand-500);      /* 7.16:1 on canvas; the lime whisper ring is what separates focus from hover */
+  --ds-color-border-control:          var(--p-color-sand-600);      /* unchecked checkbox — same value as light, by design */
+  /* Focus rings. NO LONGER theme-invariant as of Aug 6 2026 — dark now pins its
+     own values because light moved to sand-700 to clear 3:1 on light surfaces,
+     and sand-700 on this sand-950 page is only 2.87:1. Inheriting light here
+     would silently break dark focus, so every focus token is restated.
+     sand-500 measures 7.16:1 on the page, 6.32 on canvas, 5.41 on a raised card
+     and 4.18 on a field interior — it clears on every dark surface.
+     If you add a focus token to the light block, ADD ITS DARK PARTNER HERE. */
+  --ds-color-border-focus:            var(--p-color-sand-500);      /* 7.16:1 on the sand-950 page */
   --ds-color-border-focus-secondary:  var(--p-color-sand-500);      /* sand/500, matches Figma colors/ring-dark */
+  --ds-color-border-focus-link-brand: var(--p-color-sand-500);      /* matches Default, as in light */
+  /* No switch-thumb outline in dark, deliberately. The dark tracks are already
+     4.16:1 apart (lime-300 checked vs sand-700 unchecked), which satisfies SC
+     1.4.1's lightness allowance on its own, and the sand-950 thumb reads 11.94:1
+     on the checked track. An outline here could only sit BETWEEN the thumb and
+     the track and would weaken, not help — the thumb is already the darkest
+     element. transparent = no ring, by design. */
+  --ds-color-border-switch-thumb:     transparent;
+  --ds-color-border-selected-brand:   var(--p-color-sand-500);      /* 4.18:1 on the sand-800 on-fill; see the light block */
 
   /* Semi-transparent intent border on dark bg, 46% opacity matches mockup.
      Source: dark mode mockup May 28 2026. */

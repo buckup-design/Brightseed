@@ -91,8 +91,25 @@ const buttonVariants = cva(
     // (see globals.css), so loading buttons keep their content at full opacity
     // even though they're HTML-disabled, the spinner stays clearly visible.
     "disabled-state:[&_[data-slot=button-content]]:opacity-[var(--c-button-disabled-text-opacity)]",
-    // ── Focus ring: 3px outer, 50% alpha for softness. Variant sets color. ──
-    "focused:ring-[3px] focused:ring-offset-0",
+    // ── Focus ring: 2px outer, OPAQUE. Variant sets colour. ──────────────
+    // The 50% alpha modifier was removed Aug 6 2026: it cost ~35% of the
+    // contrast ratio and was the single largest reason light-mode focus did not
+    // meet SC 1.4.11 (sand-500 @50% measured ~1.47:1 against the page).
+    // Width dropped 3px -> 2px Aug 6 2026 (Becky's call): once the ring went
+    // opaque, a 3px band was ~56% of a 24px icon-xs button. 2px matches the 13
+    // other ring users in the system, so there is now ONE control ring weight.
+    // ring-offset stays 0 deliberately, but the reason is narrower than "it
+    // clears everything". What carries the indicator is the ring's OUTER edge
+    // against the page: 5.75:1 in light (sand-700 on white), 7.16:1 in dark
+    // (sand-500 on sand-950). Its INNER edge against the button's own fill only
+    // clears in light — sand-700 vs lime-300 is 4.16:1, but in dark sand-500 vs
+    // that same unchanged lime-300 fill is just 1.67:1. That is fine: 1.4.11
+    // asks that the indicator be perceivable, not perceivable on both sides
+    // (Understanding Figure 3 permits a boundary subsumed into one neighbour).
+    // An offset would not help the inner edge anyway, and it carries a real
+    // hazard: Tailwind's --tw-ring-offset-color defaults to #fff, which would
+    // paint a white gap around every focused button in dark mode.
+    "focused:ring-[2px] focused:ring-offset-0",
   ),
   {
     variants: {
@@ -103,7 +120,7 @@ const buttonVariants = cva(
           "hovered:bg-[var(--c-button-action-primary-hover)]",
           "hovered:text-[var(--c-button-text-on-action-primary-hover)]",          "pressed:bg-[var(--c-button-action-primary-active)]",
           "pressed:text-[var(--c-button-text-on-action-primary-active)]",
-          "focused:ring-[var(--c-button-border-focus)]/50",
+          "focused:ring-[var(--c-button-border-focus)]",
           "disabled-state:bg-[var(--c-button-action-primary-disabled)]"
         ),
         // ── Secondary (faint sand) ──────────────────────────────────────
@@ -111,7 +128,7 @@ const buttonVariants = cva(
           "bg-[var(--c-button-action-secondary)] text-[var(--c-button-text-default)]",
           "hovered:bg-[var(--c-button-action-secondary-hover)]",
           "hovered:text-[var(--c-button-text-default-hover)]",          "pressed:bg-[var(--c-button-action-secondary-active)]",
-          "focused:ring-[var(--c-button-border-focus-secondary)]/50",
+          "focused:ring-[var(--c-button-border-focus-secondary)]",
           "disabled-state:bg-[var(--c-button-action-secondary-disabled)]"
         ),
         // ── Outline (hairline border, transparent surface) ──────────────
@@ -120,28 +137,28 @@ const buttonVariants = cva(
           "text-[var(--c-button-text-default)]",
           "hovered:bg-[var(--c-button-action-secondary-hover)]",
           "hovered:text-[var(--c-button-text-default-hover)]",          "pressed:bg-[var(--c-button-action-secondary-active)]",
-          "focused:ring-[var(--c-button-border-focus)]/50"
+          "focused:ring-[var(--c-button-border-focus)]"
         ),
         // ── Ghost (no surface, no border) ───────────────────────────────
         ghost: cn(
           "bg-transparent text-[var(--c-button-text-default)]",
           "hovered:bg-[var(--c-button-action-secondary)]",
           "hovered:text-[var(--c-button-text-default-hover)]",          "pressed:bg-[var(--c-button-action-secondary-hover)]",
-          "focused:ring-[var(--c-button-border-focus)]/50"
+          "focused:ring-[var(--c-button-border-focus)]"
         ),
         // ── Destructive (soft red) ──────────────────────────────────────
         destructive: cn(
           "bg-[var(--c-button-action-critical)] text-[var(--c-button-text-on-action-critical)]",
           "hovered:bg-[var(--c-button-action-critical-hover)]",
           "hovered:text-[var(--c-button-text-on-action-critical-hover)]",          "pressed:bg-[var(--c-button-action-critical-active)]",
-          "focused:ring-[var(--c-button-border-focus-destructive)]/50",
+          "focused:ring-[var(--c-button-border-focus-destructive)]",
           "disabled-state:bg-[var(--c-button-action-critical-disabled)]"
         ),
         // ── Linktext (button-shaped link, never underlined) ─────────────
         linktext: cn(
           "bg-transparent text-[var(--c-button-text-link-brand)]",
           "hovered:text-[var(--c-button-text-link-brand-hover)]",          "pressed:text-[var(--c-button-text-link-brand-hover)]",
-          "focused:ring-[var(--c-button-border-focus-link-brand)]/50"
+          "focused:ring-[var(--c-button-border-focus-link-brand)]"
         ),
       },
       size: {

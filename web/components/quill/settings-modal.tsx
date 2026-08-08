@@ -568,7 +568,7 @@ export function SettingsModal({
            * Dialog close button in the top-right corner. */}
           <section
             aria-label={activeTitle}
-            className="flex flex-1 flex-col overflow-hidden bg-[var(--c-settings-surface-default)]"
+            className="flex flex-1 flex-col overflow-hidden bg-[var(--c-settings-surface-canvas)]"
           >
             {/* Fixed header — pr-12 reserves the close-button corner. */}
             <div className="shrink-0 px-6 pt-6 pb-3 pr-12">

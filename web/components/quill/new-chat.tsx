@@ -68,7 +68,7 @@ export function NewChat({
           matching every other field. The Textarea is chromeless, incl. its hover
           fill (enabled:hover:bg-transparent), so it never paints a lighter
           rectangle inset inside the shell. */}
-      <div className="space-y-3 rounded-[var(--c-new-chat-shape-radius-md)] border border-[var(--c-new-chat-border-default)] bg-[var(--c-new-chat-surface-field)] p-3 transition-[color,box-shadow,background-color] focus-within:border-[var(--c-new-chat-border-focus)] focus-within:bg-[var(--c-new-chat-surface-field-hover)] focus-within:ring-[2px] focus-within:ring-[var(--c-new-chat-ring-focus)]">
+      <div className="space-y-3 rounded-[var(--c-new-chat-shape-radius-md)] border border-[var(--c-new-chat-border-default)] bg-[var(--c-new-chat-surface-field)] p-3 transition-[color,box-shadow,background-color] focus-within:border-[var(--c-new-chat-border-focus)] focus-within:bg-[var(--c-new-chat-surface-field-focus)] focus-within:ring-[2px] focus-within:ring-[var(--c-new-chat-ring-focus)]">
         <Textarea
           value={value}
           onChange={(event) => setValue(event.target.value)}

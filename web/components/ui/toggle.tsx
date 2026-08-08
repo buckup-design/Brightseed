@@ -15,7 +15,8 @@ import { cn } from "@/lib/utils"
  *   On (state=on)       → --ds-color-surface-brand-subtle / --ds-color-text-default
  *   On + hover          → --ds-color-surface-brand-subtle-hover
  *   Outline border      → --ds-color-border-default
- *   Focus ring          → --ds-color-border-focus / 50 (same recipe as Button + Switch)
+ *   On border (state)   → --ds-color-border-selected-brand (forest-600 L / sand-500 D)
+ *   Focus ring          → --ds-color-border-focus (same recipe as Button + Switch)
  *   aria-invalid        → --ds-color-border-critical-bold (border + soft ring)
  *   Radius              → --ds-shape-radius-md
  *
@@ -53,7 +54,7 @@ import { cn } from "@/lib/utils"
 // a soft surface tint) on an element with no border-width: colour on nothing, plus
 // a halo at 1.03:1 — an invalid toggle was pixel-identical to a valid one.
 const toggleVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-[var(--c-toggle-shape-radius-md)] border border-transparent text-sm font-medium whitespace-nowrap transition-[color,box-shadow] outline-none hover:bg-[var(--c-toggle-surface-alt)] hover:text-[var(--c-toggle-text-subtle)] focus-visible:border-[var(--c-toggle-border-focus)] focus-visible:ring-[2px] focus-visible:ring-[var(--c-toggle-border-focus)]/50 disabled:pointer-events-none disabled:opacity-[var(--c-toggle-disabled-text-opacity)] aria-invalid:border-[var(--c-toggle-border-critical-bold)] aria-invalid:ring-[var(--c-toggle-border-critical-bold)]/20 data-[state=on]:bg-[var(--c-toggle-surface-brand-subtle)] data-[state=on]:text-[var(--c-toggle-text-default)] data-[state=on]:hover:bg-[var(--c-toggle-surface-brand-subtle-hover)] dark:aria-invalid:ring-[var(--c-toggle-border-critical-bold)]/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "inline-flex items-center justify-center gap-2 rounded-[var(--c-toggle-shape-radius-md)] border border-transparent text-sm font-medium whitespace-nowrap transition-[color,box-shadow] outline-none hover:bg-[var(--c-toggle-surface-alt)] hover:text-[var(--c-toggle-text-subtle)] focus-visible:border-[var(--c-toggle-border-focus)] focus-visible:ring-[2px] focus-visible:ring-[var(--c-toggle-border-focus)] disabled:pointer-events-none disabled:opacity-[var(--c-toggle-disabled-text-opacity)] aria-invalid:border-[var(--c-toggle-border-critical-bold)] aria-invalid:ring-[var(--c-toggle-border-critical-bold)]/20 data-[state=on]:bg-[var(--c-toggle-surface-brand-subtle)] data-[state=on]:border-[var(--c-toggle-border-selected)] data-[state=on]:text-[var(--c-toggle-text-default)] data-[state=on]:hover:bg-[var(--c-toggle-surface-brand-subtle-hover)] dark:aria-invalid:ring-[var(--c-toggle-border-critical-bold)]/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {

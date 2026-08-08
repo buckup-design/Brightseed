@@ -6,9 +6,9 @@ import { cn } from "@/lib/utils"
  * Input, Brightseed Quill design system.
  *
  * Color tokens (via the component tier, --c-input-*):
- *   Border resting      → --ds-color-border-field       (sand-300 light / sand-600 dark)
- *   Border hover        → --ds-color-border-field-hover (sand-500 both themes)
- *   Border focus        → --ds-color-border-focus  (sand-500, neutral)
+ *   Border resting      → --ds-color-border-field       (sand-600 both themes)
+ *   Border hover        → --ds-color-border-field-hover (sand-700 light / sand-500 dark)
+ *   Border focus        → --ds-color-border-focus  (sand-700 light / sand-500 dark, neutral)
  *   Ring focus          → --ds-color-ring-focus    (faint lime whisper, 2px)
  *   Border/ring invalid → --ds-color-border-critical-bold
  *   Surface rest/hover  → --ds-color-surface-field / --ds-color-surface-field-hover
@@ -43,6 +43,7 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
         "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-[var(--c-input-disabled-text-opacity)]",
         // Focus
         "focus-visible:border-[var(--c-input-border-focus)]",
+        "focus-visible:bg-[var(--c-input-surface-focus)]",
         "focus-visible:ring-[2px] focus-visible:ring-[var(--c-input-ring-focus)]",
         // Hover: border deepens (resting only; focus and invalid own the border
         // in their states) and the field brightens one step.

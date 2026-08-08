@@ -19,7 +19,7 @@ function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
         // `bg-[border]/30` hack is retired now that --ds-color-surface-field
         // exists. The inner control is bg-transparent (below), so this surface,
         // and its hover, is what shows.
-        "group/input-group relative flex w-full items-center rounded-[var(--c-input-group-shape-radius-md)] border border-[var(--c-input-group-border-default)] shadow-[var(--c-input-group-shadow-xs)] transition-[color,box-shadow] outline-none bg-[var(--c-input-group-surface-default)] hover:bg-[var(--c-input-group-surface-hover)]",
+        "group/input-group relative flex w-full items-center rounded-[var(--c-input-group-shape-radius-md)] border border-[var(--c-input-group-border-default)] shadow-[var(--c-input-group-shadow-xs)] transition-[color,box-shadow] outline-none bg-[var(--c-input-group-surface-default)] hover:bg-[var(--c-input-group-surface-hover)] has-[[data-slot=input-group-control]:focus-visible]:bg-[var(--c-input-group-surface-focus)]",
         "h-9 min-w-0 has-[>textarea]:h-auto",
 
         // Variants based on alignment.

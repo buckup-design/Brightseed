@@ -49,7 +49,16 @@
   --border:                 var(--ds-color-border-default);
   --border-subtle:          var(--ds-color-border-subtle);   /* extended, hairlines, table grid */
   --border-bold:            var(--ds-color-border-bold);     /* extended, emphatic dividers */
-  --input:                  var(--ds-color-border-default);
+  /* --input is shadcn's INPUT BORDER slot, so it maps to border-field rather
+     than border-default. DEFENSIVE ONLY — as of Aug 6 2026 there is no live
+     consumer: nothing in app/, components/ or stories/ uses border-input,
+     bg-input, ring-ring or border-ring (the two greppable hits are both
+     comments). The July 16 ui/ fork severed these; even the login pages render
+     ui/input.tsx, which reads --c-input-border-default. Kept correct so that a
+     future `shadcn add` pulling in a component that DOES read border-input
+     inherits the field edge (sand-600) instead of the card edge. Same status as
+     the --sidebar-* block below. */
+  --input:                  var(--ds-color-border-field);
   --ring:                   var(--ds-color-border-focus);
 
   /*
