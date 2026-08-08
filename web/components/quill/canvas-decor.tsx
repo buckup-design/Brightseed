@@ -30,10 +30,16 @@ const GRID_PITCH = 16;
 /** Plus-accent spacing in px (80 = every 5th line), and the cross's arm length. */
 const ACCENT_PITCH = 80;
 const ACCENT_ARM = 10;
-/** Cross centre within the tile. MUST be >= ACCENT_ARM: an SVG pattern clips
- *  anything outside its tile, so a cross centred at 0,0 renders as an L. Kept a
- *  multiple of GRID_PITCH so accents still land on line intersections. */
-const ACCENT_OFFSET = 16;
+/** Cross centre within the tile. MUST be >= ACCENT_ARM, and must land on a grid
+ *  line (LINE_OFFSET + n*GRID_PITCH = 8, 24, 40...), or accents drift off the
+ *  intersections they are meant to mark. */
+const ACCENT_OFFSET = 24;
+/** Line offset within the tile. Strokes are CENTRED on their path, so drawing on
+ *  the tile boundary clips the outer half and a 2px line renders 1px — the same
+ *  clipping that turned the accents into L-shapes. Half the pitch keeps both
+ *  arms whole. ACCENT_OFFSET must stay on a line (LINE_OFFSET + n*GRID_PITCH)
+ *  and >= ACCENT_ARM. */
+const LINE_OFFSET = 8;
 
 export function CanvasDecor({ className }: { className?: string }) {
   // Two grids on one page would collide on a shared <pattern> id.
@@ -59,7 +65,10 @@ export function CanvasDecor({ className }: { className?: string }) {
             patternUnits="userSpaceOnUse"
           >
             <path
-              d={`M ${GRID_PITCH} 0 L 0 0 0 ${GRID_PITCH}`}
+              d={
+                `M 0 ${LINE_OFFSET} H ${GRID_PITCH} ` +
+                `M ${LINE_OFFSET} 0 V ${GRID_PITCH}`
+              }
               fill="none"
               stroke="var(--c-canvas-decor-grid-line)"
               strokeWidth={2}
