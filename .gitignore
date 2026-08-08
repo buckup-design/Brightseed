@@ -11,6 +11,7 @@ memory/
 # Working folders (curate before adding to repo)
 OUTPUTS/
 vector-pipeline/
+DOCS/archive/
 anna's mocks 4-29-26/
 
 # Stray PDF (rename + move into DOCS/ before committing)
