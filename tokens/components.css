@@ -272,6 +272,16 @@
   --c-nav-user-text-muted:         var(--ds-color-text-muted);
   --c-nav-user-text-subtle:        var(--ds-color-text-subtle);
 
+  /* --c-canvas-decor. The badge rides surface-alt, which happens to match the
+     Figma in BOTH themes (sand-100 light, sand-850 ~= its #34332e dark). Its
+     glyph takes text-brand rather than the Figma's flat forest-500, so the
+     brand green flips with the theme instead of being pinned to one value. */
+  --c-canvas-decor-art:            var(--ds-color-decor-art);
+  --c-canvas-decor-badge-icon:     var(--ds-color-text-brand);
+  --c-canvas-decor-badge-surface:  var(--ds-color-surface-alt);
+  --c-canvas-decor-grid-accent:    var(--ds-color-decor-grid-accent);
+  --c-canvas-decor-grid-line:      var(--ds-color-decor-grid-line);
+
   /* --c-new-chat */
   --c-new-chat-border-default:     var(--ds-color-border-field);
   --c-new-chat-border-focus:       var(--ds-color-border-field-focus);

@@ -17,7 +17,9 @@
 import * as React from "react";
 import { ArrowUp, Sparkles } from "lucide-react";
 
+import { HummingbirdLine } from "@/components/ui/badge-icons";
 import { Button } from "@/components/ui/button";
+import { CanvasDecor, HummingbirdBadge } from "@/components/quill/canvas-decor";
 import { Chip } from "@/components/ui/chip";
 import { PageHeading } from "@/components/ui/page-heading";
 import { Textarea } from "@/components/ui/textarea";
@@ -59,52 +61,62 @@ export function NewChat({
   };
 
   return (
-    <div className="mx-auto flex w-full max-w-2xl flex-col gap-8 py-16">
-      <PageHeading align="center" title={greeting} description={subtitle} />
+    // The decor layer is full-bleed, so it needs a relative box spanning the
+    // whole inset — the max-w-2xl column nests inside rather than hosting it.
+    <div className="relative isolate flex w-full flex-1 flex-col">
+      <CanvasDecor />
 
-      {/* Context composer — the shell (not the inner Textarea) is the visible
-          field: it owns the surface, border, and focus affordance. focus-within
-          lightens the whole box and adds the sand-500 border + lime whisper ring,
-          matching every other field. The Textarea is chromeless, incl. its hover
-          fill (enabled:hover:bg-transparent), so it never paints a lighter
-          rectangle inset inside the shell. */}
-      <div className="space-y-3 rounded-[var(--c-new-chat-shape-radius-md)] border border-[var(--c-new-chat-border-default)] bg-[var(--c-new-chat-surface-field)] p-3 transition-[color,box-shadow,background-color] focus-within:border-[var(--c-new-chat-border-focus)] focus-within:bg-[var(--c-new-chat-surface-field-focus)] focus-within:ring-[2px] focus-within:ring-[var(--c-new-chat-ring-focus)]">
-        <Textarea
-          value={value}
-          onChange={(event) => setValue(event.target.value)}
-          placeholder="Ask about compounds, combinations, mechanisms, or dosing…"
-          // Prompt field, never a credential — stop the browser's password
-          // manager (iCloud Passwords et al.) offering autofill on focus.
-          autoComplete="off"
-          data-1p-ignore
-          data-lpignore="true"
-          className="min-h-20 resize-none border-0 bg-transparent p-0 shadow-none focus-visible:ring-0 enabled:hover:bg-transparent"
-        />
-        <div className="flex items-center justify-between">
-          <Button variant="ghost" size="sm" onClick={onCreateBrief}>
-            <Sparkles />
-            Create formula brief
-          </Button>
-          <Button size="icon" aria-label="Send message" onClick={send}>
-            <ArrowUp />
-          </Button>
+      <div className="relative mx-auto flex w-full max-w-2xl flex-col gap-8 py-16">
+        <HummingbirdBadge className="self-center">
+          <HummingbirdLine className="size-14" strokeWidth={1} />
+        </HummingbirdBadge>
+
+        <PageHeading align="center" title={greeting} description={subtitle} />
+
+        {/* Context composer — the shell (not the inner Textarea) is the visible
+            field: it owns the surface, border, and focus affordance. focus-within
+            lightens the whole box and adds the sand-500 border + lime whisper ring,
+            matching every other field. The Textarea is chromeless, incl. its hover
+            fill (enabled:hover:bg-transparent), so it never paints a lighter
+            rectangle inset inside the shell. */}
+        <div className="space-y-3 rounded-[var(--c-new-chat-shape-radius-md)] border border-[var(--c-new-chat-border-default)] bg-[var(--c-new-chat-surface-field)] p-3 transition-[color,box-shadow,background-color] focus-within:border-[var(--c-new-chat-border-focus)] focus-within:bg-[var(--c-new-chat-surface-field-focus)] focus-within:ring-[2px] focus-within:ring-[var(--c-new-chat-ring-focus)]">
+          <Textarea
+            value={value}
+            onChange={(event) => setValue(event.target.value)}
+            placeholder="Ask about compounds, combinations, mechanisms, or dosing…"
+            // Prompt field, never a credential — stop the browser's password
+            // manager (iCloud Passwords et al.) offering autofill on focus.
+            autoComplete="off"
+            data-1p-ignore
+            data-lpignore="true"
+            className="min-h-20 resize-none border-0 bg-transparent p-0 shadow-none focus-visible:ring-0 enabled:hover:bg-transparent"
+          />
+          <div className="flex items-center justify-between">
+            <Button variant="ghost" size="sm" onClick={onCreateBrief}>
+              <Sparkles />
+              Create formula brief
+            </Button>
+            <Button size="icon" aria-label="Send message" onClick={send}>
+              <ArrowUp />
+            </Button>
+          </div>
         </div>
-      </div>
 
-      <div className="flex flex-wrap justify-center gap-2">
-        {prompts.map((prompt) => (
-          <Chip key={prompt} variant="outline" asChild>
-            <button
-              type="button"
-              onClick={() => {
-                setValue(prompt);
-                onSelectPrompt?.(prompt);
-              }}
-            >
-              {prompt}
-            </button>
-          </Chip>
-        ))}
+        <div className="flex flex-wrap justify-center gap-2">
+          {prompts.map((prompt) => (
+            <Chip key={prompt} variant="outline" asChild>
+              <button
+                type="button"
+                onClick={() => {
+                  setValue(prompt);
+                  onSelectPrompt?.(prompt);
+                }}
+              >
+                {prompt}
+              </button>
+            </Chip>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -21,7 +21,7 @@ const meta = {
     // The canvas is the app shell's surface, not the screen's — mirror it here
     // so the standalone Block reads the same as it does inside App Shell Quill.
     (Story) => (
-      <div className="min-h-svh bg-[var(--ds-color-surface-canvas)] p-6">
+      <div className="flex min-h-svh flex-col bg-[var(--ds-color-surface-canvas)] p-6">
         <Story />
       </div>
     ),

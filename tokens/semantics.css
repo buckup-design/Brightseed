@@ -86,6 +86,13 @@
      both inside a Card and on the canvas, and no fixed step works on both. */
   --ds-color-surface-chip-neutral:    color-mix(in srgb, black 5%, transparent);
 
+  /* Canvas decoration: the grid and the botanical band. Decorative only — never
+     the sole carrier of information, and always aria-hidden at the DOM. The 0.6
+     group opacity the Figma applies to the grid is folded into these values. */
+  --ds-color-decor-grid-line:         color-mix(in srgb, var(--p-color-sand-50)  60%, transparent);
+  --ds-color-decor-grid-accent:       color-mix(in srgb, var(--p-color-sand-200) 60%, transparent);
+  --ds-color-decor-art:               color-mix(in srgb, var(--p-color-sand-500) 40%, transparent);
+
   --ds-color-surface-data:            var(--p-color-cyan-50);        /* default data panel tint */
   --ds-color-surface-selected:        var(--p-color-blue-50);             /* selected row / focused item, blue-50 */
   --ds-color-surface-selected-hover:  var(--p-color-blue-100);
@@ -446,6 +453,15 @@
 
   /* Deeper than light: the dark ramp's rungs sit closer in luminance. */
   --ds-color-surface-chip-neutral:    color-mix(in srgb, black 25%, transparent);
+
+  /* Polarity flips: the light grid lines are DARKER than the sand-25 canvas,
+     the dark ones LIGHTER than sand-900. Accents stay darker in both. */
+  /* 9% = the Figma's 0.15 stroke alpha folded through its 0.6 group opacity.
+     Do not read this as 60% like the light pair — the dark stroke carries its
+     own alpha on top of the group's. */
+  --ds-color-decor-grid-line:         color-mix(in srgb, var(--p-color-sand-800) 9%, transparent);
+  --ds-color-decor-grid-accent:       color-mix(in srgb, var(--p-color-sand-950) 60%, transparent);
+  --ds-color-decor-art:               color-mix(in srgb, var(--p-color-sand-500) 70%, transparent);
 
   --ds-color-surface-data:            var(--p-color-cyan-950);
   --ds-color-surface-selected:        var(--p-color-blue-950);
