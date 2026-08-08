@@ -107,6 +107,17 @@
   --ds-color-surface-critical:        var(--p-color-red-50);
   --ds-color-surface-critical-hover:  var(--p-color-red-100);
   --ds-color-surface-critical-active: var(--p-color-red-200);
+
+  /* Intent tints for a chip sitting INSIDE a raised card, the same relationship
+     surface-raised-alt has to surface-alt. In LIGHT these are identical to the
+     base tints above — the light recipe is a flat primitive step, not a mix
+     against the page, so it does not care what it sits on. Light is therefore
+     unchanged by construction; only dark needs the re-mix. See the dark block. */
+  --ds-color-surface-success-raised:  var(--p-color-forest-50);
+  --ds-color-surface-info-raised:     var(--p-color-blue-50);
+  --ds-color-surface-warning-raised:  var(--p-color-yellow-50);
+  --ds-color-surface-critical-raised: var(--p-color-red-50);
+
   --ds-color-surface-data:            var(--p-color-cyan-50);        /* default data panel tint */
   --ds-color-surface-selected:        var(--p-color-blue-50);             /* selected row / focused item, blue-50 */
   --ds-color-surface-selected-hover:  var(--p-color-blue-100);
@@ -368,6 +379,26 @@
   --ds-color-data-magnitude-default:  var(--chart-seq-forest-700);  /* med tier / single-hue default */
   --ds-color-data-magnitude-strong:   var(--chart-seq-forest-900);  /* high tier */
 
+  /* The unfilled remainder of a magnitude meter. TRANSLUCENT, deliberately —
+     this is the one token in the system that must not be a fixed step.
+
+     Why: the track's job is "a well in whatever surface I am sitting on", and a
+     ScoreMeter sits on at least four (page, surface-alt, a raised card, and a
+     card footer). ANY fixed value collides with one of them, and a collision is
+     total — the track disappears and the bar becomes a floating line of
+     arbitrary length, which destroys the meter's only quantitative channel
+     (fill LENGTH is meaningless with no visible extent to measure against).
+     That is exactly what happened when ResultCard's footer lifted to sand-800
+     in b5654b9 and met dark's sand-800 border-subtle at 1.00:1; picking a
+     different fixed step just moves the collision to a different surface.
+
+     A black overlay is a well against every host by construction. Measured, the
+     track reads 6.7% Weber on every light surface and 48-56% on every dark one,
+     and fill-vs-track stays >= 3:1 in all 21 fill x surface combinations
+     (worst: soft on the light sand-100 footer, 3.41:1 — the fixed sand-200
+     track it replaces was 3.48:1, so light is a wash). */
+  --ds-color-data-track:              color-mix(in srgb, black 5%, transparent);
+
   /* ── Favorite / pin icon ── */
   --ds-color-icon-favorite-inactive:  var(--p-color-sand-400);   /* resting unselected favorite/star, muted */
   --ds-color-icon-favorite-active:    var(--p-color-yellow-500); /* favorited/pinned, theme-invariant */
@@ -575,6 +606,28 @@
   --ds-color-surface-critical:        color-mix(in srgb, var(--p-color-red-400) 10%, var(--p-color-sand-950));
   --ds-color-surface-critical-hover:  color-mix(in srgb, var(--p-color-red-400) 16%, var(--p-color-sand-950));
   --ds-color-surface-critical-active: color-mix(in srgb, var(--p-color-red-400) 22%, var(--p-color-sand-950));
+
+  /* Intent tints for a chip INSIDE a raised (sand-850) card. Same intent step,
+     same percentage — only the base changes, sand-950 -> sand-850. This is the
+     companion pattern surface-raised-alt already established for neutral fills
+     (Aug 2026); the tinted intents needed the same treatment and had been left
+     behind when cards lifted to sand-850 in b5654b9.
+
+     WHY: the recipe mixes against the PAGE, so on a lighter card every intent
+     chip landed DARKER than the card holding it — a dent, not a raised chip.
+     Measured in the browser on Blocks/Reports list view, dark: the "Completed"
+     StatusBadge computed #242a24 (L 0.0216) on a #353430 card (L 0.0343).
+     Re-mixed against sand-850 all four are lighter than the card, and label
+     text (sand-50) still clears 9:1 on every one.
+
+     Base step only, deliberately: -hover/-active on the intent family are used
+     only by Alert and Sonner, which sit on the canvas or float above it and
+     never inside a card. Add raised hover/active steps only if that changes. */
+  --ds-color-surface-success-raised:  color-mix(in srgb, var(--p-color-forest-800) 15%, var(--p-color-sand-850));
+  --ds-color-surface-info-raised:     color-mix(in srgb, var(--p-color-blue-400)   10%, var(--p-color-sand-850));
+  --ds-color-surface-warning-raised:  color-mix(in srgb, var(--p-color-yellow-300) 10%, var(--p-color-sand-850));
+  --ds-color-surface-critical-raised: color-mix(in srgb, var(--p-color-red-400)    10%, var(--p-color-sand-850));
+
   --ds-color-surface-data:            var(--p-color-cyan-950);
   --ds-color-surface-selected:        var(--p-color-blue-950);
   --ds-color-surface-selected-hover:  var(--p-color-blue-900);
@@ -696,12 +749,28 @@
      --chart-seq-forest-* is theme-invariant (light values), so the light ramp
      would sit dark-on-dark here. Remap to lighter forest steps and INVERT the
      tier direction — on a dark card the stronger tier reads lighter/more
-     prominent. On sand-950 forest-500 is already well past 3:1.
-     BRIGHTSEED-TBD: [CONCERN] dark contrast picked by luminance estimate, not
-     formally measured against the dark card + footer; verify before promote. */
+     prominent.
+
+     RATIFIED Aug 2026. The old [CONCERN] here said the dark steps were picked
+     by luminance estimate and never formally measured. Now measured, against
+     the surface the meter actually sits on (the ResultCard footer,
+     surface-raised-alt = sand-800):
+         soft    forest-500  3.10:1 on footer  ·  5.31:1 on page
+         default forest-400  4.28:1 on footer  ·  7.35:1 on page
+         strong  forest-300  5.85:1 on footer  · 10.03:1 on page
+     Monotonic and all clear 3:1, so the inversion stands as designed. The floor
+     is soft-on-footer at 3.10:1 — that is the number to re-check if the footer
+     surface ever moves again. */
   --ds-color-data-magnitude-soft:     var(--p-color-forest-500);  /* low tier */
   --ds-color-data-magnitude-default:  var(--p-color-forest-400);  /* med tier */
   --ds-color-data-magnitude-strong:   var(--p-color-forest-300);  /* high tier */
+
+  /* Same overlay idea as light, deeper — the dark ramp's rungs are closer
+     together in luminance, so 5% would barely register. 35% gives 48-56% Weber
+     on every dark surface (page / surface-alt / sand-850 card / sand-800
+     footer) and keeps fill-vs-track at 4.45:1 or better everywhere.
+     Black, not white: the track stays a WELL in both themes. */
+  --ds-color-data-track:              color-mix(in srgb, black 35%, transparent);
 
   /* ── Favorite / pin icon ── */
   --ds-color-icon-favorite-inactive:  var(--p-color-sand-700);   /* subtle on dark surface */

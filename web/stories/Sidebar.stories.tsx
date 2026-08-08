@@ -52,9 +52,17 @@ import {
  * flyout. Both were considered and rejected: a flyout would put panel content
  * back on the rail.
  *
- * Open question: the toggle rests at opacity 0, following Otter. Resting it at
- * ~40% would make it discoverable without hovering, at the cost of a busier
- * nav. Never settled — compare both here before changing it.
+ * SETTLED Aug 2026 — the toggle rests at opacity 0, and stays there. The
+ * long-standing proposal was ~40% for discoverability; measured, that resolves
+ * to 1.79:1 against the nav, which is not a conformant control indicator (only
+ * a full-opacity 5.75:1 clears 3:1). So 0.25–0.6 all sit in a dead zone: busy
+ * enough to add noise, too faint to be a real affordance — the choice is
+ * really 0 or 1, not a dial.
+ *
+ * 0 wins because the reveal is group-hover on the WHOLE 240px panel, not the
+ * 36px button, so any pointer heading for the nav reveals it; focus-within
+ * covers keyboard; and mobile renders it solid already. Reopen only if the
+ * hover target ever narrows to the button itself.
  */
 const meta = {
   title: "Components/Sidebar",

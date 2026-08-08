@@ -369,7 +369,7 @@
   --c-score-meter-fill-soft:          var(--ds-color-data-magnitude-soft);    /* low tier */
   --c-score-meter-fill:               var(--ds-color-data-magnitude-default); /* med tier */
   --c-score-meter-fill-strong:        var(--ds-color-data-magnitude-strong);  /* high tier */
-  --c-score-meter-track:              var(--ds-color-border-subtle);
+  --c-score-meter-track:              var(--ds-color-data-track);
   --c-score-meter-tick:               var(--ds-color-text-subtle);
   --c-score-meter-label:              var(--ds-color-text-subtle);
   --c-score-meter-value:              var(--ds-color-text-default);
@@ -486,7 +486,11 @@
   --c-status-badge-surface-neutral: var(--ds-color-surface-raised-alt);
   --c-status-badge-text-neutral:    var(--ds-color-text-subtle);
   --c-status-badge-dot-neutral:     var(--ds-color-icon-subtle);
-  --c-status-badge-surface-success: var(--ds-color-surface-success);
+  /* -raised for the same reason the neutral tone above uses -raised-alt: the dark
+     intent recipe mixes against the PAGE, so on a sand-850 card the base tint
+     lands darker than the card and reads as a dent. Light is identical either
+     way (flat primitive step), so this is a dark-only change by construction. */
+  --c-status-badge-surface-success: var(--ds-color-surface-success-raised);
   --c-status-badge-text-success:    var(--ds-color-text-success);
   --c-status-badge-dot-success:     var(--ds-color-icon-success);
 
