@@ -8,13 +8,14 @@ Brightseed brand assets from 2022/
 # Personal memory (decoded shorthand, people notes, internal reasoning)
 memory/
 
-# Working folders (curate before adding to repo)
+# Working folders, local only. Curate into DESIGN.md / Storybook — not a new doc.
 OUTPUTS/
 vector-pipeline/
 DOCS/archive/
 anna's mocks 4-29-26/
 
-# Stray PDF (rename + move into DOCS/ before committing)
+# Reference PDF, local only. DOCS/ is retired — if any of this is worth keeping,
+# it belongs in DESIGN.md or a Storybook page, not a new doc.
 Hummingbird reference ui.pdf
 
 # Claude Code local state (worktrees are multi-GB)
@@ -23,7 +24,7 @@ Hummingbird reference ui.pdf
 # Marketing / brand asset exports (large; keep local, like /brand)
 hummingbird.website/
 
-# Generated DS diagram artifact (regenerate; move into DOCS/ to keep it)
+# Generated artifact, local only. Regenerate rather than commit; DOCS/ is retired.
 design-system-architecture-diagrams.html
 
 # Stray root package — the app's package.json lives in web/
