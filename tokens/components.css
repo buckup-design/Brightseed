@@ -427,13 +427,7 @@
   --c-sheet-text-default:       var(--ds-color-text-default);
   --c-sheet-text-subtle:        var(--ds-color-text-subtle);
 
-  /* --c-sidebar
-   * One block, July 16 2026. Was two: this one served stock shadcn's sidebar and
-   * --c-sidebar-alt1-* served the composition-swap experiment. Alt1 won, stock
-   * was retired, and the suffix went with the thing it distinguished itself
-   * from. Four stock-only names went too — border-default-hover (its outline
-   * variant), disabled-text-opacity, shape-radius-lg and -xl (its floating
-   * variant) — none of which the surviving sidebar has any use for. */
+  /* --c-sidebar */
   --c-sidebar-border-default:            var(--ds-color-border-default);
   --c-sidebar-border-focus:              var(--ds-color-border-focus);
   --c-sidebar-shape-radius-md:           var(--ds-shape-radius-md);

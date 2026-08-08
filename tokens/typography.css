@@ -1,37 +1,17 @@
 /*
  * Brightseed Design System, Typography Tokens
- * Reference: BrightseedDS.md §3 (typography section).
  *
- * Two tiers live in this file:
- *   Layer 1, Primitives  --p-font-family-* / --p-font-size-* / --p-font-weight-*
- *                         Raw, $type:font values. No role meaning.
- *   Layer 2, Semantics   --font-{sans,display,mono}   (bridge/Tailwind family names)
- *                         --ds-text-display-h{1,2,3}-* (marketing display roles)
+ * Primitives --p-font-{family,size,weight}-*; semantics --font-{sans,display,mono}
+ * and --ds-text-display-h{1,2,3}-*.
  *
- * Two type families:
- *   sans     Geist         , product UI scale (309 styles in Figma). Variable
- *                             font; weight axis carries the Button hover
- *                             Medium → SemiBold transition.
- *   display  Tiempos Fine  , marketing display headlines (H1 / H2 / H3).
- *                             Italic-only display face (May 8 PM decision moved
- *                             display from Tiempos Text Medium to Tiempos Fine
- *                             RegularItalic for a more refined, literary voice).
- *                             Files served from sandbox/public/fonts/tiempos/ at
- *                             /fonts/tiempos/* in both Next.js and Storybook.
- *                             Source .otf: /Brightseed brand assets from 2022/
- *                             brightseed fonts/.
- *   Tiempos Text           , kept loaded for body emphasis (Medium / Semibold /
- *                             Bold). Not in the display scale; available for
- *                             inline emphasis or future patterns.
+ *   sans     Geist        product UI. Variable font — the weight axis carries
+ *                         Button's hover Medium → SemiBold transition.
+ *   display  Tiempos Fine MARKETING headlines only, never product UI. Italic is
+ *                         intrinsic to the face, not an applied modifier.
+ *   Tiempos Text          loaded for body emphasis; not in the display scale.
  *
- * NOTE ($type extraction, June 2026): font-family, font-size, and font-weight
- * are extracted as --p-font-* primitives. The display roles (h1/h2/h3) are
- * semantic (--ds-text-display-*) and reference those primitives, removing the
- * earlier tier-skip where raw rem sizes were declared at the role name.
- * Line-height and tracking stay inline on the display roles, they're part of
- * a specific role recipe, not a reusable scale. If body type ever moves off
- * Tailwind's built-in size/leading ramp, promote a fuller --p-font-size-* /
- * --p-font-line-height-* scale here.
+ * Line-height and tracking stay inline on the display roles — part of a specific
+ * recipe, not a reusable scale.
  */
 
 @font-face {
@@ -98,13 +78,9 @@
   --font-display: var(--p-font-family-display);
   --font-mono:    var(--p-font-family-mono);
 
-  /* ── Display roles (marketing H1 / H2 / H3) ────────────────────────────
-     Sizes match the Figma `display/h1|h2|h3` text styles to the pixel and
-     reference the --p-font-size-* primitives. Line-heights tightened toward
-     1.0, display type wants air on the sides, not between lines. Tracking is
-     slightly negative; italic serif letterforms read settled at -2% to -1% on
-     display sizes. All three use Tiempos Fine RegularItalic, italic is
-     intrinsic to the face, not an applied modifier. */
+  /* Display roles (marketing H1/H2/H3). Line-heights run near 1.0 — display type
+     wants air on the sides, not between lines — and tracking is slightly negative,
+     where italic serif letterforms read settled. */
 
   --ds-text-display-h1-size:        var(--p-font-size-56);
   --ds-text-display-h1-line-height: 3.75rem;   /* 60px (≈1.07) */

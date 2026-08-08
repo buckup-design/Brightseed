@@ -1,6 +1,5 @@
 /*
  * Brightseed Design System, shadcn/ui Token Bridge
- * Reference: BrightseedDS.md §6
  *
  * Add this file to your project's globals.css ONCE, after importing tokens/index.css.
  * Maps Brightseed semantic tokens → shadcn/ui CSS variable names.

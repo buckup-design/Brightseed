@@ -1,7 +1,6 @@
 /*
  * Brightseed Design System, Color Semantics
  * Layer 2 of 2: UI-function tokens. Component code references ONLY these.
- * Reference: BrightseedDS.md §3.3
  *
  * Naming: --ds-color-{category}-{role}-{state}
  * State suffixes: -hover, -active, -disabled
@@ -20,11 +19,8 @@
 :root,
 [data-theme="light"] {
 
-  /* Tell the browser this subtree is light, so native UI it draws itself —
-     scrollbars, form controls, spellcheck underlines — matches. The dark block
-     flips this; without the pair, a dark surface still gets a light-rendered
-     native scrollbar (a near-invisible ghost). See also the .scrollbar-overlay
-     utility in web/app/globals.css, which styles the Workspace panels' bars. */
+  /* Makes native UI (scrollbars, form controls, spellcheck) match the theme.
+     Without the pair, a dark surface gets a light-rendered native scrollbar. */
   color-scheme: light;
 
   /* ── Surface ── */
@@ -33,52 +29,25 @@
   --ds-color-surface-default-active:  var(--p-color-sand-200);
   --ds-color-surface-alt:             var(--p-color-sand-100);      /* sidebar, table alt rows, inset panels */
   --ds-color-surface-alt-hover:       var(--p-color-sand-200);
-  /* RAISED — a card lifted off the page, plus the nested ladder that goes with it.
-     In LIGHT all three are identical to their surface-default/alt counterparts, so
-     this is a dark-only change by construction (same pattern as border-field).
-
-     Why -raised-alt exists at all: surface-alt means "one step up from the PAGE".
-     Once a card is itself lifted, a chip or footer inside it needs "one step up
-     from the CARD" — and in dark those are different values. Without this, a
-     sand-900 surface-alt chip on a sand-850 card renders DARKER than the card it
-     sits in, inverting the elevation. Use -raised-alt for fills nested inside a
-     Card; keep plain -alt for fills sitting directly on the page or canvas. */
+  /* -raised is a card; -raised-alt is a fill nested INSIDE one. Plain -alt is for
+     fills sitting directly on the page or canvas — the two are different values in
+     dark. Identical to their -default/-alt counterparts in light. */
   --ds-color-surface-raised:          var(--p-color-white);         /* = surface-default in light */
   --ds-color-surface-raised-alt:      var(--p-color-sand-100);      /* = surface-alt in light */
   --ds-color-surface-raised-alt-hover: var(--p-color-sand-200);     /* = surface-alt-hover in light */
-  /* Field fill (input / textarea / input-group). A field reads as a lighter
-     inset than the muted panel it sits on and BRIGHTENS on hover — the opposite
-     direction to surface-default's hover, because a field is a well you reach
-     into, not a raised control. One step lighter than surface-alt (sand-100) at
-     rest, one more on hover. */
-  /* Field fill. Becky, Aug 7 2026: a resting field is FLUSH with its canvas —
-     the same value, not a darker well — and LIFTS to white when engaged. So at
-     rest the border is the entire field; on focus the field becomes a raised
-     white plane. sand-25 is the canvas value, which is what makes rest flush. */
+  /* A resting field is FLUSH with its canvas — the same value, not a well — and
+     LIFTS to white when engaged. At rest the border is the entire field. */
   --ds-color-surface-field:           var(--p-color-sand-25);       /* rest — flush with the canvas */
   --ds-color-surface-field-hover:     var(--p-color-white);         /* lifts */
   --ds-color-surface-field-focus:     var(--p-color-white);         /* lifts — the lightest thing on the page */
-  /* Surface CANVAS — a warm near-white page base (light-mode only; the dark block
-     holds the sand-950 page). Lifted sand-100 → sand-25 July 28 2026 for a
-     brighter, airier base.
-
-     This deliberately CHANGES the light stack, and the tradeoff is real. Before:
-     sand-100 page → sand-50 field → white card, a monotonic ladder where every
-     layer sat lighter than the one under it. Now the page is the brightest fill,
-     so the field (sand-50) reads as a recessed well rather than a lighter inset,
-     and a white card separates from the page by only 1.03:1 (was 1.12:1).
-
-     What carries the layout instead is the BORDER, which gets better on the
-     brighter base: sand-300 on sand-25 is 1.35:1, up from 1.24:1 on sand-100. So
-     cards and fields are now defined by edge, not by fill. Do not "fix" the field
-     back to a lighter-than-page value without re-deciding the whole stack. */
+  /* The light page is the BRIGHTEST fill in the stack, so a white card separates
+     from it by only 1.03:1 and layout is carried by the BORDER, not the fill. Do
+     not "fix" a field back to lighter-than-page without re-deciding the stack. */
   --ds-color-surface-canvas:          var(--p-color-sand-25);
   --ds-color-surface-scrim:           color-mix(in srgb, var(--p-color-sand-950) 50%, transparent);  /* modal / dialog veil, warm dark @ 50%, matches prior look */
-  /* Sticky-chrome veil — distinct from surface-scrim above. The modal scrim
-     DARKENS to push a dialog forward; this one is the PAGE colour at partial
-     opacity, so content scrolling beneath sticky chrome (the Workspace composer)
-     tints out into the surface instead of going dark. Pair it with a backdrop
-     blur; the tint alone is too thin to obscure text. */
+  /* Distinct from surface-scrim: that one DARKENS to push a dialog forward, this
+     is the PAGE colour at partial opacity so content tints out rather than going
+     dark under sticky chrome. Needs a backdrop blur; the tint alone is too thin. */
   --ds-color-surface-scrim-chrome:    color-mix(in srgb, var(--p-color-sand-50) 72%, transparent);
 
   /* Brand surface, nav bar, header, branded panels */
@@ -88,10 +57,8 @@
   --ds-color-surface-brand-subtle:    var(--p-color-forest-50);    /* light green tint */
   --ds-color-surface-brand-subtle-hover: var(--p-color-forest-100); /* -subtle, hovered (Toggle on+hover) */
 
-  /* Loading placeholder fill (Skeleton). Deliberately NOT -brand-subtle: a
-     skeleton wants a whisper, and Toggle's on-state wants a signal that clears
-     its own hover surface. One token cannot be both, so they split (July 2026).
-     Role-named, not "surface-skeleton", per the name-the-usage rule. */
+  /* NOT -brand-subtle: a skeleton wants a whisper, an on-state wants a signal
+     that clears its own hover. One token could not be both. */
   --ds-color-surface-placeholder:     var(--p-color-forest-50);
 
   /* Semantic surfaces, alert backgrounds, callout tints */
@@ -108,19 +75,15 @@
   --ds-color-surface-critical-hover:  var(--p-color-red-100);
   --ds-color-surface-critical-active: var(--p-color-red-200);
 
-  /* Intent tints for a chip sitting INSIDE a raised card, the same relationship
-     surface-raised-alt has to surface-alt. In LIGHT these are identical to the
-     base tints above — the light recipe is a flat primitive step, not a mix
-     against the page, so it does not care what it sits on. Light is therefore
-     unchanged by construction; only dark needs the re-mix. See the dark block. */
+  /* Intent tint for a chip INSIDE a raised card. Identical to the base tints in
+     light (a flat step does not care what it sits on); only dark re-mixes. */
   --ds-color-surface-success-raised:  var(--p-color-forest-50);
   --ds-color-surface-info-raised:     var(--p-color-blue-50);
   --ds-color-surface-warning-raised:  var(--p-color-yellow-50);
   --ds-color-surface-critical-raised: var(--p-color-red-50);
 
-  /* A neutral chip that must recess into WHATEVER it sits on — StatusBadge
-     appears both inside a Card and directly on the canvas, and no fixed step
-     works on both. Overlay, like --ds-color-data-track. */
+  /* A neutral chip that recesses into WHATEVER it sits on — StatusBadge appears
+     both inside a Card and on the canvas, and no fixed step works on both. */
   --ds-color-surface-chip-neutral:    color-mix(in srgb, black 5%, transparent);
 
   --ds-color-surface-data:            var(--p-color-cyan-50);        /* default data panel tint */
@@ -130,14 +93,10 @@
   --ds-color-surface-selected-brand:  var(--p-color-lime-75);  /* brand-tinted selection (nav active item), lime-75 muted mint */
 
   /* ── Action ── */
-  /* Disabled rule (uniform across all Button variants):
-       surface = color-mix(in srgb, <default-state surface>, var(--ds-color-disabled-surface-overlay) 50%);
-       text + icon = the variant's normal foreground token, applied at --ds-disabled-text-opacity.
-     Light theme pulls surface toward light sand (desaturate + lift); dark theme pulls
-     toward dark sand (desaturate + dim). The text fade is theme-invariant, same
-     opacity in both themes, so the rule has one number to tune.
-     Disabled UI is exempt from WCAG 1.4.3 contrast (we accept ~3.4:1 for the muted
-     read on the destructive variant, the worst case of the cohort). */
+  /* Uniform across Button variants: surface = color-mix(variant default, this
+     overlay 50%); text + icon = the variant's normal foreground at
+     --ds-disabled-text-opacity, applied at exactly ONE DOM level so it cannot
+     multiply. Disabled UI is exempt from 1.4.3. */
   --ds-color-disabled-surface-overlay: var(--p-color-sand-100);
   --ds-disabled-text-opacity:          0.55;
 
@@ -154,18 +113,8 @@
      button is visibly distinct from page bg at default and steps darker per state.
      (Earlier the ladder anchored at page-bg, which made Secondary invisible on
      white surfaces, corrected Apr 2026.) */
-  /* Secondary ladder shifted one rung Aug 7 2026 (100→200→300 becomes 200→300→400).
-     The old resting value was sand-100 — IDENTICAL to --ds-color-surface-alt — so a
-     secondary button sitting on any alt-toned panel was 1.00:1 and simply vanished,
-     and on the sand-25 canvas it was 1.09:1. sand-200 reads 1.20:1 on the canvas and
-     1.09:1 on an alt panel: still quiet, but no longer the same value as its ground.
-     Label contrast is unaffected — sand-800 text is 7.83:1 on sand-200.
-     [CONCERN] DARK HAS THE SAME COLLISION AND IS NOT FIXED HERE. Dark
-     action-secondary is sand-900, which is also surface-alt (and six other tokens —
-     see the reverted-experiment note in the dark block). It cannot simply shift:
-     sand-800 is surface-field + surface-raised-alt, sand-700 is raised-alt-hover.
-     Fixing dark means re-basing the dark ramp, which was attempted and reverted in
-     July for producing dead fills. Deliberately deferred, not overlooked. */
+  /* Must never equal surface-alt: a secondary button on an alt panel would vanish
+     at 1.00:1. Quiet but distinct from its ground on both the canvas and a panel. */
   --ds-color-action-secondary:          var(--p-color-sand-200);
   --ds-color-action-secondary-hover:    var(--p-color-sand-300);
   --ds-color-action-secondary-active:   var(--p-color-sand-400);
@@ -184,35 +133,11 @@
   --ds-color-border-default:          var(--p-color-sand-300);      /* input default */
   --ds-color-border-default-hover:    var(--p-color-sand-500);      /* input/select/textarea hover (one-step darken) */
   --ds-color-border-bold:             var(--p-color-sand-500);      /* emphatic dividers */
-  /* ── Field state ladder (light). Becky, Aug 7 2026. ──────────────────────
-     THE RULE: an input field is LIGHTER than the surface it sits on, and it
-     LIFTS when you engage it — fill brightens to white, edge firms to sand-600.
-     Reference: Collab Playground frame 139:13968, the canonical light-mode
-     elevation study (canvas sand-25, sidebar sand-50, composer white + sand-300
-     edge + a 6% y4/blur20 shadow).
-
-     Structural note, because it constrains everything here: in a light theme
-     "lighter than its surface" has a CEILING. White is the lightest value, so
-     the biggest fill step available is white-on-sand-300 = 1.39:1. The fill can
-     therefore NEVER identify a field on its own — it delivers depth, not
-     identification. The BORDER is the only thing that can do that job, which is
-     why it carries the whole 3:1 obligation in the engaged state.
-
-       rest   fill sand-50   border sand-300   quiet, recedes into the page
-       hover  fill white     border sand-500
-       focus  fill white     border sand-600   3.50:1 on its own white interior,
-                                               3.41:1 on the sand-25 canvas
-
-     [CONCERN] The REST state is a deliberate, designer-owned trade. sand-300
-     measures 1.31:1 against the sand-50 interior and 1.35:1 against the canvas —
-     failing on both sides, which is the WCAG Understanding 1.4.11 Figure 22/33
-     "control with no perceivable boundary" case. It is defensible HERE because
-     every text field in Quill carries a visible label or placeholder, and
-     Figure 33's reasoning turns on a field that "lacks any form of label to hint
-     at its presence". It would NOT be defensible on a control with no label
-     inside it — which is exactly why the unchecked Checkbox was moved off this
-     token onto --ds-color-border-control below. Do not point a label-less
-     control at border-field. */
+  /* Field ladder (light): a field is LIGHTER than its surface and LIFTS when
+     engaged. White is the ceiling, so the fill can never identify a field — the
+     BORDER carries the whole 3:1 obligation. The quiet rest state is only
+     defensible because every Quill field has a visible label or placeholder;
+     label-less controls use --ds-color-border-control. DESIGN.md > Borders. */
   --ds-color-border-field:            var(--p-color-sand-300);      /* rest — quiet edge, matches the Figma study */
   --ds-color-border-field-hover:      var(--p-color-sand-500);      /* one rung up; must sit BETWEEN rest and focus */
   --ds-color-border-field-focus:      var(--p-color-sand-600);      /* engaged — 3.50:1 on white, 3.41:1 on canvas */
@@ -221,51 +146,27 @@
      Held at sand-600 in both themes so the box stays a findable target even
      while text fields rest quietly at sand-300. */
   --ds-color-border-control:          var(--p-color-sand-600);      /* 3.50:1 white / 3.41:1 canvas */
-  /* Focus rings, variant-aware. Neutral sand — the lime focus ring was retuned
-     out July 2026 ("focus green too heavy").
-     RETUNED AGAIN Aug 6 2026: light moved sand-500 → sand-700. The July retune
-     left light focus non-conformant with 1.4.11, which DOES cover focus
-     indicators ("the visual focus indicator for a component must have sufficient
-     contrast against the adjacent background"). sand-500 measured 2.30:1 on
-     white and 2.24:1 on the canvas — under 3:1 before the /50 alpha the
-     components were also applying, which dropped it to ~1.47:1.
-     WHY sand-700 AND NOT sand-600: sand-600 clears the page (3.50) but is only
-     2.53:1 against the lime-300 primary button fill, and the ring hugs that
-     fill. sand-700 clears every side — 5.75 white, 5.60 canvas, 5.13 sand-100,
-     and 4.16 against lime-300 — so it needs no ring-offset to be findable.
-     DARK KEEPS sand-500 and is overridden explicitly in the dark block below.
-     Do not "simplify" that away: sand-700 on the sand-950 page is 2.87:1, i.e.
-     applying this light value to dark would fail the criterion it just fixed. */
+  /* Focus rings, variant-aware. Neutral sand, and always OPAQUE — an alpha
+     modifier costs ~35% of the ratio and drops it under 3:1. sand-700 is the one
+     step that clears every surface the ring hugs, including the lime-300 button
+     fill at 4.16:1, so no ring-offset is needed. Dark pins sand-500 explicitly;
+     do not collapse the two, sand-700 on the dark page is 2.87:1. */
   --ds-color-border-focus:             var(--p-color-sand-700);       /* sand/700, Default/Outline/Ghost focus */
   --ds-color-border-focus-secondary:   var(--p-color-sand-700);       /* sand/700 — was sand/300, which read 1.05:1 against the button's own fill */
   --ds-color-border-focus-destructive: var(--p-color-red-500);        /* red/500, Destructive focus — 3.93:1 on white, opaque */
   --ds-color-border-focus-link-brand:  var(--p-color-sand-700);       /* sand/700, Linktext focus (same as Default) */
-  /* Ring accent — a faint lime "whisper" layered over the sand focus border on
-     text-entry fields only (input/textarea/select/input-group + the composer).
-     Pre-composited to 12% so components can reference it with no opacity modifier.
-     DECORATION ONLY: at 12% this measures ~1.09:1 in light and ~1.24:1 in dark.
-     It is the brand signature and is deliberately kept, but it is NOT the focus
-     indicator and must never be counted toward 1.4.11. The sand border above is
-     the indicator. Never ship a focus state that has the whisper and no border. */
+  /* A faint lime whisper over the sand focus border, text-entry fields only.
+     Pre-composited, so reference it with no opacity modifier. DECORATION — ~1.09:1;
+     it is never the focus indicator. Never ship the whisper without the border. */
   --ds-color-ring-focus:               color-mix(in srgb, var(--p-color-lime-500) 12%, transparent);  /* lime/500 @ 12% */
-  /* Switch thumb outline. The thumb's POSITION is what conveys on/off without
-     relying on colour (SC 1.4.1, Level A) — but only if the thumb is visible.
-     A white thumb reads 1.39:1 on the sand-300 track and 1.38:1 on the lime-300
-     track, so in light mode the position cue was effectively invisible and the
-     two track colours were themselves 1.01:1 apart. A sand-700 outline makes the
-     thumb perceivable on both: 4.14:1 unchecked, 4.16:1 checked.
-     Dark needs no outline — see the dark block. */
+  /* Switch thumb outline. Thumb POSITION carries on/off without colour (SC 1.4.1,
+     Level A) — but a white thumb is ~1.39:1 on both light tracks, so the cue only
+     works with this outline. Dark tracks are already 4.16:1 apart and need none. */
   --ds-color-border-switch-thumb:      var(--p-color-sand-700);      /* 4.14:1 / 4.16:1 against the two light tracks */
-  /* Selected-state boundary for controls whose ON state is a surface fill —
-     Toggle and ToggleGroup today. The fill alone cannot carry the state: the
-     light on-fill (forest-50) is 1.07:1 against the page and the dark on-fill
-     (sand-800) is 1.72:1, both under 3:1, so an unselected and a selected
-     segment differ only by a tint. This border is the identifying signal.
-     Light forest-600 keeps the brand's "selected is green" language and clears
-     both sides (4.01:1 vs the on-fill, 4.27:1 vs the page). Dark uses sand-500
-     (4.18:1 / 7.16:1) because the dark on-fill is neutral sand, not green, so a
-     forest edge there would read as an unrelated accent — and forest-500 would
-     only just scrape 3.10:1. */
+  /* Selected boundary for controls whose ON state is a fill (Toggle, ToggleGroup).
+     The fill alone is under 3:1 in both themes, so this border IS the state signal.
+     Dark uses sand-500, not forest — its on-fill is neutral sand, so a green edge
+     would read as an unrelated accent. */
   --ds-color-border-selected-brand:    var(--p-color-forest-600);    /* 4.01:1 on the forest-50 on-fill */
 
   --ds-color-border-success-default:  var(--p-color-forest-200);
@@ -300,12 +201,8 @@
   --ds-color-text-inverse:            var(--p-color-sand-50);
   --ds-color-text-inverse-subtle:     var(--p-color-sand-300);
 
-  /* Text/icons on the lime primary action.
-     Three text steps to match the three surface states: forest-800 default →
-     forest-900 hover → forest-950 active. The active step is required for WCAG AA
-     on the deeper lime-500 active surface (forest-800/900 fail AA on lime-500).
-     Theme-invariant, same values in dark mode (lime button is the primary action
-     in both themes). Mirrors Figma `base/primary-foreground`. */
+  /* Three steps to match the three lime surface states. The active step is
+     required for AA on lime-500; forest-800/900 fail there. Theme-invariant. */
   --ds-color-text-on-action-primary:           var(--p-color-forest-800);
   --ds-color-text-on-action-primary-hover:     var(--p-color-forest-900);
   --ds-color-text-on-action-primary-active:    var(--p-color-forest-950);
@@ -317,27 +214,16 @@
   --ds-color-text-on-action-critical-hover:     var(--p-color-red-700);
   /* No -disabled token, disabled state uses --ds-color-text-on-action-critical at --ds-disabled-text-opacity. */
 
-  /* Link, two distinct components with different state machines.
-       link-*  → the inline `<a>` Link component for body copy. Always
-                 underlined. Has anchor pseudo-class states: link / visited /
-                 hover / focus / active. Blue scale.
-       link-brand → the Button component's "Linktext/default" variant , 
-                 button-shaped, never underlined, button-state machine
-                 (default/hover/focus/loading/disabled/pressed). Lime scale , 
-                 same family as the primary button surface, signaling that
-                 Linktext is the brand-link affordance.
-     The bare --ds-color-text-link alias is intentionally NOT exposed so callers
-     must be explicit about which component they're in. */
+  /* Two components, two state machines: link-* is the inline <a> (underlined,
+     anchor pseudo-states, blue); link-brand is Button's Linktext variant (never
+     underlined, button states, lime). No bare --ds-color-text-link alias, so
+     callers must say which they are in. */
   --ds-color-text-link-default:       var(--p-color-blue-600);            /* blue-600, :link */
   --ds-color-text-link-default-hover: var(--p-color-blue-700);            /* blue-700, :hover */
   --ds-color-text-link-visited:       var(--p-color-sand-700);      /* sand-700, :visited (warm, settled) */
   --ds-color-text-link-active:        var(--p-color-blue-900);            /* blue-900, :active (pressed) */
-  /* Brand-link uses lime, but a deeper step than the lime button surface.
-     base/primary surface = lime-300 (#CDE67B); on white that's ~1.7:1, fine
-     for a button-shaped surface but unreadable as standalone text. Linktext
-     is text-only, so we step down the lime scale to lime-700 (light) /
-     lime-300 (dark) for AA contrast on page surfaces.
-     Decided May 2026, replaced earlier forest-scale brand-link. */
+  /* Deeper than the lime button surface: lime-300 is ~1.7:1 on white, fine as a
+     button fill but unreadable as standalone text. */
   --ds-color-text-link-brand:           var(--p-color-forest-800);    /* #3f6947, matches Figma base/link-brand light mode */
   --ds-color-text-link-brand-hover:     var(--p-color-forest-550);    /* brighter, more saturated green on hover (dark default -> bright). Was forest-900; changed June 2026 because the darker step read as too subtle. */
   /* No -disabled token, disabled state uses --ds-color-text-link-brand at --ds-disabled-text-opacity. */
@@ -374,48 +260,25 @@
   --ds-color-icon-data-orange:        var(--p-color-orange-700);
   --ds-color-icon-data-orchid:        var(--p-color-orchid-700);
 
-  /* ── Data magnitude (score / confidence meter fill) ──
-     One sequential-forest ramp for 0–100% magnitude, tier-darkened. Reuses
-     --chart-seq-forest-* (sanctioned for magnitude, unlike brand lime/forest as
-     a data SERIES). The floor is forest-600 (3.81:1 on the sand-100 card footer);
-     forest-500 (2.77:1) and lime (1.23:1) FAIL 3:1 as a data fill, so they are
-     out of band. This is the one --ds-* the --c-score-meter-* tier aliases. */
+  /* Magnitude ramp, tier-darkened. Floor is forest-600 (3.81:1 on the light card
+     footer); forest-500 and lime FAIL 3:1 as a data fill and are out of band. */
   --ds-color-data-magnitude-soft:     var(--chart-seq-forest-600);  /* low tier / contrast floor */
   --ds-color-data-magnitude-default:  var(--chart-seq-forest-700);  /* med tier / single-hue default */
   --ds-color-data-magnitude-strong:   var(--chart-seq-forest-900);  /* high tier */
 
-  /* The unfilled remainder of a magnitude meter. TRANSLUCENT, deliberately —
-     this is the one token in the system that must not be a fixed step.
-
-     Why: the track's job is "a well in whatever surface I am sitting on", and a
-     ScoreMeter sits on at least four (page, surface-alt, a raised card, and a
-     card footer). ANY fixed value collides with one of them, and a collision is
-     total — the track disappears and the bar becomes a floating line of
-     arbitrary length, which destroys the meter's only quantitative channel
-     (fill LENGTH is meaningless with no visible extent to measure against).
-     That is exactly what happened when ResultCard's footer lifted to sand-800
-     in b5654b9 and met dark's sand-800 border-subtle at 1.00:1; picking a
-     different fixed step just moves the collision to a different surface.
-
-     A black overlay is a well against every host by construction. Measured, the
-     track reads 6.7% Weber on every light surface and 48-56% on every dark one,
-     and fill-vs-track stays >= 3:1 in all 21 fill x surface combinations
-     (worst: soft on the light sand-100 footer, 3.41:1 — the fixed sand-200
-     track it replaces was 3.48:1, so light is a wash). */
+  /* TRANSLUCENT deliberately. A track is "a well in whatever surface I sit on",
+     and a meter sits on at least four — any fixed step collides with one, and a
+     collision is total (the bar becomes a line of arbitrary length, destroying
+     the meter's only quantitative channel). An overlay is a well against every
+     host by construction. See DESIGN.md > Elevation & Depth. */
   --ds-color-data-track:              color-mix(in srgb, black 5%, transparent);
 
   /* ── Favorite / pin icon ── */
   --ds-color-icon-favorite-inactive:  var(--p-color-sand-400);   /* resting unselected favorite/star, muted */
   --ds-color-icon-favorite-active:    var(--p-color-yellow-500); /* favorited/pinned, theme-invariant */
 
-  /* ──────────────────────────────────────────────────────────────────
-     Tag tokens, decorative color set for Hummingbird's tag-dense surfaces.
-     Recipe per hue:
-       Default, surface = step-100, text = step-700
-       Hover  , surface = step-200, text = step-700
-       Focus  , surface = step-100, text = step-700, ring = step-500 (hue-specific)
-     No intent layer, tag colors are decorative only, not semantic.
-     ────────────────────────────────────────────────────────────────── */
+  /* Tags: decorative only, never semantic — no intent layer.
+     Per hue: surface step-100 / text step-700 / hover step-200 / ring step-500. */
 
   --ds-color-surface-tag-sand:           var(--p-color-sand-100);
   --ds-color-surface-tag-sand-hover:     var(--p-color-sand-200);
@@ -467,22 +330,10 @@
   --ds-color-text-tag-orchid:            var(--p-color-orchid-700);
   --ds-color-border-tag-orchid-focus:    var(--p-color-orchid-500);
 
-  /* ──────────────────────────────────────────────────────────────────
-     Avatar identity tokens, the color set assigned at account creation.
-     Decorative like tags, no intent layer, color never implies status.
-
-     Theme-invariant by design: an avatar is identity, not chrome, so it
-     holds its color under both themes rather than flipping 500→900 the
-     way the tag scales do. Same rule as --ds-color-icon-favorite-active
-     above, and there is deliberately no override in the dark block.
-
-     Icon is always white. These are DECORATIVE identity avatars — no critical
-     information rides on the white icon standing off its surface — so the whole
-     set sits at step-500 for one uniform ramp. White on the two light steps
-     (orange, cyan) lands at 2.49 / 2.56, under WCAG 1.4.11's 3:1 non-text bar;
-     that is an accepted trade here, contrast is not critical for a decorative
-     component (July 2026, reversing the earlier orange/cyan step-600 exception).
-     ────────────────────────────────────────────────────────────────── */
+  /* Avatar identity: decorative, theme-invariant (identity, not chrome — no dark
+     override). Whole set at step-500 with a white icon; orange/cyan land under
+     3:1 and that is an accepted trade for a decorative component. Do not
+     "fix" them back to step-600. */
 
   --ds-color-surface-avatar-orchid:      var(--p-color-orchid-500);
   --ds-color-surface-avatar-lavender:    var(--p-color-lavender-500);
@@ -496,14 +347,11 @@
 
 /* ════════════════════════════════════════════════════════════════════════════
    DARK THEME OVERRIDE ([data-theme="dark"])
-   Base surface: sand-950, warm dark neutral, NOT a forest-tinted dark mode.
-   The forest scale exits surface vocabulary in dark mode entirely; it only
-   stays as lime accent, text on the lime button (forest-900), and brand-context
-   link colors.
-   Only tokens that change from light theme are listed, everything else inherits.
-   The lime button surface (lime-400) on sand-950 page bg passes contrast, so
-   the --ds-color-action-primary surface tokens don't need a dark override. Text
-   on that button stays forest-900 in both themes (see --ds-color-text-on-action-primary).
+   Warm sand dark, NOT forest-tinted — the forest scale exits surface vocabulary
+   here and survives only as lime accent and on-button text. Because hue is gone,
+   LIGHTNESS is the only axis left, so every value here is a lightness step.
+   Ladder: chrome sand-950 · content sand-900 · card sand-850 · nested sand-900.
+   Only tokens that change from light are listed; everything else inherits.
    ════════════════════════════════════════════════════════════════════════════ */
 
 [data-theme="dark"] {
@@ -557,28 +405,9 @@
   --ds-color-surface-brand:           var(--p-color-sand-900);
   --ds-color-surface-brand-hover:     var(--p-color-sand-800);
   --ds-color-surface-brand-active:    var(--p-color-sand-950);
-  /* sand-800, and it must step PAST sand-900. -subtle got swept to the page color
-     with the rest of this sand-anchored brand block, but nothing consumes it as a
-     nav/header: Toggle (on-state), ToggleGroup and Select (item focus) all use it
-     as a patch that must step AWAY from the page. At sand-950 it WAS the page, so
-     all of them rendered no signal at all in dark.
-
-     Why not sand-900, the obvious next rung: --ds-color-surface-alt is sand-900,
-     and Toggle's hover surface IS surface-alt — so at sand-900 a hovered OFF
-     toggle is pixel-identical to an ON one (the only delta is text at 1.31:1,
-     and for an icon-only toggle there is no text at all). sand-800 clears it
-     (page→hover 1.13:1, hover→on 1.51:1) and collides with nothing:
-     surface-alt-hover / surface-default-active share the hex but have no
-     component-tier alias, so no element can render them as two states of itself.
-
-     Skeleton used to ride this token and deliberately no longer does: a skeleton
-     wants a whisper, an on-state wants a signal that clears its own hover. One
-     token could not be both. See --ds-color-surface-placeholder.
-
-     Root cause worth keeping: light only ever worked because forest-50 and
-     sand-100 are the same LIGHTNESS and separate by HUE. Dark removed the hue on
-     purpose ("forest exits surface vocabulary", above), so lightness is the only
-     axis left here and every value is a lightness step. */
+  /* Consumed as an ON-STATE patch (Toggle, ToggleGroup, Select item focus), not
+     as a nav/header — so it must step PAST both the page AND the hover surface it
+     shares a control with, or a hovered OFF toggle is identical to an ON one. */
   --ds-color-surface-brand-subtle:    var(--p-color-sand-800);
   /* One rung further, for Toggle's on+hover. NOTE sand-700 is also dark
      --ds-color-border-default, so an outline Toggle's border merges into its own
@@ -586,13 +415,8 @@
      the ladder) and sand-600 is a two-step jump that overshoots a hover. */
   --ds-color-surface-brand-subtle-hover: var(--p-color-sand-700);
 
-  /* Loading placeholder fill (Skeleton). sand-900 keeps dark proportionate to the
-     light forest-50 whisper (ΔL* 4.84 vs light's 2.56); sand-800 measured ~6.8x
-     the light step and read as a solid block. Safe at sand-900: every skeleton in
-     the system sits on sand-950 (Card and Sidebar both paint surface-default, not
-     surface-alt), and SidebarMenuSkeleton — the one place a sand-900 skeleton
-     shares a list with sand-900 selected rows — paints only a size-4 square and a
-     h-4 bar, never a row fill, so it cannot be mistaken for a selected row. */
+  /* Keeps dark proportionate to the light whisper; sand-800 measured ~6.8x the
+     light step and read as a solid block. */
   --ds-color-surface-placeholder:     var(--p-color-sand-900);
 
   /* Semantic surfaces, intent tint at low opacity on sand-950 base.
@@ -612,22 +436,9 @@
   --ds-color-surface-critical-hover:  color-mix(in srgb, var(--p-color-red-400) 16%, var(--p-color-sand-900));
   --ds-color-surface-critical-active: color-mix(in srgb, var(--p-color-red-400) 22%, var(--p-color-sand-900));
 
-  /* Intent tints for a chip INSIDE a raised (sand-850) card. Same intent step,
-     same percentage — only the base changes, sand-950 -> sand-850. This is the
-     companion pattern surface-raised-alt already established for neutral fills
-     (Aug 2026); the tinted intents needed the same treatment and had been left
-     behind when cards lifted to sand-850 in b5654b9.
-
-     WHY: the recipe mixes against the PAGE, so on a lighter card every intent
-     chip landed DARKER than the card holding it — a dent, not a raised chip.
-     Measured in the browser on Blocks/Reports list view, dark: the "Completed"
-     StatusBadge computed #242a24 (L 0.0216) on a #353430 card (L 0.0343).
-     Re-mixed against sand-850 all four are lighter than the card, and label
-     text (sand-50) still clears 9:1 on every one.
-
-     Base step only, deliberately: -hover/-active on the intent family are used
-     only by Alert and Sonner, which sit on the canvas or float above it and
-     never inside a card. Add raised hover/active steps only if that changes. */
+  /* Same recipe as the base tints, mixed against the CARD (sand-850) instead of
+     the ground — otherwise a chip lands darker than the card holding it. Base step
+     only: -hover/-active serve Alert and Sonner, which never sit inside a card. */
   --ds-color-surface-success-raised:  color-mix(in srgb, var(--p-color-forest-800) 15%, var(--p-color-sand-850));
   --ds-color-surface-info-raised:     color-mix(in srgb, var(--p-color-blue-400)   10%, var(--p-color-sand-850));
   --ds-color-surface-warning-raised:  color-mix(in srgb, var(--p-color-yellow-300) 10%, var(--p-color-sand-850));
@@ -653,33 +464,21 @@
      under 3:1) and 4.16:1 if the canvas later lifts to sand-900. Hover must be its
      own step: border-default-hover is ALREADY sand-600, so reusing it here would
      leave rest and hover identical and kill the hover signal. */
-  /* Dark keeps a FIRM resting edge and does not follow light's sand-300 rest.
-     The rule ("field lighter than its surface") is already satisfied here by the
-     fill alone — the sand-800 interior is lighter than the sand-950 canvas — so
-     dark spends nothing to express it. And dark has no white ceiling working
-     against it: a quiet sand-700 rest would read 2.87:1 on the canvas, undoing
-     the July decision that made an input findable on dark in the first place.
-     Light rests quiet because its fill CAN'T carry depth; dark's already does. */
+  /* Dark keeps a FIRM resting edge, unlike light. Its fill already satisfies
+     "lighter than its surface" on its own, and a quiet sand-700 rest would be
+     2.87:1 on the canvas. Light rests quiet because its fill can't carry depth. */
   --ds-color-border-field:            var(--p-color-sand-600);      /* #8c897f, 4.71:1 on the sand-950 canvas */
   --ds-color-border-field-hover:      var(--p-color-sand-500);      /* 7.16:1, a clear rung above rest */
   --ds-color-border-field-focus:      var(--p-color-sand-500);      /* 7.16:1 on canvas; the lime whisper ring is what separates focus from hover */
   --ds-color-border-control:          var(--p-color-sand-600);      /* unchecked checkbox — same value as light, by design */
-  /* Focus rings. NO LONGER theme-invariant as of Aug 6 2026 — dark now pins its
-     own values because light moved to sand-700 to clear 3:1 on light surfaces,
-     and sand-700 on this sand-950 page is only 2.87:1. Inheriting light here
-     would silently break dark focus, so every focus token is restated.
-     sand-500 measures 7.16:1 on the page, 6.32 on canvas, 5.41 on a raised card
-     and 4.18 on a field interior — it clears on every dark surface.
-     If you add a focus token to the light block, ADD ITS DARK PARTNER HERE. */
+  /* NOT theme-invariant: light's sand-700 is only 2.87:1 on this page, so every
+     focus token is restated. sand-500 clears every dark surface (4.18:1 worst,
+     on a field interior). ADD A DARK PARTNER for any focus token you add. */
   --ds-color-border-focus:            var(--p-color-sand-500);      /* 7.16:1 on the sand-950 page */
   --ds-color-border-focus-secondary:  var(--p-color-sand-500);      /* sand/500, matches Figma colors/ring-dark */
   --ds-color-border-focus-link-brand: var(--p-color-sand-500);      /* matches Default, as in light */
-  /* No switch-thumb outline in dark, deliberately. The dark tracks are already
-     4.16:1 apart (lime-300 checked vs sand-700 unchecked), which satisfies SC
-     1.4.1's lightness allowance on its own, and the sand-950 thumb reads 11.94:1
-     on the checked track. An outline here could only sit BETWEEN the thumb and
-     the track and would weaken, not help — the thumb is already the darkest
-     element. transparent = no ring, by design. */
+  /* No outline in dark, deliberately: the tracks are already 4.16:1 apart and the
+     thumb is the darkest element, so an outline could only weaken it. */
   --ds-color-border-switch-thumb:     transparent;
   --ds-color-border-selected-brand:   var(--p-color-sand-500);      /* 4.18:1 on the sand-800 on-fill; see the light block */
 
@@ -754,22 +553,10 @@
   --ds-color-icon-data-orchid:        var(--p-color-orchid-300);
   /* --ds-color-icon-brand unchanged, lime works on dark bg */
 
-  /* ── Data magnitude (dark) ──
-     --chart-seq-forest-* is theme-invariant (light values), so the light ramp
-     would sit dark-on-dark here. Remap to lighter forest steps and INVERT the
-     tier direction — on a dark card the stronger tier reads lighter/more
-     prominent.
-
-     RATIFIED Aug 2026. The old [CONCERN] here said the dark steps were picked
-     by luminance estimate and never formally measured. Now measured, against
-     the surface the meter actually sits on (the ResultCard footer,
-     surface-raised-alt = sand-800):
-         soft    forest-500  3.10:1 on footer  ·  5.31:1 on page
-         default forest-400  4.28:1 on footer  ·  7.35:1 on page
-         strong  forest-300  5.85:1 on footer  · 10.03:1 on page
-     Monotonic and all clear 3:1, so the inversion stands as designed. The floor
-     is soft-on-footer at 3.10:1 — that is the number to re-check if the footer
-     surface ever moves again. */
+  /* The chart ramp is theme-invariant (light values), so dark remaps to lighter
+     forest steps and INVERTS the tier direction — on a dark ground the stronger
+     tier reads lighter. Floor is soft-on-card at 4.01:1; re-check it if the
+     surfaces a meter sits on ever move again. */
   --ds-color-data-magnitude-soft:     var(--p-color-forest-500);  /* low tier */
   --ds-color-data-magnitude-default:  var(--p-color-forest-400);  /* med tier */
   --ds-color-data-magnitude-strong:   var(--p-color-forest-300);  /* high tier */

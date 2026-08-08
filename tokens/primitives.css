@@ -1,7 +1,6 @@
 /*
  * Brightseed Design System, Color Primitives
  * Layer 1 of 3: Raw hue scales. No semantic meaning here.
- * Reference: BrightseedDS.md §3.1
  *
  * Naming: --p-color-{hue}-{step}
  * Steps: 50–950 (11 values per scale)

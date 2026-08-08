@@ -1,6 +1,5 @@
 /*
  * Brightseed Design System, Shape & Dimension Tokens
- * Reference: BrightseedDS.md §3.6
  *
  * Two tiers live in this file:
  *   Layer 1, Primitives  --p-radius-* / --p-border-width-* / --p-space-*
@@ -8,9 +7,8 @@
  *   Layer 2, Semantics   --ds-shape-* / --ds-shadow-*
  *                         Role/usage aliases that component code references.
  *
- * Shadow is intentionally semantic-only: a shadow bakes in a color decision
- * (umbra tinted with forest-950 #133019 for earthy warmth), so it is not a
- * raw primitive. Dark mode: shadows recede naturally on dark bg, no override.
+ * Shadow is semantic-only, never a primitive: it bakes in a colour decision
+ * (umbra tinted forest-950 for warmth).
  */
 
 :root {
