@@ -345,7 +345,7 @@ const railItemClasses = cn(
   "flex w-full items-center gap-2 rounded-[var(--c-settings-shape-radius-md)] px-2 py-2 text-left text-sm",
   "text-[var(--c-settings-text-default)]",
   "outline-none focus-visible:ring-2 focus-visible:ring-[var(--c-settings-border-focus)]",
-  "hover:bg-[var(--c-settings-surface-alt)]",
+  "hover:bg-[var(--c-settings-surface-alt-hover)]",
   "data-[active=true]:bg-[var(--c-settings-surface-selected-brand)] data-[active=true]:font-medium data-[active=true]:text-[var(--c-settings-text-brand)]",
   "[&>svg]:size-4 [&>svg]:shrink-0"
 );

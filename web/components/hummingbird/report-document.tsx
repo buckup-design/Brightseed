@@ -174,7 +174,9 @@ function MechanismCardView({
             strokeWidth={1.5}
           />
         ) : (
-          <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-[var(--ds-color-surface-alt)] text-[13px] font-semibold text-[var(--ds-color-text-default)]">
+          // -raised-alt, not -alt: this circle is inside a Card, and surface-alt
+          // is a rung BELOW the card in dark — it rendered as a dent.
+          <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-[var(--ds-color-surface-raised-alt)] text-[13px] font-semibold text-[var(--ds-color-text-default)]">
             {index}
           </span>
         )}

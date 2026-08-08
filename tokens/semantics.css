@@ -632,7 +632,8 @@
   --ds-color-surface-selected:        var(--p-color-blue-950);
   --ds-color-surface-selected-hover:  var(--p-color-blue-900);
   --ds-color-surface-selected-active: var(--p-color-blue-800);
-  --ds-color-surface-selected-brand:  var(--p-color-lime-950);  /* dark mirror of lime-50 selection */
+  /* lime-950 was 1.036:1 on the sidebar — the active row read only via its label. */
+  --ds-color-surface-selected-brand:  color-mix(in srgb, var(--p-color-lime-900) 40%, var(--p-color-sand-950));
 
   /* ── Borders, mid-sand range for structure on dark bg ── */
   --ds-color-border-subtle:           var(--p-color-sand-800);
