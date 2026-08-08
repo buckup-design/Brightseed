@@ -338,7 +338,7 @@ function ConfidenceSparkline({ values }: { values: number[] }) {
         return (
           <span
             key={i}
-            className="w-[5px] rounded-[1px]"
+            className="w-[5px] rounded-[var(--ds-shape-radius-2xs)]"
             style={{
               height: `${height}px`,
               background: SPARK_COLORS[i % SPARK_COLORS.length],

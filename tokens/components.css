@@ -288,7 +288,6 @@
   --c-new-chat-ring-focus:         var(--ds-color-ring-focus);
   --c-new-chat-shape-radius-md:    var(--ds-shape-radius-md);
   --c-new-chat-surface-field:      var(--ds-color-surface-field);
-  --c-new-chat-surface-field-hover: var(--ds-color-surface-field-hover);
   --c-new-chat-surface-field-focus: var(--ds-color-surface-field-focus);
 
   /* --c-projects-list */
@@ -331,7 +330,6 @@
   --c-settings-surface-alt:        var(--ds-color-surface-alt);
   --c-settings-surface-alt-hover:  var(--ds-color-surface-alt-hover);  /* rail rows: hover was the rail's own value */
   --c-settings-surface-canvas:     var(--ds-color-surface-canvas);
-  --c-settings-surface-default:    var(--ds-color-surface-default);
   --c-settings-surface-selected-brand: var(--ds-color-surface-selected-brand);
   --c-settings-text-brand:         var(--ds-color-text-brand);
   --c-settings-text-default:       var(--ds-color-text-default);
@@ -354,7 +352,6 @@
   --c-avatar-picker-swatch-lavender: var(--ds-color-surface-avatar-lavender);
   --c-avatar-picker-swatch-orange:   var(--ds-color-surface-avatar-orange);
   --c-avatar-picker-swatch-orchid:   var(--ds-color-surface-avatar-orchid);
-  --c-avatar-picker-text-default:  var(--ds-color-text-default);
   --c-avatar-picker-text-subtle:   var(--ds-color-text-subtle);
 
   /* --c-page-heading */
