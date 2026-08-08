@@ -40,7 +40,14 @@ type Scale = {
 
 /* Order + descriptors mirror the Figma board, using functional language. */
 const SCALES: Scale[] = [
-  { key: "sand", label: "Sand", desc: "Warm neutral surface", notes: { 50: "Surface anchor" } },
+  {
+    key: "sand",
+    label: "Sand",
+    desc: "Warm neutral surface",
+    // Two deliberate half-steps: sand-25 is the light canvas, sand-850 the dark card.
+    steps: [25, 50, 100, 200, 300, 400, 500, 600, 700, 800, 850, 900, 950],
+    notes: { 50: "Surface anchor", 25: "Light canvas", 850: "Dark card" },
+  },
   {
     key: "forest",
     label: "Forest",

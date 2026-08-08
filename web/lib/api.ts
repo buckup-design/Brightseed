@@ -9,6 +9,11 @@
  * URLs are relative because this cut is client-only (Storybook + `next dev`
  * client fetches). The server/RSC path needs an absolute origin; that arrives
  * with the deferred instrumentation work (see mocks/handlers.ts header).
+ *
+ * Handlers match on the LITERAL request URL, so relative and absolute forms are
+ * not interchangeable and a mismatch fails SILENTLY — the request escapes to the
+ * real network with no MSW error to trace. This module is the single place that
+ * form is decided; when the server cut adds an origin, change the handlers with it.
  */
 
 import type { Result } from "@/components/hummingbird/cards/result-card";

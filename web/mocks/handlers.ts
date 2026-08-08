@@ -14,6 +14,9 @@
  * (`setupServer`) + a root `instrumentation.ts` so React Server Component /
  * server-side fetches route through MSW too. Skipped for now — Next is the
  * alpha client mock; Storybook is canonical, and the browser worker covers it.
+ * When that lands, do NOT copy the client gate: `next build` forces
+ * NODE_ENV=production, so a NODE_ENV check would disable mocks in every built
+ * prototype. Gate on an explicit flag plus `process.env.NEXT_RUNTIME === "nodejs"`.
  */
 
 import { http, HttpResponse, delay } from "msw";

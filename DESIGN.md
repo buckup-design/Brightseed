@@ -219,7 +219,7 @@ Charts and tag colors (forest, cyan, lavender, orchid, orange, blue, yellow, red
 
 ### Three layers
 
-Component code references **its own component-scoped tokens only** (`--c-{component}-*`), never a global `--ds-*`, a primitive, or a raw value directly. Each `--c-{component}-*` token aliases exactly one global semantic. The prefix encodes the tier, so any reference is auditable at a glance: `--p-` is a raw value, `--ds-` is a global semantic, `--c-` is component scope. The layers exist so that a single design decision (e.g., "primary action should be lime") flows everywhere automatically.
+Component code references **its own component-scoped tokens only** (`--c-{component}-*`), never a global `--ds-*`, a primitive, or a raw value directly. Each `--c-{component}-*` token aliases exactly one global semantic. Name it `--c-{component}-{role}[-{variant-or-state}]`: a kebab-case component name matching the file (`alert-dialog`, `input-group`), a role word from the semantic vocabulary (`surface`, `border`, `text`, `icon`, `shape-radius`), then the variant or state last (`-hover`, `-focus`, `-critical`). No abbreviations, and no separate `-color-` segment — the role word carries it. The tail normally mirrors the aliased `--ds-*` name with its prefix dropped, except where the component's local intent differs, in which case local intent wins (`--c-card-surface-default: var(--ds-color-surface-raised)`). The prefix encodes the tier, so any reference is auditable at a glance: `--p-` is a raw value, `--ds-` is a global semantic, `--c-` is component scope. The layers exist so that a single design decision (e.g., "primary action should be lime") flows everywhere automatically.
 
 | Layer      | Prefix              | Example                          | What it does                                              |
 | ---------- | ------------------- | -------------------------------- | --------------------------------------------------------- |
@@ -242,28 +242,36 @@ All surfaces that change between light and dark theme list both values. State su
 | `--ds-color-surface-default`       | white      | sand-950   | Page background                                  |
 | `--ds-color-surface-default-hover` | sand-100   | sand-900   | Hovered page-level elements                      |
 | `--ds-color-surface-default-active`| sand-200   | sand-800   | Pressed page-level elements                      |
-| `--ds-color-surface-alt`           | sand-100   | sand-900   | Sidebars, table alt rows, inset panels           |
+| `--ds-color-surface-alt`           | sand-100   | sand-850   | Fills sitting directly on the page or canvas     |
 | `--ds-color-surface-alt-hover`     | sand-200   | sand-800   | Hovered alt surfaces                             |
+| `--ds-color-surface-canvas`        | sand-25    | sand-900   | The content ground the app shell paints          |
+| `--ds-color-surface-raised`        | white      | sand-850   | A card lifted off the ground                     |
+| `--ds-color-surface-raised-alt`    | sand-100   | sand-900   | A fill nested *inside* a card — recesses         |
+| `--ds-color-surface-field`         | sand-25    | sand-800   | Input / textarea fill at rest                    |
+| `--ds-color-surface-chip-neutral`  | black @ 5% | black @ 25%| Neutral chip; overlay, so it works on any host   |
+| `--ds-color-data-track`            | black @ 5% | black @ 35%| Unfilled remainder of a magnitude meter          |
 | `--ds-color-surface-scrim`         | sand-950 @ 50% | black @ 60% | Modal / dialog backdrop veil              |
+
+In dark the ladder runs **chrome sand-950 → content sand-900 → card sand-850 → nested sand-900**, so the chrome reads darker than the content it frames and a fill inside a card recesses rather than rising. In light all four `-raised*` roles collapse onto their `-default`/`-alt` counterparts, so the distinction only costs anything in dark.
 
 #### Semantic intent surfaces
 
-Light mode uses a soft step-50 tint. Dark mode blends the intent color at low opacity into sand-950 for a subtle hue without glow.
+Light mode uses a soft step-50 tint. Dark mode blends the intent color at low opacity into the **content ground** for a subtle hue without glow. The base tints mix against sand-900; the `-raised` companions mix against sand-850, for a chip sitting inside a card. Because these are mixed against a ground, they must be re-mixed whenever that ground moves.
 
 | Token                                | Light        | Dark                           | Use                              |
 | ------------------------------------ | ------------ | ------------------------------ | -------------------------------- |
-| `--ds-color-surface-success`         | forest-50    | forest-800 @ 15% on sand-950   | Success alert, callout           |
-| `--ds-color-surface-success-hover`   | forest-100   | forest-800 @ 22% on sand-950   |                                  |
-| `--ds-color-surface-success-active`  | forest-200   | forest-800 @ 30% on sand-950   |                                  |
-| `--ds-color-surface-info`            | blue-50      | blue-400 @ 10% on sand-950     | Info alert, callout              |
-| `--ds-color-surface-info-hover`      | blue-100     | blue-400 @ 16% on sand-950     |                                  |
-| `--ds-color-surface-info-active`     | blue-200     | blue-400 @ 22% on sand-950     |                                  |
-| `--ds-color-surface-warning`         | yellow-50    | yellow-300 @ 10% on sand-950   | Warning alert, callout           |
-| `--ds-color-surface-warning-hover`   | yellow-100   | yellow-300 @ 16% on sand-950   |                                  |
-| `--ds-color-surface-warning-active`  | yellow-200   | yellow-300 @ 22% on sand-950   |                                  |
-| `--ds-color-surface-critical`        | red-50       | red-400 @ 10% on sand-950      | Error / destructive alert        |
-| `--ds-color-surface-critical-hover`  | red-100      | red-400 @ 16% on sand-950      |                                  |
-| `--ds-color-surface-critical-active` | red-200      | red-400 @ 22% on sand-950      |                                  |
+| `--ds-color-surface-success`         | forest-50    | forest-800 @ 15% on sand-900   | Success alert, callout           |
+| `--ds-color-surface-success-hover`   | forest-100   | forest-800 @ 22% on sand-900   |                                  |
+| `--ds-color-surface-success-active`  | forest-200   | forest-800 @ 30% on sand-900   |                                  |
+| `--ds-color-surface-info`            | blue-50      | blue-400 @ 10% on sand-900     | Info alert, callout              |
+| `--ds-color-surface-info-hover`      | blue-100     | blue-400 @ 16% on sand-900     |                                  |
+| `--ds-color-surface-info-active`     | blue-200     | blue-400 @ 22% on sand-900     |                                  |
+| `--ds-color-surface-warning`         | yellow-50    | yellow-300 @ 10% on sand-900   | Warning alert, callout           |
+| `--ds-color-surface-warning-hover`   | yellow-100   | yellow-300 @ 16% on sand-900   |                                  |
+| `--ds-color-surface-warning-active`  | yellow-200   | yellow-300 @ 22% on sand-900   |                                  |
+| `--ds-color-surface-critical`        | red-50       | red-400 @ 10% on sand-900      | Error / destructive alert        |
+| `--ds-color-surface-critical-hover`  | red-100      | red-400 @ 16% on sand-900      |                                  |
+| `--ds-color-surface-critical-active` | red-200      | red-400 @ 22% on sand-900      |                                  |
 | `--ds-color-surface-data`            | cyan-50      | cyan-950                       | Data panel tint (default)        |
 | `--ds-color-surface-selected`        | blue-50      | blue-950                       | Selected row, focused item       |
 | `--ds-color-surface-selected-hover`  | blue-100     | blue-900                       |                                  |
@@ -283,12 +291,12 @@ Each variant has three surface states (default → hover → active) and one dis
 | `--ds-color-action-primary-hover`       | lime-400              | lime-400              | One step more pronounced                   |
 | `--ds-color-action-primary-active`      | lime-500              | lime-500              | Pressed                                    |
 | `--ds-color-action-primary-disabled`    | lime-300 + sand-100 overlay | lime-300 + sand-700 overlay | Desaturated surface overlay       |
-| `--ds-color-action-secondary`           | sand-200              | sand-900              | Faint sand bg, distinct from page and from `surface-alt` |
+| `--ds-color-action-secondary`           | sand-200              | sand-800              | Faint sand bg, distinct from page and from `surface-alt` |
 | `--ds-color-action-secondary-hover`     | sand-300              | sand-800              |                                            |
 | `--ds-color-action-secondary-active`    | sand-400              | sand-700              |                                            |
-| `--ds-color-action-secondary-disabled`  | sand-100              | sand-950              | Fades toward page bg                       |
+| `--ds-color-action-secondary-disabled`  | sand-100              | sand-900              | Fades toward page bg                       |
 
-Light shifted one rung Aug 7 2026. The old resting sand-100 was the *same value* as `--ds-color-surface-alt`, so a secondary button on an alt-toned panel was 1.00:1 and disappeared; on the sand-25 canvas it was 1.09:1. **Dark still has that exact collision** — `action-secondary` and `surface-alt` are both sand-900 — and is knowingly unfixed, because every adjacent dark rung is occupied (sand-800 is `surface-field` + `surface-raised-alt`, sand-700 is `surface-raised-alt-hover`). Fixing it means re-basing the dark ramp, which was attempted and reverted in July 2026.
+This must never equal `--ds-color-surface-alt`: a secondary button on an alt-toned panel would be 1.00:1 and simply disappear. Both themes now clear it.
 | `--ds-color-action-critical`            | red-100               | red-900               | Soft destructive, tinted, not alarming    |
 | `--ds-color-action-critical-hover`      | red-200               | red-800               |                                            |
 | `--ds-color-action-critical-active`     | red-300               | red-700               |                                            |
@@ -523,6 +531,12 @@ Hummingbird uses very little shadow. Surface differentiation comes from sand tin
 
 If you're reaching for a shadow on a card or panel, ask first whether a 1px border and a sand alt-surface achieves the same goal. It usually does.
 
+Judge separation between surface planes in **Weber** contrast, not the WCAG ratio. WCAG's flare constant compresses ratios near white and expands them near black, so it misreads depth in both directions: a dark card on the canvas at 1.17:1 is a ~35% Weber edge, one of the clearest boundaries in the system, while a light white card on the sand-25 canvas at 1.03:1 is only ~2.8% Weber — two or three sRGB code values, below the detection threshold on a dimmed or glared display, and the weakest edge Quill ships. That is why the light card leans on its border to carry the read.
+
+**Host-relative tokens are alpha overlays, never ramp steps.** Any token whose job is defined relative to whatever it sits on — meter tracks, wells, scrims, inset shadows, a chip that appears on more than one surface — must be `color-mix(in srgb, black N%, transparent)`. A ramp step encodes an absolute position, so it will eventually land on the exact value of a surface it has to sit on, and a same-value collision is total: the element disappears rather than degrading. `--ds-color-data-track` and `--ds-color-surface-chip-neutral` are both built this way.
+
+**Before re-basing a ground colour,** list every token that already resolves to the target step — the dark ramp is crowded — and move the fills that are mixed against the old ground in the same change, or they will be left standing on it. Sweep for *equal* fills, not just inverted ones: an inversion check compares a fill against its nearest opaque ancestor and cannot see a 1.00:1 match.
+
 | Token           | Use                                         |
 | --------------- | ------------------------------------------- |
 | `--ds-shadow-sm`| Raised card on page background              |
@@ -631,12 +645,15 @@ Icon sizes are relative to the component they live in. Button icon slots are siz
 
 How to assemble tokens into the common Hummingbird regions. These map intent → token; each token's appearance is defined in the sections above.
 
+A **Component** is a single building block; a **Block** is a composite that assembles several Components (app shell, nav, login form). Composition is the test, not size.
+
 **Page structure**
 
-- Page background → `--ds-color-surface-default`
-- Sidebar / nav → `--ds-color-surface-default` with a right hairline `--ds-color-border-default`; item hover `--ds-color-surface-alt`, active item on the brand selected surface with brand text
+- Page / content ground → `--ds-color-surface-canvas`. In dark this is one rung *lighter* than the chrome, so the sidebar reads as darker than the content it frames.
+- Sidebar / nav → a right hairline `--ds-color-border-default`; item hover `--ds-color-surface-alt`, active item on the brand selected surface with brand text
 - Logo mark → `--ds-color-surface-brand` (Deep Forest) with `--ds-color-text-inverse`, the only Deep Forest surface in the app shell
-- Main content panel / card → `--ds-color-surface-default`, border `--ds-color-border-subtle`
+- Main content panel / card → `--ds-color-surface-raised`, border `--ds-color-border-default`. Not `border-subtle`: in light the card's fill separates from the canvas by only ~2.8% Weber, so the border carries the whole read and must not sit at the hairline step as well.
+- A fill nested *inside* a card → `--ds-color-surface-raised-alt`, which recesses to the content ground rather than rising. Plain `--ds-color-surface-alt` is for fills sitting directly on the page or canvas; in dark the two are different values, and using the wrong one inverts the elevation.
 
 **Forms**
 
@@ -657,6 +674,10 @@ How to assemble tokens into the common Hummingbird regions. These map intent →
 
 - Success / Info / Warning / Critical → matching `--ds-color-surface-{intent}` fill, `--ds-color-border-{intent}-bold`, `--ds-color-text-{intent}` text
 
+**Naming**
+
+- Index and list views take the plural form of the object; detail views take the singular. Route segments are lowercase and kebab-case.
+
 **Charts**
 
 - Wrap in a `--ds-color-surface-default` container
@@ -675,6 +696,8 @@ Hummingbird is a biotech discovery tool; these domain facts shape UI decisions.
 - **Primary chart types are dose-response, time-series, and heatmaps:** bar and pie are rare.
 - **Units are non-negotiable:** never display a number without its unit (µM, nM, %).
 - **Never encode data by color alone:** pair color with a label or shape; some users are colorblind.
+- **The reference biology library is curated, never user-authored:** Plant Sources, Targets and lab Samples are Brightseed-maintained. Never draw a "New Plant Source", "Add Target" or end-user sample-upload affordance — upload paths exist only for the user's own documents. Targets are encountered as filter facets and as chips beside a compound, never as a browsable index.
+- **Strategies compete; they are not tasks:** each Strategy is one hypothesis for reaching a Project's Goal, and a Project holds several at once, judged side by side on Evidence, Feasibility and Legal. Losers are eliminated, not deferred — so design for comparison. A checklist, stepper or percent-complete bar misreads the model.
 
 ---
 
