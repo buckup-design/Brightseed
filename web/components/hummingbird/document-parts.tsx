@@ -72,6 +72,28 @@ export function Section({
   );
 }
 
+// ─── Eyebrow ─────────────────────────────────────────────────────────────────
+
+/**
+ * The 11px uppercase eyebrow, used where a bare <Section> can't (needs a
+ * sibling beside it, or a level below Section's h2/h3 range). Promoted from
+ * report-document.tsx when the IP appendix became a second consumer; `as`
+ * keeps the outline correct (h4 under the appendix's h3 subsections).
+ */
+export function Eyebrow({
+  as: Heading = "h3",
+  children,
+}: {
+  as?: "h3" | "h4";
+  children: React.ReactNode;
+}) {
+  return (
+    <Heading className="text-[11px] font-semibold tracking-[0.06em] text-[var(--ds-color-text-subtle)] uppercase">
+      {children}
+    </Heading>
+  );
+}
+
 // ─── Pills ───────────────────────────────────────────────────────────────────
 
 /** A wrapped row of neutral tag pills (targets, biomarkers). */

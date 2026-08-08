@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { expect, within } from "storybook/test";
 
 import { ScoreMeter } from "@/components/ui/score-meter";
 
@@ -55,6 +56,28 @@ export const Variants: Story = {
       <ScoreMeter value={0.68} label="Bare bar" showLabel={false} />
     </div>
   ),
+};
+
+/**
+ * The IP appendix's out-of-100 composites. 0.738 must print "73.8/100" (one
+ * decimal, no float dust) and announce "73.8 out of 100" (screen readers
+ * mangle a bare slash). size="lg" is the headline gauge.
+ */
+export const Fraction: Story = {
+  render: () => (
+    <div className="flex w-64 flex-col gap-5">
+      <ScoreMeter size="lg" format="fraction" value={0.5} label="FTO score" threshold={null} />
+      <ScoreMeter format="fraction" value={0.738} label="Verdict" threshold={null} />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const lg = await canvas.findByRole("meter", { name: "FTO score" });
+    expect(lg).toHaveAttribute("aria-valuetext", "50 out of 100");
+    expect(lg).toHaveAttribute("data-size", "lg");
+    const verdict = await canvas.findByRole("meter", { name: "Verdict" });
+    expect(verdict).toHaveAttribute("aria-valuetext", "73.8 out of 100");
+  },
 };
 
 /**

@@ -495,6 +495,12 @@
   --c-status-badge-surface-success: var(--ds-color-surface-success-raised);
   --c-status-badge-text-success:    var(--ds-color-text-success);
   --c-status-badge-dot-success:     var(--ds-color-icon-success);
+  --c-status-badge-surface-warning:  var(--ds-color-surface-warning-raised);
+  --c-status-badge-text-warning:     var(--ds-color-text-warning);
+  --c-status-badge-dot-warning:      var(--ds-color-icon-warning);
+  --c-status-badge-surface-critical: var(--ds-color-surface-critical-raised);
+  --c-status-badge-text-critical:    var(--ds-color-text-critical);
+  --c-status-badge-dot-critical:     var(--ds-color-icon-critical);
 
   /* --c-switch */
   --c-switch-action-primary:           var(--ds-color-action-primary);

@@ -17,6 +17,7 @@ import {
   type Result,
   type SingleResult,
 } from "@/components/hummingbird/cards/result-card"
+import type { IpAnalysis } from "@/components/hummingbird/ip-analysis"
 import type { ResultDetail } from "@/components/hummingbird/result-detail"
 import type { ReportDocument } from "@/components/hummingbird/report-document"
 
@@ -719,7 +720,7 @@ export const REPORT_DOCUMENTS: Record<string, ReportDocument> = {
     created: "Jul 20, 2026",
     ingredients: ["Berberine", "Biochanin A"],
     rationale:
-      "Berberine and biochanin A were paired for metabolic support in women aged 35–50. Berberine activates AMPK to improve glucose disposal and steer hepatic metabolism away from lipogenesis; biochanin A — an ERβ-selective isoflavone from red clover — engages PPARα and PPARγ to promote fatty-acid oxidation and temper adipocyte expansion. The two reach AMPK through independent upstream routes, which underlies the predicted synergy, and biochanin A's phytoestrogenic activity adds a rationale specific to the peri- and post-menopausal metabolic shift. A preliminary scan found no prior art claiming this pairing for a weight-management formulation.",
+      "Berberine and biochanin A were paired for metabolic support in women aged 35–50. Berberine activates AMPK to improve glucose disposal and steer hepatic metabolism away from lipogenesis; biochanin A — an ERβ-selective isoflavone from red clover — engages PPARα and PPARγ to promote fatty-acid oxidation and temper adipocyte expansion. The two reach AMPK through independent upstream routes, which underlies the predicted synergy, and biochanin A's phytoestrogenic activity adds a rationale specific to the peri- and post-menopausal metabolic shift. An initial scan surfaced no art specific to this exact pairing; the intellectual property assessment below covers the wider landscape.",
     ingredientBriefs: [
       {
         name: "Berberine",
@@ -902,6 +903,123 @@ export const REPORT_DOCUMENTS: Record<string, ReportDocument> = {
   r2: pendingReport("r2", "Resveratrol Longevity Concept"),
   r3: pendingReport("r3", "Sulforaphane Gut Health Brief"),
   r4: pendingReport("r4", "Quercetin + Fisetin Senolytic Stack"),
+}
+
+// ─── Full IP analysis (r1) ───────────────────────────────────────────────────
+//
+// Exported SEPARATELY from REPORT_DOCUMENTS.r1, which stays pre-run so the
+// flagship story keeps covering the CTA state; the appendix stories compose
+// `{ ...r1, ipAnalysis: IP_ANALYSIS_R1 }`. Enumerated values — scores, grades,
+// qualifiers, the 9 dimension statuses, the 5 patents, §102/§103, the 4
+// guidance slots — are the July 2026 live capture; prose strings are fixture
+// copy. §103 carries NO score in the capture, so the model has none.
+
+export const IP_ANALYSIS_R1: IpAnalysis = {
+  generated: "Jul 20, 2026",
+  disclaimer:
+    "An AI-generated starting point for discussion with patent counsel. Not legal advice.",
+  patentsAnalyzed: [
+    "US8367121B2",
+    "US2014301958A1",
+    "US2010150895A1",
+    "US2008292607A1",
+    "US2007116779A1",
+  ],
+  fto: {
+    // Weak→critical / Moderate→warning / Strong→success — the one mapping
+    // decision, Becky-reviewable here rather than buried in a component.
+    grade: { label: "Weak", tone: "critical" },
+    score: 0.5,
+    scoreQualifier: "Moderate",
+    scope: {
+      compounds: "Berberine + Biochanin A",
+      targetUse: "Metabolic health (glucose regulation)",
+      formulationType: "Oral supplement, capsule",
+      jurisdiction: "US",
+    },
+    executiveSummary:
+      "Freedom to operate is constrained. Two of nine dimensions are blocked by active US patents covering botanical sourcing of berberine-class alkaloids and claimed synergistic combinations in the metabolic-health space; three further dimensions carry restrictions on dose ranges, excipient systems and delivery format. The intended use, stability profile, purity specification and extraction process are clear.",
+    methodology:
+      "Each of the nine dimensions was screened against the five most-relevant active US patents surfaced by Forager's landscape search, scored clear, restricted or blocked on claim overlap, and rolled into a 0–100 composite weighted by claim breadth and remaining term. Expired and abandoned filings were excluded.",
+    dimensions: [
+      {
+        name: "Source",
+        status: "blocked",
+        note: "Active claims cover botanical extraction of berberine from Berberis species.",
+        patents: ["US8367121B2", "US2010150895A1"],
+      },
+      {
+        name: "Synergy",
+        status: "blocked",
+        note: "A claimed berberine–isoflavone combination overlaps the proposed synergistic pairing.",
+        patents: ["US2014301958A1"],
+      },
+      {
+        name: "Dose",
+        status: "restricted",
+        note: "Claimed daily-dose ranges overlap the lower bound of the proposed dosing window.",
+        patents: ["US2008292607A1"],
+      },
+      {
+        name: "Excipient",
+        status: "restricted",
+        note: "Bioavailability-enhancing excipient systems for alkaloids are claimed.",
+        patents: ["US2007116779A1"],
+      },
+      {
+        name: "Format",
+        status: "restricted",
+        note: "Capsule co-formulation claims apply to combined alkaloid–isoflavone products.",
+        patents: ["US2014301958A1"],
+      },
+      {
+        name: "Use",
+        status: "clear",
+        note: "No active method-of-use claims cover the stated glucose-regulation positioning.",
+        patents: [],
+      },
+      {
+        name: "Stability",
+        status: "clear",
+        note: "No claims constrain the proposed stabilization approach.",
+        patents: [],
+      },
+      {
+        name: "Purity",
+        status: "clear",
+        note: "Purity specifications fall outside all analyzed claim sets.",
+        patents: [],
+      },
+      {
+        name: "Process",
+        status: "clear",
+        note: "The proposed extraction process does not read on any active process claim.",
+        patents: [],
+      },
+    ],
+  },
+  patentability: {
+    grade: { label: "Weak", tone: "critical" },
+    verdict: { score: 0.738, qualifier: "Moderate" },
+    novelty: {
+      score: 0.9,
+      note: "No single analyzed reference discloses the specific berberine + biochanin A combination at the proposed ratio.",
+    },
+    nonObviousness: {
+      assessment: "Potentially obvious",
+      note: "Overlapping mechanism disclosures across the analyzed patents could support an obvious-to-try rejection of the combination.",
+    },
+    guidance: {
+      biggestRisk:
+        "§103 non-obviousness — the combination may be argued obvious over US8367121B2 in view of US2014301958A1, given the shared metabolic-pathway rationale.",
+      strongestOpportunity:
+        "The specific dose ratio and the measured synergistic glucose-uptake effect are not disclosed or suggested in any analyzed reference.",
+      mostPromisingClaimAngle:
+        "Composition claims limited to the defined ratio window, paired with a method claim tied to the demonstrated synergistic endpoint.",
+      nextStep:
+        "Commission a professional FTO opinion on the two blocked dimensions (Source, Synergy) before any filing or launch decision.",
+    },
+  },
 }
 
 /**

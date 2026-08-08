@@ -13,6 +13,7 @@ import { Separator } from "@/components/ui/separator";
 import { StatusBadge, type Status } from "@/components/ui/status-badge";
 import { Tag } from "@/components/ui/tag";
 import {
+  Eyebrow,
   Marker,
   NaturalSourceItem,
   Pills,
@@ -22,6 +23,11 @@ import {
   type Citation,
   type NaturalSource,
 } from "@/components/hummingbird/document-parts";
+import {
+  IpAppendix,
+  IpGeneratingNotice,
+  type IpAnalysis,
+} from "@/components/hummingbird/ip-analysis";
 import type { ResultDetailType } from "@/components/hummingbird/result-detail";
 import { cn } from "@/lib/utils";
 
@@ -44,8 +50,10 @@ import { cn } from "@/lib/utils";
  * surface-canvas background and the scroll the sticky bar sticks within. Back,
  * Continue edit and Run full IP analysis are the app's to own.
  *
- * Scope: the IP section is the pre-run CTA only. The generated full IP analysis
- * appendix (FTO 9-dimension grid + Patentability gauges) is a separate build.
+ * Section 3 is a three-state ladder: pre-run CTA → generating notice (the
+ * `ipAnalysisGenerating` prop; state is the app's, same contract as `pending`)
+ * → the generated appendix (`doc.ipAnalysis`, see ip-analysis.tsx). Completion
+ * never auto-scrolls; focus moves only if the reader was still in the section.
  */
 
 // ─── Types (the report's own per-ingredient model) ───────────────────────────
@@ -106,6 +114,8 @@ export type ReportDocument = {
   /** Combo only; sources shared by both ingredients (often legitimately empty). */
   sharedSources?: ReportNaturalSource[];
   ipNote: string;
+  /** The generated full IP analysis; absent until "Run full IP analysis" completes. */
+  ipAnalysis?: IpAnalysis;
   claims: ReportClaim[];
   targets: string[];
   biomarkers: string[];
@@ -144,16 +154,6 @@ function formulationRows(f: IngredientBrief["formulation"]): DescriptionRow[] {
     { label: "Source", value: f.source },
     { label: "Extraction method", value: f.extraction },
   ];
-}
-
-/** The 11px uppercase eyebrow, used where a bare <Section> can't (needs a
- *  right-aligned count beside it). */
-function Eyebrow({ children }: { children: React.ReactNode }) {
-  return (
-    <h3 className="text-[11px] font-semibold tracking-[0.06em] text-[var(--ds-color-text-subtle)] uppercase">
-      {children}
-    </h3>
-  );
 }
 
 function MechanismCardView({
@@ -240,14 +240,85 @@ export function ReportDocument({
   onBack,
   onContinueEdit,
   onRunIpAnalysis,
+  ipAnalysisGenerating = false,
 }: {
   doc: ReportDocument;
   onBack?: () => void;
   onContinueEdit?: () => void;
-  /** Mints the on-demand full IP analysis. No-op in the demo (out of scope). */
+  /** Starts the on-demand full IP analysis; the app owns the run state. */
   onRunIpAnalysis?: () => void;
+  /** True while the ~25s run is out; the CTA box swaps to a status notice. */
+  ipAnalysisGenerating?: boolean;
 }) {
   const isCombo = doc.type === "combo";
+
+  // ── IP-run focus + announcement choreography ──────────────────────────────
+  // The clicked CTA unmounts when the run starts, and the appendix mounts in
+  // place when it lands — so focus is moved by hand on each edge, and a
+  // PERSISTENT sr-only region announces (a role=status node mounted with its
+  // content already present announces unreliably; a text change does not —
+  // the results-panel pattern).
+  const generatingRef = React.useRef<HTMLDivElement>(null);
+  const ftoHeadingRef = React.useRef<HTMLHeadingElement>(null);
+  const ipSectionRef = React.useRef<HTMLDivElement>(null);
+  const runCtaRef = React.useRef<HTMLButtonElement>(null);
+  const prevGeneratingRef = React.useRef(ipAnalysisGenerating);
+  const hasAppendix = Boolean(doc.ipAnalysis);
+  // Completion keys off the APPENDIX edge, not the flag edge, so a host that
+  // clears the flag in one commit and delivers ipAnalysis in the next still
+  // gets the choreography. runPendingRef marks "a run was started here" — a
+  // doc that mounts with ipAnalysis (deep link, story) never trips it.
+  const prevHasAppendixRef = React.useRef(hasAppendix);
+  const runPendingRef = React.useRef(false);
+  const docIdRef = React.useRef(doc.id);
+  const [ipLiveMessage, setIpLiveMessage] = React.useState("");
+
+  React.useEffect(() => {
+    const prevGen = prevGeneratingRef.current;
+    const prevHas = prevHasAppendixRef.current;
+    prevGeneratingRef.current = ipAnalysisGenerating;
+    prevHasAppendixRef.current = hasAppendix;
+    if (docIdRef.current !== doc.id) {
+      // Doc swap: reset the run tracking, announce nothing.
+      docIdRef.current = doc.id;
+      runPendingRef.current = false;
+      return;
+    }
+    // Is the reader's focus effectively still in the IP section? (Focus falls
+    // to body when the node under it unmounts — but body is also where focus
+    // lives for a reader who never clicked, so body only counts as "here"
+    // when the section is actually on screen. That keeps the NO-auto-scroll
+    // rule honest: a reader three sections away is never yanked back.)
+    const stillHere = () => {
+      const active = document.activeElement;
+      if (ipSectionRef.current?.contains(active)) return true;
+      if (active === null || active === document.body) {
+        const r = ipSectionRef.current?.getBoundingClientRect();
+        return !!r && r.bottom > 0 && r.top < window.innerHeight;
+      }
+      return false;
+    };
+    if (!prevGen && ipAnalysisGenerating) {
+      // Run started: the button under focus just unmounted.
+      runPendingRef.current = true;
+      generatingRef.current?.focus();
+      setIpLiveMessage("Full IP analysis started.");
+    } else if (runPendingRef.current && hasAppendix && !prevHas) {
+      // Run completed (appendix just mounted, whatever the flag timing).
+      runPendingRef.current = false;
+      if (stillHere()) ftoHeadingRef.current?.focus();
+      setIpLiveMessage(
+        "Full IP analysis added to the intellectual property assessment section."
+      );
+    } else if (prevGen && !ipAnalysisGenerating && !hasAppendix && runPendingRef.current) {
+      // Run ended with nothing delivered (failed/cancelled): the notice under
+      // focus unmounted, so hand focus back to the remounted CTA and say so.
+      // runPendingRef stays set — if the appendix lands a commit later
+      // (split-update host), the completion branch above still fires.
+      if (stillHere()) runCtaRef.current?.focus();
+      setIpLiveMessage("Full IP analysis did not complete.");
+    }
+  }, [ipAnalysisGenerating, hasAppendix, doc.id]);
   const Glyph = isCombo ? CompoundMultiple : CompoundSingle;
   const glyphClass = isCombo
     ? "text-[var(--ds-color-icon-brand)]"
@@ -261,6 +332,11 @@ export function ReportDocument({
 
   return (
     <article className="flex flex-col">
+      {/* Persistent live region for the IP-run announcements (see effect). */}
+      <div role="status" aria-live="polite" className="sr-only">
+        {ipLiveMessage}
+      </div>
+
       {/* ── Sticky utility bar (app chrome, not the document) ──────────────── */}
       <div className="sticky top-0 z-10 border-b border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-raised)]">
         <div className="mx-auto flex w-full max-w-3xl items-center justify-between gap-4 px-4 py-3">
@@ -338,19 +414,34 @@ export function ReportDocument({
               </Section>
             )}
 
-            {/* 3 · Intellectual Property Assessment (pre-run CTA only) */}
-            {doc.ipNote && (
-              <Section as="h2" size="heading" title="Intellectual property assessment">
-                <div className="rounded-[var(--ds-shape-radius-md)] border border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-alt)] p-5">
-                  <div className="max-w-[65ch] space-y-4">
-                    <Prose>{doc.ipNote}</Prose>
-                    <Button onClick={onRunIpAnalysis}>
-                      <Scale />
-                      Run full IP analysis
-                    </Button>
-                  </div>
-                </div>
-              </Section>
+            {/* 3 · Intellectual Property Assessment: appendix → generating → CTA */}
+            {(doc.ipAnalysis || ipAnalysisGenerating || doc.ipNote) && (
+              <div ref={ipSectionRef}>
+                <Section as="h2" size="heading" title="Intellectual property assessment">
+                  {doc.ipAnalysis ? (
+                    <IpAppendix
+                      analysis={doc.ipAnalysis}
+                      ftoHeadingRef={ftoHeadingRef}
+                    />
+                  ) : (
+                    // One box, two contents: the CTA and the in-flight notice
+                    // share the exact chrome so nothing jumps when the run starts.
+                    <div className="rounded-[var(--ds-shape-radius-md)] border border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-alt)] p-5">
+                      {ipAnalysisGenerating ? (
+                        <IpGeneratingNotice ref={generatingRef} />
+                      ) : (
+                        <div className="max-w-[65ch] space-y-4">
+                          <Prose>{doc.ipNote}</Prose>
+                          <Button ref={runCtaRef} onClick={onRunIpAnalysis}>
+                            <Scale />
+                            Run full IP analysis
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </Section>
+              </div>
             )}
 
             {/* 4 · How it works */}
