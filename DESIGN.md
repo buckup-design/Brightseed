@@ -676,6 +676,8 @@ A **Component** is a single building block; a **Block** is a composite that asse
 
 **Naming**
 
+- **Sentence case everywhere in the UI.** Nav items, page and section headings, column headers, button labels, form labels, dialog titles, tabs, menu items and empty states all capitalise the first word only. "Natural sources", not "Natural Sources"; "Create formula brief", not "Create Formula Brief".
+- Proper nouns keep their own casing, and this is not a licence to lowercase the science. Compound, gene and protein names (`Berberine`, `Nrf2`, `AMPK`, `Epigallocatechin gallate`), journal titles, people and institutions are unchanged. So is **content**: a report title, a benefit category or a project name is data someone authored, not chrome the design system owns.
 - Index and list views take the plural form of the object; detail views take the singular. Route segments are lowercase and kebab-case.
 
 **Charts**

@@ -116,7 +116,7 @@ const TYPE_CONFIG = {
 const EVIDENCE_LABEL: Record<Exclude<EvidenceClass, "predicted" | "none">, string> = {
   clinical: "Clinical",
   animal: "Animal",
-  "in-vitro": "In Vitro",
+  "in-vitro": "In vitro",
 };
 
 // ─── PositionStepper ─────────────────────────────────────────────────────────

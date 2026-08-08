@@ -116,7 +116,7 @@ const SCORE_LABEL = {
 const EVIDENCE_LABEL: Record<Exclude<EvidenceClass, "none" | "predicted">, string> = {
   clinical: "Clinical",
   animal: "Animal",
-  "in-vitro": "In Vitro",
+  "in-vitro": "In vitro",
 };
 
 export function displayName(result: Result): string {

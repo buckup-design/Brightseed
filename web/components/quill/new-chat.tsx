@@ -83,7 +83,7 @@ export function NewChat({
         <div className="flex items-center justify-between">
           <Button variant="ghost" size="sm" onClick={onCreateBrief}>
             <Sparkles />
-            Create Formula Brief
+            Create formula brief
           </Button>
           <Button size="icon" aria-label="Send message" onClick={send}>
             <ArrowUp />

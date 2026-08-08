@@ -36,12 +36,14 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
-/** Verbatim from the annotation, in the annotated order. */
+/** From the annotation, in the annotated order, re-cased to the sentence-case
+ *  rule (DESIGN.md > Composition > Naming). These literals are also the SelectItem
+ *  values and derive the FeedbackTopic union, so they reach onSubmit. */
 const TOPICS = [
-  "General Feedback",
-  "Bug Report",
-  "Feature Request",
-  "Usability Issue",
+  "General feedback",
+  "Bug report",
+  "Feature request",
+  "Usability issue",
 ] as const;
 
 export type FeedbackTopic = (typeof TOPICS)[number];

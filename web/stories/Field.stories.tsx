@@ -286,7 +286,7 @@ export const SelectionCards: Story = {
           <Field orientation="horizontal">
             <Checkbox id="ev-invitro" />
             <FieldContent>
-              <FieldTitle>In Vitro</FieldTitle>
+              <FieldTitle>In vitro</FieldTitle>
               <FieldDescription>
                 Cell-based assays. Mechanism only — no dose translation.
               </FieldDescription>

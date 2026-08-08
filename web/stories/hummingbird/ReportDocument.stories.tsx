@@ -62,7 +62,7 @@ function DocHost({ doc }: { doc: ReportDoc }) {
         onBack={() => toast("Back to Reports")}
         onContinueEdit={() => toast("Continue edit")}
         onRunIpAnalysis={() =>
-          toast("Running Full IP Analysis… (generated appendix out of scope)")
+          toast("Running full IP analysis… (generated appendix out of scope)")
         }
       />
       <Toaster />

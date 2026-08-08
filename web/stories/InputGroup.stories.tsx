@@ -291,7 +291,7 @@ export const ResultsToolbar: GalleryStory = {
       </div>
       <p className="text-sm text-[var(--ds-color-text-subtle)]">
         Berberine · Biochanin A · Quercetin · Carvacrol — evidence: Clinical,
-        Animal, In Vitro, Predicted
+        Animal, In vitro, Predicted
       </p>
     </div>
   ),

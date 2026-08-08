@@ -26,7 +26,7 @@ export const Vertical: Story = {
     <div className="flex h-12 items-center gap-3 text-sm">
       <span>Compounds</span>
       <Separator orientation="vertical" />
-      <span>Plant Sources</span>
+      <span>Plant sources</span>
     </div>
   ),
 };

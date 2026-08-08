@@ -125,7 +125,7 @@ export const WithDescription: Story = {
 /* A facet panel owns its selection, so it renders through a component rather
  * than a bare render function. */
 function EvidenceFacet() {
-  const kinds = ["Clinical", "Animal", "In Vitro", "Predicted"];
+  const kinds = ["Clinical", "Animal", "In vitro", "Predicted"];
   const [selected, setSelected] = React.useState<string[]>(["Clinical", "Animal"]);
 
   const toggle = (kind: string) =>
@@ -193,7 +193,7 @@ const results = [
     id: "quercetin",
     compound: "Quercetin",
     source: "Allium cepa",
-    evidence: "In Vitro",
+    evidence: "In vitro",
     biomarker: "HOMA-IR",
   },
   {

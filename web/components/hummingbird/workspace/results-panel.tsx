@@ -61,7 +61,7 @@ const FILTERS: { key: FilterKey; label: string }[] = [
   { key: "all", label: "All" },
   { key: "clinical", label: "Clinical" },
   { key: "animal", label: "Animal" },
-  { key: "in-vitro", label: "In Vitro" },
+  { key: "in-vitro", label: "In vitro" },
   { key: "predicted", label: "Predicted" },
 ];
 
@@ -69,7 +69,7 @@ const FILTER_LABEL: Record<FilterKey, string> = {
   all: "All",
   clinical: "Clinical",
   animal: "Animal",
-  "in-vitro": "In Vitro",
+  "in-vitro": "In vitro",
   predicted: "Predicted",
 };
 

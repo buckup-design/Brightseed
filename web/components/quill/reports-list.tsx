@@ -134,7 +134,7 @@ export function ReportsList({
         />
         <Button onClick={onNewReport}>
           <Plus />
-          New Report
+          New report
         </Button>
       </div>
 
@@ -154,7 +154,7 @@ export function ReportsList({
           </div>
           <Button onClick={onNewReport}>
             <Plus />
-            Get Started
+            Get started
           </Button>
         </div>
       ) : (

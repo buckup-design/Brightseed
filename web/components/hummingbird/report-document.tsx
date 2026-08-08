@@ -42,9 +42,9 @@ import { cn } from "@/lib/utils";
  * A leaf app surface: reads --ds-* directly; the ui/ primitives it embeds carry
  * their own --c-*. Renders inside the app-shell inset, which supplies the
  * surface-canvas background and the scroll the sticky bar sticks within. Back,
- * Continue edit and Run Full IP Analysis are the app's to own.
+ * Continue edit and Run full IP analysis are the app's to own.
  *
- * Scope: the IP section is the pre-run CTA only. The generated Full IP Analysis
+ * Scope: the IP section is the pre-run CTA only. The generated full IP analysis
  * appendix (FTO 9-dimension grid + Patentability gauges) is a separate build.
  */
 
@@ -244,7 +244,7 @@ export function ReportDocument({
   doc: ReportDocument;
   onBack?: () => void;
   onContinueEdit?: () => void;
-  /** Mints the on-demand Full IP Analysis. No-op in the demo (out of scope). */
+  /** Mints the on-demand full IP analysis. No-op in the demo (out of scope). */
   onRunIpAnalysis?: () => void;
 }) {
   const isCombo = doc.type === "combo";
@@ -308,7 +308,7 @@ export function ReportDocument({
               <Section
                 as="h2"
                 size="heading"
-                title={isCombo ? "Recommended Combination" : "Recommendation"}
+                title={isCombo ? "Recommended combination" : "Recommendation"}
               >
                 <div className="space-y-3">
                   <div className="flex flex-wrap gap-1.5">
@@ -340,13 +340,13 @@ export function ReportDocument({
 
             {/* 3 · Intellectual Property Assessment (pre-run CTA only) */}
             {doc.ipNote && (
-              <Section as="h2" size="heading" title="Intellectual Property Assessment">
+              <Section as="h2" size="heading" title="Intellectual property assessment">
                 <div className="rounded-[var(--ds-shape-radius-md)] border border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-alt)] p-5">
                   <div className="max-w-[65ch] space-y-4">
                     <Prose>{doc.ipNote}</Prose>
                     <Button onClick={onRunIpAnalysis}>
                       <Scale />
-                      Run Full IP Analysis
+                      Run full IP analysis
                     </Button>
                   </div>
                 </div>
@@ -369,7 +369,7 @@ export function ReportDocument({
 
             {/* 5 · Natural Sources */}
             {hasSources && (
-              <Section as="h2" size="heading" title="Natural Sources">
+              <Section as="h2" size="heading" title="Natural sources">
                 <div className="space-y-6">
                   {isCombo && doc.sharedSources && doc.sharedSources.length > 0 && (
                     <SourceGroup label="Shared" sources={doc.sharedSources} />
@@ -389,7 +389,7 @@ export function ReportDocument({
 
             {/* 6 · Biological Pathways */}
             {hasPathways && (
-              <Section as="h2" size="heading" title="Biological Pathways">
+              <Section as="h2" size="heading" title="Biological pathways">
                 <div className="space-y-5">
                   {briefs.map(
                     (ing) =>
@@ -434,7 +434,7 @@ export function ReportDocument({
                         {claim.clinicalStudy && (
                           <Marker tone="info">
                             <FlaskConical className="size-3" />
-                            Clinical Study
+                            Clinical study
                           </Marker>
                         )}
                       </span>

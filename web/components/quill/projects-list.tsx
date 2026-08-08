@@ -86,7 +86,7 @@ export function ProjectsList({
         </div>
         <Button onClick={onNewProject}>
           <Plus />
-          New Project
+          New project
         </Button>
       </div>
 

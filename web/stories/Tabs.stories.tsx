@@ -16,7 +16,7 @@ export const Default: Story = {
     <Tabs defaultValue="compounds" className="w-[480px]">
       <TabsList>
         <TabsTrigger value="compounds">Compounds</TabsTrigger>
-        <TabsTrigger value="plants">Plant Sources</TabsTrigger>
+        <TabsTrigger value="plants">Plant sources</TabsTrigger>
       </TabsList>
       <TabsContent value="compounds" className="mt-4 text-sm text-muted-foreground">
         Compounds tab content.
