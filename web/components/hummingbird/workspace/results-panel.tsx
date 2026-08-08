@@ -270,7 +270,7 @@ export function ResultsPanel({
   const noMatches = !isEmpty && results.length === 0;
 
   return (
-    <div className={cn("flex h-full min-h-0 flex-col bg-[var(--ds-color-surface-default)]", className)}>
+    <div className={cn("flex h-full min-h-0 flex-col bg-[var(--ds-color-surface-canvas)]", className)}>
       {/* Persistent live region: always mounted, so a NEW search updating the
           banner text announces as a reliable text change (see WorkspaceBanner). */}
       <div role="status" aria-live="polite" className="sr-only">

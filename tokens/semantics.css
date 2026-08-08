@@ -118,6 +118,11 @@
   --ds-color-surface-warning-raised:  var(--p-color-yellow-50);
   --ds-color-surface-critical-raised: var(--p-color-red-50);
 
+  /* A neutral chip that must recess into WHATEVER it sits on — StatusBadge
+     appears both inside a Card and directly on the canvas, and no fixed step
+     works on both. Overlay, like --ds-color-data-track. */
+  --ds-color-surface-chip-neutral:    color-mix(in srgb, black 5%, transparent);
+
   --ds-color-surface-data:            var(--p-color-cyan-50);        /* default data panel tint */
   --ds-color-surface-selected:        var(--p-color-blue-50);             /* selected row / focused item, blue-50 */
   --ds-color-surface-selected-hover:  var(--p-color-blue-100);
@@ -518,33 +523,33 @@
   --ds-color-surface-default:         var(--p-color-sand-950);       /* #1F1F1E, page bg */
   --ds-color-surface-default-hover:   var(--p-color-sand-900);
   --ds-color-surface-default-active:  var(--p-color-sand-800);
-  --ds-color-surface-alt:             var(--p-color-sand-900);       /* raised panels, sidebars, fills ON the page */
+  /* One step UP from the content ground. Moved sand-900 -> sand-850 when the
+     canvas became sand-900; at sand-900 every pill and inset box on the canvas
+     painted its own ground colour. Coincides with surface-raised, the same way
+     light's surface-raised coincides with surface-default. */
+  --ds-color-surface-alt:             var(--p-color-sand-850);       /* raised panels, sidebars, fills ON the page */
   --ds-color-surface-alt-hover:       var(--p-color-sand-800);
   /* The dark elevation ladder: page sand-950 → card sand-850 → nested-in-card
      sand-800. Note sand-850 is LIGHTER than surface-alt (sand-900), which is why
      nested fills must move to -raised-alt rather than staying on -alt; see the
      light block for the full reasoning. */
   --ds-color-surface-raised:          var(--p-color-sand-850);       /* #353430, lifts off the sand-950 page */
-  --ds-color-surface-raised-alt:      var(--p-color-sand-800);       /* chips/footers inside a raised card */
-  --ds-color-surface-raised-alt-hover: var(--p-color-sand-700);
+  /* Nested-in-card fills RECESS to the content ground, they do not rise — pills,
+     target chips and the card footer all drop to sand-900 (Figma 142:17498).
+     Mirrors light, where sand-100 is already darker than its white card. */
+  --ds-color-surface-raised-alt:      var(--p-color-sand-900);       /* chips/footers inside a raised card */
+  --ds-color-surface-raised-alt-hover: var(--p-color-sand-950);      /* deepens, as light's sand-200 does */
   /* One step lighter than surface-alt (sand-900) at rest, one more on hover —
      see the light block for the reasoning. */
   --ds-color-surface-field:           var(--p-color-sand-800);      /* rest — already lighter than the sand-950 canvas */
   --ds-color-surface-field-hover:     var(--p-color-sand-700);      /* lifts */
   --ds-color-surface-field-focus:     var(--p-color-sand-700);      /* lifts — dark's mirror of light's white */
-  /* Canvas, dark: stays sand-950, matching the chrome.
-     ATTEMPTED AND REVERTED July 28 2026 — the plan's "lift the inset to sand-900".
-     sand-900 is a heavily occupied rung: SEVEN other dark tokens resolve to it
-     (surface-default-hover, surface-brand, surface-placeholder, text-inverse,
-     icon-inverse, action-secondary, and surface-alt). Making it the ground turns
-     every one of them invisible on the canvas — measured 23 dead fills in the
-     Report Document alone (pills, markers, inset boxes, the neutral Tag, which
-     rides action-secondary). Re-basing surface-alt to sand-850 cut that to 4, but
-     the rest would all have to follow and would then collide with the sand-850
-     card. The payoff was 1.13:1 of chrome/content separation, which this doc's own
-     honest-read already marks as failing its 3:1 target. Not worth a ramp rewrite;
-     see DOCS/dark-light-palette-alignment.md before retrying. */
-  --ds-color-surface-canvas:          var(--p-color-sand-950);
+  /* Content ground. Chrome stays sand-950, so chrome reads DARKER than content
+     (Figma 142:4874 + 142:17498 both draw it this way). Ladder: chrome sand-950
+     -> canvas sand-900 -> card sand-850 -> nested sand-800.
+     Reverted once in July for killing fills that assume a sand-950 ground; this
+     time the intent tints and tag surfaces were re-based with it. */
+  --ds-color-surface-canvas:          var(--p-color-sand-900);
   --ds-color-surface-scrim:           color-mix(in srgb, var(--p-color-black) 60%, transparent);     /* veil must go darker than the sand-950 page to register, DESIGN REVIEW: black vs warm */
   --ds-color-surface-scrim-chrome:    color-mix(in srgb, var(--p-color-sand-950) 72%, transparent);  /* page-coloured sticky-chrome veil; see the light block */
 
@@ -594,18 +599,18 @@
      Visual judgment: dark mode alerts read better with a subtle tint than
      a pure deep-intent step. Recipe: intent step at 10-15% over sand-950.
      Source: dark mode mockup May 28 2026. */
-  --ds-color-surface-success:         color-mix(in srgb, var(--p-color-forest-800) 15%, var(--p-color-sand-950));
-  --ds-color-surface-success-hover:   color-mix(in srgb, var(--p-color-forest-800) 22%, var(--p-color-sand-950));
-  --ds-color-surface-success-active:  color-mix(in srgb, var(--p-color-forest-800) 30%, var(--p-color-sand-950));
-  --ds-color-surface-info:            color-mix(in srgb, var(--p-color-blue-400)    10%, var(--p-color-sand-950));
-  --ds-color-surface-info-hover:      color-mix(in srgb, var(--p-color-blue-400)    16%, var(--p-color-sand-950));
-  --ds-color-surface-info-active:     color-mix(in srgb, var(--p-color-blue-400)    22%, var(--p-color-sand-950));
-  --ds-color-surface-warning:         color-mix(in srgb, var(--p-color-yellow-300) 10%, var(--p-color-sand-950));
-  --ds-color-surface-warning-hover:   color-mix(in srgb, var(--p-color-yellow-300) 16%, var(--p-color-sand-950));
-  --ds-color-surface-warning-active:  color-mix(in srgb, var(--p-color-yellow-300) 22%, var(--p-color-sand-950));
-  --ds-color-surface-critical:        color-mix(in srgb, var(--p-color-red-400) 10%, var(--p-color-sand-950));
-  --ds-color-surface-critical-hover:  color-mix(in srgb, var(--p-color-red-400) 16%, var(--p-color-sand-950));
-  --ds-color-surface-critical-active: color-mix(in srgb, var(--p-color-red-400) 22%, var(--p-color-sand-950));
+  --ds-color-surface-success:         color-mix(in srgb, var(--p-color-forest-800) 15%, var(--p-color-sand-900));
+  --ds-color-surface-success-hover:   color-mix(in srgb, var(--p-color-forest-800) 22%, var(--p-color-sand-900));
+  --ds-color-surface-success-active:  color-mix(in srgb, var(--p-color-forest-800) 30%, var(--p-color-sand-900));
+  --ds-color-surface-info:            color-mix(in srgb, var(--p-color-blue-400)    10%, var(--p-color-sand-900));
+  --ds-color-surface-info-hover:      color-mix(in srgb, var(--p-color-blue-400)    16%, var(--p-color-sand-900));
+  --ds-color-surface-info-active:     color-mix(in srgb, var(--p-color-blue-400)    22%, var(--p-color-sand-900));
+  --ds-color-surface-warning:         color-mix(in srgb, var(--p-color-yellow-300) 10%, var(--p-color-sand-900));
+  --ds-color-surface-warning-hover:   color-mix(in srgb, var(--p-color-yellow-300) 16%, var(--p-color-sand-900));
+  --ds-color-surface-warning-active:  color-mix(in srgb, var(--p-color-yellow-300) 22%, var(--p-color-sand-900));
+  --ds-color-surface-critical:        color-mix(in srgb, var(--p-color-red-400) 10%, var(--p-color-sand-900));
+  --ds-color-surface-critical-hover:  color-mix(in srgb, var(--p-color-red-400) 16%, var(--p-color-sand-900));
+  --ds-color-surface-critical-active: color-mix(in srgb, var(--p-color-red-400) 22%, var(--p-color-sand-900));
 
   /* Intent tints for a chip INSIDE a raised (sand-850) card. Same intent step,
      same percentage — only the base changes, sand-950 -> sand-850. This is the
@@ -627,6 +632,9 @@
   --ds-color-surface-info-raised:     color-mix(in srgb, var(--p-color-blue-400)   10%, var(--p-color-sand-850));
   --ds-color-surface-warning-raised:  color-mix(in srgb, var(--p-color-yellow-300) 10%, var(--p-color-sand-850));
   --ds-color-surface-critical-raised: color-mix(in srgb, var(--p-color-red-400)    10%, var(--p-color-sand-850));
+
+  /* Deeper than light: the dark ramp's rungs sit closer in luminance. */
+  --ds-color-surface-chip-neutral:    color-mix(in srgb, black 25%, transparent);
 
   --ds-color-surface-data:            var(--p-color-cyan-950);
   --ds-color-surface-selected:        var(--p-color-blue-950);
@@ -779,10 +787,13 @@
 
   /* ── Action, secondary adapts to dark surface ── */
   /* primary unchanged, lime-400 reads on both themes */
-  --ds-color-action-secondary:          var(--p-color-sand-900);
-  --ds-color-action-secondary-hover:    var(--p-color-sand-800);
-  --ds-color-action-secondary-active:   var(--p-color-sand-700);
-  --ds-color-action-secondary-disabled: var(--p-color-sand-950);
+  /* Lifted a rung with the canvas — at sand-900 a secondary button and the
+     neutral Tag painted the ground colour they sat on. Also finally separates
+     action-secondary from surface-alt, a collision carried since July. */
+  --ds-color-action-secondary:          var(--p-color-sand-800);
+  --ds-color-action-secondary-hover:    var(--p-color-sand-700);
+  --ds-color-action-secondary-active:   var(--p-color-sand-600);
+  --ds-color-action-secondary-disabled: var(--p-color-sand-900);
 
   /* Critical: destructive, soft style mirrors light but on the dark side of the red ladder.
      red-900 surface on sand-950 page bg; red-300 text. Hover steps "more pronounced"
@@ -814,7 +825,7 @@
   --ds-color-surface-tag-lime-hover:     var(--p-color-lime-800);
   --ds-color-text-tag-lime:              var(--p-color-lime-300);
 
-  --ds-color-surface-tag-cyan:           var(--p-color-cyan-900);
+  --ds-color-surface-tag-cyan:           var(--p-color-cyan-800);
   --ds-color-surface-tag-cyan-hover:     var(--p-color-cyan-800);
   --ds-color-text-tag-cyan:              var(--p-color-cyan-300);
 
@@ -822,11 +833,11 @@
   --ds-color-surface-tag-blue-hover:     var(--p-color-blue-800);
   --ds-color-text-tag-blue:              var(--p-color-blue-300);
 
-  --ds-color-surface-tag-yellow:         var(--p-color-yellow-900);
+  --ds-color-surface-tag-yellow:         var(--p-color-yellow-800);
   --ds-color-surface-tag-yellow-hover:   var(--p-color-yellow-800);
   --ds-color-text-tag-yellow:            var(--p-color-yellow-300);
 
-  --ds-color-surface-tag-orange:         var(--p-color-orange-900);
+  --ds-color-surface-tag-orange:         var(--p-color-orange-800);
   --ds-color-surface-tag-orange-hover:   var(--p-color-orange-800);
   --ds-color-text-tag-orange:            var(--p-color-orange-300);
 

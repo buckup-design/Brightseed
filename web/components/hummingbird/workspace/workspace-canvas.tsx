@@ -273,7 +273,7 @@ export function WorkspaceCanvas({
           {/* w-full + justify-start: TabsList's base is w-fit, which would leave
               the bar background and bottom divider spanning only the tabs' width
               (a ~130px box, obvious in dark) instead of the whole panel. */}
-          <TabsList className="w-full justify-start shrink-0 rounded-none border-b border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-default)] px-2">
+          <TabsList className="w-full justify-start shrink-0 rounded-none border-b border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-canvas)] px-2">
             <TabsTrigger value="chat">Chat</TabsTrigger>
             <TabsTrigger value="results">Results {counts.all}</TabsTrigger>
           </TabsList>

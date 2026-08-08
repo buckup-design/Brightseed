@@ -262,7 +262,7 @@ export function ReportDocument({
   return (
     <article className="flex flex-col">
       {/* ── Sticky utility bar (app chrome, not the document) ──────────────── */}
-      <div className="sticky top-0 z-10 border-b border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-default)]">
+      <div className="sticky top-0 z-10 border-b border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-raised)]">
         <div className="mx-auto flex w-full max-w-3xl items-center justify-between gap-4 px-4 py-3">
           <Button variant="ghost" onClick={onBack}>
             <ArrowLeft />

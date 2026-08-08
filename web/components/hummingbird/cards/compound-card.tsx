@@ -418,7 +418,7 @@ export function CompoundCard({
       data-type={type}
       className={cn(
         "group flex flex-col gap-3 p-4 w-full min-w-0",
-        "bg-[var(--ds-color-surface-default)]",
+        "bg-[var(--ds-color-surface-raised)]",
         "border border-[var(--ds-color-border-subtle)] hover:border-[var(--ds-color-border-default)]",
         "rounded-[var(--ds-shape-radius-md)]",
         "shadow-[0px_1px_1.5px_rgba(0,0,0,0.07)]",

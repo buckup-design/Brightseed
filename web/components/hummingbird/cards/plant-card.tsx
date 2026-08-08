@@ -79,7 +79,7 @@ export function PlantCard({
         // intrinsic content width so it doesn't overflow narrow columns.
         "w-full min-w-0",
         // surface
-        "bg-[var(--ds-color-surface-default)]",
+        "bg-[var(--ds-color-surface-raised)]",
         // border: subtle at rest, one step bolder on hover
         "border border-[var(--ds-color-border-subtle)] hover:border-[var(--ds-color-border-default)]",
         // corner radius: 8px (--ds-shape-radius-md), matches StrategyCard / Figma v2

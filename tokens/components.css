@@ -484,7 +484,7 @@
   /* -raised-alt: the badge almost always sits inside a Card, and plain surface-alt
      (sand-900) renders darker than a raised sand-850 card. Safe on the page too —
      it just reads one rung higher there. */
-  --c-status-badge-surface-neutral: var(--ds-color-surface-raised-alt);
+  --c-status-badge-surface-neutral: var(--ds-color-surface-chip-neutral);
   --c-status-badge-text-neutral:    var(--ds-color-text-subtle);
   --c-status-badge-dot-neutral:     var(--ds-color-icon-subtle);
   /* -raised for the same reason the neutral tone above uses -raised-alt: the dark

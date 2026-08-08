@@ -117,7 +117,7 @@ export function StrategyCard({
         // grid overflow when columns are narrower than the card's natural size).
         "w-full min-w-0",
         // surface
-        "bg-[var(--ds-color-surface-default)]",
+        "bg-[var(--ds-color-surface-raised)]",
         // border: subtle at rest, one step bolder on hover
         "border border-[var(--ds-color-border-subtle)] hover:border-[var(--ds-color-border-default)]",
         // corner radius: 8px (--ds-shape-radius-md) matches Figma v2

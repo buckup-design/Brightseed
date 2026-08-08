@@ -42,7 +42,7 @@ import { cn } from "@/lib/utils";
  * sand bubble, left-aligned text. */
 function MessageBubble({ text }: { text: string }) {
   return (
-    <div className="mx-auto max-w-[85%] rounded-[var(--ds-shape-radius-md)] bg-[var(--ds-color-surface-alt)] px-4 py-2.5 text-sm leading-relaxed text-[var(--ds-color-text-default)]">
+    <div className="mx-auto max-w-[85%] rounded-[var(--ds-shape-radius-md)] bg-[var(--ds-color-surface-raised)] px-4 py-2.5 text-sm leading-relaxed text-[var(--ds-color-text-default)]">
       {text}
     </div>
   );
@@ -191,7 +191,7 @@ export function ChatPanel({
   }, []);
 
   return (
-    <div className={cn("relative flex h-full min-h-0 flex-col bg-[var(--ds-color-surface-default)]", className)}>
+    <div className={cn("relative flex h-full min-h-0 flex-col bg-[var(--ds-color-surface-canvas)]", className)}>
       {/* mr-2: the overlay scrollbar is pinned to this element's right edge,
           which butts against the resize handle. A right margin insets the whole
           scroll container (scrollbar included) so the thumb clears the handle
