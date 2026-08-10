@@ -109,6 +109,7 @@ function EvidenceFilterBar({
   view,
   onViewChange,
   onAddFilter,
+  filterExpanded,
 }: {
   filter: FilterKey;
   counts: EvidenceCounts;
@@ -116,6 +117,7 @@ function EvidenceFilterBar({
   view: ViewMode;
   onViewChange: (view: ViewMode) => void;
   onAddFilter?: () => void;
+  filterExpanded?: boolean;
 }) {
   return (
     <div className="flex shrink-0 items-center gap-2 border-b border-[var(--ds-color-border-subtle)] px-4 py-2">
@@ -143,8 +145,17 @@ function EvidenceFilterBar({
       </ToggleGroup>
 
       {/* + Add is an action, not a filter value — kept OUT of the ToggleGroup so
-          it never joins the roving-tabindex set. Inert by default. */}
-      <Button variant="ghost" size="sm" className="shrink-0" onClick={onAddFilter}>
+          it never joins the roving-tabindex set. Inert by default; when a caller
+          passes a filterDrawer it becomes that drawer's disclosure control, which
+          is why it carries aria-expanded/aria-controls only in that case. */}
+      <Button
+        variant="ghost"
+        size="sm"
+        className="shrink-0"
+        onClick={onAddFilter}
+        aria-expanded={filterExpanded}
+        aria-controls={filterExpanded ? "workspace-filter-drawer" : undefined}
+      >
         <Plus />
         Add
       </Button>
@@ -246,6 +257,18 @@ export interface ResultsPanelProps {
   updateMessage?: string | null;
   onDismissUpdate?: () => void;
   onAddFilter?: () => void;
+  /** Expanded filter surface rendered under the filter bar; see the slot note below. */
+  filterDrawer?: React.ReactNode;
+  /**
+   * Set this to turn `+ Add` into the drawer's disclosure control (it then
+   * carries aria-expanded/aria-controls). Leave it undefined — the default —
+   * when `+ Add` is a plain action that opens nothing, so it doesn't advertise a
+   * disclosure state it hasn't got.
+   */
+  filterDrawerExpanded?: boolean;
+  /** Resets every filter the caller owns, not just the evidence pill. Passing it
+   *  also switches the no-matches copy to the filter-agnostic wording. */
+  onClearFilters?: () => void;
   className?: string;
 }
 
@@ -264,6 +287,9 @@ export function ResultsPanel({
   updateMessage,
   onDismissUpdate,
   onAddFilter,
+  filterDrawer,
+  filterDrawerExpanded,
+  onClearFilters,
   className,
 }: ResultsPanelProps) {
   const isEmpty = counts.all === 0;
@@ -316,8 +342,16 @@ export function ResultsPanel({
               view={view}
               onViewChange={onViewChange}
               onAddFilter={onAddFilter}
+              filterExpanded={filterDrawerExpanded}
             />
           )}
+
+          {/* The expanded filter surface `+ Add` reveals. A slot, not a built-in:
+              the panel stays presentational and the caller owns both the drawer's
+              state and the narrowing it applies to `results`. Renders nothing
+              until a caller passes one, so every existing call site is unchanged.
+              See components/hummingbird/filters/. */}
+          {!isEmpty && filterDrawer}
 
           {/* ── Scroll region ────────────────────────────────────────────── */}
           <div className="scrollbar-overlay min-h-0 flex-1 overflow-y-auto p-4">
@@ -327,16 +361,25 @@ export function ResultsPanel({
                 body="Ask Hummingbird a question to populate the workspace."
               />
             ) : noMatches ? (
+              /* Two different empties. Without a drawer, the only thing that can
+                 zero the grid is an evidence pill, so the message names it and
+                 Clear returns to All — and filter==="all" here is unreachable,
+                 since All's visible set IS the full set. A drawer makes it
+                 reachable and makes "No All results yet" a lie, so a caller that
+                 owns extra filters passes onClearFilters and gets the general
+                 wording plus a Clear that actually resets everything. */
               <div className="flex flex-col items-center gap-2 py-10 text-center">
                 <p className="text-sm text-[var(--ds-color-text-subtle)]">
-                  No {FILTER_LABEL[filter]} results yet.
+                  {onClearFilters
+                    ? "No results match these filters."
+                    : `No ${FILTER_LABEL[filter]} results yet.`}
                 </p>
                 <button
                   type="button"
-                  onClick={() => onFilterChange("all")}
+                  onClick={() => (onClearFilters ? onClearFilters() : onFilterChange("all"))}
                   className="rounded-[var(--ds-shape-radius-sm)] text-sm font-medium text-[var(--ds-color-text-link-brand)] underline-offset-2 outline-none hover:underline focus-visible:ring-1 focus-visible:ring-[var(--ds-color-border-focus)]"
                 >
-                  Clear filter
+                  {onClearFilters ? "Clear all filters" : "Clear filter"}
                 </button>
               </div>
             ) : view === "grid" ? (
