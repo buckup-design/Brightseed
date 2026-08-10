@@ -1,0 +1,148 @@
+import FilterCard from "./FilterCard";
+import ScoreFilterCard from "./ScoreFilterCard";
+import Slider from "./Slider";
+import Switch from "./Switch";
+import type { FilterGroup } from "../types";
+import type { FacetSelection } from "../lib/facets";
+import { SCORE_RANGES } from "../lib/scoreFilters";
+
+export interface FilterFacet {
+  group: FilterGroup;
+  selected: FacetSelection;
+  onToggle: (label: string) => void;
+}
+
+export interface ScorePanel {
+  productFormatOptions: string[];
+  productFormat: string;
+  onProductFormatChange: (value: string) => void;
+  requiresNoDeliveryTech: boolean;
+  onRequiresNoDeliveryTechChange: (value: boolean) => void;
+  formulationScore: number;
+  onFormulationScoreChange: (value: number) => void;
+  solubilityScore: number;
+  onSolubilityScoreChange: (value: number) => void;
+  ftoScore: number;
+  onFtoScoreChange: (value: number) => void;
+  patentabilityScore: number;
+  onPatentabilityScoreChange: (value: number) => void;
+  admetScore: number;
+  onAdmetScoreChange: (value: number) => void;
+  noGhsHazard: boolean;
+  onNoGhsHazardChange: (value: boolean) => void;
+  requiresGras: boolean;
+  onRequiresGrasChange: (value: boolean) => void;
+  requiresNonNovel: boolean;
+  onRequiresNonNovelChange: (value: boolean) => void;
+}
+
+interface FilterDrawerProps {
+  facets: FilterFacet[];
+  scorePanel: ScorePanel;
+}
+
+export default function FilterDrawer({ facets, scorePanel }: FilterDrawerProps) {
+  return (
+    <div className="flex flex-col gap-3 bg-white px-4 py-3">
+      <div className="grid grid-cols-3 gap-x-6 gap-y-2">
+        {facets.map((facet) => (
+          <FilterCard
+            key={facet.group.id}
+            group={facet.group}
+            selected={facet.selected}
+            onToggle={facet.onToggle}
+          />
+        ))}
+      </div>
+
+      <hr className="border-border" />
+      <div className="grid grid-cols-3 gap-x-6 gap-y-2">
+        <ScoreFilterCard title="Feasibility">
+          <div className="flex flex-col gap-2">
+            <p className="text-sm font-medium text-foreground">Product format</p>
+            <select
+              value={scorePanel.productFormat}
+              onChange={(event) => scorePanel.onProductFormatChange(event.target.value)}
+              className="h-8 w-full rounded-lg border border-input bg-white px-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-foreground/10"
+            >
+              <option value="">Any</option>
+              {scorePanel.productFormatOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <Switch
+            label="Does not require delivery technology"
+            checked={scorePanel.requiresNoDeliveryTech}
+            onChange={scorePanel.onRequiresNoDeliveryTechChange}
+          />
+
+          <Slider
+            label="Minimum formulation feasibility score"
+            min={SCORE_RANGES.easeOfFormulation.min}
+            max={SCORE_RANGES.easeOfFormulation.max}
+            value={scorePanel.formulationScore}
+            onChange={scorePanel.onFormulationScoreChange}
+          />
+
+          <Slider
+            label="Minimum solubility score"
+            min={SCORE_RANGES.solubility.min}
+            max={SCORE_RANGES.solubility.max}
+            value={scorePanel.solubilityScore}
+            onChange={scorePanel.onSolubilityScoreChange}
+          />
+        </ScoreFilterCard>
+
+        <ScoreFilterCard title="Novelty">
+          <Slider
+            label="Minimum FTO score"
+            min={SCORE_RANGES.fto.min}
+            max={SCORE_RANGES.fto.max}
+            value={scorePanel.ftoScore}
+            onChange={scorePanel.onFtoScoreChange}
+          />
+
+          <Slider
+            label="Minimum patentability score"
+            min={SCORE_RANGES.patentability.min}
+            max={SCORE_RANGES.patentability.max}
+            value={scorePanel.patentabilityScore}
+            onChange={scorePanel.onPatentabilityScoreChange}
+          />
+        </ScoreFilterCard>
+
+        <ScoreFilterCard title="Safety">
+          <Slider
+            label="Minimum ADMET score"
+            min={SCORE_RANGES.admet.min}
+            max={SCORE_RANGES.admet.max}
+            value={scorePanel.admetScore}
+            onChange={scorePanel.onAdmetScoreChange}
+          />
+
+          <Switch
+            label="No GHS hazard code"
+            checked={scorePanel.noGhsHazard}
+            onChange={scorePanel.onNoGhsHazardChange}
+          />
+
+          <Switch
+            label="(US) available in a GRAS source"
+            checked={scorePanel.requiresGras}
+            onChange={scorePanel.onRequiresGrasChange}
+          />
+
+          <Switch
+            label="(EU) available in non-novel food"
+            checked={scorePanel.requiresNonNovel}
+            onChange={scorePanel.onRequiresNonNovelChange}
+          />
+        </ScoreFilterCard>
+      </div>
+    </div>
+  );
+}
