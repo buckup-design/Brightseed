@@ -25,8 +25,6 @@ export default {
         "chart-2": "#98698c",
         "chart-3": "#112458",
         "chart-4": "#648361",
-        // Feasibility/Novelty/Safety slider accent, from Figma.
-        "slider-fill": "#305536",
       },
       borderRadius: {
         xl: "14px",

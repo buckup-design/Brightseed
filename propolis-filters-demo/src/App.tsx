@@ -21,6 +21,7 @@ import {
   SCORE_RANGES,
   buildProductFormatOptions,
   matchesFlag,
+  matchesMaxToxicity,
   matchesMinScore,
   matchesProductFormat,
 } from "./lib/scoreFilters";
@@ -36,7 +37,7 @@ export default function App() {
   const [evidenceType, setEvidenceType] = useState<EvidenceTypeValue>("any");
 
   // Feasibility / Novelty / Safety panel — sliders default to each field's
-  // floor value (no filter applied yet); switches default off.
+  // floor (ANY, no filter applied, dot far left); switches default off.
   const [productFormat, setProductFormat] = useState("");
   const [requiresNoDeliveryTech, setRequiresNoDeliveryTech] = useState(false);
   const [formulationScore, setFormulationScore] = useState(SCORE_RANGES.easeOfFormulation.min);
@@ -113,7 +114,7 @@ export default function App() {
           matchesMinScore(compound, "solubility", solubilityScore) &&
           matchesMinScore(compound, "fto", ftoScore) &&
           matchesMinScore(compound, "patentability", patentabilityScore) &&
-          matchesMinScore(compound, "admet", admetScore) &&
+          matchesMaxToxicity(compound, admetScore) &&
           matchesFlag(compound.ghsHazardCode, noGhsHazard, "no") &&
           matchesFlag(compound.grasSource, requiresGras, "yes") &&
           matchesFlag(compound.nonNovelSource, requiresNonNovel, "yes")

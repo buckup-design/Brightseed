@@ -4,7 +4,14 @@ import Slider from "./Slider";
 import Switch from "./Switch";
 import type { FilterGroup } from "../types";
 import type { FacetSelection } from "../lib/facets";
-import { SCORE_RANGES } from "../lib/scoreFilters";
+import {
+  FEASIBILITY_LABELS,
+  SCORE_RANGES,
+  scoreLabelFormatter,
+  SOLUBILITY_LABELS,
+  THREE_POINT_LABELS,
+  TOXICITY_LABELS,
+} from "../lib/scoreFilters";
 
 export interface FilterFacet {
   group: FilterGroup;
@@ -86,6 +93,7 @@ export default function FilterDrawer({ facets, scorePanel }: FilterDrawerProps) 
             max={SCORE_RANGES.easeOfFormulation.max}
             value={scorePanel.formulationScore}
             onChange={scorePanel.onFormulationScoreChange}
+            formatValue={scoreLabelFormatter(FEASIBILITY_LABELS)}
           />
 
           <Slider
@@ -94,6 +102,7 @@ export default function FilterDrawer({ facets, scorePanel }: FilterDrawerProps) 
             max={SCORE_RANGES.solubility.max}
             value={scorePanel.solubilityScore}
             onChange={scorePanel.onSolubilityScoreChange}
+            formatValue={scoreLabelFormatter(SOLUBILITY_LABELS)}
           />
         </ScoreFilterCard>
 
@@ -104,6 +113,7 @@ export default function FilterDrawer({ facets, scorePanel }: FilterDrawerProps) 
             max={SCORE_RANGES.fto.max}
             value={scorePanel.ftoScore}
             onChange={scorePanel.onFtoScoreChange}
+            formatValue={scoreLabelFormatter(THREE_POINT_LABELS)}
           />
 
           <Slider
@@ -112,16 +122,18 @@ export default function FilterDrawer({ facets, scorePanel }: FilterDrawerProps) 
             max={SCORE_RANGES.patentability.max}
             value={scorePanel.patentabilityScore}
             onChange={scorePanel.onPatentabilityScoreChange}
+            formatValue={scoreLabelFormatter(THREE_POINT_LABELS)}
           />
         </ScoreFilterCard>
 
         <ScoreFilterCard title="Safety">
           <Slider
-            label="Minimum ADMET score"
+            label="Maximum toxicity score"
             min={SCORE_RANGES.admet.min}
             max={SCORE_RANGES.admet.max}
             value={scorePanel.admetScore}
             onChange={scorePanel.onAdmetScoreChange}
+            formatValue={scoreLabelFormatter(TOXICITY_LABELS)}
           />
 
           <Switch
