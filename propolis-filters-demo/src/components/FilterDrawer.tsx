@@ -88,7 +88,7 @@ export default function FilterDrawer({ facets, scorePanel }: FilterDrawerProps) 
           />
 
           <Slider
-            label="Minimum formulation feasibility score"
+            label="Acceptable formulation score"
             min={SCORE_RANGES.easeOfFormulation.min}
             max={SCORE_RANGES.easeOfFormulation.max}
             value={scorePanel.formulationScore}
@@ -128,7 +128,7 @@ export default function FilterDrawer({ facets, scorePanel }: FilterDrawerProps) 
 
         <ScoreFilterCard title="Safety">
           <Slider
-            label="Maximum toxicity score"
+            label="Acceptable toxicity score"
             min={SCORE_RANGES.admet.min}
             max={SCORE_RANGES.admet.max}
             value={scorePanel.admetScore}
