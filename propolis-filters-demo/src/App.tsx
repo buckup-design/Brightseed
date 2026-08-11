@@ -49,8 +49,31 @@ export default function App() {
   const [requiresGras, setRequiresGras] = useState(false);
   const [requiresNonNovel, setRequiresNonNovel] = useState(false);
 
+  // Natural Sources' filter state is local to NaturalSourcesFilterDrawer
+  // (it has no dataset yet to drive filtering from App). Bumping this key
+  // remounts that drawer, which resets its local useState back to defaults —
+  // simplest way to reset a subtree's state without lifting it all up here.
+  const [naturalSourcesResetKey, setNaturalSourcesResetKey] = useState(0);
+
   const toggleFavorite = (id: string) => {
     setFavorites((current) => toggleSetValue(current, id));
+  };
+
+  const resetCompoundFilters = () => {
+    setEvidenceType("any");
+    setSelectedBenefits(null);
+    setSelectedClasses(null);
+    setSelectedTargets(null);
+    setProductFormat("");
+    setRequiresNoDeliveryTech(false);
+    setFormulationScore(SCORE_RANGES.easeOfFormulation.min);
+    setSolubilityScore(SCORE_RANGES.solubility.min);
+    setFtoScore(SCORE_RANGES.fto.min);
+    setPatentabilityScore(SCORE_RANGES.patentability.min);
+    setAdmetScore(SCORE_RANGES.admet.min);
+    setNoGhsHazard(false);
+    setRequiresGras(false);
+    setRequiresNonNovel(false);
   };
 
   const evidenceTypeCounts = useMemo(() => countEvidenceTypes(compounds), []);
@@ -184,6 +207,7 @@ export default function App() {
               <FilterToggleBar
                 visible={filtersVisible}
                 onToggle={() => setFiltersVisible((value) => !value)}
+                onReset={resetCompoundFilters}
               />
 
               <CardGrid
@@ -196,11 +220,12 @@ export default function App() {
             <>
               <FilterToolbar resultCount={resultCount} viewMode={viewMode} onViewModeChange={setViewMode} />
 
-              {filtersVisible && <NaturalSourcesFilterDrawer />}
+              {filtersVisible && <NaturalSourcesFilterDrawer key={naturalSourcesResetKey} />}
 
               <FilterToggleBar
                 visible={filtersVisible}
                 onToggle={() => setFiltersVisible((value) => !value)}
+                onReset={() => setNaturalSourcesResetKey((key) => key + 1)}
               />
 
               {/* No Natural Sources dataset exists yet, so this is always empty for now. */}
