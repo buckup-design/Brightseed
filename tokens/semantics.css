@@ -455,12 +455,16 @@
   --ds-color-surface-chip-neutral:    color-mix(in srgb, black 25%, transparent);
 
   /* Polarity flips: the light grid lines are DARKER than the sand-25 canvas,
-     the dark ones LIGHTER than sand-900. Accents stay darker in both. */
+     the dark ones LIGHTER than sand-900. Accents step TOWARD the content in
+     both themes — darker than the line in light, lighter than it in dark
+     (same primitive as the line, more of it). Becky, Aug 8 2026: the earlier
+     sand-950 accent read as a dent; that was the Figma's own hand-tuned
+     off-ramp value, not the relationship. */
   /* 9% = the Figma's 0.15 stroke alpha folded through its 0.6 group opacity.
      Do not read this as 60% like the light pair — the dark stroke carries its
      own alpha on top of the group's. */
   --ds-color-decor-grid-line:         color-mix(in srgb, var(--p-color-sand-800) 9%, transparent);
-  --ds-color-decor-grid-accent:       color-mix(in srgb, var(--p-color-sand-950) 60%, transparent);
+  --ds-color-decor-grid-accent:       color-mix(in srgb, var(--p-color-sand-800) 25%, transparent);
   --ds-color-decor-art:               color-mix(in srgb, var(--p-color-sand-500) 70%, transparent);
 
   --ds-color-surface-data:            var(--p-color-cyan-950);

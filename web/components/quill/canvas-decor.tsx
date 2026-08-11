@@ -97,18 +97,21 @@ export function CanvasDecor({ className }: { className?: string }) {
         <rect width="100%" height="100%" fill={`url(#${accentId})`} />
       </svg>
 
-      {/* Botanical band — bottom-anchored, bleeding off both edges. The source
-          art is 3041x947 (3.21:1); `100% auto` keeps that ratio and lets the
-          band crop rather than squash on a narrow viewport. */}
+      {/* Botanical band — tucked into the lower LEFT, whole and to scale. The
+          box carries the art's own aspect ratio (3041x947), so the mask always
+          fits it exactly: narrowing the pane scales the art down instead of
+          cropping it (the old 42%-of-pane slice cut the top off at wide
+          windows and ballooned full-bleed). The width cap keeps it a lower-
+          left vignette on wide panes rather than a wall of flowers (Becky,
+          Aug 8 2026: "down and left"). */}
       <div
-        className="absolute inset-x-0 bottom-0 h-[42%] bg-[var(--c-canvas-decor-art)]"
+        className="absolute bottom-0 left-[3%] w-[85%] max-w-[1080px] bg-[var(--c-canvas-decor-art)]"
         style={{
+          aspectRatio: "3041 / 947",
           maskImage: "url(/brand/flora-band.svg)",
           WebkitMaskImage: "url(/brand/flora-band.svg)",
-          maskSize: "100% auto",
-          WebkitMaskSize: "100% auto",
-          maskPosition: "bottom left",
-          WebkitMaskPosition: "bottom left",
+          maskSize: "100% 100%",
+          WebkitMaskSize: "100% 100%",
           maskRepeat: "no-repeat",
           WebkitMaskRepeat: "no-repeat",
         }}
