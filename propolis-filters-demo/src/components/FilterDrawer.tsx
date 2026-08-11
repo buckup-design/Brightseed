@@ -46,9 +46,20 @@ export interface ScorePanel {
 interface FilterDrawerProps {
   facets: FilterFacet[];
   scorePanel: ScorePanel;
+  /**
+   * True when Evidence Type is filtered to "Predicted" — predicted compounds
+   * carry no product-format, delivery-tech, formulation, novelty, or GHS
+   * hazard data, so those controls are inapplicable and disabled rather than
+   * silently ignored. Solubility, toxicity, GRAS, and non-novel-food stay
+   * live since predicted compounds do carry that data.
+   */
+  disabledForPredicted?: boolean;
 }
 
-export default function FilterDrawer({ facets, scorePanel }: FilterDrawerProps) {
+export default function FilterDrawer({ facets, scorePanel, disabledForPredicted }: FilterDrawerProps) {
+  const predictedTitle = disabledForPredicted
+    ? "Not applicable — predicted compounds don't carry this data"
+    : undefined;
   return (
     <div className="flex flex-col gap-3 bg-white px-4 py-3">
       <div className="grid grid-cols-3 gap-x-6 gap-y-2">
@@ -65,12 +76,13 @@ export default function FilterDrawer({ facets, scorePanel }: FilterDrawerProps) 
       <hr className="border-border" />
       <div className="grid grid-cols-3 gap-x-6 gap-y-2">
         <ScoreFilterCard title="Feasibility">
-          <div className="flex flex-col gap-2">
+          <div className={`flex flex-col gap-2 ${disabledForPredicted ? "opacity-50" : ""}`} title={predictedTitle}>
             <p className="text-sm font-medium text-foreground">Product format</p>
             <select
               value={scorePanel.productFormat}
               onChange={(event) => scorePanel.onProductFormatChange(event.target.value)}
-              className="h-8 w-full rounded-lg border border-input bg-white px-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-foreground/10"
+              disabled={disabledForPredicted}
+              className="h-8 w-full rounded-lg border border-input bg-white px-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-foreground/10 disabled:cursor-not-allowed"
             >
               <option value="">Any</option>
               {scorePanel.productFormatOptions.map((option) => (
@@ -81,20 +93,26 @@ export default function FilterDrawer({ facets, scorePanel }: FilterDrawerProps) 
             </select>
           </div>
 
-          <Switch
-            label="Does not require delivery technology"
-            checked={scorePanel.requiresNoDeliveryTech}
-            onChange={scorePanel.onRequiresNoDeliveryTechChange}
-          />
+          <div title={predictedTitle}>
+            <Switch
+              label="Does not require delivery technology"
+              checked={scorePanel.requiresNoDeliveryTech}
+              onChange={scorePanel.onRequiresNoDeliveryTechChange}
+              disabled={disabledForPredicted}
+            />
+          </div>
 
-          <Slider
-            label="Acceptable formulation score"
-            min={SCORE_RANGES.easeOfFormulation.min}
-            max={SCORE_RANGES.easeOfFormulation.max}
-            value={scorePanel.formulationScore}
-            onChange={scorePanel.onFormulationScoreChange}
-            formatValue={scoreLabelFormatter(FEASIBILITY_LABELS)}
-          />
+          <div title={predictedTitle}>
+            <Slider
+              label="Acceptable formulation score"
+              min={SCORE_RANGES.easeOfFormulation.min}
+              max={SCORE_RANGES.easeOfFormulation.max}
+              value={scorePanel.formulationScore}
+              onChange={scorePanel.onFormulationScoreChange}
+              formatValue={scoreLabelFormatter(FEASIBILITY_LABELS)}
+              disabled={disabledForPredicted}
+            />
+          </div>
 
           <Slider
             label="Minimum solubility score"
@@ -107,23 +125,27 @@ export default function FilterDrawer({ facets, scorePanel }: FilterDrawerProps) 
         </ScoreFilterCard>
 
         <ScoreFilterCard title="Novelty">
-          <Slider
-            label="Minimum FTO score"
-            min={SCORE_RANGES.fto.min}
-            max={SCORE_RANGES.fto.max}
-            value={scorePanel.ftoScore}
-            onChange={scorePanel.onFtoScoreChange}
-            formatValue={scoreLabelFormatter(THREE_POINT_LABELS)}
-          />
+          <div className="flex flex-col gap-3" title={predictedTitle}>
+            <Slider
+              label="Minimum FTO score"
+              min={SCORE_RANGES.fto.min}
+              max={SCORE_RANGES.fto.max}
+              value={scorePanel.ftoScore}
+              onChange={scorePanel.onFtoScoreChange}
+              formatValue={scoreLabelFormatter(THREE_POINT_LABELS)}
+              disabled={disabledForPredicted}
+            />
 
-          <Slider
-            label="Minimum patentability score"
-            min={SCORE_RANGES.patentability.min}
-            max={SCORE_RANGES.patentability.max}
-            value={scorePanel.patentabilityScore}
-            onChange={scorePanel.onPatentabilityScoreChange}
-            formatValue={scoreLabelFormatter(THREE_POINT_LABELS)}
-          />
+            <Slider
+              label="Minimum patentability score"
+              min={SCORE_RANGES.patentability.min}
+              max={SCORE_RANGES.patentability.max}
+              value={scorePanel.patentabilityScore}
+              onChange={scorePanel.onPatentabilityScoreChange}
+              formatValue={scoreLabelFormatter(THREE_POINT_LABELS)}
+              disabled={disabledForPredicted}
+            />
+          </div>
         </ScoreFilterCard>
 
         <ScoreFilterCard title="Safety">
@@ -136,11 +158,14 @@ export default function FilterDrawer({ facets, scorePanel }: FilterDrawerProps) 
             formatValue={scoreLabelFormatter(TOXICITY_LABELS)}
           />
 
-          <Switch
-            label="No GHS hazard code"
-            checked={scorePanel.noGhsHazard}
-            onChange={scorePanel.onNoGhsHazardChange}
-          />
+          <div title={predictedTitle}>
+            <Switch
+              label="No GHS hazard code"
+              checked={scorePanel.noGhsHazard}
+              onChange={scorePanel.onNoGhsHazardChange}
+              disabled={disabledForPredicted}
+            />
+          </div>
 
           <Switch
             label="(US) available in a GRAS source"

@@ -100,6 +100,13 @@ export default function App() {
     onRequiresNonNovelChange: setRequiresNonNovel,
   };
 
+  // Predicted compounds carry no product-format, delivery-tech, formulation,
+  // novelty, or GHS hazard data — those controls are disabled in the drawer
+  // (see FilterDrawer's disabledForPredicted), and the filters they drive are
+  // forced back to their ANY/off default here so a leftover non-default
+  // position from a prior evidence-type selection can't zero out results.
+  const isPredictedOnly = evidenceType === "predicted";
+
   const filteredCompounds = useMemo(
     () =>
       compounds.filter(
@@ -108,19 +115,28 @@ export default function App() {
           matchesAnySelected(compound, selectedBenefits, (c) => c.benefit) &&
           matchesAnySelected(compound, selectedClasses, (c) => c.classification) &&
           matchesAnySelected(compound, selectedTargets, (c) => c.targets) &&
-          matchesProductFormat(compound, productFormat) &&
-          matchesFlag(compound.requiresDeliveryTechnology, requiresNoDeliveryTech, "no") &&
-          matchesMinScore(compound, "easeOfFormulation", formulationScore) &&
+          matchesProductFormat(compound, isPredictedOnly ? "" : productFormat) &&
+          matchesFlag(compound.requiresDeliveryTechnology, isPredictedOnly ? false : requiresNoDeliveryTech, "no") &&
+          matchesMinScore(
+            compound,
+            "easeOfFormulation",
+            isPredictedOnly ? SCORE_RANGES.easeOfFormulation.min : formulationScore
+          ) &&
           matchesMinScore(compound, "solubility", solubilityScore) &&
-          matchesMinScore(compound, "fto", ftoScore) &&
-          matchesMinScore(compound, "patentability", patentabilityScore) &&
+          matchesMinScore(compound, "fto", isPredictedOnly ? SCORE_RANGES.fto.min : ftoScore) &&
+          matchesMinScore(
+            compound,
+            "patentability",
+            isPredictedOnly ? SCORE_RANGES.patentability.min : patentabilityScore
+          ) &&
           matchesMaxToxicity(compound, admetScore) &&
-          matchesFlag(compound.ghsHazardCode, noGhsHazard, "no") &&
+          matchesFlag(compound.ghsHazardCode, isPredictedOnly ? false : noGhsHazard, "no") &&
           matchesFlag(compound.grasSource, requiresGras, "yes") &&
           matchesFlag(compound.nonNovelSource, requiresNonNovel, "yes")
       ),
     [
       evidenceType,
+      isPredictedOnly,
       selectedBenefits,
       selectedClasses,
       selectedTargets,
@@ -161,7 +177,9 @@ export default function App() {
                 onViewModeChange={setViewMode}
               />
 
-              {filtersVisible && <FilterDrawer facets={facets} scorePanel={scorePanel} />}
+              {filtersVisible && (
+                <FilterDrawer facets={facets} scorePanel={scorePanel} disabledForPredicted={isPredictedOnly} />
+              )}
 
               <FilterToggleBar
                 visible={filtersVisible}

@@ -6,13 +6,14 @@ interface SliderProps {
   onChange: (value: number) => void;
   /** Overrides the default "{value} / {max}" readout, e.g. for LOW/MEDIUM/HIGH-style scales. */
   formatValue?: (value: number, max: number) => string;
+  disabled?: boolean;
 }
 
-export default function Slider({ label, min, max, value, onChange, formatValue }: SliderProps) {
+export default function Slider({ label, min, max, value, onChange, formatValue, disabled }: SliderProps) {
   const percent = max > min ? ((value - min) / (max - min)) * 100 : 0;
 
   return (
-    <div className="flex w-full flex-col gap-2">
+    <div className={`flex w-full flex-col gap-2 ${disabled ? "opacity-50" : ""}`}>
       <div className="flex items-baseline justify-between gap-2">
         <p className="text-sm font-medium text-foreground">{label}</p>
         <p className="shrink-0 text-sm text-foreground">
@@ -26,8 +27,9 @@ export default function Slider({ label, min, max, value, onChange, formatValue }
         step={1}
         value={value}
         onChange={(event) => onChange(Number(event.target.value))}
+        disabled={disabled}
         style={{ "--range-progress": `${percent}%` } as React.CSSProperties}
-        className="range-slider h-1 w-full cursor-pointer rounded-full"
+        className="range-slider h-1 w-full cursor-pointer rounded-full disabled:cursor-not-allowed"
       />
     </div>
   );
