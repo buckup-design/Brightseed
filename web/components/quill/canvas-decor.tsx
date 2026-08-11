@@ -97,17 +97,20 @@ export function CanvasDecor({ className }: { className?: string }) {
         <rect width="100%" height="100%" fill={`url(#${accentId})`} />
       </svg>
 
-      {/* Botanical band — tucked into the lower LEFT, whole and to scale. The
-          box carries the art's own aspect ratio (3041x947), so the mask always
-          fits it exactly: narrowing the pane scales the art down instead of
-          cropping it (the old 42%-of-pane slice cut the top off at wide
-          windows and ballooned full-bleed). The width cap keeps it a lower-
-          left vignette on wide panes rather than a wall of flowers (Becky,
-          Aug 8 2026: "down and left"). */}
+      {/* Botanical band — the Figma mock's composition, solved exactly
+          (Collab Playground 142:4922, rect 142:4967): the art box rides its
+          own aspect ratio at 101.3% of pane width, tips 6.73° clockwise, and
+          bleeds off the lower-left — 180px left / 143px below on the 1200px
+          reference pane, which the translate percentages reproduce at every
+          size. The wrapper's overflow-hidden does the cropping, so nothing is
+          ever cut arbitrarily: the whole composition just scales with the
+          pane. translate is listed before rotate so the shift stays on
+          parent-aligned axes; percentages resolve against the box itself. */}
       <div
-        className="absolute bottom-0 left-[3%] w-[85%] max-w-[1080px] bg-[var(--c-canvas-decor-art)]"
+        className="absolute bottom-0 left-0 w-[101.3%] bg-[var(--c-canvas-decor-art)]"
         style={{
           aspectRatio: "3041 / 947",
+          transform: "translate(-13.3%, 19.3%) rotate(6.73deg)",
           maskImage: "url(/brand/flora-band.svg)",
           WebkitMaskImage: "url(/brand/flora-band.svg)",
           maskSize: "100% 100%",

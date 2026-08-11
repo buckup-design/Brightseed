@@ -465,7 +465,10 @@
      own alpha on top of the group's. */
   --ds-color-decor-grid-line:         color-mix(in srgb, var(--p-color-sand-800) 9%, transparent);
   --ds-color-decor-grid-accent:       color-mix(in srgb, var(--p-color-sand-800) 25%, transparent);
-  --ds-color-decor-art:               color-mix(in srgb, var(--p-color-sand-500) 70%, transparent);
+  /* Full black, per the mock (142:4922) — the art recedes BELOW the ground in
+     dark, mirroring light where it is darker than the light ground. Becky,
+     Aug 8 2026: "full black 000000". */
+  --ds-color-decor-art:               var(--p-color-black);
 
   --ds-color-surface-data:            var(--p-color-cyan-950);
   --ds-color-surface-selected:        var(--p-color-blue-950);
