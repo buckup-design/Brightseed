@@ -51,7 +51,11 @@ export function CanvasDecor({ className }: { className?: string }) {
     <div
       aria-hidden="true"
       className={cn(
-        "pointer-events-none absolute inset-0 overflow-hidden print:hidden",
+        // -inset-6 counters the canvas pane's p-6 (app shell inset + the New
+        // chat story decorator), so the decor box IS the pane: the grid runs
+        // edge-to-edge and the band's Figma solve — percentages computed
+        // against the pane — crops at the pane edge, not the padding edge.
+        "pointer-events-none absolute -inset-6 overflow-hidden print:hidden",
         className
       )}
     >
