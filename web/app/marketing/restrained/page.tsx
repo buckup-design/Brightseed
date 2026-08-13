@@ -53,10 +53,12 @@ const SKIN = {
   "--mk-muted": "var(--p-color-sand-700)",
   "--mk-dot-active": "#476549",
   "--mk-dot": "#d3d1c6",
-  // Quill grid port (quill-grid.tsx) — sand-200 / sand-500 bases. Hero keeps
-  // these; cards + demo use the much-fainter -subtle pair below.
-  "--mk-grid-line": "rgba(234,232,223,0.5)",
-  "--mk-grid-accent": "rgba(174,171,158,0.3)",
+  // Quill grid port (quill-grid.tsx) — sand-200 / sand-500 bases. Hero-only
+  // now; cards + demo use the much-fainter -subtle pair below. Value is the
+  // exact midpoint between the original 0.5/0.3 and -subtle's 0.15/0.08 —
+  // the hero gets half the contrast cut the other surfaces got.
+  "--mk-grid-line": "rgba(234,232,223,0.325)",
+  "--mk-grid-accent": "rgba(174,171,158,0.19)",
   "--mk-grid-line-subtle": "rgba(234,232,223,0.15)",
   "--mk-grid-accent-subtle": "rgba(174,171,158,0.08)",
   // Shared footer contract
@@ -161,7 +163,10 @@ export default function RestrainedPage() {
       </section>
 
       {/* ── Testimonials — split spotlight ─────────────────────────────────── */}
-      <section className="mx-auto max-w-6xl px-6 pb-20">
+      {/* pt-16 is this section's own gap above the cards, on top of Industries'
+          py-20 bottom padding — widening it here rather than touching
+          Industries keeps the hero-to-cards spacing untouched. */}
+      <section className="mx-auto max-w-6xl px-6 pt-16 pb-20">
         <div className="grid gap-10 lg:grid-cols-[1fr_2fr] lg:gap-16">
           <div>
             <Eyebrow className="text-[var(--mk-quote)]">{testimonialsLabel}</Eyebrow>
