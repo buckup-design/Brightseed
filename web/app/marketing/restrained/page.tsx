@@ -6,13 +6,15 @@ import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 import { Button } from "@/components/ui/button";
 import { IndustryIcon } from "../_components/industry-icons";
 import { UiScreenshot } from "../_components/ui-screenshot";
-import { TestimonialCarousel } from "../_components/testimonial-carousel";
+import { TestimonialSpotlight } from "../_components/testimonial-spotlight";
 import { SiteFooter } from "../_components/site-footer";
+import { QuillGrid } from "../_components/quill-grid";
 import {
   hero,
   industries,
   industriesLabel,
   testimonialsLabel,
+  testimonialsHeadline,
   carouselTestimonials,
   requestDemo,
 } from "../content";
@@ -42,6 +44,7 @@ const SKIN = {
   "--mk-wordmark": "var(--p-color-forest-900)",
   "--mk-label": "#545454",
   "--mk-industry-icon": "#AEAB9E",
+  "--mk-industry-icon-hover": "#476549",
   "--mk-industry-name": "#46453f",
   "--mk-industry-body": "var(--p-color-sand-700)",
   "--mk-emphasis": "#8f9d35",
@@ -49,23 +52,16 @@ const SKIN = {
   "--mk-muted": "var(--p-color-sand-700)",
   "--mk-dot-active": "#476549",
   "--mk-dot": "#d3d1c6",
+  // Quill grid port (quill-grid.tsx) — sand-200 / sand-500 bases; alphas tuned
+  // live against the Storybook app-shell canvas.
+  "--mk-grid-line": "rgba(234,232,223,0.5)",
+  "--mk-grid-accent": "rgba(174,171,158,0.3)",
   // Shared footer contract
   "--mk-footer-surface": "#ffffff",
   "--mk-footer-border": "var(--p-color-sand-300)",
   "--mk-text": "var(--p-color-sand-900)",
   "--mk-brand": "var(--p-color-forest-900)",
 } as CSSProperties;
-
-/** Client-supplied dashed sage grid (SVG): grid-large = hero/CTA, grid-square = cards. */
-function GridOverlay({ src, className = "" }: { src: string; className?: string }) {
-  return (
-    <div
-      aria-hidden
-      className={`pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat ${className}`}
-      style={{ backgroundImage: `url('${src}')` }}
-    />
-  );
-}
 
 // Restrained reorders Nutrition ahead of Personal Care (mock order).
 const RESTRAINED_ORDER = ["food", "nutrition", "personal", "pharma"];
@@ -99,7 +95,7 @@ export default function RestrainedPage() {
       <section className="relative overflow-hidden">
         {/* inset-0 (no fixed height) so the grid fills the section to its bottom
             edge, where the Industries section crops the hero shot. */}
-        <GridOverlay src="/marketing/grid-large.svg" className="-z-0" />
+        <QuillGrid className="-z-0" />
         <div className="relative mx-auto max-w-6xl px-6 pt-16 text-center sm:pt-20">
           <Eyebrow className="text-[var(--mk-eyebrow)]">{hero.eyebrow}</Eyebrow>
           <h1 className="mt-5 font-semibold leading-[0.9] tracking-[-0.03em] text-[var(--mk-wordmark)] text-[clamp(3.5rem,9vw,7rem)]">
@@ -112,19 +108,21 @@ export default function RestrainedPage() {
             </Button>
           </div>
           {/* Cropped interface frame (Figma clips it wide + short); the big
-              wordmark above is the hero's, so the shot has none. The PNG carries
-              its own rounded corners + stroke, so we DON'T re-clip it (that
-              sliced the stroke at the corners) — the shadow is a drop-shadow
-              filter that hugs the rounded alpha. The negative bottom margin
-              bleeds the shot past the section box so the hero's overflow-hidden
-              crops it to a straight bottom edge under the Industries section;
-              only the top corners stay rounded. */}
-          <div className="mx-auto mt-14 -mb-12 w-full max-w-5xl">
+              wordmark above is the hero's, so the shot has none. The capture is a raw
+              square-cornered PNG (unlike the old art, which baked rounded corners +
+              a 1px stroke into its alpha), so the WRAPPER owns the framing: top-only
+              20px rounding + overflow-hidden + a sand-300 hairline, with a
+              box-shadow replacing the old drop-shadow filter (which only worked by
+              hugging the baked alpha). The negative bottom margin still bleeds the
+              shot past the section box so the hero's overflow-hidden crops it to a
+              straight bottom edge under the Industries section; only the top corners
+              stay rounded. */}
+          <div className="mx-auto mt-14 -mb-12 w-full max-w-5xl overflow-hidden rounded-t-[20px] border border-[var(--p-color-sand-300)] shadow-[0_22px_40px_rgba(53,56,38,0.35)]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/marketing/hero-restrained.png"
+              src="/marketing/hero-restrained-quill.png"
               alt="Hummingbird interface"
-              className="block w-full drop-shadow-[0_22px_40px_rgba(53,56,38,0.35)]"
+              className="block w-full"
             />
           </div>
         </div>
@@ -140,48 +138,50 @@ export default function RestrainedPage() {
           {restrainedIndustries.map((it) => (
             <div
               key={it.key}
-              className="relative flex min-h-[17rem] flex-col overflow-hidden rounded-2xl border border-[var(--p-color-sand-200)] bg-[var(--p-color-sand-50)] p-7"
+              className="group relative flex min-h-[17rem] flex-col overflow-hidden rounded-2xl border border-[var(--p-color-sand-200)] bg-[var(--p-color-sand-50)] p-7 transition-shadow duration-200 ease-out hover:shadow-[0_8px_28px_rgba(53,56,38,0.14)] motion-reduce:transition-none"
             >
-              <GridOverlay src="/marketing/grid-square.svg" />
-              <IndustryIcon
-                name={it.icon}
-                className={`relative size-14 text-[var(--mk-industry-icon)] ${it.icon === "carrot" ? "-scale-x-100" : ""}`}
-              />
-              <h3 className="relative mt-auto pt-14 font-mono text-[18px] font-bold text-[var(--mk-industry-name)]">
-                {it.name}
-              </h3>
-              <p className="relative mt-2 text-sm leading-relaxed text-[var(--mk-industry-body)]">{it.blurb}</p>
+              <QuillGrid />
+              {/* Inner wrapper zooms as one unit on hover; the grid stays static outside it. */}
+              <div className="relative flex flex-1 flex-col transition-transform duration-200 ease-out group-hover:scale-[1.02] motion-reduce:transition-none">
+                <IndustryIcon
+                  name={it.icon}
+                  className={`size-14 text-[var(--mk-industry-icon)] transition-colors duration-200 ease-out group-hover:text-[var(--mk-industry-icon-hover)] motion-reduce:transition-none ${it.icon === "carrot" ? "-scale-x-100" : ""}`}
+                />
+                <h3 className="mt-auto pt-14 font-mono text-[18px] font-bold text-[var(--mk-industry-name)]">
+                  {it.name}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--mk-industry-body)]">{it.blurb}</p>
+              </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ── Testimonials ────────────────────────────────────────────────── */}
-      <section className="mx-auto max-w-6xl px-6 pb-8">
-        <Eyebrow className="text-[var(--mk-quote)]">{testimonialsLabel}</Eyebrow>
-        <div className="mt-8 max-w-3xl">
-          <TestimonialCarousel
-            items={carouselTestimonials}
-            quoteClassName="text-3xl font-medium leading-[1.25] tracking-tight text-[var(--mk-quote)] sm:text-4xl"
-            roleClassName="mt-8 text-sm text-[var(--mk-muted)]"
-            dotActiveClassName="bg-[var(--mk-dot-active)]"
-            dotClassName="bg-[var(--mk-dot)] hover:bg-[var(--mk-dot-active)]/50"
-          />
+      {/* ── Testimonials — split spotlight ─────────────────────────────────── */}
+      <section className="mx-auto max-w-6xl px-6 pb-20">
+        <div className="grid gap-10 lg:grid-cols-[1fr_2fr] lg:gap-16">
+          <div>
+            <Eyebrow className="text-[var(--mk-quote)]">{testimonialsLabel}</Eyebrow>
+            <h2 className="mt-5 text-3xl font-semibold tracking-tight text-[var(--mk-quote)] sm:text-4xl">
+              {testimonialsHeadline}
+            </h2>
+          </div>
+          <TestimonialSpotlight items={carouselTestimonials} />
         </div>
       </section>
       </div>
 
       {/* ── Request a Demo ──────────────────────────────────────────────── */}
-      {/* Full-width bleed section (sand + dashed grid span the page); the content
+      {/* Full-width bleed section (sand + grid span the page); the content
           sits in a centered max-w-6xl grid — screenshot left, copy right — so
           the copy keeps a readable measure. (The old calc-padding trick squeezed
           it to one word per line on wide screens.) Stacks below xl so the
           single-line Tiempos emphasis always has room. */}
       <section className="relative overflow-hidden bg-[var(--p-color-sand-50)]">
-        <GridOverlay src="/marketing/grid-large.svg" />
+        <QuillGrid />
         <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 py-16 md:gap-14 md:py-24 xl:grid-cols-2 xl:gap-16">
           <UiScreenshot
-            src="/marketing/demo-restrained.png"
+            src="/marketing/demo-restrained-quill.png"
             label="UI Screenshot hero"
             className="aspect-[1136/716] w-full rounded-xl"
           />

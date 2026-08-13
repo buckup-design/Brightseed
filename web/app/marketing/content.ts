@@ -34,6 +34,10 @@ export const hero = {
 export type Testimonial = {
   quote: string;
   role: string;
+  /** Exact substring of `quote` set in Tiempos italic by the Restrained
+   *  spotlight (rendered plain if absent/not found). Other concepts ignore
+   *  it. PLACEHOLDER for Becky — provisional picks, confirm per quote. */
+  emphasis?: string;
 };
 
 // Exact copy from Figma node 2015:900 ("exact testimonials"): quote + role
@@ -44,16 +48,19 @@ export const testimonials: Testimonial[] = [
     quote:
       "What makes this useful is having the rationale, biomarkers, dose guidance, and supporting evidence tied together in one place.",
     role: "Director of Discovery, Supplement Manufacturing",
+    emphasis: "tied together in one place",
   },
   {
     quote:
       "The ability to start with a natural-language question and quickly get to a credible shortlist is powerful.",
     role: "R&D Lead, Multinational Food & Beverage",
+    emphasis: "quickly get to a credible shortlist",
   },
   {
     quote:
       "The value isn't another chatbot. It's something more evidence-based, more specific, and more useful for real scientific decisions.",
     role: "VP, Consulting & Innovation",
+    emphasis: "real scientific decisions",
   },
   {
     quote:
@@ -107,6 +114,9 @@ export const industries: Industry[] = [
 
 // ── Testimonials carousel label + Request-a-Demo block ────────────────────────
 export const testimonialsLabel = "Customer Stories";
+
+// Restrained spotlight left-column headline. PLACEHOLDER for Becky.
+export const testimonialsHeadline = "What scientific teams are saying";
 
 // Carousel shows 3 unique quotes (content.ts has 4; #1 and #4 are duplicates in
 // the Figma source, so we drop the trailing dupe).
