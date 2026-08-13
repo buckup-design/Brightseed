@@ -170,7 +170,9 @@ export default function RestrainedPage() {
         <div className="grid gap-10 lg:grid-cols-[1fr_2fr] lg:gap-16">
           <div>
             <Eyebrow className="text-[var(--mk-quote)]">{testimonialsLabel}</Eyebrow>
-            <h2 className="mt-5 text-3xl font-semibold tracking-tight text-[var(--mk-quote)] sm:text-4xl">
+            {/* Same size/treatment as the demo block's lead (below): no
+                font-semibold/tracking-tight, leading-snug, sand-900. */}
+            <h2 className="mt-5 text-3xl leading-snug text-[var(--p-color-sand-900)] sm:text-4xl">
               {testimonialsHeadline}
             </h2>
           </div>

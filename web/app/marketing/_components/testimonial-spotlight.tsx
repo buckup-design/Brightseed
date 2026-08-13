@@ -58,17 +58,23 @@ export function TestimonialSpotlight({
 
   return (
     <div onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
-      {/* keyed so the fade replays on each change. min-h reserves exactly 4
-          lines (leading-[1.25] × font-size, per breakpoint) so the block's
-          height never changes across quotes — the sections below it,
-          including Request a Demo, hold a fixed position regardless of
-          which quote is showing. Role still flows immediately after
-          whatever text actually renders, so short quotes don't gain an
-          artificial gap — only the reserved box height is fixed, not the
-          text's position within it. */}
+      {/* keyed so the fade replays on each change. min-h reserves the tallest
+          of the 3 actual quotes at each breakpoint (measured directly, not a
+          clean "N lines" formula — a bigger font wraps the SAME text to a
+          DIFFERENT line count depending on the column width available at
+          each breakpoint, so the two don't scale together). Mobile's narrow
+          column against this font size needs 10 lines (37.5rem); the wider
+          sm+ two-column layout only needs 5 (23.4375rem). This keeps the
+          block's height constant across quotes so Request a Demo and
+          everything below it holds a fixed position — re-measure both
+          values (temporarily zero min-height, swap in each quote, read
+          getBoundingClientRect().height) if the quotes or text size change.
+          Role still flows immediately after whatever text actually renders,
+          so short quotes don't gain an artificial gap — only the reserved
+          box height is fixed, not the text's position within it. */}
       <blockquote
         key={index}
-        className="min-h-[9.375rem] animate-in fade-in duration-700 text-3xl font-medium leading-[1.25] tracking-tight text-[var(--mk-quote)] sm:min-h-[11.25rem] sm:text-4xl"
+        className="min-h-[37.5rem] animate-in fade-in duration-700 text-5xl font-medium leading-[1.25] tracking-tight text-[var(--mk-quote)] sm:min-h-[23.4375rem] sm:text-6xl"
       >
         {"“"}
         <EmphasizedQuote quote={current.quote} emphasis={current.emphasis} />
