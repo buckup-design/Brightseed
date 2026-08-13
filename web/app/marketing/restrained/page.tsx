@@ -44,7 +44,8 @@ const SKIN = {
   "--mk-wordmark": "var(--p-color-forest-900)",
   "--mk-label": "#545454",
   "--mk-industry-icon": "#AEAB9E",
-  "--mk-industry-icon-hover": "#476549",
+  // Matches the demo block's Tiempos emphasis green — one olive across the page.
+  "--mk-industry-icon-hover": "var(--mk-emphasis)",
   "--mk-industry-name": "#46453f",
   "--mk-industry-body": "var(--p-color-sand-700)",
   "--mk-emphasis": "#8f9d35",
@@ -52,10 +53,12 @@ const SKIN = {
   "--mk-muted": "var(--p-color-sand-700)",
   "--mk-dot-active": "#476549",
   "--mk-dot": "#d3d1c6",
-  // Quill grid port (quill-grid.tsx) — sand-200 / sand-500 bases; alphas tuned
-  // live against the Storybook app-shell canvas.
+  // Quill grid port (quill-grid.tsx) — sand-200 / sand-500 bases. Hero keeps
+  // these; cards + demo use the much-fainter -subtle pair below.
   "--mk-grid-line": "rgba(234,232,223,0.5)",
   "--mk-grid-accent": "rgba(174,171,158,0.3)",
+  "--mk-grid-line-subtle": "rgba(234,232,223,0.15)",
+  "--mk-grid-accent-subtle": "rgba(174,171,158,0.08)",
   // Shared footer contract
   "--mk-footer-surface": "#ffffff",
   "--mk-footer-border": "var(--p-color-sand-300)",
@@ -140,7 +143,7 @@ export default function RestrainedPage() {
               key={it.key}
               className="group relative flex min-h-[17rem] flex-col overflow-hidden rounded-2xl border border-[var(--p-color-sand-200)] bg-[var(--p-color-sand-50)] p-7 transition-shadow duration-200 ease-out hover:shadow-[0_8px_28px_rgba(53,56,38,0.14)] motion-reduce:transition-none"
             >
-              <QuillGrid />
+              <QuillGrid lineColor="var(--mk-grid-line-subtle)" accentColor="var(--mk-grid-accent-subtle)" />
               {/* Inner wrapper zooms as one unit on hover; the grid stays static outside it. */}
               <div className="relative flex flex-1 flex-col transition-transform duration-200 ease-out group-hover:scale-[1.02] motion-reduce:transition-none">
                 <IndustryIcon
@@ -178,7 +181,7 @@ export default function RestrainedPage() {
           it to one word per line on wide screens.) Stacks below xl so the
           single-line Tiempos emphasis always has room. */}
       <section className="relative overflow-hidden bg-[var(--p-color-sand-50)]">
-        <QuillGrid />
+        <QuillGrid lineColor="var(--mk-grid-line-subtle)" accentColor="var(--mk-grid-accent-subtle)" />
         <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 py-16 md:gap-14 md:py-24 xl:grid-cols-2 xl:gap-16">
           <UiScreenshot
             src="/marketing/demo-restrained-quill.png"
