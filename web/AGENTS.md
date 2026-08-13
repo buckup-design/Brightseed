@@ -31,5 +31,10 @@ widens the file watcher to the whole parent tree and OOMs the machine. See
   won't generate arbitrary values (`h-[320px]`, `bg-[var(--c-*)]`) from files
   created after the server started, so layouts silently collapse. The tell is
   tokens resolving fine while the classes are missing.
+  - Under `next dev` a restart may not be enough: brand-new arbitrary classes
+    added to an *already-tracked* file can stay absent from the compiled CSS
+    across a full process restart (grep the served CSS for the literal class
+    string to confirm). Then `rm -rf .next` — the whole directory, no need to be
+    surgical about `.next/cache` — and restart again.
 - **Geist comes from the `geist` npm package,** not `next/font/google`, which is
   blocked in-sandbox.
