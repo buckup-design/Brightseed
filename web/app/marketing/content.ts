@@ -115,8 +115,8 @@ export const industries: Industry[] = [
 // ── Testimonials carousel label + Request-a-Demo block ────────────────────────
 export const testimonialsLabel = "Customer Stories";
 
-// Restrained spotlight left-column headline. PLACEHOLDER for Becky.
-export const testimonialsHeadline = "What scientific teams are saying";
+// Restrained spotlight left-column headline.
+export const testimonialsHeadline = "Scientific rigor at startup speed";
 
 // Carousel shows 3 unique quotes (content.ts has 4; #1 and #4 are duplicates in
 // the Figma source, so we drop the trailing dupe).

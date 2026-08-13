@@ -40,7 +40,8 @@ export function SiteFooter() {
         <div className="grid gap-12 lg:grid-cols-[1fr_auto_auto]">
           {/* Signup */}
           <div>
-            <BrightseedLogo variant="lockup" className="h-6 text-[var(--mk-text)]" />
+            {/* h-9 = 1.5x the original h-6 (24px → 36px). */}
+            <BrightseedLogo variant="lockup" className="h-9 text-[var(--mk-text)]" />
             <h3 className="mt-8 text-2xl font-semibold tracking-tight text-[var(--mk-text)]">
               {footer.signup.heading}
             </h3>

@@ -58,10 +58,17 @@ export function TestimonialSpotlight({
 
   return (
     <div onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
-      {/* keyed so the fade replays on each change */}
+      {/* keyed so the fade replays on each change. min-h reserves exactly 4
+          lines (leading-[1.25] × font-size, per breakpoint) so the block's
+          height never changes across quotes — the sections below it,
+          including Request a Demo, hold a fixed position regardless of
+          which quote is showing. Role still flows immediately after
+          whatever text actually renders, so short quotes don't gain an
+          artificial gap — only the reserved box height is fixed, not the
+          text's position within it. */}
       <blockquote
         key={index}
-        className="animate-in fade-in duration-700 text-3xl font-medium leading-[1.25] tracking-tight text-[var(--mk-quote)] sm:text-4xl"
+        className="min-h-[9.375rem] animate-in fade-in duration-700 text-3xl font-medium leading-[1.25] tracking-tight text-[var(--mk-quote)] sm:min-h-[11.25rem] sm:text-4xl"
       >
         {"“"}
         <EmphasizedQuote quote={current.quote} emphasis={current.emphasis} />
