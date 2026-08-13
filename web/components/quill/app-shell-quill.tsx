@@ -165,7 +165,9 @@ export function AppShellQuill({
     <SidebarProvider>
       <Sidebar>
         <SidebarHeader>
-          <BrightseedLogo variant="tile" className="size-8 shrink-0" />
+          {/* Bare mark, no tile square — the square read too hot on the dark
+           * sidebar (Becky, Aug 13 2026; mock: Collab Playground 142:4874). */}
+          <BrightseedLogo variant="tile-mark" className="size-8 shrink-0" />
           {/* PanelOnly, not a hidden class: the wordmark is absent from the rail
            * DOM rather than clipped inside it. This is the fix for the "B". */}
           <SidebarPanelOnly>

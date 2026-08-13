@@ -53,7 +53,9 @@ export const Mark: Story = {
 /**
  * Tile (added June 7, 2026): app-icon treatment, mark on a pale-lime
  * rounded-square. Canonical = MediaAsset.svg / Figma `Sidebar / MediaAsset`
- * (Sidebar 07 block header). Used in app-shell / sidebar headers.
+ * (Sidebar 07 block header). App-icon contexts only — the app-shell /
+ * sidebar header uses tile-mark instead (Aug 13, 2026: the square read too
+ * hot on the dark sidebar).
  */
 export const Tile: Story = {
   render: () => (
@@ -61,7 +63,7 @@ export const Tile: Story = {
       <div className="flex flex-col items-center gap-2">
         <BrightseedLogo variant="tile" className="h-8 w-8" />
         <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
-          32px, sidebar header
+          32px, app icon
         </span>
       </div>
       <div className="flex flex-col items-center gap-2">
@@ -72,6 +74,37 @@ export const Tile: Story = {
       </div>
       <div className="flex flex-col items-center gap-2">
         <BrightseedLogo variant="tile" className="h-24 w-24" />
+        <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
+          96px
+        </span>
+      </div>
+    </div>
+  ),
+};
+
+/**
+ * Tile-mark (added Aug 13, 2026): the tile's mark without the rounded
+ * square — same tighter 32×32 geometry, no plinth. The app-shell / sidebar
+ * header treatment in both light and dark mode (theme-invariant brand
+ * colors, per Collab Playground 142:4874).
+ */
+export const TileMark: Story = {
+  render: () => (
+    <div className="flex items-end gap-12">
+      <div className="flex flex-col items-center gap-2">
+        <BrightseedLogo variant="tile-mark" className="h-8 w-8" />
+        <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
+          32px, sidebar header
+        </span>
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <BrightseedLogo variant="tile-mark" className="h-16 w-16" />
+        <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
+          64px
+        </span>
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <BrightseedLogo variant="tile-mark" className="h-24 w-24" />
         <span className="font-mono text-xs text-[var(--ds-color-text-subtle)]">
           96px
         </span>

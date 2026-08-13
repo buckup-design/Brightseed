@@ -78,7 +78,7 @@ function DemoNav() {
   return (
     <Sidebar>
       <SidebarHeader>
-        <BrightseedLogo variant="tile" className="size-8 shrink-0" />
+        <BrightseedLogo variant="tile-mark" className="size-8 shrink-0" />
         <SidebarPanelOnly>
           <span className="ml-2 truncate text-sm font-medium text-[var(--c-sidebar-text-muted)]">
             Brightseed
