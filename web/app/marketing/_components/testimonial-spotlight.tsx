@@ -9,10 +9,11 @@ import type { Testimonial } from "../content";
  * Restrained-only "split spotlight" quote rotator — right column of the
  * Customer Stories section (the page owns the left headline column). One
  * quote at a time with the carousel's keyed fade, a per-quote emphasized
- * phrase in Tiempos italic, role-only attribution, and circular prev/next
- * arrows. Auto-advances every 6s on a continuous loop, pausing only on
- * hover — a manual arrow click jumps immediately but never breaks the
- * loop. Bold/Minimal keep testimonial-carousel.
+ * phrase in Tiempos italic, role-only attribution, position pips, and
+ * circular prev/next arrows. Auto-advances every 6s on a continuous loop,
+ * pausing only on hover — a manual arrow or pip click jumps immediately
+ * but never breaks the loop. Bold/Minimal keep testimonial-carousel (whose
+ * --mk-dot/--mk-dot-active tokens the pips below reuse).
  */
 
 /** Defensive emphasis split: plain render when absent or not an exact substring. */
@@ -67,7 +68,22 @@ export function TestimonialSpotlight({
         {"”"}
       </blockquote>
       <div className="mt-4 text-sm text-[var(--mk-muted)]">{current.role}</div>
-      <div className="mt-10 flex gap-3">
+      <div className="mt-4 flex items-center gap-1.5" role="tablist" aria-label="Testimonial navigation">
+        {items.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            role="tab"
+            aria-selected={i === index}
+            aria-label={`Show testimonial ${i + 1} of ${n}`}
+            onClick={() => go(i)}
+            className={`size-1.5 rounded-full transition-colors ${
+              i === index ? "bg-[var(--mk-dot-active)]/80" : "bg-[var(--mk-dot)] hover:bg-[var(--mk-dot-active)]/50"
+            }`}
+          />
+        ))}
+      </div>
+      <div className="mt-6 flex gap-3">
         <button
           type="button"
           aria-label="Previous testimonial"
