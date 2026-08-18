@@ -164,13 +164,21 @@ export default function RestrainedPage() {
           above this plan's scope (no 3xl tier yet). */}
       <section className="relative mx-auto max-w-6xl px-6 py-[clamp(3rem,2rem+4vw,7rem)]">
         <Eyebrow className="text-center text-[var(--mk-label)]">{industriesLabel}</Eyebrow>
-        {/* 1 / 2 / 3 / 4 column ladder: 2-up at 640, a new 3-up tier at 900,
-            4-up at 1024. The old sm-then-lg ladder skipped straight from 2 to
-            4 columns, nearly halving the card at the lg boundary (407px at
+        {/* 1 / 2 / 3 / 4 column ladder: 2-up at 640, a 3-up tier at 900, 4-up
+            at 1180. The old sm-then-lg ladder skipped straight from 2 to 4
+            columns, nearly halving the card at the lg boundary (407px at
             900 down to 222px at 1024). The added 900px tier splits that one
             big drop into two smaller ones.
 
-            All three tiers use arbitrary min-[Npx]: variants, not sm:/lg::
+            4-up moved from 1024 to 1180 (B-1, restrained-responsive-plan.md):
+            at 1024 this tier landed on the exact same pixel as the demo
+            split and the h1 clamp reaching its ceiling, stacking three
+            unrelated layout changes into one 1259px docH collapse. The demo
+            split stays at 1024 (lg:, below); staggering the industries tier
+            to 1180 spreads that into two smaller steps instead of one large
+            one.
+
+            All four tiers use arbitrary min-[Npx]: variants, not sm:/lg::
             Tailwind 4 emits arbitrary-bracket variants as one group, sorted
             among themselves by pixel value, but that whole group lands
             BEFORE the named-breakpoint group in the compiled stylesheet
@@ -181,7 +189,7 @@ export default function RestrainedPage() {
             grepping the compiled CSS for the three rules' byte offsets before
             trusting the layout. Keeping all four tiers in the arbitrary group
             keeps their file order matching their pixel order. */}
-        <div className="mt-10 grid gap-6 min-[640px]:grid-cols-2 min-[900px]:grid-cols-3 min-[1024px]:grid-cols-4">
+        <div className="mt-10 grid gap-6 min-[640px]:grid-cols-2 min-[900px]:grid-cols-3 min-[1180px]:grid-cols-4">
           {restrainedIndustries.map((it) => (
             <div
               key={it.key}
@@ -223,8 +231,23 @@ export default function RestrainedPage() {
             already at its ceiling well before 1120px, so at least the jump
             isn't compounded by the type ALSO changing size at the same
             breakpoint, which is what produced the 153px page-jump in the
-            original F2 measurements. */}
-        <div className="grid gap-10 min-[1120px]:grid-cols-[1fr_2fr] min-[1120px]:gap-16">
+            original F2 measurements.
+
+            Column share is [1fr_3fr], not [1fr_2fr] (B-2): at 2fr the quote
+            column measured 662px post-split against 1056px pre-split, a 37%
+            narrowing that made the block 150px TALLER right at the width
+            meant to give it more room. 3fr puts the post-split column at
+            ~745px and cuts the height jump to +75px (one extra wrapped
+            line instead of two). Measured the line-wrap threshold directly:
+            the quote needs ~900px to hold its pre-split line count, and
+            max-w-6xl only leaves that much room if the headline column
+            is squeezed under 150px (tried 4fr and 6fr, both plateau at the
+            same +75px because both still land under 900px) — not a
+            reasonable trade against the eyebrow + heading staying legible.
+            The remaining 75px is a container-width ceiling, not a ratio
+            problem; the Phase C 3xl shell (max-w-7xl) is what actually buys
+            back the room, see the re-measurement note there. */}
+        <div className="grid gap-10 min-[1120px]:grid-cols-[1fr_3fr] min-[1120px]:gap-16">
           <div>
             <Eyebrow className="text-[var(--mk-quote)]">{testimonialsLabel}</Eyebrow>
             {/* Same size/treatment as the demo block's lead (below): no
