@@ -103,7 +103,13 @@ export default function RestrainedPage() {
         <QuillGrid className="-z-0" />
         <div className="relative mx-auto max-w-6xl px-6 pt-16 text-center sm:pt-20">
           <Eyebrow className="text-[var(--mk-eyebrow)]">{hero.eyebrow}</Eyebrow>
-          <h1 className="mt-5 font-semibold leading-[0.9] tracking-[-0.03em] text-[var(--mk-wordmark)] text-[clamp(3.5rem,9vw,7rem)]">
+          {/* Floor is 2.5rem (40px), not the old 3.5rem: at 3.5rem the wordmark
+              stopped shrinking at 622px viewport while its box kept shrinking
+              below that, clipping "hummingbird™" against the section's
+              overflow-hidden from 622px down to 320px. 2.5rem fits 320px with
+              padding to spare and the 11vw slope reaches 3.5rem again at 509px,
+              so the ramp is continuous instead of flat-then-cliff. */}
+          <h1 className="mt-5 font-semibold leading-[0.9] tracking-[-0.03em] text-[var(--mk-wordmark)] text-[clamp(2.5rem,11vw,7rem)]">
             {hero.product}
             <sup className="align-super text-[0.28em] font-normal">{hero.trademark}</sup>
           </h1>
@@ -203,9 +209,15 @@ export default function RestrainedPage() {
           />
           <div className="flex flex-col justify-center gap-7">
             <p className="text-3xl leading-snug text-[var(--p-color-sand-900)] sm:text-4xl">
+              {/* nowrap only kicks in at 560px+: below that the copy column is
+                  narrower than these spans (up to 337px against a 257px column
+                  at 320), so nowrap forced overflow that the section's
+                  overflow-hidden then clipped. Above 560 the column has room and
+                  nowrap keeps each phrase, and the Tiempos emphasis span, on one
+                  line as intended. */}
               {leadHead}{" "}
-              <span className="whitespace-nowrap">{leadTail}</span>{" "}
-              <span className="whitespace-nowrap font-display italic text-[var(--mk-emphasis)]">{requestDemo.emphasis}</span>
+              <span className="min-[560px]:whitespace-nowrap">{leadTail}</span>{" "}
+              <span className="min-[560px]:whitespace-nowrap font-display italic text-[var(--mk-emphasis)]">{requestDemo.emphasis}</span>
             </p>
             <div>
               <Button size="lg" className="px-6">
