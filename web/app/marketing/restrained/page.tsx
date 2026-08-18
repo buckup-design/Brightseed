@@ -190,10 +190,16 @@ export default function RestrainedPage() {
       <section className="relative overflow-hidden bg-[var(--p-color-sand-50)]">
         <QuillGrid lineColor="var(--mk-grid-line-subtle)" accentColor="var(--mk-grid-accent-subtle)" />
         <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 py-16 md:gap-14 md:py-24 xl:grid-cols-2 xl:gap-16">
+          {/* Frame is deliberately local to this one image, not a system change:
+              the capture's own chrome is sand-50, the exact page background, so
+              with no edge it dissolved into the section. Arbitrary radius +
+              shadow (same idiom as the hero shot above) rather than a radius
+              token, to keep it clearly one-off. 6px instead of rounded-xl's
+              14px — the corners read as a screen, not a pill. */}
           <UiScreenshot
             src="/marketing/demo-restrained-quill.png"
             label="UI Screenshot hero"
-            className="aspect-[1136/716] w-full rounded-xl"
+            className="aspect-[1136/716] w-full rounded-[6px] border border-[var(--p-color-sand-300)] shadow-[0_2px_4px_rgba(53,56,38,0.07),0_18px_38px_rgba(53,56,38,0.20)]"
           />
           <div className="flex flex-col justify-center gap-7">
             <p className="text-3xl leading-snug text-[var(--p-color-sand-900)] sm:text-4xl">
