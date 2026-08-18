@@ -11,14 +11,23 @@ import { useEffect, useRef, useState } from "react";
  * change.
  *
  * Expected drop paths (public/): see each page for the exact filename.
+ *
+ * `mobileSrc` (optional, item 11): art-directs a separate crop below 640px
+ * via a <picture><source media> swap, rather than just scaling `src` down.
+ * The load-detection below still targets the single underlying <img> DOM
+ * node — the browser picks which source resolves into it, but it's the same
+ * element either way, so onLoad/onError and the mount-time complete check
+ * keep working unchanged regardless of which source won.
  */
 export function UiScreenshot({
   src,
+  mobileSrc,
   alt = "Hummingbird interface",
   label = "UI Screenshot",
   className = "",
 }: {
   src?: string;
+  mobileSrc?: string;
   alt?: string;
   label?: string;
   className?: string;
@@ -45,15 +54,18 @@ export function UiScreenshot({
         <span className="text-lg font-medium tracking-tight text-white/95">{label}</span>
       </div>
       {src ? (
-        // eslint-disable-next-line @next/next/no-img-element -- swappable drop-in placeholder, not a build-time asset
-        <img
-          ref={imgRef}
-          src={src}
-          alt={alt}
-          onLoad={() => setLoaded(true)}
-          onError={() => setLoaded(false)}
-          className={`relative z-10 h-full w-full object-cover transition-opacity duration-300 ${loaded ? "opacity-100" : "opacity-0"}`}
-        />
+        <picture>
+          {mobileSrc ? <source media="(max-width: 639px)" srcSet={mobileSrc} /> : null}
+          {/* eslint-disable-next-line @next/next/no-img-element -- swappable drop-in placeholder, not a build-time asset */}
+          <img
+            ref={imgRef}
+            src={src}
+            alt={alt}
+            onLoad={() => setLoaded(true)}
+            onError={() => setLoaded(false)}
+            className={`relative z-10 h-full w-full object-cover transition-opacity duration-300 ${loaded ? "opacity-100" : "opacity-0"}`}
+          />
+        </picture>
       ) : null}
     </div>
   );

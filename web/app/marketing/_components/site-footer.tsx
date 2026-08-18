@@ -36,8 +36,11 @@ export function SiteFooter() {
       {/* Section rhythm: same clamp(3rem, 2rem + 4vw, 7rem) the restrained
           page's sections use, replacing a flat py-16, so the footer scales
           with everything above it instead of staying pinned while the rest
-          of the page's spacing ramps. */}
-      <div className="mx-auto max-w-6xl px-6 py-[clamp(3rem,2rem+4vw,7rem)]">
+          of the page's spacing ramps. 3xl:max-w-7xl + 3xl:py-32 match the
+          shell/rhythm bump the restrained page adds at 1600 (Phase C, item
+          10); harmless on bold/minimal, which never reach the breakpoint's
+          intent but share this component structurally. */}
+      <div className="mx-auto max-w-6xl px-6 py-[clamp(3rem,2rem+4vw,7rem)] 3xl:max-w-7xl 3xl:py-32">
         {/* Signup takes the flexible 1fr (its content is left-aligned, so the
             slack sits to its RIGHT); the two menu columns are content-width and
             hug the right edge of the page. */}

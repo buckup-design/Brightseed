@@ -93,8 +93,19 @@ export default function RestrainedPage() {
             sections' clamps share the same floor breakpoint (400px, where
             `base + slope*vw` first clears the floor) so the system reads as
             one ladder even though the nav's range is much smaller than a
-            section's — see the section clamp below for the full rationale. */}
-        <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-[clamp(0.875rem,0.75rem+0.5vw,1.5rem)]">
+            section's — see the section clamp below for the full rationale.
+
+            3xl:max-w-7xl (Phase C, item 10): the shell was pinned at 1152px
+            (max-w-6xl) with nothing above it, so a 27" display showed a
+            fixed column in a field of sand from 1280 up. 1280px (max-w-7xl)
+            only applies past 1600px (--breakpoint-3xl), so nothing changes
+            below that; the named 3xl variant safely overrides the base
+            max-w-6xl here because there's no arbitrary min-[Npx]: on this
+            same property to lose the cascade race to (see the industries
+            grid comment below for that trap). py-7 at 3xl is one Tailwind
+            step past the clamp's 1.5rem ceiling, matching the section
+            rhythm bump below. */}
+        <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-[clamp(0.875rem,0.75rem+0.5vw,1.5rem)] 3xl:max-w-7xl 3xl:py-7">
           <BrightseedLogo variant="lockup" className="h-6 text-[var(--p-color-forest-900)]" />
           <Button asChild variant="secondary" size="sm" className="rounded-full px-8">
             <Link href="/marketing/restrained/login">{hero.login}</Link>
@@ -112,8 +123,9 @@ export default function RestrainedPage() {
             clamp() as every other section (see the industries section below
             for the full rationale); floor 3rem/48px below ~400px viewport,
             ramping toward 7rem/112px past ~1450px, replacing the old
-            pt-16 sm:pt-20 two-step guess. */}
-        <div className="relative mx-auto max-w-6xl px-6 pt-[clamp(3rem,2rem+4vw,7rem)] text-center">
+            pt-16 sm:pt-20 two-step guess. 3xl:max-w-7xl + 3xl:pt-32 match the
+            shell widening and rhythm bump described on the nav above. */}
+        <div className="relative mx-auto max-w-6xl px-6 pt-[clamp(3rem,2rem+4vw,7rem)] text-center 3xl:max-w-7xl 3xl:pt-32">
           <Eyebrow className="text-[var(--mk-eyebrow)]">{hero.eyebrow}</Eyebrow>
           {/* Floor is 2.5rem (40px), not the old 3.5rem: at 3.5rem the wordmark
               stopped shrinking at 622px viewport while its box kept shrinking
@@ -139,14 +151,29 @@ export default function RestrainedPage() {
               hugging the baked alpha). The negative bottom margin still bleeds the
               shot past the section box so the hero's overflow-hidden crops it to a
               straight bottom edge under the Industries section; only the top corners
-              stay rounded. */}
-          <div className="mx-auto mt-14 -mb-12 w-full max-w-5xl overflow-hidden rounded-t-[20px] border border-[var(--p-color-sand-300)] shadow-[0_22px_40px_rgba(53,56,38,0.35)]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/marketing/hero-restrained-quill.png"
-              alt="Hummingbird interface"
-              className="block w-full"
-            />
+              stay rounded. 3xl:max-w-6xl lets the shot follow the 3xl shell
+              widening at roughly the same proportion it already holds against
+              the 6xl/5xl pair below 1600 (89%). */}
+          <div className="mx-auto mt-14 -mb-12 w-full max-w-5xl overflow-hidden rounded-t-[20px] border border-[var(--p-color-sand-300)] shadow-[0_22px_40px_rgba(53,56,38,0.35)] 3xl:max-w-6xl">
+            {/* Art direction, not just a sizes hint (F9 / item 11): below 640
+                the full 2800px empty-state capture read as illegible noise at
+                phone width, so mobile gets its own crop rather than a scaled-
+                down desktop shot. Recipe (restrained-responsive-plan.md
+                section 7 item 2, Becky Aug 18 2026): cut from this SAME
+                source (sidebar + composer, not the demo section's populated
+                screen, so the two sections don't show the same app twice),
+                trimming the empty right margin and top strip, then downscaled
+                and palette-quantized. 900x481, 71KB against the desktop
+                source's 2800x1342, 506KB. */}
+            <picture>
+              <source media="(max-width: 639px)" srcSet="/marketing/hero-restrained-quill-mobile.png" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/marketing/hero-restrained-quill.png"
+                alt="Hummingbird interface"
+                className="block w-full"
+              />
+            </picture>
           </div>
         </div>
       </section>
@@ -160,9 +187,16 @@ export default function RestrainedPage() {
           per-section guesses (py-20 here, py-16 md:py-24 on demo, a flat
           py-16 on the footer, pt-16 sm:pt-20 on the hero). Floor 48px holds
           below ~400px viewport; the ramp reaches ~109px by 1920 without ever
-          hard-stepping. Rounds to 7rem/112px only past ~2000px, comfortably
-          above this plan's scope (no 3xl tier yet). */}
-      <section className="relative mx-auto max-w-6xl px-6 py-[clamp(3rem,2rem+4vw,7rem)]">
+          hard-stepping, capped at 7rem/112px past ~2000px.
+
+          3xl:max-w-7xl + 3xl:py-32 (Phase C, item 10): the shell was pinned
+          at max-w-6xl with no tier above 1280, so the page stopped growing
+          entirely from 1280 to 2560. 1280px only engages past 1600px
+          (--breakpoint-3xl); py-32/8rem is one Tailwind step past the
+          clamp's own 7rem ceiling, a single modest bump rather than a new
+          ramp, matching "restrained" — the clamp keeps doing the
+          continuous work below 1600, this only raises the ceiling once. */}
+      <section className="relative mx-auto max-w-6xl px-6 py-[clamp(3rem,2rem+4vw,7rem)] 3xl:max-w-7xl 3xl:py-32">
         <Eyebrow className="text-center text-[var(--mk-label)]">{industriesLabel}</Eyebrow>
         {/* 1 / 2 / 3 / 4 column ladder: 2-up at 640, a 3-up tier at 900, 4-up
             at 1180. The old sm-then-lg ladder skipped straight from 2 to 4
@@ -218,8 +252,11 @@ export default function RestrainedPage() {
           avoid touching Industries' padding directly; now that both sections
           share one formula there's nothing special to protect, the gap
           between the last card and the quote is just two adjacent sections'
-          padding, same as anywhere else on the page. */}
-      <section className="mx-auto max-w-6xl px-6 py-[clamp(3rem,2rem+4vw,7rem)]">
+          padding, same as anywhere else on the page. 3xl:max-w-7xl +
+          3xl:py-32 match the Industries shell/rhythm bump above; see the
+          quote-column re-measurement note further down for what the wider
+          shell does for B-2 at this width. */}
+      <section className="mx-auto max-w-6xl px-6 py-[clamp(3rem,2rem+4vw,7rem)] 3xl:max-w-7xl 3xl:py-32">
         {/* Split delayed from lg (1024) to a page-specific min-[1120px]: at
             1024 the quote column dropped from 837px (still single-column, at
             900px viewport) to 598px (freshly split), because a full-width
@@ -271,18 +308,26 @@ export default function RestrainedPage() {
           the min-[560px]: nowrap gate on the span itself, so the section no
           longer needs to hold the whole layout back for it. Section padding
           is the same clamp() every other section uses now, replacing the old
-          py-16 md:py-24 two-step. */}
+          py-16 md:py-24 two-step. 3xl:max-w-7xl + 3xl:py-32 match the shell
+          and rhythm bump used everywhere else on the page. */}
       <section className="relative overflow-hidden bg-[var(--p-color-sand-50)]">
         <QuillGrid lineColor="var(--mk-grid-line-subtle)" accentColor="var(--mk-grid-accent-subtle)" />
-        <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 py-[clamp(3rem,2rem+4vw,7rem)] md:gap-14 lg:grid-cols-2 lg:gap-16">
+        <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 py-[clamp(3rem,2rem+4vw,7rem)] md:gap-14 lg:grid-cols-2 lg:gap-16 3xl:max-w-7xl 3xl:py-32">
           {/* Frame is deliberately local to this one image, not a system change:
               the capture's own chrome is sand-50, the exact page background, so
               with no edge it dissolved into the section. Arbitrary radius +
               shadow (same idiom as the hero shot above) rather than a radius
               token, to keep it clearly one-off. 6px instead of rounded-xl's
-              14px — the corners read as a screen, not a pill. */}
+              14px — the corners read as a screen, not a pill.
+
+              mobileSrc (item 11): full frame, no recomposition — this is
+              already what the section shows below lg, so the mobile asset is
+              just a downscale + byte optimization (720x450, 45KB against the
+              desktop source's 1440x900, 140KB), not a different crop like
+              the hero's. */}
           <UiScreenshot
             src="/marketing/demo-restrained-quill.png"
+            mobileSrc="/marketing/demo-restrained-quill-mobile.png"
             label="UI Screenshot hero"
             className="aspect-[1136/716] w-full rounded-[6px] border border-[var(--p-color-sand-300)] shadow-[0_2px_4px_rgba(53,56,38,0.07),0_18px_38px_rgba(53,56,38,0.20)]"
           />
