@@ -33,7 +33,11 @@ const SUBMIT_THEME = {
 export function SiteFooter() {
   return (
     <footer className="border-t border-[var(--mk-footer-border)] bg-[var(--mk-footer-surface)]">
-      <div className="mx-auto max-w-6xl px-6 py-16">
+      {/* Section rhythm: same clamp(3rem, 2rem + 4vw, 7rem) the restrained
+          page's sections use, replacing a flat py-16, so the footer scales
+          with everything above it instead of staying pinned while the rest
+          of the page's spacing ramps. */}
+      <div className="mx-auto max-w-6xl px-6 py-[clamp(3rem,2rem+4vw,7rem)]">
         {/* Signup takes the flexible 1fr (its content is left-aligned, so the
             slack sits to its RIGHT); the two menu columns are content-width and
             hug the right edge of the page. */}

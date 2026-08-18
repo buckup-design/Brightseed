@@ -71,6 +71,19 @@
 @custom-variant card-hovered (.group\/card:is(:hover, [data-force-state="hover"]) &);
 
 @theme inline {
+  /* Additive breakpoints (restrained-responsive-plan.md section 3). Tailwind
+     4 breakpoint additions emit no CSS unless a class uses them, so these are
+     safe to add ahead of use. xs backs the marketing pages' phone-tier work;
+     3xl is claimed here for the large-screen tier (plan Phase C) but nothing
+     in Phase B uses it yet. Checked before adding: no existing class in
+     web/app, web/components or web/stories used an `xs:` or `3xl:` responsive
+     prefix (the two `xs:` hits were cva size-variant object keys in
+     button.tsx and input-group.tsx, not Tailwind classes), so neither name
+     collides with anything already relying on the old undefined-breakpoint
+     no-op behavior. */
+  --breakpoint-xs: 30rem; /* 480 */
+  --breakpoint-3xl: 100rem; /* 1600 */
+
   /* Surfaces and content */
   --color-background: var(--background);
   --color-foreground: var(--foreground);

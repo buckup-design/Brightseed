@@ -95,12 +95,21 @@ export function TestimonialSpotlight({
           hidden (CSS spec behavior for that property), which is what turns
           the opacity transition into a real crossfade instead of the old
           key={index} remount, which only ever faded in. */}
+      {/* Font size is a clamp(), not the old text-5xl sm:text-6xl step: a
+          single 48-to-60px jump at sm (640) was exactly the kind of stepped
+          quantity that produced the F5 quote-column growth spurt. Floor
+          2rem/32px holds below ~400px viewport (per Becky, deliberately
+          smaller than the old 48px floor so the quote reads on a phone
+          instead of running ten lines deep at four words a line); the ramp
+          reaches the old 3.75rem/60px ceiling by ~1100px, comfortably before
+          the testimonials split at min-[1120px] below, so the type isn't also
+          changing size at the same breakpoint where the column does. */}
       <div className="grid">
         {items.map((item, i) => (
           <blockquote
             key={i}
             aria-hidden={i !== index}
-            className={`col-start-1 row-start-1 text-5xl font-medium leading-[1.25] tracking-tight text-[var(--mk-quote)] transition-[opacity,visibility] duration-700 motion-reduce:transition-none sm:text-6xl ${
+            className={`col-start-1 row-start-1 text-[clamp(2rem,1rem+4vw,3.75rem)] font-medium leading-[1.25] tracking-tight text-[var(--mk-quote)] transition-[opacity,visibility] duration-700 motion-reduce:transition-none ${
               i === index ? "visible opacity-100" : "invisible pointer-events-none opacity-0"
             }`}
           >

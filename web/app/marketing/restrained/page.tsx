@@ -88,7 +88,13 @@ export default function RestrainedPage() {
     <div style={SKIN} className="mk-page min-h-dvh bg-[var(--p-color-sand-50)] text-[var(--p-color-sand-900)]">
       {/* ── Nav ─────────────────────────────────────────────────────────── */}
       <header className="sticky top-0 z-20 border-b border-[var(--p-color-sand-200)] bg-[var(--p-color-sand-50)]/85 backdrop-blur">
-        <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
+        {/* Vertical rhythm is one clamp() family across the whole page (nav
+            through footer), not a per-section guess. Both the nav's and the
+            sections' clamps share the same floor breakpoint (400px, where
+            `base + slope*vw` first clears the floor) so the system reads as
+            one ladder even though the nav's range is much smaller than a
+            section's — see the section clamp below for the full rationale. */}
+        <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-[clamp(0.875rem,0.75rem+0.5vw,1.5rem)]">
           <BrightseedLogo variant="lockup" className="h-6 text-[var(--p-color-forest-900)]" />
           <Button asChild variant="secondary" size="sm" className="rounded-full px-8">
             <Link href="/marketing/restrained/login">{hero.login}</Link>
@@ -101,7 +107,13 @@ export default function RestrainedPage() {
         {/* inset-0 (no fixed height) so the grid fills the section to its bottom
             edge, where the Industries section crops the hero shot. */}
         <QuillGrid className="-z-0" />
-        <div className="relative mx-auto max-w-6xl px-6 pt-16 text-center sm:pt-20">
+        {/* pt only: the bottom edge is owned by the -mb-12 bleed below, not by
+            padding, so the fluid rhythm here only ever touches the top. Same
+            clamp() as every other section (see the industries section below
+            for the full rationale); floor 3rem/48px below ~400px viewport,
+            ramping toward 7rem/112px past ~1450px, replacing the old
+            pt-16 sm:pt-20 two-step guess. */}
+        <div className="relative mx-auto max-w-6xl px-6 pt-[clamp(3rem,2rem+4vw,7rem)] text-center">
           <Eyebrow className="text-[var(--mk-eyebrow)]">{hero.eyebrow}</Eyebrow>
           {/* Floor is 2.5rem (40px), not the old 3.5rem: at 3.5rem the wordmark
               stopped shrinking at 622px viewport while its box kept shrinking
@@ -143,9 +155,33 @@ export default function RestrainedPage() {
           the page — hero, demo, footer — stays sand-50). */}
       <div className="bg-white">
       {/* ── Industries ──────────────────────────────────────────────────── */}
-      <section className="relative mx-auto max-w-6xl px-6 py-20">
+      {/* Section rhythm: clamp(3rem, 2rem + 4vw, 7rem), the one formula every
+          section (and, scaled down, the nav) now shares in place of the old
+          per-section guesses (py-20 here, py-16 md:py-24 on demo, a flat
+          py-16 on the footer, pt-16 sm:pt-20 on the hero). Floor 48px holds
+          below ~400px viewport; the ramp reaches ~109px by 1920 without ever
+          hard-stepping. Rounds to 7rem/112px only past ~2000px, comfortably
+          above this plan's scope (no 3xl tier yet). */}
+      <section className="relative mx-auto max-w-6xl px-6 py-[clamp(3rem,2rem+4vw,7rem)]">
         <Eyebrow className="text-center text-[var(--mk-label)]">{industriesLabel}</Eyebrow>
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {/* 1 / 2 / 3 / 4 column ladder: 2-up at 640, a new 3-up tier at 900,
+            4-up at 1024. The old sm-then-lg ladder skipped straight from 2 to
+            4 columns, nearly halving the card at the lg boundary (407px at
+            900 down to 222px at 1024). The added 900px tier splits that one
+            big drop into two smaller ones.
+
+            All three tiers use arbitrary min-[Npx]: variants, not sm:/lg::
+            Tailwind 4 emits arbitrary-bracket variants as one group, sorted
+            among themselves by pixel value, but that whole group lands
+            BEFORE the named-breakpoint group in the compiled stylesheet
+            regardless of value. Mixing sm:grid-cols-2 (640) with a bracket
+            min-[900px]:grid-cols-3 meant sm's rule, being later in the file,
+            silently beat the 900px rule at every width from 900 to 1023 —
+            same specificity, later cascade position wins. Verified by
+            grepping the compiled CSS for the three rules' byte offsets before
+            trusting the layout. Keeping all four tiers in the arbitrary group
+            keeps their file order matching their pixel order. */}
+        <div className="mt-10 grid gap-6 min-[640px]:grid-cols-2 min-[900px]:grid-cols-3 min-[1024px]:grid-cols-4">
           {restrainedIndustries.map((it) => (
             <div
               key={it.key}
@@ -169,11 +205,26 @@ export default function RestrainedPage() {
       </section>
 
       {/* ── Testimonials — split spotlight ─────────────────────────────────── */}
-      {/* pt-16 is this section's own gap above the cards, on top of Industries'
-          py-20 bottom padding — widening it here rather than touching
-          Industries keeps the hero-to-cards spacing untouched. */}
-      <section className="mx-auto max-w-6xl px-6 pt-16 pb-20">
-        <div className="grid gap-10 lg:grid-cols-[1fr_2fr] lg:gap-16">
+      {/* Same section clamp as Industries above, on both edges now instead of
+          the old fixed pt-16 pb-20. The old fixed pair was a workaround to
+          avoid touching Industries' padding directly; now that both sections
+          share one formula there's nothing special to protect, the gap
+          between the last card and the quote is just two adjacent sections'
+          padding, same as anywhere else on the page. */}
+      <section className="mx-auto max-w-6xl px-6 py-[clamp(3rem,2rem+4vw,7rem)]">
+        {/* Split delayed from lg (1024) to a page-specific min-[1120px]: at
+            1024 the quote column dropped from 837px (still single-column, at
+            900px viewport) to 598px (freshly split), because a full-width
+            stacked quote is always wider than any fractional share of a
+            split row — that gap can be pushed later or narrowed, but the
+            single-breakpoint jump inherent to stack-to-split can't be
+            eliminated outright. Pairing the later split with the quote's own
+            font clamp (below, in testimonial-spotlight.tsx) means the font is
+            already at its ceiling well before 1120px, so at least the jump
+            isn't compounded by the type ALSO changing size at the same
+            breakpoint, which is what produced the 153px page-jump in the
+            original F2 measurements. */}
+        <div className="grid gap-10 min-[1120px]:grid-cols-[1fr_2fr] min-[1120px]:gap-16">
           <div>
             <Eyebrow className="text-[var(--mk-quote)]">{testimonialsLabel}</Eyebrow>
             {/* Same size/treatment as the demo block's lead (below): no
@@ -191,11 +242,16 @@ export default function RestrainedPage() {
       {/* Full-width bleed section (sand + grid span the page); the content
           sits in a centered max-w-6xl grid — screenshot left, copy right — so
           the copy keeps a readable measure. (The old calc-padding trick squeezed
-          it to one word per line on wide screens.) Stacks below xl so the
-          single-line Tiempos emphasis always has room. */}
+          it to one word per line on wide screens.) Split moved from xl (1280)
+          to lg (1024): it used to wait for xl only so the single-line Tiempos
+          emphasis span always had room, but that's now handled directly by
+          the min-[560px]: nowrap gate on the span itself, so the section no
+          longer needs to hold the whole layout back for it. Section padding
+          is the same clamp() every other section uses now, replacing the old
+          py-16 md:py-24 two-step. */}
       <section className="relative overflow-hidden bg-[var(--p-color-sand-50)]">
         <QuillGrid lineColor="var(--mk-grid-line-subtle)" accentColor="var(--mk-grid-accent-subtle)" />
-        <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 py-16 md:gap-14 md:py-24 xl:grid-cols-2 xl:gap-16">
+        <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 py-[clamp(3rem,2rem+4vw,7rem)] md:gap-14 lg:grid-cols-2 lg:gap-16">
           {/* Frame is deliberately local to this one image, not a system change:
               the capture's own chrome is sand-50, the exact page background, so
               with no edge it dissolved into the section. Arbitrary radius +
@@ -207,7 +263,13 @@ export default function RestrainedPage() {
             label="UI Screenshot hero"
             className="aspect-[1136/716] w-full rounded-[6px] border border-[var(--p-color-sand-300)] shadow-[0_2px_4px_rgba(53,56,38,0.07),0_18px_38px_rgba(53,56,38,0.20)]"
           />
-          <div className="flex flex-col justify-center gap-7">
+          {/* max-w-[34ch] gives the copy a real measure instead of filling
+              whatever width the column happens to have. Applied unconditionally
+              (not just at the lg split) because the stacked band now runs all
+              the way to 1023px, wide enough that an uncapped paragraph would
+              stretch past a readable line length even before the two-column
+              split kicks in. */}
+          <div className="flex max-w-[34ch] flex-col justify-center gap-7">
             <p className="text-3xl leading-snug text-[var(--p-color-sand-900)] sm:text-4xl">
               {/* nowrap only kicks in at 560px+: below that the copy column is
                   narrower than these spans (up to 337px against a 257px column
