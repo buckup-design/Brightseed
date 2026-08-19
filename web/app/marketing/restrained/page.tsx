@@ -114,18 +114,32 @@ export default function RestrainedPage() {
       </header>
 
       {/* ── Hero ────────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden [--mk-hero-pad:clamp(3rem,2rem+4vw,7rem)] 3xl:[--mk-hero-pad:8rem]">
         {/* inset-0 (no fixed height) so the grid fills the section to its bottom
-            edge, where the Industries section crops the hero shot. */}
-        <QuillGrid className="-z-0" />
+            edge, where the Industries section crops the hero shot.
+
+            offsetY tracks the same --mk-hero-pad the content column is padded
+            by, so the screenshot's top edge holds ONE phase in the lattice at
+            every desktop width. Without it the edge slides 0.04px per px of
+            viewport (the pad is fluid, the 16px/80px pitches are not) and
+            periodically lands on a line or a plus arm: at 1440 the plus tips
+            hit it within 0.4px, at 1920 a line within 0.8px. The +2.5rem puts
+            the edge at phase 224.8 — 7.2px off the nearest line (8px is the
+            most any phase can get) and 29.2px clear of a plus arm. Hoisting
+            the pad into a var is what keeps the two from drifting apart; edit
+            the value once, here on the section. */}
+        <QuillGrid className="-z-0" offsetY="calc(var(--mk-hero-pad) + 2.5rem)" />
         {/* pt only: the bottom edge is owned by the -mb-12 bleed below, not by
             padding, so the fluid rhythm here only ever touches the top. Same
             clamp() as every other section (see the industries section below
             for the full rationale); floor 3rem/48px below ~400px viewport,
             ramping toward 7rem/112px past ~1450px, replacing the old
-            pt-16 sm:pt-20 two-step guess. 3xl:max-w-7xl + 3xl:pt-32 match the
-            shell widening and rhythm bump described on the nav above. */}
-        <div className="relative mx-auto max-w-6xl px-6 pt-[clamp(3rem,2rem+4vw,7rem)] text-center 3xl:max-w-7xl 3xl:pt-32">
+            pt-16 sm:pt-20 two-step guess. The value itself now lives in
+            --mk-hero-pad on the section (the grid reads it too, see above);
+            the 3xl step to 8rem is the same rhythm bump pt-32 used to apply,
+            set alongside that var. 3xl:max-w-7xl matches the shell widening
+            described on the nav above. */}
+        <div className="relative mx-auto max-w-6xl px-6 pt-[var(--mk-hero-pad)] text-center 3xl:max-w-7xl">
           <Eyebrow className="text-[var(--mk-eyebrow)]">{hero.eyebrow}</Eyebrow>
           {/* Floor is 2.5rem (40px), not the old 3.5rem: at 3.5rem the wordmark
               stopped shrinking at 622px viewport while its box kept shrinking

@@ -10,6 +10,12 @@
  * flora band; inset-0 (no -inset-6 padding trick to counter here). "use
  * client" only for React.useId — two grids on one page would collide on a
  * shared <pattern> id.
+ *
+ * offsetY shifts the lattice's phase within the host (any CSS length, so it
+ * can track a fluid clamp()). Needed where a hard edge sits on a surface
+ * whose offset is fluid: the edge then sweeps through the fixed pitch as the
+ * viewport resizes and periodically lands on a line or a plus arm. Pass the
+ * host's own top offset and the edge holds one phase at every width.
  */
 
 import * as React from "react";
@@ -19,15 +25,22 @@ const ACCENT_PITCH = 80;
 const ACCENT_ARM = 10;
 const ACCENT_OFFSET = 24; // must stay on a line (LINE_OFFSET + n*GRID_PITCH) and >= ACCENT_ARM
 const LINE_OFFSET = 8; // half pitch, so 2px strokes are not clipped at tile edges
+// Multiple of both pitches (240 = 15*16 = 3*80), so lifting the svg by it
+// shifts the lattice by a whole number of tiles, i.e. not at all. Must exceed
+// the largest offsetY any caller passes, or the host's top edge goes bare.
+const PHASE_CUSHION = 240;
 
 export function QuillGrid({
   className = "",
   lineColor = "var(--mk-grid-line)",
   accentColor = "var(--mk-grid-accent)",
+  offsetY = "0px",
 }: {
   className?: string;
   lineColor?: string;
   accentColor?: string;
+  /** CSS length shifting the lattice down within the host. Default "0px". */
+  offsetY?: string;
 }) {
   const uid = React.useId().replace(/:/g, "");
   const lineId = `mk-grid-${uid}`;
@@ -37,7 +50,18 @@ export function QuillGrid({
       aria-hidden="true"
       className={`pointer-events-none absolute inset-0 overflow-hidden print:hidden ${className}`}
     >
-      <svg className="absolute inset-0 size-full" xmlns="http://www.w3.org/2000/svg">
+      {/* Lifted by PHASE_CUSHION and grown to match, so a positive offsetY
+          still paints to the host's top edge instead of leaving a bare strip.
+          The cushion is a common multiple of BOTH pitches, so it moves zero
+          phase on its own and offsetY="0px" renders exactly as inset-0 did. */}
+      <svg
+        className="absolute inset-x-0"
+        style={{
+          top: `calc(${offsetY} - ${PHASE_CUSHION}px)`,
+          height: `calc(100% + ${PHASE_CUSHION}px)`,
+        }}
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <defs>
           <pattern id={lineId} width={GRID_PITCH} height={GRID_PITCH} patternUnits="userSpaceOnUse">
             <path
