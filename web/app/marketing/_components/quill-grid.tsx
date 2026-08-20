@@ -53,9 +53,16 @@ export function QuillGrid({
       {/* Lifted by PHASE_CUSHION and grown to match, so a positive offsetY
           still paints to the host's top edge instead of leaving a bare strip.
           The cushion is a common multiple of BOTH pitches, so it moves zero
-          phase on its own and offsetY="0px" renders exactly as inset-0 did. */}
+          phase on its own and offsetY="0px" renders exactly as inset-0 did.
+
+          w-full is load-bearing, do not drop it for inset-x-0 alone: <svg> is a
+          REPLACED element, so left:0 + right:0 + width:auto does not stretch it
+          the way it would a div — the used width comes from the default 300px
+          intrinsic size and the over-constrained equation discards right. That
+          shipped once (dae23e1) and painted the grid only in the leftmost 300px
+          of every host. Height is safe inline because it is explicit. */}
       <svg
-        className="absolute inset-x-0"
+        className="absolute inset-x-0 w-full"
         style={{
           top: `calc(${offsetY} - ${PHASE_CUSHION}px)`,
           height: `calc(100% + ${PHASE_CUSHION}px)`,
