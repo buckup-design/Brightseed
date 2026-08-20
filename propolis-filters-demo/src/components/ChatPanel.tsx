@@ -12,17 +12,15 @@ export default function ChatPanel() {
             🐦
           </div>
           <div className="flex flex-col gap-3 pt-1 text-sm leading-6 text-foreground">
-            <p>Here are the all compounds in your sample.</p>
             <p>
-              There are a lot of well-studied bioactives in Immune Health.
+              Here is a demo of the filters available on any set of
+              compounds. It is for demonstration only; some data is not
+              accurate.
             </p>
             <p>
-              The high prevalence of flavonoids and phenolic acids point to
-              promotion of cardiovascular health.
-            </p>
-            <p>
-              You can explore the filters in your workspace, or ask me any
-              follow up questions.
+              Note that a real query would generally start within a health
+              area. The Muscle Health area is recommended for this
+              demonstration.
             </p>
           </div>
         </div>
