@@ -926,9 +926,12 @@ export const IP_ANALYSIS_R1: IpAnalysis = {
     "US2007116779A1",
   ],
   fto: {
-    // Weak→critical / Moderate→warning / Strong→success — the one mapping
+    // Weak→critical / Moderate→warning / Strong→success. The one mapping
     // decision, Becky-reviewable here rather than buried in a component.
-    grade: { label: "Weak", tone: "critical" },
+    // Grade tracks scoreQualifier below: both read Moderate, so the badge is
+    // warning. They used to disagree (Weak badge, Moderate score), which read
+    // as an error on the page. Keep them in step when re-grading. Becky, Aug 20 2026.
+    grade: { label: "Moderate", tone: "warning" },
     score: 0.5,
     scoreQualifier: "Moderate",
     scope: {
@@ -999,7 +1002,8 @@ export const IP_ANALYSIS_R1: IpAnalysis = {
     ],
   },
   patentability: {
-    grade: { label: "Weak", tone: "critical" },
+    // Tracks verdict.qualifier below, same rule as fto.grade.
+    grade: { label: "Moderate", tone: "warning" },
     verdict: { score: 0.738, qualifier: "Moderate" },
     novelty: {
       score: 0.9,

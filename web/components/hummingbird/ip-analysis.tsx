@@ -26,7 +26,7 @@ import { Eyebrow, Prose } from "@/components/hummingbird/document-parts";
  * Data honesty rules carried from the capture:
  * - Grade label AND tone arrive as data — the UI never derives either from a
  *   score or a label string (tier cuts + grade vocabulary are open for Becky;
- *   the Weak→critical mapping lives visibly in the fixture, not here).
+ *   the grade→tone mapping lives visibly in the fixture, not here).
  * - §103 non-obviousness has NO score in the capture, so it renders as an
  *   assessment line, never an empty gauge.
  * - Statuses and grades never rely on color alone: the words carry, dots are
@@ -206,18 +206,21 @@ function PatentChips({ patents }: { patents: string[] }) {
   );
 }
 
-/** Severity rank for the renderer's sort. */
-const SEVERITY: Record<FtoDimensionStatus, number> = {
-  blocked: 0,
+/** Render order for the dimension grid. Matches the live Hummingbird product's
+ *  clear-first listing (Becky, Aug 20 2026). It was severity-first — blocked,
+ *  restricted, clear — on the reasoning that counsel reads risk first; product
+ *  parity won. The blocked/restricted/clear counts in the header carry the risk
+ *  summary regardless of row order, so nothing is lost by matching the product. */
+const DIMENSION_ORDER: Record<FtoDimensionStatus, number> = {
+  clear: 0,
   restricted: 1,
-  clear: 2,
+  blocked: 2,
 };
 
 function FtoDimensionGrid({ dimensions }: { dimensions: FtoDimension[] }) {
-  // Severity-first for counsel: blocked → restricted → clear, stable within
-  // groups. Deliberately inverts the product's clear-first listing.
+  // Product parity: clear → restricted → blocked, stable within groups.
   const sorted = [...dimensions].sort(
-    (a, b) => SEVERITY[a.status] - SEVERITY[b.status]
+    (a, b) => DIMENSION_ORDER[a.status] - DIMENSION_ORDER[b.status]
   );
   const count = (s: FtoDimensionStatus) =>
     dimensions.filter((d) => d.status === s).length;
