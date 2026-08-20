@@ -160,15 +160,26 @@ export default function RestrainedPage() {
               wordmark above is the hero's, so the shot has none. The capture is a raw
               square-cornered PNG (unlike the old art, which baked rounded corners +
               a 1px stroke into its alpha), so the WRAPPER owns the framing: top-only
-              20px rounding + overflow-hidden + a sand-300 hairline, with a
+              rounding + overflow-hidden + a sand-300 hairline, with a
               box-shadow replacing the old drop-shadow filter (which only worked by
               hugging the baked alpha). The negative bottom margin still bleeds the
               shot past the section box so the hero's overflow-hidden crops it to a
               straight bottom edge under the Industries section; only the top corners
               stay rounded. 3xl:max-w-6xl lets the shot follow the 3xl shell
               widening at roughly the same proportion it already holds against
-              the 6xl/5xl pair below 1600 (89%). */}
-          <div className="mx-auto mt-14 -mb-12 w-full max-w-5xl overflow-hidden rounded-t-[20px] border border-[var(--p-color-sand-300)] shadow-[0_22px_40px_rgba(53,56,38,0.35)] 3xl:max-w-6xl">
+              the 6xl/5xl pair below 1600 (89%).
+
+              The radius is a ratio, not a constant: 20px reads as a screen
+              bezel on the ~1024px desktop frame (1.95% of its width) but the
+              frame is only 327px at 375 viewport, where the same 20px becomes
+              11.4% of its HEIGHT and the arc eats ~55px of the mobile crop at
+              each corner — enough to clip the sidebar wordmark. 6px holds the
+              desktop proportion at phone width (327/1024 * 20 = 6.4) and
+              matches the demo screenshot's radius further down the page. The
+              switch rides the same 640px seam as the <source> art direction
+              below, so the tighter crop and the tighter corner arrive
+              together. */}
+          <div className="mx-auto mt-14 -mb-12 w-full max-w-5xl overflow-hidden rounded-t-[6px] border border-[var(--p-color-sand-300)] shadow-[0_22px_40px_rgba(53,56,38,0.35)] sm:rounded-t-[20px] 3xl:max-w-6xl">
             {/* Art direction, not just a sizes hint (F9 / item 11): below 640
                 the full 2800px empty-state capture read as illegible noise at
                 phone width, so mobile gets its own crop rather than a scaled-
