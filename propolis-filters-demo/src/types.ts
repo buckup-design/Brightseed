@@ -39,4 +39,17 @@ export interface Compound {
   // added alongside the Benefit drill-down feature) — a traceable link back
   // to the same real ontology data source. Not rendered anywhere yet.
   pubchemCid?: string;
+  // Exact deepest-tier assignments enabling precise matching at the bottom
+  // of each ontology drill-down, on top of the coarser tier-1 match every
+  // compound already gets via `benefit`/`classification`. `assignedTarget`
+  // is a real Target-tier label (health ontology, matches `benefit`'s
+  // subtree); `assignedClass` is a real Class-tier label (NPClassifier,
+  // matches `classification`'s subtree). Set on every compound except the
+  // 8 original real singles, which only get `assignedClass` (independently
+  // verified real chemistry, see mockData.ts) — no confidently-verifiable
+  // real `assignedTarget` exists for those, so they keep the coarser
+  // benefit-level match only. See matchesSelectedLeaves in
+  // lib/ontologyDrilldown.ts for how these combine with the coarse fields.
+  assignedTarget?: string;
+  assignedClass?: string;
 }

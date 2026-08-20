@@ -1,11 +1,13 @@
-import BenefitDrilldownCard from "./BenefitDrilldownCard";
+import OntologyDrilldownCard from "./OntologyDrilldownCard";
 import FilterCard from "./FilterCard";
 import ScoreFilterCard from "./ScoreFilterCard";
 import Slider from "./Slider";
 import Switch from "./Switch";
 import type { FilterGroup } from "../types";
 import type { FacetSelection } from "../lib/facets";
-import type { PathEntry } from "../lib/benefitOntology";
+import type { PathEntry } from "../lib/ontologyDrilldown";
+import * as benefitOntology from "../lib/benefitOntology";
+import * as compoundClassOntology from "../lib/compoundClassOntology";
 import {
   FEASIBILITY_LABELS,
   SCORE_RANGES,
@@ -28,6 +30,17 @@ export interface BenefitDrilldown {
   onToggleTarget: (label: string) => void;
   onResetTargets: () => void;
 }
+
+export interface CompoundClassDrilldown {
+  path: PathEntry[];
+  onPathChange: (path: PathEntry[]) => void;
+  selectedClasses: FacetSelection;
+  onToggleClass: (label: string) => void;
+  onResetClasses: () => void;
+}
+
+const BENEFIT_LEVEL_LABELS = ["Health Area", "Benefits", "Sub-benefits", "Targets"];
+const COMPOUND_CLASS_LEVEL_LABELS = ["Pathway", "Superclasses", "Classes"];
 
 export interface ScorePanel {
   productFormatOptions: string[];
@@ -55,6 +68,7 @@ export interface ScorePanel {
 
 interface FilterDrawerProps {
   benefitDrilldown: BenefitDrilldown;
+  compoundClassDrilldown: CompoundClassDrilldown;
   facets: FilterFacet[];
   scorePanel: ScorePanel;
   /**
@@ -67,19 +81,40 @@ interface FilterDrawerProps {
   disabledForPredicted?: boolean;
 }
 
-export default function FilterDrawer({ benefitDrilldown, facets, scorePanel, disabledForPredicted }: FilterDrawerProps) {
+export default function FilterDrawer({
+  benefitDrilldown,
+  compoundClassDrilldown,
+  facets,
+  scorePanel,
+  disabledForPredicted,
+}: FilterDrawerProps) {
   const predictedTitle = disabledForPredicted
     ? "Not applicable — predicted compounds don't carry this data"
     : undefined;
   return (
     <div className="flex flex-col gap-3 bg-white px-4 py-3">
       <div className="grid grid-cols-3 gap-x-6 gap-y-2">
-        <BenefitDrilldownCard
+        <OntologyDrilldownCard
+          id="benefit-drilldown"
+          levelLabels={BENEFIT_LEVEL_LABELS}
+          getChildOptions={benefitOntology.getChildOptions}
+          findChildId={benefitOntology.findChildId}
           path={benefitDrilldown.path}
           onPathChange={benefitDrilldown.onPathChange}
-          selectedTargets={benefitDrilldown.selectedTargets}
-          onToggleTarget={benefitDrilldown.onToggleTarget}
-          onResetTargets={benefitDrilldown.onResetTargets}
+          selectedLeaves={benefitDrilldown.selectedTargets}
+          onToggleLeaf={benefitDrilldown.onToggleTarget}
+          onResetLeaves={benefitDrilldown.onResetTargets}
+        />
+        <OntologyDrilldownCard
+          id="compound-class-drilldown"
+          levelLabels={COMPOUND_CLASS_LEVEL_LABELS}
+          getChildOptions={compoundClassOntology.getChildOptions}
+          findChildId={compoundClassOntology.findChildId}
+          path={compoundClassDrilldown.path}
+          onPathChange={compoundClassDrilldown.onPathChange}
+          selectedLeaves={compoundClassDrilldown.selectedClasses}
+          onToggleLeaf={compoundClassDrilldown.onToggleClass}
+          onResetLeaves={compoundClassDrilldown.onResetClasses}
         />
         {facets.map((facet) => (
           <FilterCard

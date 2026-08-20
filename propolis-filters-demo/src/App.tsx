@@ -4,13 +4,20 @@ import ChatPanel from "./components/ChatPanel";
 import Header, { type TabId } from "./components/Header";
 import FilterToolbar, { type ViewMode } from "./components/FilterToolbar";
 import FilterToggleBar from "./components/FilterToggleBar";
-import FilterDrawer, { type BenefitDrilldown, type FilterFacet, type ScorePanel } from "./components/FilterDrawer";
+import FilterDrawer, {
+  type BenefitDrilldown,
+  type CompoundClassDrilldown,
+  type FilterFacet,
+  type ScorePanel,
+} from "./components/FilterDrawer";
 import NaturalSourcesFilterDrawer from "./components/NaturalSourcesFilterDrawer";
 import CardGrid from "./components/CardGrid";
 import EmptyState from "./components/EmptyState";
 import { compounds } from "./data/mockData";
 import { countEvidenceTypes, matchesEvidenceType, type EvidenceTypeValue } from "./lib/evidenceType";
-import { matchesSelectedTargets, type PathEntry } from "./lib/benefitOntology";
+import { matchesSelectedTargets } from "./lib/benefitOntology";
+import { matchesSelectedClasses } from "./lib/compoundClassOntology";
+import type { PathEntry } from "./lib/ontologyDrilldown";
 import {
   buildFilterGroup,
   matchesAnySelected,
@@ -37,7 +44,10 @@ export default function App() {
   // multi-select, same FacetSelection convention as every other facet.
   const [benefitPath, setBenefitPath] = useState<PathEntry[]>([]);
   const [selectedBenefitTargets, setSelectedBenefitTargets] = useState<FacetSelection>(null);
-  const [selectedClasses, setSelectedClasses] = useState<FacetSelection>(null);
+  // Compound Classes drill-down (Pathway → Superclass → Classes), same
+  // shape as the Benefit one above — see OntologyDrilldownCard.
+  const [compoundClassPath, setCompoundClassPath] = useState<PathEntry[]>([]);
+  const [selectedCompoundClasses, setSelectedCompoundClasses] = useState<FacetSelection>(null);
   const [selectedTargets, setSelectedTargets] = useState<FacetSelection>(null);
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const [evidenceType, setEvidenceType] = useState<EvidenceTypeValue>("any");
@@ -69,7 +79,8 @@ export default function App() {
     setEvidenceType("any");
     setBenefitPath([]);
     setSelectedBenefitTargets(null);
-    setSelectedClasses(null);
+    setCompoundClassPath([]);
+    setSelectedCompoundClasses(null);
     setSelectedTargets(null);
     setProductFormat("");
     setRequiresNoDeliveryTech(false);
@@ -85,10 +96,6 @@ export default function App() {
 
   const evidenceTypeCounts = useMemo(() => countEvidenceTypes(compounds), []);
 
-  const compoundClassGroup = useMemo(
-    () => buildFilterGroup(compounds, "compound-classes", "Compound Classes", (c) => c.classification),
-    []
-  );
   const biologicalTargetGroup = useMemo(
     () =>
       buildFilterGroup(compounds, "biological-targets", "Biological Targets + Biomarkers", (c) => c.targets),
@@ -97,7 +104,6 @@ export default function App() {
   const productFormatOptions = useMemo(() => buildProductFormatOptions(compounds), []);
 
   const facets: FilterFacet[] = [
-    { group: compoundClassGroup, selected: selectedClasses, onToggle: (label) => setSelectedClasses((c) => toggleFacetSelection(c, label)) },
     { group: biologicalTargetGroup, selected: selectedTargets, onToggle: (label) => setSelectedTargets((c) => toggleFacetSelection(c, label)) },
   ];
 
@@ -107,6 +113,14 @@ export default function App() {
     selectedTargets: selectedBenefitTargets,
     onToggleTarget: (label) => setSelectedBenefitTargets((c) => toggleFacetSelection(c, label)),
     onResetTargets: () => setSelectedBenefitTargets(null),
+  };
+
+  const compoundClassDrilldown: CompoundClassDrilldown = {
+    path: compoundClassPath,
+    onPathChange: setCompoundClassPath,
+    selectedClasses: selectedCompoundClasses,
+    onToggleClass: (label) => setSelectedCompoundClasses((c) => toggleFacetSelection(c, label)),
+    onResetClasses: () => setSelectedCompoundClasses(null),
   };
 
   const scorePanel: ScorePanel = {
@@ -146,7 +160,7 @@ export default function App() {
         (compound) =>
           matchesEvidenceType(compound, evidenceType) &&
           matchesSelectedTargets(compound, selectedBenefitTargets) &&
-          matchesAnySelected(compound, selectedClasses, (c) => c.classification) &&
+          matchesSelectedClasses(compound, selectedCompoundClasses) &&
           matchesAnySelected(compound, selectedTargets, (c) => c.targets) &&
           matchesProductFormat(compound, isPredictedOnly ? "" : productFormat) &&
           matchesFlag(compound.requiresDeliveryTechnology, isPredictedOnly ? false : requiresNoDeliveryTech, "no") &&
@@ -171,7 +185,7 @@ export default function App() {
       evidenceType,
       isPredictedOnly,
       selectedBenefitTargets,
-      selectedClasses,
+      selectedCompoundClasses,
       selectedTargets,
       productFormat,
       requiresNoDeliveryTech,
@@ -213,6 +227,7 @@ export default function App() {
               {filtersVisible && (
                 <FilterDrawer
                   benefitDrilldown={benefitDrilldown}
+                  compoundClassDrilldown={compoundClassDrilldown}
                   facets={facets}
                   scorePanel={scorePanel}
                   disabledForPredicted={isPredictedOnly}
