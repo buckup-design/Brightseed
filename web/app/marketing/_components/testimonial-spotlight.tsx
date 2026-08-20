@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import type { Testimonial } from "../content";
 
@@ -11,10 +11,10 @@ import type { Testimonial } from "../content";
  * quote at a time, grid-stacked so the box is naturally as tall as the
  * tallest quote at every width, with a crossfade between them, a per-quote
  * emphasized phrase in Tiempos italic, role-only attribution, position pips,
- * a pause/play control, and circular prev/next arrows. Auto-advances every
- * 6s on a continuous loop; pauses on hover, on explicit pause, and whenever
- * the user prefers reduced motion. A manual arrow or pip click jumps
- * immediately but never breaks the loop. Bold/Minimal keep
+ * and circular prev/next arrows. Auto-advances every 6s on a continuous
+ * loop; pauses on hover and whenever the user prefers reduced motion. A
+ * manual arrow or pip click jumps immediately but never breaks the loop.
+ * Bold/Minimal keep
  * testimonial-carousel (whose --mk-dot/--mk-dot-active tokens the pips below
  * reuse).
  */
@@ -43,13 +43,13 @@ export function TestimonialSpotlight({
   const n = items.length;
   const [index, setIndex] = useState(0);
   const [hovered, setHovered] = useState(false);
-  const [userPaused, setUserPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
 
-  // WCAG 2.2.2: auto-moving content past 5s needs a way to stop it that isn't
-  // hover-only (touch and keyboard users can't hover). This mirrors that plus
-  // a system-level prefers-reduced-motion check, same guard the rest of the
-  // page gives its CSS transitions via motion-reduce:.
+  // Same guard the rest of the page gives its CSS transitions via
+  // motion-reduce:. Note this is now the ONLY non-hover way to stop the
+  // rotation — the explicit pause control was removed by design decision
+  // (Becky, Aug 2026), so a touch user who doesn't set the OS preference
+  // can't halt it. That is a known WCAG 2.2.2 gap, not an oversight.
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     setReducedMotion(mq.matches);
@@ -65,7 +65,7 @@ export function TestimonialSpotlight({
     [n],
   );
 
-  const paused = hovered || userPaused || reducedMotion;
+  const paused = hovered || reducedMotion;
 
   useEffect(() => {
     if (paused || n <= 1) return;
@@ -120,43 +120,27 @@ export function TestimonialSpotlight({
         ))}
       </div>
       <div className="mt-4 text-sm text-[var(--mk-muted)]">{current.role}</div>
-      <div className="mt-4 flex items-center gap-2">
-        {/* Pips: 24px hit target (size-6) around a 6px dot (size-1.5), so the
-            visual stays small while the touch target clears the 24px
-            minimum. The dot used to be the whole button. */}
-        <div className="flex items-center" role="tablist" aria-label="Testimonial navigation">
-          {items.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              role="tab"
-              aria-selected={i === index}
-              aria-label={`Show testimonial ${i + 1} of ${n}`}
-              onClick={() => go(i)}
-              className="flex size-6 items-center justify-center"
-            >
-              <span
-                className={`size-1.5 rounded-full transition-colors ${
-                  i === index ? "bg-[var(--mk-dot-active)]/80" : "bg-[var(--mk-dot)] hover:bg-[var(--mk-dot-active)]/50"
-                }`}
-              />
-            </button>
-          ))}
-        </div>
-        {/* Explicit pause control: hover-to-pause alone leaves touch and
-            keyboard users with no way to stop a 6s auto-advance (WCAG
-            2.2.2). Hidden once there's nothing to pause. */}
-        {n > 1 && (
+      {/* Pips: 24px hit target (size-6) around a 6px dot (size-1.5), so the
+          visual stays small while the touch target clears the 24px minimum.
+          The dot used to be the whole button. */}
+      <div className="mt-4 flex items-center" role="tablist" aria-label="Testimonial navigation">
+        {items.map((_, i) => (
           <button
+            key={i}
             type="button"
-            aria-pressed={userPaused}
-            aria-label={userPaused ? "Resume testimonial rotation" : "Pause testimonial rotation"}
-            onClick={() => setUserPaused((p) => !p)}
-            className="flex size-6 items-center justify-center rounded-full text-[var(--mk-muted)] transition-colors hover:text-[var(--mk-quote)]"
+            role="tab"
+            aria-selected={i === index}
+            aria-label={`Show testimonial ${i + 1} of ${n}`}
+            onClick={() => go(i)}
+            className="flex size-6 items-center justify-center"
           >
-            {userPaused ? <Play className="size-3.5" aria-hidden /> : <Pause className="size-3.5" aria-hidden />}
+            <span
+              className={`size-1.5 rounded-full transition-colors ${
+                i === index ? "bg-[var(--mk-dot-active)]/80" : "bg-[var(--mk-dot)] hover:bg-[var(--mk-dot-active)]/50"
+              }`}
+            />
           </button>
-        )}
+        ))}
       </div>
       <div className="mt-6 flex gap-3">
         <button
