@@ -68,8 +68,9 @@ export default function FilterCard({ group, selected, onToggle, titleContent }: 
             <button
               key={option.label}
               type="button"
+              disabled={option.disabled}
               onClick={() => onToggle(option.label)}
-              className="max-w-full text-left"
+              className={`max-w-full text-left ${option.disabled ? "cursor-not-allowed opacity-50" : ""}`}
             >
               <Badge wrap variant={isSelected ? "filter" : "neutral"}>
                 {option.label} ({option.count})

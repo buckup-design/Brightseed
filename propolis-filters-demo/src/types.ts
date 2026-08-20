@@ -1,6 +1,8 @@
 export interface FilterOption {
   label: string;
   count: number;
+  /** True when this option's live count is 0 given every other currently-active filter — greyed out, unclickable, matching EvidenceTypeFilter's existing zero-count treatment. */
+  disabled?: boolean;
 }
 
 export interface FilterGroup {

@@ -63,7 +63,7 @@ export default function OverflowCombobox({
     } else if (event.key === "Enter") {
       event.preventDefault();
       const option = filtered[highlighted];
-      if (option) onToggle(option.label);
+      if (option && !option.disabled) onToggle(option.label);
     }
   }
 
@@ -108,10 +108,13 @@ export default function OverflowCombobox({
                   type="button"
                   role="option"
                   aria-selected={isSelected}
+                  disabled={option.disabled}
                   onMouseEnter={() => setHighlighted(index)}
                   onClick={() => onToggle(option.label)}
-                  className={`flex w-full items-center justify-between gap-2 rounded-sm px-2 py-1.5 text-left text-sm text-foreground ${
-                    isHighlighted ? "bg-accent" : ""
+                  className={`flex w-full items-center justify-between gap-2 rounded-sm px-2 py-1.5 text-left text-sm ${
+                    option.disabled
+                      ? "cursor-not-allowed text-muted-foreground/50"
+                      : `text-foreground ${isHighlighted ? "bg-accent" : ""}`
                   }`}
                 >
                   <span className="flex items-center gap-1.5 truncate">

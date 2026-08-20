@@ -14,6 +14,7 @@ import NaturalSourcesFilterDrawer from "./components/NaturalSourcesFilterDrawer"
 import CardGrid from "./components/CardGrid";
 import EmptyState from "./components/EmptyState";
 import { compounds } from "./data/mockData";
+import type { Compound } from "./types";
 import { countEvidenceTypes, matchesEvidenceType, type EvidenceTypeValue } from "./lib/evidenceType";
 import { matchesSelectedTargets } from "./lib/benefitOntology";
 import { matchesSelectedClasses } from "./lib/compoundClassOntology";
@@ -94,14 +95,74 @@ export default function App() {
     setRequiresNonNovel(false);
   };
 
-  const evidenceTypeCounts = useMemo(() => countEvidenceTypes(compounds), []);
-
-  const biologicalTargetGroup = useMemo(
-    () =>
-      buildFilterGroup(compounds, "biological-targets", "Biological Targets + Biomarkers", (c) => c.targets),
-    []
-  );
+  // Static regardless of filters — the product format select's own options
+  // aren't part of the reactive-counts scope (no visible count to keep
+  // consistent, per Anna: just the four count-bearing facets below).
   const productFormatOptions = useMemo(() => buildProductFormatOptions(compounds), []);
+
+  // Predicted compounds carry no product-format, delivery-tech, formulation,
+  // novelty, or GHS hazard data — those controls are disabled in the drawer
+  // (see FilterDrawer's disabledForPredicted), and the filters they drive are
+  // forced back to their ANY/off default here so a leftover non-default
+  // position from a prior evidence-type selection can't zero out results.
+  const isPredictedOnly = evidenceType === "predicted";
+
+  // Named per filter "dimension" rather than one big chain, so each of the
+  // four reactive facets below can compute "every filter except my own" —
+  // standard faceted-search behavior: a facet's counts should reflect what
+  // you'd get by applying every *other* active filter, not itself (Anna).
+  // `scores` bundles every threshold/switch control together since none of
+  // them have their own reactive counts to protect from self-exclusion —
+  // they always apply as "other active filters" for the four that do.
+  const predicates: Record<string, (compound: Compound) => boolean> = {
+    evidenceType: (c) => matchesEvidenceType(c, evidenceType),
+    benefit: (c) => matchesSelectedTargets(c, selectedBenefitTargets),
+    compoundClass: (c) => matchesSelectedClasses(c, selectedCompoundClasses),
+    biologicalTargets: (c) => matchesAnySelected(c, selectedTargets, (t) => t.targets),
+    scores: (c) =>
+      matchesProductFormat(c, isPredictedOnly ? "" : productFormat) &&
+      matchesFlag(c.requiresDeliveryTechnology, isPredictedOnly ? false : requiresNoDeliveryTech, "no") &&
+      matchesMinScore(
+        c,
+        "easeOfFormulation",
+        isPredictedOnly ? SCORE_RANGES.easeOfFormulation.min : formulationScore
+      ) &&
+      matchesMinScore(c, "solubility", solubilityScore) &&
+      matchesMinScore(c, "fto", isPredictedOnly ? SCORE_RANGES.fto.min : ftoScore) &&
+      matchesMinScore(
+        c,
+        "patentability",
+        isPredictedOnly ? SCORE_RANGES.patentability.min : patentabilityScore
+      ) &&
+      matchesMaxToxicity(c, admetScore) &&
+      matchesFlag(c.ghsHazardCode, isPredictedOnly ? false : noGhsHazard, "no") &&
+      matchesFlag(c.grasSource, requiresGras, "yes") &&
+      matchesFlag(c.nonNovelSource, requiresNonNovel, "yes"),
+  };
+
+  type PredicateKey = keyof typeof predicates;
+  const predicateKeys = Object.keys(predicates) as PredicateKey[];
+  // Filtering ~179 compounds five times per render is trivially fast — not
+  // memoized on purpose, so there's no five-way dependency array to keep in
+  // sync by hand every time a new filter field is added (a real footgun for
+  // no measurable benefit at this data scale).
+  const applyExcept = (excludeKey?: PredicateKey) =>
+    compounds.filter((c) => predicateKeys.every((key) => key === excludeKey || predicates[key](c)));
+
+  const filteredCompounds = applyExcept();
+  const compoundsForBenefit = applyExcept("benefit");
+  const compoundsForCompoundClass = applyExcept("compoundClass");
+  const compoundsForBiologicalTargets = applyExcept("biologicalTargets");
+  const compoundsForEvidenceType = applyExcept("evidenceType");
+
+  const evidenceTypeCounts = countEvidenceTypes(compoundsForEvidenceType);
+
+  const biologicalTargetGroup = buildFilterGroup(
+    compoundsForBiologicalTargets,
+    "biological-targets",
+    "Biological Targets + Biomarkers",
+    (c) => c.targets
+  );
 
   const facets: FilterFacet[] = [
     { group: biologicalTargetGroup, selected: selectedTargets, onToggle: (label) => setSelectedTargets((c) => toggleFacetSelection(c, label)) },
@@ -113,6 +174,7 @@ export default function App() {
     selectedTargets: selectedBenefitTargets,
     onToggleTarget: (label) => setSelectedBenefitTargets((c) => toggleFacetSelection(c, label)),
     onResetTargets: () => setSelectedBenefitTargets(null),
+    compounds: compoundsForBenefit,
   };
 
   const compoundClassDrilldown: CompoundClassDrilldown = {
@@ -121,6 +183,7 @@ export default function App() {
     selectedClasses: selectedCompoundClasses,
     onToggleClass: (label) => setSelectedCompoundClasses((c) => toggleFacetSelection(c, label)),
     onResetClasses: () => setSelectedCompoundClasses(null),
+    compounds: compoundsForCompoundClass,
   };
 
   const scorePanel: ScorePanel = {
@@ -146,59 +209,6 @@ export default function App() {
     requiresNonNovel,
     onRequiresNonNovelChange: setRequiresNonNovel,
   };
-
-  // Predicted compounds carry no product-format, delivery-tech, formulation,
-  // novelty, or GHS hazard data — those controls are disabled in the drawer
-  // (see FilterDrawer's disabledForPredicted), and the filters they drive are
-  // forced back to their ANY/off default here so a leftover non-default
-  // position from a prior evidence-type selection can't zero out results.
-  const isPredictedOnly = evidenceType === "predicted";
-
-  const filteredCompounds = useMemo(
-    () =>
-      compounds.filter(
-        (compound) =>
-          matchesEvidenceType(compound, evidenceType) &&
-          matchesSelectedTargets(compound, selectedBenefitTargets) &&
-          matchesSelectedClasses(compound, selectedCompoundClasses) &&
-          matchesAnySelected(compound, selectedTargets, (c) => c.targets) &&
-          matchesProductFormat(compound, isPredictedOnly ? "" : productFormat) &&
-          matchesFlag(compound.requiresDeliveryTechnology, isPredictedOnly ? false : requiresNoDeliveryTech, "no") &&
-          matchesMinScore(
-            compound,
-            "easeOfFormulation",
-            isPredictedOnly ? SCORE_RANGES.easeOfFormulation.min : formulationScore
-          ) &&
-          matchesMinScore(compound, "solubility", solubilityScore) &&
-          matchesMinScore(compound, "fto", isPredictedOnly ? SCORE_RANGES.fto.min : ftoScore) &&
-          matchesMinScore(
-            compound,
-            "patentability",
-            isPredictedOnly ? SCORE_RANGES.patentability.min : patentabilityScore
-          ) &&
-          matchesMaxToxicity(compound, admetScore) &&
-          matchesFlag(compound.ghsHazardCode, isPredictedOnly ? false : noGhsHazard, "no") &&
-          matchesFlag(compound.grasSource, requiresGras, "yes") &&
-          matchesFlag(compound.nonNovelSource, requiresNonNovel, "yes")
-      ),
-    [
-      evidenceType,
-      isPredictedOnly,
-      selectedBenefitTargets,
-      selectedCompoundClasses,
-      selectedTargets,
-      productFormat,
-      requiresNoDeliveryTech,
-      formulationScore,
-      solubilityScore,
-      ftoScore,
-      patentabilityScore,
-      admetScore,
-      noGhsHazard,
-      requiresGras,
-      requiresNonNovel,
-    ]
-  );
 
   // Natural Sources has no dataset yet — results area is intentionally empty.
   const resultCount = activeTab === "compounds" ? filteredCompounds.length : 0;

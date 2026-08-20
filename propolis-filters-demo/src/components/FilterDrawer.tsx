@@ -3,7 +3,7 @@ import FilterCard from "./FilterCard";
 import ScoreFilterCard from "./ScoreFilterCard";
 import Slider from "./Slider";
 import Switch from "./Switch";
-import type { FilterGroup } from "../types";
+import type { Compound, FilterGroup } from "../types";
 import type { FacetSelection } from "../lib/facets";
 import type { PathEntry } from "../lib/ontologyDrilldown";
 import * as benefitOntology from "../lib/benefitOntology";
@@ -29,6 +29,8 @@ export interface BenefitDrilldown {
   selectedTargets: FacetSelection;
   onToggleTarget: (label: string) => void;
   onResetTargets: () => void;
+  /** Compounds matching every *other* currently-active filter — drives this card's live chip counts. */
+  compounds: Compound[];
 }
 
 export interface CompoundClassDrilldown {
@@ -37,6 +39,8 @@ export interface CompoundClassDrilldown {
   selectedClasses: FacetSelection;
   onToggleClass: (label: string) => void;
   onResetClasses: () => void;
+  /** Compounds matching every *other* currently-active filter — drives this card's live chip counts. */
+  compounds: Compound[];
 }
 
 const BENEFIT_LEVEL_LABELS = ["Health Area", "Benefits", "Sub-benefits", "Targets"];
@@ -97,7 +101,7 @@ export default function FilterDrawer({
         <OntologyDrilldownCard
           id="benefit-drilldown"
           levelLabels={BENEFIT_LEVEL_LABELS}
-          getChildOptions={benefitOntology.getChildOptions}
+          getChildOptions={(parentId) => benefitOntology.getDynamicChildOptions(parentId, benefitDrilldown.compounds)}
           findChildId={benefitOntology.findChildId}
           path={benefitDrilldown.path}
           onPathChange={benefitDrilldown.onPathChange}
@@ -108,7 +112,9 @@ export default function FilterDrawer({
         <OntologyDrilldownCard
           id="compound-class-drilldown"
           levelLabels={COMPOUND_CLASS_LEVEL_LABELS}
-          getChildOptions={compoundClassOntology.getChildOptions}
+          getChildOptions={(parentId) =>
+            compoundClassOntology.getDynamicChildOptions(parentId, compoundClassDrilldown.compounds)
+          }
           findChildId={compoundClassOntology.findChildId}
           path={compoundClassDrilldown.path}
           onPathChange={compoundClassDrilldown.onPathChange}
