@@ -77,7 +77,7 @@
   --ds-shape-radius-md:      var(--p-radius-md);    /* medium, buttons (xs/default/sm/lg/icon sizes), inputs */
   --ds-shape-radius-lg:      var(--p-radius-lg);    /* large, cards, panels */
   --ds-shape-radius-xl:      var(--p-radius-xl);    /* extra-large, dialogs */
-  --ds-shape-radius-2xl:     var(--p-radius-2xl);   /* sheet overlays, popovers */
+  --ds-shape-radius-2xl:     var(--p-radius-2xl);   /* sheet panel, inner edge */
   --ds-shape-radius-3xl:     var(--p-radius-3xl);
   --ds-shape-radius-4xl:     var(--p-radius-4xl);   /* button XL sizes (xl, icon-xl) */
   --ds-shape-radius-round:   var(--p-radius-round); /* pill, status badges, toggle chips */
@@ -124,5 +124,5 @@
  *   Raised card on page bg       → --ds-shadow-sm
  *   Popover, dropdown menu       → --ds-shadow-md
  *   Dialog, modal                → --ds-shadow-lg
- *   Sheet overlay                → --ds-shadow-xl
+ *   Sheet panel                  → --ds-shadow-lg (shared with Dialog; it sits over a scrim)
  */

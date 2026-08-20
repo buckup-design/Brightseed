@@ -166,10 +166,17 @@
      Pre-composited, so reference it with no opacity modifier. DECORATION — ~1.09:1;
      it is never the focus indicator. Never ship the whisper without the border. */
   --ds-color-ring-focus:               color-mix(in srgb, var(--p-color-lime-500) 12%, transparent);  /* lime/500 @ 12% */
-  /* Switch thumb outline. Thumb POSITION carries on/off without colour (SC 1.4.1,
-     Level A) — but a white thumb is ~1.39:1 on both light tracks, so the cue only
-     works with this outline. Dark tracks are already 4.16:1 apart and need none. */
-  --ds-color-border-switch-thumb:      var(--p-color-sand-700);      /* 4.14:1 / 4.16:1 against the two light tracks */
+  /* SLIDER thumb outline (Switch no longer takes one, see surface-switch-thumb).
+     The slider thumb is a 16px disc on a 4px track, so most of its edge abuts the
+     PAGE, not the track — and it resolves surface-default, which IS the page
+     colour in both themes. Measured in-browser at 1.00:1. This outline is the
+     only thing giving the control a visible handle; do not remove it. */
+  --ds-color-border-slider-thumb:      var(--p-color-sand-700);      /* 4.14:1 off-track, 4.16:1 on lime, 5.75:1 on the page */
+  /* SWITCH thumb fill. Charcoal, not white: light's two tracks are luminance
+     twins (sand-300 vs lime-300 = 1.01:1) so state rides on thumb POSITION, and
+     lime-300 is a pale fill, so a light thumb cannot separate from it. Going dark
+     is the only rimless option that clears both tracks. Becky's call, Aug 20 2026. */
+  --ds-color-surface-switch-thumb:     var(--p-color-sand-800);      /* 6.92:1 off-track, 6.96:1 on lime */
   /* Selected boundary for controls whose ON state is a fill (Toggle, ToggleGroup).
      The fill alone is under 3:1 in both themes, so this border IS the state signal.
      Dark uses sand-500, not forest — its on-fill is neutral sand, so a green edge
@@ -500,9 +507,17 @@
   --ds-color-border-focus:            var(--p-color-sand-500);      /* 7.16:1 on the sand-950 page */
   --ds-color-border-focus-secondary:  var(--p-color-sand-500);      /* sand/500, matches Figma colors/ring-dark */
   --ds-color-border-focus-link-brand: var(--p-color-sand-500);      /* matches Default, as in light */
-  /* No outline in dark, deliberately: the tracks are already 4.16:1 apart and the
-     thumb is the darkest element, so an outline could only weaken it. */
-  --ds-color-border-switch-thumb:     transparent;
+  /* Slider thumb outline, mirroring light at the opposite end of the ramp: 4.14:1
+     on the unfilled track, the same ratio light gets from sand-700. Load-bearing
+     for the same reason — the dark slider thumb is sand-950 on a sand-950 page,
+     1.00:1, so without this the control has no visible handle. */
+  --ds-color-border-slider-thumb:     var(--p-color-sand-300);      /* 4.14:1 off-track, 11.87:1 on the page */
+  /* Switch thumb fill, dark. Stays the page colour and is DECORATIVE here: the
+     track edge identifies the control and the track fill carries the state
+     (sand-700 vs lime-300 = 4.16:1), so the thumb is free to sit at 2.87:1. This
+     is the one place the "colour and contrast" argument holds; light cannot use
+     it because its tracks are luminance twins. */
+  --ds-color-surface-switch-thumb:    var(--p-color-sand-950);      /* 2.87:1 off-track, 11.94:1 on lime — not the carrier */
   --ds-color-border-selected-brand:   var(--p-color-sand-500);      /* 4.18:1 on the sand-800 on-fill; see the light block */
 
   /* Semi-transparent intent border on dark bg, 46% opacity matches mockup.

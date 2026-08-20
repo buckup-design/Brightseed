@@ -61,7 +61,13 @@ function SheetContent({
         data-slot="sheet-content"
         className={cn(
           "fixed z-50 flex flex-col gap-4 transition ease-in-out data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:animate-in data-[state=open]:duration-500",
-          // Brightseed surface + shadow + edge border.
+          // Brightseed surface + shadow + edge border. The panel is anchored to
+          // three viewport edges, so only its INNER edge faces the page and only
+          // that edge is rounded (--ds-shape-radius-2xl, 18px). Rounding the
+          // edges flush to the viewport would show page colour in the corners.
+          // Shadow stays --ds-shadow-lg, shared with Dialog: the sheet already
+          // sits over a scrim, so depth is not what separates it (Becky, Aug 20
+          // 2026, "radius only"). --ds-shadow-xl is now unassigned.
           "bg-[var(--c-sheet-surface-default)]",
           "shadow-[var(--c-sheet-shadow-lg)]",
           // Binds the edge border to a token. The per-side `border-{l,r,t,b}`
@@ -73,13 +79,13 @@ function SheetContent({
           // [CONCERN] surfaced by the ui/ fork.)
           "border-[var(--c-sheet-border-default)]",
           side === "right" &&
-            "inset-y-0 right-0 h-full w-3/4 border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm",
+            "inset-y-0 right-0 h-full w-3/4 border-l rounded-l-[var(--c-sheet-shape-radius-2xl)] data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm",
           side === "left" &&
-            "inset-y-0 left-0 h-full w-3/4 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm",
+            "inset-y-0 left-0 h-full w-3/4 border-r rounded-r-[var(--c-sheet-shape-radius-2xl)] data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm",
           side === "top" &&
-            "inset-x-0 top-0 h-auto border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
+            "inset-x-0 top-0 h-auto border-b rounded-b-[var(--c-sheet-shape-radius-2xl)] data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
           side === "bottom" &&
-            "inset-x-0 bottom-0 h-auto border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
+            "inset-x-0 bottom-0 h-auto border-t rounded-t-[var(--c-sheet-shape-radius-2xl)] data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
           className
         )}
         {...props}

@@ -12,28 +12,31 @@ import { cn } from "@/lib/utils"
  *   Track (unfilled)  → --ds-color-border-default       (sand-300 light / sand-700 dark)
  *   Range (filled)    → --ds-color-action-primary       (lime-300; brand action)
  *   Thumb             → --ds-color-surface-default      (white in light, sand-950 in dark)
- *   Thumb outline     → --ds-color-border-switch-thumb  (sand-700 light / none in dark)
+ *   Thumb outline     → --ds-color-border-slider-thumb  (sand-700 light / sand-300 dark)
  *   Focus ring        → --ds-color-border-focus         (sand, opaque, same as Button)
  *   Disabled          → uses --ds-disabled-text-opacity
  *
- * Accessibility note. This inherits Switch's constraint: in light mode the fill
- * (lime-300) and the track (sand-300) are ~1:1 apart in greyscale, so colour
- * cannot be what communicates the value (SC 1.4.1, Level A). Two non-colour cues
- * carry it instead — the thumb's POSITION, and the caller's own value readout
- * (see ScoreSlider in the filter drawer, which prints the active label beside
- * the title). The thumb keeps the same light-mode outline Switch uses so its
- * position stays perceivable against both track colours; do not remove it
- * without replacing the cue.
+ * THE THUMB OUTLINE IS LOAD-BEARING. Do not remove it to match Switch, which
+ * dropped its own on Aug 20 2026. The two diverge on geometry, not taste:
  *
- * BRIGHTSEED-TBD: [CONCERN] In DARK the thumb outline is transparent by token
- * (--ds-color-border-switch-thumb), leaving thumb-vs-unfilled-track at 2.87:1 —
- * just under the 3:1 SC 1.4.11 asks of a control's own indicator. Measured, not
- * estimated. This is INHERITED, not introduced here: the shipped Switch is the
- * same two tokens and measures the same 2.87:1, so Slider matching it is the
- * consistent choice and diverging unilaterally would split the two apart. Worth
- * a system-level call on the dark thumb outline; raising it fixes both at once.
- * (Against the lime FILLED range the thumb is 11.94:1, so this only bites on the
- * unfilled side — i.e. hardest at the ANY floor, where every slider rests.)
+ *   Switch's thumb fills its track, so the track is what it sits against, and a
+ *   track edge plus a track fill can carry the job instead. Slider's thumb is a
+ *   16px disc on a 4px track, so about three quarters of its edge abuts the
+ *   PAGE. And the thumb resolves --ds-color-surface-default, which IS the page
+ *   colour in both themes: white on white in light, sand-950 on sand-950 in
+ *   dark. Measured in the browser, not derived: 1.00:1. Without this outline the
+ *   control has no visible handle at all, in either theme.
+ *
+ * The dark half of that outline was transparent until Aug 20 2026, so on `main`
+ * the dark slider thumb was invisible except where it crossed the track. It is
+ * now sand-300 (4.14:1 on the unfilled track, 11.87:1 on the page), mirroring
+ * the 4.14:1 light gets from sand-700. Against the lime FILLED range the outline
+ * disappears by design; there the thumb body is 11.94:1 on its own.
+ *
+ * The value itself still needs a non-colour cue for SC 1.4.1: lime-300 and
+ * sand-300 are ~1:1 in greyscale, so colour cannot communicate it. Position and
+ * the caller's own readout carry it (see ScoreSlider in the filter drawer,
+ * which prints the active label beside the title).
  *
  * Radix gives keyboard control for free: arrows step, Home/End jump to the ends,
  * PageUp/PageDown step by 10. Callers pass a single-element `value` array — the

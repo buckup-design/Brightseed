@@ -197,10 +197,14 @@ components:
     backgroundColor: "{colors.surface-default}"
     textColor: "{colors.text-default}"
     rounded: "{rounded.none}"
+  # Tooltip is an INVERTED chip: it paints its surface with the text colour and
+  # its text with the surface colour, so it reads as a dark chip in light and a
+  # light chip in dark without any theme-specific code. The crossed-over token
+  # names below are deliberate, not a typo. Matches ui/tooltip.tsx.
   tooltip:
-    backgroundColor: "{colors.surface-brand}"
-    textColor: "{colors.text-inverse}"
-    rounded: "{rounded.sm}"
+    backgroundColor: "{colors.text-default}"
+    textColor: "{colors.surface-default}"
+    rounded: "{rounded.md}"
 ---
 
 # Design Guidelines
@@ -541,8 +545,8 @@ Judge separation between surface planes in **Weber** contrast, not the WCAG rati
 | --------------- | ------------------------------------------- |
 | `--ds-shadow-sm`| Raised card on page background              |
 | `--ds-shadow-md`| Popover, dropdown menu                      |
-| `--ds-shadow-lg`| Dialog, modal                               |
-| `--ds-shadow-xl`| Sheet overlay                               |
+| `--ds-shadow-lg`| Dialog, modal, Sheet                        |
+| `--ds-shadow-xl`|                                             |
 
 All shadows are tinted with `forest-950 (#133019)` for earthy warmth, not neutral gray.
 
@@ -563,7 +567,7 @@ All corner radii reference the shape token ladder. Never hardcode pixel values o
 | `--ds-shape-radius-md`      | 8px    | Buttons (default/sm/lg/icon), inputs, cards, alerts|
 | `--ds-shape-radius-lg`      | 10px   | Larger cards, panels                               |
 | `--ds-shape-radius-xl`      | 14px   | Dialogs / modals                                   |
-| `--ds-shape-radius-2xl`     | 18px   | Sheet overlays                                     |
+| `--ds-shape-radius-2xl`     | 18px   | Sheet panel, inner edge only                       |
 | `--ds-shape-radius-3xl`     | 22px   |                                                    |
 | `--ds-shape-radius-4xl`     | 26px   | XL buttons only, pronounced rounding for hero CTAs|
 | `--ds-shape-radius-round`   | 9999px | Pills, avatars, number badges                      |
@@ -615,7 +619,7 @@ Tooltips appear on a **delay**, never instantly, so a pointer crossing a control
 **Where colour carries meaning below 3:1, a non-colour cue is mandatory (SC 1.4.1, Level A).** The lightness allowance in 1.4.1 is only available when the two colours differ by ≥3:1; below that it is closed. Two live examples:
 
 - The dark active-nav wash is 1.14:1 against the sidebar, so it is reinforced by a `forest-500` label and icon with unselected labels dropping to `sand-500`. **The wash is reinforcement, never the sole signal.**
-- The light Switch tracks are 1.01:1 apart — lime-300 and sand-300 are the same shade in greyscale — so state is carried by thumb *position*, made perceivable by a sand-700 thumb outline (4.14:1 / 4.16:1).
+- The light Switch tracks are 1.01:1 apart — lime-300 and sand-300 are the same shade in greyscale — so state is carried by thumb *position*. The thumb is **charcoal (sand-800)**, not white, because lime-300 is a pale fill (1.38:1 on white) that a light thumb cannot separate from; charcoal clears both tracks at 6.92:1 / 6.96:1. The Switch carries **no thumb outline** in either theme: its track's edge (`--ds-color-border-control`, sand-600, 3.50:1 light / 4.71:1 dark) identifies the control, and in dark the track fill carries the state (4.16:1), which lets the dark thumb sit at 2.87:1 as decoration. **Slider is different and keeps its thumb outline** — its 16px thumb sits on a 4px track, so most of its edge abuts the page, and it resolves `surface-default`, which *is* the page colour in both themes (1.00:1). Reworked Aug 20 2026.
 
 Any new meaning-bearing tint must ship with an equivalent cue.
 

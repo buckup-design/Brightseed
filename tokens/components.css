@@ -428,6 +428,7 @@
   --c-sheet-border-focus:       var(--ds-color-border-focus);
   --c-sheet-shadow-lg:          var(--ds-shadow-lg);
   --c-sheet-shape-radius-2xs:    var(--ds-shape-radius-2xs);
+  --c-sheet-shape-radius-2xl:    var(--ds-shape-radius-2xl);
   --c-sheet-surface-alt:        var(--ds-color-surface-alt);
   --c-sheet-surface-default:    var(--ds-color-surface-default);
   --c-sheet-surface-scrim:      var(--ds-color-surface-scrim);
@@ -460,14 +461,16 @@
   --c-skeleton-shape-radius-md:         var(--ds-shape-radius-md);
   --c-skeleton-surface-placeholder:     var(--ds-color-surface-placeholder);
 
-  /* --c-slider — track/range mirror the Switch ladder deliberately: same
-     unchecked-track sand, same action-primary fill, same outlined thumb. Like
-     Switch, the fill and the track are ~1:1 in greyscale, so the THUMB's
-     position (and every caller's value readout) carries the value, not colour. */
+  /* --c-slider — track/range still mirror the Switch ladder (same unchecked-track
+     sand, same action-primary fill), but the THUMB deliberately diverges as of
+     Aug 20 2026: Slider keeps its outline, Switch dropped one. The reason is
+     geometry, not taste — a 16px thumb on a 4px track is mostly adjacent to the
+     PAGE, and it resolves surface-default, which IS the page colour. Measured
+     1.00:1. The outline is the only thing making the handle visible. */
   --c-slider-action-primary:            var(--ds-color-action-primary);
   --c-slider-border-default:            var(--ds-color-border-default);
   --c-slider-border-focus:              var(--ds-color-border-focus);
-  --c-slider-border-thumb:              var(--ds-color-border-switch-thumb);
+  --c-slider-border-thumb:              var(--ds-color-border-slider-thumb);
   --c-slider-disabled-text-opacity:     var(--ds-disabled-text-opacity);
   --c-slider-surface-default:           var(--ds-color-surface-default);
 
@@ -513,14 +516,16 @@
   --c-status-badge-text-critical:    var(--ds-color-text-critical);
   --c-status-badge-dot-critical:     var(--ds-color-icon-critical);
 
-  /* --c-switch */
+  /* --c-switch — the thumb carries NO outline; the track's edge identifies the
+     control and the track fill carries the state. Slider deliberately differs
+     (it keeps a thumb rim), so the two no longer share a thumb token. */
   --c-switch-action-primary:           var(--ds-color-action-primary);
   --c-switch-action-primary-hover:     var(--ds-color-action-primary-hover);
-  --c-switch-border-default:           var(--ds-color-border-default);
+  --c-switch-border-control:           var(--ds-color-border-control);
   --c-switch-border-focus:             var(--ds-color-border-focus);
-  --c-switch-border-thumb:             var(--ds-color-border-switch-thumb);
   --c-switch-disabled-text-opacity:    var(--ds-disabled-text-opacity);
-  --c-switch-surface-default:          var(--ds-color-surface-default);
+  --c-switch-surface-thumb:            var(--ds-color-surface-switch-thumb);
+  --c-switch-surface-track-off:        var(--ds-color-border-default);
 
   /* --c-table */
   --c-table-border-default:            var(--ds-color-border-default);
