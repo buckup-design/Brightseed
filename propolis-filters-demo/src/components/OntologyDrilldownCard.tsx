@@ -64,27 +64,46 @@ export default function OntologyDrilldownCard({
 
   const group: FilterGroup = {
     id,
-    title: levelLabels[depth],
+    title: levelLabels[0],
     options,
   };
 
-  const titleContent = (
-    <>
-      {path.map((entry, index) => (
-        <span key={entry.id}>
-          <button
-            type="button"
-            className="underline hover:text-muted-foreground"
-            onClick={() => navigateBackTo(index)}
-          >
-            {entry.label}
-          </button>
-          {" > "}
-        </span>
-      ))}
-      {levelLabels[depth]}
-    </>
-  );
+  // Root (depth 0) just shows the plain "All X" label via `group.title`
+  // above — no breadcrumb needed, nothing to navigate back to yet.
+  //
+  // Once drilled in, the breadcrumb always starts with a persistent "All X"
+  // link back to the root (index -1 → `path.slice(0, 0)` = []), stays
+  // through every depth, then each *earlier* selection keeps its own
+  // clickable link same as before — only the most recent selection folds
+  // into the trailing, non-clickable "<selection> <category>" label (e.g.
+  // "Muscle Health Benefits") instead of getting its own link, since the
+  // "All X" link already covers "go back to the very top."
+  const titleContent =
+    depth === 0 ? undefined : (
+      <>
+        <button
+          type="button"
+          className="underline hover:text-muted-foreground"
+          onClick={() => navigateBackTo(-1)}
+        >
+          {levelLabels[0]}
+        </button>
+        {" > "}
+        {path.slice(0, -1).map((entry, index) => (
+          <span key={entry.id}>
+            <button
+              type="button"
+              className="underline hover:text-muted-foreground"
+              onClick={() => navigateBackTo(index)}
+            >
+              {entry.label}
+            </button>
+            {" > "}
+          </span>
+        ))}
+        {path.at(-1)?.label} {levelLabels[depth]}
+      </>
+    );
 
   return (
     <FilterCard

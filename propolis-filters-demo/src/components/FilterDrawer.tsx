@@ -43,8 +43,8 @@ export interface CompoundClassDrilldown {
   compounds: Compound[];
 }
 
-const BENEFIT_LEVEL_LABELS = ["Health Area", "Benefits", "Sub-benefits", "Targets"];
-const COMPOUND_CLASS_LEVEL_LABELS = ["Pathway", "Superclasses", "Classes"];
+const BENEFIT_LEVEL_LABELS = ["All Health Areas", "Benefits", "Sub-benefits", "Targets"];
+const COMPOUND_CLASS_LEVEL_LABELS = ["All Pathways", "Superclasses", "Classes"];
 
 export interface ScorePanel {
   productFormatOptions: string[];
