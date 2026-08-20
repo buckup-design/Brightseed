@@ -1,4 +1,5 @@
 import { Plus, MessageSquare, Folder, FileText, Settings } from "lucide-react";
+import brightseedLogo from "../assets/brightseed-logo.png";
 
 interface SidebarButtonProps {
   icon: React.ComponentType<{ size?: number; className?: string }>;
@@ -26,7 +27,7 @@ export default function Sidebar() {
     <aside className="flex h-full w-12 flex-col items-center justify-between border-r border-border bg-sidebar py-2">
       <div className="flex flex-col items-center gap-2">
         <div className="flex size-8 items-center justify-center">
-          <div className="size-6 rounded-full bg-gradient-to-br from-orange-400 to-rose-500" />
+          <img src={brightseedLogo} alt="Brightseed" className="size-6" />
         </div>
         <SidebarButton icon={Plus} label="New" />
         <div className="mt-2 flex flex-col items-center gap-1">
