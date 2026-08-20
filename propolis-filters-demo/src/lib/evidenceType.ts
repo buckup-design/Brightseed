@@ -21,13 +21,21 @@ function normalize(evidenceType?: string): EvidenceTypeBucket | undefined {
   return undefined;
 }
 
-/** "Any published data" is the superset of clinical + animal + in vitro — everything except predicted. */
+/**
+ * "Any published data" is everything except predicted — including real
+ * compounds that simply have no recorded evidence-type bucket yet (e.g. the
+ * 140 real Muscle Health compounds added from the ontology DAG, which have a
+ * real name/benefit but no clinical/animal/in-vitro classification on record
+ * for this demo). Leaving evidence-type unset isn't the same as being
+ * predicted, so it shouldn't be excluded from "any" — only real classified
+ * buckets are excluded from "any" by not matching a *specific* filter below.
+ */
 export function matchesEvidenceType(
   compound: Pick<Compound, "evidenceType">,
   filter: EvidenceTypeValue
 ): boolean {
   const bucket = normalize(compound.evidenceType);
-  if (filter === "any") return bucket !== undefined && bucket !== "predicted";
+  if (filter === "any") return bucket !== "predicted";
   return bucket === filter;
 }
 
@@ -45,6 +53,8 @@ export function countEvidenceTypes(
     const bucket = normalize(compound.evidenceType);
     if (bucket) counts[bucket] += 1;
   }
-  counts.any = counts.clinical + counts.animal + counts["in-vitro"];
+  // Matches matchesEvidenceType's "any" definition above: everything except
+  // predicted, including compounds with no recorded bucket at all.
+  counts.any = compounds.length - counts.predicted;
   return counts;
 }

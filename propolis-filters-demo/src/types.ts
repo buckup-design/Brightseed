@@ -34,4 +34,9 @@ export interface Compound {
   evidenceType?: string; // "evidence type", e.g. "animal" → displayed capitalized
   cardType: "predicted" | "single"; // derived from the compound-name pattern
   favorited?: boolean;
+  // Real PubChem CID, set on compounds sourced from the Brightseed ontology
+  // DAG (the 8 original real singles + the 140 real Muscle Health compounds
+  // added alongside the Benefit drill-down feature) — a traceable link back
+  // to the same real ontology data source. Not rendered anywhere yet.
+  pubchemCid?: string;
 }

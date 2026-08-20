@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
 import Badge from "./Badge";
 import OverflowCombobox from "./OverflowCombobox";
 import type { FacetSelection } from "../lib/facets";
@@ -18,9 +19,11 @@ interface FilterCardProps {
   group: FilterGroup;
   selected: FacetSelection;
   onToggle: (label: string) => void;
+  /** Overrides the plain-text `group.title` render — e.g. a clickable breadcrumb for BenefitDrilldownCard. */
+  titleContent?: ReactNode;
 }
 
-export default function FilterCard({ group, selected, onToggle }: FilterCardProps) {
+export default function FilterCard({ group, selected, onToggle, titleContent }: FilterCardProps) {
   const chipWrapRef = useRef<HTMLDivElement>(null);
   const [hiddenOptions, setHiddenOptions] = useState<FilterOption[]>([]);
 
@@ -48,7 +51,7 @@ export default function FilterCard({ group, selected, onToggle }: FilterCardProp
 
   return (
     <div className="flex flex-col gap-2">
-      <h3 className="text-sm font-medium text-foreground">{group.title}</h3>
+      <h3 className="text-sm font-medium text-foreground">{titleContent ?? group.title}</h3>
       <div
         ref={chipWrapRef}
         className="flex flex-wrap gap-1.5 overflow-hidden"

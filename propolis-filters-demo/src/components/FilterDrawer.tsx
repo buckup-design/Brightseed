@@ -1,9 +1,11 @@
+import BenefitDrilldownCard from "./BenefitDrilldownCard";
 import FilterCard from "./FilterCard";
 import ScoreFilterCard from "./ScoreFilterCard";
 import Slider from "./Slider";
 import Switch from "./Switch";
 import type { FilterGroup } from "../types";
 import type { FacetSelection } from "../lib/facets";
+import type { PathEntry } from "../lib/benefitOntology";
 import {
   FEASIBILITY_LABELS,
   SCORE_RANGES,
@@ -17,6 +19,14 @@ export interface FilterFacet {
   group: FilterGroup;
   selected: FacetSelection;
   onToggle: (label: string) => void;
+}
+
+export interface BenefitDrilldown {
+  path: PathEntry[];
+  onPathChange: (path: PathEntry[]) => void;
+  selectedTargets: FacetSelection;
+  onToggleTarget: (label: string) => void;
+  onResetTargets: () => void;
 }
 
 export interface ScorePanel {
@@ -44,6 +54,7 @@ export interface ScorePanel {
 }
 
 interface FilterDrawerProps {
+  benefitDrilldown: BenefitDrilldown;
   facets: FilterFacet[];
   scorePanel: ScorePanel;
   /**
@@ -56,13 +67,20 @@ interface FilterDrawerProps {
   disabledForPredicted?: boolean;
 }
 
-export default function FilterDrawer({ facets, scorePanel, disabledForPredicted }: FilterDrawerProps) {
+export default function FilterDrawer({ benefitDrilldown, facets, scorePanel, disabledForPredicted }: FilterDrawerProps) {
   const predictedTitle = disabledForPredicted
     ? "Not applicable — predicted compounds don't carry this data"
     : undefined;
   return (
     <div className="flex flex-col gap-3 bg-white px-4 py-3">
       <div className="grid grid-cols-3 gap-x-6 gap-y-2">
+        <BenefitDrilldownCard
+          path={benefitDrilldown.path}
+          onPathChange={benefitDrilldown.onPathChange}
+          selectedTargets={benefitDrilldown.selectedTargets}
+          onToggleTarget={benefitDrilldown.onToggleTarget}
+          onResetTargets={benefitDrilldown.onResetTargets}
+        />
         {facets.map((facet) => (
           <FilterCard
             key={facet.group.id}

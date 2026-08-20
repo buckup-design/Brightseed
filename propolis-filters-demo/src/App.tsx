@@ -4,12 +4,13 @@ import ChatPanel from "./components/ChatPanel";
 import Header, { type TabId } from "./components/Header";
 import FilterToolbar, { type ViewMode } from "./components/FilterToolbar";
 import FilterToggleBar from "./components/FilterToggleBar";
-import FilterDrawer, { type FilterFacet, type ScorePanel } from "./components/FilterDrawer";
+import FilterDrawer, { type BenefitDrilldown, type FilterFacet, type ScorePanel } from "./components/FilterDrawer";
 import NaturalSourcesFilterDrawer from "./components/NaturalSourcesFilterDrawer";
 import CardGrid from "./components/CardGrid";
 import EmptyState from "./components/EmptyState";
 import { compounds } from "./data/mockData";
 import { countEvidenceTypes, matchesEvidenceType, type EvidenceTypeValue } from "./lib/evidenceType";
+import { matchesSelectedTargets, type PathEntry } from "./lib/benefitOntology";
 import {
   buildFilterGroup,
   matchesAnySelected,
@@ -30,7 +31,12 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<TabId>("compounds");
   const [filtersVisible, setFiltersVisible] = useState(true);
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
-  const [selectedBenefits, setSelectedBenefits] = useState<FacetSelection>(null);
+  // Benefit drill-down (Health Area → Benefit → Sub-benefit → Targets, see
+  // BenefitDrilldownCard). `benefitPath` is the chosen non-terminal steps
+  // (0–3 entries); `selectedBenefitTargets` is the deepest level's real
+  // multi-select, same FacetSelection convention as every other facet.
+  const [benefitPath, setBenefitPath] = useState<PathEntry[]>([]);
+  const [selectedBenefitTargets, setSelectedBenefitTargets] = useState<FacetSelection>(null);
   const [selectedClasses, setSelectedClasses] = useState<FacetSelection>(null);
   const [selectedTargets, setSelectedTargets] = useState<FacetSelection>(null);
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
@@ -61,7 +67,8 @@ export default function App() {
 
   const resetCompoundFilters = () => {
     setEvidenceType("any");
-    setSelectedBenefits(null);
+    setBenefitPath([]);
+    setSelectedBenefitTargets(null);
     setSelectedClasses(null);
     setSelectedTargets(null);
     setProductFormat("");
@@ -78,10 +85,6 @@ export default function App() {
 
   const evidenceTypeCounts = useMemo(() => countEvidenceTypes(compounds), []);
 
-  const benefitGroup = useMemo(
-    () => buildFilterGroup(compounds, "benefit", "Benefit", (c) => c.benefit),
-    []
-  );
   const compoundClassGroup = useMemo(
     () => buildFilterGroup(compounds, "compound-classes", "Compound Classes", (c) => c.classification),
     []
@@ -94,10 +97,17 @@ export default function App() {
   const productFormatOptions = useMemo(() => buildProductFormatOptions(compounds), []);
 
   const facets: FilterFacet[] = [
-    { group: benefitGroup, selected: selectedBenefits, onToggle: (label) => setSelectedBenefits((c) => toggleFacetSelection(c, label)) },
     { group: compoundClassGroup, selected: selectedClasses, onToggle: (label) => setSelectedClasses((c) => toggleFacetSelection(c, label)) },
     { group: biologicalTargetGroup, selected: selectedTargets, onToggle: (label) => setSelectedTargets((c) => toggleFacetSelection(c, label)) },
   ];
+
+  const benefitDrilldown: BenefitDrilldown = {
+    path: benefitPath,
+    onPathChange: setBenefitPath,
+    selectedTargets: selectedBenefitTargets,
+    onToggleTarget: (label) => setSelectedBenefitTargets((c) => toggleFacetSelection(c, label)),
+    onResetTargets: () => setSelectedBenefitTargets(null),
+  };
 
   const scorePanel: ScorePanel = {
     productFormatOptions,
@@ -135,7 +145,7 @@ export default function App() {
       compounds.filter(
         (compound) =>
           matchesEvidenceType(compound, evidenceType) &&
-          matchesAnySelected(compound, selectedBenefits, (c) => c.benefit) &&
+          matchesSelectedTargets(compound, selectedBenefitTargets) &&
           matchesAnySelected(compound, selectedClasses, (c) => c.classification) &&
           matchesAnySelected(compound, selectedTargets, (c) => c.targets) &&
           matchesProductFormat(compound, isPredictedOnly ? "" : productFormat) &&
@@ -160,7 +170,7 @@ export default function App() {
     [
       evidenceType,
       isPredictedOnly,
-      selectedBenefits,
+      selectedBenefitTargets,
       selectedClasses,
       selectedTargets,
       productFormat,
@@ -201,7 +211,12 @@ export default function App() {
               />
 
               {filtersVisible && (
-                <FilterDrawer facets={facets} scorePanel={scorePanel} disabledForPredicted={isPredictedOnly} />
+                <FilterDrawer
+                  benefitDrilldown={benefitDrilldown}
+                  facets={facets}
+                  scorePanel={scorePanel}
+                  disabledForPredicted={isPredictedOnly}
+                />
               )}
 
               <FilterToggleBar
