@@ -1,4 +1,5 @@
 import { useState } from "react";
+import hummingbirdLogo from "../assets/hummingbird-logo.svg";
 
 export default function ChatPanel() {
   const [message, setMessage] = useState("");
@@ -8,8 +9,8 @@ export default function ChatPanel() {
       <div className="flex-1" />
       <div className="flex flex-col gap-6 px-2 pb-4">
         <div className="flex gap-3 px-2">
-          <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-teal-50 text-lg">
-            🐦
+          <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-teal-50">
+            <img src={hummingbirdLogo} alt="" className="size-6" />
           </div>
           <div className="flex flex-col gap-3 pt-1 text-sm leading-6 text-foreground">
             <p>
