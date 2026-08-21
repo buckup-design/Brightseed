@@ -57,11 +57,13 @@ export default function NaturalSourcesFilterDrawer({ sources }: NaturalSourcesFi
   // tab (drilling into one narrows the other's live counts) — the other two
   // facets on this tab (Biological Targets, Safety) aren't backed by a real
   // NaturalSource field yet, so there's nothing for them to narrow by.
+  // matchesDrilldownScope (not just a leaf selection) so navigating the
+  // breadcrumb alone narrows things here too, same as the Compounds tab.
   const sourcesForBenefit = sources.filter((source) =>
-    compoundClassOntology.matchesSelectedClasses(source, selectedCompoundClasses)
+    compoundClassOntology.matchesDrilldownScope(compoundClassPath, selectedCompoundClasses, source)
   );
   const sourcesForCompoundClass = sources.filter((source) =>
-    benefitOntology.matchesSelectedTargets(source, selectedBenefitTargets)
+    benefitOntology.matchesDrilldownScope(benefitPath, selectedBenefitTargets, source)
   );
 
   return (

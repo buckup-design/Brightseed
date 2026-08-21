@@ -4,8 +4,9 @@ import type { FacetSelection } from "./facets";
 import {
   findChildId as findChildIdGeneric,
   getDynamicChildOptions as getDynamicChildOptionsGeneric,
-  matchesSelectedLeaves,
+  matchesDrilldownScope as matchesDrilldownScopeGeneric,
   type OntologyTree,
+  type PathEntry,
 } from "./ontologyDrilldown";
 
 export type { PathEntry } from "./ontologyDrilldown";
@@ -43,8 +44,18 @@ export function getDynamicChildOptions(parentId: string | null, items: CompoundC
   return getDynamicChildOptionsGeneric(tree, parentId, values);
 }
 
-export function matchesSelectedClasses(item: CompoundClassTaggable, selected: FacetSelection): boolean {
-  return matchesSelectedLeaves(tree, selected, {
+/**
+ * Does this item fall within the currently drilled-into Compound Classes
+ * scope? An explicit Class selection (the deepest level) is authoritative;
+ * short of that, navigating the breadcrumb down to a Pathway/Superclass is
+ * itself the filter — see matchesDrilldownScope in ontologyDrilldown.ts.
+ */
+export function matchesDrilldownScope(
+  path: PathEntry[],
+  selected: FacetSelection,
+  item: CompoundClassTaggable
+): boolean {
+  return matchesDrilldownScopeGeneric(tree, path, selected, {
     coarseValue: item.classification,
     exactValue: item.assignedClass,
   });

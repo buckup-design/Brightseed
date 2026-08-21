@@ -101,6 +101,27 @@ export function matchesSelectedLeaves(
   return false;
 }
 
+/**
+ * Does this one item fall under a given node — leaf or not? For a leaf,
+ * identical to `matchesLeafNode`. For a non-leaf, real leaf-descendant
+ * reachability (exact match) or tier-1 coverage (coarse match) — the same
+ * per-item check `countCompoundsUnderNode` below sums over a whole list,
+ * factored out so a single boolean predicate (for real filtering) and a
+ * count (for chip display) can't drift apart.
+ */
+function matchesNode(tree: OntologyTree, nodeId: string, values: CompoundFieldValues): boolean {
+  const node = tree.nodes[nodeId];
+  if (!node) return false;
+  if (node.childIds.length === 0) return matchesLeafNode(tree, nodeId, values);
+
+  const { coarseValue, exactValue } = values;
+  if (exactValue !== undefined) {
+    const leafId = getLeafIndex(tree)[exactValue];
+    return leafId !== undefined && getLeafDescendantIds(tree, nodeId).has(leafId);
+  }
+  return coarseValue !== undefined && getCoarseCoverageLabels(tree, nodeId).includes(coarseValue);
+}
+
 // --- Live (reactive) counting for drill-down chips ---
 //
 // Both of the below are pure structural facts about a tree — computed once
@@ -202,30 +223,32 @@ function getCoarseCoverageLabels(tree: OntologyTree, nodeId: string): string[] {
 }
 
 function countCompoundsUnderNode(tree: OntologyTree, nodeId: string, compoundValues: CompoundFieldValues[]): number {
-  const node = tree.nodes[nodeId];
-  if (!node) return 0;
-
-  if (node.childIds.length === 0) {
-    let count = 0;
-    for (const values of compoundValues) {
-      if (matchesLeafNode(tree, nodeId, values)) count++;
-    }
-    return count;
-  }
-
-  const leafDescendantIds = getLeafDescendantIds(tree, nodeId);
-  const coverageLabels = getCoarseCoverageLabels(tree, nodeId);
-  const leafIndex = getLeafIndex(tree);
   let count = 0;
-  for (const { coarseValue, exactValue } of compoundValues) {
-    if (exactValue !== undefined) {
-      const leafId = leafIndex[exactValue];
-      if (leafId && leafDescendantIds.has(leafId)) count++;
-    } else if (coarseValue !== undefined && coverageLabels.includes(coarseValue)) {
-      count++;
-    }
+  for (const values of compoundValues) {
+    if (matchesNode(tree, nodeId, values)) count++;
   }
   return count;
+}
+
+/**
+ * Does this item fall within the scope the user has currently drilled into?
+ * An explicit leaf selection (the deepest level's real multi-select toggle)
+ * is authoritative once made. Short of that, navigating the breadcrumb
+ * itself is the filter — per Anna, drilling down the tree (Health Area →
+ * Benefit → Sub-benefit, say) progressively narrows the result set on its
+ * own, node by node, not just once a leaf Target is finally picked. An
+ * empty path (nothing navigated, still at the root) matches everything,
+ * same pristine convention as every other facet.
+ */
+export function matchesDrilldownScope(
+  tree: OntologyTree,
+  path: PathEntry[],
+  selected: FacetSelection,
+  values: CompoundFieldValues
+): boolean {
+  if (selected !== null) return matchesSelectedLeaves(tree, selected, values);
+  if (path.length === 0) return true;
+  return matchesNode(tree, path[path.length - 1].id, values);
 }
 
 /**

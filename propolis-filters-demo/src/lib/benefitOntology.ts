@@ -4,8 +4,9 @@ import type { FacetSelection } from "./facets";
 import {
   findChildId as findChildIdGeneric,
   getDynamicChildOptions as getDynamicChildOptionsGeneric,
-  matchesSelectedLeaves,
+  matchesDrilldownScope as matchesDrilldownScopeGeneric,
   type OntologyTree,
+  type PathEntry,
 } from "./ontologyDrilldown";
 
 export type { PathEntry } from "./ontologyDrilldown";
@@ -41,8 +42,14 @@ export function getDynamicChildOptions(parentId: string | null, items: BenefitTa
   return getDynamicChildOptionsGeneric(tree, parentId, values);
 }
 
-export function matchesSelectedTargets(item: BenefitTaggable, selected: FacetSelection): boolean {
-  return matchesSelectedLeaves(tree, selected, {
+/**
+ * Does this item fall within the currently drilled-into Benefit scope? An
+ * explicit Target selection (the deepest level) is authoritative; short of
+ * that, navigating the breadcrumb down to a Health Area/Benefit/Sub-benefit
+ * is itself the filter — see matchesDrilldownScope in ontologyDrilldown.ts.
+ */
+export function matchesDrilldownScope(path: PathEntry[], selected: FacetSelection, item: BenefitTaggable): boolean {
+  return matchesDrilldownScopeGeneric(tree, path, selected, {
     coarseValue: item.benefit,
     exactValue: item.assignedTarget,
   });

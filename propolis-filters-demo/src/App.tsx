@@ -17,8 +17,8 @@ import { compounds } from "./data/mockData";
 import { naturalSources } from "./data/naturalSourcesMockData";
 import type { Compound } from "./types";
 import { countEvidenceTypes, matchesEvidenceType, type EvidenceTypeValue } from "./lib/evidenceType";
-import { matchesSelectedTargets } from "./lib/benefitOntology";
-import { matchesSelectedClasses } from "./lib/compoundClassOntology";
+import * as benefitOntology from "./lib/benefitOntology";
+import * as compoundClassOntology from "./lib/compoundClassOntology";
 import type { PathEntry } from "./lib/ontologyDrilldown";
 import {
   buildFilterGroup,
@@ -124,8 +124,13 @@ export default function App() {
   // they always apply as "other active filters" for the four that do.
   const predicates: Record<string, (compound: Compound) => boolean> = {
     evidenceType: (c) => matchesEvidenceType(c, evidenceType),
-    benefit: (c) => matchesSelectedTargets(c, selectedBenefitTargets),
-    compoundClass: (c) => matchesSelectedClasses(c, selectedCompoundClasses),
+    // Navigating the breadcrumb down the tree is itself a filter, not just
+    // the deepest level's leaf toggle — see matchesDrilldownScope's own
+    // comment in ontologyDrilldown.ts (Anna: drilling into Muscle Health →
+    // Prevents Muscle Protein Degradation And Atrophy should narrow the
+    // result set to that scope on its own, before any Target is picked).
+    benefit: (c) => benefitOntology.matchesDrilldownScope(benefitPath, selectedBenefitTargets, c),
+    compoundClass: (c) => compoundClassOntology.matchesDrilldownScope(compoundClassPath, selectedCompoundClasses, c),
     biologicalTargets: (c) => matchesAnySelected(c, selectedTargets, (t) => t.targets),
     scores: (c) =>
       matchesProductFormat(c, isPredictedOnly ? "" : productFormat) &&
