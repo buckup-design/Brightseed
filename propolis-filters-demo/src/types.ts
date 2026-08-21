@@ -71,4 +71,14 @@ export interface NaturalSource {
   // matchesFlag in lib/scoreFilters.ts.
   grasSource?: string;
   nonNovelSource?: string;
+  // Same Benefit/Compound Classes ontology tagging as Compound (see the
+  // field comments above `Compound.assignedTarget`/`assignedClass`) — reused
+  // here, same field names, so the Benefit and Compound Classes drill-downs
+  // carried over from the Compounds tab can drive their live counts off
+  // Natural Sources too via the same generic matching/counting helpers in
+  // lib/ontologyDrilldown.ts, with zero changes to that shared code.
+  benefit?: string;
+  classification?: string;
+  assignedTarget?: string;
+  assignedClass?: string;
 }

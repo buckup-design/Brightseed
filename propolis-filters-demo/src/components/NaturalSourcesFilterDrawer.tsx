@@ -1,43 +1,26 @@
 import { useState } from "react";
 import FilterCard from "./FilterCard";
+import OntologyDrilldownCard from "./OntologyDrilldownCard";
 import ScoreFilterCard from "./ScoreFilterCard";
 import Switch from "./Switch";
+import * as benefitOntology from "../lib/benefitOntology";
+import * as compoundClassOntology from "../lib/compoundClassOntology";
+import type { PathEntry } from "../lib/ontologyDrilldown";
 import { toggleFacetSelection, type FacetSelection } from "../lib/facets";
-import type { FilterGroup } from "../types";
+import type { FilterGroup, NaturalSource } from "../types";
 
-// Natural Sources has no real dataset yet (per Anna: "leave results area
-// empty for now"), so these mirror mock placeholder values rather than being
-// computed from data like the Compounds tab's facets are — swap for real
-// data once a sources dataset exists. Benefit reuses the same values/rough
-// counts as the Compounds tab's real Benefit facet (sources presumably tie
-// to the same muscle-health benefit categories); Compounds/Biological
-// Targets intentionally include one extra option beyond what's visible
-// (Coumarins / TNF-α) so FilterCard's real overflow measurement naturally
-// triggers "More".
-const BENEFIT_GROUP: FilterGroup = {
-  id: "source-benefit",
-  title: "Benefit",
-  options: [
-    { label: "Restores Mitochondrial Function And Quality", count: 19 },
-    { label: "Prevents Muscle Protein Degradation And Atrophy", count: 14 },
-    { label: "Promotes Muscle Hypertrophy And Adaptive Growth", count: 5 },
-    { label: "Supports Nutrient Dependent Muscle Growth", count: 1 },
-  ],
-};
+// Same level labels as the Compounds tab's two ontology drill-downs — see
+// FilterDrawer.tsx's BENEFIT_LEVEL_LABELS/COMPOUND_CLASS_LEVEL_LABELS. Kept
+// as a separate copy rather than a shared export: these two files' constants
+// are one-line literals, not worth a cross-file dependency for.
+const BENEFIT_LEVEL_LABELS = ["All Health Areas", "Benefits", "Sub-benefits", "Targets"];
+const COMPOUND_CLASS_LEVEL_LABELS = ["All Pathways", "Superclasses", "Classes"];
 
-const COMPOUNDS_GROUP: FilterGroup = {
-  id: "source-compounds",
-  title: "Compounds",
-  options: [
-    { label: "Flavonoids", count: 12 },
-    { label: "Phenolic acids", count: 8 },
-    { label: "Shikimates", count: 5 },
-    { label: "Alkaloids", count: 4 },
-    { label: "Terpenoids", count: 4 },
-    { label: "Coumarins", count: 2 },
-  ],
-};
-
+// Biological Targets + Biomarkers has no real Natural Sources dataset field
+// to drive it yet (per Anna, out of scope for carrying the Benefit/Compound
+// Classes drill-downs over) — stays a static placeholder. Intentionally
+// includes one extra option beyond what's visible (TNF-α) so FilterCard's
+// real overflow measurement naturally triggers "More".
 const TARGETS_GROUP: FilterGroup = {
   id: "source-targets",
   title: "Biological Targets + Biomarkers",
@@ -51,25 +34,62 @@ const TARGETS_GROUP: FilterGroup = {
   ],
 };
 
-export default function NaturalSourcesFilterDrawer() {
-  const [selectedBenefits, setSelectedBenefits] = useState<FacetSelection>(null);
-  const [selectedCompounds, setSelectedCompounds] = useState<FacetSelection>(null);
+interface NaturalSourcesFilterDrawerProps {
+  sources: NaturalSource[];
+}
+
+export default function NaturalSourcesFilterDrawer({ sources }: NaturalSourcesFilterDrawerProps) {
+  // Same shape as the Compounds tab's benefitPath/compoundClassPath state in
+  // App.tsx (see BenefitDrilldown/CompoundClassDrilldown in FilterDrawer.tsx)
+  // — kept local here rather than lifted to App, matching how every other
+  // Natural Sources filter already manages its own state (this drawer has
+  // no dataset-backed reason yet to live in App, see naturalSourcesResetKey's
+  // comment there).
+  const [benefitPath, setBenefitPath] = useState<PathEntry[]>([]);
+  const [selectedBenefitTargets, setSelectedBenefitTargets] = useState<FacetSelection>(null);
+  const [compoundClassPath, setCompoundClassPath] = useState<PathEntry[]>([]);
+  const [selectedCompoundClasses, setSelectedCompoundClasses] = useState<FacetSelection>(null);
   const [selectedTargets, setSelectedTargets] = useState<FacetSelection>(null);
   const [requiresGras, setRequiresGras] = useState(false);
   const [requiresNonNovel, setRequiresNonNovel] = useState(false);
 
+  // Cross-reactive between just these two, same principle as the Compounds
+  // tab (drilling into one narrows the other's live counts) — the other two
+  // facets on this tab (Biological Targets, Safety) aren't backed by a real
+  // NaturalSource field yet, so there's nothing for them to narrow by.
+  const sourcesForBenefit = sources.filter((source) =>
+    compoundClassOntology.matchesSelectedClasses(source, selectedCompoundClasses)
+  );
+  const sourcesForCompoundClass = sources.filter((source) =>
+    benefitOntology.matchesSelectedTargets(source, selectedBenefitTargets)
+  );
+
   return (
     <div className="flex flex-col gap-3 bg-white px-4 py-3">
       <div className="grid grid-cols-3 gap-x-6 gap-y-2">
-        <FilterCard
-          group={BENEFIT_GROUP}
-          selected={selectedBenefits}
-          onToggle={(label) => setSelectedBenefits((current) => toggleFacetSelection(current, label))}
+        <OntologyDrilldownCard
+          id="source-benefit-drilldown"
+          levelLabels={BENEFIT_LEVEL_LABELS}
+          getChildOptions={(parentId) => benefitOntology.getDynamicChildOptions(parentId, sourcesForBenefit)}
+          findChildId={benefitOntology.findChildId}
+          path={benefitPath}
+          onPathChange={setBenefitPath}
+          selectedLeaves={selectedBenefitTargets}
+          onToggleLeaf={(label) => setSelectedBenefitTargets((current) => toggleFacetSelection(current, label))}
+          onResetLeaves={() => setSelectedBenefitTargets(null)}
         />
-        <FilterCard
-          group={COMPOUNDS_GROUP}
-          selected={selectedCompounds}
-          onToggle={(label) => setSelectedCompounds((current) => toggleFacetSelection(current, label))}
+        <OntologyDrilldownCard
+          id="source-compound-class-drilldown"
+          levelLabels={COMPOUND_CLASS_LEVEL_LABELS}
+          getChildOptions={(parentId) =>
+            compoundClassOntology.getDynamicChildOptions(parentId, sourcesForCompoundClass)
+          }
+          findChildId={compoundClassOntology.findChildId}
+          path={compoundClassPath}
+          onPathChange={setCompoundClassPath}
+          selectedLeaves={selectedCompoundClasses}
+          onToggleLeaf={(label) => setSelectedCompoundClasses((current) => toggleFacetSelection(current, label))}
+          onResetLeaves={() => setSelectedCompoundClasses(null)}
         />
         <FilterCard
           group={TARGETS_GROUP}

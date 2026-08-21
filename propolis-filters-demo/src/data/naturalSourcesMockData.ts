@@ -7,6 +7,12 @@ import type { NaturalSource } from "../types";
 // verifiable today. Swap this file's contents for the real one when it
 // arrives — the NaturalSource shape in types.ts is designed to take it
 // without changes.
+//
+// benefit/classification/assignedTarget/assignedClass are likewise
+// fabricated *assignments* (per Anna: real ontology labels, not-necessarily-
+// real pairings — same standing call as mockData.ts's compound tagging) so
+// the Benefit and Compound Classes drill-downs carried over from the
+// Compounds tab have real data to drill into here too.
 export const naturalSources: NaturalSource[] = [
   {
     id: "crambe-tartarica",
@@ -19,6 +25,10 @@ export const naturalSources: NaturalSource[] = [
     targets: ["NF-kB", "PI3K", "Akt", "ZO-1", "MUC2", "AMPK", "SIRT1", "FXR", "IL-6", "PPAR-gamma", "Nrf2", "TNF-α", "Caspase-3", "Bcl-2", "mTOR", "STAT3", "JNK"],
     grasSource: "yes",
     nonNovelSource: "yes",
+    benefit: "Restores Mitochondrial Function And Quality",
+    assignedTarget: "Increases SIRT1",
+    classification: "Monoterpenoids",
+    assignedClass: "Secoiridoid monoterpenoids",
   },
   {
     id: "antrodia-cinnamomea",
@@ -31,6 +41,10 @@ export const naturalSources: NaturalSource[] = [
     targets: ["Nrf2", "NF-kB", "TNF-α", "PGC-1α", "SIRT1", "IL-6", "COX-2"],
     grasSource: "no",
     nonNovelSource: "yes",
+    benefit: "Prevents Muscle Protein Degradation And Atrophy",
+    assignedTarget: "Decreases NF-kB",
+    classification: "Flavonoids",
+    assignedClass: "Flavonolignans",
   },
   {
     id: "withania-somnifera",
@@ -43,5 +57,9 @@ export const naturalSources: NaturalSource[] = [
     targets: ["BDNF", "GABA-A", "HPA Axis"],
     grasSource: "yes",
     nonNovelSource: "no",
+    benefit: "Promotes Muscle Hypertrophy And Adaptive Growth",
+    assignedTarget: "Increases AKT Phosphorylation",
+    classification: "Triterpenoids",
+    assignedClass: "Ursane and Taraxastane triterpenoids",
   },
 ];

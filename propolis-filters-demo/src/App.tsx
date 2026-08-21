@@ -267,7 +267,9 @@ export default function App() {
             <>
               <FilterToolbar resultCount={resultCount} viewMode={viewMode} onViewModeChange={setViewMode} />
 
-              {filtersVisible && <NaturalSourcesFilterDrawer key={naturalSourcesResetKey} />}
+              {filtersVisible && (
+                <NaturalSourcesFilterDrawer key={naturalSourcesResetKey} sources={naturalSources} />
+              )}
 
               <FilterToggleBar
                 visible={filtersVisible}

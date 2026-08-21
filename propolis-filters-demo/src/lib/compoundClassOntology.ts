@@ -1,5 +1,5 @@
 import ontologyData from "../data/compoundClassOntology.json";
-import type { Compound, FilterOption } from "../types";
+import type { FilterOption } from "../types";
 import type { FacetSelection } from "./facets";
 import {
   findChildId as findChildIdGeneric,
@@ -9,6 +9,14 @@ import {
 } from "./ontologyDrilldown";
 
 export type { PathEntry } from "./ontologyDrilldown";
+
+// See the identical comment in benefitOntology.ts — generic over anything
+// carrying `classification`/`assignedClass` (Compound and NaturalSource
+// both do) rather than hardcoding Compound.
+interface CompoundClassTaggable {
+  classification?: string;
+  assignedClass?: string;
+}
 
 /**
  * Real NPClassifier natural-product classification tree (pathway →
@@ -29,15 +37,15 @@ export function findChildId(parentId: string | null, label: string): string | un
   return findChildIdGeneric(tree, parentId, label);
 }
 
-/** `compounds` should be the set matching every *other* currently-active filter — see App.tsx. */
-export function getDynamicChildOptions(parentId: string | null, compounds: Compound[]): FilterOption[] {
-  const values = compounds.map((c) => ({ coarseValue: c.classification, exactValue: c.assignedClass }));
+/** `items` should be the set matching every *other* currently-active filter — see App.tsx. */
+export function getDynamicChildOptions(parentId: string | null, items: CompoundClassTaggable[]): FilterOption[] {
+  const values = items.map((item) => ({ coarseValue: item.classification, exactValue: item.assignedClass }));
   return getDynamicChildOptionsGeneric(tree, parentId, values);
 }
 
-export function matchesSelectedClasses(compound: Compound, selected: FacetSelection): boolean {
+export function matchesSelectedClasses(item: CompoundClassTaggable, selected: FacetSelection): boolean {
   return matchesSelectedLeaves(tree, selected, {
-    coarseValue: compound.classification,
-    exactValue: compound.assignedClass,
+    coarseValue: item.classification,
+    exactValue: item.assignedClass,
   });
 }

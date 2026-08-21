@@ -1,5 +1,5 @@
 import ontologyData from "../data/benefitOntology.json";
-import type { Compound, FilterOption } from "../types";
+import type { FilterOption } from "../types";
 import type { FacetSelection } from "./facets";
 import {
   findChildId as findChildIdGeneric,
@@ -9,6 +9,16 @@ import {
 } from "./ontologyDrilldown";
 
 export type { PathEntry } from "./ontologyDrilldown";
+
+// Anything taggable against this tree — Compound and NaturalSource both
+// carry `benefit`/`assignedTarget` with identical meaning (see the field
+// comments on each in types.ts), so this stays generic over both rather
+// than hardcoding Compound and forcing a second near-duplicate module for
+// Natural Sources' own Benefit drill-down.
+interface BenefitTaggable {
+  benefit?: string;
+  assignedTarget?: string;
+}
 
 /**
  * Real Brightseed health/benefit ontology (health_area → benefit →
@@ -25,15 +35,15 @@ export function findChildId(parentId: string | null, label: string): string | un
   return findChildIdGeneric(tree, parentId, label);
 }
 
-/** `compounds` should be the set matching every *other* currently-active filter — see App.tsx. */
-export function getDynamicChildOptions(parentId: string | null, compounds: Compound[]): FilterOption[] {
-  const values = compounds.map((c) => ({ coarseValue: c.benefit, exactValue: c.assignedTarget }));
+/** `items` should be the set matching every *other* currently-active filter — see App.tsx. */
+export function getDynamicChildOptions(parentId: string | null, items: BenefitTaggable[]): FilterOption[] {
+  const values = items.map((item) => ({ coarseValue: item.benefit, exactValue: item.assignedTarget }));
   return getDynamicChildOptionsGeneric(tree, parentId, values);
 }
 
-export function matchesSelectedTargets(compound: Compound, selected: FacetSelection): boolean {
+export function matchesSelectedTargets(item: BenefitTaggable, selected: FacetSelection): boolean {
   return matchesSelectedLeaves(tree, selected, {
-    coarseValue: compound.benefit,
-    exactValue: compound.assignedTarget,
+    coarseValue: item.benefit,
+    exactValue: item.assignedTarget,
   });
 }
