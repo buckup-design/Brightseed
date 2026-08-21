@@ -83,7 +83,7 @@ export default function OntologyDrilldownCard({
       <>
         <button
           type="button"
-          className="underline hover:text-muted-foreground"
+          className="text-left underline hover:text-muted-foreground"
           onClick={() => navigateBackTo(-1)}
         >
           {levelLabels[0]}
@@ -93,7 +93,7 @@ export default function OntologyDrilldownCard({
           <span key={entry.id}>
             <button
               type="button"
-              className="underline hover:text-muted-foreground"
+              className="text-left underline hover:text-muted-foreground"
               onClick={() => navigateBackTo(index)}
             >
               {entry.label}
