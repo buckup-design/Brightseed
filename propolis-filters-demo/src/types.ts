@@ -55,3 +55,20 @@ export interface Compound {
   assignedTarget?: string;
   assignedClass?: string;
 }
+
+export interface NaturalSource {
+  id: string;
+  name: string;
+  // Drives which icon renders in the card header (leaf vs. mushroom).
+  sourceType: "plant" | "fungus";
+  description: string;
+  knownCompounds: string[];
+  // 0 → the "Forager predicted bioactives" row is omitted entirely.
+  predictedCompoundCount: number;
+  targets: string[];
+  // "yes"/"no" strings, matching Compound.grasSource/nonNovelSource's
+  // convention exactly (raw spreadsheet-cell values, not booleans) — see
+  // matchesFlag in lib/scoreFilters.ts.
+  grasSource?: string;
+  nonNovelSource?: string;
+}

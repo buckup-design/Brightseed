@@ -12,8 +12,9 @@ import FilterDrawer, {
 } from "./components/FilterDrawer";
 import NaturalSourcesFilterDrawer from "./components/NaturalSourcesFilterDrawer";
 import CardGrid from "./components/CardGrid";
-import EmptyState from "./components/EmptyState";
+import NaturalSourceCardGrid from "./components/NaturalSourceCardGrid";
 import { compounds } from "./data/mockData";
+import { naturalSources } from "./data/naturalSourcesMockData";
 import type { Compound } from "./types";
 import { countEvidenceTypes, matchesEvidenceType, type EvidenceTypeValue } from "./lib/evidenceType";
 import { matchesSelectedTargets } from "./lib/benefitOntology";
@@ -51,6 +52,9 @@ export default function App() {
   const [selectedCompoundClasses, setSelectedCompoundClasses] = useState<FacetSelection>(null);
   const [selectedTargets, setSelectedTargets] = useState<FacetSelection>(null);
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
+  // Natural Sources' own favorites — separate id namespace from compounds',
+  // mirrors the same pattern exactly.
+  const [sourceFavorites, setSourceFavorites] = useState<Set<string>>(new Set());
   const [evidenceType, setEvidenceType] = useState<EvidenceTypeValue>("any");
 
   // Feasibility / Novelty / Safety panel — sliders default to each field's
@@ -74,6 +78,10 @@ export default function App() {
 
   const toggleFavorite = (id: string) => {
     setFavorites((current) => toggleSetValue(current, id));
+  };
+
+  const toggleSourceFavorite = (id: string) => {
+    setSourceFavorites((current) => toggleSetValue(current, id));
   };
 
   const resetCompoundFilters = () => {
@@ -210,8 +218,7 @@ export default function App() {
     onRequiresNonNovelChange: setRequiresNonNovel,
   };
 
-  // Natural Sources has no dataset yet — results area is intentionally empty.
-  const resultCount = activeTab === "compounds" ? filteredCompounds.length : 0;
+  const resultCount = activeTab === "compounds" ? filteredCompounds.length : naturalSources.length;
 
   return (
     <div className="flex h-screen w-full bg-white text-foreground">
@@ -268,8 +275,11 @@ export default function App() {
                 onReset={() => setNaturalSourcesResetKey((key) => key + 1)}
               />
 
-              {/* No Natural Sources dataset exists yet, so this is always empty for now. */}
-              <EmptyState message="No matching sources found." />
+              <NaturalSourceCardGrid
+                sources={naturalSources}
+                favorites={sourceFavorites}
+                onToggleFavorite={toggleSourceFavorite}
+              />
             </>
           )}
         </div>
