@@ -8,7 +8,7 @@ interface FilterToggleBarProps {
 
 export default function FilterToggleBar({ visible, onToggle, onReset }: FilterToggleBarProps) {
   return (
-    <div className="flex items-center justify-end gap-1 bg-muted px-6 py-0.5 shadow-md">
+    <div className="relative z-10 flex items-center justify-end gap-1 bg-muted px-6 py-0.5 shadow-md">
       <button
         type="button"
         onClick={onReset}
