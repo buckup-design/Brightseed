@@ -6,6 +6,7 @@ import type { NaturalSource } from "../types";
 
 const MAX_VISIBLE_KNOWN_COMPOUNDS = 3;
 const MAX_VISIBLE_TARGETS = 5;
+const MAX_COMPOUND_LABEL_LENGTH = 24;
 
 interface NaturalSourceCardProps {
   source: NaturalSource;
@@ -31,7 +32,11 @@ export default function NaturalSourceCard({
     <div className="flex flex-col rounded-xl border border-border bg-card shadow-xs">
       <div className="flex flex-col gap-2 p-4">
         <div className="flex items-center justify-between">
-          <div className="flex size-6 shrink-0 items-center justify-center">
+          {/* No fixed width here — Tailwind's Preflight caps <img> at
+              max-width: 100% of its container, so a wrapper narrower than
+              the icon's own w-[...] would squish it. Height-only sizing lets
+              each icon's own width utility actually take effect. */}
+          <div className="flex h-6 shrink-0 items-center">
             {source.sourceType === "plant" ? (
               <img src={leafIcon} alt="" className="h-6 w-[34px]" />
             ) : (
@@ -68,7 +73,7 @@ export default function NaturalSourceCard({
           <div className="flex flex-wrap items-center gap-1.5">
             {visibleKnownCompounds.map((compound) => (
               <Badge key={compound} variant="neutral" shape="chip">
-                {compound}
+                {truncate(compound, MAX_COMPOUND_LABEL_LENGTH)}
               </Badge>
             ))}
             {extraKnownCompounds > 0 && (
@@ -122,4 +127,8 @@ export default function NaturalSourceCard({
       </div>
     </div>
   );
+}
+
+function truncate(value: string, maxLength: number) {
+  return value.length > maxLength ? `${value.slice(0, maxLength)}...` : value;
 }
