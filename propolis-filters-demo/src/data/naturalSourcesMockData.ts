@@ -12,12 +12,13 @@ import type { NaturalSource } from "../types";
 // status says "not novel" -> "yes", says otherwise -> "no"; no such entry
 // -> omitted, unknown rather than assumed "no").
 //
-// benefit/classification/assignedTarget/assignedClass are intentionally
-// left unset: the real app doesn't expose these in a form that maps onto
-// this project's Brightseed benefit/NPClassifier ontology label strings, so
-// none were guessed. These 49 sources simply won't appear in the Benefit/
-// Compound Classes drill-downs until that tagging pass happens (same
-// optionality Compound already has for untagged real compounds).
+// benefit/classification/assignedTarget/assignedClass are fabricated
+// *assignments* over real ontology labels -- round-robin over every real
+// leaf in each tree, same standing call as mockData.ts's compound tagging
+// (real label text throughout, not scientifically verified pairing with
+// this particular source). This is what makes these 49 sources show up in
+// the Benefit and Compound Classes drill-downs; swap in real assignments
+// whenever real ones exist.
 export const naturalSources: NaturalSource[] = [
   {
     id: "aegilops-tauschii",
@@ -27,6 +28,10 @@ export const naturalSources: NaturalSource[] = [
     knownCompounds: ["(+) germacrene a", "(+)-Ajmaline", "(+)-Lactose", "(+)-Pulegone", "(+)-Usnic acid", "(+)-delta-Cadinene", "(+)-isoitalicene", "(+)-trans-Carveol"],
     predictedCompoundCount: 447,
     targets: ["increases nadh", "increases ucp1", "increases ppar alpha expression", "decreases il-12", "decreases bace1", "decreases connexin-45 hemichannels", "increases nrf-2", "increases complex iii proteins"],
+    benefit: "Supports Postpartum Health",
+    assignedTarget: "(GABA(a)) Receptor Positive Modulator",
+    classification: "Anthranilic acid alkaloids",
+    assignedClass: "Acridone alkaloids",
   },
   {
     id: "anacardium-occidentale",
@@ -37,6 +42,10 @@ export const naturalSources: NaturalSource[] = [
     predictedCompoundCount: 456,
     targets: ["decreases collagen iv", "decreases akt", "decreases tak1", "decreases metalloproteinase mmp13", "increases collagen type i", "increases caspase-3", "decreases phospho akt", "decreases demineralization"],
     grasSource: "yes",
+    benefit: "Improved Mood",
+    assignedTarget: "5-HT1A Receptor Agonist",
+    classification: "Anthranilic acid alkaloids",
+    assignedClass: "Anthranillic acid derivatives",
   },
   {
     id: "arabidopsis-thaliana",
@@ -46,6 +55,10 @@ export const naturalSources: NaturalSource[] = [
     knownCompounds: ["1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "2-Amino-2-Deoxy-D-Galactopyranose", "2-carboxy-d-arabinitol", "2365-40-4", "CARVONE", "Coprosterol", "D-Rhamnose", "ERYTHRITOL"],
     predictedCompoundCount: 520,
     targets: ["decreases mapk phosphorylation", "lxrα agonist", "decreases lipogenesis", "decreases hs-crp", "decreases  nf-kb", "decreases pulmonary artery vascular smooth muscle cell (pasmc) proliferation", "trpv1 agonist", "increases akt2 expression"],
+    benefit: "Pain Management",
+    assignedTarget: "5-HT1A Receptor Positive Allosteric Modulator",
+    classification: "Anthranilic acid alkaloids",
+    assignedClass: "Benzodiazepine alkaloids",
   },
   {
     id: "asparagus-officinalis",
@@ -56,6 +69,10 @@ export const naturalSources: NaturalSource[] = [
     predictedCompoundCount: 388,
     targets: ["decreases il-17", "inhibition of protein synthesis", "increases atg12", "decreases matrix metalloproteinase-9", "decreases melanosome transfer to keratinocytes", "decreases  cox-2", "decreases murf1", "stimulation of fat oxidation for increased energy expenditure"],
     grasSource: "yes",
+    benefit: "Improved Mood",
+    assignedTarget: "5-HT2A Receptor Antagonist",
+    classification: "Anthranilic acid alkaloids",
+    assignedClass: "Phenazine alkaloids",
   },
   {
     id: "beta-vulgaris",
@@ -66,6 +83,10 @@ export const naturalSources: NaturalSource[] = [
     predictedCompoundCount: 422,
     targets: ["decreases c/ebpα", "promote autophagy", "decreases cebp/d promoter activity", "increases nqo1", "increases maltase", "glucocorticoid receptor agonist", "increases p38 mapk", "increases mir103"],
     grasSource: "yes",
+    benefit: "Improved Mood",
+    assignedTarget: "5-HT2C Receptor Antagonist",
+    classification: "Anthranilic acid alkaloids",
+    assignedClass: "Phenoxazine alkaloids",
   },
   {
     id: "cajanus-cajan",
@@ -77,6 +98,10 @@ export const naturalSources: NaturalSource[] = [
     targets: ["increases adiponectin", "increases thyroxine (t4)", "increases alkaline phosphatase alp", "increases pdk4", "il-1r antagonist", "increases bcl2", "increases zo-1", "decreases tlr4"],
     grasSource: "yes",
     nonNovelSource: "yes",
+    benefit: "Pain Management",
+    assignedTarget: "5-HT3 Receptor Agonist",
+    classification: "Anthranilic acid alkaloids",
+    assignedClass: "Quinazoline alkaloids",
   },
   {
     id: "camellia-sinensis-var-sinensis",
@@ -86,6 +111,10 @@ export const naturalSources: NaturalSource[] = [
     knownCompounds: ["delta7-Avenasterol", "(+) germacrene a", "(+)-Gallocatechin", "(+)-Lactose", "(+)-Pulegone", "(+)-Usnic acid", "(+)-catechin-(4alpha->8)-(-)-epigallocatechin", "(+)-trans-Carveol"],
     predictedCompoundCount: 406,
     targets: ["cannabinoid cb1 receptor agonist", "increases protein synthesis", "decreases stat1", "decreases substance p", "decreases glycogen phosphorylase", "decreases pancreatic lipase", "decreases mmp-9", "decreases ffa"],
+    benefit: "Improved Mood",
+    assignedTarget: "5-HT3 Receptor Antagonist",
+    classification: "Tryptophan alkaloids",
+    assignedClass: "Quinoline alkaloids",
   },
   {
     id: "cannabis-sativa",
@@ -97,6 +126,10 @@ export const naturalSources: NaturalSource[] = [
     targets: ["increases gamma interferon", "decreases ampk", "increases protein kinase b", "enhanced  mitochondrial biogenesis", "increase radical scavenging", "decreases sflt-1", "decreases p21", "increases pgc1a expression in subcutaneous adipose tissue"],
     grasSource: "yes",
     nonNovelSource: "yes",
+    benefit: "Improves Symptoms Of Intestinal Disturbance",
+    assignedTarget: "5-HT3 Receptor Antagonists",
+    classification: "Histidine alkaloids",
+    assignedClass: "Imidazole alkaloids",
   },
   {
     id: "capsicum-annuum",
@@ -107,6 +140,10 @@ export const naturalSources: NaturalSource[] = [
     predictedCompoundCount: 540,
     targets: ["decreases bcl-2", "normalizes rorc", "decreases pi3k/akt", "increases tgf-beta", "decreases cinc-1", "δ-opioid receptor agonist", "decreases hsp 70", "decreases atf4"],
     grasSource: "yes",
+    benefit: "Enhanced Focus",
+    assignedTarget: "A2A Receptor Antagonist",
+    classification: "Lysine alkaloids",
+    assignedClass: "Indolizidine alkaloids",
   },
   {
     id: "catharanthus-roseus",
@@ -117,6 +154,10 @@ export const naturalSources: NaturalSource[] = [
     predictedCompoundCount: 499,
     targets: ["decreases p62", "decreases casein kinase 2 alpha", "decreases cd36/fat", "increases tnfa", "decreases p47phox subunit of nadph oxidase", "increases anagen phase duration", "retinoic acid receptor agonist", "decreases gata-3"],
     grasSource: "yes",
+    benefit: "Decreases Interocular Pressure",
+    assignedTarget: "Acetylcholinesterase Inhibitor",
+    classification: "Lysine alkaloids",
+    assignedClass: "Piperidine alkaloids",
   },
   {
     id: "chenopodium-quinoa",
@@ -128,6 +169,10 @@ export const naturalSources: NaturalSource[] = [
     targets: ["decreases mmp-2", "decreases vldl", "decreases apolipoprotein b", "decreases mek5", "decreases glia cell activation", "decreases fbxw8", "decreases ptp1b", "decreases il-22"],
     grasSource: "yes",
     nonNovelSource: "yes",
+    benefit: "Restores Mitochondrial Function And Quality",
+    assignedTarget: "Activates AdipoR1",
+    classification: "Lysine alkaloids",
+    assignedClass: "Quinolizidine alkaloids",
   },
   {
     id: "cicer-arietinum",
@@ -139,6 +184,10 @@ export const naturalSources: NaturalSource[] = [
     targets: ["glp-1 receptor agonist", "decreases p21 mrna", "increases lcat", "decreases hif-1α", "decreases cox-2", "increases gsh-px", "decreases prostaglandins", "increases mfn2"],
     grasSource: "yes",
     nonNovelSource: "no",
+    benefit: "Promotes Muscle Hypertrophy And Adaptive Growth",
+    assignedTarget: "Activates Akt Signaling",
+    classification: "Nicotinic acid alkaloids",
+    assignedClass: "Pyridine alkaloids",
   },
   {
     id: "citrus-sinensis",
@@ -150,6 +199,10 @@ export const naturalSources: NaturalSource[] = [
     targets: ["decreases bcl-2", "decreases pi3k/akt", "decreases cinc-1", "decreases hsp 70", "increases udp-glucuronosyltransferase", "δ-opioid receptor agonist", "decreases akt activation", "viral entry (endocytosis or fusion)"],
     grasSource: "yes",
     nonNovelSource: "no",
+    benefit: "Restores Mitochondrial Function And Quality",
+    assignedTarget: "Activates AMPK",
+    classification: "Ornithine alkaloids",
+    assignedClass: "Polyamines",
   },
   {
     id: "cuscuta-campestris",
@@ -159,6 +212,10 @@ export const naturalSources: NaturalSource[] = [
     knownCompounds: ["Alpha-Linolenic acid", "(+) germacrene a", "(+)-Lactose", "(+)-Usnic acid", "(-)-Asarinin", "(-)-Glycinol", "(-)-Isokaurene", "(-)-pinoresinol"],
     predictedCompoundCount: 340,
     targets: ["decreases il-5", "increases testosterone", "decreases mcl1", "decreases iba-1", "release of new viruses from host cell", "decreases gamma interferon", "decreases dgat1", "decreases cullin1"],
+    benefit: "Improved Learning And Memory",
+    assignedTarget: "Activates Creatine Kinase B-type (CKB)",
+    classification: "Ornithine alkaloids",
+    assignedClass: "Pyrrolidine alkaloids",
   },
   {
     id: "erythranthe-glabrata",
@@ -168,6 +225,10 @@ export const naturalSources: NaturalSource[] = [
     knownCompounds: ["(+) germacrene a", "(+)-Ajmaline", "(+)-Lactose", "(+)-Ledene", "(+)-Pulegone", "(+)-Usnic acid", "(-)-Asarinin", "(-)-Glycinol"],
     predictedCompoundCount: 398,
     targets: ["increases bone morphogenetic protein bmp2", "decreases tarc", "decreases glioma-associated oncogene 1", "reduced pro-inflammatory signaling", "decreases cox-1", "increases caspase 3", "replication of viral genome", "increases duration of attention span"],
+    benefit: "Restores Mitochondrial Function And Quality",
+    assignedTarget: "Activates Mitochondrial Calcium Uniporter (MCU)",
+    classification: "Ornithine alkaloids",
+    assignedClass: "Pyrrolizidine alkaloids",
   },
   {
     id: "erythranthe-guttata",
@@ -177,6 +238,10 @@ export const naturalSources: NaturalSource[] = [
     knownCompounds: ["(+)-Ajmaline", "(+)-Lactose", "(+)-Ledene", "(+)-Pulegone", "(+)-Usnic acid", "(-)-Isokaurene", "(1S,4S,9S,10R,13S)-5,5,9-trimethyl-14-methylidenetetracyclo[11.2.1.01,10.04,9]hexadecane", "(1e)-1-{[(1e)-prop-1-ene-1-sulfinyl]sulfanyl}prop-1-ene"],
     predictedCompoundCount: 427,
     targets: [],
+    benefit: "Regulation Of Nutrient Sensing",
+    assignedTarget: "Activates PCG-1α",
+    classification: "Ornithine alkaloids",
+    assignedClass: "Tropane alkaloids",
   },
   {
     id: "eucalyptus-grandis",
@@ -186,6 +251,10 @@ export const naturalSources: NaturalSource[] = [
     knownCompounds: ["2,5-DIHYDROXYBENZOIC ACID", "3,4-DIHYDROXYBENZOIC ACID", "(+) germacrene a", "(+)-Ajmaline", "(+)-Lactose", "(+)-Pulegone", "(+)-Usnic acid", "(+)-isoitalicene"],
     predictedCompoundCount: 425,
     targets: ["glucocorticoid receptor agonist", "decreases irs-1", "increases mir103", "increases nqo1", "increases p38 mapk", "increases maltase", "decreases c/ebpα", "decreases cebp/d promoter activity"],
+    benefit: "Weight Management",
+    assignedTarget: "Activation Of Browning/thermogenesis",
+    classification: "Peptide alkaloids",
+    assignedClass: "Indole diketopiperazine alkaloids (L-Trp, L-Pro)",
   },
   {
     id: "fragaria-vesca",
@@ -196,6 +265,10 @@ export const naturalSources: NaturalSource[] = [
     predictedCompoundCount: 436,
     targets: ["decreases acetylcholinesterase", "decreses caspase-3", "increases claudin-4", "increases glycosaminoglycan", "decreases hmgb1/tlr4", "decreases gbpb", "increases phosphorylated akt", "decreases tnfα"],
     grasSource: "yes",
+    benefit: "Promotes Mitochondrial Health",
+    assignedTarget: "Activation Of Mitophagy",
+    classification: "Peptide alkaloids",
+    assignedClass: "Other indole diketopiperazine alkaloids",
   },
   {
     id: "ginkgo-biloba",
@@ -207,6 +280,10 @@ export const naturalSources: NaturalSource[] = [
     targets: [],
     grasSource: "yes",
     nonNovelSource: "yes",
+    benefit: "Pain Management",
+    assignedTarget: "Adenosine A1 Receptor Agonist",
+    classification: "Tetramate alkaloids",
+    assignedClass: "Pyrazine and Piperazine alkaloids",
   },
   {
     id: "ginkgo-biloba-cv-pendula",
@@ -218,6 +295,10 @@ export const naturalSources: NaturalSource[] = [
     targets: ["increases caspase-3 activation", "decreases aspartate aminotransferase (ast)", "increases foxp3 expression in t cells", "decreases connexin-43 hemichannels", "decreases e2f1", "decreases caspase 3", "decreases 4-hne", "decreases mmp9"],
     grasSource: "yes",
     nonNovelSource: "yes",
+    benefit: "Pain Management",
+    assignedTarget: "Adenosine A2 Receptor Agonist",
+    classification: "Peptide alkaloids",
+    assignedClass: "Simple amide alkaloids",
   },
   {
     id: "hordeum-vulgare",
@@ -229,6 +310,10 @@ export const naturalSources: NaturalSource[] = [
     targets: [],
     grasSource: "yes",
     nonNovelSource: "yes",
+    benefit: "Promotes Sleep",
+    assignedTarget: "Adenosine A2A PAM",
+    classification: "Peptide alkaloids",
+    assignedClass: "Simple diketopiperazine alkaloids",
   },
   {
     id: "hordeum-vulgare-cv-seco",
@@ -240,6 +325,10 @@ export const naturalSources: NaturalSource[] = [
     targets: ["decreases spap", "increases atp synthesis or stores", "increases beclin-1", "decreases lipid peroxidation", "decreases traf6", "class b scavenger receptor (sr-b1) antagonist", "decreases collagen-iii", "decreases igf-1"],
     grasSource: "yes",
     nonNovelSource: "yes",
+    benefit: "Promotes Sleep",
+    assignedTarget: "Adenosine A2A Receptor Agonist",
+    classification: "Proline alkaloids",
+    assignedClass: "Pyrrole alkaloids",
   },
   {
     id: "humulus-lupulus",
@@ -250,6 +339,10 @@ export const naturalSources: NaturalSource[] = [
     predictedCompoundCount: 505,
     targets: ["increases akt/pi3k pathway activation", "increased mucus production", "decreases proton leakage", "increases nitric oxide (no)", "decreases pikka", "increases cytochrome c oxidase", "decreases bax", "increases pparγ"],
     grasSource: "yes",
+    benefit: "Promotes Sleep",
+    assignedTarget: "Adenosine A2A Receptor Antagonist",
+    classification: "Pseudoalkaloids",
+    assignedClass: "Acetate-derived alkaloids",
   },
   {
     id: "lactuca-sativa",
@@ -259,6 +352,10 @@ export const naturalSources: NaturalSource[] = [
     knownCompounds: ["(2S,5S)-2-[2-(3,4-dihydroxyphenyl)-5,7-dihydroxychromenylium-3-yl]oxy-6-(hydroxymethyl)oxane-3,4,5-triol", "1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "Gallic acid", "Lactucin", "Oleic acid", "benzoate", "luteolin", "GIBBERELLIC ACID"],
     predictedCompoundCount: 431,
     targets: ["increases bdnf", "increases tissue inhibitor of matrix metalloproteinase 1 (timp-1)", "decreases abcg2", "decreases ikkb", "increases sirt6", "increases intestinal  zo-1", "decreases neuronal protein oxidation", "increases ho-1"],
+    benefit: "Promotes Sleep",
+    assignedTarget: "Adenosine Analog",
+    classification: "Pseudoalkaloids",
+    assignedClass: "Azo and Azoxy alkaloids",
   },
   {
     id: "linum-usitatissimum",
@@ -270,6 +367,10 @@ export const naturalSources: NaturalSource[] = [
     targets: ["inhibit pi3k", "decreases parp", "decreases cd38", "increases mitofusin 1", "decreases il-5", "decreases dgat1", "increases testosterone", "release of new viruses from host cell"],
     grasSource: "yes",
     nonNovelSource: "yes",
+    benefit: "Promotes Sleep",
+    assignedTarget: "Adenosine Transport Inhibitor",
+    classification: "Pseudoalkaloids",
+    assignedClass: "Capsaicins and Capsaicinoids",
   },
   {
     id: "malus-domestica",
@@ -280,6 +381,10 @@ export const naturalSources: NaturalSource[] = [
     predictedCompoundCount: 465,
     targets: ["decreases il-23", "decreases tlr2", "decreased pink1/parkin expression", "decreases ccl11", "decreases mapk signaling", "increases atg7", "increases caspase-9", "decreases p16"],
     grasSource: "yes",
+    benefit: "Improved Learning And Memory",
+    assignedTarget: "AhR Agonist",
+    classification: "Pseudoalkaloids",
+    assignedClass: "Isoindole alkaloids",
   },
   {
     id: "manihot-esculenta",
@@ -291,6 +396,10 @@ export const naturalSources: NaturalSource[] = [
     targets: ["increases sirt3", "decreases adiponectin", "increases cell cycle arrest", "increases slc27a1", "increases sod", "increases cola1", "increases estrogen receptor a (er-a) signaling", "increases satellite cell differentiation"],
     grasSource: "yes",
     nonNovelSource: "yes",
+    benefit: "Improves Skin Texture",
+    assignedTarget: "Aldosterone Receptor Agonist",
+    classification: "Pseudoalkaloids",
+    assignedClass: "Phenylalanine-derived alkaloids",
   },
   {
     id: "medicago-truncatula",
@@ -300,6 +409,10 @@ export const naturalSources: NaturalSource[] = [
     knownCompounds: ["3-hydroxy-p-menth-1-en-6-one", "Alpha-Ionone", "Isoliquiritigenin", "P-CYMENE", "Platambin", "(-)-Medicocarpin", "(3S,4aR,6aR,6bR,8aR,12S,12aR,12bR,14aR,14bR)-4,4,6a,6b,8a,12,14b-heptamethyl-11-methylidene-docosahydropicen-3-yl hexadecanoate", "Afrormosin"],
     predictedCompoundCount: 455,
     targets: ["other", "decreases il-2", "trpa1 antagonist", "increases glucokinase", "increases atgl", "increases gpx4", "increases dynamin-related protein", "decreases hif-1⍺"],
+    benefit: "Increase Blood Flow",
+    assignedTarget: "Aldosterone Receptor Antagonist",
+    classification: "Pseudoalkaloids",
+    assignedClass: "Purine alkaloids",
   },
   {
     id: "musa-acuminata",
@@ -310,6 +423,10 @@ export const naturalSources: NaturalSource[] = [
     predictedCompoundCount: 366,
     targets: ["decreases cox-2", "decreases stat6", "increases gsh-px", "increases mfn2", "decreases prostaglandins", "decreases erk5", "decreases ifg-1r-pi3k/akt pathway activation", "increases sirt-3"],
     nonNovelSource: "yes",
+    benefit: "Decreases Interocular Pressure",
+    assignedTarget: "Alpha Adrenergic Receptor Agonist",
+    classification: "Pseudoalkaloids",
+    assignedClass: "Steroidal alkaloids",
   },
   {
     id: "nelumbo-nucifera",
@@ -321,6 +438,10 @@ export const naturalSources: NaturalSource[] = [
     targets: ["decreases hif-1⍺", "decreases mmp-8", "increases dynamin-related protein", "other", "increases atgl", "decreases il-2", "increases gpx4", "increases glucokinase"],
     grasSource: "yes",
     nonNovelSource: "yes",
+    benefit: "Decreases Coughing",
+    assignedTarget: "Alpha Adrengergic Receptor Agonist",
+    classification: "Pseudoalkaloids",
+    assignedClass: "Terpenoid alkaloids",
   },
   {
     id: "nicotiana-tabacum",
@@ -331,6 +452,10 @@ export const naturalSources: NaturalSource[] = [
     predictedCompoundCount: 507,
     targets: ["increased bnip3/nix expression", "gaba-a receptor agonist", "decreases il-1b", "maintains alkaline phosphatase alp", "increases oxidative phosphorylation", "decreases fabp4/a-fabp/ap2", "increases pparα", "decreases nlrp3"],
     grasSource: "yes",
+    benefit: "Supports Healthy Prostate Size",
+    assignedTarget: "Alpha-1 Adrenergic Antagonist",
+    classification: "Pseudoalkaloids",
+    assignedClass: "pteridine alkaloids",
   },
   {
     id: "olea-europaea",
@@ -342,6 +467,10 @@ export const naturalSources: NaturalSource[] = [
     targets: ["decreases pparγ", "decreases tnf⍺", "decreases erk1/2 activation", "pi3k/akt activators", "decreases ho-1", "α2-adrenergic receptor agonist", "decreases cd86", "increases creb"],
     grasSource: "yes",
     nonNovelSource: "yes",
+    benefit: "Prevents Kidney Stones",
+    assignedTarget: "Alpha-1a Adrenergic Antagonist",
+    classification: "Serine alkaloids",
+    assignedClass: "Thiazole alkaloids",
   },
   {
     id: "petunia-axillaris",
@@ -351,6 +480,10 @@ export const naturalSources: NaturalSource[] = [
     knownCompounds: ["(+) germacrene a", "(+)-Ajmaline", "(+)-Lactose", "(+)-Ledene", "(+)-Pulegone", "(+)-Usnic acid", "(+)-trans-Carveol", "(-)-Asarinin"],
     predictedCompoundCount: 409,
     targets: ["decreases tak1", "decreases metalloproteinase mmp13", "decreases collagen iv", "increases caspase-3", "increases collagen type i", "decreases phospho akt", "decreases akt", "decreases demineralization"],
+    benefit: "Increase Blood Flow",
+    assignedTarget: "Alpha-1A Adrenoceptor Antagonist",
+    classification: "Tryptophan alkaloids",
+    assignedClass: "Aspidosperma type",
   },
   {
     id: "phaseolus-vulgaris",
@@ -362,6 +495,10 @@ export const naturalSources: NaturalSource[] = [
     targets: ["decreases parp", "inhibit pi3k", "decreases cd38", "decreases cullin1", "decreases ache", "increases mitofusin 1", "decreases il-5", "release of new viruses from host cell"],
     grasSource: "yes",
     nonNovelSource: "no",
+    benefit: "Increase Blood Flow",
+    assignedTarget: "Alpha-1B Adrenoceptor Antagonist",
+    classification: "Tryptophan alkaloids",
+    assignedClass: "Carbazole alkaloids",
   },
   {
     id: "prunus-avium",
@@ -372,6 +509,10 @@ export const naturalSources: NaturalSource[] = [
     predictedCompoundCount: 477,
     targets: ["decreases tnfα", "increases bax", "decreases tryptase", "increases intestinal occludin", "decreases acetylcholinesterase", "decreases gbpb", "increases caspase 9", "increases claudin-4"],
     grasSource: "yes",
+    benefit: "Increase Blood Flow",
+    assignedTarget: "Alpha-1D Adrenoceptor Antagonist",
+    classification: "Tryptophan alkaloids",
+    assignedClass: "Carboline alkaloids",
   },
   {
     id: "prunus-persica",
@@ -383,6 +524,10 @@ export const naturalSources: NaturalSource[] = [
     targets: ["decreases fasn", "decreases pcsk9", "decreases akt activation", "gpr109a agonist", "viral entry (endocytosis or fusion)", "decreases app", "increases collagen type x", "decreases nf-κb phosphorylation"],
     grasSource: "yes",
     nonNovelSource: "yes",
+    benefit: "Increase Blood Flow",
+    assignedTarget: "Alpha-2A Adrenoceptor Agonist",
+    classification: "Tryptophan alkaloids",
+    assignedClass: "Corynanthe type",
   },
   {
     id: "punica-granatum",
@@ -394,6 +539,10 @@ export const naturalSources: NaturalSource[] = [
     targets: ["decreases rbp4", "decreases il-1⍺", "decreases mtorc1", "increases hepatic p62", "increases dysferlin", "decreases mir-221", "decreases ldl", "decreases gsk3β"],
     grasSource: "yes",
     nonNovelSource: "yes",
+    benefit: "Increase Blood Flow",
+    assignedTarget: "Alpha-2B Adrenoceptor Antagonist",
+    classification: "Tryptophan alkaloids",
+    assignedClass: "Ergot alkaloids",
   },
   {
     id: "pyrus-communis",
@@ -403,6 +552,10 @@ export const naturalSources: NaturalSource[] = [
     knownCompounds: ["(+)-Gallocatechin", "1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "5041-82-7", "D-Gal", "Isoquercetin", "Oleic acid", "Procyanidin B2", "all-trans-phytoene"],
     predictedCompoundCount: 414,
     targets: ["decreases perilipin", "decreases npc1l", "decreases reaction time", "decreases cox 2", "decreases protein nitrotyrosylation", "ampk activators", "decreases pepck/pck1", "interference of biofilms (anti-bacterial resistance)"],
+    benefit: "Promotes Healthy Airway Function",
+    assignedTarget: "Alpha-adrenergic Receptor Agonist",
+    classification: "Tryptophan alkaloids",
+    assignedClass: "Pyrroloindole alkaloids",
   },
   {
     id: "quercus-suber",
@@ -412,6 +565,10 @@ export const naturalSources: NaturalSource[] = [
     knownCompounds: ["4-hydroxymellein", "5041-82-7", "Arjunglucoside II", "CAMPESTEROL", "Isoquercetin", "beta-Amyrin", "(1S,2S,20S,42S,46R)-46-[(2R,3R)-2-(3,4-dihydroxyphenyl)-3,5,7-trihydroxy-3,4-dihydro-2H-chromen-6-yl]-7,8,9,12,13,14,25,26,27,30,31,32,35,36,37-pentadecahydroxy-3,18,21,41,43-pentaoxanonacyclo[27.13.3.138,42.02,20.05,10.011,16.023,28.033,45.034,39]hexatetraconta-5,7,9,11,13,15,23,25,27,29(45),30,32,34(39),35,37-pentadecaene-4,17,22,40,44-pentone", "(9e)-18-hydroxyoctadec-9-enoic acid"],
     predictedCompoundCount: 446,
     targets: ["increases ulk1", "protection/regeneration of pancreatic β-cells", "increases pink1 (pink-1)", "decreases myostatin", "increases vascular endothelial growth factor-a vegf", "decreases gsk3b", "decreases tbars/lipid peroxidation", "increases myogenic regulatory factor-5 (myf5)"],
+    benefit: "Prostate Chemopreventative",
+    assignedTarget: "Alpha-reductase Inhibitor",
+    classification: "Tryptophan alkaloids",
+    assignedClass: "Pyrroloquinoline alkaloids",
   },
   {
     id: "salvia-miltiorrhiza",
@@ -423,6 +580,10 @@ export const naturalSources: NaturalSource[] = [
     targets: ["decreases il-25", "increases sirt1", "decreases il-4", "enhanced mitochondrial fusion", "increases pgc-1 alpha", "increases hemoglobin", "decreases p53", "decreases irak4"],
     grasSource: "yes",
     nonNovelSource: "yes",
+    benefit: "Improves Gut Barrier Function",
+    assignedTarget: "altering microbiota composition",
+    classification: "Tryptophan alkaloids",
+    assignedClass: "Simple indole alkaloids",
   },
   {
     id: "solanum-lycopersicum",
@@ -434,6 +595,10 @@ export const naturalSources: NaturalSource[] = [
     targets: ["decreases il-2", "other", "increases atgl", "increases gpx4", "trpa1 antagonist", "increases glucokinase", "increases dynamin-related protein", "decreases hif-1⍺"],
     grasSource: "yes",
     nonNovelSource: "no",
+    benefit: "Enhance Delivery And Utilization Of Substrates In Working Muscle",
+    assignedTarget: "AMPK Activators",
+    classification: "Tryptophan alkaloids",
+    assignedClass: "Simple oxindole alkaloids",
   },
   {
     id: "solanum-melongena",
@@ -443,6 +608,10 @@ export const naturalSources: NaturalSource[] = [
     knownCompounds: ["1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "Gallic acid", "Oleic acid", "Phenethylamine", "benzoate", "luteolin", "norepinephrine", "Obtusifoliol"],
     predictedCompoundCount: 470,
     targets: ["increases catalase", "increases akt", "decreases il-1", "increases sirt-1", "decreases alkaline phosphatase (alp)", "increases myoblast determination protein 1 ( myod)", "decreases pge2", "increases sirt1"],
+    benefit: "Increase Adaptive Muscle Growth",
+    assignedTarget: "Androgen Receptor Agonist",
+    classification: "Tryptophan alkaloids",
+    assignedClass: "Yohimbine-like alkaloids",
   },
   {
     id: "solanum-tuberosum",
@@ -453,6 +622,10 @@ export const naturalSources: NaturalSource[] = [
     predictedCompoundCount: 472,
     targets: ["decreases jnk", "increases myogenic regulatory factor-5 (myf5)", "increases trkb", "decreases tbars/lipid peroxidation", "decreases pjnk", "blocks cav2.2 channel", "increased keratinocyte proliferation", "decreases myostatin"],
     grasSource: "yes",
+    benefit: "Increase Blood Flow",
+    assignedTarget: "Angiotensin (AT)1 Receptor  Antagonist",
+    classification: "Tyrosine alkaloids",
+    assignedClass: "Amarylidaceae alkaloids",
   },
   {
     id: "sorghum-bicolor",
@@ -463,6 +636,10 @@ export const naturalSources: NaturalSource[] = [
     predictedCompoundCount: 435,
     targets: ["decreases aβ42 oligomers and fibrils", "decreases foxo activation", "decreases egfr", "decreases phospho-akt", "increases mitotic arrest", "decreases mmp-3", "decreases ca2+ flux", "increases perk"],
     nonNovelSource: "yes",
+    benefit: "Increase Blood Flow",
+    assignedTarget: "Angiotensin (AT)2 Receptor Antagonist",
+    classification: "Tyrosine alkaloids",
+    assignedClass: "Aporphine alkaloids",
   },
   {
     id: "spinacia-oleracea",
@@ -473,6 +650,10 @@ export const naturalSources: NaturalSource[] = [
     predictedCompoundCount: 402,
     targets: ["decreases tlr4", "increases zo-1", "decreases pnfkb", "increases igf-1", "decreases cortisol", "increases bcl2", "increases tmem26 in subcutaneous adipose tissue", "decreases cleaved caspase-3"],
     grasSource: "yes",
+    benefit: "Increase Cardiac Output",
+    assignedTarget: "Angiotensin I Receptor Antagonist",
+    classification: "Tyrosine alkaloids",
+    assignedClass: "Betalain alkaloids",
   },
   {
     id: "spirodela-polyrhiza",
@@ -482,6 +663,10 @@ export const naturalSources: NaturalSource[] = [
     knownCompounds: ["1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "578-74-5", "Isovitexin", "luteolin", "luteolin 7-O-beta-d-glucopyranoside", "(+)-Lactose", "(+)-delta-Cadinene", "(-)-Glycinol"],
     predictedCompoundCount: 307,
     targets: ["decreases iba-1", "decreases il-5", "decreases mcl1", "increases testosterone", "decreases oxidative stress", "decreases gamma interferon", "decreases dgat1", "increases nad+/nadh ratio"],
+    benefit: "Improves Blood Filtration",
+    assignedTarget: "Angiotensin II Receptor Antagonist",
+    classification: "Tyrosine alkaloids",
+    assignedClass: "Cephalotaxus alkaloids",
   },
   {
     id: "theobroma-cacao",
@@ -493,6 +678,10 @@ export const naturalSources: NaturalSource[] = [
     targets: ["decreases icam-1", "decreases srebp", "increases sr-bi", "decreases keap1", "increases srebp-2", "increases il-10", "increases occludin", "increases vdac (porin)"],
     grasSource: "yes",
     nonNovelSource: "yes",
+    benefit: "Increase Blood Flow",
+    assignedTarget: "Angiotensin-converting Enzyme (ACE) Inhibitor",
+    classification: "Tyrosine alkaloids",
+    assignedClass: "Hasubanan alkaloids",
   },
   {
     id: "triticum-aestivum",
@@ -504,6 +693,10 @@ export const naturalSources: NaturalSource[] = [
     targets: ["decreases perilipin", "decreases protein nitrotyrosylation", "decreases npc1l", "decreases reaction time", "decreases cox 2", "ampk activators", "decreases pepck/pck1", "interference of biofilms (anti-bacterial resistance)"],
     grasSource: "yes",
     nonNovelSource: "yes",
+    benefit: "Improves Blood Filtration",
+    assignedTarget: "Angiotensin-converting Enzyme Inhibitor",
+    classification: "Tyrosine alkaloids",
+    assignedClass: "Isoquinoline alkaloids",
   },
   {
     id: "vitis-vinifera",
@@ -515,5 +708,9 @@ export const naturalSources: NaturalSource[] = [
     targets: ["protection/regeneration of pancreatic β-cells", "decreases myostatin", "increases ulk1", "increases hur", "increases vascular endothelial growth factor-a vegf", "increases myogenic regulatory factor-5 (myf5)", "increases trkb", "decreases jnk"],
     grasSource: "yes",
     nonNovelSource: "yes",
+    benefit: "Chemoprotective--intestinal/colon Cancer",
+    assignedTarget: "Anti-angiogenesis",
+    classification: "Tyrosine alkaloids",
+    assignedClass: "Morphinan alkaloids",
   }
 ];
