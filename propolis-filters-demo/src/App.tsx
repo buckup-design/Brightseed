@@ -10,12 +10,12 @@ import FilterDrawer, {
   type FilterFacet,
   type ScorePanel,
 } from "./components/FilterDrawer";
-import NaturalSourcesFilterDrawer from "./components/NaturalSourcesFilterDrawer";
+import NaturalSourcesFilterDrawer, { type SourceDrilldown } from "./components/NaturalSourcesFilterDrawer";
 import CardGrid from "./components/CardGrid";
 import NaturalSourceCardGrid from "./components/NaturalSourceCardGrid";
 import { compounds } from "./data/mockData";
 import { naturalSources } from "./data/naturalSourcesMockData";
-import type { Compound } from "./types";
+import type { Compound, NaturalSource } from "./types";
 import { countEvidenceTypes, matchesEvidenceType, type EvidenceTypeValue } from "./lib/evidenceType";
 import * as benefitOntology from "./lib/benefitOntology";
 import * as compoundClassOntology from "./lib/compoundClassOntology";
@@ -70,11 +70,22 @@ export default function App() {
   const [requiresGras, setRequiresGras] = useState(false);
   const [requiresNonNovel, setRequiresNonNovel] = useState(false);
 
-  // Natural Sources' filter state is local to NaturalSourcesFilterDrawer
-  // (it has no dataset yet to drive filtering from App). Bumping this key
-  // remounts that drawer, which resets its local useState back to defaults —
-  // simplest way to reset a subtree's state without lifting it all up here.
-  const [naturalSourcesResetKey, setNaturalSourcesResetKey] = useState(0);
+  // Natural Sources' own Benefit/Compound Classes drill-downs and Safety
+  // switches — same shape as the Compounds tab's equivalents above, now
+  // that there's a real (tagged) dataset to actually filter with. Kept as
+  // separate state rather than reusing the Compounds tab's vars: the two
+  // tabs' filters are independent (switching tabs shouldn't cross-pollute).
+  const [sourceBenefitPath, setSourceBenefitPath] = useState<PathEntry[]>([]);
+  const [selectedSourceBenefitTargets, setSelectedSourceBenefitTargets] = useState<FacetSelection>(null);
+  const [sourceCompoundClassPath, setSourceCompoundClassPath] = useState<PathEntry[]>([]);
+  const [selectedSourceCompoundClasses, setSelectedSourceCompoundClasses] = useState<FacetSelection>(null);
+  const [sourceRequiresGras, setSourceRequiresGras] = useState(false);
+  const [sourceRequiresNonNovel, setSourceRequiresNonNovel] = useState(false);
+  // Biological Targets + Biomarkers stays a static, non-reactive placeholder
+  // facet (no real per-source field backs it yet) — its selection is lifted
+  // here anyway, not because it filters anything, but so "Reset filters"
+  // can still clear it now that the drawer's no longer remounted to reset.
+  const [selectedSourceTargets, setSelectedSourceTargets] = useState<FacetSelection>(null);
 
   const toggleFavorite = (id: string) => {
     setFavorites((current) => toggleSetValue(current, id));
@@ -101,6 +112,16 @@ export default function App() {
     setNoGhsHazard(false);
     setRequiresGras(false);
     setRequiresNonNovel(false);
+  };
+
+  const resetSourceFilters = () => {
+    setSourceBenefitPath([]);
+    setSelectedSourceBenefitTargets(null);
+    setSourceCompoundClassPath([]);
+    setSelectedSourceCompoundClasses(null);
+    setSourceRequiresGras(false);
+    setSourceRequiresNonNovel(false);
+    setSelectedSourceTargets(null);
   };
 
   // Static regardless of filters — the product format select's own options
@@ -170,6 +191,27 @@ export default function App() {
 
   const evidenceTypeCounts = countEvidenceTypes(compoundsForEvidenceType);
 
+  // Same "named predicate + applyExcept" pattern as the Compounds tab above,
+  // scoped to Natural Sources' two reactive facets (Benefit, Compound
+  // Classes) plus its Safety switches. Biological Targets + Biomarkers
+  // stays out of this — it's still a static placeholder facet with no real
+  // per-source field backing it, so there's nothing to filter by.
+  const sourcePredicates: Record<string, (source: NaturalSource) => boolean> = {
+    benefit: (s) => benefitOntology.matchesDrilldownScope(sourceBenefitPath, selectedSourceBenefitTargets, s),
+    compoundClass: (s) =>
+      compoundClassOntology.matchesDrilldownScope(sourceCompoundClassPath, selectedSourceCompoundClasses, s),
+    safety: (s) =>
+      matchesFlag(s.grasSource, sourceRequiresGras, "yes") && matchesFlag(s.nonNovelSource, sourceRequiresNonNovel, "yes"),
+  };
+  type SourcePredicateKey = keyof typeof sourcePredicates;
+  const sourcePredicateKeys = Object.keys(sourcePredicates) as SourcePredicateKey[];
+  const applySourceExcept = (excludeKey?: SourcePredicateKey) =>
+    naturalSources.filter((s) => sourcePredicateKeys.every((key) => key === excludeKey || sourcePredicates[key](s)));
+
+  const filteredSources = applySourceExcept();
+  const sourcesForBenefit = applySourceExcept("benefit");
+  const sourcesForCompoundClass = applySourceExcept("compoundClass");
+
   const biologicalTargetGroup = buildFilterGroup(
     compoundsForBiologicalTargets,
     "biological-targets",
@@ -199,6 +241,24 @@ export default function App() {
     compounds: compoundsForCompoundClass,
   };
 
+  const sourceBenefitDrilldown: SourceDrilldown = {
+    path: sourceBenefitPath,
+    onPathChange: setSourceBenefitPath,
+    selected: selectedSourceBenefitTargets,
+    onToggle: (label) => setSelectedSourceBenefitTargets((c) => toggleFacetSelection(c, label)),
+    onReset: () => setSelectedSourceBenefitTargets(null),
+    sources: sourcesForBenefit,
+  };
+
+  const sourceCompoundClassDrilldown: SourceDrilldown = {
+    path: sourceCompoundClassPath,
+    onPathChange: setSourceCompoundClassPath,
+    selected: selectedSourceCompoundClasses,
+    onToggle: (label) => setSelectedSourceCompoundClasses((c) => toggleFacetSelection(c, label)),
+    onReset: () => setSelectedSourceCompoundClasses(null),
+    sources: sourcesForCompoundClass,
+  };
+
   const scorePanel: ScorePanel = {
     productFormatOptions,
     productFormat,
@@ -223,7 +283,7 @@ export default function App() {
     onRequiresNonNovelChange: setRequiresNonNovel,
   };
 
-  const resultCount = activeTab === "compounds" ? filteredCompounds.length : naturalSources.length;
+  const resultCount = activeTab === "compounds" ? filteredCompounds.length : filteredSources.length;
 
   return (
     <div className="flex h-screen w-full bg-white text-foreground">
@@ -273,17 +333,26 @@ export default function App() {
               <FilterToolbar resultCount={resultCount} viewMode={viewMode} onViewModeChange={setViewMode} />
 
               {filtersVisible && (
-                <NaturalSourcesFilterDrawer key={naturalSourcesResetKey} sources={naturalSources} />
+                <NaturalSourcesFilterDrawer
+                  benefitDrilldown={sourceBenefitDrilldown}
+                  compoundClassDrilldown={sourceCompoundClassDrilldown}
+                  selectedTargets={selectedSourceTargets}
+                  onToggleTarget={(label) => setSelectedSourceTargets((c) => toggleFacetSelection(c, label))}
+                  requiresGras={sourceRequiresGras}
+                  onRequiresGrasChange={setSourceRequiresGras}
+                  requiresNonNovel={sourceRequiresNonNovel}
+                  onRequiresNonNovelChange={setSourceRequiresNonNovel}
+                />
               )}
 
               <FilterToggleBar
                 visible={filtersVisible}
                 onToggle={() => setFiltersVisible((value) => !value)}
-                onReset={() => setNaturalSourcesResetKey((key) => key + 1)}
+                onReset={resetSourceFilters}
               />
 
               <NaturalSourceCardGrid
-                sources={naturalSources}
+                sources={filteredSources}
                 favorites={sourceFavorites}
                 onToggleFavorite={toggleSourceFavorite}
               />
