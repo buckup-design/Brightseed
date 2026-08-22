@@ -99,7 +99,7 @@ export default function NaturalSourceCard({
           <div className="flex flex-wrap items-center gap-1.5">
             {visibleTargets.map((target) => (
               <Badge key={target} variant="neutral" shape="chip">
-                {target}
+                {formatTarget(target)}
               </Badge>
             ))}
             {extraTargets > 0 && (
@@ -131,4 +131,14 @@ export default function NaturalSourceCard({
 
 function truncate(value: string, maxLength: number) {
   return value.length > maxLength ? `${value.slice(0, maxLength)}...` : value;
+}
+
+// Real scraped biological targets are prefixed "increases "/"decreases "
+// (e.g. "increases nadh", "decreases il-12") — matches the ↑/↓ convention
+// the app's own descriptions already use elsewhere. Targets with neither
+// prefix (e.g. "gaba-a receptor agonist") are left as-is.
+function formatTarget(target: string) {
+  if (/^increases\s+/i.test(target)) return `↑ ${target.replace(/^increases\s+/i, "")}`;
+  if (/^decreases\s+/i.test(target)) return `↓ ${target.replace(/^decreases\s+/i, "")}`;
+  return target;
 }
