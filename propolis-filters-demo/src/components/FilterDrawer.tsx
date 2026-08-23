@@ -1,6 +1,7 @@
 import OntologyDrilldownCard from "./OntologyDrilldownCard";
 import FilterCard from "./FilterCard";
 import ScoreFilterCard from "./ScoreFilterCard";
+import SelectDropdown from "./SelectDropdown";
 import Slider from "./Slider";
 import Switch from "./Switch";
 import type { Compound, FilterGroup } from "../types";
@@ -137,19 +138,12 @@ export default function FilterDrawer({
         <ScoreFilterCard title="Feasibility">
           <div className={`flex flex-col gap-2 ${disabledForPredicted ? "opacity-50" : ""}`} title={predictedTitle}>
             <p className="text-sm font-medium text-foreground">Product format</p>
-            <select
+            <SelectDropdown
               value={scorePanel.productFormat}
-              onChange={(event) => scorePanel.onProductFormatChange(event.target.value)}
+              options={scorePanel.productFormatOptions}
+              onChange={scorePanel.onProductFormatChange}
               disabled={disabledForPredicted}
-              className="h-8 w-full rounded-lg border border-input bg-white px-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-foreground/10 disabled:cursor-not-allowed"
-            >
-              <option value="">Any</option>
-              {scorePanel.productFormatOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
+            />
           </div>
 
           <div title={predictedTitle}>
