@@ -174,6 +174,21 @@ export default function NaturalSourceCard({
 
       <div className="flex flex-col gap-2 px-4 pb-4">
         <TagRow
+          items={regulatoryFlags}
+          renderTag={(flag) => (
+            <Badge
+              key={flag}
+              variant="regulatory"
+              shape="pill"
+              icon={<CircleCheck size={13} className="text-lime-500" />}
+            >
+              {flag}
+            </Badge>
+          )}
+          renderMore={moreBadge}
+        />
+
+        <TagRow
           items={source.knownCompounds}
           renderTag={(compound) => (
             <Badge key={compound} variant="outline" shape="chip">
@@ -199,21 +214,6 @@ export default function NaturalSourceCard({
           renderTag={(target) => (
             <Badge key={target} variant="neutral" shape="chip">
               {formatTarget(target)}
-            </Badge>
-          )}
-          renderMore={moreBadge}
-        />
-
-        <TagRow
-          items={regulatoryFlags}
-          renderTag={(flag) => (
-            <Badge
-              key={flag}
-              variant="regulatory"
-              shape="pill"
-              icon={<CircleCheck size={13} className="text-lime-500" />}
-            >
-              {flag}
             </Badge>
           )}
           renderMore={moreBadge}
