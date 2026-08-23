@@ -1,8 +1,7 @@
-import { Circle, Sparkles, Star } from "lucide-react";
+import { Blend, Circle, Sparkles, Star } from "lucide-react";
 import Badge from "./Badge";
+import { TagRow } from "./TagRow";
 import type { Compound } from "../types";
-
-const MAX_VISIBLE_TARGETS = 5;
 
 interface CompoundCardProps {
   compound: Compound;
@@ -15,9 +14,8 @@ export default function CompoundCard({
   favorited,
   onToggleFavorite,
 }: CompoundCardProps) {
-  const visibleTargets = compound.targets.slice(0, MAX_VISIBLE_TARGETS);
-  const extraTargets = compound.targets.length - visibleTargets.length;
   const isPredicted = compound.cardType === "predicted";
+  const isCombo = compound.cardType === "combo";
   const hasEvidence = !isPredicted && compound.confidenceScore != null;
 
   return (
@@ -26,6 +24,8 @@ export default function CompoundCard({
         <div className="flex items-center justify-between">
           {isPredicted ? (
             <Sparkles size={24} className="text-chart-2" />
+          ) : isCombo ? (
+            <Blend size={24} className="text-lime-500" />
           ) : (
             <Circle size={24} className="text-orange-400" />
           )}
@@ -54,18 +54,21 @@ export default function CompoundCard({
         </div>
       </div>
 
-      {visibleTargets.length > 0 && (
-        <div className="flex flex-wrap items-center gap-1 px-4 pb-4">
-          {visibleTargets.map((target) => (
-            <Badge key={target} variant="neutral" shape="chip">
-              {target}
-            </Badge>
-          ))}
-          {extraTargets > 0 && (
-            <Badge variant="ghost" shape="chip">
-              + {extraTargets} more
-            </Badge>
-          )}
+      {compound.targets.length > 0 && (
+        <div className="px-4 pb-4">
+          <TagRow
+            items={compound.targets}
+            renderTag={(target) => (
+              <Badge key={target} variant="neutral" shape="chip">
+                {target}
+              </Badge>
+            )}
+            renderMore={(hiddenCount) => (
+              <Badge key="more" variant="ghost" shape="chip">
+                + {hiddenCount} more
+              </Badge>
+            )}
+          />
         </div>
       )}
 
@@ -78,25 +81,53 @@ export default function CompoundCard({
       ) : (
         hasEvidence && (
           <div className="flex items-center justify-between gap-2 rounded-b-xl border-t border-border bg-muted px-4 py-3">
-            <div className="flex items-center gap-2">
-              <div className="flex items-end gap-0.5">
-                <span className="h-[13px] w-[5px] bg-chart-1" />
-                <span className="h-[6px] w-[5px] bg-chart-4" />
-                <span className="h-[4px] w-[5px] bg-chart-3" />
-              </div>
-              <span className="text-xs text-muted-foreground">CONFIDENCE</span>
-              <span className="text-xs font-medium text-foreground">
-                {compound.confidenceScore}%
-              </span>
-            </div>
-            {compound.evidenceType && (
-              <Badge variant="ghost" shape="chip" className="border border-border">
-                {capitalize(compound.evidenceType)}
-              </Badge>
+            <ConfidenceMeter score={compound.confidenceScore!} isCombo={isCombo} />
+            {isCombo ? (
+              compound.evidenceTypes &&
+              compound.evidenceTypes.length > 0 && (
+                <div className="flex flex-wrap items-center justify-end gap-1">
+                  {compound.evidenceTypes.map((evidenceType) => (
+                    <Badge key={evidenceType} variant="ghost" shape="chip" className="border border-border">
+                      {capitalize(evidenceType)}
+                    </Badge>
+                  ))}
+                </div>
+              )
+            ) : (
+              compound.evidenceType && (
+                <Badge variant="ghost" shape="chip" className="border border-border">
+                  {capitalize(compound.evidenceType)}
+                </Badge>
+              )
             )}
           </div>
         )
       )}
+    </div>
+  );
+}
+
+// Shared between the "single" and "combo" evidence footers — see the branch
+// above — so the sparkline/label/percentage cluster isn't duplicated. Combo
+// cards get 2 extra bars per the Figma spec, in the same lime green as the
+// header's Blend icon (a combo-only accent, not the chart-1/3/4 palette the
+// original 3 bars use).
+function ConfidenceMeter({ score, isCombo = false }: { score: number; isCombo?: boolean }) {
+  return (
+    <div className="flex items-center gap-2">
+      <div className="flex items-end gap-0.5">
+        <span className="h-[13px] w-[5px] bg-chart-1" />
+        <span className="h-[6px] w-[5px] bg-chart-4" />
+        <span className="h-[4px] w-[5px] bg-chart-3" />
+        {isCombo && (
+          <>
+            <span className="h-[13px] w-[5px] bg-lime-500" />
+            <span className="h-[13px] w-[5px] bg-lime-500" />
+          </>
+        )}
+      </div>
+      <span className="text-xs text-muted-foreground">CONFIDENCE</span>
+      <span className="text-xs font-medium text-foreground">{score}%</span>
     </div>
   );
 }

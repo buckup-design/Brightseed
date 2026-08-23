@@ -13,8 +13,13 @@ import FilterDrawer, {
 import NaturalSourcesFilterDrawer, { type SourceDrilldown } from "./components/NaturalSourcesFilterDrawer";
 import CardGrid from "./components/CardGrid";
 import NaturalSourceCardGrid from "./components/NaturalSourceCardGrid";
-import { compounds } from "./data/mockData";
+import { compounds as baseCompounds } from "./data/mockData";
+import { combinations } from "./data/combinationsMockData";
 import { naturalSources } from "./data/naturalSourcesMockData";
+
+// Combination (combo) cards are a third `cardType` in the same Compounds
+// results set, not a separate tab — see CompoundCard.tsx's 3-way branch.
+const compounds: Compound[] = [...baseCompounds, ...combinations];
 import type { Compound, NaturalSource } from "./types";
 import { countEvidenceTypes, matchesEvidenceType, type EvidenceTypeValue } from "./lib/evidenceType";
 import * as benefitOntology from "./lib/benefitOntology";
@@ -183,7 +188,14 @@ export default function App() {
   const applyExcept = (excludeKey?: PredicateKey) =>
     compounds.filter((c) => predicateKeys.every((key) => key === excludeKey || predicates[key](c)));
 
-  const filteredCompounds = applyExcept();
+  // Sorted by confidence score (descending) regardless of card type, so
+  // combo and single cards interleave by how confident the result is
+  // instead of grouping by type. Predicted cards carry no confidenceScore
+  // at all — treated as lowest so they settle at the end rather than
+  // throwing off real-score ordering.
+  const filteredCompounds = [...applyExcept()].sort(
+    (a, b) => (b.confidenceScore ?? -1) - (a.confidenceScore ?? -1)
+  );
   const compoundsForBenefit = applyExcept("benefit");
   const compoundsForCompoundClass = applyExcept("compoundClass");
   const compoundsForBiologicalTargets = applyExcept("biologicalTargets");
