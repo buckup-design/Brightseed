@@ -72,7 +72,7 @@ export default function NaturalSourceCard({
         {visibleKnownCompounds.length > 0 && (
           <div className="flex flex-wrap items-center gap-1.5">
             {visibleKnownCompounds.map((compound) => (
-              <Badge key={compound} variant="neutral" shape="chip">
+              <Badge key={compound} variant="outline" shape="chip">
                 {truncate(compound, MAX_COMPOUND_LABEL_LENGTH)}
               </Badge>
             ))}
@@ -86,7 +86,7 @@ export default function NaturalSourceCard({
 
         {source.predictedCompoundCount > 0 && (
           <div className="flex items-center gap-2">
-            <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-badge-compound px-1 text-xs font-medium text-foreground">
+            <span className="flex h-5 min-w-5 items-center justify-center rounded-full border border-border bg-white px-1 text-xs font-medium text-foreground">
               {source.predictedCompoundCount}
             </span>
             <span className="text-xs text-muted-foreground">
@@ -98,7 +98,7 @@ export default function NaturalSourceCard({
         {visibleTargets.length > 0 && (
           <div className="flex flex-wrap items-center gap-1.5">
             {visibleTargets.map((target) => (
-              <Badge key={target} variant="outline" shape="chip">
+              <Badge key={target} variant="neutral" shape="chip">
                 {formatTarget(target)}
               </Badge>
             ))}
