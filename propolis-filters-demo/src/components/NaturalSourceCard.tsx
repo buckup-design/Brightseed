@@ -1,12 +1,54 @@
+import { useLayoutEffect, useRef, useState } from "react";
 import { CircleCheck, Star } from "lucide-react";
 import Badge from "./Badge";
 import leafIcon from "../assets/leaf-icon.svg";
 import mushroomIcon from "../assets/mushroom-icon.svg";
 import type { NaturalSource } from "../types";
 
-const MAX_VISIBLE_KNOWN_COMPOUNDS = 3;
-const MAX_VISIBLE_TARGETS = 5;
 const MAX_COMPOUND_LABEL_LENGTH = 24;
+
+// Height (px) of a single Badge chip (text-xs + py-0.5) — every tag row on
+// this card is single-line (chips never wrap internally, unlike FilterCard's
+// `wrap` pills), so capping a row's container to exactly this height always
+// shows exactly one row, whatever the item count or label lengths, instead
+// of a fixed item-count cutoff.
+const SINGLE_ROW_HEIGHT = 22;
+
+/**
+ * Caps a flex-wrap tag row to a single visible line — same overflow-
+ * detection technique as FilterCard's two-row cap (a wrapped child's bottom
+ * edge spills past the container's own clientHeight), just measured against
+ * one row instead of two. Returns a ref for the (height-capped, overflow-
+ * hidden) wrap container plus how many trailing items got hidden, so the
+ * caller can render its own "+N more" indicator beneath the row.
+ */
+function useSingleRowOverflow<T>(items: T[]) {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [hiddenCount, setHiddenCount] = useState(0);
+
+  useLayoutEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+
+    function measure() {
+      if (!el) return;
+      const containerTop = el.getBoundingClientRect().top;
+      const children = Array.from(el.children) as HTMLElement[];
+      // Items render in the same order as `items`, so the first child that
+      // spills past the visible height marks where the hidden tail starts.
+      const firstHiddenIndex = children.findIndex(
+        (child) => child.getBoundingClientRect().bottom - containerTop > el.clientHeight + 1
+      );
+      setHiddenCount(firstHiddenIndex === -1 ? 0 : items.length - firstHiddenIndex);
+    }
+
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [items]);
+
+  return { wrapRef, hiddenCount };
+}
 
 interface NaturalSourceCardProps {
   source: NaturalSource;
@@ -19,14 +61,13 @@ export default function NaturalSourceCard({
   favorited,
   onToggleFavorite,
 }: NaturalSourceCardProps) {
-  const visibleKnownCompounds = source.knownCompounds.slice(0, MAX_VISIBLE_KNOWN_COMPOUNDS);
-  const extraKnownCompounds = source.knownCompounds.length - visibleKnownCompounds.length;
-  const visibleTargets = source.targets.slice(0, MAX_VISIBLE_TARGETS);
-  const extraTargets = source.targets.length - visibleTargets.length;
+  const knownCompoundsRow = useSingleRowOverflow(source.knownCompounds);
+  const targetsRow = useSingleRowOverflow(source.targets);
   const regulatoryFlags = [
     source.grasSource === "yes" ? "GRAS" : null,
     source.nonNovelSource === "yes" ? "Non-Novel Food" : null,
   ].filter((flag): flag is string => flag !== null);
+  const regulatoryRow = useSingleRowOverflow(regulatoryFlags);
 
   return (
     <div className="flex flex-col rounded-xl border border-border bg-card shadow-xs">
@@ -69,19 +110,25 @@ export default function NaturalSourceCard({
       </div>
 
       <div className="flex flex-col gap-2 px-4 pb-4">
-        {visibleKnownCompounds.length > 0 && (
-          <div className="flex flex-wrap items-center gap-1.5">
-            {visibleKnownCompounds.map((compound) => (
-              <Badge key={compound} variant="outline" shape="chip">
-                {truncate(compound, MAX_COMPOUND_LABEL_LENGTH)}
-              </Badge>
-            ))}
-            {extraKnownCompounds > 0 && (
-              <Badge variant="ghost" shape="chip">
-                + {extraKnownCompounds} more
+        {source.knownCompounds.length > 0 && (
+          <>
+            <div
+              ref={knownCompoundsRow.wrapRef}
+              className="flex flex-wrap items-center gap-1.5 overflow-hidden"
+              style={{ maxHeight: SINGLE_ROW_HEIGHT }}
+            >
+              {source.knownCompounds.map((compound) => (
+                <Badge key={compound} variant="outline" shape="chip">
+                  {truncate(compound, MAX_COMPOUND_LABEL_LENGTH)}
+                </Badge>
+              ))}
+            </div>
+            {knownCompoundsRow.hiddenCount > 0 && (
+              <Badge variant="ghost" shape="chip" className="self-start">
+                + {knownCompoundsRow.hiddenCount} more
               </Badge>
             )}
-          </div>
+          </>
         )}
 
         {source.predictedCompoundCount > 0 && (
@@ -95,34 +142,51 @@ export default function NaturalSourceCard({
           </div>
         )}
 
-        {visibleTargets.length > 0 && (
-          <div className="flex flex-wrap items-center gap-1.5">
-            {visibleTargets.map((target) => (
-              <Badge key={target} variant="neutral" shape="chip">
-                {formatTarget(target)}
-              </Badge>
-            ))}
-            {extraTargets > 0 && (
-              <Badge variant="ghost" shape="chip">
-                + {extraTargets} more
+        {source.targets.length > 0 && (
+          <>
+            <div
+              ref={targetsRow.wrapRef}
+              className="flex flex-wrap items-center gap-1.5 overflow-hidden"
+              style={{ maxHeight: SINGLE_ROW_HEIGHT }}
+            >
+              {source.targets.map((target) => (
+                <Badge key={target} variant="neutral" shape="chip">
+                  {formatTarget(target)}
+                </Badge>
+              ))}
+            </div>
+            {targetsRow.hiddenCount > 0 && (
+              <Badge variant="ghost" shape="chip" className="self-start">
+                + {targetsRow.hiddenCount} more
               </Badge>
             )}
-          </div>
+          </>
         )}
 
         {regulatoryFlags.length > 0 && (
-          <div className="flex flex-wrap items-center gap-1.5">
-            {regulatoryFlags.map((flag) => (
-              <Badge
-                key={flag}
-                variant="regulatory"
-                shape="pill"
-                icon={<CircleCheck size={13} className="text-lime-500" />}
-              >
-                {flag}
+          <>
+            <div
+              ref={regulatoryRow.wrapRef}
+              className="flex flex-wrap items-center gap-1.5 overflow-hidden"
+              style={{ maxHeight: SINGLE_ROW_HEIGHT }}
+            >
+              {regulatoryFlags.map((flag) => (
+                <Badge
+                  key={flag}
+                  variant="regulatory"
+                  shape="pill"
+                  icon={<CircleCheck size={13} className="text-lime-500" />}
+                >
+                  {flag}
+                </Badge>
+              ))}
+            </div>
+            {regulatoryRow.hiddenCount > 0 && (
+              <Badge variant="ghost" shape="chip" className="self-start">
+                + {regulatoryRow.hiddenCount} more
               </Badge>
-            ))}
-          </div>
+            )}
+          </>
         )}
       </div>
     </div>
