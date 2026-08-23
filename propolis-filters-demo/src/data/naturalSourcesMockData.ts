@@ -23,6 +23,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "aegilops-tauschii",
     name: "Aegilops tauschii",
+    commonName: "Rough-spike Hard Grass",
     sourceType: "plant",
     description: "Rough-spike Hard Grass may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Rough-spike Hard Grass also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 4 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["(+) germacrene a", "(+)-Ajmaline", "(+)-Lactose", "(+)-Pulegone", "(+)-Usnic acid", "(+)-delta-Cadinene", "(+)-isoitalicene", "(+)-trans-Carveol"],
@@ -36,6 +37,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "anacardium-occidentale",
     name: "Anacardium occidentale",
+    commonName: "cashew",
     sourceType: "plant",
     description: "cashew may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in cashew also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↑heart function and protects against oxidative damage, and ↓inhibition of th2 activation (and 4 more), contributing to activates hormonal anabolic signaling, alleviates oxidative stress and cardiac injury, and anti-allergic.",
     knownCompounds: ["1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "5-Pentadecylresorcinol", "5-[(8z,11z)-pentadeca-8,11-dien-1-yl]benzene-1,3-diol", "Estragole", "Harman", "Oleic acid", "Quercetin-3-O-arabinoside", "apigenin"],
@@ -50,6 +52,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "arabidopsis-thaliana",
     name: "Arabidopsis thaliana",
+    commonName: "mouse-ear cress",
     sourceType: "plant",
     description: "mouse-ear cress may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in mouse-ear cress also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 3 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "2-Amino-2-Deoxy-D-Galactopyranose", "2-carboxy-d-arabinitol", "2365-40-4", "CARVONE", "Coprosterol", "D-Rhamnose", "ERYTHRITOL"],
@@ -63,6 +66,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "asparagus-officinalis",
     name: "Asparagus officinalis",
+    commonName: "wild asparagus",
     sourceType: "plant",
     description: "wild asparagus may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in wild asparagus also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 3 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "542-44-9", "Isoquercetin", "Oleic acid", "glutinol", "Lutein", "Nonacosan-10-one", "Physalien"],
@@ -77,6 +81,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "beta-vulgaris",
     name: "Beta vulgaris",
+    commonName: "Beet",
     sourceType: "plant",
     description: "Beet may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Beet also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 5 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "1,4-diaminobutane", "2-carboxy-d-arabinitol", "2365-40-4", "3-O-Methylquercetin", "BETA-D-XYLOPYRANOSE", "D-Gal", "GEOSMIN"],
@@ -91,6 +96,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "cajanus-cajan",
     name: "Cajanus cajan",
+    commonName: "Congo-pea",
     sourceType: "plant",
     description: "Congo-pea may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Congo-pea also support sub-benefits including ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↑heart function and protects against oxidative damage, ↓inhibition of th2 activation, and inhibition of th2 activation (and 5 more), contributing to activates hormonal anabolic signaling, alleviates oxidative stress and cardiac injury, and anti-allergic.",
     knownCompounds: ["1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "BETA-D-XYLOPYRANOSE", "Betulin", "D-Gal", "D-Sorbitol", "ERYTHRITOL", "Friedelanol", "Oleic acid"],
@@ -106,6 +112,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "camellia-sinensis-var-sinensis",
     name: "Camellia sinensis var sinensis",
+    commonName: "China tea",
     sourceType: "plant",
     description: "China tea may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in China tea also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 4 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["delta7-Avenasterol", "(+) germacrene a", "(+)-Gallocatechin", "(+)-Lactose", "(+)-Pulegone", "(+)-Usnic acid", "(+)-catechin-(4alpha->8)-(-)-epigallocatechin", "(+)-trans-Carveol"],
@@ -119,6 +126,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "cannabis-sativa",
     name: "Cannabis sativa",
+    commonName: "Grass",
     sourceType: "plant",
     description: "Grass may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Grass also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 5 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["1-Methoxy-4(1-propenyl)-benzene", "2-Amino-2-Deoxy-D-Galactopyranose", "2-Methylhexacosane", "Alpha-Linolenic acid", "BETA-D-XYLOPYRANOSE", "CARVONE", "D-Gal", "D-Sorbitol"],
@@ -134,6 +142,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "capsicum-annuum",
     name: "Capsicum annuum",
+    commonName: "Bell Pepper",
     sourceType: "plant",
     description: "Bell Pepper may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Bell Pepper also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 5 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["(3e)-4-(4-hydroxy-2,6,6-trimethylcyclohex-1-en-1-yl)but-3-en-2-one", "1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "1,4-diaminobutane", "1-Hexanol", "1-Methylpyrrole", "1-OCTEN-3-OL", "1-PENTEN-3-OL", "2-HEPTANONE"],
@@ -148,6 +157,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "catharanthus-roseus",
     name: "Catharanthus roseus",
+    commonName: "Billygoat Weed",
     sourceType: "plant",
     description: "Billygoat Weed may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Billygoat Weed also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 4 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["(4ar,6as,6br,8ar,10s,12ar,12br,14bs)-10-hydroxy-2,2,6a,6b,9,9,12a-heptamethyl-1,3,4,5,6,7,8,8a,10,11,12,12b,13,14b-tetradecahydropicene-4a-carboxylic acid", "1,4-diaminobutane", "Alpha-Linolenic acid", "Clausarin", "Corchoionoside C", "D-Gal", "Decanal", "MYRCENE"],
@@ -162,6 +172,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "chenopodium-quinoa",
     name: "Chenopodium quinoa",
+    commonName: "Quinoa",
     sourceType: "plant",
     description: "Quinoa may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Quinoa also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 4 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["(4ar,6as,6br,8ar,10s,12ar,12br,14bs)-10-hydroxy-2,2,6a,6b,9,9,12a-heptamethyl-1,3,4,5,6,7,8,8a,10,11,12,12b,13,14b-tetradecahydropicene-4a-carboxylic acid", "1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "Oleic acid", "Tocopherylquinone", "(+) germacrene a", "(+)-Ajmaline", "(+)-Lactose", "(+)-Ledene"],
@@ -177,6 +188,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "cicer-arietinum",
     name: "Cicer arietinum",
+    commonName: "chickpea",
     sourceType: "plant",
     description: "chickpea may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in chickpea also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 3 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "1,4-diaminobutane", "Glycitein", "Isoliquiritigenin", "Oleic acid", "formononetin", "(E)-caffeic acid", "3,5-DIHYDROXYBENZOIC ACID"],
@@ -192,6 +204,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "citrus-sinensis",
     name: "Citrus sinensis",
+    commonName: "Seville orange",
     sourceType: "plant",
     description: "Seville orange may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Seville orange also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 5 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["(2S,5S)-2-[2-(3,4-dihydroxyphenyl)-5,7-dihydroxychromenylium-3-yl]oxy-6-(hydroxymethyl)oxane-3,4,5-triol", "1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "1-Hexanol", "1-octanol", "1178-24-1", "DODECANAL", "Decanal", "HEXANAL"],
@@ -207,6 +220,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "cuscuta-campestris",
     name: "Cuscuta campestris",
+    commonName: "Field Dodder",
     sourceType: "plant",
     description: "Field Dodder may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Field Dodder also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 3 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["Alpha-Linolenic acid", "(+) germacrene a", "(+)-Lactose", "(+)-Usnic acid", "(-)-Asarinin", "(-)-Glycinol", "(-)-Isokaurene", "(-)-pinoresinol"],
@@ -220,6 +234,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "erythranthe-glabrata",
     name: "Erythranthe glabrata",
+    commonName: "round-leaved monkeyflower",
     sourceType: "plant",
     description: "round-leaved monkeyflower may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in round-leaved monkeyflower also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 3 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["(+) germacrene a", "(+)-Ajmaline", "(+)-Lactose", "(+)-Ledene", "(+)-Pulegone", "(+)-Usnic acid", "(-)-Asarinin", "(-)-Glycinol"],
@@ -246,6 +261,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "eucalyptus-grandis",
     name: "Eucalyptus grandis",
+    commonName: "Blue Gum",
     sourceType: "plant",
     description: "Blue Gum may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Blue Gum also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 4 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["2,5-DIHYDROXYBENZOIC ACID", "3,4-DIHYDROXYBENZOIC ACID", "(+) germacrene a", "(+)-Ajmaline", "(+)-Lactose", "(+)-Pulegone", "(+)-Usnic acid", "(+)-isoitalicene"],
@@ -259,6 +275,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "fragaria-vesca",
     name: "Fragaria vesca",
+    commonName: "Alpine Strawberry",
     sourceType: "plant",
     description: "Alpine Strawberry may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Alpine Strawberry also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 3 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["578-74-5", "CAMPESTEROL", "Corosolic acid", "Linalool", "Maslinic acid", "P-CYMENE", "Prunasin", "STIGMASTEROL"],
@@ -288,6 +305,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "ginkgo-biloba-cv-pendula",
     name: "Ginkgo biloba cv pendula",
+    commonName: "Common Ginkgo",
     sourceType: "plant",
     description: "Common Ginkgo may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Common Ginkgo also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 3 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["(+)-Gallocatechin", "1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "14-METHYLHEXADECANOIC ACID", "2'-deoxyguanosine", "2-carboxy-d-arabinitol", "4-aminobutyric acid", "5-Pentadecylresorcinol", "5041-82-7"],
@@ -318,6 +336,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "hordeum-vulgare-cv-seco",
     name: "Hordeum vulgare cv seco",
+    commonName: "Barley",
     sourceType: "plant",
     description: "Barley may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Barley also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 5 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "1,4-diaminobutane", "2-carboxy-d-arabinitol", "5-Pentadecylresorcinol", "ABSCISIC ACID", "Alpha-Linolenic acid", "Auxin", "Nonan-1-ol"],
@@ -333,6 +352,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "humulus-lupulus",
     name: "Humulus lupulus",
+    commonName: "Bine",
     sourceType: "plant",
     description: "Bine may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Bine also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 4 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["1-OCTEN-3-ONE", "2-HEPTANONE", "2-Hexenal", "2-Methylbutanoic acid", "2-Tetradecanone", "2-Undecanone", "4-hydroxybenzaldehyde", "8-Prenylnaringenin"],
@@ -347,6 +367,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "lactuca-sativa",
     name: "Lactuca sativa",
+    commonName: "Garden Lettuce",
     sourceType: "plant",
     description: "Garden Lettuce may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Garden Lettuce also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 4 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["(2S,5S)-2-[2-(3,4-dihydroxyphenyl)-5,7-dihydroxychromenylium-3-yl]oxy-6-(hydroxymethyl)oxane-3,4,5-triol", "1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "Gallic acid", "Lactucin", "Oleic acid", "benzoate", "luteolin", "GIBBERELLIC ACID"],
@@ -360,6 +381,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "linum-usitatissimum",
     name: "Linum usitatissimum",
+    commonName: "Common Flax",
     sourceType: "plant",
     description: "Common Flax may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Common Flax also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 4 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["(-)-pinoresinol", "1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "2'-deoxyguanosine", "Alpha-Linolenic acid", "BETA-D-XYLOPYRANOSE", "CAMPESTEROL", "Curcumin", "Erucic acid"],
@@ -375,6 +397,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "malus-domestica",
     name: "Malus domestica",
+    commonName: "Apple",
     sourceType: "plant",
     description: "Apple may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Apple also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 5 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["1,4-diaminobutane", "4-Guanidinobutyric acid", "Antheraxanthin", "Citramalic acid", "Gallic acid", "Geraniol", "HEXADECANE", "Isopropyl alcohol"],
@@ -389,6 +412,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "manihot-esculenta",
     name: "Manihot esculenta",
+    commonName: "Bitter Cassava",
     sourceType: "plant",
     description: "Bitter Cassava may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Bitter Cassava also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 4 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "Oleic acid", "Scopolin", "Taraxerone", "beta-Amyrin", "beta-Amyrone", "NONANAL", "Biorobin"],
@@ -404,6 +428,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "medicago-truncatula",
     name: "Medicago truncatula",
+    commonName: "Barrel Clover",
     sourceType: "plant",
     description: "Barrel Clover may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Barrel Clover also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 3 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["3-hydroxy-p-menth-1-en-6-one", "Alpha-Ionone", "Isoliquiritigenin", "P-CYMENE", "Platambin", "(-)-Medicocarpin", "(3S,4aR,6aR,6bR,8aR,12S,12aR,12bR,14aR,14bR)-4,4,6a,6b,8a,12,14b-heptamethyl-11-methylidene-docosahydropicen-3-yl hexadecanoate", "Afrormosin"],
@@ -417,6 +442,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "musa-acuminata",
     name: "Musa acuminata",
+    commonName: "Cavendish banana",
     sourceType: "plant",
     description: "Cavendish banana may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Cavendish banana also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 3 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["(+)-Gallocatechin", "1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "Gallic acid", "tyramine", "(+) germacrene a", "(+)-Lactose", "(+)-Usnic acid", "(+)-alpha-phellandrene"],
@@ -431,6 +457,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "nelumbo-nucifera",
     name: "Nelumbo nucifera",
+    commonName: "Bean of India",
     sourceType: "plant",
     description: "Bean of India may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Bean of India also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 5 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "2-BUTYL-1-OCTANOL", "2-PENTYLFURAN", "22688-79-5", "5041-82-7", "542-44-9", "CAMPESTEROL", "DODECANAL"],
@@ -446,6 +473,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "nicotiana-tabacum",
     name: "Nicotiana tabacum",
+    commonName: "Cultivated tobacco",
     sourceType: "plant",
     description: "Cultivated tobacco may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Cultivated tobacco also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 4 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["(-)-Epicedrol", "(1S,2R,5S,10S,11S,14R,15R)-14-[(2R,5R)-5-ethyl-6-methylhept-6-en-2-yl]-2,15-dimethyltetracyclo[8.7.0.0^{2,7}.0^{11,15}]heptadec-7-en-5-ol", "1,4-diaminobutane", "2,4-Di-tert-butylphenol", "2-PENTYLFURAN", "2-Phenyl-2-butenal", "3-Methylbutanal", "3-OCTANOL"],
@@ -460,6 +488,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "olea-europaea",
     name: "Olea europaea",
+    commonName: "Olive",
     sourceType: "plant",
     description: "Olive may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Olive also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 4 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["(2S,5S)-2-[2-(3,4-dihydroxyphenyl)-5,7-dihydroxychromenylium-3-yl]oxy-6-(hydroxymethyl)oxane-3,4,5-triol", "(4ar,6as,6br,8ar,10s,12ar,12br,14bs)-10-hydroxy-2,2,6a,6b,9,9,12a-heptamethyl-1,3,4,5,6,7,8,8a,10,11,12,12b,13,14b-tetradecahydropicene-4a-carboxylic acid", "1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "2,6-DIHYDROXYBENZOIC ACID", "2-Hexenal", "3-Methylbutanal", "578-74-5", "Alpha-Linolenic acid"],
@@ -475,6 +504,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "petunia-axillaris",
     name: "Petunia axillaris",
+    commonName: "large white petunia",
     sourceType: "plant",
     description: "large white petunia may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in large white petunia also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 4 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["(+) germacrene a", "(+)-Ajmaline", "(+)-Lactose", "(+)-Ledene", "(+)-Pulegone", "(+)-Usnic acid", "(+)-trans-Carveol", "(-)-Asarinin"],
@@ -488,6 +518,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "phaseolus-vulgaris",
     name: "Phaseolus vulgaris",
+    commonName: "Bean",
     sourceType: "plant",
     description: "Bean may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Bean also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 3 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["(+)-Gallocatechin", "(1S,2R,5S,10S,11S,14R,15R)-14-[(2R,5R)-5-ethyl-6-methylhept-6-en-2-yl]-2,15-dimethyltetracyclo[8.7.0.0^{2,7}.0^{11,15}]heptadec-7-en-5-ol", "(2S,5S)-2-[2-(3,4-dihydroxyphenyl)-5,7-dihydroxychromenylium-3-yl]oxy-6-(hydroxymethyl)oxane-3,4,5-triol", "1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "1,4-diaminobutane", "2-PENTYLFURAN", "2-carboxy-d-arabinitol", "22688-79-5"],
@@ -503,6 +534,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "prunus-avium",
     name: "Prunus avium",
+    commonName: "Bird Cherry",
     sourceType: "plant",
     description: "Bird Cherry may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Bird Cherry also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 4 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["(+)-Gallocatechin", "(2S,5S)-2-[2-(3,4-dihydroxyphenyl)-5,7-dihydroxychromenylium-3-yl]oxy-6-(hydroxymethyl)oxane-3,4,5-triol", "(4ar,6as,6br,8ar,10s,12ar,12br,14bs)-10-hydroxy-2,2,6a,6b,9,9,12a-heptamethyl-1,3,4,5,6,7,8,8a,10,11,12,12b,13,14b-tetradecahydropicene-4a-carboxylic acid", "1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "1-DECANOL", "2,4-hexadienal", "2-Heptenal", "2-PENTYLFURAN"],
@@ -517,6 +549,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "prunus-persica",
     name: "Prunus persica",
+    commonName: "Peach",
     sourceType: "plant",
     description: "Peach may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Peach also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 4 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["(+)-Gallocatechin", "(2S,5S)-2-[2-(3,4-dihydroxyphenyl)-5,7-dihydroxychromenylium-3-yl]oxy-6-(hydroxymethyl)oxane-3,4,5-triol", "1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "1-Hexanol", "1-octanol", "2-HEPTANONE", "2-Methylbutanoic acid", "2-PENTYLFURAN"],
@@ -532,6 +565,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "punica-granatum",
     name: "Punica granatum",
+    commonName: "Pomegranate",
     sourceType: "plant",
     description: "Pomegranate may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓il-13 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Pomegranate also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 3 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["(+)-Gallocatechin", "(-)-pinoresinol", "(2S,5S)-2-[2-(3,4-dihydroxyphenyl)-5,7-dihydroxychromenylium-3-yl]oxy-6-(hydroxymethyl)oxane-3,4,5-triol", "(4ar,6as,6br,8ar,10s,12ar,12br,14bs)-10-hydroxy-2,2,6a,6b,9,9,12a-heptamethyl-1,3,4,5,6,7,8,8a,10,11,12,12b,13,14b-tetradecahydropicene-4a-carboxylic acid", "1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "1-DECANOL", "1-Hexanol", "2,4-hexadienal"],
@@ -547,6 +581,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "pyrus-communis",
     name: "Pyrus communis",
+    commonName: "Common Pear",
     sourceType: "plant",
     description: "Common Pear may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Common Pear also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 4 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["(+)-Gallocatechin", "1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "5041-82-7", "D-Gal", "Isoquercetin", "Oleic acid", "Procyanidin B2", "all-trans-phytoene"],
@@ -560,6 +595,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "quercus-suber",
     name: "Quercus suber",
+    commonName: "Cork Oak",
     sourceType: "plant",
     description: "Cork Oak may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Cork Oak also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 4 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["4-hydroxymellein", "5041-82-7", "Arjunglucoside II", "CAMPESTEROL", "Isoquercetin", "beta-Amyrin", "(1S,2S,20S,42S,46R)-46-[(2R,3R)-2-(3,4-dihydroxyphenyl)-3,5,7-trihydroxy-3,4-dihydro-2H-chromen-6-yl]-7,8,9,12,13,14,25,26,27,30,31,32,35,36,37-pentadecahydroxy-3,18,21,41,43-pentaoxanonacyclo[27.13.3.138,42.02,20.05,10.011,16.023,28.033,45.034,39]hexatetraconta-5,7,9,11,13,15,23,25,27,29(45),30,32,34(39),35,37-pentadecaene-4,17,22,40,44-pentone", "(9e)-18-hydroxyoctadec-9-enoic acid"],
@@ -573,6 +609,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "salvia-miltiorrhiza",
     name: "Salvia miltiorrhiza",
+    commonName: "red sage",
     sourceType: "plant",
     description: "red sage may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in red sage also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 5 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["(4ar,6as,6br,8ar,10s,12ar,12br,14bs)-10-hydroxy-2,2,6a,6b,9,9,12a-heptamethyl-1,3,4,5,6,7,8,8a,10,11,12,12b,13,14b-tetradecahydropicene-4a-carboxylic acid", "Abietatriene", "Alpha-Linolenic acid", "Isoorientin", "Isoquercetin", "Isovitexin", "Methyl rosmarinate", "Octadecanoate"],
@@ -588,6 +625,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "solanum-lycopersicum",
     name: "Solanum lycopersicum",
+    commonName: "tomato",
     sourceType: "plant",
     description: "tomato may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in tomato also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 4 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["(+)-cucurbic acid", "(-)-9,10-dihydrojasmonic acid", "1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "1-OCTEN-3-ONE", "2,4-hexadienal", "2-Decenal, (2Z)-", "2-Heptenal", "2-Hexenal"],
@@ -603,6 +641,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "solanum-melongena",
     name: "Solanum melongena",
+    commonName: "Aubergine",
     sourceType: "plant",
     description: "Aubergine may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Aubergine also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 4 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "Gallic acid", "Oleic acid", "Phenethylamine", "benzoate", "luteolin", "norepinephrine", "Obtusifoliol"],
@@ -616,6 +655,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "solanum-tuberosum",
     name: "Solanum tuberosum",
+    commonName: "Irish Potato",
     sourceType: "plant",
     description: "Irish Potato may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Irish Potato also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 4 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["(+)-cucurbic acid", "1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "1,4-diaminobutane", "2-Hydroxyhexadecanoic acid", "2-Methylhexacosane", "2365-40-4", "4-aminobenzoic acid", "CAMPESTEROL"],
@@ -630,6 +670,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "sorghum-bicolor",
     name: "Sorghum bicolor",
+    commonName: "Sorghums",
     sourceType: "plant",
     description: "Sorghums may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Sorghums also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 5 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["Methyl 3,4-dihydroxybenzoate", "STIGMASTEROL", "Stigmast-5-en-3-yl acetate", "apigenin", "luteolin", "19013-07-1", "4-hydroxybenzaldehyde", "Gibberellin A20"],
@@ -644,6 +685,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "spinacia-oleracea",
     name: "Spinacia oleracea",
+    commonName: "Spinach",
     sourceType: "plant",
     description: "Spinach may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Spinach also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 4 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "1,4-diaminobutane", "2-carboxy-d-arabinitol", "Alpha-Linolenic acid", "D-Gal", "ERYTHRITOL", "Lathosterol", "Lutein"],
@@ -658,6 +700,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "spirodela-polyrhiza",
     name: "Spirodela polyrhiza",
+    commonName: "Common Duckmeat",
     sourceType: "plant",
     description: "Common Duckmeat may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Common Duckmeat also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 4 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "578-74-5", "Isovitexin", "luteolin", "luteolin 7-O-beta-d-glucopyranoside", "(+)-Lactose", "(+)-delta-Cadinene", "(-)-Glycinol"],
@@ -671,6 +714,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "theobroma-cacao",
     name: "Theobroma cacao",
+    commonName: "cacao tree",
     sourceType: "plant",
     description: "cacao tree may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in cacao tree also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 5 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["(+)-Gallocatechin", "1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "Linalool", "Mellein", "Oleic acid", "benzoate", "(2S,5S)-2-[2-(3,4-dihydroxyphenyl)-5,7-dihydroxychromenylium-3-yl]oxy-6-(hydroxymethyl)oxane-3,4,5-triol", "2-hydroxy-1,7-dimethylpurin-6-one"],
@@ -686,6 +730,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "triticum-aestivum",
     name: "Triticum aestivum",
+    commonName: "Bread Wheat",
     sourceType: "plant",
     description: "Bread Wheat may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Bread Wheat also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 4 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "1,4-diaminobutane", "2,6-Dimethoxy-1,4-benzoquinone", "2-carboxy-d-arabinitol", "5-Pentadecylresorcinol", "578-74-5", "Acetosyringone", "D-Gal"],
@@ -701,6 +746,7 @@ export const naturalSources: NaturalSource[] = [
   {
     id: "vitis-vinifera",
     name: "Vitis vinifera",
+    commonName: "Common Grapevine",
     sourceType: "plant",
     description: "Common Grapevine may contain compounds that modulate ↓ccl11, ↓ccl20, ↓ccl5, ↑estrogen receptor a (er-a) signaling, and ↓gata-3 (and 4 more), mediating activates hormonal anabolic signaling and anti-allergic. Compounds in Common Grapevine also support sub-benefits including anti-histamine, ↑estrogen receptor-mediated muscle preservation, estrogen receptor-mediated muscle preservation, ↓inhibition of th2 activation, and inhibition of th2 activation (and 5 more), contributing to activates hormonal anabolic signaling and anti-allergic.",
     knownCompounds: ["(+)-Gallocatechin", "(2S,5S)-2-[2-(3,4-dihydroxyphenyl)-5,7-dihydroxychromenylium-3-yl]oxy-6-(hydroxymethyl)oxane-3,4,5-triol", "(4ar,6as,6br,8ar,10s,12ar,12br,14bs)-10-hydroxy-2,2,6a,6b,9,9,12a-heptamethyl-1,3,4,5,6,7,8,8a,10,11,12,12b,13,14b-tetradecahydropicene-4a-carboxylic acid", "1,3,3-trimethyl-2-[(1z,3z,5z,7z,9z,11z,13z,15z,17z)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohex-1-en-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaen-1-yl]cyclohex-1-ene", "1,4-diaminobutane", "1-Hexanol", "1-OCTEN-3-ONE", "1-butanol"],

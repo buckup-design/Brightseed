@@ -165,6 +165,7 @@ export default function NaturalSourceCard({
         <div className="flex flex-col gap-1">
           <p className="text-base font-medium text-card-foreground">
             {source.name}
+            {source.commonName && ` (${capitalize(source.commonName)})`}
           </p>
           <p className="h-[60px] overflow-hidden text-sm leading-5 text-muted-foreground [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:3]">
             {source.description}
@@ -231,6 +232,13 @@ export default function NaturalSourceCard({
 
 function truncate(value: string, maxLength: number) {
   return value.length > maxLength ? `${value.slice(0, maxLength)}...` : value;
+}
+
+// commonName is scraped from the middle of a sentence ("cashew may contain
+// compounds...") so it's real text but not reliably title-cased — normalize
+// display only, leave the stored value as-scraped.
+function capitalize(value: string) {
+  return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
 // Real scraped biological targets are prefixed "increases "/"decreases "

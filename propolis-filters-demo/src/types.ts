@@ -59,6 +59,12 @@ export interface Compound {
 export interface NaturalSource {
   id: string;
   name: string;
+  // Common name, shown in parentheses after `name` on the card per Figma
+  // (node 74:17248). Derived from the scraped description text (each one
+  // opens "<Common Name> may contain compounds..."), not itself scraped as
+  // a distinct field — omitted (not fabricated) for the handful of sources
+  // whose description came back empty.
+  commonName?: string;
   // Drives which icon renders in the card header (leaf vs. mushroom).
   sourceType: "plant" | "fungus";
   description: string;
