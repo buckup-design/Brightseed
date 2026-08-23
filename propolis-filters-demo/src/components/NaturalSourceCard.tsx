@@ -172,7 +172,13 @@ export default function NaturalSourceCard({
         </div>
       </div>
 
-      <div className="flex flex-col gap-2 px-4 pb-4">
+      {/* mt-auto pushes this whole block to the card's bottom edge when the
+          grid stretches this card taller than its own content (a shorter
+          sibling in the same row) — matching CompoundCard's footer-flush-
+          bottom look. Any row that renders nothing (e.g. no regulatory
+          flags) collapses within this block, which reads as a gap right
+          above the first populated row rather than shifting content up. */}
+      <div className="mt-auto flex flex-col gap-2 px-4 pb-4">
         <TagRow
           items={regulatoryFlags}
           renderTag={(flag) => (
