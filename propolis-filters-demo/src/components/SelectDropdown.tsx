@@ -63,7 +63,11 @@ export default function SelectDropdown({
       {open && (
         <div
           role="listbox"
-          className="absolute left-0 top-full z-10 mt-1 w-full rounded-md border border-border bg-card p-1 shadow-md"
+          // z-20: FilterToggleBar (the drawer's bottom bar) sits at z-10, so this
+          // panel — which overflows past the drawer's own edge — needs to
+          // outrank it, not just tie (a tie falls back to DOM order, which
+          // would still lose to the toggle bar rendered after this drawer).
+          className="absolute left-0 top-full z-20 mt-1 w-full rounded-md border border-border bg-card p-1 shadow-md"
         >
           <button
             type="button"
