@@ -41,7 +41,7 @@ export default function ChatPanel() {
       <footer className="flex items-center justify-between border-t border-border px-4 py-3 text-xs text-muted-foreground">
         <span>© 2026 Brightseed. All rights reserved.</span>
         <span className="rounded-full border border-border bg-muted px-2 py-0.5 font-medium text-foreground">
-          v1.2.0
+          v2.0
         </span>
       </footer>
     </div>
