@@ -86,7 +86,7 @@ export default function FilterToolbar({
           {sortDropdown && (
             <>
               <span className="shrink-0 whitespace-nowrap text-xs text-muted-foreground">sorted</span>
-              <div className="w-44 shrink-0">
+              <div className="w-52 shrink-0">
                 <SelectDropdown
                   value={sortDropdown.value}
                   options={sortDropdown.options}
