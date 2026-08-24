@@ -64,7 +64,7 @@ export default function SelectDropdown({
         aria-expanded={open}
         className="flex h-8 w-full items-center justify-between gap-1.5 rounded-md border border-input bg-white px-2.5 text-sm text-foreground hover:bg-accent focus:outline-none focus:ring-2 focus:ring-foreground/10 disabled:cursor-not-allowed disabled:hover:bg-white"
       >
-        <span className={value ? "text-foreground" : "text-muted-foreground"}>{value || placeholder}</span>
+        <span className={`min-w-0 truncate ${value ? "text-foreground" : "text-muted-foreground"}`}>{value || placeholder}</span>
         <ChevronDown size={16} className="shrink-0 text-muted-foreground" />
       </button>
 

@@ -31,7 +31,10 @@ interface FilterToolbarProps {
   sortSuffix?: string;
   // Natural Sources: a real sort dropdown, intentionally left unwired for
   // now — no relative-abundance data to sort by yet, and per Anna even
-  // the default "A → Z" option shouldn't reorder cards in this pass.
+  // the default "A → Z" option shouldn't reorder cards in this pass. The
+  // "sorted" label carries no trailing "by" — options that need it (e.g.
+  // "by relative abundance") include it themselves, since "A → Z" reads
+  // fine without one ("sorted A → Z" vs. "sorted by relative abundance").
   sortDropdown?: SortDropdownProps;
 }
 
@@ -46,7 +49,7 @@ export default function FilterToolbar({
   const [search, setSearch] = useState("");
 
   return (
-    <div className="flex items-center border-b border-border bg-white px-4 py-2">
+    <div className="flex items-center gap-5 border-b border-border bg-white px-4 py-2">
       <div className="flex flex-1 items-center">
         {evidenceType && (
           <EvidenceTypeFilter
@@ -74,24 +77,26 @@ export default function FilterToolbar({
         </button>
       </div>
 
-      <div className="flex flex-1 items-center justify-end gap-4">
-        <span className="shrink-0 whitespace-nowrap text-xs text-muted-foreground">
-          {resultCount} results{sortSuffix ? `, ${sortSuffix}` : ""}
-        </span>
+      <div className="flex flex-1 items-center justify-end gap-5">
+        <div className="flex shrink-0 items-center gap-2">
+          <span className="shrink-0 whitespace-nowrap text-xs text-muted-foreground">
+            {resultCount} results{sortSuffix ? `, ${sortSuffix}` : ""}
+          </span>
 
-        {sortDropdown && (
-          <div className="flex shrink-0 items-center gap-2">
-            <span className="shrink-0 whitespace-nowrap text-xs text-muted-foreground">sorted by</span>
-            <div className="w-44 shrink-0">
-              <SelectDropdown
-                value={sortDropdown.value}
-                options={sortDropdown.options}
-                onChange={sortDropdown.onChange}
-                showClearOption={false}
-              />
-            </div>
-          </div>
-        )}
+          {sortDropdown && (
+            <>
+              <span className="shrink-0 whitespace-nowrap text-xs text-muted-foreground">sorted</span>
+              <div className="w-44 shrink-0">
+                <SelectDropdown
+                  value={sortDropdown.value}
+                  options={sortDropdown.options}
+                  onChange={sortDropdown.onChange}
+                  showClearOption={false}
+                />
+              </div>
+            </>
+          )}
+        </div>
 
         <div className="flex shrink-0 items-center gap-0.5 rounded-md border border-input bg-muted p-0.5">
           <button

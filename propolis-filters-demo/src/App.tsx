@@ -354,7 +354,7 @@ export default function App() {
                 onViewModeChange={setViewMode}
                 sortDropdown={{
                   value: sourceSortOrder,
-                  options: ["A → Z", "Relative abundance"],
+                  options: ["A → Z", "by relative abundance"],
                   onChange: setSourceSortOrder,
                 }}
               />
