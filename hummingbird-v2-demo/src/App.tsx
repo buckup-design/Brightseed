@@ -1,6 +1,7 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Sidebar from "./components/Sidebar";
 import ChatPanel from "./components/ChatPanel";
+import ResizeHandle from "./components/ResizeHandle";
 import Header, { type TabId } from "./components/Header";
 import FilterToolbar, { type ViewMode } from "./components/FilterToolbar";
 import FilterToggleBar from "./components/FilterToggleBar";
@@ -41,9 +42,27 @@ import {
   matchesProductFormat,
 } from "./lib/scoreFilters";
 
+// Chat/results split — DEFAULT_CHAT_WIDTH matches the panel's original fixed
+// width so this is a no-op visually until someone drags the handle. Bounds
+// keep both sides usable: the results panel always keeps at least
+// MIN_RESULTS_WIDTH regardless of viewport size (see ResizeHandle usage).
+const DEFAULT_CHAT_WIDTH = 400;
+const MIN_CHAT_WIDTH = 280;
+const MIN_RESULTS_WIDTH = 480;
+
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabId>("compounds");
   const [filtersVisible, setFiltersVisible] = useState(true);
+  const [chatWidth, setChatWidth] = useState(DEFAULT_CHAT_WIDTH);
+  const panelsRef = useRef<HTMLDivElement>(null);
+
+  const handleChatResize = (deltaX: number) => {
+    setChatWidth((current) => {
+      const containerWidth = panelsRef.current?.getBoundingClientRect().width ?? Infinity;
+      const maxWidth = Math.max(MIN_CHAT_WIDTH, containerWidth - MIN_RESULTS_WIDTH);
+      return Math.min(maxWidth, Math.max(MIN_CHAT_WIDTH, current + deltaX));
+    });
+  };
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
   // Natural Sources' "sorted by" dropdown — display only for now (see
   // FilterToolbar's sortDropdown prop doc): no relative-abundance data
@@ -306,10 +325,12 @@ export default function App() {
     <div className="flex h-screen w-full bg-white text-foreground">
       <Sidebar />
 
-      <div className="flex min-w-0 flex-1">
-        <div className="flex w-[400px] shrink-0 flex-col border-r border-border">
+      <div ref={panelsRef} className="flex min-w-0 flex-1">
+        <div className="flex shrink-0 flex-col" style={{ width: chatWidth }}>
           <ChatPanel />
         </div>
+
+        <ResizeHandle onResize={handleChatResize} onReset={() => setChatWidth(DEFAULT_CHAT_WIDTH)} />
 
         <div className="flex min-w-0 flex-1 flex-col">
           <Header activeTab={activeTab} onTabChange={setActiveTab} />
