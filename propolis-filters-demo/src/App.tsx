@@ -45,6 +45,11 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<TabId>("compounds");
   const [filtersVisible, setFiltersVisible] = useState(true);
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
+  // Natural Sources' "sorted by" dropdown — display only for now (see
+  // FilterToolbar's sortDropdown prop doc): no relative-abundance data
+  // exists yet, and per Anna even "A → Z" shouldn't reorder cards in this
+  // pass, so this state drives the control's selected value only.
+  const [sourceSortOrder, setSourceSortOrder] = useState("A → Z");
   // Benefit drill-down (Health Area → Benefit → Sub-benefit → Targets, see
   // BenefitDrilldownCard). `benefitPath` is the chosen non-terminal steps
   // (0–3 entries); `selectedBenefitTargets` is the deepest level's real
@@ -316,6 +321,7 @@ export default function App() {
                 resultCount={resultCount}
                 viewMode={viewMode}
                 onViewModeChange={setViewMode}
+                sortSuffix="sorted by confidence"
               />
 
               {filtersVisible && (
@@ -342,7 +348,16 @@ export default function App() {
             </>
           ) : (
             <>
-              <FilterToolbar resultCount={resultCount} viewMode={viewMode} onViewModeChange={setViewMode} />
+              <FilterToolbar
+                resultCount={resultCount}
+                viewMode={viewMode}
+                onViewModeChange={setViewMode}
+                sortDropdown={{
+                  value: sourceSortOrder,
+                  options: ["A → Z", "Relative abundance"],
+                  onChange: setSourceSortOrder,
+                }}
+              />
 
               {filtersVisible && (
                 <NaturalSourcesFilterDrawer

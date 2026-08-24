@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowRight, LayoutGrid, List } from "lucide-react";
 import EvidenceTypeFilter from "./EvidenceTypeFilter";
+import SelectDropdown from "./SelectDropdown";
 import type { EvidenceTypeValue } from "../lib/evidenceType";
 
 export type ViewMode = "grid" | "list";
@@ -11,12 +12,27 @@ interface EvidenceTypeProps {
   counts: Record<EvidenceTypeValue, number>;
 }
 
+interface SortDropdownProps {
+  value: string;
+  options: string[];
+  onChange: (value: string) => void;
+}
+
 interface FilterToolbarProps {
   // Omitted for tabs with no Evidence Type concept (e.g. Natural Sources).
   evidenceType?: EvidenceTypeProps;
   resultCount: number;
   viewMode: ViewMode;
   onViewModeChange: (mode: ViewMode) => void;
+  // Compounds: the sort order is fixed (confidence score — see App.tsx's
+  // filteredCompounds sort), so it's shown as plain trailing text rather
+  // than a control per the Figma spec ("350 results, sorted by
+  // confidence") — display only, doesn't drive anything itself.
+  sortSuffix?: string;
+  // Natural Sources: a real sort dropdown, intentionally left unwired for
+  // now — no relative-abundance data to sort by yet, and per Anna even
+  // the default "A → Z" option shouldn't reorder cards in this pass.
+  sortDropdown?: SortDropdownProps;
 }
 
 export default function FilterToolbar({
@@ -24,6 +40,8 @@ export default function FilterToolbar({
   resultCount,
   viewMode,
   onViewModeChange,
+  sortSuffix,
+  sortDropdown,
 }: FilterToolbarProps) {
   const [search, setSearch] = useState("");
 
@@ -39,7 +57,7 @@ export default function FilterToolbar({
         )}
       </div>
 
-      <div className="flex w-full max-w-xs items-stretch gap-0">
+      <div className="flex w-full min-w-0 max-w-xs items-stretch gap-0">
         <input
           type="text"
           value={search}
@@ -57,9 +75,25 @@ export default function FilterToolbar({
       </div>
 
       <div className="flex flex-1 items-center justify-end gap-4">
-        <span className="text-xs text-muted-foreground">{resultCount} results</span>
+        <span className="shrink-0 whitespace-nowrap text-xs text-muted-foreground">
+          {resultCount} results{sortSuffix ? `, ${sortSuffix}` : ""}
+        </span>
 
-        <div className="flex items-center gap-0.5 rounded-md border border-input bg-muted p-0.5">
+        {sortDropdown && (
+          <div className="flex shrink-0 items-center gap-2">
+            <span className="shrink-0 whitespace-nowrap text-xs text-muted-foreground">sorted by</span>
+            <div className="w-44 shrink-0">
+              <SelectDropdown
+                value={sortDropdown.value}
+                options={sortDropdown.options}
+                onChange={sortDropdown.onChange}
+                showClearOption={false}
+              />
+            </div>
+          </div>
+        )}
+
+        <div className="flex shrink-0 items-center gap-0.5 rounded-md border border-input bg-muted p-0.5">
           <button
             type="button"
             aria-label="Grid view"

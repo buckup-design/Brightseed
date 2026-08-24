@@ -8,6 +8,13 @@ interface SelectDropdownProps {
   /** Shown as the first, selectable "no filter" option and as the trigger label when value is "". */
   placeholder?: string;
   disabled?: boolean;
+  /**
+   * False for dropdowns with no "no selection" state (e.g. a sort order,
+   * which always has an active value) — hides the placeholder/clear row
+   * from the open panel. Default true matches every existing filter-style
+   * call site (Product Format's "Any").
+   */
+  showClearOption?: boolean;
 }
 
 /**
@@ -22,6 +29,7 @@ export default function SelectDropdown({
   onChange,
   placeholder = "Any",
   disabled = false,
+  showClearOption = true,
 }: SelectDropdownProps) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -69,19 +77,21 @@ export default function SelectDropdown({
           // would still lose to the toggle bar rendered after this drawer).
           className="absolute left-0 top-full z-20 mt-1 w-full rounded-md border border-border bg-card p-1 shadow-md"
         >
-          <button
-            type="button"
-            role="option"
-            aria-selected={value === ""}
-            onClick={() => {
-              onChange("");
-              setOpen(false);
-            }}
-            className="flex w-full items-center gap-1.5 rounded-sm px-2 py-1.5 text-left text-sm text-foreground hover:bg-accent"
-          >
-            <Check size={14} className={value === "" ? "opacity-100" : "opacity-0"} />
-            {placeholder}
-          </button>
+          {showClearOption && (
+            <button
+              type="button"
+              role="option"
+              aria-selected={value === ""}
+              onClick={() => {
+                onChange("");
+                setOpen(false);
+              }}
+              className="flex w-full items-center gap-1.5 rounded-sm px-2 py-1.5 text-left text-sm text-foreground hover:bg-accent"
+            >
+              <Check size={14} className={value === "" ? "opacity-100" : "opacity-0"} />
+              {placeholder}
+            </button>
+          )}
           {options.map((option) => {
             const selected = value === option;
             return (
