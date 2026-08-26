@@ -78,10 +78,11 @@ interface FilterDrawerProps {
   scorePanel: ScorePanel;
   /**
    * True when Evidence Type is filtered to "Predicted" — predicted compounds
-   * carry no product-format, delivery-tech, formulation, novelty, or GHS
-   * hazard data, so those controls are inapplicable and disabled rather than
-   * silently ignored. Solubility, toxicity, GRAS, and non-novel-food stay
-   * live since predicted compounds do carry that data.
+   * carry no product-format, delivery-tech, formulation, or GHS hazard data,
+   * so those controls are inapplicable and disabled rather than silently
+   * ignored. Solubility, toxicity, GRAS, non-novel-food, and Novelty
+   * (FTO/patentability, backed by dummy scores — see mockData.ts) stay live
+   * since predicted compounds do carry that data.
    */
   disabledForPredicted?: boolean;
 }
@@ -178,7 +179,7 @@ export default function FilterDrawer({
         </ScoreFilterCard>
 
         <ScoreFilterCard title="Novelty">
-          <div className="flex flex-col gap-3" title={predictedTitle}>
+          <div className="flex flex-col gap-3">
             <Slider
               label="Minimum FTO score"
               min={SCORE_RANGES.fto.min}
@@ -186,7 +187,6 @@ export default function FilterDrawer({
               value={scorePanel.ftoScore}
               onChange={scorePanel.onFtoScoreChange}
               formatValue={scoreLabelFormatter(THREE_POINT_LABELS)}
-              disabled={disabledForPredicted}
             />
 
             <Slider
@@ -196,7 +196,6 @@ export default function FilterDrawer({
               value={scorePanel.patentabilityScore}
               onChange={scorePanel.onPatentabilityScoreChange}
               formatValue={scoreLabelFormatter(THREE_POINT_LABELS)}
-              disabled={disabledForPredicted}
             />
           </div>
         </ScoreFilterCard>

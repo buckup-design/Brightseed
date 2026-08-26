@@ -159,10 +159,13 @@ export default function App() {
   const productFormatOptions = useMemo(() => buildProductFormatOptions(compounds), []);
 
   // Predicted compounds carry no product-format, delivery-tech, formulation,
-  // novelty, or GHS hazard data — those controls are disabled in the drawer
-  // (see FilterDrawer's disabledForPredicted), and the filters they drive are
+  // or GHS hazard data — those controls are disabled in the drawer (see
+  // FilterDrawer's disabledForPredicted), and the filters they drive are
   // forced back to their ANY/off default here so a leftover non-default
   // position from a prior evidence-type selection can't zero out results.
+  // Novelty (FTO/patentability) is the exception: predicted compounds do
+  // carry dummy scores for it (see mockData.ts), so those two stay live and
+  // are deliberately left out of the forcing below.
   const isPredictedOnly = evidenceType === "predicted";
 
   // Named per filter "dimension" rather than one big chain, so each of the
@@ -191,12 +194,8 @@ export default function App() {
         isPredictedOnly ? SCORE_RANGES.easeOfFormulation.min : formulationScore
       ) &&
       matchesMinScore(c, "solubility", solubilityScore) &&
-      matchesMinScore(c, "fto", isPredictedOnly ? SCORE_RANGES.fto.min : ftoScore) &&
-      matchesMinScore(
-        c,
-        "patentability",
-        isPredictedOnly ? SCORE_RANGES.patentability.min : patentabilityScore
-      ) &&
+      matchesMinScore(c, "fto", ftoScore) &&
+      matchesMinScore(c, "patentability", patentabilityScore) &&
       matchesMaxToxicity(c, admetScore) &&
       matchesFlag(c.ghsHazardCode, isPredictedOnly ? false : noGhsHazard, "no") &&
       matchesFlag(c.grasSource, requiresGras, "yes") &&
