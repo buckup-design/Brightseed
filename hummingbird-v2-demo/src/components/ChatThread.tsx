@@ -15,19 +15,20 @@ interface ChatThreadProps {
 // React only mounts a line once (matched by its position, not recreated on
 // later re-renders), this plays exactly once per line, when it first
 // appears, and never replays for already-settled turns.
-function AssistantLine({ text, index }: { text: string; index: number }) {
-  const style = { animationDelay: `${index * 120}ms` };
+function AssistantLine({ text, index, animate }: { text: string; index: number; animate: boolean }) {
+  const animationClass = animate ? "animate-fade-in-up" : "";
+  const style = animate ? { animationDelay: `${index * 120}ms` } : undefined;
 
   if (/^\d+\.\s/.test(text)) {
     return (
-      <p className="animate-fade-in-up font-semibold" style={style}>
+      <p className={`${animationClass} font-semibold`} style={style}>
         {text}
       </p>
     );
   }
   if (text.startsWith("  - ")) {
     return (
-      <p className="animate-fade-in-up pl-8" style={style}>
+      <p className={`${animationClass} pl-8`} style={style}>
         <span className="mr-1.5 text-muted-foreground">◦</span>
         {text.slice(4)}
       </p>
@@ -35,14 +36,14 @@ function AssistantLine({ text, index }: { text: string; index: number }) {
   }
   if (text.startsWith("- ")) {
     return (
-      <p className="animate-fade-in-up pl-4" style={style}>
+      <p className={`${animationClass} pl-4`} style={style}>
         <span className="mr-1.5 text-muted-foreground">•</span>
         {text.slice(2)}
       </p>
     );
   }
   return (
-    <p className="animate-fade-in-up" style={style}>
+    <p className={animationClass} style={style}>
       {text}
     </p>
   );
@@ -55,12 +56,18 @@ function AssistantLine({ text, index }: { text: string; index: number }) {
 // opening greeting has no userMessage, and a user turn can go unanswered
 // for a step (e.g. the response arrives as its own step once the screen
 // changes) by omitting assistantMessage.
+//
+// The very first step of the whole script (isEntryPoint) is present the
+// moment the page loads, before any input — it renders statically, with no
+// entrance animation, since it never "just arrived." Every other message
+// was revealed by a send, so it animates in.
 export default function ChatThread({ messages, isThinking }: ChatThreadProps) {
   return (
     <div className="flex flex-1 flex-col gap-4 overflow-y-auto px-2 py-4">
-      {messages.map(({ stepId, turn }, index) => {
+      {messages.map(({ stepId, turn, isEntryPoint }, index) => {
         const isLast = index === messages.length - 1;
         const showThinking = isLast && isThinking;
+        const animate = !isEntryPoint;
 
         return (
           <div key={stepId} className="flex flex-col gap-2">
@@ -83,7 +90,7 @@ export default function ChatThread({ messages, isThinking }: ChatThreadProps) {
                   <img src={hummingbirdLogo} alt="" className="size-[28px] shrink-0" />
                   <div className="flex flex-1 flex-col gap-2 pt-1 text-sm leading-6 text-foreground">
                     {turn.assistantMessage.map((line, lineIndex) => (
-                      <AssistantLine key={lineIndex} text={line} index={lineIndex} />
+                      <AssistantLine key={lineIndex} text={line} index={lineIndex} animate={animate} />
                     ))}
                   </div>
                 </div>

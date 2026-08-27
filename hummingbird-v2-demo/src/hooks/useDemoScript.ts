@@ -17,6 +17,10 @@ const THINKING_DURATION_MS = 5000;
 export interface DemoChatMessage {
   stepId: string;
   turn: ChatTurn;
+  /** True only for the very first step of the whole script — present on
+   *  load, before any input, so it renders statically (no entrance
+   *  animation) instead of like a just-arrived response. */
+  isEntryPoint: boolean;
 }
 
 export interface FoldedProjectState {
@@ -76,7 +80,7 @@ export function useDemoScript(script: DemoStep[]): UseDemoScript {
     const threadId = CHAT_THREAD_BY_SCREEN[screen];
     return visibleSteps
       .filter((step) => CHAT_THREAD_BY_SCREEN[step.screen] === threadId)
-      .map((step) => ({ stepId: step.id, turn: step.chat }));
+      .map((step) => ({ stepId: step.id, turn: step.chat, isEntryPoint: step.id === script[0]?.id }));
   };
 
   // Fold: scalar context fields shallow-merge (a step's absent keys keep the
