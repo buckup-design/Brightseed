@@ -97,7 +97,7 @@ export const DEMO_STEPS: DemoStep[] = [
     id: "w1",
     screen: "welcome",
     chat: {
-      userMessage: "Help me build a stimulant-free fat burner.",
+      userMessage: "I want to develop a supplement that supports resistance to viral infection.",
       assistantMessage: [
         "Let's turn that into a project — give me a moment to pull together a goal, constraints, and a first strategy to explore.",
       ],
