@@ -18,7 +18,7 @@ import { useDemoScriptContext } from "../context/DemoScriptContext";
 // composer off-screen.
 export default function WelcomeScreen() {
   useDemoScreenSync("welcome");
-  const { chatFor, advance, isThinking, stepIndex } = useDemoScriptContext();
+  const { chatFor, advance, isThinking, revealedLineCount, stepIndex } = useDemoScriptContext();
   const isInitial = stepIndex === 0;
 
   return (
@@ -29,7 +29,7 @@ export default function WelcomeScreen() {
         className={`flex min-w-0 flex-1 justify-center border-l border-border ${isInitial ? "items-center" : ""}`}
       >
         <div className={`flex w-[600px] flex-col gap-2 px-2 ${isInitial ? "" : "h-full py-4"}`}>
-          <ChatThread messages={chatFor("welcome")} isThinking={isThinking} />
+          <ChatThread messages={chatFor("welcome")} isThinking={isThinking} revealedLineCount={revealedLineCount} />
           <ChatComposer onSubmit={advance} />
         </div>
       </div>

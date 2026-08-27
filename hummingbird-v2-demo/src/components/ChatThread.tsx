@@ -5,30 +5,28 @@ interface ChatThreadProps {
   messages: DemoChatMessage[];
   /** True while the latest turn's response is still "thinking" — see useDemoScript. */
   isThinking?: boolean;
+  /** How many lines of the latest turn's response have appeared so far — see useDemoScript. */
+  revealedLineCount?: number;
 }
 
 // Very light plain-text formatting so a scripted response can look like a
 // real numbered/bulleted answer without a markdown parser: a line starting
 // "1. " renders as a bold heading, "- " as a bullet, "  - " as a nested
-// sub-bullet, anything else as a plain paragraph. Each line fades in with a
-// staggered delay (see the .animate-fade-in-up rule in index.css) — since
-// React only mounts a line once (matched by its position, not recreated on
-// later re-renders), this plays exactly once per line, when it first
-// appears, and never replays for already-settled turns.
-function AssistantLine({ text, index, animate }: { text: string; index: number; animate: boolean }) {
+// sub-bullet, anything else as a plain paragraph. Each line also gets a
+// quick fade/slide-in on mount (see .animate-fade-in-up in index.css) —
+// combined with the caller only mounting one additional line at a time
+// (see revealedLineCount), this is what makes even a one-line response
+// visibly "arrive" instead of a CSS delay trick that resolves before
+// anyone notices.
+function AssistantLine({ text, animate }: { text: string; animate: boolean }) {
   const animationClass = animate ? "animate-fade-in-up" : "";
-  const style = animate ? { animationDelay: `${index * 120}ms` } : undefined;
 
   if (/^\d+\.\s/.test(text)) {
-    return (
-      <p className={`${animationClass} font-semibold`} style={style}>
-        {text}
-      </p>
-    );
+    return <p className={`${animationClass} font-semibold`}>{text}</p>;
   }
   if (text.startsWith("  - ")) {
     return (
-      <p className={`${animationClass} pl-8`} style={style}>
+      <p className={`${animationClass} pl-8`}>
         <span className="mr-1.5 text-muted-foreground">◦</span>
         {text.slice(4)}
       </p>
@@ -36,17 +34,13 @@ function AssistantLine({ text, index, animate }: { text: string; index: number; 
   }
   if (text.startsWith("- ")) {
     return (
-      <p className={`${animationClass} pl-4`} style={style}>
+      <p className={`${animationClass} pl-4`}>
         <span className="mr-1.5 text-muted-foreground">•</span>
         {text.slice(2)}
       </p>
     );
   }
-  return (
-    <p className={animationClass} style={style}>
-      {text}
-    </p>
-  );
+  return <p className={animationClass}>{text}</p>;
 }
 
 // Renders the accumulated conversation for one chat thread (see
@@ -58,16 +52,20 @@ function AssistantLine({ text, index, animate }: { text: string; index: number; 
 // changes) by omitting assistantMessage.
 //
 // The very first step of the whole script (isEntryPoint) is present the
-// moment the page loads, before any input — it renders statically, with no
-// entrance animation, since it never "just arrived." Every other message
-// was revealed by a send, so it animates in.
-export default function ChatThread({ messages, isThinking }: ChatThreadProps) {
+// moment the page loads, before any input — it renders fully and
+// statically, with no reveal/animation, since it never "just arrived."
+// Every other message was revealed by a send: its lines mount one at a
+// time (revealedLineCount, only meaningful for the current latest turn)
+// rather than all at once.
+export default function ChatThread({ messages, isThinking, revealedLineCount }: ChatThreadProps) {
   return (
     <div className="flex flex-1 flex-col gap-4 overflow-y-auto px-2 py-4">
       {messages.map(({ stepId, turn, isEntryPoint }, index) => {
         const isLast = index === messages.length - 1;
-        const showThinking = isLast && isThinking;
-        const animate = !isEntryPoint;
+        const showThinking = isLast && !isEntryPoint && isThinking;
+        const fullMessage = turn.assistantMessage ?? [];
+        const visibleLines =
+          isLast && !isEntryPoint ? fullMessage.slice(0, revealedLineCount ?? fullMessage.length) : fullMessage;
 
         return (
           <div key={stepId} className="flex flex-col gap-2">
@@ -84,13 +82,12 @@ export default function ChatThread({ messages, isThinking }: ChatThreadProps) {
                 <img src={hummingbirdLogo} alt="" className="size-[28px] shrink-0 animate-pulse" />
               </div>
             ) : (
-              turn.assistantMessage &&
-              turn.assistantMessage.length > 0 && (
+              visibleLines.length > 0 && (
                 <div className="flex items-start gap-[10px]">
                   <img src={hummingbirdLogo} alt="" className="size-[28px] shrink-0" />
                   <div className="flex flex-1 flex-col gap-2 pt-1 text-sm leading-6 text-foreground">
-                    {turn.assistantMessage.map((line, lineIndex) => (
-                      <AssistantLine key={lineIndex} text={line} index={lineIndex} animate={animate} />
+                    {visibleLines.map((line, lineIndex) => (
+                      <AssistantLine key={lineIndex} text={line} animate={!isEntryPoint} />
                     ))}
                   </div>
                 </div>

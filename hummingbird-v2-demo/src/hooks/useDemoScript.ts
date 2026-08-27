@@ -11,8 +11,12 @@ import {
 import type { TabId } from "../components/Header";
 
 // How long the "thinking" indicator shows before an assistant response
-// reveals — see advance() below.
+// starts revealing, and how far apart each of its lines then appears —
+// see advance() below. Lines are revealed one at a time on a real timer
+// (not just a CSS animation-delay on an already-inserted block) so a
+// short response is still visibly "typed in", not just a quick flash.
 const THINKING_DURATION_MS = 5000;
+const LINE_REVEAL_INTERVAL_MS = 280;
 
 export interface DemoChatMessage {
   stepId: string;
@@ -44,16 +48,23 @@ export interface UseDemoScript {
   folded: FoldedProjectState;
   /** True for THINKING_DURATION_MS right after advancing into a step that has an assistant response. */
   isThinking: boolean;
+  /** How many lines of the CURRENT (latest) step's response have appeared so far. Irrelevant to every earlier, already-settled turn. */
+  revealedLineCount: number;
 }
 
 export function useDemoScript(script: DemoStep[]): UseDemoScript {
   const [stepIndex, setStepIndex] = useState(0);
   const [isThinking, setIsThinking] = useState(false);
+  const [revealedLineCount, setRevealedLineCount] = useState(0);
   const thinkingTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const revealInterval = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  useEffect(() => () => {
+  const clearTimers = () => {
     if (thinkingTimeout.current) clearTimeout(thinkingTimeout.current);
-  }, []);
+    if (revealInterval.current) clearInterval(revealInterval.current);
+  };
+
+  useEffect(() => clearTimers, []);
 
   const currentStep = script[stepIndex];
   const visibleSteps = useMemo(() => script.slice(0, stepIndex + 1), [script, stepIndex]);
@@ -62,12 +73,24 @@ export function useDemoScript(script: DemoStep[]): UseDemoScript {
     setStepIndex((current) => {
       const next = Math.min(current + 1, script.length - 1);
       const nextStep = script[next];
+      const lineCount = nextStep.chat.assistantMessage?.length ?? 0;
 
-      if (thinkingTimeout.current) clearTimeout(thinkingTimeout.current);
-      const hasResponse = (nextStep.chat.assistantMessage?.length ?? 0) > 0;
-      if (hasResponse) {
+      clearTimers();
+      setRevealedLineCount(0);
+
+      if (lineCount > 0) {
         setIsThinking(true);
-        thinkingTimeout.current = setTimeout(() => setIsThinking(false), THINKING_DURATION_MS);
+        thinkingTimeout.current = setTimeout(() => {
+          setIsThinking(false);
+          let revealed = 0;
+          revealInterval.current = setInterval(() => {
+            revealed += 1;
+            setRevealedLineCount(revealed);
+            if (revealed >= lineCount && revealInterval.current) {
+              clearInterval(revealInterval.current);
+            }
+          }, LINE_REVEAL_INTERVAL_MS);
+        }, THINKING_DURATION_MS);
       } else {
         setIsThinking(false);
       }
@@ -108,5 +131,6 @@ export function useDemoScript(script: DemoStep[]): UseDemoScript {
     chatFor,
     folded,
     isThinking,
+    revealedLineCount,
   };
 }
