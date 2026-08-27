@@ -87,7 +87,9 @@ export const DEMO_STEPS: DemoStep[] = [
     screen: "welcome",
     chat: {
       assistantMessage: [
-        "Hi! Ask Hummingbird about compounds, natural sources, or combinations for any health area.",
+        "I’m Hummingbird, your agent for product concept creation. I can help you design natural health products, guiding your selection of science-backed ingredients or identifying health benefit opportunities for specific plants.",
+        "You can always ask me questions about my capabilities.",
+        "Let’s start your first project.",
       ],
     },
   },
