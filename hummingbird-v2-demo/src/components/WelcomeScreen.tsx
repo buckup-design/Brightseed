@@ -27,8 +27,8 @@ export default function WelcomeScreen() {
           </div>
 
           <div className="flex w-full items-center pl-11">
-            <div className="flex flex-1 justify-end rounded-sm bg-muted p-2">
-              <p className="flex-1 text-right text-sm leading-5 text-foreground">
+            <div className="flex flex-1 rounded-sm bg-muted p-2">
+              <p className="flex-1 text-sm leading-5 text-foreground">
                 Show me combos for muscle health
               </p>
             </div>
