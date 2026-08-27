@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   CHAT_THREAD_BY_SCREEN,
   type ChatTurn,
@@ -9,6 +9,10 @@ import {
   type StrategyCardData,
 } from "../data/demoScript";
 import type { TabId } from "../components/Header";
+
+// How long the "thinking" indicator shows before an assistant response
+// reveals — see advance() below.
+const THINKING_DURATION_MS = 5000;
 
 export interface DemoChatMessage {
   stepId: string;
@@ -34,15 +38,39 @@ export interface UseDemoScript {
   chatFor: (screen: ScreenId) => DemoChatMessage[];
   /** Everything Project/Strategy screens read, folded up to the current step. */
   folded: FoldedProjectState;
+  /** True for THINKING_DURATION_MS right after advancing into a step that has an assistant response. */
+  isThinking: boolean;
 }
 
 export function useDemoScript(script: DemoStep[]): UseDemoScript {
   const [stepIndex, setStepIndex] = useState(0);
+  const [isThinking, setIsThinking] = useState(false);
+  const thinkingTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => () => {
+    if (thinkingTimeout.current) clearTimeout(thinkingTimeout.current);
+  }, []);
 
   const currentStep = script[stepIndex];
   const visibleSteps = useMemo(() => script.slice(0, stepIndex + 1), [script, stepIndex]);
 
-  const advance = () => setStepIndex((i) => Math.min(i + 1, script.length - 1));
+  const advance = () => {
+    setStepIndex((current) => {
+      const next = Math.min(current + 1, script.length - 1);
+      const nextStep = script[next];
+
+      if (thinkingTimeout.current) clearTimeout(thinkingTimeout.current);
+      const hasResponse = (nextStep.chat.assistantMessage?.length ?? 0) > 0;
+      if (hasResponse) {
+        setIsThinking(true);
+        thinkingTimeout.current = setTimeout(() => setIsThinking(false), THINKING_DURATION_MS);
+      } else {
+        setIsThinking(false);
+      }
+
+      return next;
+    });
+  };
 
   const chatFor = (screen: ScreenId): DemoChatMessage[] => {
     const threadId = CHAT_THREAD_BY_SCREEN[screen];
@@ -75,5 +103,6 @@ export function useDemoScript(script: DemoStep[]): UseDemoScript {
     advance,
     chatFor,
     folded,
+    isThinking,
   };
 }

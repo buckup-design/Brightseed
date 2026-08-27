@@ -11,7 +11,7 @@ import { useDemoScriptContext } from "../context/DemoScriptContext";
 
 export default function ProjectScreen() {
   useDemoScreenSync("project");
-  const { chatFor, advance, folded } = useDemoScriptContext();
+  const { chatFor, advance, folded, isThinking } = useDemoScriptContext();
   const { leftWidth, containerRef, handleResize, reset } = useResizableSplit();
 
   return (
@@ -20,7 +20,7 @@ export default function ProjectScreen() {
 
       <div ref={containerRef} className="flex min-w-0 flex-1">
         <div className="flex shrink-0 flex-col" style={{ width: leftWidth }}>
-          <ChatThread messages={chatFor("project")} />
+          <ChatThread messages={chatFor("project")} isThinking={isThinking} />
           <ChatComposer onSubmit={advance} />
           <footer className="flex items-center justify-between border-t border-border px-4 py-3 text-xs text-muted-foreground">
             <span>© 2026 Brightseed. All rights reserved.</span>

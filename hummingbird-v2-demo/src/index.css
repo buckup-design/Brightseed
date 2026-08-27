@@ -13,6 +13,25 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Scripted-demo assistant responses (ChatThread.tsx) fade/slide in one line
+   at a time via a per-line animation-delay, so a canned response reads like
+   it's streaming in rather than appearing all at once. */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  opacity: 0;
+  animation: fade-in-up 300ms ease-out forwards;
+}
+
 /* Score filter sliders (Slider.tsx): white/grey-ring thumb + an orange fill
    from the track's start up to the thumb. Native <input type="range"> has no
    cross-browser way to color the track left of the thumb without
