@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   CHAT_THREAD_BY_SCREEN,
   type ChatTurn,
@@ -12,7 +12,7 @@ import type { TabId } from "../components/Header";
 
 // How long the "thinking" indicator shows before an assistant response
 // starts revealing, and how far apart each of its lines then appears —
-// see advance() below. Lines are revealed one at a time on a real timer
+// see the effect below. Lines are revealed one at a time on a real timer
 // (not just a CSS animation-delay on an already-inserted block) so a
 // short response is still visibly "typed in", not just a quick flash.
 const THINKING_DURATION_MS = 5000;
@@ -56,48 +56,48 @@ export function useDemoScript(script: DemoStep[]): UseDemoScript {
   const [stepIndex, setStepIndex] = useState(0);
   const [isThinking, setIsThinking] = useState(false);
   const [revealedLineCount, setRevealedLineCount] = useState(0);
-  const thinkingTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const revealInterval = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const clearTimers = () => {
-    if (thinkingTimeout.current) clearTimeout(thinkingTimeout.current);
-    if (revealInterval.current) clearInterval(revealInterval.current);
-  };
-
-  useEffect(() => clearTimers, []);
 
   const currentStep = script[stepIndex];
   const visibleSteps = useMemo(() => script.slice(0, stepIndex + 1), [script, stepIndex]);
 
-  const advance = () => {
-    setStepIndex((current) => {
-      const next = Math.min(current + 1, script.length - 1);
-      const nextStep = script[next];
-      const lineCount = nextStep.chat.assistantMessage?.length ?? 0;
+  const advance = () => setStepIndex((current) => Math.min(current + 1, script.length - 1));
 
-      clearTimers();
-      setRevealedLineCount(0);
+  // Drives the thinking -> reveal sequence for whichever step is current.
+  // Deliberately a useEffect, not side effects stuffed inside the
+  // setStepIndex updater above: React (in StrictMode) intentionally
+  // invokes a functional setState updater twice per call to catch impure
+  // updaters, which was silently double-scheduling/cancelling these timers
+  // — an effect's setup/cleanup lifecycle is the correct, StrictMode-safe
+  // place for this. Skipped entirely for the very first step (index 0):
+  // that one is present on load, not revealed by a send.
+  useEffect(() => {
+    if (stepIndex === 0) return;
 
-      if (lineCount > 0) {
-        setIsThinking(true);
-        thinkingTimeout.current = setTimeout(() => {
-          setIsThinking(false);
-          let revealed = 0;
-          revealInterval.current = setInterval(() => {
-            revealed += 1;
-            setRevealedLineCount(revealed);
-            if (revealed >= lineCount && revealInterval.current) {
-              clearInterval(revealInterval.current);
-            }
-          }, LINE_REVEAL_INTERVAL_MS);
-        }, THINKING_DURATION_MS);
-      } else {
-        setIsThinking(false);
-      }
+    const lineCount = currentStep.chat.assistantMessage?.length ?? 0;
+    setRevealedLineCount(0);
 
-      return next;
-    });
-  };
+    if (lineCount === 0) {
+      setIsThinking(false);
+      return;
+    }
+
+    setIsThinking(true);
+    let revealInterval: ReturnType<typeof setInterval> | undefined;
+    const thinkingTimeout = setTimeout(() => {
+      setIsThinking(false);
+      let revealed = 0;
+      revealInterval = setInterval(() => {
+        revealed += 1;
+        setRevealedLineCount(revealed);
+        if (revealed >= lineCount && revealInterval) clearInterval(revealInterval);
+      }, LINE_REVEAL_INTERVAL_MS);
+    }, THINKING_DURATION_MS);
+
+    return () => {
+      clearTimeout(thinkingTimeout);
+      if (revealInterval) clearInterval(revealInterval);
+    };
+  }, [stepIndex, currentStep]);
 
   const chatFor = (screen: ScreenId): DemoChatMessage[] => {
     const threadId = CHAT_THREAD_BY_SCREEN[screen];
