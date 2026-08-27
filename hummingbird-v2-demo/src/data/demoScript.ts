@@ -21,8 +21,8 @@ export const CHAT_THREAD_BY_SCREEN: Record<ScreenId, string> = {
 export interface ChatTurn {
   /** Omitted on an assistant-only turn (e.g. an opening greeting). */
   userMessage?: string;
-  /** One string per paragraph/bubble. */
-  assistantMessage: string[];
+  /** One string per paragraph/bubble. Omitted on a user-only turn (the response comes in a later step). */
+  assistantMessage?: string[];
 }
 
 export interface ProjectContextPatch {
@@ -98,9 +98,6 @@ export const DEMO_STEPS: DemoStep[] = [
     screen: "welcome",
     chat: {
       userMessage: "I want to develop a supplement that supports resistance to viral infection.",
-      assistantMessage: [
-        "Let's turn that into a project — give me a moment to pull together a goal, constraints, and a first strategy to explore.",
-      ],
     },
   },
   {

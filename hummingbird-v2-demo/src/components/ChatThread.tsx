@@ -8,8 +8,10 @@ interface ChatThreadProps {
 // Renders the accumulated conversation for one chat thread (see
 // CHAT_THREAD_BY_SCREEN in demoScript.ts for which screens share a thread).
 // Within a turn, the user's message (what triggered this turn) renders
-// first, followed by Hummingbird's response — turns with no userMessage
-// (e.g. an opening greeting) render assistant-only.
+// first, followed by Hummingbird's response. Either half is optional: an
+// opening greeting has no userMessage, and a user turn can go unanswered
+// for a step (e.g. the response arrives as its own step once the screen
+// changes) by omitting assistantMessage.
 export default function ChatThread({ messages }: ChatThreadProps) {
   return (
     <div className="flex flex-1 flex-col gap-4 overflow-y-auto px-2 py-4">
@@ -22,14 +24,16 @@ export default function ChatThread({ messages }: ChatThreadProps) {
               </div>
             </div>
           )}
-          <div className="flex items-start gap-[10px]">
-            <img src={hummingbirdLogo} alt="" className="size-[28px] shrink-0" />
-            <div className="flex flex-1 flex-col gap-2 pt-1 text-sm leading-6 text-foreground">
-              {turn.assistantMessage.map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
-              ))}
+          {turn.assistantMessage && turn.assistantMessage.length > 0 && (
+            <div className="flex items-start gap-[10px]">
+              <img src={hummingbirdLogo} alt="" className="size-[28px] shrink-0" />
+              <div className="flex flex-1 flex-col gap-2 pt-1 text-sm leading-6 text-foreground">
+                {turn.assistantMessage.map((paragraph, index) => (
+                  <p key={index}>{paragraph}</p>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       ))}
     </div>
