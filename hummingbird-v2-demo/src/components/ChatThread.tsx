@@ -17,17 +17,28 @@ function isTableSegment(item: AssistantMessageItem): item is AssistantTableSegme
 
 // Very light plain-text formatting so a scripted response can look like a
 // real numbered/bulleted answer without a markdown parser: a line starting
-// "1. " renders as a bold heading, "- " as a bullet, "  - " as a nested
-// sub-bullet, anything else as a plain paragraph. Each line also gets a
-// quick fade/slide-in on mount (see .animate-fade-in-up in index.css) —
-// combined with the caller only mounting one additional item at a time
-// (see revealedLineCount), this is what makes even a one-line response
-// visibly "arrive" instead of a CSS delay trick that resolves before
-// anyone notices.
+// "1. " renders as a bold heading (a trailing "(...)" parenthetical, if
+// any, stays unbolded — it's supporting stats, not part of the heading),
+// "- " as a bullet, "  - " as a nested sub-bullet, anything else as a
+// plain paragraph. Each line also gets a quick fade/slide-in on mount (see
+// .animate-fade-in-up in index.css) — combined with the caller only
+// mounting one additional item at a time (see revealedLineCount), this is
+// what makes even a one-line response visibly "arrive" instead of a CSS
+// delay trick that resolves before anyone notices.
 function AssistantLine({ text, animate }: { text: string; animate: boolean }) {
   const animationClass = animate ? "animate-fade-in-up" : "";
 
   if (/^\d+\.\s/.test(text)) {
+    const trailingParenthetical = text.match(/^(.*?)(\s*\([^)]*\))$/);
+    if (trailingParenthetical) {
+      const [, heading, parenthetical] = trailingParenthetical;
+      return (
+        <p className={animationClass}>
+          <span className="font-semibold">{heading}</span>
+          {parenthetical}
+        </p>
+      );
+    }
     return <p className={`${animationClass} font-semibold`}>{text}</p>;
   }
   if (text.startsWith("  - ")) {
