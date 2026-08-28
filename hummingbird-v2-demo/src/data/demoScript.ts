@@ -50,6 +50,15 @@ export interface ChatTurn {
   userMessage?: string;
   /** One item per paragraph/bulleted line/table. Omitted on a user-only turn (the response comes in a later step). */
   assistantMessage?: AssistantMessageItem[];
+  /**
+   * Trims this step's thread down to "everything up through the step with
+   * this id, then this step onward" — everything in between (still real,
+   * still in the script) just isn't re-shown. E.g. returning to the project
+   * thread after reviewing a strategy keeps the "Project Created" beat but
+   * drops the strategy-card browsing that happened after it. See
+   * useDemoScript's chatFor.
+   */
+  threadResetAfterStepId?: string;
 }
 
 export interface ProjectContextPatch {
@@ -57,6 +66,25 @@ export interface ProjectContextPatch {
   goal?: string;
   constraints?: string;
   referencesLabel?: string;
+}
+
+export interface StrategyCombinationSummary {
+  id: string;
+  label: string;
+  totalPredictedBioactiveCompounds: number;
+}
+
+// Present once a strategy has actually been reviewed (see p2's
+// threadResetAfterStepId) — StrategyCard renders the richer Figma
+// "reviewed" layout instead of the plain summary when this is set.
+export interface ReviewedStrategyDetails {
+  evidencedCompoundNames: string[];
+  predictedCompoundsNote: string;
+  molecularDockingLinkLabel: string;
+  naturalSourcesNote: string;
+  combinations: StrategyCombinationSummary[];
+  ipAssessmentLabel: string;
+  notesLabel: string;
 }
 
 export interface StrategyCardData {
@@ -67,6 +95,7 @@ export interface StrategyCardData {
   predictedCompounds: number;
   totalCompounds: number;
   referencesLabel: string;
+  reviewed?: ReviewedStrategyDetails;
 }
 
 export interface CompoundRow {
@@ -589,10 +618,85 @@ export const DEMO_STEPS: DemoStep[] = [
   {
     id: "p2",
     screen: "project",
+    // No userMessage — reached by clicking the breadcrumb (see s4), not by
+    // sending anything, same as s0's card-click drill-in.
     chat: {
-      userMessage: "Let's go back and compare the two strategies.",
-      assistantMessage: ["Back on the project — here's Strategy Name alongside the other option again."],
+      assistantMessage: [
+        "*Strategy One reviewed*",
+        "I’ve summarized the exploration of that strategy. If you want an IP assessment, you can request that and it will run in the background and appear here when ready. You can also add any notes to the summary, or invite colleagues to review and add their own notes.",
+        "You have 100 service credits available. You can use these to run samples of specific plants or extracts to determine concentrations of your target compounds, or run a molecular docking study on the predicted compounds in your dataset.",
+        "When you're ready, go ahead and explore the other strategies.",
+      ],
+      // Drops the strategy-card browsing (p0/p1's turns) between "Project
+      // Created" (w3) and now — matches Anna's Figma reference (node
+      // 136:92027), where the top card gains a reviewed summary.
+      threadResetAfterStepId: "w3",
     },
+    strategyCards: [
+      {
+        id: "fusion-polymerase",
+        name: "Fusion inhibition + polymerase inhibition",
+        approach: "Entry plus replication: targets viral genome replication after entry.",
+        evidencedCompounds: 7,
+        predictedCompounds: 1241,
+        totalCompounds: 1248,
+        referencesLabel: "view 6 relevant papers",
+        reviewed: {
+          evidencedCompoundNames: ["Beta-sitosterol", "Rosmarinic acid", "EGCG", "Fisetin", "Tangeretin"],
+          predictedCompoundsNote:
+            "All predicted compounds are still in scope; open the strategy to revise this assumption. To further refine your list of predictions,",
+          molecularDockingLinkLabel: "request a molecular docking analysis.",
+          naturalSourcesNote:
+            "Top combinations have been defined as pairs of two GRAS natural sources that include all 5 evidenced compounds, and the highest count of predicted compounds.",
+          combinations: [
+            { id: "mango-sour-orange", label: "Mango + Sour orange", totalPredictedBioactiveCompounds: 183 },
+            { id: "sour-orange-boerhavia-diffusa", label: "Sour orange + Boerhavia diffusa", totalPredictedBioactiveCompounds: 164 },
+            { id: "sour-orange-cistus-incanus", label: "Sour orange + Cistus incanus", totalPredictedBioactiveCompounds: 162 },
+            { id: "sour-orange-ephedra-nevadensis", label: "Sour orange + Ephedra nevadensis", totalPredictedBioactiveCompounds: 153 },
+            { id: "mango-soybean", label: "Mango + Soybean", totalPredictedBioactiveCompounds: 142 },
+          ],
+          ipAssessmentLabel: "generate",
+          notesLabel: "add notes",
+        },
+      },
+      {
+        id: "fusion-neuraminidase",
+        name: "Fusion inhibition + neuraminidase inhibition",
+        approach: "Entry plus release/spread: targets a viral life-cycle enzyme associated with viral release and spread.",
+        evidencedCompounds: 6,
+        predictedCompounds: 1085,
+        totalCompounds: 1091,
+        referencesLabel: "view 6 relevant papers",
+      },
+      {
+        id: "fusion-protease",
+        name: "Fusion inhibition + viral protease inhibition",
+        approach: "Entry plus viral protein maturation: targets viral protein processing and maturation.",
+        evidencedCompounds: 9,
+        predictedCompounds: 1147,
+        totalCompounds: 1156,
+        referencesLabel: "view 6 relevant papers",
+      },
+      {
+        id: "fusion-nfkb",
+        name: "Fusion inhibition + NF-κB/cytokine modulation",
+        approach:
+          "Viral-life-cycle targeting plus a host inflammatory-response angle: may address infection-associated inflammatory signaling or tissue injury rather than directly blocking viral entry.",
+        evidencedCompounds: 117,
+        predictedCompounds: 6902,
+        totalCompounds: 7019,
+        referencesLabel: "view 6 relevant papers",
+      },
+      {
+        id: "fusion-pi3k-ampk",
+        name: "Fusion inhibition + PI3K/AKT/mTOR or AMPK modulation",
+        approach: "A host-cell pathway hypothesis, but less virus-specific — linked to antiviral outcomes via host-cell signaling axes.",
+        evidencedCompounds: 76,
+        predictedCompounds: 4930,
+        totalCompounds: 5006,
+        referencesLabel: "view 6 relevant papers",
+      },
+    ],
   },
 ];
 

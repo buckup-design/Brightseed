@@ -145,9 +145,31 @@ export function useDemoScript(script: DemoStep[]): UseDemoScript {
 
   const chatFor = (screen: ScreenId): DemoChatMessage[] => {
     const threadId = CHAT_THREAD_BY_SCREEN[screen];
-    return visibleSteps
-      .filter((step) => CHAT_THREAD_BY_SCREEN[step.screen] === threadId)
-      .map((step) => ({ stepId: step.id, turn: step.chat, isEntryPoint: step.id === script[0]?.id }));
+    const threadSteps = visibleSteps.filter((step) => CHAT_THREAD_BY_SCREEN[step.screen] === threadId);
+
+    // A step can set chat.threadResetAfterStepId to trim this thread's
+    // rendered history: keep everything up through the named anchor step,
+    // then continue with this step onward — everything else in between
+    // (still real, still in the script) just isn't re-shown. Only the most
+    // recent reset marker in the thread applies.
+    let resetAtIndex = -1;
+    let anchorStepId: string | undefined;
+    threadSteps.forEach((step, index) => {
+      if (step.chat.threadResetAfterStepId !== undefined) {
+        resetAtIndex = index;
+        anchorStepId = step.chat.threadResetAfterStepId;
+      }
+    });
+
+    const renderedSteps =
+      resetAtIndex === -1
+        ? threadSteps
+        : [
+            ...threadSteps.slice(0, threadSteps.findIndex((step) => step.id === anchorStepId) + 1),
+            ...threadSteps.slice(resetAtIndex),
+          ];
+
+    return renderedSteps.map((step) => ({ stepId: step.id, turn: step.chat, isEntryPoint: step.id === script[0]?.id }));
   };
 
   // While the latest turn is still "thinking", the workspace hasn't caught
