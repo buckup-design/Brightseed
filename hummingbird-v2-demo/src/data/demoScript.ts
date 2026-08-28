@@ -140,8 +140,6 @@ export interface CombinationRow {
   rank: number;
   combinationLabel: string;
   combinedPredicted: number;
-  /** The "(63 + 120)" breakdown text — kept as a string, not parsed. */
-  combinedPredictedBreakdown: string;
   grasStatusLabel: string;
   /** Screenshot bolds the #1 row — preserve that signal. */
   highlight?: boolean;
@@ -544,7 +542,6 @@ export const DEMO_STEPS: DemoStep[] = [
             rank: 1,
             combinationLabel: "Mango + Sour orange",
             combinedPredicted: 183,
-            combinedPredictedBreakdown: "(63 + 120)",
             grasStatusLabel: "Both ✓ GRAS",
           },
           {
@@ -552,7 +549,6 @@ export const DEMO_STEPS: DemoStep[] = [
             rank: 2,
             combinationLabel: "Sour orange + Boerhavia diffusa",
             combinedPredicted: 164,
-            combinedPredictedBreakdown: "(120 + 44)",
             grasStatusLabel: "Both ✓ GRAS",
           },
           {
@@ -560,7 +556,6 @@ export const DEMO_STEPS: DemoStep[] = [
             rank: 3,
             combinationLabel: "Sour orange + Cistus incanus",
             combinedPredicted: 162,
-            combinedPredictedBreakdown: "(120 + 42)",
             grasStatusLabel: "Both ✓ GRAS",
           },
           {
@@ -568,7 +563,6 @@ export const DEMO_STEPS: DemoStep[] = [
             rank: 4,
             combinationLabel: "Sour orange + Ephedra nevadensis",
             combinedPredicted: 153,
-            combinedPredictedBreakdown: "(120 + 33)",
             grasStatusLabel: "Both ✓ GRAS",
           },
           {
@@ -576,7 +570,6 @@ export const DEMO_STEPS: DemoStep[] = [
             rank: 5,
             combinationLabel: "Mango + Soybean",
             combinedPredicted: 142,
-            combinedPredictedBreakdown: "(63 + 79)",
             grasStatusLabel: "Both ✓ GRAS",
           },
         ],

@@ -19,7 +19,7 @@ export default function CombinationsCard({ card }: CombinationsCardProps) {
           <tr className="border-b border-border text-left">
             <th className="px-2 py-2 font-medium text-foreground">Rank</th>
             <th className="px-2 py-2 font-medium text-foreground">Combination</th>
-            <th className="px-2 py-2 font-medium text-foreground">Combined predicted</th>
+            <th className="px-2 py-2 font-medium text-foreground">Additional predicted bioactives</th>
             <th className="px-2 py-2 font-medium text-foreground">GRAS status</th>
           </tr>
         </thead>
@@ -32,9 +32,8 @@ export default function CombinationsCard({ card }: CombinationsCardProps) {
               <td className={`px-2 py-2 align-top text-foreground ${row.highlight ? "font-semibold" : ""}`}>
                 {row.combinationLabel}
               </td>
-              <td className="px-2 py-2 align-top text-foreground">
-                <span className={row.highlight ? "font-semibold" : ""}>{row.combinedPredicted}</span>{" "}
-                {row.combinedPredictedBreakdown}
+              <td className={`px-2 py-2 align-top text-foreground ${row.highlight ? "font-semibold" : ""}`}>
+                {row.combinedPredicted}
               </td>
               <td className="px-2 py-2 align-top text-foreground">{row.grasStatusLabel}</td>
             </tr>
