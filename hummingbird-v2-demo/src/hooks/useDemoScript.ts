@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useLayoutEffect, useMemo, useState } from "react";
 import {
   CHAT_THREAD_BY_SCREEN,
   type ChatTurn,
@@ -69,14 +69,19 @@ export function useDemoScript(script: DemoStep[]): UseDemoScript {
   const advance = () => setStepIndex((current) => Math.min(current + 1, script.length - 1));
 
   // Drives the thinking -> reveal sequence for whichever step is current.
-  // Deliberately a useEffect, not side effects stuffed inside the
+  // Deliberately a layout effect, not side effects stuffed inside the
   // setStepIndex updater above: React (in StrictMode) intentionally
   // invokes a functional setState updater twice per call to catch impure
   // updaters, which was silently double-scheduling/cancelling these timers
   // — an effect's setup/cleanup lifecycle is the correct, StrictMode-safe
-  // place for this. Skipped entirely for the very first step (index 0):
-  // that one is present on load, not revealed by a send.
-  useEffect(() => {
+  // place for this. It's a *layout* effect rather than a plain one so the
+  // isThinking/revealedLineCount reset for a new step lands before the
+  // browser paints — otherwise there'd be a one-frame flash of the previous
+  // step's already-settled state (and, worse, foldSourceSteps below would
+  // briefly fold the new step in a beat early). Skipped entirely for the
+  // very first step (index 0): that one is present on load, not revealed by
+  // a send.
+  useLayoutEffect(() => {
     if (stepIndex === 0) return;
 
     const assistantMessage = currentStep.chat.assistantMessage;
@@ -89,6 +94,12 @@ export function useDemoScript(script: DemoStep[]): UseDemoScript {
     // user send required.
     const hasLoadingSegment =
       assistantMessage?.some((item) => typeof item !== "string" && "loading" in item) ?? false;
+    // A step that moves to a different screen than the one before it is a
+    // navigation, not a reply the user is waiting on — Hummingbird doesn't
+    // "think" before landing you on the new screen, it just shows what's
+    // there. Skips straight to the (still per-line staggered) reveal.
+    const previousStep = script[stepIndex - 1];
+    const isScreenTransition = previousStep !== undefined && previousStep.screen !== currentStep.screen;
     setRevealedLineCount(0);
 
     if (lineCount === 0) {
@@ -103,23 +114,34 @@ export function useDemoScript(script: DemoStep[]): UseDemoScript {
       return () => clearTimeout(autoAdvanceTimeout);
     }
 
+    const startRevealing = () => {
+      let revealed = 0;
+      const revealInterval = setInterval(() => {
+        revealed += 1;
+        setRevealedLineCount(revealed);
+        if (revealed >= lineCount) clearInterval(revealInterval);
+      }, LINE_REVEAL_INTERVAL_MS);
+      return revealInterval;
+    };
+
+    if (isScreenTransition) {
+      setIsThinking(false);
+      const revealInterval = startRevealing();
+      return () => clearInterval(revealInterval);
+    }
+
     setIsThinking(true);
     let revealInterval: ReturnType<typeof setInterval> | undefined;
     const thinkingTimeout = setTimeout(() => {
       setIsThinking(false);
-      let revealed = 0;
-      revealInterval = setInterval(() => {
-        revealed += 1;
-        setRevealedLineCount(revealed);
-        if (revealed >= lineCount && revealInterval) clearInterval(revealInterval);
-      }, LINE_REVEAL_INTERVAL_MS);
+      revealInterval = startRevealing();
     }, THINKING_DURATION_MS);
 
     return () => {
       clearTimeout(thinkingTimeout);
       if (revealInterval) clearInterval(revealInterval);
     };
-  }, [stepIndex, currentStep]);
+  }, [stepIndex, currentStep, script]);
 
   const chatFor = (screen: ScreenId): DemoChatMessage[] => {
     const threadId = CHAT_THREAD_BY_SCREEN[screen];
@@ -128,11 +150,24 @@ export function useDemoScript(script: DemoStep[]): UseDemoScript {
       .map((step) => ({ stepId: step.id, turn: step.chat, isEntryPoint: step.id === script[0]?.id }));
   };
 
+  // While the latest turn is still "thinking", the workspace hasn't caught
+  // up to it yet — a tab switch or a new card (e.g. the Best combinations
+  // table) should land at the same moment its message starts revealing, not
+  // the instant the user sends/clicks. So while isThinking is true, fold as
+  // if the current (last) step in visibleSteps hadn't happened yet; the
+  // moment isThinking flips false (immediately for a screen transition,
+  // after the delay otherwise — see the layout effect above), the current
+  // step's patches land in the same beat the reveal starts.
+  const foldSourceSteps = useMemo(() => {
+    if (isThinking && stepIndex > 0) return visibleSteps.slice(0, -1);
+    return visibleSteps;
+  }, [visibleSteps, isThinking, stepIndex]);
+
   // Fold: scalar context fields shallow-merge (a step's absent keys keep the
   // prior value); array/name fields are last-write-wins whole replacements.
   // This is what lets a step only specify what actually changed.
   const folded = useMemo<FoldedProjectState>(() => {
-    return visibleSteps.reduce<FoldedProjectState>(
+    return foldSourceSteps.reduce<FoldedProjectState>(
       (acc, step) => ({
         context: { ...acc.context, ...step.contextPatch },
         strategyCards: step.strategyCards ?? acc.strategyCards,
@@ -145,7 +180,7 @@ export function useDemoScript(script: DemoStep[]): UseDemoScript {
       }),
       { context: {}, strategyCards: [], categoryCards: [], predictedCompoundsCards: [] }
     );
-  }, [visibleSteps]);
+  }, [foldSourceSteps]);
 
   return {
     stepIndex,
