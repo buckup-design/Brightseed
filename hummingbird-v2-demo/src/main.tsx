@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
+import { HashRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import WelcomeScreen from "./components/WelcomeScreen";
@@ -10,7 +10,13 @@ import { DemoScriptProvider } from "./context/DemoScriptContext";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
+    {/* HashRouter (not BrowserRouter): this app only navigates client-side via
+        `navigate()`, never a server-rendered deep link, so a hash-based
+        history works identically here and is what lets the standalone
+        single-file build (see vite.config.ts's "standalone" mode) run
+        correctly straight off disk (file://) or from any static host with no
+        server-side rewrite rules. */}
+    <HashRouter>
       <Routes>
         {/* The scripted welcome -> project -> strategy demo shares one
             DemoScriptProvider so its step index survives client-side
@@ -32,6 +38,6 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/filters" element={<App />} />
         <Route path="/" element={<Navigate to="/welcome" replace />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   </StrictMode>
 );
