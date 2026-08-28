@@ -577,6 +577,16 @@ export const DEMO_STEPS: DemoStep[] = [
     },
   },
   {
+    id: "s4",
+    screen: "strategy",
+    chat: {
+      userMessage: "Let’s explore another strategy.",
+      assistantMessage: [
+        "Just click on the project at the top of the page to review the other strategies.",
+      ],
+    },
+  },
+  {
     id: "p2",
     screen: "project",
     chat: {

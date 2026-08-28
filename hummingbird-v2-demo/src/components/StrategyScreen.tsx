@@ -55,6 +55,7 @@ export default function StrategyScreen() {
           <ProjectHeaderBar
             projectName={folded.context.projectName ?? "Untitled Project"}
             strategyName={folded.strategyName ?? "Untitled Strategy"}
+            onProjectClick={advance}
           />
           <ContextDrawer context={folded.context} />
           <Header
