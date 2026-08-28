@@ -18,11 +18,25 @@ export const CHAT_THREAD_BY_SCREEN: Record<ScreenId, string> = {
   strategy: "strategy",
 };
 
+export interface AssistantTableSegment {
+  table: {
+    columns: string[];
+    rows: string[][];
+  };
+}
+
+// A response is a sequence of items, each one revealed as its own beat —
+// see useDemoScript's revealedLineCount. Plain strings are the common case
+// (one paragraph/bulleted line each, see ChatThread's AssistantLine); a
+// table segment renders as a real HTML table instead of prose, for the
+// rare response that needs one.
+export type AssistantMessageItem = string | AssistantTableSegment;
+
 export interface ChatTurn {
   /** Omitted on an assistant-only turn (e.g. an opening greeting). */
   userMessage?: string;
-  /** One string per paragraph/bubble. Omitted on a user-only turn (the response comes in a later step). */
-  assistantMessage?: string[];
+  /** One item per paragraph/bulleted line/table. Omitted on a user-only turn (the response comes in a later step). */
+  assistantMessage?: AssistantMessageItem[];
 }
 
 export interface ProjectContextPatch {
@@ -120,6 +134,39 @@ export const DEMO_STEPS: DemoStep[] = [
         "- A small number of records associate SIRT1 and PINK1/Parkin-related signaling with reduced viral replication, though these findings are experimental.",
         "The records behind these pathway links are predominantly in-vitro or animal studies; they should be viewed as mechanistic hypotheses and early evidence, not proof of improved resistance to viral infections in people. The clearest mechanistic categories are viral entry/fusion and viral replication enzymes.",
         "I can answer any follow up questions about these pathways, or narrow them down for you. Since viral entry/fusion has the most robust supporting evidence, and the compound space is broad, I recommend looking into compounds that may both block viral entry and target one of the additional pathways outlined.",
+      ],
+    },
+  },
+  {
+    id: "w2",
+    screen: "welcome",
+    chat: {
+      userMessage: "Help me choose a secondary target.",
+      assistantMessage: [
+        {
+          table: {
+            columns: ["Secondary target/pathway", "Why it may be complementary", "Example compounds represented in KB", "Evidence context"],
+            rows: [
+              ["Viral polymerase inhibition", "Targets viral genome replication after entry.", "Beta-sitosterol; fisetin", "Primarily animal/in-vitro records"],
+              ["Neuraminidase inhibition", "Targets a viral life-cycle enzyme associated with viral release/spread.", "Curcumin", "In-vitro records"],
+              ["Viral protease inhibition — including HIV-1 and retroviral protease", "Targets viral protein processing and maturation.", "Hinnuliquinone; carvacrol; curcumin", "In-vitro records"],
+              ["Integrase / reverse-transcriptase inhibition", "Relevant to retroviral replication steps.", "Curcumin; myricetin", "In-vitro records"],
+              ["NF-κB and pro-inflammatory cytokines — IL-6, IL-1β, TNF-related signaling", "May address infection-associated inflammatory signaling or tissue injury rather than directly blocking viral entry.", "Curcumin; ergosterol peroxide; others", "Mostly in-vitro/animal evidence"],
+              ["PI3K–AKT–mTOR signaling", "A host-cell signaling axis linked in KB mechanisms to antiviral outcomes; best considered a host-pathway hypothesis rather than a virus-specific target.", "Myricetin; curcumin", "In-vitro records"],
+              ["AMPK signaling", "Appears in a fusion/replication-related mechanism record and may be a complementary host-pathway angle.", "Tangeretin", "In-vitro / mouse-associated record"],
+              ["Oxidative-stress and cell-survival pathways — ROS, p53, BAX/BCL-2, caspase-3", "Associated with reduced viral load in a curated experimental mechanism; potentially relevant to infected-cell stress and apoptosis.", "Ergosterol peroxide", "In-vitro record"],
+              ["SIRT1 / PINK1–Parkin mitochondrial quality-control signaling", "Linked to reduced viral replication in a predicted-inclusive mechanism record.", "Pterostilbene", "In-vitro / mouse-associated record"],
+            ],
+          },
+        },
+        "I would prioritize pairings such as:",
+        "1. Fusion inhibition + polymerase inhibition — entry plus replication. (7 directly evidenced compounds, 1,241 predictions)",
+        "2. Fusion inhibition + neuraminidase inhibition — entry plus release/spread. (6 directly evidenced compounds, 1,085 predictions)",
+        "3. Fusion inhibition + viral protease inhibition — entry plus viral protein maturation. (9 directly evidenced compounds, 1,147 predictions)",
+        "4. Fusion inhibition + NF-κB/cytokine modulation — viral-life-cycle targeting plus a host inflammatory-response angle. (117 directly evidenced compounds, 6,902 predictions)",
+        "5. Fusion inhibition + PI3K/AKT/mTOR or AMPK modulation — a host-cell pathway hypothesis, but less virus-specific. (76 directly evidenced compounds, 4,930 predictions)",
+        "Caution: these are knowledge-base mechanistic associations, and the supporting records are predominantly in vitro or animal studies. They do not establish that targeting these pathways prevents viral infection in people.",
+        "If this looks like a good solution space for us to explore, just say “GO” and I’ll kick off a project workspace for you.",
       ],
     },
   },

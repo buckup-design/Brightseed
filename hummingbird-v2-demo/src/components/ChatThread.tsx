@@ -1,12 +1,17 @@
 import hummingbirdLogo from "../assets/hummingbird-logo.svg";
+import type { AssistantMessageItem, AssistantTableSegment } from "../data/demoScript";
 import type { DemoChatMessage } from "../hooks/useDemoScript";
 
 interface ChatThreadProps {
   messages: DemoChatMessage[];
   /** True while the latest turn's response is still "thinking" — see useDemoScript. */
   isThinking?: boolean;
-  /** How many lines of the latest turn's response have appeared so far — see useDemoScript. */
+  /** How many items of the latest turn's response have appeared so far — see useDemoScript. */
   revealedLineCount?: number;
+}
+
+function isTableSegment(item: AssistantMessageItem): item is AssistantTableSegment {
+  return typeof item !== "string";
 }
 
 // Very light plain-text formatting so a scripted response can look like a
@@ -14,7 +19,7 @@ interface ChatThreadProps {
 // "1. " renders as a bold heading, "- " as a bullet, "  - " as a nested
 // sub-bullet, anything else as a plain paragraph. Each line also gets a
 // quick fade/slide-in on mount (see .animate-fade-in-up in index.css) —
-// combined with the caller only mounting one additional line at a time
+// combined with the caller only mounting one additional item at a time
 // (see revealedLineCount), this is what makes even a one-line response
 // visibly "arrive" instead of a CSS delay trick that resolves before
 // anyone notices.
@@ -43,6 +48,39 @@ function AssistantLine({ text, animate }: { text: string; animate: boolean }) {
   return <p className={animationClass}>{text}</p>;
 }
 
+// A real HTML table, for the rare response that needs one instead of prose
+// — rendered as one whole reveal beat (see AssistantMessageItem), not
+// row-by-row.
+function AssistantTable({ segment, animate }: { segment: AssistantTableSegment; animate: boolean }) {
+  const { columns, rows } = segment.table;
+  return (
+    <div className={`${animate ? "animate-fade-in-up" : ""} overflow-x-auto rounded-lg border border-border`}>
+      <table className="w-full min-w-[640px] border-collapse text-sm">
+        <thead>
+          <tr className="border-b border-border bg-muted">
+            {columns.map((column) => (
+              <th key={column} className="px-3 py-2 text-left font-medium text-foreground">
+                {column}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, rowIndex) => (
+            <tr key={rowIndex} className="border-b border-border last:border-b-0">
+              {row.map((cell, cellIndex) => (
+                <td key={cellIndex} className="px-3 py-2 align-top text-foreground">
+                  {cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 // Renders the accumulated conversation for one chat thread (see
 // CHAT_THREAD_BY_SCREEN in demoScript.ts for which screens share a thread).
 // Within a turn, the user's message (what triggered this turn) renders
@@ -54,9 +92,9 @@ function AssistantLine({ text, animate }: { text: string; animate: boolean }) {
 // The very first step of the whole script (isEntryPoint) is present the
 // moment the page loads, before any input — it renders fully and
 // statically, with no reveal/animation, since it never "just arrived."
-// Every other message was revealed by a send: its lines mount one at a
-// time (revealedLineCount, only meaningful for the current latest turn)
-// rather than all at once.
+// Every other message was revealed by a send: its items (text lines or a
+// table) mount one at a time (revealedLineCount, only meaningful for the
+// current latest turn) rather than all at once.
 export default function ChatThread({ messages, isThinking, revealedLineCount }: ChatThreadProps) {
   return (
     <div className="flex flex-1 flex-col gap-4 overflow-y-auto px-2 py-4">
@@ -64,7 +102,7 @@ export default function ChatThread({ messages, isThinking, revealedLineCount }: 
         const isLast = index === messages.length - 1;
         const showThinking = isLast && !isEntryPoint && isThinking;
         const fullMessage = turn.assistantMessage ?? [];
-        const visibleLines =
+        const visibleItems =
           isLast && !isEntryPoint ? fullMessage.slice(0, revealedLineCount ?? fullMessage.length) : fullMessage;
 
         return (
@@ -82,13 +120,17 @@ export default function ChatThread({ messages, isThinking, revealedLineCount }: 
                 <img src={hummingbirdLogo} alt="" className="size-[28px] shrink-0 animate-pulse" />
               </div>
             ) : (
-              visibleLines.length > 0 && (
+              visibleItems.length > 0 && (
                 <div className="flex items-start gap-[10px]">
                   <img src={hummingbirdLogo} alt="" className="size-[28px] shrink-0" />
                   <div className="flex flex-1 flex-col gap-2 pt-1 text-sm leading-6 text-foreground">
-                    {visibleLines.map((line, lineIndex) => (
-                      <AssistantLine key={lineIndex} text={line} animate={!isEntryPoint} />
-                    ))}
+                    {visibleItems.map((item, itemIndex) =>
+                      isTableSegment(item) ? (
+                        <AssistantTable key={itemIndex} segment={item} animate={!isEntryPoint} />
+                      ) : (
+                        <AssistantLine key={itemIndex} text={item} animate={!isEntryPoint} />
+                      )
+                    )}
                   </div>
                 </div>
               )
