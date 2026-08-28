@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import hummingbirdLogo from "../assets/hummingbird-logo.svg";
 import type { AssistantMessageItem, AssistantTableSegment } from "../data/demoScript";
 import type { DemoChatMessage } from "../hooks/useDemoScript";
@@ -50,16 +51,26 @@ function AssistantLine({ text, animate }: { text: string; animate: boolean }) {
 
 // A real HTML table, for the rare response that needs one instead of prose
 // — rendered as one whole reveal beat (see AssistantMessageItem), not
-// row-by-row.
+// row-by-row. table-fixed + explicit column widths (rather than table-auto)
+// so it always fits the chat column's width by wrapping cell text, never by
+// scrolling horizontally.
 function AssistantTable({ segment, animate }: { segment: AssistantTableSegment; animate: boolean }) {
   const { columns, rows } = segment.table;
   return (
-    <div className={`${animate ? "animate-fade-in-up" : ""} overflow-x-auto rounded-lg border border-border`}>
-      <table className="w-full min-w-[640px] border-collapse text-sm">
+    <div className={`${animate ? "animate-fade-in-up" : ""} rounded-lg border border-border`}>
+      <table className="w-full table-fixed border-collapse text-xs">
+        {columns.length === 4 && (
+          <colgroup>
+            <col className="w-[24%]" />
+            <col className="w-[36%]" />
+            <col className="w-[22%]" />
+            <col className="w-[18%]" />
+          </colgroup>
+        )}
         <thead>
           <tr className="border-b border-border bg-muted">
             {columns.map((column) => (
-              <th key={column} className="px-3 py-2 text-left font-medium text-foreground">
+              <th key={column} className="break-words px-2 py-1.5 text-left font-medium text-foreground">
                 {column}
               </th>
             ))}
@@ -69,7 +80,7 @@ function AssistantTable({ segment, animate }: { segment: AssistantTableSegment; 
           {rows.map((row, rowIndex) => (
             <tr key={rowIndex} className="border-b border-border last:border-b-0">
               {row.map((cell, cellIndex) => (
-                <td key={cellIndex} className="px-3 py-2 align-top text-foreground">
+                <td key={cellIndex} className="break-words px-2 py-1.5 align-top text-foreground">
                   {cell}
                 </td>
               ))}
@@ -96,8 +107,17 @@ function AssistantTable({ segment, animate }: { segment: AssistantTableSegment; 
 // table) mount one at a time (revealedLineCount, only meaningful for the
 // current latest turn) rather than all at once.
 export default function ChatThread({ messages, isThinking, revealedLineCount }: ChatThreadProps) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Keep the newest content in view: a fresh user message (or the next
+  // revealed response line/thinking indicator) should always scroll into
+  // frame rather than leaving the viewer to notice it appeared off-screen.
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
+  }, [messages.length, isThinking, revealedLineCount]);
+
   return (
-    <div className="flex flex-1 flex-col gap-4 overflow-y-auto px-2 py-4">
+    <div ref={scrollRef} className="flex flex-1 flex-col gap-4 overflow-y-auto px-2 py-4">
       {messages.map(({ stepId, turn, isEntryPoint }, index) => {
         const isLast = index === messages.length - 1;
         const showThinking = isLast && !isEntryPoint && isThinking;
