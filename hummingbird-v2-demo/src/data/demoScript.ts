@@ -464,7 +464,7 @@ export const DEMO_STEPS: DemoStep[] = [
       userMessage: "Ok, show me some sources",
       assistantMessage: [
         "I’ve searched for natural sources that contain those top 5 compounds – as well as ones with additional predicted bioactives. I also checked the GRAS status of each. Here's a summary of what I found.",
-        "I can analyze this list to find the best combinations of sources. Would you like me to do that?",
+        "Once you've reviewed the candidates and eliminations and made any adjustments, let me know and I'll find the best combinations of sources.",
       ],
     },
     strategyScreen: {
