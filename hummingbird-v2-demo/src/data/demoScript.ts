@@ -98,12 +98,6 @@ export const DEMO_STEPS: DemoStep[] = [
     screen: "welcome",
     chat: {
       userMessage: "I want to develop a supplement that supports resistance to viral infection.",
-    },
-  },
-  {
-    id: "w2",
-    screen: "welcome",
-    chat: {
       assistantMessage: [
         "There are over 800 compounds in the database for resistance to viral infections. Biological pathways you might consider are:",
         "1. Block viral entry or membrane fusion",
