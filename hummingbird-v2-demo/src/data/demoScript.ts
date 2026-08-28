@@ -285,39 +285,68 @@ export const DEMO_STEPS: DemoStep[] = [
     screen: "strategy",
     chat: {
       assistantMessage: [
-        "Diving into Strategy Name — here's what the candidate and eliminated compounds look like so far.",
+        "I’ve eliminated for you the compounds that don’t meet my criteria for food grade. If you want to refine that criteria, just ask and I’ll add it to the project’s context.",
+        "You can drill into any compound for more information, or ask me questions about them. You can also remove any compounds from the candidates list that you don't want to include. I'll keep track of them in the eliminated list below.",
+        "I’ve also listed the top predicted compound candidates, along with prediction score and predicted bioavailabilty. You can do the same things with those.",
+        "When you’re ready, I can suggest some natural sources.",
       ],
     },
     strategyScreen: {
-      strategyName: "Strategy Name",
+      strategyName: "Fusion inhibition + polymerase inhibition",
       activeTab: "compounds",
       categoryCards: [
         {
           id: "fusion-inhibition-compounds",
-          title: "Compounds targeting viral entry – fusion inhibition",
+          title: "Compounds with direct evidence",
           candidates: [
             {
-              id: "rosemarinic-acid",
-              compoundName: "Rosemarinic Acid",
-              evidenceContextLabel: "In vitro record, 2013",
+              id: "rosmarinic-acid",
+              compoundName: "Rosmarinic acid",
+              evidenceContextLabel: "In-vitro / mouse-associated record; 2019",
               foodGrade: true,
               drink: true,
               gummy: false,
             },
             {
               id: "egcg",
-              compoundName: "Epegallocatechin gallate (EGCG)",
-              evidenceContextLabel: "in vitro record, 2020",
+              compoundName: "Epigallocatechin gallate (EGCG)",
+              evidenceContextLabel: "In-vitro record; 2021",
               foodGrade: true,
               drink: false,
               gummy: true,
             },
+            {
+              id: "tangeretin",
+              compoundName: "Tangeretin",
+              evidenceContextLabel: "In-vitro / mouse-associated record; 2018",
+              foodGrade: true,
+              drink: true,
+              gummy: true,
+            },
+            {
+              id: "beta-sitosterol",
+              compoundName: "Beta-sitosterol",
+              // Folds in the "Curated target label" column from Anna's second
+              // screenshot — the table here has no separate slot for it.
+              evidenceContextLabel: "Decreases polymerase — animal record, 2022; 50 mg/kg reported",
+              foodGrade: true,
+              drink: false,
+              gummy: false,
+            },
+            {
+              id: "fisetin",
+              compoundName: "Fisetin",
+              evidenceContextLabel: "Inhibits polymerase — in-vitro record, 2025",
+              foodGrade: true,
+              drink: true,
+              gummy: false,
+            },
           ],
           eliminated: [
             {
-              id: "oleanic-acid",
-              compoundName: "Oleanic Acid",
-              evidenceContextLabel: "in vitro record, 2013",
+              id: "oleanolic-acid",
+              compoundName: "Oleanolic acid",
+              evidenceContextLabel: "In-vitro record; 2013",
               foodGrade: false,
               drink: false,
               gummy: false,
@@ -325,7 +354,7 @@ export const DEMO_STEPS: DemoStep[] = [
             {
               id: "berberine",
               compoundName: "Berberine",
-              evidenceContextLabel: "in vitro record, 2020",
+              evidenceContextLabel: "In-vitro record; 2020",
               foodGrade: false,
               drink: true,
               gummy: false,

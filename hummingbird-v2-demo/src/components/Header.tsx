@@ -8,12 +8,15 @@ const TABS: { id: TabId; label: string }[] = [
 interface HeaderProps {
   activeTab: TabId;
   onTabChange: (tab: TabId) => void;
+  /** No Natural Sources content in this script yet — hide the tab entirely rather than leave it clickable to nothing. */
+  hideSourcesTab?: boolean;
 }
 
-export default function Header({ activeTab, onTabChange }: HeaderProps) {
+export default function Header({ activeTab, onTabChange, hideSourcesTab }: HeaderProps) {
+  const tabs = hideSourcesTab ? TABS.filter((tab) => tab.id !== "sources") : TABS;
   return (
     <header className="flex items-center gap-1 border-b border-border px-2 pt-3">
-      {TABS.map((tab) => {
+      {tabs.map((tab) => {
         const isActive = tab.id === activeTab;
         return (
           <button

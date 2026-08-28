@@ -54,7 +54,7 @@ export default function StrategyScreen() {
             strategyName={folded.strategyName ?? "Untitled Strategy"}
           />
           <ContextDrawer context={folded.context} />
-          <Header activeTab={activeTab} onTabChange={setTabOverride} />
+          <Header activeTab={activeTab} onTabChange={setTabOverride} hideSourcesTab />
 
           <div className="flex flex-1 flex-col gap-4 overflow-y-auto p-4">
             {activeTab === "compounds" ? (
