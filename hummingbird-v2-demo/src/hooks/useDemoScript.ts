@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import {
   CHAT_THREAD_BY_SCREEN,
   type ChatTurn,
+  type CombinationsCardData,
   type CompoundCategoryCardData,
   type DemoStep,
   type NaturalSourcesCardData,
@@ -37,6 +38,7 @@ export interface FoldedProjectState {
   categoryCards: CompoundCategoryCardData[];
   predictedCompoundsCards: PredictedCompoundsCardData[];
   naturalSourcesCard?: NaturalSourcesCardData;
+  combinationsCard?: CombinationsCardData;
 }
 
 export interface UseDemoScript {
@@ -139,6 +141,7 @@ export function useDemoScript(script: DemoStep[]): UseDemoScript {
         categoryCards: step.strategyScreen?.categoryCards ?? acc.categoryCards,
         predictedCompoundsCards: step.strategyScreen?.predictedCompoundsCards ?? acc.predictedCompoundsCards,
         naturalSourcesCard: step.strategyScreen?.naturalSourcesCard ?? acc.naturalSourcesCard,
+        combinationsCard: step.strategyScreen?.combinationsCard ?? acc.combinationsCard,
       }),
       { context: {}, strategyCards: [], categoryCards: [], predictedCompoundsCards: [] }
     );

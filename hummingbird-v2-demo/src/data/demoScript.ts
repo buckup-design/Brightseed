@@ -135,6 +135,25 @@ export interface NaturalSourcesCardData {
   eliminated: NaturalSourceRow[];
 }
 
+export interface CombinationRow {
+  id: string;
+  rank: number;
+  combinationLabel: string;
+  combinedPredicted: number;
+  /** The "(63 + 120)" breakdown text — kept as a string, not parsed. */
+  combinedPredictedBreakdown: string;
+  grasStatusLabel: string;
+  /** Screenshot bolds the #1 row — preserve that signal. */
+  highlight?: boolean;
+}
+
+// Sits above NaturalSourcesCard on the Natural Sources tab, once Anna's run
+// the combinations — see CombinationsCard.
+export interface CombinationsCardData {
+  id: string;
+  rows: CombinationRow[];
+}
+
 export interface StrategyScreenPatch {
   strategyName?: string;
   activeTab?: TabId;
@@ -144,6 +163,8 @@ export interface StrategyScreenPatch {
   predictedCompoundsCards?: PredictedCompoundsCardData[];
   /** The Natural Sources tab is hidden until this is set — see StrategyScreen. */
   naturalSourcesCard?: NaturalSourcesCardData;
+  /** Rendered above naturalSourcesCard, once set. */
+  combinationsCard?: CombinationsCardData;
 }
 
 export interface DemoStep {
@@ -500,6 +521,59 @@ export const DEMO_STEPS: DemoStep[] = [
           { id: "quercus-ilex", scientificName: "Quercus ilex", commonName: "evergreen oak", directCompoundFlags: [true, true, true, false, false], directCount: 3, predictedCompoundsCount: 20, grasStatus: "no-entry" },
           { id: "asplenium-trichomanes", scientificName: "Asplenium trichomanes", commonName: "maidenhair spleenwort", directCompoundFlags: [true, true, false, false, false], directCount: 2, predictedCompoundsCount: 14, grasStatus: "no-entry" },
           { id: "maytenus-laevis", scientificName: "Maytenus laevis", commonName: "", directCompoundFlags: [true, false, true, false, false], directCount: 2, predictedCompoundsCount: 20, grasStatus: "no-entry" },
+        ],
+      },
+    },
+  },
+  {
+    id: "s3",
+    screen: "strategy",
+    chat: {
+      userMessage: "Ok, run the combinations",
+      assistantMessage: [
+        "I've added a table with the top 5 combinations. Sour orange's 120 is doing a lot of work — it appears in 4 of your top 5 combos simply because it's so far above everything else in predicted count. If you wanted a result less dependent on that one outlier, Mango + Soybean (142, both fully GRAS, no pending status anywhere) is the strongest alternative that doesn't include sour orange.",
+      ],
+    },
+    strategyScreen: {
+      // Transcribed from Anna's screenshot — only 4 rows were visible in it
+      // even though both the screenshot's header and the reply text above
+      // say "top 5"; a 5th row wasn't given, so it's not invented here.
+      combinationsCard: {
+        id: "fusion-polymerase-combinations",
+        rows: [
+          {
+            id: "mango-sour-orange",
+            rank: 1,
+            combinationLabel: "Mango + Sour orange",
+            combinedPredicted: 183,
+            combinedPredictedBreakdown: "(63 + 120)",
+            grasStatusLabel: "Both ✓ GRAS",
+            highlight: true,
+          },
+          {
+            id: "sour-orange-boerhavia-diffusa",
+            rank: 2,
+            combinationLabel: "Sour orange + Boerhavia diffusa",
+            combinedPredicted: 164,
+            combinedPredictedBreakdown: "(120 + 44)",
+            grasStatusLabel: "Both ✓ GRAS",
+          },
+          {
+            id: "sour-orange-cistus-incanus",
+            rank: 3,
+            combinationLabel: "Sour orange + Cistus incanus",
+            combinedPredicted: 162,
+            combinedPredictedBreakdown: "(120 + 42)",
+            grasStatusLabel: "Both ✓ GRAS",
+          },
+          {
+            id: "sour-orange-ephedra-nevadensis",
+            rank: 4,
+            combinationLabel: "Sour orange + Ephedra nevadensis",
+            combinedPredicted: 153,
+            combinedPredictedBreakdown: "(120 + 33)",
+            grasStatusLabel: "Both ✓ GRAS",
+          },
         ],
       },
     },

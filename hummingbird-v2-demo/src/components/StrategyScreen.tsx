@@ -9,6 +9,7 @@ import Header, { type TabId } from "./Header";
 import CompoundCategoryCard from "./CompoundCategoryCard";
 import PredictedCompoundsCard from "./PredictedCompoundsCard";
 import NaturalSourcesCard from "./NaturalSourcesCard";
+import CombinationsCard from "./CombinationsCard";
 import { useResizableSplit } from "../hooks/useResizableSplit";
 import { useDemoScreenSync } from "../hooks/useDemoScreenSync";
 import { useDemoScriptContext } from "../context/DemoScriptContext";
@@ -73,7 +74,10 @@ export default function StrategyScreen() {
                 ))}
               </>
             ) : folded.naturalSourcesCard ? (
-              <NaturalSourcesCard card={folded.naturalSourcesCard} />
+              <>
+                {folded.combinationsCard && <CombinationsCard card={folded.combinationsCard} />}
+                <NaturalSourcesCard card={folded.naturalSourcesCard} />
+              </>
             ) : (
               <p className="text-sm text-muted-foreground">
                 No Natural Sources content in this script yet.
