@@ -13,8 +13,8 @@ interface NaturalSourcesTableProps {
 function PredictedCompoundsBar({ value, max }: { value: number; max: number }) {
   const widthPercent = max > 0 ? (value / max) * 100 : 0;
   return (
-    <div className="flex items-center gap-2">
-      <div className="h-2 w-16 overflow-hidden rounded-full bg-muted">
+    <div className="flex w-full items-center gap-2">
+      <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
         <div className="h-full rounded-full bg-muted-foreground" style={{ width: `${widthPercent}%` }} />
       </div>
       <span className="tabular-nums text-foreground">{value}</span>
@@ -35,7 +35,7 @@ export default function NaturalSourcesTable({ card }: NaturalSourcesTableProps) 
               {compound}
             </th>
           ))}
-          <th className="px-2 py-2 text-right font-medium text-foreground">Direct</th>
+          <th className="px-2 py-2 font-medium text-foreground">Direct</th>
           <th className="px-2 py-2 font-medium text-foreground">Predicted compounds</th>
           <th className="px-2 py-2 text-center font-medium text-foreground">GRAS</th>
         </tr>
@@ -52,7 +52,7 @@ export default function NaturalSourcesTable({ card }: NaturalSourcesTableProps) 
                 {present && <Check size={14} className="mx-auto text-foreground" />}
               </td>
             ))}
-            <td className="px-2 py-2 text-right align-top text-foreground">{row.directCount}</td>
+            <td className="px-2 py-2 align-top text-foreground">{row.directCount}</td>
             <td className="px-2 py-2 align-top">
               <PredictedCompoundsBar value={row.predictedCompoundsCount} max={maxPredicted} />
             </td>
