@@ -97,9 +97,17 @@ export function useDemoScript(script: DemoStep[]): UseDemoScript {
     // A step that moves to a different screen than the one before it is a
     // navigation, not a reply the user is waiting on — Hummingbird doesn't
     // "think" before landing you on the new screen, it just shows what's
-    // there. Skips straight to the (still per-line staggered) reveal.
+    // there. A step can also opt into the same skip explicitly
+    // (chat.skipThinking) without changing screen — e.g. a short system-
+    // update beat meant to land right before the reply that follows it, as
+    // its own icon group but with no pause in between (see chat.
+    // autoAdvanceDelayMs below).
     const previousStep = script[stepIndex - 1];
     const isScreenTransition = previousStep !== undefined && previousStep.screen !== currentStep.screen;
+    const skipThinking = isScreenTransition || currentStep.chat.skipThinking === true;
+    // Generalizes the loading-segment auto-advance below to any step: once
+    // fully revealed, wait this long, then move on with no further input.
+    const autoAdvanceDelayMs = currentStep.chat.autoAdvanceDelayMs;
     setRevealedLineCount(0);
 
     if (lineCount === 0) {
@@ -114,33 +122,37 @@ export function useDemoScript(script: DemoStep[]): UseDemoScript {
       return () => clearTimeout(autoAdvanceTimeout);
     }
 
+    const cleanupFns: Array<() => void> = [];
     const startRevealing = () => {
       let revealed = 0;
       const revealInterval = setInterval(() => {
         revealed += 1;
         setRevealedLineCount(revealed);
-        if (revealed >= lineCount) clearInterval(revealInterval);
+        if (revealed >= lineCount) {
+          clearInterval(revealInterval);
+          if (autoAdvanceDelayMs !== undefined) {
+            const autoAdvanceTimeout = setTimeout(advance, autoAdvanceDelayMs);
+            cleanupFns.push(() => clearTimeout(autoAdvanceTimeout));
+          }
+        }
       }, LINE_REVEAL_INTERVAL_MS);
-      return revealInterval;
+      cleanupFns.push(() => clearInterval(revealInterval));
     };
 
-    if (isScreenTransition) {
+    if (skipThinking) {
       setIsThinking(false);
-      const revealInterval = startRevealing();
-      return () => clearInterval(revealInterval);
+      startRevealing();
+      return () => cleanupFns.forEach((fn) => fn());
     }
 
     setIsThinking(true);
-    let revealInterval: ReturnType<typeof setInterval> | undefined;
     const thinkingTimeout = setTimeout(() => {
       setIsThinking(false);
-      revealInterval = startRevealing();
+      startRevealing();
     }, THINKING_DURATION_MS);
+    cleanupFns.push(() => clearTimeout(thinkingTimeout));
 
-    return () => {
-      clearTimeout(thinkingTimeout);
-      if (revealInterval) clearInterval(revealInterval);
-    };
+    return () => cleanupFns.forEach((fn) => fn());
   }, [stepIndex, currentStep, script]);
 
   const chatFor = (screen: ScreenId): DemoChatMessage[] => {

@@ -59,6 +59,10 @@ export interface ChatTurn {
    * useDemoScript's chatFor.
    */
   threadResetAfterStepId?: string;
+  /** Skips the thinking pulse even though this step didn't change screen — see useDemoScript. */
+  skipThinking?: boolean;
+  /** Once fully revealed, auto-advances after this many ms — no further input needed. See useDemoScript. */
+  autoAdvanceDelayMs?: number;
 }
 
 export interface ProjectContextPatch {
@@ -619,18 +623,19 @@ export const DEMO_STEPS: DemoStep[] = [
     id: "p2",
     screen: "project",
     // No userMessage — reached by clicking the breadcrumb (see s4), not by
-    // sending anything, same as s0's card-click drill-in.
+    // sending anything, same as s0's card-click drill-in. Its own icon
+    // group, separate from p3's reply (see p3's skipThinking +
+    // autoAdvanceDelayMs here) — Anna wanted two hummingbird icons, not one
+    // icon leading a 4-item stack.
     chat: {
-      assistantMessage: [
-        "*Strategy One reviewed*",
-        "I’ve summarized the exploration of that strategy. If you want an IP assessment, you can request that and it will run in the background and appear here when ready. You can also add any notes to the summary, or invite colleagues to review and add their own notes.",
-        "You have 100 service credits available. You can use these to run samples of specific plants or extracts to determine concentrations of your target compounds, or run a molecular docking study on the predicted compounds in your dataset.",
-        "When you're ready, go ahead and explore the other strategies.",
-      ],
+      assistantMessage: ["*Strategy One reviewed*"],
       // Drops the strategy-card browsing (p0/p1's turns) between "Project
       // Created" (w3) and now — matches Anna's Figma reference (node
       // 136:92027), where the top card gains a reviewed summary.
       threadResetAfterStepId: "w3",
+      // Long enough to read the system-update line, short enough that it
+      // still reads as "arriving together" with p3's reply.
+      autoAdvanceDelayMs: 600,
     },
     strategyCards: [
       {
@@ -697,6 +702,21 @@ export const DEMO_STEPS: DemoStep[] = [
         referencesLabel: "view 6 relevant papers",
       },
     ],
+  },
+  {
+    id: "p3",
+    screen: "project",
+    // Same screen as p2, so not a natural transition — skipThinking opts in
+    // explicitly, so this lands right after p2's auto-advance with no
+    // pause, as its own icon group.
+    chat: {
+      skipThinking: true,
+      assistantMessage: [
+        "I’ve summarized the exploration of that strategy. If you want an IP assessment, you can request that and it will run in the background and appear here when ready. You can also add any notes to the summary, or invite colleagues to review and add their own notes.",
+        "You have 100 service credits available. You can use these to run samples of specific plants or extracts to determine concentrations of your target compounds, or run a molecular docking study on the predicted compounds in your dataset.",
+        "When you're ready, go ahead and explore the other strategies.",
+      ],
+    },
   },
 ];
 
