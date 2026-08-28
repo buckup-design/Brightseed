@@ -155,14 +155,21 @@ export default function ChatThread({ messages, isThinking, revealedLineCount }: 
               </div>
             )}
 
-            {showThinking ? (
-              <div className="flex items-center gap-[10px]">
-                <img src={hummingbirdLogo} alt="" className="size-[28px] shrink-0 animate-pulse" />
-              </div>
-            ) : (
-              visibleItems.length > 0 && (
-                <div className="flex items-start gap-[10px]">
-                  <img src={hummingbirdLogo} alt="" className="size-[28px] shrink-0" />
+            {(showThinking || visibleItems.length > 0) && (
+              // showThinking and visibleItems.length > 0 aren't mutually
+              // exclusive: a loading segment (e.g. "Creating project…") is
+              // revealed immediately, so its icon still pulses (isThinking)
+              // right alongside its own text — the pulse isn't a separate
+              // silent phase that precedes it. An ordinary response only
+              // ever has one of the two true at a time (pulse with no text
+              // yet, then text with no more pulse).
+              <div className="flex items-start gap-[10px]">
+                <img
+                  src={hummingbirdLogo}
+                  alt=""
+                  className={`size-[28px] shrink-0 ${showThinking ? "animate-pulse" : ""}`}
+                />
+                {visibleItems.length > 0 && (
                   <div className="flex flex-1 flex-col gap-2 pt-1 text-sm leading-6 text-foreground">
                     {visibleItems.map((item, itemIndex) =>
                       isTableSegment(item) ? (
@@ -180,8 +187,8 @@ export default function ChatThread({ messages, isThinking, revealedLineCount }: 
                       )
                     )}
                   </div>
-                </div>
-              )
+                )}
+              </div>
             )}
           </div>
         );
