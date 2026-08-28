@@ -458,16 +458,6 @@ export const DEMO_STEPS: DemoStep[] = [
     },
   },
   {
-    id: "s1",
-    screen: "strategy",
-    chat: {
-      userMessage: "Why were some compounds eliminated?",
-      assistantMessage: [
-        "Mostly delivery-format mismatches — see the Eliminated table below for the specifics.",
-      ],
-    },
-  },
-  {
     id: "s2",
     screen: "strategy",
     chat: {
