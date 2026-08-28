@@ -535,9 +535,7 @@ export const DEMO_STEPS: DemoStep[] = [
       ],
     },
     strategyScreen: {
-      // Transcribed from Anna's screenshot — only 4 rows were visible in it
-      // even though both the screenshot's header and the reply text above
-      // say "top 5"; a 5th row wasn't given, so it's not invented here.
+      // Transcribed from Anna's screenshots (rows 1-4, then row 5 added separately).
       combinationsCard: {
         id: "fusion-polymerase-combinations",
         rows: [
@@ -548,7 +546,6 @@ export const DEMO_STEPS: DemoStep[] = [
             combinedPredicted: 183,
             combinedPredictedBreakdown: "(63 + 120)",
             grasStatusLabel: "Both ✓ GRAS",
-            highlight: true,
           },
           {
             id: "sour-orange-boerhavia-diffusa",
@@ -572,6 +569,14 @@ export const DEMO_STEPS: DemoStep[] = [
             combinationLabel: "Sour orange + Ephedra nevadensis",
             combinedPredicted: 153,
             combinedPredictedBreakdown: "(120 + 33)",
+            grasStatusLabel: "Both ✓ GRAS",
+          },
+          {
+            id: "mango-soybean",
+            rank: 5,
+            combinationLabel: "Mango + Soybean",
+            combinedPredicted: 142,
+            combinedPredictedBreakdown: "(63 + 79)",
             grasStatusLabel: "Both ✓ GRAS",
           },
         ],
