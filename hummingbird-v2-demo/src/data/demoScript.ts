@@ -86,11 +86,34 @@ export interface CompoundCategoryCardData {
   referencesLabel: string;
 }
 
+// A different shape from CompoundRow — model-predicted rather than
+// evidence-backed, so it has no food-grade/drink/gummy columns, only ever
+// a Candidates list (no Eliminated), and its own scoring columns instead.
+export interface PredictedCompoundRow {
+  id: string;
+  structuralIdentifier: string;
+  predictedAssociation: string;
+  fingerprintScore: number;
+  chemicalGrouping: string;
+  /** A single value ("0.63") or a range ("0.37–0.78"); kept as text, not parsed. */
+  predictedBioavailability: string;
+  /** The source screenshot bolds a couple of standout bioavailability values — preserve that signal. */
+  highlightBioavailability?: boolean;
+}
+
+export interface PredictedCompoundsCardData {
+  id: string;
+  title: string;
+  candidates: PredictedCompoundRow[];
+}
+
 export interface StrategyScreenPatch {
   strategyName?: string;
   activeTab?: TabId;
   /** Whole-array replace when present — not merged by id. */
   categoryCards?: CompoundCategoryCardData[];
+  /** Whole-array replace when present — not merged by id. Rendered below categoryCards. */
+  predictedCompoundsCards?: PredictedCompoundsCardData[];
 }
 
 export interface DemoStep {
@@ -362,6 +385,37 @@ export const DEMO_STEPS: DemoStep[] = [
             },
           ],
           referencesLabel: "view 6 relevant papers",
+        },
+      ],
+      // From Anna's screenshot: model-predicted candidates, ranked by
+      // fingerprint score. All candidates (no eliminated list) — see
+      // PredictedCompoundRow.
+      predictedCompoundsCards: [
+        {
+          id: "top-predicted-compounds",
+          title: "Top predicted compounds",
+          candidates: [
+            { id: "ulsuxbhsysgdt", structuralIdentifier: "ULSUXBHSYSGDT", predictedAssociation: "Fusion inhibition", fingerprintScore: 5.0, chemicalGrouping: "Flavonoids", predictedBioavailability: "0.85", highlightBioavailability: true },
+            { id: "kzjwdpnrjallns", structuralIdentifier: "KZJWDPNRJALLNS", predictedAssociation: "Decreases polymerase", fingerprintScore: 5.0, chemicalGrouping: "Steroids", predictedBioavailability: "0.37–0.78" },
+            { id: "mijyxulnpsfwek", structuralIdentifier: "MIJYXULNPSFWEK", predictedAssociation: "Fusion inhibition", fingerprintScore: 5.0, chemicalGrouping: "Triterpenoids", predictedBioavailability: "0.54–0.74" },
+            { id: "ybhilyktiriute", structuralIdentifier: "YBHILYKTIRIUTE", predictedAssociation: "Fusion inhibition", fingerprintScore: 5.0, chemicalGrouping: "Tyrosine alkaloids", predictedBioavailability: "0.51–0.65" },
+            { id: "xhefdibzljxqhf", structuralIdentifier: "XHEFDIBZLJXQHF", predictedAssociation: "Polymerase inhibition", fingerprintScore: 5.0, chemicalGrouping: "Flavonoids", predictedBioavailability: "0.37–0.48" },
+            { id: "doumfzqkyfqntf", structuralIdentifier: "DOUMFZQKYFQNTF", predictedAssociation: "Fusion inhibition", fingerprintScore: 5.0, chemicalGrouping: "Phenylpropanoids", predictedBioavailability: "0.38–0.42*" },
+            { id: "wmbwrepuvvbilr", structuralIdentifier: "WMBWREPUVVBILR", predictedAssociation: "Fusion inhibition", fingerprintScore: 5.0, chemicalGrouping: "Flavonoids", predictedBioavailability: "0.31–0.37" },
+            { id: "vkjgbajnnalvav", structuralIdentifier: "VKJGBAJNNALVAV", predictedAssociation: "Fusion inhibition", fingerprintScore: 3.2, chemicalGrouping: "Tyrosine alkaloids", predictedBioavailability: "0.46–0.68" },
+            { id: "lshvyafmtmfkba", structuralIdentifier: "LSHVYAFMTMFKBA", predictedAssociation: "Fusion inhibition", fingerprintScore: 3.083, chemicalGrouping: "Flavonoids", predictedBioavailability: "0.34–0.41" },
+            { id: "sgnbvlswzmbqth", structuralIdentifier: "SGNBVLSWZMBQTH", predictedAssociation: "Decreases polymerase", fingerprintScore: 2.583, chemicalGrouping: "Steroids", predictedBioavailability: "0.38–0.71" },
+            { id: "oselkochbmdkej", structuralIdentifier: "OSELKOCHBMDKEJ", predictedAssociation: "Decreases polymerase", fingerprintScore: 2.558, chemicalGrouping: "Steroids", predictedBioavailability: "0.34–0.78" },
+            { id: "hcxvjbmsmiarin", structuralIdentifier: "HCXVJBMSMIARIN", predictedAssociation: "Decreases polymerase", fingerprintScore: 2.45, chemicalGrouping: "Steroids", predictedBioavailability: "0.32–0.72" },
+            { id: "sdzpynmxguhfmz", structuralIdentifier: "SDZPYNMXGUHFMZ", predictedAssociation: "Fusion inhibition", fingerprintScore: 2.283, chemicalGrouping: "Flavonoids", predictedBioavailability: "0.39–0.41" },
+            { id: "ghgkplpbpgysoo", structuralIdentifier: "GHGKPLPBPGYSOO", predictedAssociation: "Decreases polymerase", fingerprintScore: 2.081, chemicalGrouping: "Steroids", predictedBioavailability: "0.70–0.71" },
+            { id: "jzfsmvxquwrsiw", structuralIdentifier: "JZFSMVXQUWRSIW", predictedAssociation: "Fusion inhibition", fingerprintScore: 2.023, chemicalGrouping: "Triterpenoids", predictedBioavailability: "0.62–0.66" },
+            { id: "qgosjbzftwgwdu", structuralIdentifier: "QGOSJBZFTWGWDU", predictedAssociation: "Fusion inhibition", fingerprintScore: 2.011, chemicalGrouping: "Triterpenoids", predictedBioavailability: "0.63" },
+            { id: "hvywmomldimfja", structuralIdentifier: "HVYWMOMLDIMFJA", predictedAssociation: "Decreases polymerase", fingerprintScore: 1.972, chemicalGrouping: "Steroids", predictedBioavailability: "0.37–0.79" },
+            { id: "mriaqlrqzppods", structuralIdentifier: "MRIAQLRQZPPODS", predictedAssociation: "Fusion inhibition", fingerprintScore: 1.946, chemicalGrouping: "Flavonoids", predictedBioavailability: "0.88", highlightBioavailability: true },
+            { id: "xhalvrqbzgzhfe", structuralIdentifier: "XHALVRQBZGZHFE", predictedAssociation: "Fusion inhibition", fingerprintScore: 1.867, chemicalGrouping: "Phenylpropanoids", predictedBioavailability: "0.40–0.55" },
+            { id: "bxpbsbbfpntfft", structuralIdentifier: "BXPBSBBFPNTFFT", predictedAssociation: "Polymerase inhibition", fingerprintScore: 1.813, chemicalGrouping: "Flavonoids", predictedBioavailability: "0.39–0.49" },
+          ],
         },
       ],
     },

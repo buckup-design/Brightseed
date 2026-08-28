@@ -4,6 +4,7 @@ import {
   type ChatTurn,
   type CompoundCategoryCardData,
   type DemoStep,
+  type PredictedCompoundsCardData,
   type ProjectContextPatch,
   type ScreenId,
   type StrategyCardData,
@@ -33,6 +34,7 @@ export interface FoldedProjectState {
   strategyName?: string;
   activeTab?: TabId;
   categoryCards: CompoundCategoryCardData[];
+  predictedCompoundsCards: PredictedCompoundsCardData[];
 }
 
 export interface UseDemoScript {
@@ -133,8 +135,9 @@ export function useDemoScript(script: DemoStep[]): UseDemoScript {
         strategyName: step.strategyScreen?.strategyName ?? acc.strategyName,
         activeTab: step.strategyScreen?.activeTab ?? acc.activeTab,
         categoryCards: step.strategyScreen?.categoryCards ?? acc.categoryCards,
+        predictedCompoundsCards: step.strategyScreen?.predictedCompoundsCards ?? acc.predictedCompoundsCards,
       }),
-      { context: {}, strategyCards: [], categoryCards: [] }
+      { context: {}, strategyCards: [], categoryCards: [], predictedCompoundsCards: [] }
     );
   }, [visibleSteps]);
 

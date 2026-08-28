@@ -7,6 +7,7 @@ import ProjectHeaderBar from "./ProjectHeaderBar";
 import ContextDrawer from "./ContextDrawer";
 import Header, { type TabId } from "./Header";
 import CompoundCategoryCard from "./CompoundCategoryCard";
+import PredictedCompoundsCard from "./PredictedCompoundsCard";
 import { useResizableSplit } from "../hooks/useResizableSplit";
 import { useDemoScreenSync } from "../hooks/useDemoScreenSync";
 import { useDemoScriptContext } from "../context/DemoScriptContext";
@@ -58,7 +59,14 @@ export default function StrategyScreen() {
 
           <div className="flex flex-1 flex-col gap-4 overflow-y-auto p-4">
             {activeTab === "compounds" ? (
-              folded.categoryCards.map((card) => <CompoundCategoryCard key={card.id} card={card} />)
+              <>
+                {folded.categoryCards.map((card) => (
+                  <CompoundCategoryCard key={card.id} card={card} />
+                ))}
+                {folded.predictedCompoundsCards.map((card) => (
+                  <PredictedCompoundsCard key={card.id} card={card} />
+                ))}
+              </>
             ) : (
               <p className="text-sm text-muted-foreground">
                 No Natural Sources content in this script yet.
