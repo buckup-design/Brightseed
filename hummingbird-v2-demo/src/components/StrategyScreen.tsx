@@ -8,6 +8,7 @@ import ContextDrawer from "./ContextDrawer";
 import Header, { type TabId } from "./Header";
 import CompoundCategoryCard from "./CompoundCategoryCard";
 import PredictedCompoundsCard from "./PredictedCompoundsCard";
+import NaturalSourcesTable from "./NaturalSourcesTable";
 import { useResizableSplit } from "../hooks/useResizableSplit";
 import { useDemoScreenSync } from "../hooks/useDemoScreenSync";
 import { useDemoScriptContext } from "../context/DemoScriptContext";
@@ -55,7 +56,11 @@ export default function StrategyScreen() {
             strategyName={folded.strategyName ?? "Untitled Strategy"}
           />
           <ContextDrawer context={folded.context} />
-          <Header activeTab={activeTab} onTabChange={setTabOverride} hideSourcesTab />
+          <Header
+            activeTab={activeTab}
+            onTabChange={setTabOverride}
+            hideSourcesTab={!folded.naturalSourcesCard}
+          />
 
           <div className="flex flex-1 flex-col gap-4 overflow-y-auto p-4">
             {activeTab === "compounds" ? (
@@ -67,6 +72,10 @@ export default function StrategyScreen() {
                   <PredictedCompoundsCard key={card.id} card={card} />
                 ))}
               </>
+            ) : folded.naturalSourcesCard ? (
+              <div className="rounded-xl border border-border bg-card p-4 shadow-xs">
+                <NaturalSourcesTable card={folded.naturalSourcesCard} />
+              </div>
             ) : (
               <p className="text-sm text-muted-foreground">
                 No Natural Sources content in this script yet.

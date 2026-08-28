@@ -109,6 +109,27 @@ export interface PredictedCompoundsCardData {
   candidates: PredictedCompoundRow[];
 }
 
+export interface NaturalSourceRow {
+  id: string;
+  scientificName: string;
+  commonName: string;
+  /** Aligned with NaturalSourcesCardData.compoundColumns — which of those compounds this source directly evidences. */
+  directCompoundFlags: boolean[];
+  directCount: number;
+  predictedCompoundsCount: number;
+  grasListed: boolean;
+}
+
+// The Natural Sources tab's one table — see NaturalSourcesTable. Anna's
+// screenshot has a title/legend above the table too, deliberately dropped
+// (just the table, styled simply to match the rest of the screen).
+export interface NaturalSourcesCardData {
+  id: string;
+  /** Column order for each row's directCompoundFlags. */
+  compoundColumns: string[];
+  rows: NaturalSourceRow[];
+}
+
 export interface StrategyScreenPatch {
   strategyName?: string;
   activeTab?: TabId;
@@ -116,6 +137,8 @@ export interface StrategyScreenPatch {
   categoryCards?: CompoundCategoryCardData[];
   /** Whole-array replace when present — not merged by id. Rendered below categoryCards. */
   predictedCompoundsCards?: PredictedCompoundsCardData[];
+  /** The Natural Sources tab is hidden until this is set — see StrategyScreen. */
+  naturalSourcesCard?: NaturalSourcesCardData;
 }
 
 export interface DemoStep {
@@ -437,6 +460,41 @@ export const DEMO_STEPS: DemoStep[] = [
       assistantMessage: [
         "Mostly delivery-format mismatches — see the Eliminated table below for the specifics.",
       ],
+    },
+  },
+  {
+    id: "s2",
+    screen: "strategy",
+    chat: {
+      userMessage: "Ok, show me some sources",
+      assistantMessage: [
+        "I’ve searched for natural sources that contain those top 5 compounds – as well as ones with additional predicted bioactives. I also checked the GRAS status of each. Here's a summary of what I found.",
+        "I can analyze this list to find the best combinations of sources. Would you like me to do that?",
+      ],
+    },
+    strategyScreen: {
+      // Switches the tab bar to Natural Sources and — since naturalSourcesCard
+      // is now set — unhides it (see StrategyScreen's hideSourcesTab).
+      activeTab: "sources",
+      naturalSourcesCard: {
+        id: "fusion-polymerase-sources",
+        compoundColumns: ["Beta-sitosterol", "Rosmarinic acid", "EGCG", "Fisetin", "Tangeretin"],
+        // Transcribed from Anna's screenshot (ranks as shown — an extended
+        // ranking of 20 plants, only the GRAS-listed ones included here).
+        rows: [
+          { id: "mangifera-indica", scientificName: "Mangifera indica", commonName: "mango", directCompoundFlags: [true, true, true, true, false], directCount: 4, predictedCompoundsCount: 63, grasListed: true },
+          { id: "salvia-officinalis", scientificName: "Salvia officinalis", commonName: "sage", directCompoundFlags: [true, true, false, false, true], directCount: 3, predictedCompoundsCount: 65, grasListed: true },
+          { id: "petroselinum-crispum", scientificName: "Petroselinum crispum", commonName: "garden parsley", directCompoundFlags: [true, true, false, false, true], directCount: 3, predictedCompoundsCount: 43, grasListed: true },
+          { id: "cistus-incanus", scientificName: "Cistus incanus", commonName: "hairy rockrose", directCompoundFlags: [true, true, true, false, false], directCount: 3, predictedCompoundsCount: 42, grasListed: true },
+          { id: "citrus-aurantium", scientificName: "Citrus aurantium", commonName: "sour orange", directCompoundFlags: [true, false, false, true, true], directCount: 3, predictedCompoundsCount: 120, grasListed: true },
+          { id: "glycine-max", scientificName: "Glycine max", commonName: "soybean", directCompoundFlags: [true, false, false, true, true], directCount: 3, predictedCompoundsCount: 79, grasListed: true },
+          { id: "boerhavia-diffusa", scientificName: "Boerhavia diffusa", commonName: "red spiderling", directCompoundFlags: [true, true, true, false, false], directCount: 3, predictedCompoundsCount: 44, grasListed: true },
+          { id: "hypericum-perforatum", scientificName: "Hypericum perforatum", commonName: "common St. John's wort", directCompoundFlags: [true, true, false, true, false], directCount: 3, predictedCompoundsCount: 35, grasListed: true },
+          { id: "ephedra-nevadensis", scientificName: "Ephedra nevadensis", commonName: "green ephedra", directCompoundFlags: [true, true, true, false, false], directCount: 3, predictedCompoundsCount: 33, grasListed: true },
+          { id: "pogostemon-cablin", scientificName: "Pogostemon cablin", commonName: "patchouli", directCompoundFlags: [true, true, false, false, true], directCount: 3, predictedCompoundsCount: 33, grasListed: true },
+          { id: "salix-alba", scientificName: "Salix alba", commonName: "", directCompoundFlags: [true, true, false, false, false], directCount: 2, predictedCompoundsCount: 36, grasListed: true },
+        ],
+      },
     },
   },
   {
