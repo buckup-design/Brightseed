@@ -72,6 +72,8 @@ export interface StrategyCardData {
 export interface CompoundRow {
   id: string;
   compoundName: string;
+  /** Matches the "Predicted association" column on PredictedCompoundRow. */
+  predictedAssociation: string;
   evidenceContextLabel: string;
   foodGrade: boolean;
   drink: boolean;
@@ -325,6 +327,7 @@ export const DEMO_STEPS: DemoStep[] = [
             {
               id: "rosmarinic-acid",
               compoundName: "Rosmarinic acid",
+              predictedAssociation: "Fusion inhibition",
               evidenceContextLabel: "In-vitro / mouse-associated record; 2019",
               foodGrade: true,
               drink: true,
@@ -333,6 +336,7 @@ export const DEMO_STEPS: DemoStep[] = [
             {
               id: "egcg",
               compoundName: "Epigallocatechin gallate (EGCG)",
+              predictedAssociation: "Fusion inhibition",
               evidenceContextLabel: "In-vitro record; 2021",
               foodGrade: true,
               drink: false,
@@ -341,6 +345,7 @@ export const DEMO_STEPS: DemoStep[] = [
             {
               id: "tangeretin",
               compoundName: "Tangeretin",
+              predictedAssociation: "Fusion inhibition",
               evidenceContextLabel: "In-vitro / mouse-associated record; 2018",
               foodGrade: true,
               drink: true,
@@ -349,6 +354,7 @@ export const DEMO_STEPS: DemoStep[] = [
             {
               id: "beta-sitosterol",
               compoundName: "Beta-sitosterol",
+              predictedAssociation: "Polymerase inhibition",
               // "Curated target label" from Anna's second screenshot
               // ("Decreases polymerase") dropped — no column for it, and not
               // folded into evidence context either.
@@ -360,6 +366,7 @@ export const DEMO_STEPS: DemoStep[] = [
             {
               id: "fisetin",
               compoundName: "Fisetin",
+              predictedAssociation: "Polymerase inhibition",
               evidenceContextLabel: "In-vitro record, 2025",
               foodGrade: true,
               drink: true,
@@ -370,6 +377,7 @@ export const DEMO_STEPS: DemoStep[] = [
             {
               id: "oleanolic-acid",
               compoundName: "Oleanolic acid",
+              predictedAssociation: "Fusion inhibition",
               evidenceContextLabel: "In-vitro record; 2013",
               foodGrade: false,
               drink: false,
@@ -378,6 +386,7 @@ export const DEMO_STEPS: DemoStep[] = [
             {
               id: "berberine",
               compoundName: "Berberine",
+              predictedAssociation: "Fusion inhibition",
               evidenceContextLabel: "In-vitro record; 2020",
               foodGrade: false,
               drink: true,
