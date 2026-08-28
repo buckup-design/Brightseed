@@ -11,7 +11,9 @@ interface CombinationsCardProps {
 export default function CombinationsCard({ card }: CombinationsCardProps) {
   return (
     <div className="flex flex-col gap-2 rounded-xl border border-border bg-card p-4 shadow-xs">
-      <h4 className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Best combinations</h4>
+      <h4 className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+        Best combinations - include all 5 selected compounds
+      </h4>
       <table className="w-full border-collapse text-sm">
         <thead>
           <tr className="border-b border-border text-left">
