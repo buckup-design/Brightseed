@@ -268,34 +268,6 @@ export const DEMO_STEPS: DemoStep[] = [
     ],
   },
   {
-    id: "p1",
-    screen: "project",
-    chat: {
-      userMessage: "What's another angle worth exploring?",
-      assistantMessage: ["Here's a second strategy for comparison."],
-    },
-    strategyCards: [
-      {
-        id: "fusion-inhibition",
-        name: "Strategy Name",
-        approach: "Paragraph long description of the strategy. Explain the science concisely, identify pathways of interest.",
-        evidencedCompounds: 7,
-        predictedCompounds: 1241,
-        totalCompounds: 1248,
-        referencesLabel: "view 6 relevant papers",
-      },
-      {
-        id: "alternate-strategy",
-        name: "Alternate Strategy",
-        approach: "Paragraph long description of the alternate strategy. Explain the science concisely, identify pathways of interest.",
-        evidencedCompounds: 3,
-        predictedCompounds: 512,
-        totalCompounds: 515,
-        referencesLabel: "view 4 relevant papers",
-      },
-    ],
-  },
-  {
     id: "s0",
     screen: "strategy",
     chat: {
@@ -370,3 +342,38 @@ export const DEMO_STEPS: DemoStep[] = [
     },
   },
 ];
+
+// PARKED — not part of DEMO_STEPS, so it can never be silently reached by
+// advance(). This was step p1, sitting between p0 and s0, before the
+// project screen's drill-in became a strategy-card click (which jumps
+// straight from p0 into s0). Keeping the shape here in case a later turn
+// wants to reintroduce a second-strategy comparison; wire it back into
+// DEMO_STEPS with real content when that's ready, not this placeholder data.
+export const PARKED_STEP_P1: DemoStep = {
+  id: "p1",
+  screen: "project",
+  chat: {
+    userMessage: "What's another angle worth exploring?",
+    assistantMessage: ["Here's a second strategy for comparison."],
+  },
+  strategyCards: [
+    {
+      id: "fusion-inhibition",
+      name: "Strategy Name",
+      approach: "Paragraph long description of the strategy. Explain the science concisely, identify pathways of interest.",
+      evidencedCompounds: 7,
+      predictedCompounds: 1241,
+      totalCompounds: 1248,
+      referencesLabel: "view 6 relevant papers",
+    },
+    {
+      id: "alternate-strategy",
+      name: "Alternate Strategy",
+      approach: "Paragraph long description of the alternate strategy. Explain the science concisely, identify pathways of interest.",
+      evidencedCompounds: 3,
+      predictedCompounds: 512,
+      totalCompounds: 515,
+      referencesLabel: "view 4 relevant papers",
+    },
+  ],
+};

@@ -38,7 +38,7 @@ export default function ProjectScreen() {
 
           <div className="flex flex-1 flex-col gap-4 overflow-y-auto p-4">
             {folded.strategyCards.map((card) => (
-              <StrategyCard key={card.id} card={card} />
+              <StrategyCard key={card.id} card={card} onClick={advance} />
             ))}
           </div>
         </div>
