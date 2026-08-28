@@ -49,8 +49,14 @@ export default function CompoundTable({ variant, rows }: CompoundTableProps) {
             <td className="px-2 py-2">
               <YesNo value={row.gummy} />
             </td>
-            <td className="px-2 py-2 text-muted-foreground">
-              {variant === "candidates" ? <X size={16} /> : <Plus size={16} />}
+            <td className="px-2 py-2">
+              <button
+                type="button"
+                aria-label={variant === "candidates" ? `Remove ${row.compoundName}` : `Restore ${row.compoundName}`}
+                className="flex size-7 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-foreground/30 hover:bg-muted hover:text-foreground"
+              >
+                {variant === "candidates" ? <X size={14} /> : <Plus size={14} />}
+              </button>
             </td>
           </tr>
         ))}
