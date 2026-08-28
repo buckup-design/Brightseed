@@ -326,9 +326,10 @@ export const DEMO_STEPS: DemoStep[] = [
             {
               id: "beta-sitosterol",
               compoundName: "Beta-sitosterol",
-              // Folds in the "Curated target label" column from Anna's second
-              // screenshot — the table here has no separate slot for it.
-              evidenceContextLabel: "Decreases polymerase — animal record, 2022; 50 mg/kg reported",
+              // "Curated target label" from Anna's second screenshot
+              // ("Decreases polymerase") dropped — no column for it, and not
+              // folded into evidence context either.
+              evidenceContextLabel: "Animal record, 2022; 50 mg/kg reported",
               foodGrade: true,
               drink: false,
               gummy: false,
@@ -336,7 +337,7 @@ export const DEMO_STEPS: DemoStep[] = [
             {
               id: "fisetin",
               compoundName: "Fisetin",
-              evidenceContextLabel: "Inhibits polymerase — in-vitro record, 2025",
+              evidenceContextLabel: "In-vitro record, 2025",
               foodGrade: true,
               drink: true,
               gummy: false,
