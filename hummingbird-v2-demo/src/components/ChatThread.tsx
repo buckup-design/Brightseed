@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import hummingbirdLogo from "../assets/hummingbird-logo.svg";
-import type { AssistantMessageItem, AssistantTableSegment } from "../data/demoScript";
+import type { AssistantLoadingSegment, AssistantMessageItem, AssistantTableSegment } from "../data/demoScript";
 import type { DemoChatMessage } from "../hooks/useDemoScript";
 
 interface ChatThreadProps {
@@ -12,7 +12,11 @@ interface ChatThreadProps {
 }
 
 function isTableSegment(item: AssistantMessageItem): item is AssistantTableSegment {
-  return typeof item !== "string";
+  return typeof item !== "string" && "table" in item;
+}
+
+function isLoadingSegment(item: AssistantMessageItem): item is AssistantLoadingSegment {
+  return typeof item !== "string" && "loading" in item;
 }
 
 // Very light plain-text formatting so a scripted response can look like a
@@ -56,6 +60,11 @@ function AssistantLine({ text, animate }: { text: string; animate: boolean }) {
         {text.slice(2)}
       </p>
     );
+  }
+  // "*…*" — a whole-line italic status message (e.g. "Creating project…"),
+  // not real markdown, just enough to flag a line as system-status prose.
+  if (text.startsWith("*") && text.endsWith("*") && text.length > 1) {
+    return <p className={`${animationClass} italic`}>{text.slice(1, -1)}</p>;
   }
   return <p className={animationClass}>{text}</p>;
 }
@@ -158,6 +167,14 @@ export default function ChatThread({ messages, isThinking, revealedLineCount }: 
                     {visibleItems.map((item, itemIndex) =>
                       isTableSegment(item) ? (
                         <AssistantTable key={itemIndex} segment={item} animate={!isEntryPoint} />
+                      ) : isLoadingSegment(item) ? (
+                        // Still the latest turn -> "in flight" text; the
+                        // script has moved on -> "done" text, in place.
+                        <AssistantLine
+                          key={itemIndex}
+                          text={isLast ? item.loading.pendingText : item.loading.doneText}
+                          animate={!isEntryPoint}
+                        />
                       ) : (
                         <AssistantLine key={itemIndex} text={item} animate={!isEntryPoint} />
                       )

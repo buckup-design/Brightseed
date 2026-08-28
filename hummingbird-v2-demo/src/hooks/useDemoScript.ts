@@ -17,6 +17,10 @@ import type { TabId } from "../components/Header";
 // short response is still visibly "typed in", not just a quick flash.
 const THINKING_DURATION_MS = 5000;
 const LINE_REVEAL_INTERVAL_MS = 280;
+// How long a "creating project…"-style loading message sits fully revealed
+// before the script advances itself — see the effect below. Long enough to
+// read the line, short enough to still feel automatic.
+const AUTO_ADVANCE_DELAY_MS = 1500;
 
 export interface DemoChatMessage {
   stepId: string;
@@ -73,7 +77,13 @@ export function useDemoScript(script: DemoStep[]): UseDemoScript {
   useEffect(() => {
     if (stepIndex === 0) return;
 
-    const lineCount = currentStep.chat.assistantMessage?.length ?? 0;
+    const assistantMessage = currentStep.chat.assistantMessage;
+    const lineCount = assistantMessage?.length ?? 0;
+    // A loading segment (e.g. "Creating project…") doesn't wait for the
+    // user to send anything next — once it's fully revealed, the script
+    // moves on by itself.
+    const autoAdvanceOnceRevealed =
+      assistantMessage?.some((item) => typeof item !== "string" && "loading" in item) ?? false;
     setRevealedLineCount(0);
 
     if (lineCount === 0) {
@@ -83,19 +93,26 @@ export function useDemoScript(script: DemoStep[]): UseDemoScript {
 
     setIsThinking(true);
     let revealInterval: ReturnType<typeof setInterval> | undefined;
+    let autoAdvanceTimeout: ReturnType<typeof setTimeout> | undefined;
     const thinkingTimeout = setTimeout(() => {
       setIsThinking(false);
       let revealed = 0;
       revealInterval = setInterval(() => {
         revealed += 1;
         setRevealedLineCount(revealed);
-        if (revealed >= lineCount && revealInterval) clearInterval(revealInterval);
+        if (revealed >= lineCount) {
+          if (revealInterval) clearInterval(revealInterval);
+          if (autoAdvanceOnceRevealed) {
+            autoAdvanceTimeout = setTimeout(advance, AUTO_ADVANCE_DELAY_MS);
+          }
+        }
       }, LINE_REVEAL_INTERVAL_MS);
     }, THINKING_DURATION_MS);
 
     return () => {
       clearTimeout(thinkingTimeout);
       if (revealInterval) clearInterval(revealInterval);
+      if (autoAdvanceTimeout) clearTimeout(autoAdvanceTimeout);
     };
   }, [stepIndex, currentStep]);
 

@@ -25,12 +25,25 @@ export interface AssistantTableSegment {
   };
 }
 
+// A "creating project…" style status line: it reads as pendingText for as
+// long as its step is the latest turn, then flips to doneText the moment a
+// later step has advanced past it — see ChatThread's isLast handling. No
+// separate timer/state needed for the swap, it falls out of the same
+// mechanism that already tracks "is this still the current turn."
+export interface AssistantLoadingSegment {
+  loading: {
+    pendingText: string;
+    doneText: string;
+  };
+}
+
 // A response is a sequence of items, each one revealed as its own beat —
 // see useDemoScript's revealedLineCount. Plain strings are the common case
 // (one paragraph/bulleted line each, see ChatThread's AssistantLine); a
 // table segment renders as a real HTML table instead of prose, for the
-// rare response that needs one.
-export type AssistantMessageItem = string | AssistantTableSegment;
+// rare response that needs one; a loading segment is a status line whose
+// text changes once the script has moved on (see AssistantLoadingSegment).
+export type AssistantMessageItem = string | AssistantTableSegment | AssistantLoadingSegment;
 
 export interface ChatTurn {
   /** Omitted on an assistant-only turn (e.g. an opening greeting). */
@@ -167,6 +180,25 @@ export const DEMO_STEPS: DemoStep[] = [
         "5. Fusion inhibition + PI3K/AKT/mTOR or AMPK modulation — a host-cell pathway hypothesis, but less virus-specific. (76 directly evidenced compounds, 4,930 predictions)",
         "Caution: these are knowledge-base mechanistic associations, and the supporting records are predominantly in vitro or animal studies. They do not establish that targeting these pathways prevents viral infection in people.",
         "If this looks like a good solution space for us to explore, just say “GO” and I’ll kick off a project workspace for you.",
+      ],
+    },
+  },
+  {
+    id: "w3",
+    screen: "welcome",
+    chat: {
+      userMessage: "GO",
+      // Wrapped in "*…*" — AssistantLine renders a plain string bounded by
+      // asterisks as an italicized status line (see ChatThread.tsx). Once
+      // this step is no longer the latest turn (the moment p0 auto-advances
+      // in below), the bubble flips from pendingText to doneText in place.
+      assistantMessage: [
+        {
+          loading: {
+            pendingText: "*Creating project...*",
+            doneText: "*Project Created*",
+          },
+        },
       ],
     },
   },
