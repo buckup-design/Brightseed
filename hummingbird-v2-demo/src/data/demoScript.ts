@@ -109,6 +109,8 @@ export interface PredictedCompoundsCardData {
   candidates: PredictedCompoundRow[];
 }
 
+export type GrasStatus = "listed" | "no-entry" | "pending";
+
 export interface NaturalSourceRow {
   id: string;
   scientificName: string;
@@ -117,17 +119,20 @@ export interface NaturalSourceRow {
   directCompoundFlags: boolean[];
   directCount: number;
   predictedCompoundsCount: number;
-  grasListed: boolean;
+  grasStatus: GrasStatus;
 }
 
-// The Natural Sources tab's one table — see NaturalSourcesTable. Anna's
-// screenshot has a title/legend above the table too, deliberately dropped
-// (just the table, styled simply to match the rest of the screen).
+// The Natural Sources tab's card — see NaturalSourcesCard/NaturalSourcesTable.
+// Anna's screenshot has a title/legend above the table too, deliberately
+// dropped (just the two tables, styled simply to match the rest of the
+// screen) — but the Candidates/Eliminated split itself mirrors
+// CompoundCategoryCard on the Compounds tab.
 export interface NaturalSourcesCardData {
   id: string;
   /** Column order for each row's directCompoundFlags. */
   compoundColumns: string[];
-  rows: NaturalSourceRow[];
+  candidates: NaturalSourceRow[];
+  eliminated: NaturalSourceRow[];
 }
 
 export interface StrategyScreenPatch {
@@ -479,20 +484,32 @@ export const DEMO_STEPS: DemoStep[] = [
       naturalSourcesCard: {
         id: "fusion-polymerase-sources",
         compoundColumns: ["Beta-sitosterol", "Rosmarinic acid", "EGCG", "Fisetin", "Tangeretin"],
-        // Transcribed from Anna's screenshot (ranks as shown — an extended
-        // ranking of 20 plants, only the GRAS-listed ones included here).
-        rows: [
-          { id: "mangifera-indica", scientificName: "Mangifera indica", commonName: "mango", directCompoundFlags: [true, true, true, true, false], directCount: 4, predictedCompoundsCount: 63, grasListed: true },
-          { id: "salvia-officinalis", scientificName: "Salvia officinalis", commonName: "sage", directCompoundFlags: [true, true, false, false, true], directCount: 3, predictedCompoundsCount: 65, grasListed: true },
-          { id: "petroselinum-crispum", scientificName: "Petroselinum crispum", commonName: "garden parsley", directCompoundFlags: [true, true, false, false, true], directCount: 3, predictedCompoundsCount: 43, grasListed: true },
-          { id: "cistus-incanus", scientificName: "Cistus incanus", commonName: "hairy rockrose", directCompoundFlags: [true, true, true, false, false], directCount: 3, predictedCompoundsCount: 42, grasListed: true },
-          { id: "citrus-aurantium", scientificName: "Citrus aurantium", commonName: "sour orange", directCompoundFlags: [true, false, false, true, true], directCount: 3, predictedCompoundsCount: 120, grasListed: true },
-          { id: "glycine-max", scientificName: "Glycine max", commonName: "soybean", directCompoundFlags: [true, false, false, true, true], directCount: 3, predictedCompoundsCount: 79, grasListed: true },
-          { id: "boerhavia-diffusa", scientificName: "Boerhavia diffusa", commonName: "red spiderling", directCompoundFlags: [true, true, true, false, false], directCount: 3, predictedCompoundsCount: 44, grasListed: true },
-          { id: "hypericum-perforatum", scientificName: "Hypericum perforatum", commonName: "common St. John's wort", directCompoundFlags: [true, true, false, true, false], directCount: 3, predictedCompoundsCount: 35, grasListed: true },
-          { id: "ephedra-nevadensis", scientificName: "Ephedra nevadensis", commonName: "green ephedra", directCompoundFlags: [true, true, true, false, false], directCount: 3, predictedCompoundsCount: 33, grasListed: true },
-          { id: "pogostemon-cablin", scientificName: "Pogostemon cablin", commonName: "patchouli", directCompoundFlags: [true, true, false, false, true], directCount: 3, predictedCompoundsCount: 33, grasListed: true },
-          { id: "salix-alba", scientificName: "Salix alba", commonName: "", directCompoundFlags: [true, true, false, false, false], directCount: 2, predictedCompoundsCount: 36, grasListed: true },
+        // Transcribed from Anna's screenshots (ranks as shown — an extended
+        // ranking of 20 plants; the GRAS-listed ones are candidates, the
+        // rest (no GRAS entry, or a notice filed but pending) are eliminated).
+        candidates: [
+          { id: "mangifera-indica", scientificName: "Mangifera indica", commonName: "mango", directCompoundFlags: [true, true, true, true, false], directCount: 4, predictedCompoundsCount: 63, grasStatus: "listed" },
+          { id: "salvia-officinalis", scientificName: "Salvia officinalis", commonName: "sage", directCompoundFlags: [true, true, false, false, true], directCount: 3, predictedCompoundsCount: 65, grasStatus: "listed" },
+          { id: "petroselinum-crispum", scientificName: "Petroselinum crispum", commonName: "garden parsley", directCompoundFlags: [true, true, false, false, true], directCount: 3, predictedCompoundsCount: 43, grasStatus: "listed" },
+          { id: "cistus-incanus", scientificName: "Cistus incanus", commonName: "hairy rockrose", directCompoundFlags: [true, true, true, false, false], directCount: 3, predictedCompoundsCount: 42, grasStatus: "listed" },
+          { id: "citrus-aurantium", scientificName: "Citrus aurantium", commonName: "sour orange", directCompoundFlags: [true, false, false, true, true], directCount: 3, predictedCompoundsCount: 120, grasStatus: "listed" },
+          { id: "glycine-max", scientificName: "Glycine max", commonName: "soybean", directCompoundFlags: [true, false, false, true, true], directCount: 3, predictedCompoundsCount: 79, grasStatus: "listed" },
+          { id: "boerhavia-diffusa", scientificName: "Boerhavia diffusa", commonName: "red spiderling", directCompoundFlags: [true, true, true, false, false], directCount: 3, predictedCompoundsCount: 44, grasStatus: "listed" },
+          { id: "hypericum-perforatum", scientificName: "Hypericum perforatum", commonName: "common St. John's wort", directCompoundFlags: [true, true, false, true, false], directCount: 3, predictedCompoundsCount: 35, grasStatus: "listed" },
+          { id: "ephedra-nevadensis", scientificName: "Ephedra nevadensis", commonName: "green ephedra", directCompoundFlags: [true, true, true, false, false], directCount: 3, predictedCompoundsCount: 33, grasStatus: "listed" },
+          { id: "pogostemon-cablin", scientificName: "Pogostemon cablin", commonName: "patchouli", directCompoundFlags: [true, true, false, false, true], directCount: 3, predictedCompoundsCount: 33, grasStatus: "listed" },
+          { id: "salix-alba", scientificName: "Salix alba", commonName: "", directCompoundFlags: [true, true, false, false, false], directCount: 2, predictedCompoundsCount: 36, grasStatus: "listed" },
+        ],
+        eliminated: [
+          { id: "ulmus-campestris", scientificName: "Ulmus campestris", commonName: "elm family", directCompoundFlags: [true, true, true, false, false], directCount: 3, predictedCompoundsCount: 28, grasStatus: "no-entry" },
+          { id: "pistacia-chinensis", scientificName: "Pistacia chinensis", commonName: "Chinese pistache", directCompoundFlags: [true, false, true, true, false], directCount: 3, predictedCompoundsCount: 30, grasStatus: "no-entry" },
+          { id: "punica-granatum", scientificName: "Punica granatum", commonName: "pomegranate", directCompoundFlags: [true, false, true, false, true], directCount: 3, predictedCompoundsCount: 50, grasStatus: "pending" },
+          { id: "erythroxylum-vaccinifolium", scientificName: "Erythroxylum vaccinifolium", commonName: "", directCompoundFlags: [true, true, true, false, false], directCount: 3, predictedCompoundsCount: 31, grasStatus: "no-entry" },
+          { id: "setaria-reverchonii", scientificName: "Setaria reverchonii", commonName: "Reverchon's bristle grass", directCompoundFlags: [true, true, true, false, false], directCount: 3, predictedCompoundsCount: 17, grasStatus: "no-entry" },
+          { id: "vaccinium-vitis-idaea", scientificName: "Vaccinium vitis-idaea", commonName: "lingonberry", directCompoundFlags: [true, true, false, false, true], directCount: 3, predictedCompoundsCount: 52, grasStatus: "no-entry" },
+          { id: "quercus-ilex", scientificName: "Quercus ilex", commonName: "evergreen oak", directCompoundFlags: [true, true, true, false, false], directCount: 3, predictedCompoundsCount: 20, grasStatus: "no-entry" },
+          { id: "asplenium-trichomanes", scientificName: "Asplenium trichomanes", commonName: "maidenhair spleenwort", directCompoundFlags: [true, true, false, false, false], directCount: 2, predictedCompoundsCount: 14, grasStatus: "no-entry" },
+          { id: "maytenus-laevis", scientificName: "Maytenus laevis", commonName: "", directCompoundFlags: [true, false, true, false, false], directCount: 2, predictedCompoundsCount: 20, grasStatus: "no-entry" },
         ],
       },
     },

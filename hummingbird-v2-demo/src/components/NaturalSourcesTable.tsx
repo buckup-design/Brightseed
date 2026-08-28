@@ -1,15 +1,23 @@
-import { Check } from "lucide-react";
-import type { NaturalSourcesCardData } from "../data/demoScript";
+import { Check, Plus, X } from "lucide-react";
+import type { GrasStatus, NaturalSourceRow } from "../data/demoScript";
 
 interface NaturalSourcesTableProps {
-  card: NaturalSourcesCardData;
+  variant: "candidates" | "eliminated";
+  compoundColumns: string[];
+  rows: NaturalSourceRow[];
+  /** Shared across candidates + eliminated so bar scale is comparable between the two sections — see NaturalSourcesCard. */
+  maxPredicted: number;
 }
 
-// The Natural Sources tab's table. Anna's reference screenshot has a
-// title/legend and color-coded cells above it — deliberately simplified
-// here to a plain table matching the rest of the app (a check icon for
-// presence, no color-coding) — except the Predicted compounds bar, which
-// she asked to keep, rendered in greyscale rather than the source's color.
+const GRAS_STATUS_LABEL: Record<GrasStatus, string> = {
+  listed: "yes",
+  "no-entry": "—",
+  pending: "†",
+};
+
+// A greyscale bar, scaled to maxPredicted, kept from Anna's reference
+// screenshot; everything else about that screenshot (color-coded cells,
+// title/legend) was simplified away to match the rest of the app.
 function PredictedCompoundsBar({ value, max }: { value: number; max: number }) {
   const widthPercent = max > 0 ? (value / max) * 100 : 0;
   return (
@@ -22,15 +30,16 @@ function PredictedCompoundsBar({ value, max }: { value: number; max: number }) {
   );
 }
 
-export default function NaturalSourcesTable({ card }: NaturalSourcesTableProps) {
-  const maxPredicted = Math.max(0, ...card.rows.map((row) => row.predictedCompoundsCount));
-
+// One of the two tables on a NaturalSourcesCard (Candidates / Eliminated),
+// matching CompoundTable's structure and row-action icon on the Compounds
+// tab (X to "remove" a candidate, + to "restore" an eliminated one).
+export default function NaturalSourcesTable({ variant, compoundColumns, rows, maxPredicted }: NaturalSourcesTableProps) {
   return (
     <table className="w-full border-collapse text-sm">
       <thead>
         <tr className="border-b border-border text-left">
           <th className="px-2 py-2 font-medium text-foreground">Natural source</th>
-          {card.compoundColumns.map((compound) => (
+          {compoundColumns.map((compound) => (
             <th key={compound} className="px-2 py-2 text-center font-medium text-foreground">
               {compound}
             </th>
@@ -38,10 +47,11 @@ export default function NaturalSourcesTable({ card }: NaturalSourcesTableProps) 
           <th className="px-2 py-2 font-medium text-foreground">Direct</th>
           <th className="px-2 py-2 font-medium text-foreground">Predicted compounds</th>
           <th className="px-2 py-2 text-center font-medium text-foreground">GRAS</th>
+          <th className="w-10 px-2 py-2" />
         </tr>
       </thead>
       <tbody>
-        {card.rows.map((row) => (
+        {rows.map((row) => (
           <tr key={row.id} className="border-b border-border last:border-b-0">
             <td className="px-2 py-2 align-top">
               <span className="italic text-foreground">{row.scientificName}</span>
@@ -56,7 +66,16 @@ export default function NaturalSourcesTable({ card }: NaturalSourcesTableProps) 
             <td className="px-2 py-2 align-top">
               <PredictedCompoundsBar value={row.predictedCompoundsCount} max={maxPredicted} />
             </td>
-            <td className="px-2 py-2 text-center align-top text-foreground">{row.grasListed ? "yes" : "no"}</td>
+            <td className="px-2 py-2 text-center align-top text-foreground">{GRAS_STATUS_LABEL[row.grasStatus]}</td>
+            <td className="px-2 py-2 align-top">
+              <button
+                type="button"
+                aria-label={variant === "candidates" ? `Remove ${row.scientificName}` : `Restore ${row.scientificName}`}
+                className="flex size-7 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-foreground/30 hover:bg-muted hover:text-foreground"
+              >
+                {variant === "candidates" ? <X size={14} /> : <Plus size={14} />}
+              </button>
+            </td>
           </tr>
         ))}
       </tbody>

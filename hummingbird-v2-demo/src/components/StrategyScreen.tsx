@@ -8,7 +8,7 @@ import ContextDrawer from "./ContextDrawer";
 import Header, { type TabId } from "./Header";
 import CompoundCategoryCard from "./CompoundCategoryCard";
 import PredictedCompoundsCard from "./PredictedCompoundsCard";
-import NaturalSourcesTable from "./NaturalSourcesTable";
+import NaturalSourcesCard from "./NaturalSourcesCard";
 import { useResizableSplit } from "../hooks/useResizableSplit";
 import { useDemoScreenSync } from "../hooks/useDemoScreenSync";
 import { useDemoScriptContext } from "../context/DemoScriptContext";
@@ -73,9 +73,7 @@ export default function StrategyScreen() {
                 ))}
               </>
             ) : folded.naturalSourcesCard ? (
-              <div className="rounded-xl border border-border bg-card p-4 shadow-xs">
-                <NaturalSourcesTable card={folded.naturalSourcesCard} />
-              </div>
+              <NaturalSourcesCard card={folded.naturalSourcesCard} />
             ) : (
               <p className="text-sm text-muted-foreground">
                 No Natural Sources content in this script yet.
