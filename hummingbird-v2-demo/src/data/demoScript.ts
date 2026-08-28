@@ -268,6 +268,19 @@ export const DEMO_STEPS: DemoStep[] = [
     ],
   },
   {
+    id: "p1",
+    screen: "project",
+    chat: {
+      userMessage: "Not targeting a specific population yet. I’d like the product to be a drink or gummy, but I’m open to other formats.",
+      assistantMessage: [
+        "Got it. Added that to your requirements. Go ahead and choose a strategy you’d like to explore. We’ll review each one until you’ve found a solution that works for you.",
+      ],
+    },
+    contextPatch: {
+      constraints: "drink or gummy desired but not required",
+    },
+  },
+  {
     id: "s0",
     screen: "strategy",
     chat: {
