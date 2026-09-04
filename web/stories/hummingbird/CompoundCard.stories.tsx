@@ -6,6 +6,10 @@ import { CardGrid } from "@/components/hummingbird/card-grid";
 /* ─────────────────────────────────────────────────────────────────────────
  * CompoundCard, Hummingbird Compounds view.
  *
+ * SUPERSEDED for the discovery flow (Sept 2026): compounds are now triaged in
+ * the formulation stage's table (WORK IN PROGRESS/Project Flow). Kept for
+ * reference until Becky rules on retiring the card surfaces.
+ *
  * Rebuilt June 2026 on the StrategyCard shell from the Figma "Card/compound"
  * set (Collab Playground, node 42:1328). Lives under WORK IN PROGRESS until
  * Becky promotes it to Components/Cards (root CLAUDE.md rule 10).

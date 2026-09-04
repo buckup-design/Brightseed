@@ -6,6 +6,10 @@ import { CardGrid } from "@/components/hummingbird/card-grid";
 /* ─────────────────────────────────────────────────────────────────────────
  * PlantCard, Hummingbird Plants view.
  *
+ * SUPERSEDED for the discovery flow (Sept 2026): natural sources are now the
+ * presence matrix in the formulation stage (WORK IN PROGRESS/Project Flow).
+ * Kept for reference until Becky rules on retiring the card surfaces.
+ *
  * Source mock: anna's mocks 4-29-26/filtered to plants.png
  * Content shapes pulled from Anna's mocs; typography and hierarchy rebuilt
  * on Brightseed Quill tokens.

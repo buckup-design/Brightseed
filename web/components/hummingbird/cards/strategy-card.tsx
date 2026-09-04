@@ -9,6 +9,12 @@ import { Button } from "@/components/ui/button";
 /**
  * StrategyCard v2, Hummingbird Strategies overview.
  *
+ * SUPERSEDED for the discovery flow (Sept 2026). Strategies are now compared in
+ * a table — components/hummingbird/project/strategies-stage.tsx — because a
+ * decision between five competing options is made by reading them column by
+ * column, which a card board prevents. This component is not deleted: it is
+ * promoted (Components/Cards/Strategy) and retiring it is Becky's call.
+ *
  * Source: Figma StrategyCard v2 Components, node 26585:379616
  * https://www.figma.com/design/ZZPjoeJ447MWuzNi3LL1BL?node-id=26585-379616
  *

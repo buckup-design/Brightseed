@@ -13,6 +13,7 @@ OUTPUTS/
 vector-pipeline/
 DOCS/archive/
 anna's mocks 4-29-26/
+anna mocks 8-28-26/
 
 # Reference PDF, local only. DOCS/ is retired — if any of this is worth keeping,
 # it belongs in DESIGN.md or a Storybook page, not a new doc.

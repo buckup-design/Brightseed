@@ -9,6 +9,10 @@ import { CardGrid } from "@/components/hummingbird/card-grid";
 /* ─────────────────────────────────────────────────────────────────────────
  * StrategyCard v2, Hummingbird Strategies view.
  *
+ * SUPERSEDED for the discovery flow (Sept 2026) by WORK IN PROGRESS/Project
+ * Flow, where strategies are triaged in a table. Kept because this component is
+ * promoted and its removal is Becky's call — see the note in strategy-card.tsx.
+ *
  * Source mock:  anna's mocks 4-29-26/strategies view.png
  * Figma source: node 26585:379616 (StrategyCard v2 Components)
  *
