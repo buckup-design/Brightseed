@@ -55,9 +55,9 @@ function AgentMessage({
   onFavorite,
 }: {
   message: Extract<ChatMessage, { role: "assistant" }>;
-  favoritedIds: Set<string>;
-  onSelectResult: (result: Result) => void;
-  onFavorite: (result: Result, favorited: boolean) => void;
+  favoritedIds?: Set<string>;
+  onSelectResult?: (result: Result) => void;
+  onFavorite?: (result: Result, favorited: boolean) => void;
 }) {
   return (
     <div className="flex gap-3">
@@ -76,19 +76,34 @@ function AgentMessage({
         <p className="text-sm leading-relaxed text-[var(--ds-color-text-default)]">
           {message.text}
         </p>
-        {message.results && message.results.length > 0 && (
+        {message.results && message.results.length > 0 && onSelectResult && (
           <div className="mt-1 flex max-w-[420px] flex-col gap-2">
             {message.results.map((result) => (
               <ResultCard
                 key={resultKey(result)}
-                result={{ ...result, isFavorited: favoritedIds.has(resultKey(result)) }}
-                onFavorite={(favorited) => onFavorite(result, favorited)}
+                result={{ ...result, isFavorited: favoritedIds?.has(resultKey(result)) ?? false }}
+                onFavorite={(favorited) => onFavorite?.(result, favorited)}
                 onSelect={() => onSelectResult(result)}
               />
             ))}
           </div>
         )}
       </div>
+    </div>
+  );
+}
+
+/** Same glyph and gutter as AgentMessage, so the answer lands where the
+ * placeholder sat rather than jumping a row. */
+function ThinkingRow() {
+  return (
+    <div className="flex gap-3">
+      <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-[var(--ds-color-surface-success)] text-[var(--ds-color-icon-success)]">
+        <HummingbirdLine className="size-4" />
+      </div>
+      <p className="animate-pulse self-center text-sm italic text-[var(--ds-color-text-subtle)]">
+        Thinking…
+      </p>
     </div>
   );
 }
@@ -148,11 +163,17 @@ function MessageComposer({ onSend }: { onSend?: (value: string) => void }) {
 
 export interface ChatPanelProps {
   messages: ChatMessage[];
-  /** Favorites keyed by resultKey(result) — the canvas's one source of truth. */
-  favoritedIds: Set<string>;
+  /**
+   * Favorites keyed by resultKey(result) — the canvas's one source of truth.
+   * Optional: a host that never puts cards in the thread (the project flow)
+   * omits all three card props and gets a text-only pane.
+   */
+  favoritedIds?: Set<string>;
   onSend?: (value: string) => void;
-  onSelectResult: (result: Result) => void;
-  onFavorite: (result: Result, favorited: boolean) => void;
+  onSelectResult?: (result: Result) => void;
+  onFavorite?: (result: Result, favorited: boolean) => void;
+  /** An answer is in flight — shows the thinking row under the last turn. */
+  pending?: boolean;
   className?: string;
 }
 
@@ -162,6 +183,7 @@ export function ChatPanel({
   onSend,
   onSelectResult,
   onFavorite,
+  pending = false,
   className,
 }: ChatPanelProps) {
   const bottomRef = React.useRef<HTMLDivElement>(null);
@@ -173,7 +195,7 @@ export function ChatPanel({
   // list (nearest scroll ancestor), not the page.
   React.useEffect(() => {
     bottomRef.current?.scrollIntoView({ block: "end" });
-  }, [messages.length]);
+  }, [messages.length, pending]);
 
   // The composer is lifted OUT of flex flow (absolute) so the thread scrolls
   // behind it. That costs us the layout it used to reserve, so measure it and
@@ -200,6 +222,10 @@ export function ChatPanel({
       <div
         className="scrollbar-overlay mr-2 flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto p-4"
         style={{ paddingBottom: composerHeight }}
+        /* Replies arrive without focus moving, so nothing would announce them.
+           Polite, on the thread rather than per-message, so additions are read
+           in order and scrolling re-announces nothing. */
+        aria-live="polite"
       >
         {messages.map((message, i) =>
           message.role === "assistant" ? (
@@ -217,6 +243,7 @@ export function ChatPanel({
             />
           ),
         )}
+        {pending && <ThinkingRow />}
         <div ref={bottomRef} />
       </div>
       <div ref={composerRef} className="absolute inset-x-0 bottom-0">

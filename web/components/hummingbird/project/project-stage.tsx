@@ -10,6 +10,13 @@ import {
   type ProjectCrumb,
   type ProjectMember,
 } from "@/components/hummingbird/project/project-header";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { ProjectContextPanel } from "@/components/hummingbird/project/project-context-panel";
 
 /**
@@ -52,6 +59,7 @@ export function ProjectStage({
   onNavigateProject,
   onAddMember,
   defaultContextOpen = true,
+  chat,
   children,
 }: {
   user: SettingsUser;
@@ -73,10 +81,26 @@ export function ProjectStage({
   onNavigateProject?: () => void;
   onAddMember?: () => void;
   defaultContextOpen?: boolean;
+  /**
+   * The conversation half of the stage. Optional: a stage rendered without it
+   * keeps the pre-chat single-pane layout, so nothing that already composes
+   * ProjectStage has to change.
+   */
+  chat?: React.ReactNode;
   children: React.ReactNode;
 }) {
   const [contextOpen, setContextOpen] = React.useState(defaultContextOpen);
   const scrollRef = React.useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
+
+  const stagePane = (
+    <div
+      ref={scrollRef}
+      className="flex min-h-0 min-w-0 flex-1 flex-col overflow-y-auto p-6"
+    >
+      {children}
+    </div>
+  );
 
   React.useEffect(() => {
     scrollRef.current?.scrollTo({ top: 0 });
@@ -105,12 +129,65 @@ export function ProjectStage({
       }
     >
       <div className="flex min-h-0 flex-1">
-        <div
-          ref={scrollRef}
-          className="flex min-h-0 min-w-0 flex-1 flex-col overflow-y-auto p-6"
-        >
-          {children}
-        </div>
+        {chat ? (
+          isMobile ? (
+            /* Two panels can't sit side by side on a phone. Same swap the
+               Workspace canvas makes, and the SAME stage/chat instances render
+               either way — only the container changes. */
+            <Tabs
+              defaultValue="stage"
+              /* min-w-0: the tables are wider than a phone, and without this
+                 the stage's intrinsic width pushes the whole Tabs box — tab bar
+                 included — past the viewport instead of scrolling inside it. */
+              className="flex min-h-0 min-w-0 flex-1 flex-col gap-0"
+            >
+              <TabsList className="w-full shrink-0 justify-start rounded-none border-b border-[var(--ds-color-border-subtle)] bg-[var(--ds-color-surface-canvas)] px-2">
+                <TabsTrigger value="chat">Chat</TabsTrigger>
+                <TabsTrigger value="stage">Work</TabsTrigger>
+              </TabsList>
+              <TabsContent
+                value="chat"
+                className="min-h-0 min-w-0 flex-1 overflow-hidden"
+              >
+                {chat}
+              </TabsContent>
+              <TabsContent
+                value="stage"
+                className="min-h-0 min-w-0 flex-1 overflow-hidden"
+              >
+                {stagePane}
+              </TabsContent>
+            </Tabs>
+          ) : (
+            <ResizablePanelGroup
+              orientation="horizontal"
+              className="min-h-0 flex-1"
+            >
+              {/* String percents, NOT numbers — a numeric size is PIXELS in
+                  react-resizable-panels v4. Narrower default than the Workspace
+                  canvas's 38: the tables here are wide and the reading happens
+                  on the right. */}
+              <ResizablePanel
+                defaultSize="32"
+                minSize="24"
+                maxSize="48"
+                className="flex min-h-0 flex-col"
+              >
+                {chat}
+              </ResizablePanel>
+              <ResizableHandle withHandle />
+              <ResizablePanel
+                defaultSize="68"
+                minSize="45"
+                className="flex min-h-0 flex-col"
+              >
+                {stagePane}
+              </ResizablePanel>
+            </ResizablePanelGroup>
+          )
+        ) : (
+          stagePane
+        )}
         {/* Always mounted: it owns its own visibility so it can animate out as a
           * Sheet on mobile rather than vanishing mid-transition. */}
         <ProjectContextPanel

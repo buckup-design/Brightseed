@@ -6,6 +6,10 @@ import { Building2, FlaskConical, Sprout } from "lucide-react";
 import type { SettingsAccount, SettingsUser } from "@/components/quill/settings-modal";
 import type { Team } from "@/components/quill/team-switcher";
 import { ProjectStage } from "@/components/hummingbird/project/project-stage";
+import { ChatPanel } from "@/components/hummingbird/workspace/chat-panel";
+import type { ChatMessage } from "@/components/hummingbird/data";
+import { createMockResponder } from "@/lib/chat-responder";
+import { useChat } from "@/hooks/use-chat";
 import { StrategiesStage } from "@/components/hummingbird/project/strategies-stage";
 import type { ProjectMember } from "@/components/hummingbird/project/project-header";
 import {
@@ -98,6 +102,16 @@ const PROJECT = {
   references: REFERENCES,
 };
 
+/* One opening turn, then the pane is genuinely live — anything you type goes to
+ * the responder. This is not Anna's 12-step script: there is no fixed path
+ * through it and no "next" to advance to. */
+const OPENING_THREAD: ChatMessage[] = [
+  {
+    role: "assistant",
+    text: `Here's your project workspace for ${PROJECT_VIRAL.name}. The goal is to ${PROJECT_VIRAL.goal}, and I've pulled the context I could find into the panel on the right. There are ${STRATEGIES_VIRAL.length} strategies to work through — eliminate the ones that don't fit and we'll take the survivors into formulation. Ask me anything about the data as you go.`,
+  },
+];
+
 // ── The flow ───────────────────────────────────────────────────────────────
 
 const FIXTURE_FORMULATION: FormulationData = {
@@ -128,6 +142,21 @@ function ProjectFlowHost({
   const [mixtureTriage, setMixtureTriage] = React.useState<TriageState>({});
   const [onExperiment, setOnExperiment] = React.useState(false);
 
+  /* The seam. Swapping Brightseed's internal MCP in behind the chat means
+   * replacing this one line — see lib/chat-responder.ts. */
+  const responder = React.useMemo(() => createMockResponder(), []);
+  const stage = onExperiment
+    ? "experiment"
+    : openStrategy
+      ? "formulation"
+      : "strategies";
+  const { messages, pending, send } = useChat({
+    responder,
+    initialMessages: OPENING_THREAD,
+    stage,
+    projectId: PROJECT_VIRAL.id,
+  });
+
   const crumbs = openStrategy
     ? onExperiment
       ? [
@@ -155,6 +184,7 @@ function ProjectFlowHost({
         setOpenStrategy(null);
       }}
       onAddMember={() => {}}
+      chat={<ChatPanel messages={messages} pending={pending} onSend={send} />}
     >
       {status ??
         (openStrategy ? (
