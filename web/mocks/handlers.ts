@@ -33,6 +33,17 @@ import {
   resolveWorkspaceDetail,
 } from "@/components/hummingbird/data";
 import { resultKey } from "@/components/hummingbird/cards/result-card";
+import {
+  COMBINATIONS,
+  COMPOUND_CANDIDATES,
+  COMPOUND_ELIMINATED,
+  PREDICTED_COMPOUNDS,
+  PROJECT_VIRAL,
+  STRATEGIES_VIRAL,
+  SOURCE_CANDIDATES,
+  MATRIX_COMPOUNDS,
+  SOURCE_ELIMINATED,
+} from "@/components/hummingbird/project-data";
 
 /** A modest, uniform latency so loading states are real, not theoretical. */
 const LATENCY_MS = 350;
@@ -88,17 +99,72 @@ export const handlers = [
     return HttpResponse.json(resolveReportDocument(String(params.id)));
   }),
 
-  // ── Reference data (no consumer yet — completes the API artifact) ────────────
-  http.get("/api/project", () => HttpResponse.json(PROJECT)),
-  http.get("/api/strategies", () => HttpResponse.json(STRATEGIES)),
-  http.get("/api/compounds", () => HttpResponse.json(COMPOUNDS)),
+  // ── The discovery flow (business goal → strategies → formulation plans) ──────
+  // Project-scoped, and separate from the flat reference routes below: this is
+  // the viral-infection dataset the v2 direction is built against, and it must
+  // not disturb the GLP-1 fixtures the shipped stories still use.
+  http.get("/api/projects/:id", async () => {
+    await delay(LATENCY_MS);
+    return HttpResponse.json(PROJECT_VIRAL);
+  }),
+
+  http.get("/api/projects/:id/strategies", async () => {
+    await delay(LATENCY_MS);
+    return HttpResponse.json(STRATEGIES_VIRAL);
+  }),
+
+  // The compounds table ships PRE-SPLIT by the model. That split is a proposal,
+  // not a review — the client's triage model treats it as the starting position
+  // and counts only human decisions as reviewed.
+  http.get("/api/strategies/:id/compounds", async () => {
+    await delay(LATENCY_MS);
+    return HttpResponse.json({
+      candidates: COMPOUND_CANDIDATES,
+      eliminated: COMPOUND_ELIMINATED,
+    });
+  }),
+  http.get("/api/strategies/:id/predicted-compounds", async () => {
+    await delay(LATENCY_MS);
+    return HttpResponse.json(PREDICTED_COMPOUNDS);
+  }),
+  http.get("/api/strategies/:id/sources", async () => {
+    await delay(LATENCY_MS);
+    return HttpResponse.json({
+      compoundColumns: MATRIX_COMPOUNDS,
+      candidates: SOURCE_CANDIDATES,
+      eliminated: SOURCE_ELIMINATED,
+    });
+  }),
+  http.get("/api/strategies/:id/combinations", async () => {
+    await delay(LATENCY_MS);
+    return HttpResponse.json(COMBINATIONS);
+  }),
+
+  // ── Reference data (completes the API artifact) ──────────────────────────────
+  // These carry the same latency as everything else; without it a loading state
+  // cannot be demonstrated on them at all.
+  http.get("/api/project", async () => {
+    await delay(LATENCY_MS);
+    return HttpResponse.json(PROJECT);
+  }),
+  http.get("/api/strategies", async () => {
+    await delay(LATENCY_MS);
+    return HttpResponse.json(STRATEGIES);
+  }),
+  http.get("/api/compounds", async () => {
+    await delay(LATENCY_MS);
+    return HttpResponse.json(COMPOUNDS);
+  }),
   http.get("/api/compounds/:id", ({ params }) => {
     const found = COMPOUNDS.find((c) => c.id === params.id);
     return found
       ? HttpResponse.json(found)
       : new HttpResponse(null, { status: 404 });
   }),
-  http.get("/api/plants", () => HttpResponse.json(PLANTS)),
+  http.get("/api/plants", async () => {
+    await delay(LATENCY_MS);
+    return HttpResponse.json(PLANTS);
+  }),
   http.get("/api/plants/:id", ({ params }) => {
     const found = PLANTS.find((p) => p.id === params.id);
     return found

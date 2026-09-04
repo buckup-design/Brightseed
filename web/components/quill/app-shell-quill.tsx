@@ -32,6 +32,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+import { cn } from "@/lib/utils";
 import { BrightseedLogo } from "@/components/brand/BrightseedLogo";
 import { FeedbackDialog } from "@/components/quill/feedback-dialog";
 import {
@@ -120,6 +121,9 @@ export function AppShellQuill({
   onUserChange,
   appearance,
   onAppearanceChange,
+  header,
+  layout = "document",
+  contentClassName,
   children,
 }: {
   user: SettingsUser;
@@ -140,6 +144,23 @@ export function AppShellQuill({
    * apply the theme — the app owns that (see the story for the reference wiring). */
   appearance?: Appearance;
   onAppearanceChange?: (next: Appearance) => void;
+  /**
+   * A bar spanning the content area, above `children` and below the mobile nav
+   * opener. Inset-width by design: it stops at the sidebar rather than crossing
+   * it, so the sidebar keeps the brand mark and its left edge doesn't jump
+   * 184px every time the panel collapses.
+   */
+  header?: React.ReactNode;
+  /**
+   * "document" (default) keeps the page-scrolling behaviour every existing
+   * screen was built on. "app" makes the shell viewport-height and hands
+   * scrolling to the content, which is what a full-height split view needs — a
+   * flex item's min-height is `auto`, so without this a `h-full` child cannot
+   * resolve its height and the layout either collapses or grows the page.
+   */
+  layout?: "document" | "app";
+  /** Escape hatch for the content wrapper's padding, e.g. an edge-to-edge split. */
+  contentClassName?: string;
   children?: React.ReactNode;
 }) {
   const [settingsOpen, setSettingsOpen] = React.useState(false);
@@ -161,8 +182,12 @@ export function AppShellQuill({
     icon: user.icon,
   };
 
+  const app = layout === "app";
+
   return (
-    <SidebarProvider>
+    <SidebarProvider
+      className={cn(app && "h-svh overflow-hidden")}
+    >
       <Sidebar>
         <SidebarHeader>
           {/* Bare mark, no tile square — the square read too hot on the dark
@@ -212,7 +237,17 @@ export function AppShellQuill({
         <header className="flex h-14 shrink-0 items-center gap-2 border-b border-[var(--c-app-shell-border-default)] px-4 md:hidden">
           <MobileNavOpener />
         </header>
-        <div className="flex flex-1 flex-col bg-[var(--c-app-shell-surface-canvas)] p-6">
+        {header}
+        <div
+          className={cn(
+            "flex flex-1 flex-col bg-[var(--c-app-shell-surface-canvas)]",
+            /* min-h-0 is what lets a full-height child resolve its height; the
+             * flex default of min-height:auto is why the workspace canvas has
+             * always had to mount in its own h-svh box instead of the shell. */
+            app && "min-h-0 overflow-hidden",
+            contentClassName ?? "p-6",
+          )}
+        >
           {children}
         </div>
       </SidebarInset>

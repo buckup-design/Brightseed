@@ -25,6 +25,14 @@ import type {
   Plant,
   Strategy,
 } from "@/components/hummingbird/data";
+import type {
+  CombinationRow,
+  EvidencedCompound,
+  MatrixCompound,
+  NaturalSourceRow,
+  PredictedCompound,
+  ProjectStrategy,
+} from "@/components/hummingbird/project-data";
 
 export type Project = {
   name: string;
@@ -101,4 +109,60 @@ export function getCompounds(): Promise<Compound[]> {
 
 export function getPlants(): Promise<Plant[]> {
   return getJSON<Plant[]>("/plants");
+}
+
+// ── The discovery flow ───────────────────────────────────────────────────────
+// Project-scoped reads for the business goal → strategies → formulation plans
+// spine. Kept separate from the flat reference getters above: those serve the
+// GLP-1 fixtures the shipped card stories still use.
+
+export type ProjectBrief = {
+  id: string;
+  name: string;
+  goal: string;
+  constraints: string;
+  referencesLabel: string;
+  referenceCount: number;
+};
+
+/**
+ * A set the model has already split into its own proposal. The split is a
+ * starting position, NOT a review — only a human decision counts as reviewed
+ * (see lib/triage.ts).
+ */
+export type ProposedSplit<T> = { candidates: T[]; eliminated: T[] };
+
+export type SourceMatrix = ProposedSplit<NaturalSourceRow> & {
+  /** The matrix's default columns. The stage narrows these to the surviving set. */
+  compoundColumns: MatrixCompound[];
+};
+
+export function getProjectBrief(id: string): Promise<ProjectBrief> {
+  return getJSON<ProjectBrief>(`/projects/${encodeURIComponent(id)}`);
+}
+
+export function getStrategyCompounds(
+  strategyId: string,
+): Promise<ProposedSplit<EvidencedCompound>> {
+  return getJSON(`/strategies/${encodeURIComponent(strategyId)}/compounds`);
+}
+
+export function getStrategyPredictedCompounds(
+  strategyId: string,
+): Promise<PredictedCompound[]> {
+  return getJSON(`/strategies/${encodeURIComponent(strategyId)}/predicted-compounds`);
+}
+
+export function getStrategySources(strategyId: string): Promise<SourceMatrix> {
+  return getJSON(`/strategies/${encodeURIComponent(strategyId)}/sources`);
+}
+
+export function getStrategyCombinations(
+  strategyId: string,
+): Promise<CombinationRow[]> {
+  return getJSON(`/strategies/${encodeURIComponent(strategyId)}/combinations`);
+}
+
+export function getProjectStrategies(projectId: string): Promise<ProjectStrategy[]> {
+  return getJSON(`/projects/${encodeURIComponent(projectId)}/strategies`);
 }
