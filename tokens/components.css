@@ -175,6 +175,39 @@
   --c-checkbox-shape-radius-xs: var(--ds-shape-radius-xs);
   --c-checkbox-text-on-action-primary:    var(--ds-color-text-on-action-primary);
 
+  /* --c-data-table — the column-driven table engine layered over --c-table.
+     Row borders, hover and selected stay on --c-table; this block defines only
+     what the engine adds: group header rows, the pinned column's backfill, the
+     cell-kind vocabulary (presence check, status icon, meter bar). */
+  --c-data-table-border-subtle:      var(--ds-color-border-subtle);
+  --c-data-table-border-default:     var(--ds-color-border-default);
+  --c-data-table-border-focus:       var(--ds-color-border-focus);
+  /* The pinned column's backfill occludes the columns scrolling under it, so it
+     must match its HOST surface, not the page. These tables always sit in a
+     card: in light both are white, but in dark the page is sand-950 while the
+     card is sand-850, and surface-default would paint a stripe. */
+  --c-data-table-surface-pinned:     var(--ds-color-surface-raised);
+  --c-data-table-surface-hover:      var(--ds-color-surface-default-hover);
+  /* raised-alt, NOT alt: in dark, surface-alt and surface-raised are both
+     sand-850, and this band always sits inside a Card painted surface-raised —
+     so alt would render at 1.00:1 against its own host. raised-alt is the
+     "inside a raised card" step (sand-900 dark, sand-100 light). */
+  --c-data-table-surface-group:      var(--ds-color-surface-raised-alt);
+  --c-data-table-text-default:       var(--ds-color-text-default);
+  --c-data-table-text-subtle:        var(--ds-color-text-subtle);
+  --c-data-table-text-muted:         var(--ds-color-text-muted);
+  --c-data-table-text-link:          var(--ds-color-text-link-default);
+  --c-data-table-text-link-hover:    var(--ds-color-text-link-default-hover);
+  --c-data-table-icon-default:       var(--ds-color-icon-default);
+  --c-data-table-icon-subtle:        var(--ds-color-icon-subtle);
+  --c-data-table-icon-success:       var(--ds-color-icon-success);
+  --c-data-table-icon-warning:       var(--ds-color-icon-warning);
+  --c-data-table-icon-critical:      var(--ds-color-icon-critical);
+  --c-data-table-meter-track:        var(--ds-color-data-track);
+  --c-data-table-meter-fill:         var(--ds-color-data-magnitude-default);
+  --c-data-table-shape-radius-round: var(--ds-shape-radius-round);
+  --c-data-table-shape-radius-md:    var(--ds-shape-radius-md);
+
   /* --c-description-list — the shared label→value <dl> (result-detail's
      Dosage/ADME, the report's Formulation). Each aliases the exact --ds-* the
      inline DataRows used, so the extraction is provably zero-visual-change.
